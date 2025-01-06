@@ -94,13 +94,13 @@
         <div class="sticky top-14">
           {{#if this.leaderboardIsExpanded}}
             <CoursePage::CollapseLeaderboardButton
-              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5 z-10"
               {{on "click" this.handleCollapseLeaderboardButtonClick}}
               data-test-collapse-leaderboard-button
             />
           {{else}}
             <CoursePage::ExpandLeaderboardButton
-              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5"
+              class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5 z-10"
               {{on "click" this.handleExpandLeaderboardButtonClick}}
               data-test-expand-leaderboard-button
             />
