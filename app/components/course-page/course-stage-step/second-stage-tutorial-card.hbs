@@ -1,7 +1,7 @@
 <CoursePage::InstructionsCard @title="How to pass this stage" id="second-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
-      {{#if (and this.shouldShowShortInstructions (eq @repository.course.slug "shell"))}}
+      {{#if (eq @repository.course.slug "shell")}}
         <div class="mb-5 prose-compact">
           {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
         </div>

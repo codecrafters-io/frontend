@@ -14,10 +14,6 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
-  get canSeeShortInstructionsForStage2() {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-short-instructions-for-stage-2') === 'test';
-  }
-
   get currentUser() {
     return this.authenticator.currentUser;
   }
