@@ -132,6 +132,7 @@
 
 .diff-highlight .removed-line {
   background-color: rgba(255, 0, 0, 0.1);
+  user-select: none;
 }
 
 .dark .diff-highlight .removed-line {
