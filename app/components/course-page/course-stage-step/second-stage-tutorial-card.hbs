@@ -2,9 +2,32 @@
   <:content>
     <div class="prose dark:prose-invert mb-5">
       {{#if (eq @repository.course.slug "shell")}}
-        <div class="mb-5 prose-compact">
-          {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
-        </div>
+        {{#if this.shouldShowTerminalInstructions}}
+          <p>
+            In this stage, you'll implement support for handling invalid commands in your shell.
+          </p>
+          <div class="mb-6 bg-slate-800 dark:bg-slate-100 rounded-xl max-w-md shadow-md dark:shadow-slate-600">
+            <div class="flex items-center h-14 px-5 gap-2.5">
+              <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
+              <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
+              <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
+            </div>
+            <div class="pt-0 p-5 font-mono">
+              <p class="mt-0 mb-2 cursor-pointer w-fit text-slate-300 dark:text-slate-600">$
+                <span class="text-red-400">invalid_command</span>
+                <EmberTooltip @side="right" @text="Treat every command as invalid for now." />
+              </p>
+              <p class="my-0 animate-pulse text-slate-100 dark:text-slate-800 cursor-pointer w-fit">
+                invalid_command: command not found
+                <EmberTooltip @side="bottom" @text="Read the command and print the error message." />
+              </p>
+            </div>
+          </div>
+        {{else}}
+          <div class="mt-2 mb-5 prose-compact">
+            {{markdown-to-html @courseStage.shortInstructionsMarkdown}}
+          </div>
+        {{/if}}
       {{else}}
         <p>
           In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.

@@ -85,6 +85,10 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
     return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
   }
 
+  get shouldShowTerminalInstructions() {
+    return this.featureFlags.canSeeTerminalInstructionsForStage1And2;
+  }
+
   get steps() {
     return [
       new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),

@@ -83,6 +83,10 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
     );
   }
 
+  get shouldShowTerminalInstructions() {
+    return this.featureFlags.canSeeTerminalInstructionsForStage1And2;
+  }
+
   get steps() {
     return [
       new ImplementSolutionStep(this.args.repository, this.implementSolutionStepIsComplete),
