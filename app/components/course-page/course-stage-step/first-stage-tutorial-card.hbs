@@ -1,7 +1,7 @@
 <CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
-      {{#if this.shouldShowTerminalInstructions}}
+      {{#if (and (eq @repository.course.slug "shell") this.shouldShowTerminalInstructions)}}
         <p>
           In this stage, you'll implement printing a shell prompt ($) and waiting for user input.
         </p>
