@@ -11,20 +11,15 @@
             <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
             <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
           </div>
-          <div class="flex items-center gap-2 pt-0 p-5">
-            <div class="font-mono relative">
-              <span class="my-0 text-slate-100 dark:text-slate-800 cursor-pointer w-fit">$</span>
-              <div class="absolute top-0 bottom-0 -right-8 flex items-center">
-                <span class="relative flex h-6 w-6 cursor-pointer">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                  {{svg-jar "question-mark-circle" class="w-6 h-6 text-blue-500"}}
-                  <EmberTooltip @side="right" @text="Print '$ ' to pass this stage." @popperContainer="body" />
-                </span>
-              </div>
+          <div class="pt-0 p-5 cursor-pointer">
+            <div class="flex items-center gap-2 w-fit">
+              <span class="font-mono text-slate-100 dark:text-slate-800">$</span>
+              <span class="relative flex size-6">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                {{svg-jar "question-mark-circle" class="size-6 text-blue-500"}}
+              </span>
+              <EmberTooltip @side="right" @text="Print '$ ' to pass this stage." @popperContainer="body" />
             </div>
-            {{!-- <div class="flex items-center justify-center rounded-full relative">
-              {{svg-jar "question-mark-circle" class="w-6 h-6 text-blue-500"}}
-            </div> --}}
           </div>
         </div>
       {{else}}

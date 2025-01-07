@@ -19,7 +19,7 @@ declare module '@glint/environment-ember-loose/registry' {
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
     EmberTooltip: ComponentLike<{
-      Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number } };
+      Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number; popperContainer?: string } };
       Blocks: { default?: [] };
     }>;
     EmberPopover: ComponentLike<{

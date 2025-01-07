@@ -13,14 +13,18 @@
               <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
             </div>
             <div class="pt-0 p-5 font-mono">
-              <p class="mt-0 mb-2 cursor-pointer w-fit text-slate-300 dark:text-slate-600">$
+              <div class="flex items-center gap-2 mb-2 text-slate-300 dark:text-slate-600 cursor-pointer w-fit">$
                 <span class="text-red-400">invalid_command</span>
-                <EmberTooltip @side="right" @text="Treat every command as invalid for now." />
-              </p>
-              <p class="my-0 animate-pulse text-slate-100 dark:text-slate-800 cursor-pointer w-fit">
+                <EmberTooltip @side="right" @text="Treat every command as invalid for now." @popperContainer="body" />
+              </div>
+              <div class="flex items-center gap-2 text-slate-100 dark:text-slate-800 cursor-pointer w-fit">
                 invalid_command: command not found
-                <EmberTooltip @side="bottom" @text="Read the command and print the error message." />
-              </p>
+                <span class="relative flex size-6 cursor-pointer">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  {{svg-jar "question-mark-circle" class="size-6 text-blue-500"}}
+                </span>
+                <EmberTooltip @side="right" @text="Read the command and print the error message." @popperContainer="body" />
+              </div>
             </div>
           </div>
         {{else}}
