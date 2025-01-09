@@ -90,19 +90,19 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].text,
-      '⦚ 13 unchanged lines ⦚',
+      'Expand 13 unchanged lines',
       'The first placeholder should show correct number of lines',
     );
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[1].text,
-      '⦚ 6 unchanged lines ⦚',
+      'Expand 6 unchanged lines',
       'The second placeholder should show correct number of lines',
     );
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[2].text,
-      '⦚ 7 unchanged lines ⦚',
+      'Expand 7 unchanged lines',
       'The third placeholder should show correct number of lines',
     );
 
