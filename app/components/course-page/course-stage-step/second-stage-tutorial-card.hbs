@@ -13,18 +13,25 @@
               <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
             </div>
             <div class="pt-0 p-5 font-mono">
-              <div class="flex items-center gap-2 mb-2 text-slate-300 dark:text-slate-600 cursor-pointer w-fit">$
+              <div class="flex items-center gap-2 mb-2 text-slate-300 dark:text-slate-600 cursor-default w-fit">$
                 <span class="text-red-400">invalid_command</span>
                 <EmberTooltip @side="right" @text="Treat every command as invalid for now." @popperContainer="body" />
               </div>
-              <div class="flex items-center gap-2 text-slate-100 dark:text-slate-800 cursor-pointer w-fit">
+              <button
+                type="button"
+                class="flex items-center gap-2 text-slate-100 dark:text-slate-800 w-fit
+                  {{if this.shouldShowTerminalInstructionsPinging 'cursor-pointer' 'cursor-auto'}}"
+                {{on "click" this.handleTerminalClick}}
+              >
                 invalid_command: command not found
-                <span class="relative flex size-6 cursor-pointer">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span class="relative flex size-6">
+                  {{#if this.shouldShowTerminalInstructionsPinging}}
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                  {{/if}}
                   {{svg-jar "question-mark-circle" class="size-6 text-blue-500"}}
                 </span>
                 <EmberTooltip @side="right" @text="Read the command and print the error message." @popperContainer="body" />
-              </div>
+              </button>
             </div>
           </div>
         {{else}}
