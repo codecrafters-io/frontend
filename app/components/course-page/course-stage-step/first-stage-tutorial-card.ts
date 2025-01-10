@@ -9,6 +9,7 @@ import type { Step } from 'codecrafters-frontend/components/expandable-step-list
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -73,6 +74,8 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
+  @tracked isTerminalInstructionsPingingClicked = false;
+
   get hasPassedTests() {
     return this.args.currentStep.testsStatus === 'passed' || this.args.currentStep.status === 'complete';
   }
@@ -83,6 +86,14 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
 
   get navigateToFileStepWasMarkedAsComplete() {
     return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
+  }
+
+  get shouldShowTerminalInstructions() {
+    return this.featureFlags.canSeeTerminalInstructionsForStage1And2;
+  }
+
+  get shouldShowTerminalInstructionsPinging() {
+    return !this.hasPassedTests && !this.isTerminalInstructionsPingingClicked;
   }
 
   get steps() {
@@ -127,6 +138,11 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
         repository_id: this.args.repository.id,
       });
     }
+  }
+
+  @action
+  handleTerminalClick() {
+    this.isTerminalInstructionsPingingClicked = true;
   }
 
   @action
