@@ -63,7 +63,12 @@ const BASE_STYLE = {
           color: 'rgb(102 153 0)',
         },
       },
+    },
+  },
 
+  // Collapse unchanged lines gutter
+  '.cm-collapseUnchangedBarGutter': {
+    '& .cm-gutterElement': {
       '&.cm-collapseUnchangedBarNeighbor': {
         '& .cm-collapseUnchangedBarGutterElement': {
           content: '""',
@@ -192,8 +197,8 @@ export const codeCraftersDark = [
         backgroundColor: tailwindColors.gray['900'],
       },
 
-      // Changes gutter for diff +/- indicators
-      '.cm-changeGutter': {
+      // Collapse unchanged lines gutter
+      '.cm-collapseUnchangedBarGutter': {
         '& .cm-gutterElement': {
           '&.cm-collapseUnchangedBarNeighbor': {
             '& .cm-collapseUnchangedBarGutterElement': {

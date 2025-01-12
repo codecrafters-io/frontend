@@ -1,4 +1,4 @@
-import { EditorView, GutterMarker, gutterWidgetClass } from '@codemirror/view';
+import { EditorView, gutter, GutterMarker, gutterWidgetClass } from '@codemirror/view';
 
 export class CollapseUnchangedGutterMarker extends GutterMarker {
   elementClass = 'cm-collapseUnchangedBarNeighbor';
@@ -30,11 +30,17 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
 }
 
 export function collapseUnchangedGutterWidgetClass() {
-  return gutterWidgetClass.of(function (_view, widget, _block): GutterMarker | null {
-    if ('type' in widget && widget.type === 'collapsed-unchanged-code') {
-      return new CollapseUnchangedGutterMarker();
-    }
+  return [
+    gutter({
+      class: 'cm-collapseUnchangedBarGutter',
+      renderEmptyElements: true,
+    }),
+    gutterWidgetClass.of(function (_view, widget, _block): GutterMarker | null {
+      if ('type' in widget && widget.type === 'collapsed-unchanged-code') {
+        return new CollapseUnchangedGutterMarker();
+      }
 
-    return null;
-  });
+      return null;
+    }),
+  ];
 }
