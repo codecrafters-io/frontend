@@ -182,7 +182,7 @@
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.4.0",
     "rgb-hex": "^4.1.0",
-    "shiki": "^1.17.7",
+    "shiki": "^1.27.0",
     "sinon": "^19.0.2",
     "stylelint": "^16.13.0",
     "stylelint-config-standard": "^36.0.1",
