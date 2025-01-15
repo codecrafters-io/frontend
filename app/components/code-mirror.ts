@@ -136,7 +136,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
           }),
-          collapseUnchangedGutter(),
+          collapseUnchanged ? collapseUnchangedGutter() : [],
         ]
       : [];
   },
