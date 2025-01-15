@@ -29,7 +29,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
   }
 }
 
-export function collapseUnchangedGutterWidgetClass() {
+export function collapseUnchangedGutter() {
   return [
     gutter({
       class: 'cm-collapseUnchangedBarGutter',
