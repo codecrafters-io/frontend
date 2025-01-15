@@ -1,5 +1,6 @@
 import { BlockInfo, EditorView, gutter, GutterMarker, type WidgetType } from '@codemirror/view';
 import { uncollapseUnchanged } from '@codemirror/merge';
+import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 
 function isCollapseUnchangedWidget(widget: WidgetType) {
   return 'type' in widget && widget.type === 'collapsed-unchanged-code';
@@ -43,6 +44,23 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
   }
 }
 
+export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS {
+  line: BlockInfo;
+  view: EditorView;
+  widget: WidgetType;
+
+  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+    super();
+    this.line = line;
+    this.view = view;
+    this.widget = widget;
+  }
+
+  toDOM(view: EditorView) {
+    return renderGutterElement(view, this.widget, this.line);
+  }
+}
+
 export function collapseUnchangedGutter() {
   return [
     gutter({
@@ -50,6 +68,14 @@ export function collapseUnchangedGutter() {
 
       widgetMarker(view, widget, line) {
         return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarker(view, widget, line) : null;
+      },
+    }),
+
+    gutterRS({
+      class: 'cm-collapseUnchangedGutter',
+
+      widgetMarker(view, widget, line) {
+        return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarkerRS(view, widget, line) : null;
       },
     }),
   ];
