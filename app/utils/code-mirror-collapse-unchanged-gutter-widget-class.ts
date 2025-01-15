@@ -34,13 +34,13 @@ export function collapseUnchangedGutterWidgetClass() {
     gutter({
       class: 'cm-collapseUnchangedBarGutter',
       renderEmptyElements: true,
-    }),
-    gutterWidgetClass.of(function (_view, widget, _block): GutterMarker | null {
-      if ('type' in widget && widget.type === 'collapsed-unchanged-code') {
-        return new CollapseUnchangedGutterMarker();
-      }
+      widgetMarker(_view, widget, _block) {
+        if ('type' in widget && widget.type === 'collapsed-unchanged-code') {
+          return new CollapseUnchangedGutterMarker();
+        }
 
-      return null;
+        return null;
+      },
     }),
   ];
 }
