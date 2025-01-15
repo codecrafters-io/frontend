@@ -69,7 +69,7 @@ const BASE_STYLE = {
   // Collapse unchanged lines gutter
   '.cm-collapseUnchangedBarGutter': {
     '& .cm-gutterElement': {
-      '&.cm-collapseUnchangedBarNeighbor': {
+      '&.cm-collapseUnchangedBarSibling': {
         '& .cm-collapseUnchangedBarGutterElement': {
           content: '""',
           position: 'absolute',
@@ -200,7 +200,7 @@ export const codeCraftersDark = [
       // Collapse unchanged lines gutter
       '.cm-collapseUnchangedBarGutter': {
         '& .cm-gutterElement': {
-          '&.cm-collapseUnchangedBarNeighbor': {
+          '&.cm-collapseUnchangedBarSibling': {
             '& .cm-collapseUnchangedBarGutterElement': {
               borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
               backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),

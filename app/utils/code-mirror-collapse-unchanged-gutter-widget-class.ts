@@ -1,7 +1,7 @@
-import { EditorView, gutter, GutterMarker, gutterWidgetClass } from '@codemirror/view';
+import { EditorView, gutter, GutterMarker } from '@codemirror/view';
 
 export class CollapseUnchangedGutterMarker extends GutterMarker {
-  elementClass = 'cm-collapseUnchangedBarNeighbor';
+  elementClass = 'cm-collapseUnchangedBarSibling';
 
   toDOM(_view: EditorView): Node {
     const el = document.createElement('div');
@@ -10,7 +10,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
       const editor = el.closest('.cm-editor');
       const gutter = el.closest('.cm-gutter');
       const gutterElement = el.closest('.cm-gutterElement');
-      const gutterElementSiblings = gutter?.querySelectorAll('.cm-collapseUnchangedBarNeighbor');
+      const gutterElementSiblings = gutter?.querySelectorAll('.cm-collapseUnchangedBarSibling');
 
       if (!editor || !gutter || !gutterElement || !gutterElementSiblings) {
         return;
