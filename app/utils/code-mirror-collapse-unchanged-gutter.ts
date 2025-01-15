@@ -5,7 +5,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
 
   toDOM(_view: EditorView): Node {
     const el = document.createElement('div');
-    el.className = 'cm-collapseUnchangedBarGutterElement';
+    el.className = 'cm-collapseUnchangedGutterElement';
     el.addEventListener('click', (_e) => {
       const editor = el.closest('.cm-editor');
       const gutter = el.closest('.cm-gutter');
@@ -32,7 +32,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
 export function collapseUnchangedGutter() {
   return [
     gutter({
-      class: 'cm-collapseUnchangedBarGutter',
+      class: 'cm-collapseUnchangedGutter',
       renderEmptyElements: true,
       widgetMarker(_view, widget, _block) {
         if ('type' in widget && widget.type === 'collapsed-unchanged-code') {
