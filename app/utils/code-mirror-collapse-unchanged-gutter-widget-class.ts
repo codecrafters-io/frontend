@@ -9,7 +9,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
     el.addEventListener('click', (_e) => {
       const editor = el.closest('.cm-editor');
       const gutter = el.closest('.cm-gutter');
-      const gutterElement = el.closest('.cm-collapseUnchangedBarNeighbor');
+      const gutterElement = el.closest('.cm-gutterElement');
       const gutterElementSiblings = gutter?.querySelectorAll('.cm-collapseUnchangedBarNeighbor');
 
       if (!editor || !gutter || !gutterElement || !gutterElementSiblings) {
