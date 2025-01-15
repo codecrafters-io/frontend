@@ -19,10 +19,10 @@ export class CollapseUnchangedGutterMarker extends GutterMarker {
       // Find the index of the clicked gutter element
       const gutterElementIndex = [...gutterElementSiblings.values()].indexOf(gutterElement);
 
-      // Find the corresponding expand unchanged bar in the content
-      const expandCollapsedBar = editor.querySelectorAll<HTMLElement>('.cm-content .cm-collapsedLines').item(gutterElementIndex);
+      // Find the corresponding Collapse Unchanged Bar in the content
+      const collapsedUnchangedBar = editor.querySelectorAll<HTMLElement>('.cm-content .cm-collapsedLines').item(gutterElementIndex);
 
-      expandCollapsedBar?.click();
+      collapsedUnchangedBar?.click();
     });
 
     return el;
