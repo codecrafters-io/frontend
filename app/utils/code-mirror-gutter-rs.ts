@@ -1,10 +1,20 @@
-import {combineConfig, MapMode, Facet, Extension, EditorState,
-        RangeValue, RangeSet, RangeCursor} from "@codemirror/state"
-import {EditorView} from "./editorview"
-import {ViewPlugin, ViewUpdate} from "./extension"
-import {BlockType, WidgetType} from "./decoration"
-import {BlockInfo} from "./heightmap"
-import {Direction} from "./bidi"
+///
+/// Copied from https://github.com/codemirror/view/blob/6.36.2/src/gutter.ts
+///
+
+// @ts-nocheck
+/* eslint-disable */
+
+import { combineConfig, MapMode, Facet, type Extension, EditorState, RangeValue, RangeSet, type RangeCursor } from '@codemirror/state';
+import { EditorView, ViewPlugin, ViewUpdate, BlockType, WidgetType, BlockInfo, Direction } from '@codemirror/view';
+
+// import {combineConfig, MapMode, Facet, Extension, EditorState,
+//         RangeValue, RangeSet, RangeCursor} from "@codemirror/state"
+// import {EditorView} from "./editorview"
+// import {ViewPlugin, ViewUpdate} from "./extension"
+// import {BlockType, WidgetType} from "./decoration"
+// import {BlockInfo} from "./heightmap"
+// import {Direction} from "./bidi"
 
 /// A gutter marker represents a bit of information attached to a line
 /// in a specific gutter. Your own custom markers have to extend this
@@ -126,9 +136,10 @@ const gutterView = ViewPlugin.fromClass(class {
   constructor(readonly view: EditorView) {
     this.prevViewport = view.viewport
     this.dom = document.createElement("div")
-    this.dom.className = "cm-gutters"
+    this.dom.className = "cm-gutters cm-gutters-rs"
     this.dom.setAttribute("aria-hidden", "true")
     this.dom.style.minHeight = (this.view.contentHeight / this.view.scaleY) + "px"
+    this.dom.style.right = "0";
     this.gutters = view.state.facet(activeGutters).map(conf => new SingleGutterView(view, conf))
     for (let gutter of this.gutters) this.dom.appendChild(gutter.dom)
     this.fixed = !view.state.facet(unfixGutters)
@@ -139,7 +150,7 @@ const gutterView = ViewPlugin.fromClass(class {
       this.dom.style.position = "sticky"
     }
     this.syncGutters(false)
-    view.scrollDOM.insertBefore(this.dom, view.contentDOM)
+    view.scrollDOM.insertBefore(this.dom, view.contentDOM.nextSibling)
   }
 
   update(update: ViewUpdate) {
@@ -188,7 +199,13 @@ const gutterView = ViewPlugin.fromClass(class {
       }
     }
     for (let cx of contexts) cx.finish()
-    if (detach) this.view.scrollDOM.insertBefore(this.dom, after)
+    if (detach) {
+      if (after) {
+        this.view.scrollDOM.insertBefore(this.dom, after)
+      } else {
+        this.view.scrollDOM.appendChild(this.dom)
+      }
+    }
   }
 
   updateGutters(update: ViewUpdate) {
