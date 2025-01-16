@@ -144,7 +144,7 @@ Our interactive concepts can help with this:
 
   get shortInstructionsMarkdown() {
     return `
-In this stage, you'll implement support for handling invalid commands in your shell.
+In this stage, you'll handle invalid commands in your shell. For now, treat all commands as invalid.
 
 Example:
 
