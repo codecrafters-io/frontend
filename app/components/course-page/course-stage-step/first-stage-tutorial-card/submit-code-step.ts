@@ -21,7 +21,8 @@ export default class SubmitCodeStepComponent extends Component<Signature> {
   @tracked isPushModalOpen = false;
 
   get canSeeSplitUpGitCommandsForStage1() {
-    return this.featureFlags.canSeeSplitUpGitCommandsForStage1;
+    return true;
+    // return this.featureFlags.canSeeSplitUpGitCommandsForStage1;
   }
 
   @action

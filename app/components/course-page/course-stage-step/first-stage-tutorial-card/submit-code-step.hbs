@@ -28,10 +28,11 @@
       </p>
       <pre class="language-bash max-w-2xl"><code>[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
 
-      <button {{on "click" (fn (mut this.isCommitModalOpen) true)}} type="button" class="flex items-center gap-1">
-        Help! My output is different.
-        {{svg-jar "question-mark-circle" class="size-4 text-blue-500"}}
-      </button>
+      <p class="text-xs">
+        <b>Note:</b>
+        If your output doesn't match the above,
+        <a href="#">read this</a>.
+      </p>
     </div>
   </div>
 
@@ -50,10 +51,12 @@
       </p>
 
       <pre class="language-bash max-w-2xl"><code>remote: Welcome to CodeCrafters! Your commit was received successfully.</code></pre>
-      <button type="button" class="flex items-center gap-1">
-        Help! My output is different.
-        {{svg-jar "question-mark-circle" class="size-4 text-blue-500"}}
-      </button>
+
+      <p class="text-xs">
+        <b>Note:</b>
+        If your output doesn't match the above,
+        <a href="#">read this</a>.
+      </p>
     </div>
   </div>
 {{else}}
