@@ -1,12 +1,14 @@
 {{#if this.isCommitModalOpen}}
   <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{fn (mut this.isCommitModalOpen) false}} class="w-full cursor-default">
+    <ModalBody @allowManualClose={{true}} @onClose={{fn (mut this.isCommitModalOpen) false}} @isWide={{true}} class="w-full cursor-default">
       <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
         <p>
           If you see output like this:
         </p>
-        <pre class="language-bash max-w-2xl"><code class="text-xs">On branch master<br />Your branch is up to date with 'origin/master'.<br />nothing to
-            commit, working tree clean</code></pre>
+        <pre class="language-bash max-w-2xl"><code class="text-xs">On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean</code></pre>
       </div>
     </ModalBody>
   </ModalBackdrop>
@@ -15,7 +17,8 @@
 {{#if this.canSeeSplitUpGitCommandsForStage1}}
   <div class="mb-5">
     <div class="prose prose-compact dark:prose-invert mb-3">
-      First, run this command to <span class="font-semibold">commit your changes</span>:
+      First, run this command to
+      <span class="font-semibold">commit your changes</span>:
     </div>
 
     <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-3" />
@@ -30,14 +33,15 @@
       <p class="text-xs">
         <b>Note:</b>
         If your output doesn't match the above,
-        <a href="#">read this</a>.
+        <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>read this</a>.
       </p>
     </div>
   </div>
 
   <div class="mb-5">
     <div class="prose prose-compact dark:prose-invert mb-3">
-      Next, run this command to <span class="font-semibold">push your changes</span>:
+      Next, run this command to
+      <span class="font-semibold">push your changes</span>:
     </div>
 
     <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-3" />
