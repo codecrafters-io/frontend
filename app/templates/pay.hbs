@@ -51,7 +51,6 @@
 
       <PayPage::PricingCard
         @actualPrice={{1490}}
-        @discountedPrice={{990}}
         @footerText="Pay once, access for life."
         @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
         @isRecommended={{false}}
@@ -59,8 +58,6 @@
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{false}}
         @title="Lifetime access"
-        @temporaryNoticeText="Price increases on Jan 15"
-        @temporaryNoticeTooltipText="The price for the lifetime plan will increase from $990 to $1,490 on January 15, 2025."
         data-test-lifetime-pricing-card
       />
     </div>
