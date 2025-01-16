@@ -67,10 +67,10 @@ const BASE_STYLE = {
   },
 
   // Collapse unchanged lines gutter
-  '.cm-collapseUnchangedBarGutter': {
+  '.cm-collapseUnchangedGutter': {
     '& .cm-gutterElement': {
-      '&.cm-collapseUnchangedBarNeighbor': {
-        '& .cm-collapseUnchangedBarGutterElement': {
+      '&.cm-collapseUnchangedBarSibling': {
+        '& .cm-collapseUnchangedGutterElement': {
           content: '""',
           position: 'absolute',
           left: 0,
@@ -87,20 +87,20 @@ const BASE_STYLE = {
           cursor: 'pointer',
         },
         '&:hover': {
-          '& .cm-collapseUnchangedBarGutterElement': {
+          '& .cm-collapseUnchangedGutterElement': {
             backgroundColor: tailwindColors.sky['100'],
             color: tailwindColors.sky['800'],
           },
         },
         '&:first-child': {
-          '& .cm-collapseUnchangedBarGutterElement': {
+          '& .cm-collapseUnchangedGutterElement': {
             borderTop: 'none',
             marginTop: '-0.5rem',
             backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
           },
         },
         '&:last-child': {
-          '& .cm-collapseUnchangedBarGutterElement': {
+          '& .cm-collapseUnchangedGutterElement': {
             borderBottom: 'none',
             marginTop: '0.5rem',
             backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
@@ -198,30 +198,30 @@ export const codeCraftersDark = [
       },
 
       // Collapse unchanged lines gutter
-      '.cm-collapseUnchangedBarGutter': {
+      '.cm-collapseUnchangedGutter': {
         '& .cm-gutterElement': {
-          '&.cm-collapseUnchangedBarNeighbor': {
-            '& .cm-collapseUnchangedBarGutterElement': {
+          '&.cm-collapseUnchangedBarSibling': {
+            '& .cm-collapseUnchangedGutterElement': {
               borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
               backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
             },
 
             '&:hover': {
-              '& .cm-collapseUnchangedBarGutterElement': {
+              '& .cm-collapseUnchangedGutterElement': {
                 backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
                 color: tailwindColors.sky['300'],
               },
             },
 
             '&:first-child': {
-              '& .cm-collapseUnchangedBarGutterElement': {
+              '& .cm-collapseUnchangedGutterElement': {
                 backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
               },
             },
 
             '&:last-child': {
-              '& .cm-collapseUnchangedBarGutterElement': {
+              '& .cm-collapseUnchangedGutterElement': {
                 backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
               },
             },

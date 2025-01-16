@@ -28,6 +28,12 @@ export default create({
           scope: '> .cm-gutter.cm-changeGutter',
           elements: collection('> .cm-gutterElement'),
         },
+
+        collapseUnchangedGutter: {
+          scope: '> .cm-gutter.cm-collapseUnchangedGutter',
+          elements: collection('> .cm-gutterElement'),
+          collapseUnchangedBarSiblings: collection('.cm-collapseUnchangedGutterElement'),
+        },
       },
 
       content: {

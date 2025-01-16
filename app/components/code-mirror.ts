@@ -37,7 +37,7 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
-import { collapseUnchangedGutterWidgetClass } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter-widget-class';
+import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -136,7 +136,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
           }),
-          collapseUnchangedGutterWidgetClass(),
+          collapseUnchanged ? collapseUnchangedGutter() : [],
         ]
       : [];
   },
