@@ -11,7 +11,7 @@ function toDOM(_view: EditorView): Node {
     const editor = el.closest('.cm-editor');
     const gutter = el.closest('.cm-gutter');
     const gutterElement = el.closest('.cm-gutterElement');
-    const gutterElementSiblings = gutter?.querySelectorAll('.cm-collapseUnchangedBarSibling');
+    const gutterElementSiblings = gutter?.querySelectorAll('.cm-gutterElement');
 
     if (!editor || !gutter || !gutterElement || !gutterElementSiblings) {
       return;
@@ -30,7 +30,6 @@ function toDOM(_view: EditorView): Node {
 }
 
 export class CollapseUnchangedGutterMarker extends GutterMarker {
-  elementClass = 'cm-collapseUnchangedBarSibling';
   toDOM = toDOM;
 }
 
@@ -38,7 +37,6 @@ export function collapseUnchangedGutter() {
   return [
     gutter({
       class: 'cm-collapseUnchangedGutter',
-      renderEmptyElements: true,
       widgetMarker(_view, widget, _block) {
         return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarker() : null;
       },
