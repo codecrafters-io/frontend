@@ -1,41 +1,10 @@
 <CoursePage::InstructionsCard @title="How to pass this stage" id="first-stage-tutorial-card" ...attributes>
   <:content>
     <div class="prose dark:prose-invert mb-5">
-      {{#if (and (eq @repository.course.slug "shell") this.shouldShowTerminalInstructions)}}
-        <p>
-          In this stage, you'll implement printing a shell prompt
-          <code>"$ "</code>
-          and waiting for user input.
-        </p>
-        <div class="mb-6 bg-slate-800 dark:bg-slate-100 rounded-xl max-w-md shadow-md dark:shadow-slate-600">
-          <div class="flex items-center h-14 px-5 gap-2.5">
-            <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
-            <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
-            <div class="size-3 bg-slate-500 dark:bg-slate-300 rounded-full flex-shrink-0"></div>
-          </div>
-          <div class="pt-0 p-5">
-            <button
-              type="button"
-              class="flex items-center gap-2 w-fit {{if this.shouldShowTerminalInstructionsPinging 'cursor-pointer' 'cursor-default'}}"
-              {{on "click" this.handleTerminalClick}}
-            >
-              <span class="font-mono text-slate-100 dark:text-slate-800">$</span>
-              <div class="relative flex size-6">
-                {{#if this.shouldShowTerminalInstructionsPinging}}
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                {{/if}}
-                {{svg-jar "question-mark-circle" class="size-6 text-blue-500"}}
-              </div>
-              <EmberTooltip @side="right" @text='Print "$ " to pass this stage.' @popperContainer="body" />
-            </button>
-          </div>
-        </div>
-      {{else}}
-        <p>
-          Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
-          submit your changes.
-        </p>
-      {{/if}}
+      <p>
+        Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
+        submit your changes.
+      </p>
     </div>
 
     <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32" as |stepList|>
