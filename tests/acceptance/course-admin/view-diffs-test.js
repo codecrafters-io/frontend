@@ -114,12 +114,12 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
       'The first placeholder should be expanded after clicking',
     );
 
-    await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.gutters.collapseUnchangedGutter.collapseUnchangedBarSiblings[0].click();
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,
       1,
-      'The second placeholder should be expanded after clicking',
+      "The second placeholder should be expanded after clicking on it's gutter sibling",
     );
 
     await submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[0].click();
