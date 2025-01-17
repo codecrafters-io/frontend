@@ -1,21 +1,5 @@
-{{#if this.isCommitModalOpen}}
-  <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{fn (mut this.isCommitModalOpen) false}} @isWide={{true}} class="w-full cursor-default">
-      <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
-        <p>
-          If you see output like this:
-        </p>
-        <pre class="language-bash max-w-2xl"><code class="text-xs">On branch master
-Your branch is up to date with 'origin/master'.
-
-nothing to commit, working tree clean</code></pre>
-      </div>
-    </ModalBody>
-  </ModalBackdrop>
-{{/if}}
-
 {{#if this.canSeeSplitUpGitCommandsForStage1}}
-  <div class="mb-5">
+  <div class="mb-6">
     <div class="prose prose-compact dark:prose-invert mb-3">
       First, run this command to
       <span class="font-semibold">commit your changes</span>:
@@ -28,7 +12,7 @@ nothing to commit, working tree clean</code></pre>
         The output of the command should look like this:
       </p>
 
-      <pre class="language-bash max-w-2xl"><code class="text-xs">[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+      <pre class="max-w-2xl"><code class="text-xs">[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
 
       <p class="text-xs">
         <b>Note:</b>
@@ -38,7 +22,7 @@ nothing to commit, working tree clean</code></pre>
     </div>
   </div>
 
-  <div class="mb-5">
+  <div class="mb-6">
     <div class="prose prose-compact dark:prose-invert mb-3">
       Next, run this command to
       <span class="font-semibold">push your changes</span>:
@@ -56,7 +40,7 @@ nothing to commit, working tree clean</code></pre>
       <p class="text-xs">
         <b>Note:</b>
         If your output doesn't match the above,
-        <a href="#">read this</a>.
+        <a href="#" {{on "click" (fn (mut this.isPushModalOpen) true)}}>read this</a>.
       </p>
     </div>
   </div>
@@ -94,3 +78,109 @@ nothing to commit, working tree clean</code></pre>
     to troubleshoot.
   </p>
 {{/unless}}
+
+{{#if this.isCommitModalOpen}}
+  <ModalBackdrop class="cursor-pointer">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} @isWide={{true}} class="w-full cursor-default">
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
+        <div>
+          <h3>Nothing to commit</h3>
+          <p>
+            If you see output like this:
+          </p>
+          <pre class="language-bash max-full"><code class="text-xs">On branch master<br />Your branch is up to date with 'origin/master'.<br /><br
+              />nothing to commit, working tree clean</code></pre>
+          <ol class="space-y-4">
+            <li>
+              <p>Double-check if you’ve saved the changes.</p>
+              <p>Then run <code>git commit -am "[saved]"</code> again.</p>
+            </li>
+            <li>
+              <p>
+                Check the file content in the latest commit:
+              </p>
+              <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+            </li>
+            <li>
+              <p>
+                If the file content looks correct, make an empty commit:
+              </p>
+              <code>git commit --allow-empty -m 'empty'</code>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
+        <p>
+          Need help?
+          <a
+            href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Post your issue</a>
+          on the forum —
+          <img
+            alt="avatar"
+            src="https://avatars.githubusercontent.com/u/1450947"
+            class="inline-block ml-1 mr-1.5 my-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 shadow"
+          />Andy usually replies within 6 hours.
+        </p>
+      </div>
+    </ModalBody>
+  </ModalBackdrop>
+{{/if}}
+
+{{#if this.isPushModalOpen}}
+  <ModalBackdrop class="cursor-pointer">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} @isWide={{true}} class="w-full cursor-default">
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
+        <div>
+          <h3>Everything up-to-date</h3>
+          <p>
+            If you see output like this:
+          </p>
+          <pre class="language-bash max-full"><code class="text-xs">Everything up-to-date</code></pre>
+          <ol class="space-y-4">
+            <li>
+              <p>
+                Check the file content in the latest commit:
+              </p>
+              <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+            </li>
+            <li>
+              <p>
+                If the file content looks correct, make an empty commit:
+              </p>
+              <code>git commit --allow-empty -m 'empty'</code>
+            </li>
+            <li>
+              Run
+              <code>git push origin master</code>
+              again.
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
+        <p>
+          Need help?
+          <a
+            href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Post your issue</a>
+          on the forum —
+          <img
+            alt="avatar"
+            src="https://avatars.githubusercontent.com/u/1450947"
+            class="inline-block ml-1 mr-1.5 my-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 shadow"
+          />Andy usually replies within 6 hours.
+        </p>
+      </div>
+    </ModalBody>
+  </ModalBackdrop>
+{{/if}}
