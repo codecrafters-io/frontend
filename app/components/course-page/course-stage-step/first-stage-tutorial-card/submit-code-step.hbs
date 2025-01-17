@@ -7,7 +7,7 @@
 
     <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-3" />
 
-    <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
+    <div class="prose prose-compact dark:prose-invert">
       <p>
         The output of the command should look like this:
       </p>
@@ -30,7 +30,7 @@
 
     <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-3" />
 
-    <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
+    <div class="prose prose-compact dark:prose-invert">
       <p>
         The output of the command should look like this:
       </p>
@@ -81,34 +81,51 @@
 
 {{#if this.isCommitModalOpen}}
   <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} @isWide={{true}} class="w-full cursor-default">
-      <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
-        <div>
-          <h3>Nothing to commit</h3>
-          <p>
-            If you see output like this:
-          </p>
-          <pre class="language-bash max-full"><code class="text-xs">On branch master<br />Your branch is up to date with 'origin/master'.<br /><br
-              />nothing to commit, working tree clean</code></pre>
-          <ol class="space-y-4">
-            <li>
-              <p>Double-check if you’ve saved the changes.</p>
-              <p>Then run <code>git commit -am "[saved]"</code> again.</p>
-            </li>
-            <li>
-              <p>
-                Check the file content in the latest commit:
-              </p>
-              <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
-            </li>
-            <li>
-              <p>
-                If the file content looks correct, make an empty commit:
-              </p>
-              <code>git commit --allow-empty -m 'empty'</code>
-            </li>
-          </ol>
-        </div>
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} @isWide={{true}} class="w-fit cursor-default">
+      <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
+        Commit changes
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        Run this command to
+        <span class="font-semibold">commit your changes</span>:
+      </div>
+
+      <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="w-full mb-3" />
+
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting mb-3">
+        <p>
+          The output of the command should look like this:
+        </p>
+
+        <pre class="max-w-2xl"><code class="text-xs">[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting mt-6">
+        <h3>Nothing to commit</h3>
+        <p>
+          If you see output like this instead:
+        </p>
+        <pre class="language-bash max-full max-w-2xl"><code class="text-xs">On branch master<br />Your branch is up to date with 'origin/master'.<br
+            /><br />nothing to commit, working tree clean</code></pre>
+        <ol class="space-y-4">
+          <li>
+            <p>Double-check if you’ve saved the changes.</p>
+            <p>Then run <code>git commit -am "[saved]"</code> again.</p>
+          </li>
+          <li>
+            <p>
+              Check the file content in the latest commit:
+            </p>
+            <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+          </li>
+          <li>
+            <p>
+              If the file content looks correct, make an empty commit:
+            </p>
+            <code>git commit --allow-empty -m 'empty'</code>
+          </li>
+        </ol>
       </div>
 
       <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
@@ -134,34 +151,51 @@
 
 {{#if this.isPushModalOpen}}
   <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} @isWide={{true}} class="w-full cursor-default">
-      <div class="prose prose-compact dark:prose-invert has-prism-highlighting">
-        <div>
-          <h3>Everything up-to-date</h3>
-          <p>
-            If you see output like this:
-          </p>
-          <pre class="language-bash max-full"><code class="text-xs">Everything up-to-date</code></pre>
-          <ol class="space-y-4">
-            <li>
-              <p>
-                Check the file content in the latest commit:
-              </p>
-              <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
-            </li>
-            <li>
-              <p>
-                If the file content looks correct, make an empty commit:
-              </p>
-              <code>git commit --allow-empty -m 'empty'</code>
-            </li>
-            <li>
-              Run
-              <code>git push origin master</code>
-              again.
-            </li>
-          </ol>
-        </div>
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} @isWide={{true}} class="w-fit cursor-default">
+      <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
+        Push changes
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        Run this command to
+        <span class="font-semibold">push your changes</span>:
+      </div>
+
+      <CopyableTerminalCommand @commands={{array "git push origin master"}} class="w-full mb-3" />
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        <p>
+          The output of the command should look like this:
+        </p>
+
+        <pre class="max-w-2xl"><code class="text-xs">remote: Welcome to CodeCrafters! Your commit was received successfully.</code></pre>
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mt-6">
+        <h3>Everything up-to-date</h3>
+        <p>
+          If you see output like this instead:
+        </p>
+        <pre class="language-bash max-full max-w-2xl"><code class="text-xs">Everything up-to-date</code></pre>
+        <ol class="space-y-4">
+          <li>
+            <p>
+              Check the file content in the latest commit:
+            </p>
+            <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+          </li>
+          <li>
+            <p>
+              If the file content looks correct, make an empty commit:
+            </p>
+            <code>git commit --allow-empty -m 'empty'</code>
+          </li>
+          <li>
+            Run
+            <code>git push origin master</code>
+            again.
+          </li>
+        </ol>
       </div>
 
       <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
