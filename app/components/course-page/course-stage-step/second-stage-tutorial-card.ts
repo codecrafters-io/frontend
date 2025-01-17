@@ -9,7 +9,6 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import { action } from '@ember/object';
 import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
-import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -54,8 +53,6 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
-
-  @tracked isTerminalInstructionsPingingClicked = false;
 
   get implementSolutionStepIsComplete() {
     return (
@@ -115,11 +112,6 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
         repository_id: this.args.repository.id,
       });
     }
-  }
-
-  @action
-  handleTerminalClick() {
-    this.isTerminalInstructionsPingingClicked = true;
   }
 
   @action

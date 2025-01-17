@@ -14,6 +14,10 @@ export default class FeatureFlagsService extends Service {
     return this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor);
   }
 
+  get canSeeSplitUpGitCommandsForStage1() {
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-split-up-git-commands-for-stage-1') === 'test';
+  }
+
   get currentUser() {
     return this.authenticator.currentUser;
   }
