@@ -55,6 +55,7 @@ const OPTION_DEFAULTS = {
   indentWithTab: true,
   language: true,
   lineNumbers: true,
+  lineComments: false,
   lineSeparator: true,
   lineWrapping: true,
   maxHeight: true,
@@ -110,6 +111,7 @@ export default class DemoCodeMirrorController extends Controller {
     'indentUnit',
     'indentWithTab',
     'language',
+    'lineComments',
     'lineNumbers',
     'lineSeparator',
     'lineWrapping',
@@ -163,6 +165,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked indentUnits = INDENT_UNITS;
   @tracked indentWithTab = OPTION_DEFAULTS.indentWithTab;
   @tracked language = OPTION_DEFAULTS.language;
+  @tracked lineComments = OPTION_DEFAULTS.lineComments;
   @tracked lineNumbers = OPTION_DEFAULTS.lineNumbers;
   @tracked lineSeparator = OPTION_DEFAULTS.lineSeparator;
   @tracked lineSeparators = LINE_SEPARATORS;
