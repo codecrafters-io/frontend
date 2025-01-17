@@ -42,6 +42,7 @@ import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
+import { lineComments } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -86,6 +87,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
+  lineComments: ({ lineComments: enabled }) => (enabled ? [lineComments()] : []),
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -270,6 +272,10 @@ export interface Signature {
        * Explicitly pass a language to the editor
        */
       language?: string;
+      /**
+       * Enable line comments
+       */
+      lineComments?: boolean;
       /**
        * Enable the line numbers gutter
        */
