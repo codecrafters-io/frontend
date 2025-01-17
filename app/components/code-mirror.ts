@@ -39,6 +39,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { lineComments } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -78,6 +79,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
+  lineComments: ({ lineComments: enabled }) => (enabled ? [lineComments()] : []),
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -266,6 +268,10 @@ export interface Signature {
        * Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed
        */
       indentWithTab?: boolean;
+      /**
+       * Enable line comments
+       */
+      lineComments?: boolean;
       /**
        * Enable the line numbers gutter
        */
