@@ -6,38 +6,9 @@ import {
   highlightActiveLineGutter as highlightActiveLineGutterRS,
 } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 
-function getRandomInt(inclusiveMin: number, exclusiveMax: number) {
-  const minCeiled = Math.ceil(inclusiveMin);
-  const maxFloored = Math.floor(exclusiveMax);
+export type LineCommentsCollection = (undefined | LineComment[])[];
 
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-}
-
-function generateRandomComments(linesCount = 0) {
-  return Array.from({ length: linesCount }).map(function (_v, lineNumber) {
-    const rnd = Math.random();
-
-    let commentsCount;
-
-    if (rnd < 0.05) {
-      commentsCount = getRandomInt(100, 1000);
-    } else if (rnd < 0.1) {
-      commentsCount = getRandomInt(10, 100);
-    } else if (rnd < 0.8) {
-      commentsCount = 0;
-    } else {
-      commentsCount = getRandomInt(1, 10);
-    }
-
-    return Array.from<string>({ length: commentsCount }).map(
-      (_v, index) => new LineComment({ lineNumber, author: 'Darth Programmius', text: `Comment #${index}` }),
-    );
-  });
-}
-
-type LineCommentsCollection = (undefined | LineComment[])[];
-
-class LineComment {
+export class LineComment {
   lineNumber: number;
   text: string;
   author: string;
@@ -143,9 +114,9 @@ class CommentButtonGutterMarker extends GutterMarkerRS {
   }
 }
 
-export function lineComments() {
+export function lineComments(comments: LineCommentsCollection) {
   return [
-    lineCommentsFacet.compute(['doc'], (state) => generateRandomComments(state.doc.lines)),
+    lineCommentsFacet.of(comments),
 
     lineCommentsStateField,
 
