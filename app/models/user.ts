@@ -70,7 +70,7 @@ export default class UserModel extends Model {
   @hasMany('user-profile-event', { async: false, inverse: 'user' }) profileEvents!: UserProfileEventModel[];
 
   // Our discounts currently only apply to yearly plans. Change this if we need to support other pricing frequencies.
-  get activeDiscountForYearlyPlan() {
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup;
   }
 

@@ -166,15 +166,19 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
   });
 
-  test('upgrade prompt should have the correct copy when the user is eligible for both early bird and regional discounts', async function (assert) {
+  test('upgrade prompt should have the correct copy when the user is eligible for both signup and regional discounts', async function (assert) {
     testScenario(this.server);
 
-    let currentUser = this.server.schema.users.first();
-    currentUser.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
+    const currentUser = signIn(this.owner, this.server);
+
+    this.server.schema.promotionalDiscounts.create({
+      user: currentUser,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 1 * 60 * 60 * 1000),
+    });
 
     this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
-
-    signIn(this.owner, this.server);
 
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
@@ -208,13 +212,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     );
   });
 
-  test('upgrade prompt should have the correct copy when the user is eligible for an early bird discount', async function (assert) {
+  test('upgrade prompt should have the correct copy when the user is eligible for a signup discount', async function (assert) {
     testScenario(this.server);
 
-    let currentUser = this.server.schema.users.first();
-    currentUser.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
+    const currentUser = signIn(this.owner, this.server);
 
-    signIn(this.owner, this.server);
+    this.server.schema.promotionalDiscounts.create({
+      user: currentUser,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 1 * 60 * 60 * 1000),
+    });
 
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
