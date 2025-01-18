@@ -1,44 +1,55 @@
-import { EditorView, gutter, GutterMarker, type WidgetType } from '@codemirror/view';
+import { BlockInfo, EditorView, gutter, GutterMarker, type WidgetType } from '@codemirror/view';
+import { uncollapseUnchanged } from '@codemirror/merge';
 
 function isCollapseUnchangedWidget(widget: WidgetType) {
   return 'type' in widget && widget.type === 'collapsed-unchanged-code';
 }
 
-function toDOM(_view: EditorView): Node {
+function renderGutterElement(view: EditorView, widget: WidgetType, line: BlockInfo) {
+  const totalLines = view.state.doc.lines;
+  const lineNumber = view.state.doc.lineAt(line.from).number;
+  const collapsedLinesCount = 'lines' in widget ? (widget.lines as number) : 1;
+  const extraClassNames = [];
+
+  if (lineNumber === 1) {
+    extraClassNames.push('cm-collapseUnchangedGutterElementFirst');
+  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
+    extraClassNames.push('cm-collapseUnchangedGutterElementLast');
+  }
+
   const el = document.createElement('div');
-  el.className = 'cm-collapseUnchangedGutterElement';
-  el.addEventListener('click', (_e) => {
-    const editor = el.closest('.cm-editor');
-    const gutter = el.closest('.cm-gutter');
-    const gutterElement = el.closest('.cm-gutterElement');
-    const gutterElementSiblings = gutter?.querySelectorAll('.cm-gutterElement');
-
-    if (!editor || !gutter || !gutterElement || !gutterElementSiblings) {
-      return;
-    }
-
-    // Find the index of the clicked gutter element
-    const gutterElementIndex = [...gutterElementSiblings.values()].indexOf(gutterElement);
-
-    // Find the corresponding Collapse Unchanged Bar in the content
-    const collapsedUnchangedBar = editor.querySelectorAll<HTMLElement>('.cm-content .cm-collapsedLines').item(gutterElementIndex);
-
-    collapsedUnchangedBar?.click();
+  el.className = ['cm-collapseUnchangedGutterElement', ...extraClassNames].join(' ');
+  el.addEventListener('click', function dispatchUncollapseUnchanged() {
+    view.dispatch({ effects: uncollapseUnchanged.of(line.from) });
   });
 
   return el;
 }
 
 export class CollapseUnchangedGutterMarker extends GutterMarker {
-  toDOM = toDOM;
+  line: BlockInfo;
+  view: EditorView;
+  widget: WidgetType;
+
+  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+    super();
+    this.line = line;
+    this.view = view;
+    this.widget = widget;
+  }
+
+  toDOM(view: EditorView) {
+    return renderGutterElement(view, this.widget, this.line);
+  }
 }
 
 export function collapseUnchangedGutter() {
   return [
     gutter({
       class: 'cm-collapseUnchangedGutter',
-      widgetMarker(_view, widget, _block) {
-        return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarker() : null;
+
+      widgetMarker(view, widget, line) {
+        return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarker(view, widget, line) : null;
       },
     }),
   ];
