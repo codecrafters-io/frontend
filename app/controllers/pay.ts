@@ -7,6 +7,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 export default class PayController extends Controller {
   declare model: ModelType;
@@ -21,8 +22,8 @@ export default class PayController extends Controller {
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
 
-  get activeDiscountForYearlyPlan() {
-    return this.user?.activeDiscountForYearlyPlan;
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
+    return this.user?.activeDiscountForYearlyPlan || null;
   }
 
   get additionalCheckoutSessionProperties() {
