@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import Store from '@ember-data/store';
 import window from 'ember-window-mock';
@@ -15,8 +16,7 @@ interface Signature {
     additionalCheckoutSessionProperties: {
       pricingFrequency: string;
       regionalDiscount: RegionalDiscountModel | null;
-      earlyBirdDiscountEnabled?: boolean;
-      referralDiscountEnabled?: boolean;
+      promotionalDiscount: PromotionalDiscountModel | null;
     };
   };
 }
@@ -31,14 +31,12 @@ export default class ConfigureCheckoutSessionModal extends Component<Signature> 
     this.isCreatingCheckoutSession = true;
 
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
-      autoRenewSubscription: false, // None of our plans are subscriptions at the moment
-      regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
-      earlyBirdDiscountEnabled: this.args.additionalCheckoutSessionProperties.earlyBirdDiscountEnabled,
-      referralDiscountEnabled: this.args.additionalCheckoutSessionProperties.referralDiscountEnabled,
-      extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
-      successUrl: `${window.location.origin}/tracks`,
       cancelUrl: `${window.location.origin}/pay`,
+      extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
       pricingFrequency: this.args.additionalCheckoutSessionProperties.pricingFrequency,
+      promotionalDiscount: this.args.additionalCheckoutSessionProperties.promotionalDiscount,
+      regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
+      successUrl: `${window.location.origin}/tracks`,
     });
 
     await checkoutSession.save();
