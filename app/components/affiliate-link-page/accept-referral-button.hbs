@@ -16,7 +16,7 @@
     <EmberTooltip @text="Click to login via GitHub" />
   {{else if this.currentUserIsReferrer}}
     <EmberTooltip @text="You can't accept your own referral offer." />
-  {{else if this.currentUserIsAlreadyEligibleForReferralDiscount}}
+  {{else if this.currentUserHasActiveDiscountFromAffiliateReferral}}
     <EmberTooltip @text="You've already accepted {{this.currentUser.currentAffiliateReferral.affiliateLink.usernameForDisplay}}'s referral offer." />
   {{else if this.currentUserCanAccessMembershipBenefits}}
     <EmberTooltip @text="As a CodeCrafters member, you already have full access." />

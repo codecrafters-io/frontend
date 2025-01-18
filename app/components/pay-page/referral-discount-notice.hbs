@@ -4,21 +4,21 @@
   </div>
 
   <div class="text-blue-700 prose max-w-none prose-blue leading-7">
-    {{#if @affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
+    {{#if @discount.affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
       <img
         alt="avatar"
-        src={{@affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
+        src={{@discount.affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
         class="inline-block mb-0 w-6 h-6 transform -translate-y-px"
       />
     {{else}}
       <AvatarImage
-        @user={{@affiliateReferral.referrer}}
+        @user={{@discount.affiliateReferral.referrer}}
         class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
       />
     {{/if}}
 
-    <b>{{@affiliateReferral.affiliateLink.usernameForDisplay}}</b>'s referral offer: Subscribe by
-    <span class="font-semibold percy-timestamp">{{date-format @affiliateReferral.discountPeriodEndsAt format="PPPp"}}</span>
+    <b>{{@discount.affiliateReferral.affiliateLink.usernameForDisplay}}</b>'s referral offer: Subscribe by
+    <span class="font-semibold percy-timestamp">{{date-format @discount.discountPeriodEndsAt format="PPPp"}}</span>
     to get
     <span class="font-semibold">40% off</span>
     the 1 year plan.

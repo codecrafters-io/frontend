@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import type AffiliateReferralModel from 'codecrafters-frontend/models/affiliate-referral';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    affiliateReferral: AffiliateReferralModel;
+    discount: PromotionalDiscountModel;
   };
 }
 

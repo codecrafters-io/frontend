@@ -21,20 +21,22 @@ export default class PayController extends Controller {
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
 
+  get activeDiscountForYearlyPlan() {
+    return this.user?.activeDiscountForYearlyPlan;
+  }
+
   get additionalCheckoutSessionProperties() {
     return {
       pricingFrequency: this.selectedPricingFrequency,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
-      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForEarlyBirdDiscount,
-      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForReferralDiscount,
+      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.activeDiscountForYearlyPlan?.isFromSignup,
+      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.activeDiscountForYearlyPlan?.isFromAffiliateReferral,
     };
   }
 
   get discountedYearlyPrice() {
-    if (this.user?.isEligibleForReferralDiscount) {
-      return 216;
-    } else if (this.user?.isEligibleForEarlyBirdDiscount) {
-      return 216;
+    if (this.activeDiscountForYearlyPlan) {
+      return this.activeDiscountForYearlyPlan.computeDiscountedPrice(360);
     } else {
       return null;
     }
