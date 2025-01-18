@@ -31,6 +31,7 @@ import leaderboardEntries from './handlers/leaderboard-entries';
 import logstreams from './handlers/logstreams';
 import onboardingSurveys from './handlers/onboarding-surveys';
 import perks from './handlers/perks';
+import promotionalDiscounts from './handlers/promotional-discounts';
 import referralActivations from './handlers/referral-activations';
 import referralLinks from './handlers/referral-links';
 import regionalDiscounts from './handlers/regional-discounts';
@@ -145,6 +146,7 @@ function routes() {
   logstreams(this);
   onboardingSurveys(this);
   perks(this);
+  promotionalDiscounts(this);
   referralActivations(this);
   referralLinks(this);
   regionalDiscounts(this);

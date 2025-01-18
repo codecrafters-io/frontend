@@ -18,6 +18,7 @@ import ReferralActivationModel from 'codecrafters-frontend/models/referral-activ
 import AffiliateEarningsPayoutModel from 'codecrafters-frontend/models/affiliate-earnings-payout';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
 import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
@@ -63,9 +64,23 @@ export default class UserModel extends Model {
   @hasMany('affiliate-earnings-payout', { async: false, inverse: 'user' }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];
   @hasMany('referral-link', { async: false, inverse: 'user' }) referralLinks!: ReferralLinkModel[];
   @hasMany('repository', { async: false, inverse: 'user' }) repositories!: RepositoryModel[];
+  @hasMany('promotional-discount', { async: false, inverse: 'user' }) promotionalDiscounts!: PromotionalDiscountModel[];
   @hasMany('subscription', { async: false, inverse: 'user' }) subscriptions!: SubscriptionModel[];
   @hasMany('team-membership', { async: false, inverse: 'user' }) teamMemberships!: TeamMembershipModel[];
   @hasMany('user-profile-event', { async: false, inverse: 'user' }) profileEvents!: UserProfileEventModel[];
+
+  // Our discounts currently only apply to yearly plans. Change this if we need to support other pricing frequencies.
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
+    return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup;
+  }
+
+  get activeDiscountFromAffiliateReferral() {
+    return this.activePromotionalDiscountForType('affiliate_referral');
+  }
+
+  get activeDiscountFromSignup() {
+    return this.activePromotionalDiscountForType('signup');
+  }
 
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
@@ -93,10 +108,6 @@ export default class UserModel extends Model {
 
   get currentAffiliateReferral() {
     return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse()[0];
-  }
-
-  get earlyBirdDiscountEligibilityExpiresAt() {
-    return new Date(this.createdAt.getTime() + 24 * 60 * 60 * 1000);
   }
 
   get expiredSubscription() {
@@ -143,22 +154,6 @@ export default class UserModel extends Model {
     return this.referralLinks.rejectBy('isNew').length > 0;
   }
 
-  get isEligibleForEarlyBirdDiscount() {
-    if (this.isEligibleForReferralDiscount) {
-      return false; // Prioritize referral
-    }
-
-    return this.earlyBirdDiscountEligibilityExpiresAt > new Date();
-  }
-
-  get isEligibleForReferralDiscount() {
-    if (this.currentAffiliateReferral) {
-      return this.currentAffiliateReferral.isWithinDiscountPeriod;
-    } else {
-      return false;
-    }
-  }
-
   get isTeamAdmin() {
     return !!this.managedTeams[0];
   }
@@ -189,6 +184,10 @@ export default class UserModel extends Model {
 
   get teams() {
     return this.teamMemberships.mapBy('team');
+  }
+
+  activePromotionalDiscountForType(type: PromotionalDiscountModel['type']) {
+    return this.promotionalDiscounts.filterBy('type', type).rejectBy('isExpired').sortBy('createdAt').reverse()[0] || null;
   }
 
   canAttemptCourseStage(courseStage: CourseStageModel) {

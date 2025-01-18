@@ -6,6 +6,7 @@ import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { waitFor } from '@ember/test-waiters';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -62,24 +63,28 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @tracked isLoadingRegionalDiscount: boolean = true;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
+  get activeDiscountForYearlyPlan() {
+    return this.authenticator.currentUser?.activeDiscountForYearlyPlan;
+  }
+
   get featureToHighlight(): Feature {
     return features.find((feature) => feature.slug === this.args.featureSlugToHighlight)!;
   }
 
   get secondaryCopyMarkdown(): string {
-    if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount && this.regionalDiscount) {
+    if (this.activeDiscountForYearlyPlan && this.regionalDiscount) {
       return `Plans start at ~~$30/month~~ $15/month (discounted price for ${
         this.regionalDiscount.countryName
-      }) when billed annually. Save an additional 40% by joining within ${formatDistanceStrictWithOptions(
+      }) when billed annually. Save an additional ${this.activeDiscountForYearlyPlan.percentageOff}% by joining within ${formatDistanceStrictWithOptions(
         {},
         new Date(),
-        this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
+        this.activeDiscountForYearlyPlan.expiresAt,
       )}.`;
-    } else if (this.authenticator.currentUser!.isEligibleForEarlyBirdDiscount) {
-      return `Plans start at $30/month when billed annually. Save 40% by joining within ${formatDistanceStrictWithOptions(
+    } else if (this.activeDiscountForYearlyPlan) {
+      return `Plans start at $30/month when billed annually. Save ${this.activeDiscountForYearlyPlan.percentageOff}% by joining within ${formatDistanceStrictWithOptions(
         {},
         new Date(),
-        this.authenticator.currentUser!.earlyBirdDiscountEligibilityExpiresAt,
+        this.activeDiscountForYearlyPlan.expiresAt,
       )}.`;
     } else if (this.regionalDiscount) {
       return `Plans start at ~~$30/month~~ $15/month (discounted price for ${this.regionalDiscount.countryName}) when billed annually.`;
@@ -93,6 +98,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
   }
 
   @action
+  @waitFor
   async handleDidInsert(): Promise<void> {
     this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
     this.isLoadingRegionalDiscount = false;

@@ -14,16 +14,8 @@ export default class AffiliateReferralModel extends Model {
   @attr('number') declare withdrawableEarningsAmountInCents: number;
   @attr('number') declare withheldEarningsAmountInCents: number;
 
-  get discountPeriodEndsAt() {
-    return new Date(this.activatedAt.getTime() + 3 * 24 * 60 * 60 * 1000);
-  }
-
   get hasStartedTrial() {
     return this.statusIsTrialing || this.statusIsFirstChargeSuccessful || this.statusIsTrialCancelled;
-  }
-
-  get isWithinDiscountPeriod() {
-    return this.discountPeriodEndsAt > new Date();
   }
 
   get spentAmountInDollars() {

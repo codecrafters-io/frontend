@@ -77,21 +77,25 @@ export default class AuthenticatorService extends Service {
     }
 
     const includedResources = [
-      'feature_suggestions',
-      'affiliate_referrals_as_customer.referrer',
-      'affiliate_referrals_as_customer.affiliate-link',
-      'affiliate_links',
-      'affiliate_links.user',
-      'referral_activations_as_customer.referrer',
-      'referral_links',
-      'referral_links.user',
-      'team_memberships',
-      'team_memberships.team.memberships.user',
-      'team_memberships.team.subscriptions',
-      'team_memberships.team.pilots',
-      'team_memberships.team.payment_methods',
+      'affiliate-links',
+      'affiliate-links.user',
+      'feature-suggestions',
+      'promotional-discounts',
+      'promotional-discounts.affiliate-referral',
+      'promotional-discounts.affiliate-referral.affiliate-link',
+      'promotional-discounts.affiliate-referral.affiliate-link.user',
+      'promotional-discounts.affiliate-referral.referrer',
+      'promotional-discounts.user',
+      'referral-activations-as-customer.referrer',
+      'referral-links',
+      'referral-links.user',
       'subscriptions',
       'subscriptions.user',
+      'team-memberships',
+      'team-memberships.team.memberships.user',
+      'team-memberships.team.payment-methods',
+      'team-memberships.team.pilots',
+      'team-memberships.team.subscriptions',
     ];
 
     this.isLoadingUser = true;

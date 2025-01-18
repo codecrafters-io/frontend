@@ -29,7 +29,7 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
     return (
       !this.isCreatingAffiliateReferral &&
       !this.currentUserIsReferrer &&
-      !this.currentUserIsAlreadyEligibleForReferralDiscount &&
+      !this.currentUserHasActiveDiscountFromAffiliateReferral &&
       !this.currentUserCanAccessMembershipBenefits
     );
   }
@@ -42,8 +42,8 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
     return this.authenticator.currentUser && this.authenticator.currentUser.canAccessMembershipBenefits;
   }
 
-  get currentUserIsAlreadyEligibleForReferralDiscount() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.isEligibleForReferralDiscount;
+  get currentUserHasActiveDiscountFromAffiliateReferral() {
+    return this.authenticator.currentUser && this.authenticator.currentUser.activeDiscountFromAffiliateReferral;
   }
 
   get currentUserIsAnonymous() {

@@ -7,6 +7,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 export default class PayController extends Controller {
   declare model: ModelType;
@@ -21,20 +22,21 @@ export default class PayController extends Controller {
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
 
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
+    return this.user?.activeDiscountForYearlyPlan || null;
+  }
+
   get additionalCheckoutSessionProperties() {
     return {
       pricingFrequency: this.selectedPricingFrequency,
+      promotionalDiscount: this.activeDiscountForYearlyPlan,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
-      earlyBirdDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForEarlyBirdDiscount,
-      referralDiscountEnabled: this.selectedPricingFrequency === 'yearly' && this.user?.isEligibleForReferralDiscount,
     };
   }
 
   get discountedYearlyPrice() {
-    if (this.user?.isEligibleForReferralDiscount) {
-      return 216;
-    } else if (this.user?.isEligibleForEarlyBirdDiscount) {
-      return 216;
+    if (this.activeDiscountForYearlyPlan) {
+      return this.activeDiscountForYearlyPlan.computeDiscountedPrice(360);
     } else {
       return null;
     }

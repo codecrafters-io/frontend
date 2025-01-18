@@ -57,30 +57,30 @@ module('Acceptance | pay-test', function (hooks) {
   test('new user can start checkout session', async function (assert) {
     testScenario(this.server);
 
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
-
     signIn(this.owner, this.server);
 
     await payPage.visit();
     await percySnapshot('Pay page');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
-
     await percySnapshot('Pay page - configure checkout session modal');
 
     await payPage.clickOnProceedToCheckoutButton();
 
-    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
   });
 
-  test('new user sees discounted price start checkout session', async function (assert) {
+  test('user with signup discount can start checkout session', async function (assert) {
     testScenario(this.server);
 
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(new Date().getTime() - 23 * 60 * 60 * 1000));
+    const user = signIn(this.owner, this.server);
 
-    signIn(this.owner, this.server);
+    const signupDiscount = this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    });
 
     await payPage.visit();
     assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
@@ -89,22 +89,39 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
-    assert.true(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
 
-  test('new user sees discounted price if they have a referral', async function (assert) {
+  test('user with referral discount and signup discount sees referral discount', async function (assert) {
     testScenario(this.server);
 
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000));
+    const user = signIn(this.owner, this.server);
 
-    this.server.create('affiliate-referral', {
-      activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
-      referrer: user,
-      customer: user,
+    const signupDiscount = this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     });
 
-    signIn(this.owner, this.server);
+    const affiliateLink = this.server.create('affiliate-link', {
+      user: user,
+    });
+
+    const affiliateReferral = this.server.create('affiliate-referral', {
+      activatedAt: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000),
+      affiliateLink: affiliateLink,
+      customer: user,
+      referrer: user,
+    });
+
+    const referralDiscount = this.server.schema.promotionalDiscounts.create({
+      affiliateReferral: affiliateReferral,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+      percentageOff: 40,
+      type: 'affiliate_referral',
+      user: user,
+    });
 
     await payPage.visit();
     assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
@@ -113,18 +130,17 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
-    assert.true(this.server.schema.individualCheckoutSessions.first().referralDiscountEnabled);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, referralDiscount.id);
+    assert.notStrictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
+
+  // TODO: Add test for only referral discount
 
   test('user can create checkout session with regional discount applied', async function (assert) {
     testScenario(this.server);
 
-    let user = this.server.schema.users.first();
-    user.update('createdAt', new Date(user.createdAt.getTime() - 5 * 24 * 60 * 60 * 1000));
-
-    this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
-
     signIn(this.owner, this.server);
+    const regionalDiscount = this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
 
     await payPage.visit();
     await percySnapshot('Pay page - with regional discount (not applied)');
@@ -134,8 +150,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
-    assert.false(this.server.schema.individualCheckoutSessions.first().earlyBirdDiscountEnabled);
-    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscountId, 'current-discount-id');
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscount.id, regionalDiscount.id);
   });
 
   test('user can create checkout session when extra invoice details is not requested', async function (assert) {
