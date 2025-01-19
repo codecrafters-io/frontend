@@ -6,17 +6,25 @@ import {
   highlightActiveLineGutter as highlightActiveLineGutterRS,
 } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 
-export type LineCommentsCollection = (undefined | LineComment[])[];
-
-export class LineComment {
+export class LineData {
   lineNumber: number;
-  text: string;
-  author: string;
+  commentsCount: number;
 
-  constructor({ lineNumber, text, author }: { lineNumber: number; text: string; author: string }) {
+  constructor({ lineNumber, commentsCount }: { lineNumber: number; commentsCount: number }) {
     this.lineNumber = lineNumber;
-    this.text = text;
-    this.author = author;
+    this.commentsCount = commentsCount;
+  }
+}
+
+export class LineDataCollection {
+  #lineData: LineData[];
+
+  constructor(lineData: LineData[] = []) {
+    this.#lineData = lineData;
+  }
+
+  dataForLine(lineNumber: number) {
+    return this.#lineData.find((c) => c.lineNumber === lineNumber);
   }
 }
 
@@ -29,11 +37,12 @@ class CommentsWidget extends WidgetType {
   }
 
   toDOM(view: EditorView): HTMLElement {
-    const comments = (view.state.facet(lineCommentsFacet)[0] || [])[this.line.number - 1];
+    const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(this.line.number)?.commentsCount || 0;
+
     const elem = document.createElement('line-comments');
 
-    if (comments?.length) {
-      elem.innerText = `💬 COMMENTS (${comments?.length || 0}) FOR LINE #${this.line.number}`;
+    if (commentsCount) {
+      elem.innerText = `💬 COMMENTS FOR LINE #${this.line.number} (COUNT: ${commentsCount})`;
     }
 
     return elem;
@@ -58,6 +67,8 @@ function lineCommentsDecorations(state: EditorState) {
   return Decoration.set(decorations);
 }
 
+const lineDataFacet = Facet.define<LineDataCollection>();
+
 const lineCommentsStateField = StateField.define<DecorationSet>({
   create(state) {
     return lineCommentsDecorations(state);
@@ -71,8 +82,6 @@ const lineCommentsStateField = StateField.define<DecorationSet>({
   },
 });
 
-const lineCommentsFacet = Facet.define<LineCommentsCollection>();
-
 class CommentsCountGutterMarker extends GutterMarkerRS {
   line: BlockInfo;
 
@@ -83,8 +92,7 @@ class CommentsCountGutterMarker extends GutterMarkerRS {
 
   toDOM(view: EditorView) {
     const lineNumber = view.state.doc.lineAt(this.line.from).number;
-    const comments = (view.state.facet(lineCommentsFacet)[0] || [])[lineNumber - 1];
-    const commentsCount = comments?.length || 0;
+    const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
     const elem = document.createElement('comments-count');
 
     elem.innerText = `${commentsCount > 99 ? '99+' : commentsCount}`;
@@ -114,9 +122,9 @@ class CommentButtonGutterMarker extends GutterMarkerRS {
   }
 }
 
-export function lineComments(comments: LineCommentsCollection) {
+export function lineComments(lineData: LineDataCollection) {
   return [
-    lineCommentsFacet.of(comments),
+    lineDataFacet.of(lineData),
 
     lineCommentsStateField,
 
@@ -125,8 +133,7 @@ export function lineComments(comments: LineCommentsCollection) {
 
       lineMarker(view, line) {
         const lineNumber = view.state.doc.lineAt(line.from).number;
-        const comments = (view.state.facet(lineCommentsFacet)[0] || [])[lineNumber - 1];
-        const commentsCount = comments?.length || 0;
+        const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
 
         return new (commentsCount === 0 ? CommentButtonGutterMarker : CommentsCountGutterMarker)(line);
       },
