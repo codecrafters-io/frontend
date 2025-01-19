@@ -42,7 +42,7 @@ import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
-import { lineComments, type LineCommentsCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import { lineComments, type LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -60,7 +60,7 @@ export type LineRange = { startLine: number; endLine: number };
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[] | LineCommentsCollection;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[] | LineDataCollection;
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
@@ -87,7 +87,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
-  lineCommentsOrComments: ({ comments = [], lineComments: enabled }) => (enabled ? [lineComments(comments)] : []),
+  lineCommentsOrLineData: ({ lineData, lineComments: enabled }) => (enabled && lineData ? [lineComments(lineData)] : []),
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -193,10 +193,6 @@ export interface Signature {
        */
       collapseUnchanged?: boolean;
       /**
-       * Comments to show for each line in the editor, if `lineComments` are enabled
-       */
-      comments?: LineCommentsCollection;
-      /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */
       crosshairCursor?: boolean;
@@ -280,6 +276,10 @@ export interface Signature {
        * Enable line comments
        */
       lineComments?: boolean;
+      /**
+       * Line data containing comments counts or other line-related metadata
+       */
+      lineData?: LineDataCollection;
       /**
        * Enable the line numbers gutter
        */
