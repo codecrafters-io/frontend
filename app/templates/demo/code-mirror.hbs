@@ -330,7 +330,6 @@
   @bracketMatching={{this.bracketMatching}}
   @closeBrackets={{this.closeBrackets}}
   @crosshairCursor={{this.crosshairCursor}}
-  @comments={{if this.lineComments this.selectedDocumentComments}}
   @drawSelection={{this.drawSelection}}
   @dropCursor={{this.dropCursor}}
   @editable={{this.editable}}
@@ -346,6 +345,7 @@
   @indentOnInput={{this.indentOnInput}}
   @indentWithTab={{this.indentWithTab}}
   @lineComments={{this.lineComments}}
+  @lineData={{if this.lineComments this.selectedDocumentLineData}}
   @lineNumbers={{this.lineNumbers}}
   @lineWrapping={{this.lineWrapping}}
   @mergeControls={{this.mergeControls}}
