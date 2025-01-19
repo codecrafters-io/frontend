@@ -39,7 +39,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
-import { lineComments, type LineCommentsCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import { lineComments, type LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -55,7 +55,7 @@ enum FoldGutterIcon {
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineCommentsCollection;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineDataCollection;
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
@@ -79,7 +79,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
-  lineCommentsOrComments: ({ comments = [], lineComments: enabled }) => (enabled ? [lineComments(comments)] : []),
+  lineCommentsOrLineData: ({ lineData, lineComments: enabled }) => (enabled && lineData ? [lineComments(lineData)] : []),
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -209,10 +209,6 @@ export interface Signature {
        */
       closeBrackets?: boolean;
       /**
-       * Comments to show for each line in the editor, if `lineComments` are enabled
-       */
-      comments?: LineCommentsCollection;
-      /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */
       crosshairCursor?: boolean;
@@ -276,6 +272,10 @@ export interface Signature {
        * Enable line comments
        */
       lineComments?: boolean;
+      /**
+       * Line data containing comments counts or other line-related metadata
+       */
+      lineData?: LineDataCollection;
       /**
        * Enable the line numbers gutter
        */
