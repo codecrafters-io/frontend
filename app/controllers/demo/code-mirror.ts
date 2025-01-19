@@ -6,17 +6,17 @@ import { type Extension } from '@codemirror/state';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
-import { LineComment } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import { LineData, LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
-function getRandomInt(inclusiveMin: number, exclusiveMax: number) {
-  const minCeiled = Math.ceil(inclusiveMin);
-  const maxFloored = Math.floor(exclusiveMax);
+function generateRandomLineData(linesCount = 0) {
+  function getRandomInt(inclusiveMin: number, exclusiveMax: number) {
+    const minCeiled = Math.ceil(inclusiveMin);
+    const maxFloored = Math.floor(exclusiveMax);
 
-  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
-}
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+  }
 
-function generateRandomComments(linesCount = 0) {
-  return Array.from({ length: linesCount }).map(function (_v, lineNumber) {
+  const lineData = Array.from({ length: linesCount }).map(function (_v, lineNumber) {
     const rnd = Math.random();
 
     let commentsCount;
@@ -31,10 +31,10 @@ function generateRandomComments(linesCount = 0) {
       commentsCount = getRandomInt(1, 10);
     }
 
-    return Array.from<string>({ length: commentsCount }).map(
-      (_v, index) => new LineComment({ lineNumber, author: 'Darth Programmius', text: `Comment #${index}` }),
-    );
+    return new LineData({ lineNumber, commentsCount });
   });
+
+  return new LineDataCollection(lineData);
 }
 
 const THEME_EXTENSIONS: {
@@ -240,8 +240,8 @@ export default class DemoCodeMirrorController extends Controller {
     return this.documents[this.selectedDocumentIndex] || ExampleDocument.createEmpty();
   }
 
-  get selectedDocumentComments() {
-    return generateRandomComments(this.selectedDocument.document.split(/$/gm).length);
+  get selectedDocumentLineData() {
+    return generateRandomLineData(this.selectedDocument.document.split(/$/gm).length);
   }
 
   get selectedIndentUnit() {
