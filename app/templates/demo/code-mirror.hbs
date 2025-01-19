@@ -331,7 +331,6 @@
   @collapseUnchanged={{this.collapseUnchanged}}
   @crosshairCursor={{this.crosshairCursor}}
   @document={{if this.document this.selectedDocument.document}}
-  @comments={{if this.lineComments this.selectedDocumentComments}}
   @drawSelection={{this.drawSelection}}
   @dropCursor={{this.dropCursor}}
   @editable={{this.editable}}
@@ -351,6 +350,7 @@
   @indentWithTab={{this.indentWithTab}}
   @language={{if this.language this.selectedDocument.language}}
   @lineComments={{this.lineComments}}
+  @lineData={{if this.lineComments this.selectedDocumentLineData}}
   @lineNumbers={{this.lineNumbers}}
   @lineSeparator={{if this.lineSeparator this.selectedLineSeparator.symbol}}
   @lineWrapping={{this.lineWrapping}}
