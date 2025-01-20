@@ -29,7 +29,7 @@ export default class PayController extends Controller {
   get additionalCheckoutSessionProperties() {
     return {
       pricingFrequency: this.selectedPricingFrequency,
-      promotionalDiscount: this.activeDiscountForYearlyPlan,
+      promotionalDiscount: this.selectedPricingFrequency === 'yearly' ? this.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
     };
   }
