@@ -1,16 +1,14 @@
 import { Facet } from '@codemirror/state';
-import { lineCommentsGutter } from 'codecrafters-frontend/utils/code-mirror-line-comments-gutter';
 import { lineCommentsWidget } from 'codecrafters-frontend/utils/code-mirror-line-comments-widget';
-
-export const lineDataFacet = Facet.define<LineDataCollection>();
+import { lineCommentsGutter } from 'codecrafters-frontend/utils/code-mirror-line-comments-gutter';
 
 export class LineData {
-  lineNumber: number;
   commentsCount: number;
+  lineNumber: number;
 
-  constructor({ lineNumber, commentsCount }: { lineNumber: number; commentsCount: number }) {
-    this.lineNumber = lineNumber;
+  constructor({ commentsCount, lineNumber }: { commentsCount: number; lineNumber: number }) {
     this.commentsCount = commentsCount;
+    this.lineNumber = lineNumber;
   }
 }
 
@@ -25,6 +23,8 @@ export class LineDataCollection {
     return this.#lineData.find((c) => c.lineNumber === lineNumber);
   }
 }
+
+export const lineDataFacet = Facet.define<LineDataCollection>();
 
 export function lineComments(lineData: LineDataCollection) {
   return [lineDataFacet.of(lineData), lineCommentsWidget(), lineCommentsGutter()];
