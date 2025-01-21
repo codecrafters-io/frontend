@@ -1,4 +1,4 @@
-import { Facet } from '@codemirror/state';
+import { Compartment, Facet, StateEffect } from '@codemirror/state';
 import { lineCommentsWidget } from 'codecrafters-frontend/utils/code-mirror-line-comments-widget';
 import { lineCommentsGutter } from 'codecrafters-frontend/utils/code-mirror-line-comments-gutter';
 
@@ -26,6 +26,19 @@ export class LineDataCollection {
 
 export const lineDataFacet = Facet.define<LineDataCollection>();
 
+export const expandedLineNumbersFacet = Facet.define<number[]>();
+
+export const expandedLineNumbersCompartment = new Compartment();
+
+export const toggleLineCommentsEffect = StateEffect.define<{ pos: number; isExpanded: boolean }>({
+  map: (value, mapping) => ({ pos: mapping.mapPos(value.pos), isExpanded: value.isExpanded }),
+});
+
 export function lineComments(lineData: LineDataCollection) {
-  return [lineDataFacet.of(lineData), lineCommentsWidget(), lineCommentsGutter()];
+  return [
+    lineDataFacet.of(lineData),
+    expandedLineNumbersCompartment.of(expandedLineNumbersFacet.of([-999])),
+    lineCommentsWidget(),
+    lineCommentsGutter(),
+  ];
 }
