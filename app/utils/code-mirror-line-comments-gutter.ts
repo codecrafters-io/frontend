@@ -17,13 +17,15 @@ class CommentsCountGutterMarker extends GutterMarkerRS {
   toDOM(view: EditorView) {
     const lineNumber = view.state.doc.lineAt(this.line.from).number;
     const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
-    const elem = document.createElement('comments-count');
-
-    elem.innerText = `${commentsCount > 99 ? '99+' : commentsCount}`;
+    const elem = document.createElement('div');
+    const classNames = ['cm-commentsCount'];
 
     if (commentsCount > 99) {
-      elem.className = 'cm-over-99';
+      classNames.push('cm-commentsCountOver99');
     }
+
+    elem.className = classNames.join(' ');
+    elem.innerText = `${commentsCount > 99 ? '99+' : commentsCount}`;
 
     return elem;
   }
@@ -38,7 +40,8 @@ class CommentButtonGutterMarker extends GutterMarkerRS {
   }
 
   toDOM() {
-    const elem = document.createElement('comment-button');
+    const elem = document.createElement('div');
+    elem.className = 'cm-commentButton';
 
     elem.innerText = `💬`;
 
@@ -46,62 +49,59 @@ class CommentButtonGutterMarker extends GutterMarkerRS {
   }
 }
 
+function lineCommentsLineMarker(view: EditorView, line: BlockInfo) {
+  const lineNumber = view.state.doc.lineAt(line.from).number;
+  const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
+
+  return new (commentsCount === 0 ? CommentButtonGutterMarker : CommentsCountGutterMarker)(line);
+}
+
+const lineCommentsGutterBaseTheme = EditorView.baseTheme({
+  '.cm-lineCommentsGutter': {
+    minWidth: '24px',
+    textAlign: 'center',
+
+    '& .cm-gutterElement': {
+      cursor: 'pointer',
+
+      '& .cm-commentButton': {
+        opacity: '0.15',
+      },
+
+      '& .cm-commentsCount': {
+        display: 'block',
+        backgroundColor: '#ffcd72c0',
+        borderRadius: '50%',
+        color: '#24292e',
+        transform: 'scale(0.75)',
+        fontWeight: '500',
+        fontSize: '12px',
+
+        '&.cm-commentsCountOver99': {
+          fontSize: '9.5px',
+        },
+      },
+
+      '&:hover': {
+        '& .cm-commentButton': {
+          opacity: '1',
+        },
+
+        '& .cm-commentsCount': {
+          backgroundColor: '#ffa500',
+        },
+      },
+    },
+  },
+});
+
 export function lineCommentsGutter() {
   return [
     gutterRS({
       class: 'cm-lineCommentsGutter',
-
-      lineMarker(view, line) {
-        const lineNumber = view.state.doc.lineAt(line.from).number;
-        const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
-
-        return new (commentsCount === 0 ? CommentButtonGutterMarker : CommentsCountGutterMarker)(line);
-      },
+      lineMarker: lineCommentsLineMarker,
     }),
-
     highlightActiveLineGutterRS(),
-
-    EditorView.baseTheme({
-      '.cm-gutters.cm-gutters-rs': {
-        backgroundColor: '#ffffff20', // '#ff000070', // 'transparent',
-
-        '& .cm-lineCommentsGutter': {
-          minWidth: '24px',
-          textAlign: 'center',
-
-          '& .cm-gutterElement': {
-            cursor: 'pointer',
-
-            '& comments-count': {
-              display: 'block',
-              backgroundColor: '#ffcd72c0',
-              borderRadius: '50%',
-              color: '#24292e',
-              transform: 'scale(0.75)',
-              fontWeight: '500',
-              fontSize: '12px',
-
-              '&.cm-over-99': {
-                fontSize: '9.5px',
-              },
-            },
-
-            '& comment-button': {
-              opacity: '0.15',
-            },
-
-            '&:hover': {
-              '& comment-button': {
-                opacity: '1',
-              },
-
-              '& comments-count': {
-                backgroundColor: '#ffa500',
-              },
-            },
-          },
-        },
-      },
-    }),
+    lineCommentsGutterBaseTheme,
   ];
 }
