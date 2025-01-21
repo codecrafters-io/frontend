@@ -7,6 +7,10 @@ const BASE_STYLE = {
   // Container for all gutters
   '.cm-gutters': {
     borderRight: 'none',
+
+    '&.cm-gutters-rs': {
+      backgroundColor: '#ffffff20', // '#ff000070', // 'transparent',
+    },
   },
 
   // All gutter elements
