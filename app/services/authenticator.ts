@@ -4,7 +4,6 @@ import RouterService from '@ember/routing/router-service';
 import Service, { inject as service } from '@ember/service';
 import SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import Store from '@ember-data/store';
-import UserModel from 'codecrafters-frontend/models/user';
 import window from 'ember-window-mock';
 import { tracked } from '@glimmer/tracking';
 
@@ -18,13 +17,12 @@ export default class AuthenticatorService extends Service {
   @tracked isLoadingUser: boolean = false;
   @tracked cacheBuster: number = 0;
 
-  // TODO: Update this when User model is converted to typescript
   get currentUser() {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.cacheBuster; // Force reload on cacheBuster change
 
     if (this.currentUserCacheStorage.userId) {
-      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as UserModel;
+      return this.store.peekRecord('user', this.currentUserCacheStorage.userId);
     } else {
       return null;
     }
@@ -66,52 +64,11 @@ export default class AuthenticatorService extends Service {
   }
 
   async authenticate(): Promise<void> {
-    if (!this.sessionTokenStorage.hasToken) {
-      return;
-    }
-
     if (this.currentUserIsLoaded) {
-      this.prefillBeaconEmail();
-
       return;
     }
 
-    const includedResources = [
-      'affiliate-links',
-      'affiliate-links.user',
-      'feature-suggestions',
-      'promotional-discounts',
-      'promotional-discounts.affiliate-referral',
-      'promotional-discounts.affiliate-referral.affiliate-link',
-      'promotional-discounts.affiliate-referral.affiliate-link.user',
-      'promotional-discounts.affiliate-referral.referrer',
-      'promotional-discounts.user',
-      'referral-activations-as-customer.referrer',
-      'referral-links',
-      'referral-links.user',
-      'subscriptions',
-      'subscriptions.user',
-      'team-memberships',
-      'team-memberships.team.memberships.user',
-      'team-memberships.team.payment-methods',
-      'team-memberships.team.pilots',
-      'team-memberships.team.subscriptions',
-    ];
-
-    this.isLoadingUser = true;
-    const user = await this.store.createRecord('user').fetchCurrent({ include: includedResources.join(',') });
-    this.isLoadingUser = false;
-
-    if (!user) {
-      this.logout();
-      window.location.reload();
-
-      return;
-    }
-
-    this.prefillBeaconEmail();
-    this.currentUserCacheStorage.setValues(user.id, user.username);
-    this.cacheBuster++;
+    await this.syncCurrentUser();
   }
 
   initiateLogin(redirectPath: string | null) {
@@ -138,5 +95,47 @@ export default class AuthenticatorService extends Service {
         email: this.currentUser.primaryEmailAddress,
       });
     }
+  }
+
+  async syncCurrentUser() {
+    if (!this.sessionTokenStorage.hasToken) {
+      return;
+    }
+
+    const includedResources = [
+      'affiliate-links',
+      'affiliate-links.user',
+      'feature-suggestions',
+      'promotional-discounts',
+      'promotional-discounts.affiliate-referral',
+      'promotional-discounts.affiliate-referral.affiliate-link',
+      'promotional-discounts.affiliate-referral.affiliate-link.user',
+      'promotional-discounts.affiliate-referral.referrer',
+      'promotional-discounts.user',
+      'referral-activations-as-customer.referrer',
+      'referral-links',
+      'referral-links.user',
+      'subscriptions',
+      'subscriptions.user',
+      'team-memberships',
+      'team-memberships.team.memberships.user',
+      'team-memberships.team.payment-methods',
+      'team-memberships.team.pilots',
+      'team-memberships.team.subscriptions',
+    ];
+
+    const user = await this.store.createRecord('user').fetchCurrent({ include: includedResources.join(',') });
+
+    // We reached here since sessionToken has a token, and that token is now invalid. Clear and force a refresh!
+    if (!user) {
+      this.logout();
+      window.location.reload();
+
+      return;
+    }
+
+    this.prefillBeaconEmail();
+    this.currentUserCacheStorage.setValues(user.id, user.username);
+    this.cacheBuster++;
   }
 }

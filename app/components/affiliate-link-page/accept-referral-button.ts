@@ -74,7 +74,7 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
         })
         .save();
 
-      await this.authenticator.currentUser!.fetchCurrent({}); // Refresh free usage grant columns
+      await this.authenticator.syncCurrentUser(); // Refresh discounts, free usage etc.
 
       if (this.args.course) {
         this.router.transitionTo('course', this.args.course.slug);
