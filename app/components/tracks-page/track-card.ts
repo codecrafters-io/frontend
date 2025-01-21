@@ -5,6 +5,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -27,7 +28,7 @@ export default class TrackCardComponent extends Component<Signature> {
     return this.authenticator.currentUser.repositories
       .filterBy('language', this.args.language)
       .toArray()
-      .flatMap((repository) => repository.completedStages)
+      .flatMap((repository: RepositoryModel) => repository.completedStages)
       .uniq().length;
   }
 

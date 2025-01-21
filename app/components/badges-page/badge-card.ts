@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type BadgeModel from 'codecrafters-frontend/models/badge';
 import { inject as service } from '@ember/service';
+import type BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,7 +20,7 @@ export default class BadgeCardComponent extends Component<Signature> {
   }
 
   get currentUserBadgeAwards() {
-    return this.currentUser ? this.currentUser.badgeAwards.filter((badgeAward) => badgeAward.badge === this.args.badge) : [];
+    return this.currentUser ? this.currentUser.badgeAwards.filter((badgeAward: BadgeAwardModel) => badgeAward.badge === this.args.badge) : [];
   }
 
   get userHasBadgeAward() {

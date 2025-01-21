@@ -5,6 +5,7 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { BaseButtonSignature } from '../base-button';
 
 interface Signature {
@@ -27,7 +28,9 @@ export default class CourseOverviewResumeTrackButtonComponent extends Component<
     }
 
     return this.args.courses.find((course) => {
-      const courseRepositories = this.authenticator.currentUser!.repositories.filterBy('course', course).filterBy('language', this.args.language);
+      const courseRepositories = this.authenticator
+        .currentUser!.repositories.filterBy('course', course)
+        .filterBy('language', this.args.language) as RepositoryModel[];
 
       return courseRepositories.length > 0 && !courseRepositories.some((repository) => repository.allStagesAreComplete);
     });

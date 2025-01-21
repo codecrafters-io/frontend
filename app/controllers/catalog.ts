@@ -36,11 +36,9 @@ export default class CatalogController extends Controller {
         const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
 
         const lastActivityForCourse1At =
-          // @ts-expect-error at(-1) is not defined on Array
           repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
 
         const lastActivityForCourse2At =
-          // @ts-expect-error at(-1) is not defined on Array
           repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
 
         if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At > lastActivityForCourse2At) {
@@ -72,9 +70,7 @@ export default class CatalogController extends Controller {
           .filterBy('firstSubmissionCreated');
 
         if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
-          // @ts-expect-error at(-1) is not defined on Array
           const lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
-          // @ts-expect-error at(-1) is not defined on Array
           const lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
 
           return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;

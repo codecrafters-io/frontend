@@ -2,6 +2,7 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import { inject as service } from '@ember/service';
+import type ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -16,7 +17,7 @@ export default class ConceptCardComponent extends Component<Signature> {
 
   get latestConceptEngagement() {
     return this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
+      .filter((engagement: ConceptEngagementModel) => engagement.concept.slug === this.args.concept.slug)
       .sortBy('createdAt')
       .reverse()[0];
   }

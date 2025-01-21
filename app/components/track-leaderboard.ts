@@ -6,6 +6,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type Store from '@ember-data/store';
 import type TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
@@ -52,13 +53,15 @@ export default class TrackLeaderboardComponent extends Component<Signature> {
       return [];
     }
 
-    const currentUserRepositories = this.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated');
+    const currentUserRepositories = this.currentUser.repositories
+      .filterBy('language', this.args.language)
+      .filterBy('firstSubmissionCreated') as RepositoryModel[];
 
     if (currentUserRepositories.length === 0) {
       return [];
     }
 
-    const completedStagesCount = currentUserRepositories.reduce((result, repository) => {
+    const completedStagesCount = currentUserRepositories.reduce((result: CourseStageCompletionModel[], repository) => {
       return result.concat(repository.courseStageCompletions.toArray()).uniqBy('courseStage');
     }, [] as CourseStageCompletionModel[]).length;
 
