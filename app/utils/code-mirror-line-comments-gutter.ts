@@ -4,7 +4,7 @@ import {
   GutterMarker as GutterMarkerRS,
   highlightActiveLineGutter as highlightActiveLineGutterRS,
 } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
-import { lineDataFacet } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import { expandedLineNumbersCompartment, expandedLineNumbersFacet, lineDataFacet } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 class CommentsCountGutterMarker extends GutterMarkerRS {
   line: BlockInfo;
@@ -100,6 +100,22 @@ export function lineCommentsGutter() {
     gutterRS({
       class: 'cm-lineCommentsGutter',
       lineMarker: lineCommentsLineMarker,
+      domEventHandlers: {
+        click: (view: EditorView, line: BlockInfo) => {
+          const lineNumber = view.state.doc.lineAt(line.from).number;
+          const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
+
+          view.dispatch({
+            effects: [
+              expandedLineNumbersCompartment.reconfigure(
+                expandedLineNumbersFacet.of(expandedLines.includes(lineNumber) ? expandedLines.without(lineNumber) : [...expandedLines, lineNumber]),
+              ),
+            ],
+          });
+
+          return true;
+        },
+      },
     }),
     highlightActiveLineGutterRS(),
     lineCommentsGutterBaseTheme,
