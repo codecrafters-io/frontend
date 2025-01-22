@@ -73,6 +73,28 @@ export default Factory.extend({
     },
   }),
 
+  withSecondStageCompleted: trait({
+    afterCreate(repository, server) {
+      const firstStage = repository.course.stages.models.sortBy('position')[0];
+      const secondStage = repository.course.stages.models.sortBy('position')[1];
+
+      [firstStage, secondStage].forEach((stage, index) => {
+        server.create('submission', 'withFailureStatus', {
+          repository,
+          courseStage: stage,
+          createdAt: new Date(repository.createdAt.getTime() + 1000 * index), // 1s, 2s
+          status: 'failure',
+        });
+
+        server.create('submission', 'withStageCompletion', {
+          repository,
+          courseStage: stage,
+          createdAt: new Date(repository.createdAt.getTime() + 1500 * (index + 1)), // 1.5s, 3s
+        });
+      });
+    },
+  }),
+
   withSetupStageCompleted: trait({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
