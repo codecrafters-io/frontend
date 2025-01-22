@@ -1,3 +1,12 @@
 .h-2px {
   height: 2px;
 }
+
+/* https://bengammon.co.uk/css-repeatable-linear-gradients-on-multiple-lines-of-text/ */
+.bg-repeating-gradient-to-b {
+  background-image: repeating-linear-gradient(to bottom, var(--tw-gradient-stops) 1.75rem);
+}
+
+.animate-spin-once {
+  animation: spin 1s 1;
+}
