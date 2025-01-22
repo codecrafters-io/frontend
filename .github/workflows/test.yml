@@ -56,8 +56,9 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: npx ember --version
-      - run: npx percy --version
+      # Useful for debugging
+      # - run: npx ember --version
+      # - run: npx percy --version
 
       - run: npm run tailwind:build
 

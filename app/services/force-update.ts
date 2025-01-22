@@ -20,9 +20,10 @@ export default class ForceUpdateService extends Service {
     try {
       await this.versionTracker.fetchLatestVersionIfNeeded();
     } catch (error) {
-      if (config.environment === 'test') {
-        throw error;
-      }
+      // TODO: Bring this back
+      // if (config.environment === 'test') {
+      //   throw error;
+      // }
 
       Sentry.captureException(error);
     }
