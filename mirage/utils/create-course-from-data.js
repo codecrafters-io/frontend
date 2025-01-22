@@ -98,7 +98,7 @@ function courseStageAttributesFromData(courseStageData, positionWithinCourse, po
     descriptionMarkdownTemplate: courseStageData.description_md,
     difficulty: courseStageData.difficulty,
     testerSourceCodeUrl: courseStageData.tester_source_code_url,
-    isPaid: positionWithinCourse > 3,
+    isPaid: positionWithinCourse >= 3,
     primaryExtensionSlug: courseStageData.primary_extension_slug,
     secondaryExtensionSlugs: courseStageData.secondary_extension_slugs || [],
   };
