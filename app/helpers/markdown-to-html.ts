@@ -32,8 +32,6 @@ export default class MarkdownToHtml extends Helper<Signature> {
     }).makeHtml(markdown);
 
     if (this.fastboot.isFastBoot) {
-      console.warn('DOMPurify unavailable in FastBoot mode, skipping sanitize');
-
       return generatedHtml;
     }
 
