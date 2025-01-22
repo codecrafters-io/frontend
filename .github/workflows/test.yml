@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-64
     # Use cheaper machines for dependabot if we're low on namespace credits
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
     permissions: write-all
