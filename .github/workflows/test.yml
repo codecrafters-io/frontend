@@ -30,7 +30,7 @@ jobs:
       # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
       - id: cache
         name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./node_modules
           key: modules-v1-${{ hashFiles('package-lock.json') }}
@@ -133,7 +133,7 @@ jobs:
       # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
       - id: cache
         name: Cache dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ./node_modules
           key: modules-v1-${{ hashFiles('package-lock.json') }}
