@@ -13,12 +13,8 @@
 
 {{#if this.canSeeLanguageGuideBeforeSolution}}
   {{#if @languageGuide}}
-    <div class="mt-6 mb-3 prose dark:prose-invert font-semibold">
-      Guide:
-    </div>
-
     <div
-      class="prose dark:prose-invert has-prism-highlighting"
+      class="prose dark:prose-invert has-prism-highlighting mt-4"
       {{highlight-code-blocks @languageGuide.markdownForBeginner}}
       data-test-language-guide-card
     >
@@ -27,10 +23,6 @@
   {{/if}}
 
   {{#if this.solution}}
-    <div class="mt-6 prose prose-compact dark:prose-invert font-semibold">
-      Solution:
-    </div>
-
     <BlurredOverlay
       class="mb-3 group"
       @isBlurred={{this.solutionIsBlurred}}
