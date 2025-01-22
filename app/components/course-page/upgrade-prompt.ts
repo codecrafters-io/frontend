@@ -60,7 +60,7 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  @tracked isLoadingRegionalDiscount: boolean = true;
+  @tracked isLoadingDiscounts: boolean = true;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
   get activeDiscountForYearlyPlan() {
@@ -101,12 +101,13 @@ export default class UpgradePromptComponent extends Component<Signature> {
   @waitFor
   async handleDidInsert(): Promise<void> {
     this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
-    this.isLoadingRegionalDiscount = false;
+    // await this.authenticator.syncCurrentUser();
+    this.isLoadingDiscounts = false;
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::UpgradePrompt': typeof UpgradePromptComponent;
+    'CoursePage::UpgradePrompt': typeof UpgradePromptComponent;
   }
 }
