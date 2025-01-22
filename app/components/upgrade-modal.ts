@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Signature as UpgradePromptSignature } from './course-page/course-stage-step/upgrade-prompt';
+import type { Signature as UpgradePromptSignature } from './course-page/upgrade-prompt';
 import { action } from '@ember/object';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import { service } from '@ember/service';
