@@ -31,8 +31,8 @@ export default class DarkModeService extends Service {
    */
   @tracked systemPreference?: SystemPreference;
 
-  constructor(properties: object | undefined) {
-    super(properties);
+  constructor(...args: [object | undefined] | []) {
+    super(...args);
 
     // Load the localStorage preference from localStorage service
     this.localStoragePreference = this.localStorage.getItem(LOCAL_STORAGE_KEY) as LocalStoragePreference;

@@ -9,8 +9,8 @@ export default class FeatureFlagsService extends Service {
 
   private notifiedFeatureFlags: Set<string>;
 
-  constructor() {
-    super();
+  constructor(...args: [object | undefined] | []) {
+    super(...args);
     this.notifiedFeatureFlags = new Set();
   }
 

@@ -9,8 +9,8 @@ export default class FocusService extends Service {
   @tracked isFocused;
   callbacks: Record<string, (isVisible: boolean) => void> = {};
 
-  constructor() {
-    super();
+  constructor(...args: [object | undefined] | []) {
+    super(...args);
 
     this.isFocused = document.hasFocus();
     this.setupFocusChangeEventHandlers();

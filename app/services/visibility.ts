@@ -9,8 +9,8 @@ export default class VisibilityService extends Service {
   @tracked isVisible;
   callbacks: Record<string, (isVisible: boolean) => void> = {};
 
-  constructor() {
-    super();
+  constructor(...args: [object | undefined] | []) {
+    super(...args);
 
     this.isVisible = true;
     this.setupVisibilityChangeEventHandlers();
