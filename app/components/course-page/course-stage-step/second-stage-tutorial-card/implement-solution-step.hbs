@@ -11,61 +11,123 @@
   {{/unless}}
 </div>
 
-{{#if this.solution}}
-  <BlurredOverlay
-    class="mb-3 group"
-    @isBlurred={{this.solutionIsBlurred}}
-    @overlayClass="inset-px rounded cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
-  >
-    <:content>
-      <div class="grid gap-3 mb-3">
-        {{#each this.solution.changedFiles as |changedFile|}}
-          {{! Extra if condition convinces typescript that solution isn't null }}
-          {{#if this.solution}}
-            <FileDiffCard
-              @filename={{changedFile.filename}}
-              @code={{changedFile.diff}}
-              @language={{this.solution.language.slug}}
-              data-test-file-diff-card
-            />
-          {{/if}}
-        {{/each}}
-      </div>
+{{#if this.canSeeLanguageGuideBeforeSolution}}
+  {{#if @languageGuide}}
+    <div
+      class="prose dark:prose-invert has-prism-highlighting mt-4"
+      {{highlight-code-blocks @languageGuide.markdownForBeginner}}
+      data-test-language-guide-card
+    >
+      {{markdown-to-html @languageGuide.markdownForBeginner}}
+    </div>
+  {{/if}}
 
-      {{#unless this.solutionIsBlurred}}
-        <TertiaryButton
-          class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
-          {{on "click" this.handleHideSolutionButtonClick}}
-          data-test-hide-solution-button
-        >
-          {{svg-jar "eye-off" class="size-4"}}
-          Hide Solution
-        </TertiaryButton>
+  {{#if this.solution}}
+    <BlurredOverlay
+      class="mb-3 group"
+      @isBlurred={{this.solutionIsBlurred}}
+      @overlayClass="inset-px rounded cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
+    >
+      <:content>
+        <div class="grid gap-3 mt-6 mb-3">
 
-        {{#if @languageGuide}}
-          <div
-            class="prose dark:prose-invert has-prism-highlighting"
-            {{highlight-code-blocks @languageGuide.markdownForBeginner}}
-            data-test-language-guide-card
-          >
-            {{markdown-to-html @languageGuide.markdownForBeginner}}
-          </div>
-        {{/if}}
-      {{/unless}}
-    </:content>
-
-    <:overlay>
-      <SecondaryButton
-        class="self-center bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
-        data-test-reveal-solution-button
-      >
-        <div class="flex items-center gap-2">
-          {{svg-jar "eye" class="size-6"}}
-          <span>Click to reveal solution</span>
+          {{#each this.solution.changedFiles as |changedFile|}}
+            {{! Extra if condition convinces typescript that solution isn't null }}
+            {{#if this.solution}}
+              <FileDiffCard
+                @filename={{changedFile.filename}}
+                @code={{changedFile.diff}}
+                @language={{this.solution.language.slug}}
+                data-test-file-diff-card
+              />
+            {{/if}}
+          {{/each}}
         </div>
-      </SecondaryButton>
-      <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
-      </button>
-    </:overlay>
-  </BlurredOverlay>
+
+        {{#unless this.solutionIsBlurred}}
+          <TertiaryButton
+            class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
+            {{on "click" this.handleHideSolutionButtonClick}}
+            data-test-hide-solution-button
+          >
+            {{svg-jar "eye-off" class="size-4"}}
+            Hide Solution
+          </TertiaryButton>
+        {{/unless}}
+      </:content>
+
+      <:overlay>
+        <SecondaryButton
+          class="self-center bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
+          data-test-reveal-solution-button
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "eye" class="size-6"}}
+            <span>Click to reveal solution</span>
+          </div>
+        </SecondaryButton>
+        <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
+        </button>
+      </:overlay>
+    </BlurredOverlay>
+  {{/if}}
+{{else}}
+  {{#if this.solution}}
+    <BlurredOverlay
+      class="mb-3 group"
+      @isBlurred={{this.solutionIsBlurred}}
+      @overlayClass="inset-px rounded cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
+    >
+      <:content>
+        <div class="grid gap-3 mb-3">
+          {{#each this.solution.changedFiles as |changedFile|}}
+            {{! Extra if condition convinces typescript that solution isn't null }}
+            {{#if this.solution}}
+              <FileDiffCard
+                @filename={{changedFile.filename}}
+                @code={{changedFile.diff}}
+                @language={{this.solution.language.slug}}
+                data-test-file-diff-card
+              />
+            {{/if}}
+          {{/each}}
+        </div>
+
+        {{#unless this.solutionIsBlurred}}
+          <TertiaryButton
+            class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
+            {{on "click" this.handleHideSolutionButtonClick}}
+            data-test-hide-solution-button
+          >
+            {{svg-jar "eye-off" class="size-4"}}
+            Hide Solution
+          </TertiaryButton>
+
+          {{#if @languageGuide}}
+            <div
+              class="prose dark:prose-invert has-prism-highlighting"
+              {{highlight-code-blocks @languageGuide.markdownForBeginner}}
+              data-test-language-guide-card
+            >
+              {{markdown-to-html @languageGuide.markdownForBeginner}}
+            </div>
+          {{/if}}
+        {{/unless}}
+      </:content>
+
+      <:overlay>
+        <SecondaryButton
+          class="self-center bg-white group-hover:bg-teal-50 dark:bg-gray-900 dark:group-hover:bg-gray-900/80 backdrop-blur-3xl group-hover:text-teal-600 dark:group-hover:text-teal-400 group-hover:border-teal-600 dark:group-hover:border-teal-400"
+          data-test-reveal-solution-button
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "eye" class="size-6"}}
+            <span>Click to reveal solution</span>
+          </div>
+        </SecondaryButton>
+        <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
+        </button>
+      </:overlay>
+    </BlurredOverlay>
+  {{/if}}
 {{/if}}
