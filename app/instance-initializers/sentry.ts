@@ -1,9 +1,9 @@
 import ApplicationInstance from '@ember/application/instance';
-import TimeService from 'codecrafters-frontend/services/time';
 
 export function initialize(applicationInstance: ApplicationInstance) {
-  const time = applicationInstance.lookup('service:time') as TimeService;
-  time.setupTimer();
+  const sentryService = applicationInstance.lookup('service:sentry');
+  // @ts-expect-error service is not typed
+  sentryService.identifyUser();
 }
 
 export default {

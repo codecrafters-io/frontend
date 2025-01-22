@@ -1,6 +1,8 @@
-export function initialize(applicationInstance: unknown) {
-  // @ts-expect-error not typed
-  const forceUpdate = applicationInstance.lookup('service:force-update');
+import ApplicationInstance from '@ember/application/instance';
+import ForceUpdateService from 'codecrafters-frontend/services/force-update';
+
+export function initialize(applicationInstance: ApplicationInstance) {
+  const forceUpdate = applicationInstance.lookup('service:force-update') as ForceUpdateService;
   forceUpdate.setupListener();
 }
 
