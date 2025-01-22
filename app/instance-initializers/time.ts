@@ -1,6 +1,8 @@
-export function initialize(applicationInstance: unknown) {
-  // @ts-expect-error not typed
-  const time = applicationInstance.lookup('service:time');
+import ApplicationInstance from '@ember/application/instance';
+import TimeService from 'codecrafters-frontend/services/time';
+
+export function initialize(applicationInstance: ApplicationInstance) {
+  const time = applicationInstance.lookup('service:time') as TimeService;
   time.setupTimer();
 }
 

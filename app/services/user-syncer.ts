@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from './authenticator';
 import type RouterService from '@ember/routing/router';
 
-export default class UserSyncer extends Service {
+export default class UserSyncerService extends Service {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @tracked lastSyncedAt: Date | null = null;

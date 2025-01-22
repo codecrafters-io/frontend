@@ -1,6 +1,8 @@
-export function initialize(applicationInstance: unknown) {
-  // @ts-expect-error not typed
-  const authenticator = applicationInstance.lookup('service:authenticator');
+import ApplicationInstance from '@ember/application/instance';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+
+export function initialize(applicationInstance: ApplicationInstance) {
+  const authenticator = applicationInstance.lookup('service:authenticator') as AuthenticatorService;
   authenticator.authenticate();
 }
 
