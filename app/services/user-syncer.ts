@@ -12,13 +12,6 @@ export default class UserSyncer extends Service {
 
   MIN_SYNC_INTERVAL_MS = 10_000;
 
-  forceSync() {
-    if (this.authenticator.currentUser) {
-      this.authenticator.currentUser.sync();
-      this.lastSyncedAt = new Date();
-    }
-  }
-
   @action
   async handleRouteChange() {
     if (config.environment === 'test') {
@@ -32,7 +25,7 @@ export default class UserSyncer extends Service {
     await this.authenticator.syncCurrentUser();
 
     if (this.authenticator.currentUser) {
-      this.authenticator.currentUser.syncFeatureFlags();
+      this.authenticator.syncCurrentUser();
       this.lastSyncedAt = new Date();
     }
   }
