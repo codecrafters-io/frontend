@@ -6,6 +6,7 @@ import SessionTokenStorageService from 'codecrafters-frontend/services/session-t
 import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import { tracked } from '@glimmer/tracking';
+import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class AuthenticatorService extends Service {
   @service declare router: RouterService;
@@ -22,7 +23,7 @@ export default class AuthenticatorService extends Service {
     this.cacheBuster; // Force reload on cacheBuster change
 
     if (this.currentUserCacheStorage.userId) {
-      return this.store.peekRecord('user', this.currentUserCacheStorage.userId);
+      return this.store.peekRecord('user', this.currentUserCacheStorage.userId) as UserModel;
     } else {
       return null;
     }
