@@ -1,25 +1,34 @@
 import Service, { inject as service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { action } from '@ember/object';
+import type RouterService from '@ember/routing/router-service';
+import type AnalyticsEventTrackerService from './analytics-event-tracker';
+import type Transition from '@ember/routing/-private/transition';
+
+interface RouteInfo {
+  name: string;
+  params: Record<string, unknown>;
+  parent: RouteInfo | null;
+}
 
 export default class PageViewTracker extends Service {
-  @service analyticsEventTracker;
-  @service router;
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+  @service declare router: RouterService;
 
   @action
-  handleRouteChange(transition) {
+  handleRouteChange(transition: Transition): void {
     if (this.#shouldIgnoreEventForTransition(transition)) {
       return;
     }
 
-    this.analyticsEventTracker.track('viewed_page');
+    this.analyticsEventTracker.track('viewed_page', {});
   }
 
-  setupListener() {
+  setupListener(): void {
     this.router.on('routeDidChange', this.handleRouteChange);
   }
 
-  #shouldIgnoreEventForTransition(transition) {
+  #shouldIgnoreEventForTransition(transition: { from: RouteInfo | null; to: RouteInfo | null }): boolean {
     if (!transition.from || !transition.to) {
       return false; // First page load, not reason to ignore
     }
@@ -49,7 +58,7 @@ export default class PageViewTracker extends Service {
     return true;
   }
 
-  willDestroy() {
+  willDestroy(): void {
     this.router.off('routeDidChange', this.handleRouteChange);
   }
 }
