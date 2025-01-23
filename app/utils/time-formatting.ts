@@ -10,7 +10,7 @@ export function formatTimeLeft(expiresAt: Date, currentTime: Date): string {
 
   // TODO: How to handle this? Raise error?
   if (distanceInSeconds < 0) {
-    return '0s';
+    return '00s';
   }
 
   if (hoursLeft > 0) {
