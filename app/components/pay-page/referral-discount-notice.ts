@@ -10,6 +10,7 @@ interface Signature {
 
   Args: {
     discount: PromotionalDiscountModel;
+    variant?: 'default' | 'countdown';
   };
 }
 
