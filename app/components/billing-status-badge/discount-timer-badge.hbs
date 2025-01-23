@@ -1,0 +1,26 @@
+<LinkTo
+  @route="pay"
+  class="flex bg-gradient-to-b from-gray-600 to-gray-900 border border-yellow-600 rounded shadow-sm
+    {{if (eq @size 'small') 'px-1.5 py-1'}}
+    {{if (eq @size 'large') 'px-2 py-1.5'}}"
+  data-test-discount-timer-badge
+  ...attributes
+>
+  <span class="flex items-center gap-x-1">
+    <div class="flex-shrink-0">
+      <img src={{this.iconImage}} alt="treasure" class="w-4 animate-spin-once" />
+    </div>
+    <span class="bg-gradient-to-b from-yellow-100 to-amber-500 text-transparent bg-clip-text inline-block text-xs font-semibold flex-shrink-0">
+      43 hours left
+      {{! 1 hour left }}
+      {{! 59 minutes left }}
+      {{! 5 minutes left }}
+      {{! 1 minute left }}
+      {{! 59 seconds left }}
+      {{! 1 second left }}
+      {{! should not be rendered afterwards! }}
+    </span>
+  </span>
+
+  <EmberTooltip @text={{this.tooltipText}} />
+</LinkTo>

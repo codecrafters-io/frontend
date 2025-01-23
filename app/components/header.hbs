@@ -58,7 +58,8 @@
             </div>
           </FeedbackButton>
 
-          {{#if this.billingStatusDisplay.shouldShowVipBadge}}
+          {{! TODO: Extract this into BillingStatusBadgeComponent, re-use in course page header and here? }}
+          {{!-- {{#if this.billingStatusDisplay.shouldShowVipBadge}}
             <Header::VipBadge class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowMemberBadge}}
             <Header::MemberBadge class="mr-3" />
@@ -71,7 +72,9 @@
                 {{svg-jar "lock-open" class="w-4"}}
               </span>
             </PrimaryLinkButton>
-          {{/if}}
+          {{/if}} --}}
+
+          <BillingStatusBadge::DiscountTimerBadge @size="small" class="mr-3" />
 
           <Header::AccountDropdown />
         {{else}}

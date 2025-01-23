@@ -27,7 +27,8 @@
         </TertiaryLinkButton>
       {{/if}}
 
-      {{#if this.billingStatusDisplay.shouldShowVipBadge}}
+      {{! TODO: Extract this into BillingStatusBadgeComponent, re-use in course page header and here? }}
+      {{!-- {{#if this.billingStatusDisplay.shouldShowVipBadge}}
         <Header::VipBadge />
       {{else if this.billingStatusDisplay.shouldShowMemberBadge}}
         <Header::MemberBadge />
@@ -40,7 +41,9 @@
             {{svg-jar "lock-open" class="w-4"}}
           </span>
         </PrimaryLinkButton>
-      {{/if}}
+      {{/if}} --}}
+
+      <BillingStatusBadge::DiscountTimerBadge @size="large" />
 
       <LinkTo
         @route="catalog"
