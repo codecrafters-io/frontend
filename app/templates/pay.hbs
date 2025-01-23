@@ -7,11 +7,13 @@
     </h1>
 
     {{#if this.activeDiscountForYearlyPlan.isFromSignup}}
-      <PayPage::SignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} 
+      <PayPage::SignupDiscountNotice
+      @discount={{this.activeDiscountForYearlyPlan}} 
       @variant={{if this.canSeeDiscountCountdown "countdown" "default"}} 
       class="mt-8" />
     {{else if this.activeDiscountForYearlyPlan.isFromAffiliateReferral}}
-      <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan
+      <PayPage::ReferralDiscountNotice
+      @discount={{this.activeDiscountForYearlyPlan}}
       @variant={{if this.canSeeDiscountCountdown "countdown" "default"}} 
       class="mt-8" />
     {{/if}}
