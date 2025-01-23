@@ -26,7 +26,7 @@
         @discountedPrice={{null}}
         @footerText="Single payment of $120."
         @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
-        @isRecommended={{true}}
+        @isRecommended={{false}}
         @pricingFrequency="quarterly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{false}}
@@ -39,7 +39,7 @@
         @discountedPrice={{this.discountedYearlyPrice}}
         @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
         @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
-        @isRecommended={{false}}
+        @isRecommended={{true}}
         @pricingFrequency="yearly"
         @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
         @shouldShowAmortizedMonthlyPrice={{false}}
