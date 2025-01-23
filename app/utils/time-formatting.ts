@@ -8,6 +8,11 @@ export function formatTimeLeft(expiresAt: Date, currentTime: Date): string {
   const minutesLeftStr = `${minutesLeft.toString().padStart(2, '0')}m`;
   const secondsLeftStr = `${secondsLeft.toString().padStart(2, '0')}s`;
 
+  // TODO: How to handle this? Raise error?
+  if (distanceInSeconds < 0) {
+    return '0s';
+  }
+
   if (hoursLeft > 0) {
     return `${hoursLeftStr}:${minutesLeftStr}:${secondsLeftStr}`;
   }
