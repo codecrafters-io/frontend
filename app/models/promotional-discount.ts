@@ -1,6 +1,8 @@
 import AffiliateReferralModel from 'codecrafters-frontend/models/affiliate-referral';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
+import type TimeService from 'codecrafters-frontend/services/time';
+import { service } from '@ember/service';
 
 export default class PromotionalDiscountModel extends Model {
   @belongsTo('affiliate-referral', { async: false, inverse: null }) declare affiliateReferral: AffiliateReferralModel;
@@ -11,8 +13,15 @@ export default class PromotionalDiscountModel extends Model {
   @attr('string') type!: 'signup' | 'affiliate_referral';
   @attr('number') percentageOff!: number;
 
+  @service declare time: TimeService;
+
   get isExpired() {
-    return this.expiresAt < new Date();
+    // short-circuit, prevent re-computation
+    if (this.expiresAt < new Date()) {
+      return false;
+    }
+
+    return this.expiresAt < this.time.currentTime;
   }
 
   get isFromAffiliateReferral() {
