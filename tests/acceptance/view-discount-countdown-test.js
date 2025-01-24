@@ -1,7 +1,7 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, visit } from '@ember/test-helpers';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -12,7 +12,7 @@ module('Acceptance | view-discount-countdown', function (hooks) {
 
   hooks.beforeEach(async function () {
     testScenario(this.server);
-    this.currentUser = signIn(this.owner, this.server);
+    this.currentUser = signInAsStaff(this.owner, this.server);
   });
 
   test('it redirects to /tracks page', async function (assert) {
