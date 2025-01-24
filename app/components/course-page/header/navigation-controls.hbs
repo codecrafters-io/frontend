@@ -28,10 +28,14 @@
       {{/if}}
 
       {{! TODO: Extract this into BillingStatusBadgeComponent, re-use in course page header and here? }}
-      {{!-- {{#if this.billingStatusDisplay.shouldShowVipBadge}}
+      {{#if this.billingStatusDisplay.shouldShowVipBadge}}
         <Header::VipBadge />
       {{else if this.billingStatusDisplay.shouldShowMemberBadge}}
         <Header::MemberBadge />
+      {{else if this.activeDiscountForYearlyPlan}}
+        {{#if this.canSeeDiscountCountdown}}
+          <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="large" />
+        {{/if}}
       {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
         <Header::FreeWeeksLeftButton />
       {{else if this.billingStatusDisplay.shouldShowUpgradeButton}}
@@ -41,10 +45,6 @@
             {{svg-jar "lock-open" class="w-4"}}
           </span>
         </PrimaryLinkButton>
-      {{/if}} --}}
-
-      {{#if this.activeDiscountForYearlyPlan}}
-        <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="large" />
       {{/if}}
 
       <LinkTo
