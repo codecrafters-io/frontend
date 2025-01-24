@@ -8,27 +8,15 @@
 
     {{#if this.activeDiscountForYearlyPlan.isFromSignup}}
       {{#if this.canSeeDiscountCountdown}}
-        <PayPage::ExperimentalSignupDiscountNotice
-          @discount={{this.activeDiscountForYearlyPlan}}
-          class="mt-8"
-        />
+        <PayPage::ExperimentalSignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
       {{else}}
-        <PayPage::SignupDiscountNotice
-          @discount={{this.activeDiscountForYearlyPlan}}
-          class="mt-8"
-        />
+        <PayPage::SignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
       {{/if}}
     {{else if this.activeDiscountForYearlyPlan.isFromAffiliateReferral}}
       {{#if this.canSeeDiscountCountdown}}
-        <PayPage::ExperimentalReferralDiscountNotice
-          @discount={{this.activeDiscountForYearlyPlan}}
-          class="mt-8"
-        />
+        <PayPage::ExperimentalReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
       {{else}}
-        <PayPage::ReferralDiscountNotice
-          @discount={{this.activeDiscountForYearlyPlan}}
-          class="mt-8"
-        />
+        <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
       {{/if}}
     {{/if}}
 
