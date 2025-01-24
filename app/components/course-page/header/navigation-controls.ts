@@ -33,6 +33,10 @@ export default class NavigationControlsComponent extends Component<Signature> {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }
 
+  get canSeeDiscountCountdown() {
+    return this.featureFlags.canSeeDiscountCountdown;
+  }
+
   get currentStepAsCourseStageStep() {
     return this.args.currentStep as CourseStageStep;
   }

@@ -36,6 +36,10 @@ export default class HeaderComponent extends Component<Signature> {
     return `${config.x.backendUrl}/admin`;
   }
 
+  get canSeeDiscountCountdown() {
+    return this.featureFlags.canSeeDiscountCountdown;
+  }
+
   get currentUser() {
     return this.authenticator.currentUser;
   }
