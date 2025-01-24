@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/ember';
 
-export function formatTimeDurationForCoundown(laterDate: Date, earlierDate: Date): string {
+export function formatTimeDurationForCountdown(laterDate: Date, earlierDate: Date): string {
   const distanceInSeconds = Math.floor((laterDate.getTime() - earlierDate.getTime()) / 1000);
   const hoursLeft = Math.floor(distanceInSeconds / 60 / 60);
   const minutesLeft = Math.floor(distanceInSeconds / 60) - hoursLeft * 60;
