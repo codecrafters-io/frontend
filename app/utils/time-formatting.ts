@@ -17,6 +17,7 @@ export function formatTimeDurationForCoundown(laterDate: Date, earlierDate: Date
         currentDate: earlierDate,
       },
     });
+
     return '00s';
   }
 
