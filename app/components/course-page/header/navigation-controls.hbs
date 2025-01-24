@@ -43,7 +43,9 @@
         </PrimaryLinkButton>
       {{/if}} --}}
 
-      <BillingStatusBadge::DiscountTimerBadge @size="large" />
+      {{#if this.activeDiscountForYearlyPlan}}
+        <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="large" />
+      {{/if}}
 
       <LinkTo
         @route="catalog"

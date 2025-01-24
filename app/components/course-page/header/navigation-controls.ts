@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -27,6 +28,10 @@ export default class NavigationControlsComponent extends Component<Signature> {
   @service declare billingStatusDisplay: BillingStatusDisplayService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
+
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
+    return this.currentUser?.activeDiscountForYearlyPlan || null;
+  }
 
   get currentStepAsCourseStageStep() {
     return this.args.currentStep as CourseStageStep;
