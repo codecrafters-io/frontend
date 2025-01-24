@@ -2,12 +2,14 @@ import Component from '@glimmer/component';
 import iconImage from '/assets/images/icons/money.svg';
 import { service } from '@ember/service';
 import type TimeService from 'codecrafters-frontend/services/time';
-import { formatTimeDurationForCoundown } from 'codecrafters-frontend/utils/time-formatting';
+import { formatTimeDurationForBadge, formatTimeDurationForCoundown } from 'codecrafters-frontend/utils/time-formatting';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
+    discount: PromotionalDiscountModel;
     size: 'small' | 'large'; // small is used for the menu bar, large is used for the course page header
   };
 }
@@ -17,8 +19,17 @@ export default class DiscountTimerBadgeComponent extends Component<Signature> {
 
   @service declare time: TimeService;
 
-  // (TODO: Use actual discount expiration date)
-  expiresAt = new Date(new Date().getTime() + 23 * 60 * 60 * 1000);
+  get expiresAt() {
+    return this.args.discount.expiresAt;
+  }
+
+  get isExpired() {
+    return this.args.discount.isExpired;
+  }
+
+  get timeLeft() {
+    return formatTimeDurationForBadge(this.expiresAt, this.time.currentTime);
+  }
 
   get tooltipText() {
     return `Upgrade in ${formatTimeDurationForCoundown(this.expiresAt, this.time.currentTime)} to get 40% off the annual plan. Click to view details.`;
