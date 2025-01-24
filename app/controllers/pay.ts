@@ -8,12 +8,14 @@ import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/m
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 
 export default class PayController extends Controller {
   declare model: ModelType;
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
   @service declare router: RouterService;
 
@@ -32,6 +34,10 @@ export default class PayController extends Controller {
       promotionalDiscount: this.selectedPricingFrequency === 'yearly' ? this.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
     };
+  }
+
+  get canSeeDiscountCountdown() {
+    return this.featureFlags.canSeeDiscountCountdown;
   }
 
   get discountedYearlyPrice() {
