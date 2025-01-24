@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import iconImage from '/assets/images/icons/money.svg';
 import { service } from '@ember/service';
 import type TimeService from 'codecrafters-frontend/services/time';
-import { formatTimeLeft } from 'codecrafters-frontend/utils/time-formatting';
+import { formatTimeDurationForCoundown } from 'codecrafters-frontend/utils/time-formatting';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -21,7 +21,7 @@ export default class DiscountTimerBadgeComponent extends Component<Signature> {
   expiresAt = new Date(new Date().getTime() + 23 * 60 * 60 * 1000);
 
   get tooltipText() {
-    return `Upgrade in ${formatTimeLeft(this.expiresAt, this.time.currentTime)} to get 40% off the annual plan. Click to view details.`;
+    return `Upgrade in ${formatTimeDurationForCoundown(this.expiresAt, this.time.currentTime)} to get 40% off the annual plan. Click to view details.`;
   }
 }
 
