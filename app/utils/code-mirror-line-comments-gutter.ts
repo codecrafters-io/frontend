@@ -45,11 +45,23 @@ class CommentButtonGutterMarker extends GutterMarkerRS {
   }
 }
 
-function lineCommentsLineMarker(view: EditorView, line: BlockInfo) {
+function lineCommentsGutterLineMarker(view: EditorView, line: BlockInfo) {
   const lineNumber = view.state.doc.lineAt(line.from).number;
   const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(lineNumber)?.commentsCount || 0;
 
   return new (commentsCount === 0 ? CommentButtonGutterMarker : CommentsCountGutterMarker)(line);
+}
+
+function lineCommentsGutterClickHandler(view: EditorView, line: BlockInfo) {
+  const lineNumber = view.state.doc.lineAt(line.from).number;
+  const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
+  const newExpandedLines = expandedLines.includes(lineNumber) ? expandedLines.without(lineNumber) : [...expandedLines, lineNumber];
+
+  view.dispatch({
+    effects: [expandedLineNumbersCompartment.reconfigure(expandedLineNumbersFacet.of(newExpandedLines))],
+  });
+
+  return true;
 }
 
 const lineCommentsGutterBaseTheme = EditorView.baseTheme({
@@ -96,22 +108,9 @@ export function lineCommentsGutter() {
   return [
     gutterRS({
       class: 'cm-lineCommentsGutter',
-      lineMarker: lineCommentsLineMarker,
+      lineMarker: lineCommentsGutterLineMarker,
       domEventHandlers: {
-        click: (view: EditorView, line: BlockInfo) => {
-          const lineNumber = view.state.doc.lineAt(line.from).number;
-          const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
-
-          view.dispatch({
-            effects: [
-              expandedLineNumbersCompartment.reconfigure(
-                expandedLineNumbersFacet.of(expandedLines.includes(lineNumber) ? expandedLines.without(lineNumber) : [...expandedLines, lineNumber]),
-              ),
-            ],
-          });
-
-          return true;
-        },
+        click: lineCommentsGutterClickHandler,
       },
     }),
     lineCommentsGutterBaseTheme,
