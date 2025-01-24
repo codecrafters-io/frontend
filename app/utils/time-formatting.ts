@@ -31,3 +31,32 @@ export function formatTimeDurationForCoundown(laterDate: Date, earlierDate: Date
 
   return `${secondsLeftStr}`;
 }
+
+export function formatTimeDurationForBadge(laterDate: Date, earlierDate: Date): string {
+  const distanceInSeconds = Math.floor((laterDate.getTime() - earlierDate.getTime()) / 1000);
+  const hoursLeft = Math.floor(distanceInSeconds / 60 / 60);
+  const minutesLeft = Math.floor(distanceInSeconds / 60) - hoursLeft * 60;
+  const secondsLeft = distanceInSeconds - hoursLeft * 60 * 60 - minutesLeft * 60;
+
+  if (distanceInSeconds < 0) {
+    return '0 second';
+  }
+
+  if (hoursLeft > 0) {
+    return formatTimeDurationSingularOrPlural(hoursLeft, 'hour');
+  }
+
+  if (minutesLeft > 0) {
+    return formatTimeDurationSingularOrPlural(minutesLeft, 'minute');
+  }
+
+  return formatTimeDurationSingularOrPlural(secondsLeft, 'second');
+}
+
+export function formatTimeDurationSingularOrPlural(duration: number, unit: string): string {
+  if (duration === 1) {
+    return `1 ${unit}`;
+  }
+
+  return `${duration} ${unit}s`;
+}
