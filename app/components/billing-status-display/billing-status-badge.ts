@@ -7,8 +7,7 @@ import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotio
 
 interface Signature {
   Element: HTMLDivElement;
-  Args: {
-  };
+  Args: {};
 }
 
 export default class BillingStatusDisplayComponent extends Component<Signature> {
