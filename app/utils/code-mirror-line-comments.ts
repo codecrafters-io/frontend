@@ -35,10 +35,5 @@ export const toggleLineCommentsEffect = StateEffect.define<{ pos: number; isExpa
 });
 
 export function lineComments(lineData: LineDataCollection) {
-  return [
-    lineDataFacet.of(lineData),
-    expandedLineNumbersCompartment.of(expandedLineNumbersFacet.of([-999])),
-    lineCommentsWidget(),
-    lineCommentsGutter(),
-  ];
+  return [lineDataFacet.of(lineData), expandedLineNumbersCompartment.of(expandedLineNumbersFacet.of([])), lineCommentsWidget(), lineCommentsGutter()];
 }
