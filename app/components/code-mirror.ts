@@ -38,6 +38,7 @@ import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
+import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -66,7 +67,8 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
-  highlightActiveLine: ({ highlightActiveLine: enabled }) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
+  highlightActiveLine: ({ highlightActiveLine: enabled }) =>
+    enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
