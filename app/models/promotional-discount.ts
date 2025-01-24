@@ -18,7 +18,7 @@ export default class PromotionalDiscountModel extends Model {
   get isExpired() {
     // short-circuit, prevent re-computation
     if (this.expiresAt < new Date()) {
-      return false;
+      return true;
     }
 
     return this.expiresAt < this.time.currentTime;
