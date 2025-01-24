@@ -1,4 +1,3 @@
-import BillingStatusDisplayService from 'codecrafters-frontend/services/billing-status-display';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
@@ -24,7 +23,6 @@ interface Signature {
 
 export default class NavigationControlsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare billingStatusDisplay: BillingStatusDisplayService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
 
