@@ -36,6 +36,8 @@ module('Acceptance | view-discount-countdown', function (hooks) {
     });
 
     await catalogPage.visit();
+    // TODO:
+    // CANT USE assert.dom in tests
     assert.dom('[data-test-discount-timer-badge]').exists('Discount timer badge is visible');
     assert.dom('[data-test-discount-timer-badge]').hasText('1 hour left', 'Shows correct time remaining');
   });

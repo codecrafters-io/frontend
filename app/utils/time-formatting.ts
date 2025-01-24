@@ -38,6 +38,9 @@ export function formatTimeDurationForBadge(laterDate: Date, earlierDate: Date): 
   const minutesLeft = Math.floor(distanceInSeconds / 60) - hoursLeft * 60;
   const secondsLeft = distanceInSeconds - hoursLeft * 60 * 60 - minutesLeft * 60;
 
+  // TODO:
+  // More time > 24 hours we need to show `X days left`
+  // And round up to the nearest day
   if (distanceInSeconds < 0) {
     return '0 second';
   }
