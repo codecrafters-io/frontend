@@ -75,7 +75,7 @@
           {{/if}} --}}
 
           {{#if this.activeDiscountForYearlyPlan}}
-            <BillingStatusBadge::DiscountTimerBadge @size="small" @discount={{this.activeDiscountForYearlyPlan}} class="mr-3" />
+            <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" class="mr-3" />
           {{/if}}
 
           <Header::AccountDropdown />
