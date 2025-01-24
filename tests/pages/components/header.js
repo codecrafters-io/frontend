@@ -3,6 +3,12 @@ import { clickOnText, clickable, fillable, isVisible, triggerable } from 'ember-
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
 
+  discountTimerBadge: {
+    scope: '[data-test-discount-timer-badge]',
+    hover: triggerable('mouseenter'),
+    click: clickable(),
+  },
+
   feedbackDropdown: {
     clickOnSendButton: clickable('[data-test-send-button]'),
     fillInExplanation: fillable('textarea'),

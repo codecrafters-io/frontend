@@ -10,6 +10,7 @@ import type ContainerWidthService from 'codecrafters-frontend/services/container
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -27,8 +28,16 @@ export default class HeaderComponent extends Component<Signature> {
 
   @tracked mobileMenuIsExpanded = false;
 
+  get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
+    return this.currentUser?.activeDiscountForYearlyPlan || null;
+  }
+
   get adminPanelLink() {
     return `${config.x.backendUrl}/admin`;
+  }
+
+  get canSeeDiscountCountdown() {
+    return this.featureFlags.canSeeDiscountCountdown;
   }
 
   get currentUser() {
