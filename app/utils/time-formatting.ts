@@ -1,5 +1,7 @@
-export function formatTimeLeft(expiresAt: Date, currentTime: Date): string {
-  const distanceInSeconds = Math.floor((expiresAt.getTime() - currentTime.getTime()) / 1000);
+import * as Sentry from '@sentry/ember';
+
+export function formatTimeDurationForCoundown(laterDate: Date, earlierDate: Date): string {
+  const distanceInSeconds = Math.floor((laterDate.getTime() - earlierDate.getTime()) / 1000);
   const hoursLeft = Math.floor(distanceInSeconds / 60 / 60);
   const minutesLeft = Math.floor(distanceInSeconds / 60) - hoursLeft * 60;
   const secondsLeft = distanceInSeconds - hoursLeft * 60 * 60 - minutesLeft * 60;
@@ -8,8 +10,13 @@ export function formatTimeLeft(expiresAt: Date, currentTime: Date): string {
   const minutesLeftStr = `${minutesLeft.toString().padStart(2, '0')}m`;
   const secondsLeftStr = `${secondsLeft.toString().padStart(2, '0')}s`;
 
-  // TODO: How to handle this? Raise error?
   if (distanceInSeconds < 0) {
+    Sentry.captureMessage(`Received negative time duration for discount countdown notice`, {
+      extra: {
+        expiryDate: laterDate,
+        currentDate: earlierDate,
+      },
+    });
     return '00s';
   }
 

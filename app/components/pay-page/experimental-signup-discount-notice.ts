@@ -3,7 +3,7 @@ import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-d
 import iconImage from '/assets/images/icons/money.svg';
 import { service } from '@ember/service';
 import type TimeService from 'codecrafters-frontend/services/time';
-import { formatTimeLeft } from 'codecrafters-frontend/utils/time-formatting';
+import { formatTimeDurationForCoundown } from 'codecrafters-frontend/utils/time-formatting';
 interface Signature {
   Element: HTMLDivElement;
 
@@ -18,7 +18,7 @@ export default class SignupDiscountNoticeComponent extends Component<Signature> 
   @service declare time: TimeService;
 
   get timeLeftText() {
-    return formatTimeLeft(this.args.discount.expiresAt, this.time.currentTime);
+    return formatTimeDurationForCoundown(this.args.discount.expiresAt, this.time.currentTime);
   }
 }
 
