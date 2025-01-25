@@ -331,6 +331,7 @@ module('Integration | Component | code-mirror', function (hooks) {
 
     module('filename', function () {
       retry("it doesn't break the editor when passed", async function (assert) {
+        assert.timeout(3000);
         this.set('filename', 'javascript.js');
         await render(hbs`<CodeMirror @filename={{this.filename}} />`);
         assert.ok(codeMirror.hasRendered);
