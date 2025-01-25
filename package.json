@@ -181,6 +181,7 @@
     "qunit": "^2.22.0",
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.4.0",
+    "qunit-retry": "^2.3.0",
     "rgb-hex": "^4.1.0",
     "shiki": "^2.0.3",
     "sinon": "^19.0.2",
