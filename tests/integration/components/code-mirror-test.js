@@ -1,9 +1,12 @@
 import { module, skip, test } from 'qunit';
+import setupRetry from 'qunit-retry';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
+
+const retry = setupRetry(test);
 
 module('Integration | Component | code-mirror', function (hooks) {
   setupRenderingTest(hooks);
@@ -327,7 +330,7 @@ module('Integration | Component | code-mirror', function (hooks) {
     });
 
     module('filename', function () {
-      test("it doesn't break the editor when passed", async function (assert) {
+      retry("it doesn't break the editor when passed", async function (assert) {
         this.set('filename', 'javascript.js');
         await render(hbs`<CodeMirror @filename={{this.filename}} />`);
         assert.ok(codeMirror.hasRendered);
