@@ -1,25 +1,25 @@
 import { Decoration, EditorView, WidgetType, type DecorationSet } from '@codemirror/view';
-import { Line, StateEffect, StateField } from '@codemirror/state';
-import { lineDataFacet, expandedLineNumbersFacet, expandedLineNumbersCompartment } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import { Line, /* StateEffect, */ StateField } from '@codemirror/state';
+import { lineDataFacet /*, expandedLineNumbersFacet, expandedLineNumbersCompartment */ } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 class LineCommentsWidget extends WidgetType {
   line: Line;
-  isExpanded: boolean;
+  // isExpanded: boolean;
 
-  constructor(line: Line, isExpanded: boolean = false) {
+  constructor(line: Line /* , isExpanded: boolean = false */) {
     super();
     this.line = line;
-    this.isExpanded = isExpanded;
+    // this.isExpanded = isExpanded;
   }
 
   toDOM(view: EditorView): HTMLElement {
-    const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
+    // const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
     const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(this.line.number)?.commentsCount || 0;
     const classNames = ['cm-lineCommentsWidget'];
 
-    if (expandedLines.includes(this.line.number) || this.isExpanded) {
-      classNames.push('cm-lineCommentsWidgetExpanded');
-    }
+    // if (expandedLines.includes(this.line.number) || this.isExpanded) {
+    //   classNames.push('cm-lineCommentsWidgetExpanded');
+    // }
 
     const elem = document.createElement('div');
     elem.className = classNames.join(' ');
@@ -55,15 +55,15 @@ const lineCommentsWidgetStateField = StateField.define<DecorationSet>({
 
     // let newDecorations = decorations.map(transaction.changes);
 
-    for (const effect of transaction.effects) {
-      if (effect instanceof StateEffect && effect.value?.compartment === expandedLineNumbersCompartment) {
-        return this.create(transaction.state);
+    // for (const effect of transaction.effects) {
+    //   if (effect instanceof StateEffect && effect.value?.compartment === expandedLineNumbersCompartment) {
+    //     // return this.create(transaction.state);
 
-        // newDecorations = newDecorations.update({ filter: (pos) => pos !== effect.value.pos }).update({
-        //   add: [lineCommentsWidgetDecoration(transaction.state.doc.lineAt(effect.value.pos))],
-        // });
-      }
-    }
+    //     newDecorations = newDecorations.update({ filter: (pos) => pos !== effect.value.pos }).update({
+    //       add: [lineCommentsWidgetDecoration(transaction.state.doc.lineAt(effect.value.pos))],
+    //     });
+    //   }
+    // }
 
     // return newDecorations;
 
@@ -82,15 +82,17 @@ const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
       backgroundColor: '#009bff40',
       paddingLeft: '1rem',
       marginRight: '-1rem',
+    },
 
-      '&.cm-lineCommentsWidgetExpanded': {
+    '&.cm-lineCommentsExpanded': {
+      '& .cm-lineCommentsWidget': {
         display: 'block',
         backgroundColor: '#009bff80',
       },
+    },
 
-      '& + br': {
-        display: 'none',
-      },
+    '& .cm-lineCommentsWidget + br': {
+      display: 'none',
     },
 
     '& .cm-insertedLine + br': {
