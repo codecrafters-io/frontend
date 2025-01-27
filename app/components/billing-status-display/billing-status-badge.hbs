@@ -1,6 +1,6 @@
 <div ...attributes>
   {{#if this.shouldShowVipBadge}}
-    <Header::VipBadge />
+    <Header::VipBadge @size={{@size}} />
   {{else if this.shouldShowMemberBadge}}
     <Header::MemberBadge />
   {{else if this.activeDiscountForYearlyPlan}}
