@@ -36,7 +36,7 @@ export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
     return `Your free content access expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PP')}.`;
   }
 
-  get size() {
+  get linkButtonSize() {
     // arg:small -> PrimaryLinkButton size:extra-small
     // arg:large -> small
     return this.args.size === 'large' ? 'small' : 'extra-small';

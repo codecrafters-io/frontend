@@ -1,5 +1,5 @@
-<PrimaryLinkButton @size={{this.size}} @route="pay"
-class="{{if (eq this.size 'extra-small') 'mr-2'}} {{if (eq this.size 'large') 'mr-3'}}"
+<PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay"
+class="{{if (eq this.linkButtonSize 'extra-small') 'mr-2'}} {{if (eq this.linkButtonSize 'small') 'mr-3'}}"
 data-test-free-weeks-left-button>
   <span class="flex items-center gap-x-1">
     {{svg-jar "clock" class="w-4 fill-current"}}
