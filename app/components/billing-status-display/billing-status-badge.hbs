@@ -1,0 +1,20 @@
+<div ...attributes>
+  {{#if this.shouldShowVipBadge}}
+    <Header::VipBadge />
+  {{else if this.shouldShowMemberBadge}}
+    <Header::MemberBadge />
+  {{else if this.activeDiscountForYearlyPlan}}
+    {{#if this.canSeeDiscountCountdown}}
+      <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" />
+    {{/if}}
+  {{else if this.shouldShowFreeWeeksLeftButton}}
+    <Header::FreeWeeksLeftButton />
+  {{else if this.shouldShowUpgradeButton}}
+    <PrimaryLinkButton @size="extra-small" @route="pay" data-test-upgrade-button>
+      <span class="flex items-center gap-x-1">
+        <span>Upgrade</span>
+        {{svg-jar "lock-open" class="w-4"}}
+      </span>
+    </PrimaryLinkButton>
+  {{/if}}
+</div>
