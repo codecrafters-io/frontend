@@ -8,9 +8,10 @@ interface Signature {
 }
 
 export default class MemberBadgeComponent extends Component<Signature> {
-  get size() {
-    // Default to small if not provided
-    return this.args.size || 'small';
+  get linkButtonSize() {
+    // arg:small -> PrimaryLinkButton size:extra-small
+    // arg:large -> small
+    return this.args.size === 'large' ? 'small' : 'extra-small';
   }
 }
 
