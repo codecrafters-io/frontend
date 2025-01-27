@@ -10,7 +10,12 @@
   {{else if this.shouldShowFreeWeeksLeftButton}}
     <Header::FreeWeeksLeftButton @size={{@size}} />
   {{else if this.shouldShowUpgradeButton}}
-    <PrimaryLinkButton @size="extra-small" @route="pay" data-test-upgrade-button>
+    <PrimaryLinkButton
+      @size={{this.linkButtonSize}}
+      @route="pay"
+      class="{{if (eq this.linkButtonSize 'extra-small') 'mr-3'}}"
+      data-test-upgrade-button
+    >
       <span class="flex items-center gap-x-1">
         <span>Upgrade</span>
         {{svg-jar "lock-open" class="w-4"}}

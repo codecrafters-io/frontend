@@ -30,6 +30,12 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.authenticator.currentUser;
   }
 
+  get linkButtonSize() {
+    // arg:small -> PrimaryLinkButton size:extra-small
+    // arg:large -> small
+    return this.args.size === 'large' ? 'small' : 'extra-small';
+  }
+
   get shouldShowFreeWeeksLeftButton(): boolean {
     return (
       !!this.currentUser &&
