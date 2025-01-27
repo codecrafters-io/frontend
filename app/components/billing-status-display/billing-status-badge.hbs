@@ -8,7 +8,7 @@
       <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
     {{/if}}
   {{else if this.shouldShowFreeWeeksLeftButton}}
-    <Header::FreeWeeksLeftButton />
+    <Header::FreeWeeksLeftButton @size={{@size}} />
   {{else if this.shouldShowUpgradeButton}}
     <PrimaryLinkButton @size="extra-small" @route="pay" data-test-upgrade-button>
       <span class="flex items-center gap-x-1">

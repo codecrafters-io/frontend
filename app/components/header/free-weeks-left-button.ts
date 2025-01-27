@@ -5,6 +5,9 @@ import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
+  Args: {
+    size: 'small' | 'large';
+  };
 }
 
 export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
@@ -31,6 +34,12 @@ export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
 
   get freeWeeksLeftTooltipCopy() {
     return `Your free content access expires on ${format(this.currentUser?.lastFreeUsageGrantExpiresAt as Date, 'PP')}.`;
+  }
+
+  get size() {
+    // arg:small -> PrimaryLinkButton size:extra-small
+    // arg:large -> small
+    return this.args.size === 'large' ? 'small' : 'extra-small';
   }
 }
 
