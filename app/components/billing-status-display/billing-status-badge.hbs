@@ -5,7 +5,7 @@
     <Header::MemberBadge @size={{@size}} />
   {{else if this.activeDiscountForYearlyPlan}}
     {{#if this.canSeeDiscountCountdown}}
-      <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" />
+      <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
     {{/if}}
   {{else if this.shouldShowFreeWeeksLeftButton}}
     <Header::FreeWeeksLeftButton />
