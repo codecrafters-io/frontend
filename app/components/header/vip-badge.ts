@@ -13,13 +13,13 @@ interface Signature {
 export default class VipBadgeComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
+  get currentUser() {
+    return this.authenticator.currentUser as UserModel;
+  }
+
   get size() {
     // Default to small if not provided
     return this.args.size || 'small';
-  }
-
-  get currentUser() {
-    return this.authenticator.currentUser as UserModel;
   }
 }
 
