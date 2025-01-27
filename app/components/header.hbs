@@ -59,13 +59,13 @@
           </FeedbackButton>
 
           {{! TODO: Extract this into BillingStatusBadgeComponent, re-use in course page header and here? }}
-          {{#if this.billingStatusDisplay.shouldShowVipBadge}}
+          {{!-- {{#if this.billingStatusDisplay.shouldShowVipBadge}}
             <Header::VipBadge class="mr-3" />
           {{else if this.billingStatusDisplay.shouldShowMemberBadge}}
             <Header::MemberBadge class="mr-3" />
           {{else if this.activeDiscountForYearlyPlan}}
             {{#if this.canSeeDiscountCountdown}}
-              <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" class="mr-3" />
+              <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" class="mr-3" />
             {{/if}}
           {{else if this.billingStatusDisplay.shouldShowFreeWeeksLeftButton}}
             <Header::FreeWeeksLeftButton class="mr-3" />
@@ -76,7 +76,9 @@
                 {{svg-jar "lock-open" class="w-4"}}
               </span>
             </PrimaryLinkButton>
-          {{/if}}
+          {{/if}} --}}
+
+          <BillingStatusDisplay::BillingStatusBadge />
 
           <Header::AccountDropdown />
         {{else}}
