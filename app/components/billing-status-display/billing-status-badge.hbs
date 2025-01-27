@@ -2,7 +2,7 @@
   {{#if this.shouldShowVipBadge}}
     <Header::VipBadge @size={{@size}} />
   {{else if this.shouldShowMemberBadge}}
-    <Header::MemberBadge />
+    <Header::MemberBadge @size={{@size}} />
   {{else if this.activeDiscountForYearlyPlan}}
     {{#if this.canSeeDiscountCountdown}}
       <BillingStatusDisplay::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size="small" />

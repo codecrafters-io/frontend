@@ -1,5 +1,12 @@
-<PrimaryLinkButton @size="extra-small" @route="membership" data-test-member-badge ...attributes>
-  <span class="flex items-center">
+<PrimaryLinkButton
+  @size="extra-small"
+  @route="membership"
+  class="{{if (eq this.size 'small') 'px-2 py-1 mr-3'}} {{if (eq this.size 'large') 'px-3 py-2'}}"
+  data-test-member-badge
+  ...attributes
+>
+
+  <span class="flex items-center {{if (eq this.size 'small') 'text-xs'}} {{if (eq this.size 'large') 'text-xs'}}">
     Member
     {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}
   </span>
