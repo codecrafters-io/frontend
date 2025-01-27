@@ -38,6 +38,6 @@ export default class DiscountTimerBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BillingStatusBadge::DiscountTimerBadge': typeof DiscountTimerBadgeComponent;
+    'BillingStatusDisplay::DiscountTimerBadge': typeof DiscountTimerBadgeComponent;
   }
 }
