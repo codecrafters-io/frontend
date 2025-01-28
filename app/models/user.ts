@@ -71,7 +71,7 @@ export default class UserModel extends Model {
 
   // Our discounts currently only apply to yearly plans. Change this if we need to support other pricing frequencies.
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
-    return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup;
+    return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup || this.activeDiscountFromStageTwoCompletion;
   }
 
   get activeDiscountFromAffiliateReferral() {
@@ -80,6 +80,10 @@ export default class UserModel extends Model {
 
   get activeDiscountFromSignup() {
     return this.activePromotionalDiscountForType('signup');
+  }
+
+  get activeDiscountFromStageTwoCompletion() {
+    return this.activePromotionalDiscountForType('stage_2_completion');
   }
 
   get activeSubscription() {
