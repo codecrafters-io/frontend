@@ -9,7 +9,7 @@ interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
-    discount: PromotionalDiscountModel;
+    discount: PromotionalDiscountModel | null;
     size: 'small' | 'large'; // small is used for the menu bar, large is used for the course page header
   };
 }
@@ -20,18 +20,26 @@ export default class DiscountTimerBadgeComponent extends Component<Signature> {
   @service declare time: TimeService;
 
   get expiresAt() {
-    return this.args.discount.expiresAt;
+    return this.args.discount?.expiresAt;
   }
 
   get isExpired() {
-    return this.args.discount.isExpired;
+    return this.args.discount?.isExpired;
   }
 
   get timeLeft() {
+    if (!this.expiresAt) {
+      return '0';
+    }
+
     return formatTimeDurationForBadge(this.expiresAt, this.time.currentTime);
   }
 
   get tooltipText() {
+    if (!this.expiresAt) {
+      return '';
+    }
+
     return `Upgrade in ${formatTimeDurationForCountdown(this.expiresAt, this.time.currentTime)} to get 40% off the annual plan. Click to view details.`;
   }
 }
