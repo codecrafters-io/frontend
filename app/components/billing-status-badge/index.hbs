@@ -4,9 +4,7 @@
   {{else if this.shouldShowMemberBadge}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
   {{else if (and this.activeDiscountForYearlyPlan this.canSeeDiscountCountdown)}}
-    {{#if this.canSeeDiscountCountdown}}
-      <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
-    {{/if}}
+    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
   {{else if this.shouldShowFreeWeeksLeftButton}}
     <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
   {{else if this.shouldShowUpgradeButton}}
