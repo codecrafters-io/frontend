@@ -4,6 +4,7 @@
   {{else if this.shouldShowMemberBadge}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
   {{else if (and this.activeDiscountForYearlyPlan this.canSeeDiscountCountdown)}}
+    {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
     <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
   {{else if this.shouldShowFreeWeeksLeftButton}}
     <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
