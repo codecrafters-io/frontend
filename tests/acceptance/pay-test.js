@@ -142,7 +142,7 @@ module('Acceptance | pay-test', function (hooks) {
       user: user,
       type: 'stage_2_completion',
       percentageOff: 40,
-      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 + 10), // Add 10 seconds to the expiration time
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 10), // Subtract 10 second from the expiration time
     });
 
     this.server.create('submission', 'withSuccessStatus', {
@@ -156,7 +156,7 @@ module('Acceptance | pay-test', function (hooks) {
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge is visible');
-    assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '24 hours left', 'should show correct time remaining');
+    assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '23 hours left', 'should show correct time remaining');
     await coursePage.header.discountTimerBadge.click();
 
     assert.strictEqual(currentURL(), '/pay');
