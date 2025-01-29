@@ -5,6 +5,39 @@
 
   <div class="flex items-start">
     <div class="flex-grow">
+      <div class="bg-white rounded-md shadow-sm border border-gray-200 relative w-full group mb-4 p-4 md:p-6">
+        <div class="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center mb-4">
+          Rust Primer
+        </div>
+
+        <div class="leading-6 prose dark:prose-invert mb-4">
+          <p>
+            New to Rust? Start with these interactive guides to cover the basics.
+          </p>
+        </div>
+
+        <div>
+          <TrackConceptItem @name="Defining variables" @isComplete={{false}} @estimatedReadingTimeInMinutes={{2}} />
+          <TrackConceptItem @name="Printing output" @isComplete={{false}} @estimatedReadingTimeInMinutes={{4}} />
+          <TrackConceptItem @name="Control flow" @isComplete={{false}} @estimatedReadingTimeInMinutes={{4}} />
+          <TrackConceptItem @name="Scalar data types" @isComplete={{false}} @estimatedReadingTimeInMinutes={{6}} />
+          <TrackConceptItem @name="Compound data types" @isComplete={{false}} @estimatedReadingTimeInMinutes={{2}} />
+          <TrackConceptItem @name="Defining functions" @isComplete={{false}} @estimatedReadingTimeInMinutes={{3}} />
+          <TrackConceptItem @name="Ownership" @isComplete={{false}} @estimatedReadingTimeInMinutes={{3}} />
+          <TrackConceptItem @name="Error handling" @isComplete={{false}} @estimatedReadingTimeInMinutes={{3}} />
+          <TrackConceptItem @name="Modules" @isComplete={{false}} @estimatedReadingTimeInMinutes={{8}} />
+          <TrackConceptItem @name="Packages" @isComplete={{false}} @estimatedReadingTimeInMinutes={{8}} />
+          <TrackConceptItem @name="Crates" @isComplete={{false}} @estimatedReadingTimeInMinutes={{12}} />
+          <TrackConceptItem @name="Generic Types, Traits and Lifetimes" @isComplete={{false}} @estimatedReadingTimeInMinutes={{12}} />
+        </div>
+
+        <div class="leading-6 prose dark:prose-invert mt-4">
+          <p>
+            Once you've go the basics down, time to move on to real projects.
+          </p>
+        </div>
+      </div>
+
       <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
     </div>
 

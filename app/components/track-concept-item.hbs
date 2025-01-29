@@ -1,0 +1,43 @@
+<LinkTo
+  @route="catalog"
+  class="block hover:bg-gray-50 dark:hover:bg-gray-700/50 py-1.5 -mx-1.5 px-1.5 rounded"
+  data-test-stage-list-item
+  ...attributes
+>
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200 dark:bg-gray-700'}} rounded-full mr-2"></div>
+
+      {{! TODO: Qualify all heroicons with solid/outline }}
+      {{svg-jar "academic-cap-outline" class="w-6 mr-1.5 text-gray-400 dark:text-gray-600"}}
+
+      <div class="prose dark:prose-invert prose-sm">
+        {{@name}}
+      </div>
+    </div>
+
+    {{#if @isComplete}}
+      {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
+    {{else}}
+      <div class="flex items-center gap-x-2">
+        {{!-- <div class="flex items-center">
+          {{svg-jar "clipboard-check" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
+
+          <span class="text-xs text-gray-400 dark:text-gray-600">
+            4 questions
+          </span>
+        </div>
+
+        <div class="h-3 w-px bg-gray-200"></div> --}}
+
+        <div class="flex items-center">
+          {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
+
+          <span class="text-xs text-gray-400 dark:text-gray-600">
+            {{@estimatedReadingTimeInMinutes}} mins
+          </span>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+</LinkTo>
