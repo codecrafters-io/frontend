@@ -17,6 +17,6 @@ export default class MemberBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::MemberBadge': typeof MemberBadgeComponent;
+    'BillingStatusBadge::MemberBadge': typeof MemberBadgeComponent;
   }
 }
