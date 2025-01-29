@@ -1,8 +1,8 @@
 <div ...attributes>
   {{#if this.shouldShowVipBadge}}
-    <Header::VipBadge @size={{@size}} />
+    <BillingStatusBadge::VipBadge @size={{@size}} />
   {{else if this.shouldShowMemberBadge}}
-    <Header::MemberBadge @size={{@size}} />
+    <BillingStatusBadge::MemberBadge @size={{@size}} />
   {{else if (and this.activeDiscountForYearlyPlan this.canSeeDiscountCoundown)}}
     {{#if this.canSeeDiscountCountdown}}
       <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
