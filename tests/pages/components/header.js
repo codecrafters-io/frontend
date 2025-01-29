@@ -1,4 +1,4 @@
-import { clickOnText, clickable, fillable, isVisible, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, fillable, isVisible, text, triggerable } from 'ember-cli-page-object';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
@@ -7,6 +7,9 @@ export default {
     scope: '[data-test-discount-timer-badge]',
     hover: triggerable('mouseenter'),
     click: clickable(),
+    isVisible: isVisible(),
+    text: text(),
+    timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
   },
 
   feedbackDropdown: {

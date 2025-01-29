@@ -1,10 +1,19 @@
-import { clickable, text, triggerable } from 'ember-cli-page-object';
+import { clickable, isVisible, text, triggerable } from 'ember-cli-page-object';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 
 export default {
   clickOnCloseCourseButton: clickable('[data-test-close-course-button]'),
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
   darkModeToggle: DarkModeToggle,
+
+  discountTimerBadge: {
+    scope: '[data-test-discount-timer-badge]',
+    hover: triggerable('mouseenter'),
+    click: clickable(),
+    isVisible: isVisible(),
+    text: text(),
+    timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
+  },
 
   freeWeeksLeftButton: {
     hover: triggerable('mouseenter'),
