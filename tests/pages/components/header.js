@@ -1,18 +1,10 @@
-import { clickOnText, clickable, fillable, hasClass, isVisible, text, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, fillable, isVisible } from 'ember-cli-page-object';
+import billingStatusBadge from './billing-status-badge';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
 
-  discountTimerBadge: {
-    scope: '[data-test-discount-timer-badge]',
-    hover: triggerable('mouseenter'),
-    click: clickable(),
-    isVisible: isVisible(),
-    text: text(),
-    timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
-    hasSmallSize: hasClass('px-1.5'),
-    hasLargeSize: hasClass('px-2'),
-  },
+  discountTimerBadge: billingStatusBadge.discountTimerBadge,
 
   feedbackDropdown: {
     clickOnSendButton: clickable('[data-test-send-button]'),
@@ -24,23 +16,13 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  freeWeeksLeftButton: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-free-weeks-left-button]',
-  },
+  freeWeeksLeftButton: billingStatusBadge.freeWeeksLeftButton,
 
-  memberBadge: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-member-badge]',
-  },
+  memberBadge: billingStatusBadge.memberBadge,
 
   scope: '[data-test-header]',
 
-  upgradeButton: {
-    scope: '[data-test-upgrade-button]',
-  },
+  upgradeButton: billingStatusBadge.upgradeButton,
 
-  vipBadge: {
-    scope: '[data-test-vip-badge]',
-  },
+  vipBadge: billingStatusBadge.vipBadge,
 };

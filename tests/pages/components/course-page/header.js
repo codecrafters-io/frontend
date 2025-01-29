@@ -1,41 +1,23 @@
-import { clickable, hasClass, isVisible, text, triggerable } from 'ember-cli-page-object';
+import { clickable, text } from 'ember-cli-page-object';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
+import billingStatusBadge from '../billing-status-badge';
 
 export default {
   clickOnCloseCourseButton: clickable('[data-test-close-course-button]'),
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
   darkModeToggle: DarkModeToggle,
 
-  discountTimerBadge: {
-    scope: '[data-test-discount-timer-badge]',
-    hover: triggerable('mouseenter'),
-    click: clickable(),
-    isVisible: isVisible(),
-    text: text(),
-    timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
-    hasSmallSize: hasClass('px-1.5'),
-    hasLargeSize: hasClass('px-2'),
-  },
+  discountTimerBadge: billingStatusBadge.discountTimerBadge,
 
-  freeWeeksLeftButton: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-free-weeks-left-button]',
-  },
+  freeWeeksLeftButton: billingStatusBadge.freeWeeksLeftButton,
 
-  memberBadge: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-member-badge]',
-  },
+  memberBadge: billingStatusBadge.memberBadge,
 
   progressIndicatorText: text('[data-test-progress-indicator-text]'),
   scope: '[data-test-course-page-header]',
   stepName: text('[data-test-step-name]'),
 
-  upgradeButton: {
-    scope: '[data-test-upgrade-button]',
-  },
+  upgradeButton: billingStatusBadge.upgradeButton,
 
-  vipBadge: {
-    scope: '[data-test-vip-badge]',
-  },
+  vipBadge: billingStatusBadge.vipBadge,
 };
