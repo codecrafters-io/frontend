@@ -36,10 +36,8 @@ module('Acceptance | view-discount-countdown', function (hooks) {
     });
 
     await catalogPage.visit();
-    // TODO:
-    // CANT USE assert.dom in tests
-    assert.dom('[data-test-discount-timer-badge]').exists('Discount timer badge is visible');
-    assert.dom('[data-test-discount-timer-badge]').hasText('1 hour left', 'Shows correct time remaining');
+    assert.ok(catalogPage.header.discountTimerBadge.isVisible, 'Discount timer badge is visible');
+    assert.strictEqual(catalogPage.header.discountTimerBadge.timeLeftText, '1 hour left', 'Shows correct time remaining');
   });
 
   test('discount timer badge shows correct tooltip', async function (assert) {
@@ -82,21 +80,21 @@ module('Acceptance | view-discount-countdown', function (hooks) {
 
     // Check catalog page
     await catalogPage.visit();
-    assert.dom('[data-test-discount-timer-badge]').exists('Badge visible on catalog page');
-    assert.dom('[data-test-discount-timer-badge]').hasClass(/px-1\.5/, 'Has small size on catalog page');
+    assert.ok(catalogPage.header.discountTimerBadge.isVisible, 'Badge visible on catalog page');
+    assert.ok(catalogPage.header.discountTimerBadge.hasSmallSize, 'Has small size on catalog page');
 
     // Check course page
     await catalogPage.clickOnCourse('Build your own Redis');
-    assert.dom('[data-test-discount-timer-badge]').exists('Badge visible on course page');
-    assert.dom('[data-test-discount-timer-badge]').hasClass(/px-1\.5/, 'Has small size on course page');
+    assert.ok(catalogPage.header.discountTimerBadge.isVisible, 'Badge visible on course page');
+    assert.ok(catalogPage.header.discountTimerBadge.hasSmallSize, 'Has small size on course page');
 
     await coursePage.visit({ course_slug: 'redis' });
-    assert.dom('[data-test-discount-timer-badge]').exists('Badge visible on course page');
-    assert.dom('[data-test-discount-timer-badge]').hasClass(/px-2/, 'Has large size on course page');
+    assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge visible on course page');
+    assert.ok(coursePage.header.discountTimerBadge.hasLargeSize, 'Has large size on course page');
   });
 
   test('discount timer badge is not visible when no active discount', async function (assert) {
     await catalogPage.visit();
-    assert.dom('[data-test-discount-timer-badge]').doesNotExist('Discount timer badge is not visible without active discount');
+    assert.notOk(catalogPage.header.discountTimerBadge.isVisible, 'Discount timer badge is not visible without active discount');
   });
 });
