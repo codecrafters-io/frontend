@@ -57,6 +57,9 @@ module.exports = {
           925: '#0A1120',
         },
       },
+      fontSize: {
+        xxs: ['0.625rem', '0.75rem'], // 10px font size with 12px line height
+      },
       typography: {
         DEFAULT: {
           css: {
