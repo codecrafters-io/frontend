@@ -142,7 +142,7 @@ module('Acceptance | pay-test', function (hooks) {
       user: user,
       type: 'stage_2_completion',
       percentageOff: 40,
-      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 10), // Subtract 10 second from the expiration time
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - (30 * 60 * 1000)), // Subtract 30 minutes from the expiration time
     });
 
     this.server.create('submission', 'withSuccessStatus', {
