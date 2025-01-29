@@ -4,12 +4,14 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL, visit } from '@ember/test-helpers';
+import { currentURL, pauseTest, visit } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { animationsSettled } from 'ember-animated/test-support';
+import coursePage from '../pages/course-page';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -97,7 +99,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     const user = signIn(this.owner, this.server);
 
-    const signupDiscount = this.server.schema.promotionalDiscounts.create({
+    const stage2CompletionDiscount = this.server.schema.promotionalDiscounts.create({
       user: user,
       type: 'stage_2_completion',
       percentageOff: 40,
@@ -106,12 +108,58 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
     assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
+    // await pauseTest();
 
     await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
-    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, stage2CompletionDiscount.id);
+  });
+
+  test('passing stage 2 should show stage 2 completion discount', async function (assert) {
+    // The discount timer is currently behind a feature flag
+    testScenario(this.server);
+    const user = signInAsStaff(this.owner, this.server);
+
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: go,
+      user: user,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[0],
+    });
+
+    const stage2CompletionDiscount = this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'stage_2_completion',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    });
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: redis.stages.models.sortBy('position')[1],
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await animationsSettled();
+
+    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+
+    console.log(user.promotionalDiscounts);
+    // Add explicit assertion for badge
+
+    // await pauseTest();
   });
 
   test('user with referral discount and signup discount sees referral discount', async function (assert) {
