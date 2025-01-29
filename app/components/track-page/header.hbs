@@ -1,32 +1,54 @@
-<div class="flex items-center justify-between" ...attributes data-test-track-header>
-  <div>
-    <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
+<div ...attributes data-test-track-header>
+  <div class="flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-2">{{@language.trackTitle}}</h1>
 
-    <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-xl" data-test-track-header-description>
-      {{markdown-to-html @language.trackDescriptionMarkdown}}
-    </p>
+      <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-xl" data-test-track-header-description>
+        {{markdown-to-html @language.trackDescriptionMarkdown}}
+      </p>
 
-    <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
-      {{#if this.currentUserHasStartedTrack}}
-        <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
-      {{else}}
-        <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
-      {{/if}}
-
-      {{#if (gt this.topParticipants.length 0)}}
+      <div class="flex items-center gap-x-3">
         <div class="flex items-center">
-          <div class="flex -space-x-1 hover:space-x-1 items-center">
-            {{#each this.topParticipants as |user|}}
-              <TrackPage::Header::TopParticipantAvatar @user={{user}} />
-            {{/each}}
-          </div>
-
-          <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
+          {{svg-jar "user-group" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+          <span class="text-xs text-gray-500">203,192 learners</span>
         </div>
-      {{/if}}
+        <div class="h-3 w-px bg-gray-200"></div>
+        <div class="flex items-center">
+          {{svg-jar "terminal" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+          <span class="text-xs text-gray-500">248 exercises</span>
+        </div>
+        <div class="h-3 w-px bg-gray-200"></div>
+        <div class="flex items-center">
+          {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+          <span class="text-xs text-gray-500">56 concepts</span>
+        </div>
+        <div class="h-3 w-px bg-gray-200"></div>
+        <div class="flex items-center">
+          {{svg-jar "clipboard-check" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+          <span class="text-xs text-gray-500">148 questions</span>
+        </div>
+        {{!-- <div class="h-1 w-1 bg-gray-400 rounded-full"></div>
+        <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
+          {{#if (gt this.topParticipants.length 0)}}
+            <div class="flex items-center">
+              <div class="flex -space-x-1 hover:space-x-1 items-center">
+                {{#each this.topParticipants as |user|}}
+                  <TrackPage::Header::TopParticipantAvatar @user={{user}} />
+                {{/each}}
+              </div>
+
+              <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
+            </div>
+          {{/if}}
+        </div> --}}
+      </div>
+    </div>
+
+    <div class="ml-4 hidden md:block bg-white rounded-full p-2 border-2 border-gray-200 shadow">
+      <img src="https://raw.githubusercontent.com/rust-lang/rust-artwork/refs/heads/master/logo/rust-logo-blk.svg" class="h-36" />
+      {{!-- <LanguageLogo @language={{@language}} @variant="teal" class="h-36 dark:opacity-90" /> --}}
     </div>
   </div>
-  <div class="ml-4 hidden md:block">
-    <LanguageLogo @language={{@language}} @variant="teal" class="h-36 dark:opacity-90" />
-  </div>
+
+  <div class="h-px bg-gray-200 dark:bg-white/5 w-full my-8"></div>
 </div>
