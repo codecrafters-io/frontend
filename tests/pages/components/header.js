@@ -1,4 +1,4 @@
-import { clickOnText, clickable, fillable, isVisible, text, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, fillable, hasClass, isVisible, text, triggerable } from 'ember-cli-page-object';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
@@ -10,6 +10,8 @@ export default {
     isVisible: isVisible(),
     text: text(),
     timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
+    hasSmallSize: hasClass('px-1.5'),
+    hasLargeSize: hasClass('px-2'),
   },
 
   feedbackDropdown: {

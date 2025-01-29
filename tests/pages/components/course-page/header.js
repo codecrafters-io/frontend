@@ -1,4 +1,4 @@
-import { clickable, isVisible, text, triggerable } from 'ember-cli-page-object';
+import { clickable, hasClass, isVisible, text, triggerable } from 'ember-cli-page-object';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 
 export default {
@@ -13,6 +13,8 @@ export default {
     isVisible: isVisible(),
     text: text(),
     timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
+    hasSmallSize: hasClass('px-1.5'),
+    hasLargeSize: hasClass('px-2'),
   },
 
   freeWeeksLeftButton: {
