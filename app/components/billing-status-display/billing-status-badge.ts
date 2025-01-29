@@ -64,6 +64,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BillingStatusDisplay::BillingStatusBadge': typeof BillingStatusDisplayComponent;
+    BillingStatusBadge: typeof BillingStatusDisplayComponent;
   }
 }
