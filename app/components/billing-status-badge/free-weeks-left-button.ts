@@ -45,6 +45,6 @@ export default class FreeWeeksLeftButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::FreeWeeksLeftButton': typeof FreeWeeksLeftButtonComponent;
+    'BillingStatusBadge::FreeWeeksLeftButton': typeof FreeWeeksLeftButtonComponent;
   }
 }

@@ -8,7 +8,7 @@
       <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
     {{/if}}
   {{else if this.shouldShowFreeWeeksLeftButton}}
-    <Header::FreeWeeksLeftButton @size={{@size}} />
+    <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
   {{else if this.shouldShowUpgradeButton}}
     <PrimaryLinkButton
       @size={{this.linkButtonSize}}
