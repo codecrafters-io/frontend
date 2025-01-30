@@ -1,23 +1,23 @@
 <div ...attributes>
   {{#match this.badgeType}}
-    {{#case 'vip'}}
+    {{#case "vip"}}
       <BillingStatusBadge::VipBadge @size={{@size}} />
     {{/case}}
-    {{#case 'member'}}
+    {{#case "member"}}
       <BillingStatusBadge::MemberBadge @size={{@size}} />
     {{/case}}
-    {{#case 'all-discounts'}}
+    {{#case "all-discounts"}}
       {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
       <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
     {{/case}}
-    {{#case 'old-discounts'}}
+    {{#case "old-discounts"}}
       {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
       <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
     {{/case}}
-    {{#case 'free-weeks-left'}}
+    {{#case "free-weeks-left"}}
       <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
     {{/case}}
-    {{#case 'upgrade'}}
+    {{#case "upgrade"}}
       <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button>
         <span class="flex items-center gap-x-1">
           <span>Upgrade</span>
