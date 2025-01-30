@@ -1,4 +1,5 @@
-<PrimaryLinkButton @size="extra-small" @route="membership" data-test-member-badge ...attributes>
+<PrimaryLinkButton @size={{this.linkButtonSize}} @route="membership" data-test-member-badge ...attributes>
+
   <span class="flex items-center">
     Member
     {{svg-jar "shield-check" class="w-4 ml-1 fill-current"}}

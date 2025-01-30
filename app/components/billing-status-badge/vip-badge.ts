@@ -5,6 +5,9 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 
 interface Signature {
   Element: HTMLDivElement;
+  Args: {
+    size: 'small' | 'large';
+  };
 }
 
 export default class VipBadgeComponent extends Component<Signature> {
@@ -13,10 +16,15 @@ export default class VipBadgeComponent extends Component<Signature> {
   get currentUser() {
     return this.authenticator.currentUser as UserModel;
   }
+
+  get size() {
+    // Default to small if not provided
+    return this.args.size || 'small';
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::VipBadge': typeof VipBadgeComponent;
+    'BillingStatusBadge::VipBadge': typeof VipBadgeComponent;
   }
 }

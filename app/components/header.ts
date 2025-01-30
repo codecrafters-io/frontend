@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type BillingStatusDisplayService from 'codecrafters-frontend/services/billing-status-display';
 import type ContainerWidthService from 'codecrafters-frontend/services/container-width';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
@@ -20,7 +19,6 @@ export default class HeaderComponent extends Component<Signature> {
   logoImage = logoImage;
 
   @service declare authenticator: AuthenticatorService;
-  @service declare billingStatusDisplay: BillingStatusDisplayService;
   @service declare containerWidth: ContainerWidthService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
@@ -34,10 +32,6 @@ export default class HeaderComponent extends Component<Signature> {
 
   get adminPanelLink() {
     return `${config.x.backendUrl}/admin`;
-  }
-
-  get canSeeDiscountCountdown() {
-    return this.featureFlags.canSeeDiscountCountdown;
   }
 
   get currentUser() {
