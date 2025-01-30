@@ -19,7 +19,9 @@
         <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
       {{/if}}
     {{else if this.activeDiscountForYearlyPlan.isFromStage2Completion}}
-      <PayPage::ExperimentalStage2CompletionDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+      {{#if this.canSeeStage2CompletionDiscount}}
+        <PayPage::ExperimentalStage2CompletionDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+      {{/if}}
     {{/if}}
 
     {{#if @model.regionalDiscount}}

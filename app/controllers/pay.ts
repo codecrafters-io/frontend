@@ -40,6 +40,10 @@ export default class PayController extends Controller {
     return this.featureFlags.canSeeDiscountCountdown;
   }
 
+  get canSeeStage2CompletionDiscount() {
+    return this.featureFlags.canSeeStage2CompletionDiscount;
+  }
+
   get discountedYearlyPrice() {
     if (this.activeDiscountForYearlyPlan) {
       return this.activeDiscountForYearlyPlan.computeDiscountedPrice(360);
