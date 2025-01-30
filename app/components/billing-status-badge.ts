@@ -22,8 +22,16 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }
 
+  get activeDiscountForYearlyPlanExcludingStage2CompletionDiscount(): PromotionalDiscountModel | null {
+    return this.currentUser?.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount || null;
+  }
+
   get canSeeDiscountCountdown() {
     return this.featureFlags.canSeeDiscountCountdown;
+  }
+
+  get canSeeStage2CompletionDiscount() {
+    return this.featureFlags.canSeeStage2CompletionDiscount;
   }
 
   get currentUser(): UserModel | null {
