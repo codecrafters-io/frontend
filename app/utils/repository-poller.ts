@@ -18,7 +18,6 @@ export default class RepositoryPoller extends Poller {
     'user.badge-awards.course-stage-completion',
     'user.badge-awards.course-stage-completion.course-stage',
     'user.badge-awards.course-stage-completion.repository',
-    'user.promotional-discounts',
     'course-stage-completions',
     'course-stage-completions.course-stage',
     'course-stage-feedback-submissions',

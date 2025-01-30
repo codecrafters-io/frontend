@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { tracked } from '@glimmer/tracking';
@@ -16,6 +17,7 @@ interface Signature {
 }
 
 export default class MarkStageAsCompleteButtonComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   @tracked isCreatingStageCompletion = false;
@@ -41,6 +43,7 @@ export default class MarkStageAsCompleteButtonComponent extends Component<Signat
       .save();
 
     await this.args.repository.refreshStateFromServer();
+    await this.authenticator.syncCurrentUser();
 
     this.isCreatingStageCompletion = false;
   }
