@@ -26,7 +26,7 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount || null;
   }
 
-  get badgeType(): 'vip' | 'member' | 'discount' | 'free-weeks-left' | 'upgrade' {
+  get badgeType(): 'vip' | 'member' | 'old-discounts' | 'all-discounts' | 'free-weeks-left' | 'upgrade' {
     if (this.shouldShowVipBadge) {
       return 'vip';
     }
@@ -37,7 +37,13 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
 
     if (this.activeDiscountForYearlyPlan) {
       if (this.canSeeDiscountCountdown) {
-        return 'discount';
+        if (this.canSeeStage2CompletionDiscount) {
+          // We can show the stage2 completion discount too
+          return 'all-discounts';
+        }
+
+        // We can only show the signup / affiliate discount
+        return 'old-discounts';
       }
     }
 
