@@ -6,6 +6,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type Store from '@ember-data/store';
+import { waitFor } from '@ember/test-waiters';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -31,6 +32,7 @@ export default class MarkStageAsCompleteButtonComponent extends Component<Signat
   }
 
   @action
+  @waitFor
   async handleCreateStageCompletionButtonClick() {
     this.isCreatingStageCompletion = true;
 
