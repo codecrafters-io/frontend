@@ -1,22 +1,29 @@
 <div ...attributes>
-  {{#if this.shouldShowVipBadge}}
-    <BillingStatusBadge::VipBadge @size={{@size}} />
-  {{else if this.shouldShowMemberBadge}}
-    <BillingStatusBadge::MemberBadge @size={{@size}} />
-  {{else if (and this.activeDiscountForYearlyPlan this.canSeeDiscountCountdown this.canSeeStage2CompletionDiscount)}}
-    {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
-    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
-  {{else if (and this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount this.canSeeDiscountCountdown)}}
-    {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
-    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
-  {{else if this.shouldShowFreeWeeksLeftButton}}
-    <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
-  {{else if this.shouldShowUpgradeButton}}
-    <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button>
-      <span class="flex items-center gap-x-1">
-        <span>Upgrade</span>
-        {{svg-jar "lock-open" class="w-4"}}
-      </span>
-    </PrimaryLinkButton>
-  {{/if}}
+  {{#match this.badgeType}}
+    {{#case 'vip'}}
+      <BillingStatusBadge::VipBadge @size={{@size}} />
+    {{/case}}
+    {{#case 'member'}}
+      <BillingStatusBadge::MemberBadge @size={{@size}} />
+    {{/case}}
+    {{#case 'all-discounts'}}
+      {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
+      <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
+    {{/case}}
+    {{#case 'old-discounts'}}
+      {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
+      <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
+    {{/case}}
+    {{#case 'free-weeks-left'}}
+      <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
+    {{/case}}
+    {{#case 'upgrade'}}
+      <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button>
+        <span class="flex items-center gap-x-1">
+          <span>Upgrade</span>
+          {{svg-jar "lock-open" class="w-4"}}
+        </span>
+      </PrimaryLinkButton>
+    {{/case}}
+  {{/match}}
 </div>
