@@ -32,7 +32,7 @@ export default class PromotionalDiscountModel extends Model {
     return this.type === 'signup';
   }
 
-  get isFromStageTwoCompletion() {
+  get isFromStage2Completion() {
     return this.type === 'stage_2_completion';
   }
 
