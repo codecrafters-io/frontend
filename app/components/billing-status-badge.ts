@@ -38,12 +38,14 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     if (this.activeDiscountForYearlyPlan) {
       if (this.canSeeDiscountCountdown) {
         if (this.canSeeStage2CompletionDiscount) {
-          // We can show the stage2 completion discount too
+          // We can render the stage2 completion discount too
           return 'all-discounts';
         }
 
-        // We can only show the signup / affiliate discount
-        return 'old-discounts';
+        // We can only render the signup / affiliate discount IF it is available
+        if (this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount) {
+          return 'old-discounts';
+        }
       }
     }
 
