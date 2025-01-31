@@ -1,4 +1,4 @@
-import { clickable, hasClass, isVisible, text, triggerable } from 'ember-cli-page-object';
+import { hasClass, text, triggerable } from 'ember-cli-page-object';
 
 export default {
   discountTimerBadge: {
