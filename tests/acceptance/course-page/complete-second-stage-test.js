@@ -177,13 +177,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: redis.stages.models.sortBy('position')[0],
     });
 
-    this.server.schema.promotionalDiscounts.create({
-      user: user,
-      type: 'stage_2_completion',
-      percentageOff: 40,
-      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 30 * 60 * 1000), // Subtract 30 minutes from the expiration time
-    });
-
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       courseStage: redis.stages.models.sortBy('position')[1],
@@ -192,12 +185,19 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
+    this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'stage_2_completion',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 30 * 60 * 1000), // Subtract 30 minutes from the expiration time
+    });
+
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge is visible');
     assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '23 hours left', 'should show correct time remaining');
-    await coursePage.header.discountTimerBadge.click();
 
+    await coursePage.header.discountTimerBadge.click();
     assert.strictEqual(currentURL(), '/pay');
   });
 });
