@@ -81,16 +81,16 @@ module('Acceptance | view-discount-countdown', function (hooks) {
     // Check catalog page
     await catalogPage.visit();
     assert.ok(catalogPage.header.discountTimerBadge.isVisible, 'Badge visible on catalog page');
-    assert.ok(catalogPage.header.discountTimerBadge.hasSmallSize, 'Has small size on catalog page');
+    assert.ok(catalogPage.header.discountTimerBadge.isSmallSize, 'Has small size on catalog page');
 
     // Check course page
     await catalogPage.clickOnCourse('Build your own Redis');
     assert.ok(catalogPage.header.discountTimerBadge.isVisible, 'Badge visible on course page');
-    assert.ok(catalogPage.header.discountTimerBadge.hasSmallSize, 'Has small size on course page');
+    assert.ok(catalogPage.header.discountTimerBadge.isSmallSize, 'Has small size on course page');
 
     await coursePage.visit({ course_slug: 'redis' });
     assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge visible on course page');
-    assert.ok(coursePage.header.discountTimerBadge.hasLargeSize, 'Has large size on course page');
+    assert.ok(coursePage.header.discountTimerBadge.isLargeSize, 'Has large size on course page');
   });
 
   test('discount timer badge is not visible when no active discount', async function (assert) {

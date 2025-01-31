@@ -3,10 +3,10 @@
     <BillingStatusBadge::VipBadge @size={{@size}} />
   {{else if (eq this.badgeType "member")}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
-  {{else if (eq this.badgeType "all-discounts")}}
+  {{else if (eq this.badgeType "discount-timer")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
     <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
-  {{else if (eq this.badgeType "old-discounts")}}
+  {{else if (eq this.badgeType "discount-timer-excluding-stage-2-completion")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
     <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
   {{else if (eq this.badgeType "free-weeks-left")}}
