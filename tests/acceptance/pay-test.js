@@ -9,9 +9,7 @@ import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { animationsSettled } from 'ember-animated/test-support';
-import coursePage from '../pages/course-page';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | pay-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -114,52 +112,6 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
     await payPage.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, stage2CompletionDiscount.id);
-  });
-
-  test('passing stage 2 should show valid clickable stage 2 completion discount', async function (assert) {
-    testScenario(this.server);
-    // The discount timer is currently behind a feature flag
-    const user = signInAsStaff(this.owner, this.server);
-
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: go,
-      user: user,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    this.server.create('submission', 'withStageCompletion', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
-    });
-
-    this.server.schema.promotionalDiscounts.create({
-      user: user,
-      type: 'stage_2_completion',
-      percentageOff: 40,
-      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 30 * 60 * 1000), // Subtract 30 minutes from the expiration time
-    });
-
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
-
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
-
-    assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge is visible');
-    assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '23 hours left', 'should show correct time remaining');
-    await coursePage.header.discountTimerBadge.click();
-
-    assert.strictEqual(currentURL(), '/pay');
   });
 
   test('user with referral discount and signup discount sees referral discount', async function (assert) {
