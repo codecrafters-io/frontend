@@ -4,9 +4,6 @@ export default {
   discountTimerBadge: {
     scope: '[data-test-discount-timer-badge]',
     hover: triggerable('mouseenter'),
-    click: clickable(),
-    isVisible: isVisible(),
-    text: text(),
     timeLeftText: text('[data-test-discount-timer-badge-time-left-text]', { normalized: true }),
     isSmallSize: hasClass('px-1.5'),
     isLargeSize: hasClass('px-2'),
