@@ -35,9 +35,9 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       return 'member';
     }
 
-    if (this.activeDiscountForYearlyPlan && this.canSeeDiscountCountdown) {
+    if (this.activeDiscountForYearlyPlan && this.featureFlags.canSeeDiscountCountdown) {
       // Stage 2 completion discounts are hidden behind a feature flag
-      if (this.activeDiscountForYearlyPlan.isFromStage2Completion && this.canSeeStage2CompletionDiscount) {
+      if (this.activeDiscountForYearlyPlan.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
         return 'discount-timer';
       }
 
@@ -52,14 +52,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     }
 
     return 'upgrade';
-  }
-
-  get canSeeDiscountCountdown() {
-    return this.featureFlags.canSeeDiscountCountdown;
-  }
-
-  get canSeeStage2CompletionDiscount() {
-    return this.featureFlags.canSeeStage2CompletionDiscount;
   }
 
   get currentUser(): UserModel | null {
