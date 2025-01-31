@@ -2,23 +2,25 @@
   <img alt="avatar" src={{@user.avatarUrl}} class="border-2 border-white shadow rounded w-48 h-48 mb-6" />
 
   {{#if @user.hasAnonymousModeEnabled}}
-    <a
-      class="group inline-flex items-center text-gray-400 mb-4 w-full"
-      href="https://github.com/ghost"
-      target="_blank"
-      rel="noopener noreferrer"
-      data-test-github-profile-link
-    >
-      <div class="text-lg group-hover:underline truncate">
-        {{@user.username}}
-      </div>
+    <h1 class="mb-4">
+      <a
+        class="group inline-flex items-center text-gray-400 w-full"
+        href="https://github.com/ghost"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-test-github-profile-link
+      >
+        <div class="text-lg group-hover:underline truncate">
+          {{@user.username}}
+        </div>
 
-      {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
-    </a>
+        {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+      </a>
+    </h1>
   {{else}}
-    <div class="font-bold text-2xl text-gray-600" data-test-github-name>
+    <h1 class="font-bold text-2xl text-gray-600" data-test-github-name>
       {{@user.githubName}}
-    </div>
+    </h1>
 
     <a
       class="group inline-flex items-center text-gray-400 mb-4 w-full"
