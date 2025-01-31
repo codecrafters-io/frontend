@@ -10,7 +10,7 @@ export default class PromotionalDiscountModel extends Model {
 
   @attr('date') createdAt!: Date;
   @attr('date') expiresAt!: Date;
-  @attr('string') type!: 'signup' | 'affiliate_referral';
+  @attr('string') type!: 'signup' | 'affiliate_referral' | 'stage_2_completion';
   @attr('number') percentageOff!: number;
 
   @service declare time: TimeService;
@@ -30,6 +30,10 @@ export default class PromotionalDiscountModel extends Model {
 
   get isFromSignup() {
     return this.type === 'signup';
+  }
+
+  get isFromStage2Completion() {
+    return this.type === 'stage_2_completion';
   }
 
   computeDiscountedPrice(price: number) {

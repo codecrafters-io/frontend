@@ -30,6 +30,10 @@ export default class FeatureFlagsService extends Service {
     return Boolean(this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-split-up-git-commands-for-stage-1') === 'test');
   }
 
+  get canSeeStage2CompletionDiscount(): boolean {
+    return Boolean(this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-stage2-completion-discount') === 'test');
+  }
+
   get currentUser(): User | null {
     return this.authenticator.currentUser;
   }

@@ -1,14 +1,17 @@
 <div ...attributes>
-  {{#if this.shouldShowVipBadge}}
+  {{#if (eq this.badgeType "vip")}}
     <BillingStatusBadge::VipBadge @size={{@size}} />
-  {{else if this.shouldShowMemberBadge}}
+  {{else if (eq this.badgeType "member")}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
-  {{else if (and this.activeDiscountForYearlyPlan this.canSeeDiscountCountdown)}}
+  {{else if (eq this.badgeType "discount-timer")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
     <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
-  {{else if this.shouldShowFreeWeeksLeftButton}}
+  {{else if (eq this.badgeType "discount-timer-excluding-stage-2-completion")}}
+    {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
+    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
+  {{else if (eq this.badgeType "free-weeks-left")}}
     <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
-  {{else if this.shouldShowUpgradeButton}}
+  {{else if (eq this.badgeType "upgrade")}}
     <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button>
       <span class="flex items-center gap-x-1">
         <span>Upgrade</span>

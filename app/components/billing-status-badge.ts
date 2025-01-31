@@ -22,8 +22,36 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }
 
-  get canSeeDiscountCountdown() {
-    return this.featureFlags.canSeeDiscountCountdown;
+  get activeDiscountForYearlyPlanExcludingStage2CompletionDiscount(): PromotionalDiscountModel | null {
+    return this.currentUser?.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount || null;
+  }
+
+  get badgeType(): 'vip' | 'member' | 'discount-timer' | 'discount-timer-excluding-stage-2-completion' | 'free-weeks-left' | 'upgrade' {
+    if (this.shouldShowVipBadge) {
+      return 'vip';
+    }
+
+    if (this.shouldShowMemberBadge) {
+      return 'member';
+    }
+
+    if (this.activeDiscountForYearlyPlan && this.featureFlags.canSeeDiscountCountdown) {
+      // Stage 2 completion discounts are hidden behind a feature flag
+      if (this.activeDiscountForYearlyPlan.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
+        return 'discount-timer';
+      }
+
+      // We can only render the signup / affiliate discount IF it is available
+      if (this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount) {
+        return 'discount-timer-excluding-stage-2-completion';
+      }
+    }
+
+    if (this.shouldShowFreeWeeksLeftButton) {
+      return 'free-weeks-left';
+    }
+
+    return 'upgrade';
   }
 
   get currentUser(): UserModel | null {

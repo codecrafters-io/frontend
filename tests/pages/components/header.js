@@ -1,13 +1,10 @@
-import { clickOnText, clickable, fillable, isVisible, triggerable } from 'ember-cli-page-object';
+import { clickOnText, clickable, fillable, isVisible } from 'ember-cli-page-object';
+import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/billing-status-badge';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
 
-  discountTimerBadge: {
-    scope: '[data-test-discount-timer-badge]',
-    hover: triggerable('mouseenter'),
-    click: clickable(),
-  },
+  discountTimerBadge: BillingStatusBadge.discountTimerBadge,
 
   feedbackDropdown: {
     clickOnSendButton: clickable('[data-test-send-button]'),
@@ -19,23 +16,13 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  freeWeeksLeftButton: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-free-weeks-left-button]',
-  },
+  freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
 
-  memberBadge: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-member-badge]',
-  },
+  memberBadge: BillingStatusBadge.memberBadge,
 
   scope: '[data-test-header]',
 
-  upgradeButton: {
-    scope: '[data-test-upgrade-button]',
-  },
+  upgradeButton: BillingStatusBadge.upgradeButton,
 
-  vipBadge: {
-    scope: '[data-test-vip-badge]',
-  },
+  vipBadge: BillingStatusBadge.vipBadge,
 };

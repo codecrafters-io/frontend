@@ -1,4 +1,5 @@
-import { clickable, text, triggerable } from 'ember-cli-page-object';
+import { clickable, text } from 'ember-cli-page-object';
+import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/billing-status-badge';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 
 export default {
@@ -6,25 +7,17 @@ export default {
   clickOnNextStepButton: clickable('[data-test-next-step-button]'),
   darkModeToggle: DarkModeToggle,
 
-  freeWeeksLeftButton: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-free-weeks-left-button]',
-  },
+  discountTimerBadge: BillingStatusBadge.discountTimerBadge,
 
-  memberBadge: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-member-badge]',
-  },
+  freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
+
+  memberBadge: BillingStatusBadge.memberBadge,
 
   progressIndicatorText: text('[data-test-progress-indicator-text]'),
   scope: '[data-test-course-page-header]',
   stepName: text('[data-test-step-name]'),
 
-  upgradeButton: {
-    scope: '[data-test-upgrade-button]',
-  },
+  upgradeButton: BillingStatusBadge.upgradeButton,
 
-  vipBadge: {
-    scope: '[data-test-vip-badge]',
-  },
+  vipBadge: BillingStatusBadge.vipBadge,
 };

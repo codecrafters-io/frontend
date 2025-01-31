@@ -92,6 +92,28 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
 
+  test('user with stage2 discount can start checkout session', async function (assert) {
+    testScenario(this.server);
+
+    const user = signIn(this.owner, this.server);
+
+    const stage2CompletionDiscount = this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'stage_2_completion',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    });
+
+    await payPage.visit();
+    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
+
+    await percySnapshot('Pay page - with stage 2 completion discount');
+
+    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnProceedToCheckoutButton();
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, stage2CompletionDiscount.id);
+  });
+
   test('user with referral discount and signup discount sees referral discount', async function (assert) {
     testScenario(this.server);
 
