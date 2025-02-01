@@ -139,16 +139,7 @@ export default class LanguageModel extends Model {
   }
 
   get trackDescriptionMarkdown() {
-    if (this.isGo) {
-      return `
-Achieve mastery in advanced Go, by building real-world projects. Featuring goroutines, systems programming,
-file I/O, and more.
-     `;
-    } else {
-      return `
-${this.name} mastery exercises. Become your team's resident ${this.name} expert.
-      `;
-    }
+    return `${this.name} mastery exercises. Become your team's resident ${this.name} expert.`;
   }
 
   get trackIntroductionMarkdown() {
