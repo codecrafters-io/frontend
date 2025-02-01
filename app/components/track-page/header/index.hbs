@@ -20,7 +20,7 @@
         <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
       {{/if}}
 
-      <TrackPage::Header::Statistic @description="243 exercises" @icon="terminal" class="flex-shrink-0" />
+      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
     </div>
 
     <div class="flex items-center flex-wrap gap-x-2 gap-y-4">
