@@ -1,10 +1,13 @@
 <div class="flex items-center justify-between" ...attributes data-test-track-header>
   <div>
-    <div class="flex items-center justify-between">
-      <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-2 md:mb-3">
+    <div class="flex items-center justify-between mb-1 md:mb-3">
+      <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter">
         Master
         {{@language.name}}.
       </h1>
+      <div class="flex md:hidden h-12 w-12 flex-shrink-0">
+        <LanguageLogo @language={{@language}} @variant="teal" class="dark:opacity-90" />
+      </div>
     </div>
 
     <p class="text-gray-600 dark:text-gray-400 mb-3 max-w-xl text-base md:text-lg" data-test-track-header-description>
@@ -37,7 +40,7 @@
       {{/if}}
     </div>
   </div>
-  <div class="ml-4 hidden md:block">
-    <LanguageLogo @language={{@language}} @variant="teal" class="h-36 dark:opacity-90" />
+  <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
+    <LanguageLogo @language={{@language}} @variant="teal" class="dark:opacity-90" />
   </div>
 </div>
