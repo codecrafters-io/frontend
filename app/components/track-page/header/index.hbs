@@ -1,12 +1,18 @@
 <div class="flex items-center justify-between" ...attributes data-test-track-header>
   <div>
-    <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-2">{{@language.trackTitle}}</h1>
+    <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-2 md:mb-3">{{@language.trackTitle}}</h1>
 
-    <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-xl" data-test-track-header-description>
+    <p class="text-gray-600 dark:text-gray-400 mb-3 max-w-xl text-base md:text-lg" data-test-track-header-description>
       {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
-    <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
+    <div class="flex items-center gap-3 mb-5 flex-wrap">
+      <TrackPage::Header::Statistic @description="123k learners" @icon="users" class="flex-shrink-0" />
+      <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
+      <TrackPage::Header::Statistic @description="243 exercises" @icon="terminal" class="flex-shrink-0" />
+    </div>
+
+    <div class="flex items-center flex-wrap gap-x-2 gap-y-4">
       {{#if this.currentUserHasStartedTrack}}
         <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
       {{else}}
@@ -14,7 +20,7 @@
       {{/if}}
 
       {{#if (gt this.topParticipants.length 0)}}
-        <div class="flex items-center">
+        <div class="hidden sm:flex items-center">
           <div class="flex -space-x-1 hover:space-x-1 items-center">
             {{#each this.topParticipants as |user|}}
               <TrackPage::Header::TopParticipantAvatar @user={{user}} />
