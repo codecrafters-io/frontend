@@ -17,6 +17,6 @@ export default class RequestedLanguagesPromptComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt': typeof RequestedLanguagesPromptComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::RequestedLanguagesPrompt': typeof RequestedLanguagesPromptComponent;
   }
 }
