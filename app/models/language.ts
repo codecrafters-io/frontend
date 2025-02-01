@@ -161,8 +161,4 @@ A quick welcome to CodeCrafters.
       return '717263263';
     }
   }
-
-  get trackTitle() {
-    return `Master ${this.name}.`;
-  }
 }
