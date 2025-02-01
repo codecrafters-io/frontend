@@ -78,7 +78,7 @@ const testimonials = {
     authorName: 'Jonathan Lorimer',
     authorDesignation: 'Lead SWE at Mercury Bank',
     authorAvatarImage: jonathanImage,
-    text: `I was really impressed that they support Haskell, and will probably usethis to learn Rust! The git-based workflow is :chefkiss:`,
+    text: `I was really impressed that they support Haskell, and will probably use this to learn Rust! The git-based workflow is :chefkiss:`,
   },
 
   'patrick-burris': {
