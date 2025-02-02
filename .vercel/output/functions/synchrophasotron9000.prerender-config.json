@@ -1,0 +1,6 @@
+{
+  "expiration": 30,
+  "allowQuery": ["accelerationMode"],
+  "passQuery": true,
+  "fallback": "synchrophasotron9000.prerender-fallback.html"
+}

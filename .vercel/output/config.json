@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/synchrophasotron9000", "dest": "/synchrophasotron9000" }
+  ]
+}
