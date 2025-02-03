@@ -21,16 +21,17 @@ import replaceMetaTag from './app/utils/replace-meta-tag';
 export const config = {
   // Limit the middleware to run only for user profile and concept routes
   // RegExp syntax uses rules from pillarjs/path-to-regexp
-  matcher: ['/users/:path*', '/concepts/:path*'],
+  matcher: ['/users/:path*', '/concepts/:path*', '/contests/:path*'],
 };
 
 export default async function middleware(request) {
   // Parse the users or concepts path match result from the request URL
   const usersPathMatchResult = request.url.match(/\/users\/([^/?]+)/);
   const conceptsPathMatchResult = request.url.match(/\/concepts\/([^/?]+)/);
+  const contestsPathMatchResult = request.url.match(/\/contests\/([^/?]+)/);
 
   // Skip the request if username or concept slug is missing
-  if (!usersPathMatchResult && !conceptsPathMatchResult) {
+  if (!usersPathMatchResult && !conceptsPathMatchResult && !contestsPathMatchResult) {
     // Log an error to the console
     console.error('Unable to parse username or concept slug from the URL:', request.url);
 
@@ -81,6 +82,14 @@ export default async function middleware(request) {
     pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
     pageTitle = conceptTitle;
     pageDescription = conceptDescription;
+  } else if (contestsPathMatchResult) {
+    const contestSlug = contestsPathMatchResult[1];
+
+    if (contestSlug === 'amazon-1') {
+      pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
+      pageTitle = `CodeCrafters x Amazon`;
+      pageDescription = `Compete in the first ever contest exclusively for Amazonians on CodeCrafters.`;
+    }
   }
 
   // Determine URL for reading local `/dist/_empty.html`
