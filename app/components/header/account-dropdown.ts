@@ -21,12 +21,6 @@ export default class AccountDropdownComponent extends Component {
   }
 
   @action
-  handleCommunityClick(dropdownActions: { close: () => void }) {
-    window.open('https://discord.gg/DeqUD2P', '_blank');
-    dropdownActions.close();
-  }
-
-  @action
   handleCreateTeamClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
     this.router.transitionTo('teams.create');
