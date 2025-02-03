@@ -89,6 +89,10 @@ export default async function middleware(request) {
       pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
       pageTitle = `CodeCrafters x Amazon`;
       pageDescription = `Compete in the first ever contest exclusively for Amazonians on CodeCrafters.`;
+    } else {
+      pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
+      pageTitle = `CodeCrafters Contests`;
+      pageDescription = `Compete in this contest only on CodeCrafters.`;
     }
   }
 
