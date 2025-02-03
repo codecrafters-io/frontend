@@ -84,11 +84,12 @@ export default async function middleware(request) {
     pageDescription = conceptDescription;
   } else if (contestsPathMatchResult) {
     const contestSlug = contestsPathMatchResult[1];
-    console.log('contestSlug', contestSlug);
     // Generate a proper OG Image URL for the contest
-    pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
-    pageTitle = `CodeCrafters - ${contestSlug}`;
-    pageDescription = `Compete in the ${contestSlug} contest on CodeCrafters.`;
+    if (contestSlug === 'amazon-1') {
+      pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
+      pageTitle = `CodeCrafters x Amazon`;
+      pageDescription = `Compete in the first ever contest exclusively for Amazonians on CodeCrafters.`;
+    }
   }
 
   // Determine URL for reading local `/dist/_empty.html`
