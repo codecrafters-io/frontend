@@ -45,31 +45,24 @@
           <OutdatedClientBadge class="mr-4" />
         {{/if}}
 
+        <FeedbackButton @source="header" class="mr-4" as |dd|>
+          <div
+            role="button"
+            class="rounded border
+              {{if dd.isOpen 'border-gray-500 dark:border-gray-500' 'border-gray-200 dark:border-white/10'}}
+              text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-gray-500 px-2 py-1 text-xs"
+            data-test-feedback-button
+          >
+            Feedback
+          </div>
+        </FeedbackButton>
+
+        <BillingStatusBadge @size="small" class="mr-3" />
+
         {{#if this.authenticator.isAuthenticated}}
-          <FeedbackButton @source="header" class="mr-4" as |dd|>
-            <div
-              role="button"
-              class="rounded border
-                {{if dd.isOpen 'border-gray-500 dark:border-gray-500' 'border-gray-200 dark:border-white/10'}}
-                text-gray-600 dark:text-gray-400 hover:border-gray-500 dark:hover:border-gray-500 px-2 py-1 text-xs"
-              data-test-feedback-button
-            >
-              Feedback
-            </div>
-          </FeedbackButton>
-
-          <BillingStatusBadge @size="small" class="mr-3" />
-
           <Header::AccountDropdown />
         {{else}}
-          <div class="flex items-center ml-6">
-            <PrimaryLinkButton @size="extra-small" @route="pay" class="mr-4" data-test-upgrade-button>
-              <span class="flex items-center gap-x-1">
-                <span>Upgrade</span>
-                {{svg-jar "lock-open" class="w-4"}}
-              </span>
-            </PrimaryLinkButton>
-
+          <div class="flex items-center">
             {{! @glint-expect-error not ts-ified yet }}
             <Header::SignInWithGithubButton />
           </div>
