@@ -50,11 +50,11 @@ export default class ContestRoute extends BaseRoute {
 
     const languages = (await this.store.findAll('language')) as unknown as LanguageModel[];
 
-    this.headData.set('title', `CodeCrafters - ${contest.name}`);
-    this.headData.set('description', `Compete in the ${contest.name} programming contest on CodeCrafters.`);
+    this.headData.title = `CodeCrafters - ${contest.name}`;
+    this.headData.description = `Compete in the ${contest.name} programming contest on CodeCrafters.`;
 
-    if (contest.name === "Amazon Contest #1") {
-      this.headData.set('imageUrl', '/assets/images/og-amazon-contest-1.png');
+    if (contest.name === "Amaze Contest #1") {
+      this.headData.imageUrl = 'public/assets/images/contest-og-images/og-amazon-contest-1.png';
     }
 
     return {
