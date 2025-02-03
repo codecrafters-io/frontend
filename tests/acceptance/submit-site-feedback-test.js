@@ -49,7 +49,6 @@ module('Acceptance | submit-site-feedback', function (hooks) {
     const feedbackSubmission = server.schema.siteFeedbackSubmissions.first();
     assert.strictEqual(feedbackSubmission.source, 'header');
     assert.strictEqual(JSON.stringify(feedbackSubmission.sourceMetadata), '{}');
-    console.log(feedbackSubmission.explanation);
     assert.strictEqual(feedbackSubmission.explanation, feedbackMessage);
 
     await percySnapshot('Feedback widget - after submission');
