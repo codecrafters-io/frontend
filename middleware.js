@@ -84,7 +84,7 @@ export default async function middleware(request) {
     pageDescription = conceptDescription;
   } else if (contestsPathMatchResult) {
     const contestSlug = contestsPathMatchResult[1];
-    // Generate a proper OG Image URL for the contest
+
     if (contestSlug === 'amazon-1') {
       pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
       pageTitle = `CodeCrafters x Amazon`;
