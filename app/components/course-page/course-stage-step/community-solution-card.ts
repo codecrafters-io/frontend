@@ -51,6 +51,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   }
 
   @action
+  handleBackToTopButtonClick() {
+    this.containerElement!.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  @action
   handleCollapseButtonClick() {
     this.isExpanded = false;
     this.containerElement!.scrollIntoView({ behavior: 'smooth' });
