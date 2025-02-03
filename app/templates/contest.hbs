@@ -1,5 +1,12 @@
 {{page-title "Contest"}}
 
+{{#if (eq @model.contest.name "Amazon Contest #1")}}
+  <head>
+    <meta property="og:image" content="/assets/images/og-amazon-contest-1.png" key="og:image" />
+    <meta property="twitter:image" content="/assets/images/og-amazon-contest-1.png" key="twitter:image" />
+  </head>
+{{/if}}
+
 <div class="dark:bg-gray-900">
   <div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
     <ContestPage::Header @allContests={{@model.allContests}} @contest={{@model.contest}} class="mb-6" />
