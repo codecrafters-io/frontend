@@ -6,7 +6,6 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
-import HeadDataService from 'codecrafters-frontend/services/meta-data';
 
 export type ModelType = {
   contest: ContestModel;
@@ -25,7 +24,6 @@ export default class ContestRoute extends BaseRoute {
 
   @service declare router: RouterService;
   @service declare store: Store;
-  @service declare headData: HeadDataService;
 
   async model(params: { contest_slug: string }) {
     const allContests = (await this.store.query('contest', { include: 'leaderboard' })) as unknown as ContestModel[];
@@ -49,13 +47,6 @@ export default class ContestRoute extends BaseRoute {
     }
 
     const languages = (await this.store.findAll('language')) as unknown as LanguageModel[];
-
-    this.headData.title = `CodeCrafters - ${contest.name}`;
-    this.headData.description = `Compete in the ${contest.name} programming contest on CodeCrafters.`;
-
-    if (contest.name === "Amaze Contest #1") {
-      this.headData.imageUrl = 'public/assets/images/contest-og-images/og-amazon-contest-1.png';
-    }
 
     return {
       contest,
