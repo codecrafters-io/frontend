@@ -8,10 +8,20 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 module('Acceptance | submit-site-feedback', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('can submit site feedback', async function (assert) {
+  test('can submit site feedback if user is authenticated', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    await submitFeedback(assert, this.server, 'authenticated feedback');
+  });
+
+  test('can submit site feedback if user is not authenticated', async function (assert) {
+    testScenario(this.server);
+
+    await submitFeedback(assert, this.server, 'anonymous feedback');
+  });
+
+  async function submitFeedback(assert, server, feedbackMessage) {
     const feedbackDropdown = catalogPage.header.feedbackDropdown;
 
     await catalogPage.visit();
@@ -30,16 +40,18 @@ module('Acceptance | submit-site-feedback', function (hooks) {
     await feedbackDropdown.clickOnSendButton();
     assert.ok(feedbackDropdown.sendButtonIsVisible, 'Send button is still visible');
 
-    await feedbackDropdown.fillInExplanation('This is a test');
+    await feedbackDropdown.fillInExplanation(feedbackMessage);
 
     await feedbackDropdown.clickOnSendButton();
     assert.notOk(feedbackDropdown.sendButtonIsVisible, 'Send button is not visible');
     assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is still open (has completed message)');
 
-    const feedbackSubmission = this.server.schema.siteFeedbackSubmissions.first();
+    const feedbackSubmission = server.schema.siteFeedbackSubmissions.first();
     assert.strictEqual(feedbackSubmission.source, 'header');
     assert.strictEqual(JSON.stringify(feedbackSubmission.sourceMetadata), '{}');
+    console.log(feedbackSubmission.explanation);
+    assert.strictEqual(feedbackSubmission.explanation, feedbackMessage);
 
     await percySnapshot('Feedback widget - after submission');
-  });
+  }
 });
