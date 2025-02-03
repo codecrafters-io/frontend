@@ -86,7 +86,7 @@ export default async function middleware(request) {
     const contestSlug = contestsPathMatchResult[1];
     console.log('contestSlug', contestSlug);
     // Generate a proper OG Image URL for the contest
-    pageImageUrl = `https://og.codecrafters.io/api/contest/${contestSlug}`;
+    pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
     pageTitle = `CodeCrafters - ${contestSlug}`;
     pageDescription = `Compete in the ${contestSlug} contest on CodeCrafters.`;
   }
