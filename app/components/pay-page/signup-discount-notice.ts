@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import iconImage from '/assets/images/icons/money.svg';
 import { service } from '@ember/service';
 import type TimeService from 'codecrafters-frontend/services/time';
 import { formatTimeDurationForCountdown } from 'codecrafters-frontend/utils/time-formatting';
-
 interface Signature {
   Element: HTMLDivElement;
 
@@ -13,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class ReferralDiscountNoticeComponent extends Component<Signature> {
+export default class SignupDiscountNoticeComponent extends Component<Signature> {
   iconImage = iconImage;
 
   @service declare time: TimeService;
@@ -25,6 +24,6 @@ export default class ReferralDiscountNoticeComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::ExperimentalReferralDiscountNotice': typeof ReferralDiscountNoticeComponent;
+    'PayPage::SignupDiscountNotice': typeof SignupDiscountNoticeComponent;
   }
 }
