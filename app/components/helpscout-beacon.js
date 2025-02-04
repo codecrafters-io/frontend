@@ -18,4 +18,11 @@ export default class HelpScoutBeaconComponent extends Component {
       console.error('Error loading HelpScout Beacon:', error);
     }
   }
+
+  @action
+  destroyBeacon() {
+    if (typeof window.Beacon === 'function') {
+      window.Beacon('destroy');
+    }
+  }
 }
