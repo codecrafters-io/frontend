@@ -22,10 +22,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }
 
-  get activeDiscountForYearlyPlanExcludingStage2CompletionDiscount(): PromotionalDiscountModel | null {
-    return this.currentUser?.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount || null;
-  }
-
   get badgeType(): 'vip' | 'member' | 'discount-timer' | 'discount-timer-excluding-stage-2-completion' | 'free-weeks-left' | 'upgrade' {
     if (this.shouldShowVipBadge) {
       return 'vip';
@@ -35,16 +31,13 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       return 'member';
     }
 
-    if (this.activeDiscountForYearlyPlan) {
-      // Stage 2 completion discounts are hidden behind a feature flag
-      if (this.activeDiscountForYearlyPlan.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
-        return 'discount-timer';
-      }
+    // Stage 2 completion discounts gets higher priority
+    if (this.activeDiscountForYearlyPlan?.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
+      return 'discount-timer';
+    }
 
-      // We can only render the signup / affiliate discount IF it is available
-      if (this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount) {
-        return 'discount-timer-excluding-stage-2-completion';
-      }
+    if (this.activeDiscountForYearlyPlan?.isFromSignup || this.activeDiscountForYearlyPlan?.isFromAffiliateReferral) {
+      return 'discount-timer-excluding-stage-2-completion';
     }
 
     if (this.shouldShowFreeWeeksLeftButton) {
