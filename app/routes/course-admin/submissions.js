@@ -39,6 +39,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       ...{
         include: [
           'evaluations',
+          'repository.buildpack',
           'repository.language',
           'repository.user',
           'course-stage',
