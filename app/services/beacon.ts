@@ -33,4 +33,4 @@ declare module '@ember/service' {
   interface Registry {
     beacon: BeaconService;
   }
-} 
+}
