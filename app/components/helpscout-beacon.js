@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { loadScript } from '../utils/load-helpscout-beacon';
 import { action } from '@ember/object';
 
-export default class HelpScoutBeaconComponent extends Component {  
+export default class HelpScoutBeaconComponent extends Component {
   @action
   destroyBeacon() {
     if (typeof window.Beacon === 'function') {
