@@ -22,6 +22,10 @@ export default {
 
   scope: '[data-test-header]',
 
+  signInButton: {
+    scope: '[data-test-sign-in-with-github-button]',
+  },
+
   upgradeButton: BillingStatusBadge.upgradeButton,
 
   vipBadge: BillingStatusBadge.vipBadge,

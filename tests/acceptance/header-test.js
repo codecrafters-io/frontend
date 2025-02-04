@@ -5,11 +5,35 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | header-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
+
+  test('header should show sign-in & upgrade button if user is unauthenticated', async function (assert) {
+    testScenario(this.server);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.signInButton.isVisible, 'expect sign-in button to be visible');
+    assert.true(catalogPage.header.upgradeButton.isVisible, 'expect billing status  badge to be visible');
+    await catalogPage.header.upgradeButton.click();
+
+    assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
+  });
+
+  test('header should show upgrade button if user does not have an active subscription', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.upgradeButton.isVisible, 'expect billing status  badge to be visible');
+    await catalogPage.header.upgradeButton.click();
+
+    assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
+  });
 
   test('header should show member badge if user has an active subscription', async function (assert) {
     testScenario(this.server);
