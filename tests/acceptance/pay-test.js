@@ -4,7 +4,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL, pauseTest, visit } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -85,8 +85,11 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
 
-    assert.strictEqual(payPage.signupDiscountNotice.isVisible, true, 'should show signup discount notice');
-    assert.ok(payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/), 'should show signup discount notice text');
+    assert.true(payPage.signupDiscountNotice.isVisible, 'should show signup discount notice');
+    assert.ok(
+      payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/),
+      'should show signup discount notice text',
+    );
     await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnStartPaymentButtonForYearlyPlan();
@@ -148,8 +151,11 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    assert.strictEqual(payPage.referralDiscountNotice.isVisible, true, 'should show referral discount notice');
-    assert.ok(payPage.referralDiscountNotice.text.match(/^rohitpaulk's referral offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the 1 year plan\.$/), 'should show referral discount notice text');
+    assert.true(payPage.referralDiscountNotice.isVisible, 'should show referral discount notice');
+    assert.ok(
+      payPage.referralDiscountNotice.text.match(/^rohitpaulk's referral offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the 1 year plan\.$/),
+      'should show referral discount notice text',
+    );
     assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
 
     await percySnapshot('Pay page - with referral discount');
