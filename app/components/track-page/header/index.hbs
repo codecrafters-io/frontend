@@ -1,12 +1,32 @@
 <div class="flex items-center justify-between" ...attributes data-test-track-header>
   <div>
-    <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter mb-3">{{@language.trackTitle}}</h1>
+    <div class="flex items-center justify-between mb-1 md:mb-3">
+      <h1 class="text-3xl md:text-5xl text-gray-800 dark:text-gray-50 font-bold tracking-tighter">
+        Master
+        {{@language.name}}.
+      </h1>
+      <div class="flex md:hidden h-12 w-12 flex-shrink-0">
+        <LanguageLogo @language={{@language}} @variant="teal" class="dark:opacity-90" />
+      </div>
+    </div>
 
-    <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-xl" data-test-track-header-description>
+    <p class="text-gray-600 dark:text-gray-400 mb-3 max-w-xl text-base md:text-lg" data-test-track-header-description>
       {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
-    <div class="flex items-center flex-wrap-reverse gap-x-2 gap-y-4">
+    <div class="flex items-center gap-3 mb-5 flex-wrap">
+      {{#if (gt @language.trackLearnersCount 3000)}}
+        {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
+        {{#if @language.trackLearnersCount}}
+          <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="flex-shrink-0" />
+          <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
+        {{/if}}
+      {{/if}}
+
+      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
+    </div>
+
+    <div class="flex items-center flex-wrap gap-x-2 gap-y-4">
       {{#if this.currentUserHasStartedTrack}}
         <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
       {{else}}
@@ -14,7 +34,7 @@
       {{/if}}
 
       {{#if (gt this.topParticipants.length 0)}}
-        <div class="flex items-center">
+        <div class="hidden sm:flex items-center">
           <div class="flex -space-x-1 hover:space-x-1 items-center">
             {{#each this.topParticipants as |user|}}
               <TrackPage::Header::TopParticipantAvatar @user={{user}} />
@@ -26,7 +46,7 @@
       {{/if}}
     </div>
   </div>
-  <div class="ml-4 hidden md:block">
-    <LanguageLogo @language={{@language}} @variant="teal" class="h-36 dark:opacity-90" />
+  <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
+    <LanguageLogo @language={{@language}} @variant="teal" class="dark:opacity-90" />
   </div>
 </div>

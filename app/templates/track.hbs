@@ -1,23 +1,27 @@
 {{page-title @model.language.name}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
+<div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
   <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}} />
+</div>
 
-  <div class="h-px bg-gray-200 dark:bg-white/5 w-full my-8"></div>
+<div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
 
-  <div class="flex items-start">
-    <div class="flex-grow">
-      <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
-    </div>
+<div class="bg-white dark:bg-gray-850">
+  <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+    <div class="flex items-start">
+      <div class="flex-grow">
+        <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
+      </div>
 
-    <div class="w-80 flex-shrink-0 hidden lg:block">
-      <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
+      <div class="w-80 flex-shrink-0 hidden lg:block">
+        <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
 
-      {{! TODO: Show testimonials for track instead of courses? }}
-      <div class="mx-6">
-        {{#each this.testimonials as |testimonial|}}
-          <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
-        {{/each}}
+        {{! TODO: Show testimonials for track instead of courses? }}
+        <div class="mx-6">
+          {{#each this.testimonials as |testimonial|}}
+            <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
+          {{/each}}
+        </div>
       </div>
     </div>
   </div>
