@@ -1,6 +1,7 @@
 export function loadScript(src) {
   return new Promise((resolve, reject) => {
-    const existingScript = document.querySelector(`script[src="${src}"]`);
+    console.log('loadScript');
+    const existingScript = document.querySelector('script[src="https://beacon-v2.helpscout.net"]');
 
     if (existingScript) {
       if (typeof window.Beacon === 'function') {
@@ -12,21 +13,40 @@ export function loadScript(src) {
       return;
     }
 
+    // Create and configure the initialization script
+    const initScript = document.createElement('script');
+    initScript.type = 'text/javascript';
+    initScript.innerHTML = `window.Beacon = function(method, options, data) { 
+      window.Beacon.readyQueue = window.Beacon.readyQueue || [];
+      window.Beacon.readyQueue.push({ method: method, options: options, data: data }); 
+    };`;
+    document.head.appendChild(initScript);
+
+    // Create and configure the main Beacon script
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.async = true;
-    script.text = `!function(e,t,n){function a(){var e=t.getElementsByTagName("script")[0],n=t.createElement("script");n.type="text/javascript",n.async=!0,n.src="https://beacon-v2.helpscout.net",e.parentNode.insertBefore(n,e)}if(e.Beacon=n=function(t,n,a){e.Beacon.readyQueue.push({method:t,options:n,data:a})},n.readyQueue=[],"complete"===t.readyState)return a();e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)}(window,document,window.Beacon||function(){});`;
+    script.src = 'https://beacon-v2.helpscout.net';
 
     script.onload = () => {
-      if (typeof window.Beacon === 'function') {
-        resolve();
-      } else {
-        reject(new Error('Beacon API not available after script load'));
-      }
+      console.log('script.onload');
+      // Add a longer delay to ensure Beacon is initialized
+      setTimeout(() => {
+        if (typeof window.Beacon === 'function') {
+          resolve();
+        } else {
+          reject(new Error('Beacon API not available after script load'));
+        }
+      }, 500); // Increased timeout to 500ms
     };
 
-    script.onerror = () => reject(new Error(`Failed to load script for Helpscout Beacon`));
+    script.onerror = () => {
+      console.log('script.onerror');
+      reject(new Error(`Failed to load script for Helpscout Beacon`));
+    };
 
+    // Append the script
     document.head.appendChild(script);
+    console.log('script appended');
   });
 }
