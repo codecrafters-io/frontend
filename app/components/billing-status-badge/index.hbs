@@ -5,10 +5,10 @@
     <BillingStatusBadge::MemberBadge @size={{@size}} />
   {{else if (eq this.badgeType "discount-timer")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
-    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
+    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} {{on "click" this.handleClick}}/>
   {{else if (eq this.badgeType "discount-timer-excluding-stage-2-completion")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
-    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} />
+    <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlanExcludingStage2CompletionDiscount}} @size={{@size}} {{on "click" this.handleClick}}/>
   {{else if (eq this.badgeType "free-weeks-left")}}
     <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
   {{else if (eq this.badgeType "upgrade")}}
