@@ -13,40 +13,62 @@ export function loadScript(src) {
       return;
     }
 
+    // Set up a MutationObserver to watch for the Beacon script
+    const observer = new MutationObserver((mutations) => {
+      const beaconScript = document.querySelector('script[src="https://beacon-v2.helpscout.net"]');
+      if (beaconScript) {
+        observer.disconnect();
+        beaconScript.addEventListener('load', () => {
+          setTimeout(() => {
+            if (typeof window.Beacon === 'function') {
+              resolve();
+            } else {
+              reject(new Error('Beacon API not available after script load'));
+            }
+          }, 100);
+        });
+        beaconScript.addEventListener('error', () => {
+          reject(new Error('Failed to load Beacon script'));
+        });
+      }
+    });
+
+    // Start observing
+    observer.observe(document.head, {
+      childList: true,
+      subtree: true
+    });
+
     // Create and configure the initialization script
     const initScript = document.createElement('script');
     initScript.type = 'text/javascript';
-    initScript.innerHTML = `window.Beacon = function(method, options, data) { 
-      window.Beacon.readyQueue = window.Beacon.readyQueue || [];
-      window.Beacon.readyQueue.push({ method: method, options: options, data: data }); 
-    };`;
-    document.head.appendChild(initScript);
-
-    // Create and configure the main Beacon script
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = 'https://beacon-v2.helpscout.net';
-
-    script.onload = () => {
-      console.log('script.onload');
-      // Add a longer delay to ensure Beacon is initialized
-      setTimeout(() => {
-        if (typeof window.Beacon === 'function') {
-          resolve();
-        } else {
-          reject(new Error('Beacon API not available after script load'));
+    initScript.innerHTML = `
+      !function(e,t,n){
+        function a(){
+          var e=t.getElementsByTagName("script")[0],
+              n=t.createElement("script");
+          n.type="text/javascript",
+          n.async=!0,
+          n.src="https://beacon-v2.helpscout.net",
+          e.parentNode.insertBefore(n,e)
         }
-      }, 500); // Increased timeout to 500ms
-    };
-
-    script.onerror = () => {
-      console.log('script.onerror');
-      reject(new Error(`Failed to load script for Helpscout Beacon`));
-    };
+        if(e.Beacon=n=function(t,n,a){
+          e.Beacon.readyQueue.push({method:t,options:n,data:a})
+        },
+        n.readyQueue=[],
+        "complete"===t.readyState)return a();
+        e.attachEvent?e.attachEvent("onload",a):e.addEventListener("load",a,!1)
+      }(window,document,window.Beacon||function(){});
+    `;
 
     // Append the script
-    document.head.appendChild(script);
+    document.head.appendChild(initScript);
     console.log('script appended');
+
+    // Add a timeout to prevent hanging
+    setTimeout(() => {
+      observer.disconnect();
+      reject(new Error('Timeout waiting for Beacon script'));
+    }, 10000); // 10 second timeout
   });
 }
