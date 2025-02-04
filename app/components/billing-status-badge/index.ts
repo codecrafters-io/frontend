@@ -35,7 +35,7 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       return 'member';
     }
 
-    if (this.activeDiscountForYearlyPlan && this.featureFlags.canSeeDiscountCountdown) {
+    if (this.activeDiscountForYearlyPlan) {
       // Stage 2 completion discounts are hidden behind a feature flag
       if (this.activeDiscountForYearlyPlan.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
         return 'discount-timer';
