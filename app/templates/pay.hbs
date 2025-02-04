@@ -7,9 +7,9 @@
     </h1>
 
     {{#if this.activeDiscountForYearlyPlan.isFromSignup}}
-      <PayPage::ExperimentalSignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+      <PayPage::SignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
     {{else if this.activeDiscountForYearlyPlan.isFromAffiliateReferral}}
-      <PayPage::ExperimentalReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+      <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
     {{else if this.activeDiscountForYearlyPlan.isFromStage2Completion}}
       {{#if this.canSeeStage2CompletionDiscount}}
         <PayPage::ExperimentalStage2CompletionDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
