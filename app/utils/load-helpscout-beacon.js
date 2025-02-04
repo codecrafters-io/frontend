@@ -1,10 +1,9 @@
-export function loadScript(src, onLoadCallback) {
+export function loadScript(src) {
   return new Promise((resolve, reject) => {
     const existingScript = document.querySelector(`script[src="${src}"]`);
 
     if (existingScript) {
       resolve();
-
       return;
     }
 
@@ -14,7 +13,6 @@ export function loadScript(src, onLoadCallback) {
     script.async = true;
 
     script.onload = () => {
-      if (onLoadCallback) onLoadCallback();
       resolve();
     };
 
