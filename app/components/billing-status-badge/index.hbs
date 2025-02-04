@@ -12,7 +12,7 @@
   {{else if (eq this.badgeType "free-weeks-left")}}
     <BillingStatusBadge::FreeWeeksLeftButton @size={{@size}} />
   {{else if (eq this.badgeType "upgrade")}}
-    <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button>
+    <PrimaryLinkButton @size={{this.linkButtonSize}} @route="pay" data-test-upgrade-button {{on "click" this.handleClick}}>
       <span class="flex items-center gap-x-1">
         <span>Upgrade</span>
         {{svg-jar "lock-open" class="w-4"}}

@@ -5,6 +5,7 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type RouterService from '@ember/routing/router-service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -56,6 +57,15 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
 
   get currentUser(): UserModel | null {
     return this.authenticator.currentUser;
+  }
+
+  @action
+  handleClick() {
+    // @ts-ignore
+    if (typeof fbq === 'function') {
+      // @ts-ignore
+      fbq('track', 'InitiateCheckout');
+    }
   }
 
   get linkButtonSize() {
