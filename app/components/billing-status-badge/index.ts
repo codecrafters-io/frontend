@@ -22,6 +22,10 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }
 
+  get activeDiscountForYearlyPlanExcludingStage2CompletionDiscount(): PromotionalDiscountModel | null {
+    return this.currentUser?.activeDiscountFromAffiliateReferral || this.currentUser?.activeDiscountFromSignup || null;
+  }
+
   get badgeType(): 'vip' | 'member' | 'discount-timer' | 'discount-timer-excluding-stage-2-completion' | 'free-weeks-left' | 'upgrade' {
     if (this.shouldShowVipBadge) {
       return 'vip';
