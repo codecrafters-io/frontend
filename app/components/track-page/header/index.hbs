@@ -16,8 +16,11 @@
 
     <div class="flex items-center gap-3 mb-5 flex-wrap">
       {{#if (gt @language.trackLearnersCount 3000)}}
-        <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="flex-shrink-0" />
-        <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
+        {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
+        {{#if @language.trackLearnersCount}}
+          <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="flex-shrink-0" />
+          <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
+        {{/if}}
       {{/if}}
 
       <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
