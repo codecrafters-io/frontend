@@ -22,10 +22,6 @@ export default class SubmitCodeStepComponent extends Component<Signature> {
   @tracked isCommitModalOpen: boolean = false;
   @tracked isPushModalOpen: boolean = false;
 
-  get canSeeSplitUpGitCommandsForStage1() {
-    return this.featureFlags.canSeeSplitUpGitCommandsForStage1;
-  }
-
   get currentCourse() {
     return this.args.courseStage.course;
   }
