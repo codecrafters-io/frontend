@@ -8,14 +8,17 @@ export default class BeaconService extends Service {
 
   get shouldShowBeacon(): boolean {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
+    console.log('shouldShowBeacon called', currentRoute, currentRoute?.metadata);
 
     while (currentRoute) {
       const metadata = currentRoute.metadata;
 
       if (metadata instanceof RouteInfoMetadata) {
         if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Hide) {
+          console.log('shouldShowBeacon returning false');
           return false;
         } else if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Show) {
+          console.log('shouldShowBeacon returning true');
           return true;
         }
       }
@@ -24,6 +27,7 @@ export default class BeaconService extends Service {
     }
 
     // Default to showing the beacon if no route specifies otherwise
+    console.log('shouldShowBeacon returning true');
     return true;
   }
 }
