@@ -98,6 +98,8 @@ module.exports = {
             code: {
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
+              borderWidth: '1px',
+              borderColor: colors.gray[200],
               borderRadius: '4px',
               whiteSpace: 'nowrap',
               backgroundColor: 'var(--tw-prose-pre-bg)',
