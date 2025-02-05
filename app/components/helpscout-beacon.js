@@ -11,23 +11,25 @@ export default class HelpScoutBeaconComponent extends Component {
     this.initBeacon(); // Initialize immediately on component creation
   }
 
-  willDestroy() {
-    super.willDestroy(...arguments); // Call superclass's willDestroy
-    this.destroyBeacon(); // Destroy when component is removed
-  }
-
   @action
   destroyBeacon() {
     console.log('destroyBeacon');
+
     if (typeof window.Beacon === 'function') {
       window.Beacon('destroy');
       this.beaconInitialized = false; // Reset the flag
     }
   }
 
+  willDestroy() {
+    super.willDestroy(...arguments); // Call superclass's willDestroy
+    this.destroyBeacon(); // Destroy when component is removed
+  }
+  
   @action
   async initBeacon() {
     console.log('initBeacon');
+
     try {
       if (typeof window.Beacon === 'function') {
         window.Beacon('init', 'bb089ae9-a4ae-4114-8f7a-b660f6310158');
