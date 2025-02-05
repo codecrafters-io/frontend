@@ -16,6 +16,7 @@ export default class ConceptEngagementModel extends Model {
 
   get totalBlocksCount() {
     const allBlocks = this.concept.parsedBlocks;
+
     return allBlocks.length;
   }
 }
