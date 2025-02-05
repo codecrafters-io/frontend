@@ -6,9 +6,9 @@
 
     <div class="flex-shrink-0 ml-3 text-gray-600 text-sm font-medium">
       <AnimatedContainer>
-        {{#animated-value @latestConceptEngagement.currentProgressPercentage rules=this.rules duration=200 as |v|}}
+        {{#animated-value @latestConceptEngagement.completedBlocksCount rules=this.rules duration=200 as |c|}}
           <div>
-            {{v}}%
+            {{c}}/{{@latestConceptEngagement.totalBlocksCount}}
           </div>
         {{/animated-value}}
       </AnimatedContainer>
