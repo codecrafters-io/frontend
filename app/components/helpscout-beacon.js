@@ -30,8 +30,9 @@ export default class HelpScoutBeaconComponent extends Component {
   async initBeacon() {
     console.log('initBeacon');
     try {
-      await loadScript('https://beacon-v2.helpscout.net');
-      console.log('loadScript done');
+      // await loadScript('https://beacon-v2.helpscout.net');
+      // console.log('loadScript done');
+      console.log('Skipped loadScript')
       if (typeof window.Beacon === 'function') {
         window.Beacon('init', 'bb089ae9-a4ae-4114-8f7a-b660f6310158');
         console.log('HelpScout Beacon initialized.');
