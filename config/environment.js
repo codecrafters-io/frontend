@@ -26,6 +26,10 @@ module.exports = function (environment) {
     },
 
     x: {
+      analytics: {
+        facebookPixelId: process.env.FACEBOOK_PIXEL_ID || '1218366289258395',
+      },
+
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
 
       defaultMetaTags: {
