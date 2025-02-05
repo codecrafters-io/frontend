@@ -36,10 +36,6 @@ export default class PayController extends Controller {
     };
   }
 
-  get canSeeDiscountCountdown() {
-    return this.featureFlags.canSeeDiscountCountdown;
-  }
-
   get canSeeStage2CompletionDiscount() {
     return this.featureFlags.canSeeStage2CompletionDiscount;
   }
