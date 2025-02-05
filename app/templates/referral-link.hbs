@@ -1,4 +1,4 @@
-{{page-title "Referral Link"}}
+{{page-title (concat "Join " @model.referralLink.user.username)}}
 
 <div class="container mx-auto lg:max-w-screen-lg py-16 pb-48 px-3 md:px-6">
   <h1 class="text-2xl font-bold text-gray-700 md:text-3xl text-center">
@@ -6,8 +6,8 @@
   </h1>
 
   <ReferralLinkPage::AcceptReferralContainer
-    @acceptedReferralOfferFreeUsageGrant={{this.model.acceptedReferralOfferFreeUsageGrant}}
-    @referralLink={{this.model.referralLink}}
+    @acceptedReferralOfferFreeUsageGrant={{@model.acceptedReferralOfferFreeUsageGrant}}
+    @referralLink={{@model.referralLink}}
     class="mt-8"
   />
 

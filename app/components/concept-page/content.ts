@@ -15,7 +15,6 @@ interface Signature {
     concept: ConceptModel;
     conceptGroup?: ConceptGroupModel;
     latestConceptEngagement: ConceptEngagementModel;
-    nextConcept: ConceptModel | null;
   };
 }
 
@@ -47,5 +46,11 @@ export default class ContentComponent extends Component<Signature> {
   @action
   handleDidInsertConfettiEmoji(emojiElement: HTMLElement) {
     this.confetti.fireFromElement(emojiElement);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ConceptPage::Content': typeof ContentComponent;
   }
 }

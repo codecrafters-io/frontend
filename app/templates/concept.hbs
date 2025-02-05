@@ -1,9 +1,10 @@
-{{page-title "Concepts"}}
+{{page-title @model.concept.title}}
 
-<ConceptPage::Header @concept={{this.model.concept}} />
+<ConceptPage::Header @concept={{@model.concept}} />
+
 <ConceptPage::Content
-  @allConcepts={{this.model.allConcepts}}
-  @concept={{this.model.concept}}
-  @latestConceptEngagement={{this.model.latestConceptEngagement}}
-  @conceptGroup={{this.model.conceptGroup}}
+  @allConcepts={{@model.allConcepts}}
+  @concept={{@model.concept}}
+  @latestConceptEngagement={{@model.latestConceptEngagement}}
+  @conceptGroup={{@model.conceptGroup}}
 />
