@@ -99,6 +99,7 @@ export default function (config) {
 function routes() {
   this.passthrough('/write-coverage'); // used by ember-cli-code-coverage
   this.passthrough('/assets/**'); // 3d models?
+  this.passthrough('https://beacon-v2.helpscout.net/**'); // HelpScout Beacon
   this.passthrough('https://d3hb14vkzrxvla.cloudfront.net/**'); // HelpScout Beacon
   this.passthrough('https://unpkg.com/**'); // Shiki
   this.passthrough('/version.txt');

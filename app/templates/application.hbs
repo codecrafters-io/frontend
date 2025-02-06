@@ -19,6 +19,10 @@
   {{#if this.layout.shouldShowFooter}}
     <Footer />
   {{/if}}
+
+  {{#if this.beacon.shouldShowBeacon}}
+    <HelpscoutBeacon />
+  {{/if}}
 </div>
 
 <LoadingIndicatorRemover />

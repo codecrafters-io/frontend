@@ -27,7 +27,7 @@
     "lint:types": "tsc --noEmit",
     "lint:glint": "glint",
     "lint:glint:fix": "glint",
-    "start:ember": "FASTBOOT_DISABLED=true ember serve",
+    "start:ember": "FASTBOOT_DISABLED=true ember serve --live-reload=false",
     "start:ember:fastboot": "FASTBOOT_DISABLED=\"\" ember serve",
     "start": "concurrently \"npm:tailwind:watch\" \"npm:start:ember\" --names \"tailwind,ember:\"",
     "start:fastboot": "concurrently \"npm:tailwind:watch\" \"npm:start:ember:fastboot\" --names \"tailwind,ember:\"",
