@@ -24,9 +24,8 @@ export const config = {
   matcher: ['/users/:path*', '/concepts/:path*', '/contests/:path*'],
 };
 
-// Define a hashmap for slug-to-details mapping
 const contestDetailsMap = {
-  'default': {
+  default: {
     imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
     title: 'CodeCrafters Contests',
     description: 'Compete in this contest only on CodeCrafters.',
@@ -41,7 +40,6 @@ const contestDetailsMap = {
     title: 'CodeCrafters x Vercel',
     description: 'Compete in the first ever contest exclusively for Vercelians on CodeCrafters.',
   },
-  // Add more contest slugs and their details here
 };
 
 function getContestDetails(slug) {
