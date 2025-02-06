@@ -22,7 +22,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-interface BlockGroup {
+export interface BlockGroup {
   index: number;
   blocks: Block[];
 }
