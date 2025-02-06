@@ -32,7 +32,7 @@ export default class ConceptEngagementModel extends Model {
   get completedBlocksCount() {
     return Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
   }
- 
+
   get totalBlocksCount() {
     return this.allBlockGroups.length;
   }
