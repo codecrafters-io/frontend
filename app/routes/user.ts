@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = UserModel | undefined;
 
@@ -12,6 +13,10 @@ export default class UserRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
+  }
 
   afterModel(model: ModelType): void {
     if (!model) {
