@@ -34,6 +34,6 @@ export default class ConceptEngagementModel extends Model {
   }
 
   get totalBlocksCount() {
-    return this.allBlockGroups.length;
+    return this.allBlockGroups?.length ?? 0;
   }
 }
