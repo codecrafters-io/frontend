@@ -2,12 +2,17 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service authenticator;
   @service router;
   @service store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
+  }
 
   constructor() {
     super(...arguments);
