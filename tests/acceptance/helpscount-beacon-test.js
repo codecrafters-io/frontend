@@ -34,7 +34,7 @@ module('Acceptance | helpscout-beacon-test', function (hooks) {
 
     assert.false(conceptsPage.helpscoutBeacon.isPresent, 'Helpscout Beacon is not present');
   });
-  
+
   test("beacon doesn't render on concepts page", async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);

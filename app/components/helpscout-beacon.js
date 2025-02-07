@@ -6,34 +6,28 @@ export default class HelpScoutBeaconComponent extends Component {
   @tracked beaconInitialized = false;
 
   constructor() {
-    console.log('HelpScoutBeaconComponent constructor');
     super(...arguments);
-    this.initBeacon(); // Initialize immediately on component creation
+    this.initBeacon();
   }
 
   @action
   destroyBeacon() {
-    console.log('destroyBeacon');
-
     if (typeof window.Beacon === 'function') {
       window.Beacon('destroy');
-      this.beaconInitialized = false; // Reset the flag
+      this.beaconInitialized = false;
     }
   }
 
   willDestroy() {
-    super.willDestroy(...arguments); // Call superclass's willDestroy
-    this.destroyBeacon(); // Destroy when component is removed
+    super.willDestroy(...arguments);
+    this.destroyBeacon();
   }
-  
+
   @action
   async initBeacon() {
-    console.log('initBeacon');
-
     try {
       if (typeof window.Beacon === 'function') {
         window.Beacon('init', 'bb089ae9-a4ae-4114-8f7a-b660f6310158');
-        console.log('HelpScout Beacon initialized.');
         this.beaconInitialized = true;
       } else {
         console.warn('HelpScout Beacon not available after script load.  Check network request.');
