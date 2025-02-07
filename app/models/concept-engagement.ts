@@ -1,4 +1,4 @@
-import ConceptModel from 'codecrafters-frontend/models/concept';
+import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
 import UserModel from 'codecrafters-frontend/models/user';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { cached } from '@glimmer/tracking';
@@ -12,9 +12,8 @@ export default class ConceptEngagementModel extends Model {
   @attr('date') declare lastActivityAt: Date;
   @attr('date') declare startedAt: Date;
 
-  @cached
-  get allBlockGroups(): BlockGroup[] {
-    return this.concept.parsedBlocks.reduce((groups, block) => {
+  getAllBlockGroups(blocks: Block[]): BlockGroup[] {
+    return blocks.reduce((groups, block) => {
       if (groups.length <= 0) {
         groups.push({ index: 0, blocks: [] });
       }
@@ -30,10 +29,16 @@ export default class ConceptEngagementModel extends Model {
   }
 
   get completedBlocksCount() {
-    return Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
+    let index = Math.round((this.currentProgressPercentage / 100) * this.rawTotalBlocksCount());
+
+    return this.getAllBlockGroups(this.concept.parsedBlocks.slice(0, index)).length;
   }
 
   get totalBlocksCount() {
-    return this.allBlockGroups?.length ?? 0;
+    return this.getAllBlockGroups(this.concept.parsedBlocks).length;
+  }
+
+  rawTotalBlocksCount() {
+    return this.concept.parsedBlocks.length;
   }
 }
