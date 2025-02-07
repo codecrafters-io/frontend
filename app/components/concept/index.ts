@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import config from 'codecrafters-frontend/config/environment';
-import type { Block } from 'codecrafters-frontend/models/concept';
+import type { BlockGroup } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
@@ -20,11 +20,6 @@ interface Signature {
   };
 
   Element: HTMLDivElement;
-}
-
-export interface BlockGroup {
-  index: number;
-  blocks: Block[];
 }
 
 export default class ConceptComponent extends Component<Signature> {

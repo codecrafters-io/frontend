@@ -1,7 +1,7 @@
 import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
 import UserModel from 'codecrafters-frontend/models/user';
 import Model, { attr, belongsTo } from '@ember-data/model';
-import type { BlockGroup } from 'codecrafters-frontend/components/concept';
+import type { BlockGroup } from 'codecrafters-frontend/models/concept';
 
 export default class ConceptEngagementModel extends Model {
   @belongsTo('concept', { async: false, inverse: 'engagements' }) declare concept: ConceptModel;

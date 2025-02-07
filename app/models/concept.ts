@@ -14,6 +14,12 @@ export type BlockJSON = {
   args: Record<string, unknown>;
 };
 
+
+export interface BlockGroup {
+  index: number;
+  blocks: Block[];
+}
+
 export default class ConceptModel extends Model {
   @belongsTo('user', { async: false, inverse: null }) declare author: UserModel;
 
