@@ -74,10 +74,6 @@ export default class UserModel extends Model {
     return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup || this.activeDiscountFromStageTwoCompletion;
   }
 
-  get activeDiscountForYearlyPlanExcludingStage2CompletionDiscount(): PromotionalDiscountModel | null {
-    return this.activeDiscountFromAffiliateReferral || this.activeDiscountFromSignup;
-  }
-
   get activeDiscountFromAffiliateReferral() {
     return this.activePromotionalDiscountForType('affiliate_referral');
   }

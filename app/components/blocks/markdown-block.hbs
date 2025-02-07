@@ -4,5 +4,5 @@
   {{did-update this.handleDidUpdateHTML @model.markdown}}
   ...attributes
 >
-  {{markdown-to-html @model.markdown}}
+  {{markdown-to-html (or @model.markdown "**_(!! empty markdown block !!)_**")}}
 </div>

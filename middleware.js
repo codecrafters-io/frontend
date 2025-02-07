@@ -24,6 +24,32 @@ export const config = {
   matcher: ['/users/:path*', '/concepts/:path*', '/contests/:path*'],
 };
 
+const contestDetailsMap = {
+  default: {
+    imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
+    title: 'CodeCrafters Contests',
+    description: 'Compete in this contest only on CodeCrafters.',
+  },
+  'amazon-1': {
+    imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
+    title: 'CodeCrafters x Amazon',
+    description: 'Compete in the first ever contest exclusively for Amazonians on CodeCrafters.',
+  },
+  'vercel-1': {
+    imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
+    title: 'CodeCrafters x Vercel',
+    description: 'Compete in the first ever contest exclusively for Vercelians on CodeCrafters.',
+  },
+};
+
+function getContestDetails(slug) {
+  if (!(slug in contestDetailsMap)) {
+    return contestDetailsMap['default'];
+  }
+
+  return contestDetailsMap[slug];
+}
+
 export default async function middleware(request) {
   // Parse the users or concepts path match result from the request URL
   const usersPathMatchResult = request.url.match(/\/users\/([^/?]+)/);
@@ -85,15 +111,12 @@ export default async function middleware(request) {
   } else if (contestsPathMatchResult) {
     const contestSlug = contestsPathMatchResult[1];
 
-    if (contestSlug === 'amazon-1') {
-      pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
-      pageTitle = `CodeCrafters x Amazon`;
-      pageDescription = `Compete in the first ever contest exclusively for Amazonians on CodeCrafters.`;
-    } else {
-      pageImageUrl = `/assets/images/contest-og-images/og-amazon-contest-1.png`;
-      pageTitle = `CodeCrafters Contests`;
-      pageDescription = `Compete in this contest only on CodeCrafters.`;
-    }
+    // Fetch contest details from the hashmap
+    const contestDetails = getContestDetails(contestSlug);
+
+    pageImageUrl = contestDetails.imageUrl;
+    pageTitle = contestDetails.title;
+    pageDescription = contestDetails.description;
   }
 
   // Determine URL for reading local `/dist/_empty.html`

@@ -11,6 +11,14 @@ export default create({
   clickOnStartPaymentButtonForYearlyPlan: clickable('[data-test-yearly-pricing-card] [data-test-start-payment-button]'),
   header: Header,
 
+  referralDiscountNotice: {
+    scope: '[data-test-referral-discount-notice]',
+  },
+
+  signupDiscountNotice: {
+    scope: '[data-test-signup-discount-notice]',
+  },
+
   pricingCards: collection('[data-test-pricing-card]', {
     discountedPriceText: text('[data-test-discounted-price]'),
 
