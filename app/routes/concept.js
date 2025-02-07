@@ -10,16 +10,16 @@ export default class ConceptRoute extends BaseRoute {
   @service router;
   @service store;
 
-  buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
-  }
-
   constructor() {
     super(...arguments);
 
     this.router.on('routeDidChange', () => {
       scheduleOnce('afterRender', this, scrollToTop);
     });
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
   }
 
   async findOrCreateConceptEngagement(concept) {

@@ -18,11 +18,6 @@ export default class HelpScoutBeaconComponent extends Component {
     }
   }
 
-  willDestroy() {
-    super.willDestroy(...arguments);
-    this.destroyBeacon();
-  }
-
   @action
   async initBeacon() {
     try {
@@ -35,5 +30,10 @@ export default class HelpScoutBeaconComponent extends Component {
     } catch (error) {
       console.error('Error loading HelpScout Beacon:', error);
     }
+  }
+
+  willDestroy() {
+    super.willDestroy(...arguments);
+    this.destroyBeacon();
   }
 }

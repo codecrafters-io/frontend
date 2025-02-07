@@ -14,14 +14,14 @@ export default class UserRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
-  }
-
   afterModel(model: ModelType): void {
     if (!model) {
       this.router.transitionTo('not-found');
     }
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
   }
 
   async model(params: { username: string }): Promise<ModelType> {

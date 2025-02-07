@@ -8,6 +8,7 @@ export default class BeaconService extends Service {
 
   get shouldShowBeacon(): boolean {
     let currentRoute: RouteInfo | null = this.router.currentRoute;
+
     while (currentRoute) {
       const metadata = currentRoute.metadata;
 
