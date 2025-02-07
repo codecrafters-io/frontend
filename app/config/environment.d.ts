@@ -14,6 +14,7 @@ declare const config: {
     isCI: boolean;
     metaTagImagesBaseURL: string;
     stripePublishableKey: string;
+    helpscoutBeaconId: string;
     version: string;
   };
 };

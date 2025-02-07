@@ -45,6 +45,7 @@ module.exports = function (environment) {
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
+      helpscoutBeaconId: process.env.HELPSCOUT_BEACON_ID || 'bb089ae9-a4ae-4114-8f7a-b660f6310158',
 
       // Update the major version number to force all clients to update.
       // The minor version doesn't do anything at the moment, might use in the future.
