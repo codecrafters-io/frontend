@@ -14,7 +14,6 @@ export type BlockJSON = {
   args: Record<string, unknown>;
 };
 
-
 export interface BlockGroup {
   index: number;
   blocks: Block[];
