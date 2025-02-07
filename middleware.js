@@ -35,6 +35,11 @@ const contestDetailsMap = {
     title: 'CodeCrafters x Amazon',
     description: 'Compete in the first ever contest exclusively for Amazonians on CodeCrafters.',
   },
+  'github-1': {
+    imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
+    title: 'CodeCrafters x GitHub',
+    description: 'Compete in the first ever contest exclusively for Hubbers on CodeCrafters.',
+  },
   'vercel-1': {
     imageUrl: '/assets/images/contest-og-images/og-amazon-contest-1.png',
     title: 'CodeCrafters x Vercel',
