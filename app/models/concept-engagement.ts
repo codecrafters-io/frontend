@@ -11,6 +11,20 @@ export default class ConceptEngagementModel extends Model {
   @attr('date') declare lastActivityAt: Date;
   @attr('date') declare startedAt: Date;
 
+  get completedBlockGroupsCount() {
+    const index = Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
+
+    return this.parseIntoBlockGroups(this.concept.parsedBlocks.slice(0, index)).length;
+  }
+
+  get totalBlockGroupsCount() {
+    return this.parseIntoBlockGroups(this.concept.parsedBlocks).length;
+  }
+
+  get totalBlocksCount() {
+    return this.concept.parsedBlocks.length;
+  }
+
   parseIntoBlockGroups(blocks: Block[]): BlockGroup[] {
     return blocks.reduce((groups, block) => {
       if (groups.length <= 0) {
@@ -25,19 +39,5 @@ export default class ConceptEngagementModel extends Model {
 
       return groups;
     }, [] as BlockGroup[]);
-  }
-
-  get completedBlockGroupsCount() {
-    let index = Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount());
-
-    return this.parseIntoBlockGroups(this.concept.parsedBlocks.slice(0, index)).length;
-  }
-
-  get totalBlockGroupsCount() {
-    return this.parseIntoBlockGroups(this.concept.parsedBlocks).length;
-  }
-
-  totalBlocksCount() {
-    return this.concept.parsedBlocks.length;
   }
 }
