@@ -15,6 +15,6 @@ export default class LanguageButtonComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::LanguageButton': typeof LanguageButtonComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::LanguageButton': typeof LanguageButtonComponent;
   }
 }
