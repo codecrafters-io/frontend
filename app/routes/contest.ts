@@ -18,6 +18,12 @@ export type ModelType = {
 export default class ContestRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
+  afterModel(model: ModelType): void {
+    if (!model || !model.contest) {
+      this.router.transitionTo('not-found');
+    }
+  }
+
   buildRouteInfoMetadata(): RouteInfoMetadata {
     return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
   }
@@ -28,8 +34,17 @@ export default class ContestRoute extends BaseRoute {
   async model(params: { contest_slug: string }) {
     const allContests = (await this.store.query('contest', { include: 'leaderboard' })) as unknown as ContestModel[];
 
-    // TODO: Handle case where contest is not found
     const contest = allContests.find((contest) => contest.slug === params.contest_slug) as ContestModel;
+
+    if (!contest) {
+      return {
+        contest: null,
+        allContests: [],
+        topLeaderboardEntries: [],
+        surroundingLeaderboardEntries: [],
+        languages: [],
+      } as unknown as ModelType;
+    }
 
     const topLeaderboardEntries = (await this.store.query('leaderboard-entry', {
       leaderboard_id: contest.leaderboard.id,
