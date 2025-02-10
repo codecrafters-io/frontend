@@ -102,6 +102,13 @@ module('Acceptance | contests-test', function (hooks) {
     await percySnapshot('Active Contest');
   });
 
+  test('it should redirect to not-found if the contest does not exist', async function (assert) {
+    testScenario(this.server);
+
+    await contestsPage.visit({ contest_slug: 'nonexistent' });
+    assert.strictEqual(currentURL(), '/404');
+  });
+
   test('time remaining status pill shows correct copy', async function (assert) {
     testScenario(this.server);
     createContests(this.owner, this.server);
