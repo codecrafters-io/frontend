@@ -8,6 +8,7 @@ import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagem
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ConceptRouteModel = {
   allConcepts: ConceptModel[];
@@ -28,6 +29,10 @@ export default class ConceptRoute extends BaseRoute {
     this.router.on('routeDidChange', () => {
       scheduleOnce('afterRender', this, scrollToTop);
     });
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   async findOrCreateConceptEngagement(concept: ConceptModel) {

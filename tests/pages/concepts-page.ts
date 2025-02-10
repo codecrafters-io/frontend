@@ -1,5 +1,6 @@
 import { attribute, clickable, collection, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
+import helpscoutBeacon from 'codecrafters-frontend/tests/pages/components/helpscout-beacon';
 
 export default createPage({
   clickOnConceptCard(title: string) {
@@ -24,6 +25,8 @@ export default createPage({
       scope: '[data-test-draft-label]',
     },
   }),
+
+  helpscoutBeacon: helpscoutBeacon,
 
   visit: visitable('/concepts'),
 });

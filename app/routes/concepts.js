@@ -1,10 +1,15 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 import { hash as RSVPHash } from 'rsvp';
 
 export default class ConceptsRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+  }
 
   async model() {
     if (this.authenticator.isAuthenticated) {

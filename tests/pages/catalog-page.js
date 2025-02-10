@@ -4,6 +4,7 @@ import AccountDropdown from 'codecrafters-frontend/tests/pages/components/accoun
 import CourseCard from 'codecrafters-frontend/tests/pages/components/course-card';
 import TrackCard from 'codecrafters-frontend/tests/pages/components/tracks-page/track-card';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
+import helpscoutBeacon from 'codecrafters-frontend/tests/pages/components/helpscout-beacon';
 
 export default create({
   accountDropdown: AccountDropdown,
@@ -23,6 +24,8 @@ export default create({
   courseCardByName(name) {
     return this.courseCards.toArray().find((courseCard) => courseCard.name === name);
   },
+
+  helpscoutBeacon: helpscoutBeacon,
 
   productWalkthroughFeatureSuggestion: {
     clickOnDismissButton: clickable('[data-test-dismiss-button]'),
