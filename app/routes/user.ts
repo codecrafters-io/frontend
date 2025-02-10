@@ -21,7 +21,7 @@ export default class UserRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   async model(params: { username: string }): Promise<ModelType> {

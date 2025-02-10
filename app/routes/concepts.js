@@ -8,7 +8,7 @@ export default class ConceptsRoute extends BaseRoute {
   @service store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hide });
+    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   async model() {
