@@ -2,6 +2,7 @@ import { attribute, collection, text, triggerable, visitable } from 'ember-cli-p
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import CourseProgressListItem from 'codecrafters-frontend/tests/pages/components/course-progress-list-item';
 import helpscoutBeacon from 'codecrafters-frontend/tests/pages/components/helpscout-beacon';
+
 export default createPage({
   adminProfileButton: {
     scope: '[data-test-admin-profile-button]',

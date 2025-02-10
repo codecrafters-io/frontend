@@ -11,10 +11,10 @@ declare const config: {
   rootURL: string;
   x: {
     backendUrl: string;
+    helpscoutBeaconId: string;
     isCI: boolean;
     metaTagImagesBaseURL: string;
     stripePublishableKey: string;
-    helpscoutBeaconId: string;
     version: string;
   };
 };

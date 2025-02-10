@@ -3,7 +3,7 @@ import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/route-info';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 
-export default class BeaconService extends Service {
+export default class HelpscoutBeaconService extends Service {
   @service declare router: RouterService;
 
   get shouldShowBeacon(): boolean {
@@ -13,9 +13,9 @@ export default class BeaconService extends Service {
       const metadata = currentRoute.metadata;
 
       if (metadata instanceof RouteInfoMetadata) {
-        if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Hide) {
+        if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Hidden) {
           return false;
-        } else if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Show) {
+        } else if (metadata.beaconVisibility === HelpscoutBeaconVisibility.Visible) {
           return true;
         }
       }
@@ -31,6 +31,6 @@ export default class BeaconService extends Service {
 // Type declaration for service injection
 declare module '@ember/service' {
   interface Registry {
-    beacon: BeaconService;
+    beacon: HelpscoutBeaconService;
   }
 }
