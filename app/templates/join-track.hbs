@@ -27,18 +27,18 @@
         <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
-      <div class="w-80 flex-shrink-0 hidden lg:block">
+      <div class="hidden lg:block w-80 flex-shrink-0 sticky top-4 ml-2">
         <AffiliateLinkPage::AcceptReferralContainer
           @affiliateLink={{this.model.affiliateLink}}
-          {{!-- @language={{this.model.language}} --}}
+          @language={{this.model.language}}
           @verticalSize="compact"
           class="mb-6 ml-2 w-full bg-github-green-dot-wall"
         />
 
-        <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
+        <TrackLeaderboard class="mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
-        <div class="mx-6">
+        <div class="mx-4">
           {{#each this.testimonials as |testimonial|}}
             <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
           {{/each}}
@@ -49,7 +49,7 @@
     <div class="flex justify-center items-center py-6 md:py-10">
       <AffiliateLinkPage::AcceptReferralContainer
         @affiliateLink={{this.model.affiliateLink}}
-        {{!-- @course={{this.model.course}} --}}
+        @language={{this.model.language}}
         @verticalSize="tall"
         class="w-full bg-github-green-dot-wall"
       />
