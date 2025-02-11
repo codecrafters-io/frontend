@@ -1,4 +1,4 @@
-import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
+import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
@@ -23,6 +23,10 @@ export default createPage({
   },
 
   questionCards: collection('[data-test-question-card]', {
+    body: {
+      scope: '[data-test-question-card-body]',
+      hasPrismHighlighting: hasClass('has-prism-highlighting'),
+    },
     focusedOption: {
       scope: '[data-test-question-card-option]:focus',
     },
