@@ -13,12 +13,28 @@
 
 <div class="bg-white dark:bg-gray-850">
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+    <div class="lg:hidden flex justify-center items-center pb-6 md:pb-10">
+      <AffiliateLinkPage::AcceptReferralContainer
+        @affiliateLink={{this.model.affiliateLink}}
+        {{!-- @course={{this.model.course}} --}}
+        @verticalSize="tall"
+        class="w-full bg-github-green-dot-wall"
+      />
+    </div>
+
     <div class="flex items-start">
       <div class="flex-grow">
         <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
       <div class="w-80 flex-shrink-0 hidden lg:block">
+        <AffiliateLinkPage::AcceptReferralContainer
+          @affiliateLink={{this.model.affiliateLink}}
+          {{!-- @language={{this.model.language}} --}}
+          @verticalSize="compact"
+          class="mb-6 ml-2 w-full bg-github-green-dot-wall"
+        />
+
         <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
@@ -28,6 +44,15 @@
           {{/each}}
         </div>
       </div>
+    </div>
+
+    <div class="flex justify-center items-center py-6 md:py-10">
+      <AffiliateLinkPage::AcceptReferralContainer
+        @affiliateLink={{this.model.affiliateLink}}
+        {{!-- @course={{this.model.course}} --}}
+        @verticalSize="tall"
+        class="w-full bg-github-green-dot-wall"
+      />
     </div>
   </div>
 </div>
