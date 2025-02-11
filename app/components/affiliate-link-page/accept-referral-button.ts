@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
@@ -15,6 +16,7 @@ interface Signature {
   Args: {
     affiliateLink: AffiliateLinkModel;
     course?: CourseModel;
+    language?: LanguageModel;
   };
 }
 
@@ -78,6 +80,8 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
 
       if (this.args.course) {
         this.router.transitionTo('course', this.args.course.slug);
+      } else if (this.args.language) {
+        this.router.transitionTo('track', this.args.language.slug);
       } else {
         this.router.transitionTo('pay');
       }
