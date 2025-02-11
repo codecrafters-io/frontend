@@ -13,11 +13,11 @@
         <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
-      <div class="w-80 flex-shrink-0 hidden lg:block">
-        <TrackLeaderboard class="ml-2 mb-6" @language={{@model.language}} />
+      <div class="hidden lg:block w-80 flex-shrink-0 sticky top-4 ml-2">
+        <TrackLeaderboard class="mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
-        <div class="mx-6">
+        <div class="mx-4">
           {{#each this.testimonials as |testimonial|}}
             <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
           {{/each}}
