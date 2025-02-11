@@ -50,19 +50,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   @cached
   get allBlockGroups(): BlockGroup[] {
-    return this.allBlocks.reduce((groups, block) => {
-      if (groups.length <= 0) {
-        groups.push({ index: 0, blocks: [] });
-      }
-
-      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
-
-      if (block.isInteractable || groups.length === 0) {
-        groups.push({ index: groups.length, blocks: [] });
-      }
-
-      return groups;
-    }, [] as BlockGroup[]);
+    return this.args.concept.allBlockGroups;
   }
 
   @cached

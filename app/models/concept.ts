@@ -6,6 +6,7 @@ import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, Mark
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
+import { cached } from '@glimmer/tracking';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
@@ -34,6 +35,23 @@ export default class ConceptModel extends Model {
 
   @equal('status', 'draft') declare statusIsDraft: boolean;
   @equal('status', 'published') declare statusIsPublished: boolean;
+
+  @cached
+  get allBlockGroups(): BlockGroup[] {
+    return this.parsedBlocks.reduce((groups, block) => {
+      if (groups.length <= 0) {
+        groups.push({ index: 0, blocks: [] });
+      }
+
+      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+
+      if (block.isInteractable || groups.length === 0) {
+        groups.push({ index: groups.length, blocks: [] });
+      }
+
+      return groups;
+    }, [] as BlockGroup[]);
+  }
 
   get estimatedReadingTimeInMinutes(): number {
     if (this.blocks) {
