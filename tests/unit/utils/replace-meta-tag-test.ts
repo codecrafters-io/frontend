@@ -1,12 +1,7 @@
-import replaceMetaTag from 'codecrafters-frontend/utils/replace-meta-tag';
+import replaceMetaTag, { replaceAllMetaTags } from 'codecrafters-frontend/utils/replace-meta-tag';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | replace-meta-tag', function () {
-  test('it exists and is a function', function (assert) {
-    assert.ok(replaceMetaTag, 'it exists');
-    assert.ok(replaceMetaTag instanceof Function, 'it is an instance of Function');
-  });
-
   test('it overwrites content of specified meta tags in passed text', function (assert) {
     assert.strictEqual(
       replaceMetaTag('<meta property="og:image" content="old image">', 'property', 'og:image', 'new image'),
@@ -54,5 +49,20 @@ module('Unit | Utility | replace-meta-tag', function () {
       '<meta foo="bar" content="top tag"><meta property="og:image" content="new image"><meta bar="baz" content="bottom tag">',
       'content around replaced tags is preserved',
     );
+  });
+
+  module('replaceAllMetaTags', function () {
+    test('it overwrites content of all specified meta tags in passed text', function (assert) {
+      assert.strictEqual(
+        replaceAllMetaTags(
+          '<meta property="og:image" content="old image"><meta property="og:title" content="old title"><meta property="og:description" content="old description"><meta name="twitter:image" content="old twitter image">',
+          'new title',
+          'new description',
+          'new image url',
+        ),
+        '<meta property="og:image" content="new image url"><meta property="og:title" content="new title"><meta property="og:description" content="new description"><meta name="twitter:image" content="new image url">',
+        'all old content is replaced with new content',
+      );
+    });
   });
 });

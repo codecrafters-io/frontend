@@ -16,7 +16,7 @@
  */
 
 import { next } from '@vercel/edge';
-import replaceMetaTag from './app/utils/replace-meta-tag';
+import { replaceAllMetaTags } from './app/utils/replace-meta-tag';
 
 export const config = {
   // Limit the middleware to run only for user profile and concept routes
@@ -130,18 +130,8 @@ export default async function middleware(request) {
   // Read contents of `/dist/_empty.html`
   const indexFileText = await fetch(indexFileURL).then((res) => res.text());
 
-  // Overwrite content of required meta tags with user-profile specific ones,
-  // by sequentially calling `replaceMetaTag` against `indexFileText`,
-  // and passing it arguments from the following list:
-  const responseText = [
-    ['name', 'description', pageDescription], // <meta name="description" content="...">
-    ['property', 'og:title', pageTitle],
-    ['property', 'og:description', pageDescription],
-    ['property', 'og:image', pageImageUrl],
-    ['name', 'twitter:title', pageTitle],
-    ['name', 'twitter:description', pageDescription],
-    ['name', 'twitter:image', pageImageUrl],
-  ].reduce((text, args) => replaceMetaTag(text, ...args), indexFileText);
+  // Overwrite content of required meta tags with newer ones
+  const responseText = replaceAllMetaTags(indexFileText, pageTitle, pageDescription, pageImageUrl);
 
   // Serve the result as HTML
   return new Response(responseText, { headers: { 'Content-Type': 'text/html' } });
