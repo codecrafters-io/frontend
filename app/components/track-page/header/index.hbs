@@ -14,7 +14,7 @@
       {{markdown-to-html @language.trackDescriptionMarkdown}}
     </p>
 
-    <div class="flex items-center gap-3 mb-5 flex-wrap">
+    <div class="flex items-center gap-3 flex-wrap">
       {{#if (gt @language.trackLearnersCount 3000)}}
         {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
         {{#if @language.trackLearnersCount}}
@@ -26,25 +26,29 @@
       <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
     </div>
 
-    <div class="flex items-center flex-wrap gap-x-2 gap-y-4">
-      {{#if this.currentUserHasStartedTrack}}
-        <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
-      {{else}}
-        <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
-      {{/if}}
+    {{#if (has-block "cta")}}
+      {{yield to="cta"}}
+    {{else}}
+      <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
+        {{#if this.currentUserHasStartedTrack}}
+          <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
+        {{else}}
+          <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
+        {{/if}}
 
-      {{#if (gt this.topParticipants.length 0)}}
-        <div class="hidden sm:flex items-center">
-          <div class="flex -space-x-1 hover:space-x-1 items-center">
-            {{#each this.topParticipants as |user|}}
-              <TrackPage::Header::TopParticipantAvatar @user={{user}} />
-            {{/each}}
+        {{#if (gt this.topParticipants.length 0)}}
+          <div class="hidden sm:flex items-center">
+            <div class="flex -space-x-1 hover:space-x-1 items-center">
+              {{#each this.topParticipants as |user|}}
+                <TrackPage::Header::TopParticipantAvatar @user={{user}} />
+              {{/each}}
+            </div>
+
+            <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
           </div>
-
-          <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
-        </div>
-      {{/if}}
-    </div>
+        {{/if}}
+      </div>
+    {{/if}}
   </div>
   <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
     <LanguageLogo @language={{@language}} @variant="teal" class="dark:opacity-90" />

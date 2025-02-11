@@ -13,6 +13,10 @@ interface Signature {
     language: LanguageModel;
     courses: CourseModel[];
   };
+
+  Blocks: {
+    cta?: [];
+  };
 }
 
 export default class TrackPageHeaderComponent extends Component<Signature> {

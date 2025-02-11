@@ -1,7 +1,12 @@
 {{page-title (concat "Join " this.model.affiliateLink.usernameForDisplay " on CodeCrafters") replace=true}}
 
+{{! Note: This is very similar to the track page atm so it re-uses a lot of the same components. }}
 <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
-  <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}} />
+  <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}}>
+    <:cta>
+      {{! suppress CTA }}
+    </:cta>
+  </TrackPage::Header>
 </div>
 
 <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
