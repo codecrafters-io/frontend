@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
-import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
@@ -18,11 +17,12 @@ export type ModelType = {
 
 export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
+
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare metaData: MetaDataService;
 
-  @tracked previousMetaImageUrl: string | undefined;
+  previousMetaImageUrl: string | undefined;
 
   activate(): void {
     scrollToTop();

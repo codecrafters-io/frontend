@@ -7,7 +7,6 @@ import HeadDataService from 'codecrafters-frontend/services/meta-data';
 import Store from '@ember-data/store';
 import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 
 export default class ConceptGroupRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -16,11 +15,11 @@ export default class ConceptGroupRoute extends BaseRoute {
   @service declare metaData: HeadDataService;
   @service declare store: Store;
   @service declare router: RouterService;
-  @tracked previousMetaImageUrl: string | undefined = undefined;
+
+  previousMetaImageUrl: string | undefined = undefined;
 
   afterModel(model: { conceptGroup: ConceptGroupModel }) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
-    // @ts-ignore
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}collection-${model.conceptGroup.slug}.png`;
   }
 

@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
@@ -24,7 +23,7 @@ export default class JoinCourseRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  @tracked previousMetaImageUrl: string | undefined;
+  previousMetaImageUrl: string | undefined;
 
   afterModel(model: ModelType) {
     if (!model.affiliateLink || !model.course) {
