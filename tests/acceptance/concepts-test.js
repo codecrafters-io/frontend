@@ -127,6 +127,23 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
   });
 
+  test('concept question body has prism highlighting', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Dummy Concept');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.questionCards[0].body.hasPrismHighlighting);
+    await conceptPage.questionCards[0].selectOption('Correct');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+  });
+
   test('clicking on the upcoming concept cards works properly', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
