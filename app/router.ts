@@ -64,7 +64,8 @@ Router.map(function () {
   this.route('course-overview', { path: '/courses/:course_slug/overview' }); // TODO: Add dark mode support
   this.route('debug');
   this.route('join'); // TODO: Add dark mode support
-  this.route('join-course', { path: '/join/:course_slug' }); // TODO: Add dark mode support
+  this.route('join-course', { path: '/join/:course_slug' });
+  this.route('join-track', { path: '/join-track/:track_slug' });
   this.route('login'); // TODO: Add dark mode support?
   this.route('logged-in'); // TODO: Add dark mode support?
   this.route('membership'); // TODO: Add dark mode support
