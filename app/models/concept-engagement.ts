@@ -16,23 +16,25 @@ export default class ConceptEngagementModel extends Model {
     return this.convertBlockProgressIntoBlockGroupProgress(this.concept.allBlockGroups, completedBlocksCount);
   }
 
-  convertBlockProgressIntoBlockGroupProgress(allBlockGroups: BlockGroup[], completedBlocksCount: number) {
-    let completedBlockGroups = 0;
-    for (const blockGroup of allBlockGroups) {
-      completedBlockGroups += blockGroup.blocks.length;
-      if (completedBlocksCount <= completedBlockGroups) {
-        return blockGroup.index + 2;
-      }
-    }
-
-    return allBlockGroups.length;
-  }
-
   get totalBlockGroupsCount() {
     return this.concept.allBlockGroups.length;
   }
 
   get totalBlocksCount() {
     return this.concept.parsedBlocks.length;
+  }
+
+  convertBlockProgressIntoBlockGroupProgress(allBlockGroups: BlockGroup[], completedBlocksCount: number) {
+    let completedBlockGroups = 0;
+
+    for (const blockGroup of allBlockGroups) {
+      completedBlockGroups += blockGroup.blocks.length;
+
+      if (completedBlocksCount <= completedBlockGroups) {
+        return blockGroup.index + 2;
+      }
+    }
+
+    return allBlockGroups.length;
   }
 }
