@@ -14,7 +14,7 @@ module('Acceptance | view-join-track-page', function (hooks) {
   test('can view join track page when not logged in', async function (assert) {
     testScenario(this.server);
 
-    this.server.create('affiliate-link', { user: this.server.schema.users.first() });
+    this.server.create('affiliate-link', { user: this.server.schema.users.first(), slug: 'dummy' });
 
     await joinTrackPage.visit({ track_slug: 'go' });
     assert.notOk(joinTrackPage.acceptReferralButtons[0].isVisible, 'First button is hidden (for mobile only)');
@@ -29,7 +29,7 @@ module('Acceptance | view-join-track-page', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.server.create('affiliate-link', { user: this.server.schema.users.first() });
+    this.server.create('affiliate-link', { user: this.server.schema.users.first(), slug: 'dummy' });
 
     await joinTrackPage.visit({ track_slug: 'go' });
     assert.notOk(joinTrackPage.acceptReferralButtons[0].isVisible, 'First button is hidden (for mobile only)');
@@ -40,10 +40,19 @@ module('Acceptance | view-join-track-page', function (hooks) {
     await percySnapshot('Affiliate Link Page | View Affiliate Link (anonymous)');
   });
 
+  test('redirects to not found if track slug is invalid', async function (assert) {
+    testScenario(this.server);
+
+    this.server.create('affiliate-link', { user: this.server.schema.users.first(), slug: 'dummy' });
+
+    await joinTrackPage.visit({ track_slug: 'invalid', affiliate_link_slug: 'dummy' });
+    assert.strictEqual(currentURL(), '/404');
+  });
+
   test('redirects to not found if affiliate link is invalid', async function (assert) {
     testScenario(this.server);
 
-    await joinTrackPage.visit({ track_slug: 'invalid' });
+    await joinTrackPage.visit({ track_slug: 'rust', affiliate_link_slug: 'invalid' });
     assert.strictEqual(currentURL(), '/404');
   });
 });

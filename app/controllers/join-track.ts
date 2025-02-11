@@ -7,6 +7,8 @@ import { type ModelType } from 'codecrafters-frontend/routes/join-track';
 export default class JoinTrackController extends Controller {
   declare model: ModelType;
 
+  queryParams = [{ affiliateLinkSlug: 'via' }];
+
   @service declare authenticator: AuthenticatorService;
 
   get courses(): CourseModel[] {
