@@ -118,11 +118,10 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   async handleContinueButtonClick() {
-    if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
+    this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
+    this.enqueueConceptEngagementUpdate.perform();
+    if (this.currentBlockGroupIndex === this.allBlockGroups.length) {
       this.hasFinished = true;
-    } else {
-      this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
-      this.enqueueConceptEngagementUpdate.perform();
     }
 
     this.analyticsEventTracker.track('progressed_through_concept', {
