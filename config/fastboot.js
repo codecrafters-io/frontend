@@ -12,6 +12,7 @@ module.exports = function (/* environment */) {
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
         AbortController,
+        URLSearchParams,
       });
     },
   };
