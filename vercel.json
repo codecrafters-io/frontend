@@ -4,6 +4,7 @@
   "redirects": [
     { "source": "/package.json", "destination": "/404" },
     { "source": "/prerender-user-profile-page", "destination": "/404" },
+    { "source": "/prerender-concept-page", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
     { "source": "/join_team", "destination": "https://backend.codecrafters.io/join_team" },
     { "source": "/setup_team", "destination": "https://backend.codecrafters.io/setup_team" },
