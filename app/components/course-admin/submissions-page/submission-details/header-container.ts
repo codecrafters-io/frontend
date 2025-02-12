@@ -22,7 +22,11 @@ export default class HeaderContainerComponent extends Component<Signature> {
   @service declare router: RouterService;
 
   get buildpackSlug() {
-    return this.args.submission.repository.buildpack.slug;
+    if (this.args.submission.repository.buildpack) {
+      return this.args.submission.repository.buildpack.slug;
+    } else {
+      return 'Unknown';
+    }
   }
 
   get durationInMilliseconds() {
