@@ -38,19 +38,29 @@ export default class ConceptModel extends Model {
 
   @cached
   get allBlockGroups(): BlockGroup[] {
-    return this.parsedBlocks.reduce((groups, block) => {
+    let blockGroups = this.parsedBlocks.reduce((groups, block) => {
       if (groups.length <= 0) {
         groups.push({ index: 0, blocks: [] });
       }
 
       (groups[groups.length - 1] as BlockGroup).blocks.push(block);
 
-      if (block.isInteractable || groups.length === 0) {
+      if (block.isInteractable) {
         groups.push({ index: groups.length, blocks: [] });
       }
 
       return groups;
     }, [] as BlockGroup[]);
+
+    // While parsing into block groups, we push a new blockGroup
+    // when we encounter an interactable block.
+    // This means that there would be a last blockGroup that is empty.
+    // We remove it here.
+    if (blockGroups[blockGroups.length - 1]!.blocks.length <= 0) {
+      blockGroups.pop();
+    }
+
+    return blockGroups;
   }
 
   get estimatedReadingTimeInMinutes(): number {
