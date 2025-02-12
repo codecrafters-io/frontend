@@ -57,6 +57,7 @@ export default class ConceptModel extends Model {
     // This means that there would be a last blockGroup that is empty.
     // We remove it here.
     const lastGroup = blockGroups[blockGroups.length - 1];
+
     if (lastGroup && lastGroup.blocks.length <= 0 && blockGroups.length > 1) {
       blockGroups.pop();
     }
