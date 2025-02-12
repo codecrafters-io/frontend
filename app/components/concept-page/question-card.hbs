@@ -7,11 +7,11 @@
     {{! template-lint-disable no-invalid-interactive }}
     <div class="question-card-option-container flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
       {{#each this.options as |option optionIndex|}}
-        {{! @glint-expect-error: not ts-ified yet }}
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
+          @questionSlug={{@question.slug}}
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />
