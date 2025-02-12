@@ -90,10 +90,10 @@
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
-        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Build Pack">
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Buildpack">
           <div class="flex items-center">
-            <span class="mr-2 text-gray-600">
-              {{this.buildpackLanguageVersion}}
+            <span class="text-gray-600">
+              {{this.buildpackSlug}}
             </span>
 
             {{#if @submission.repository.buildpack.isLatest}}

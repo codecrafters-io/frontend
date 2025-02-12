@@ -254,6 +254,11 @@ export default class RepositoryModel extends Model {
   declare updateTesterVersion: (this: Model, payload: unknown) => Promise<void>;
 }
 
+RepositoryModel.prototype.updateBuildpack = memberAction({
+  path: 'update-buildpack',
+  type: 'post',
+});
+
 RepositoryModel.prototype.updateTesterVersion = memberAction({
   path: 'update-tester-version',
   type: 'post',

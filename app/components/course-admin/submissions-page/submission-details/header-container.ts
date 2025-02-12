@@ -21,12 +21,8 @@ export default class HeaderContainerComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
-  get buildpackLanguageVersion() {
-    if (this.args.submission.repository.buildpack) {
-      return this.args.submission.repository.buildpack.languageVersion;
-    } else {
-      return 'Unknown';
-    }
+  get buildpackSlug() {
+    return this.args.submission.repository.buildpack.slug;
   }
 
   get durationInMilliseconds() {
