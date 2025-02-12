@@ -40,7 +40,7 @@ export default class ConceptComponent extends Component<Signature> {
     super(owner, args);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)
-    const urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window?.location?.search || '');
     const bgiQueryParam = urlParams.get('bgi');
 
     if (bgiQueryParam) {
