@@ -47,12 +47,33 @@ export default class UserRoute extends BaseRoute {
     this.metaData.description = this.previousMetaDescription;
   }
 
-  async model(params: { username: string }): Promise<ModelType> {
-    const users = (await this.store.query('user', {
-      username: params.username,
-      include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage,profile-events',
-    })) as unknown as UserModel[];
+  async #fetchUserRecord(username: string) {
+    return (
+      (await this.store.query('user', {
+        username,
+        include: 'course-participations.language,course-participations.course.stages,course-participations.current-stage,profile-events',
+      })) as unknown as UserModel[]
+    )[0];
+  }
 
-    return users[0];
+  #findCachedUserRecord(username: string) {
+    return this.store.peekAll('user').find((u) => u.username === username);
+  }
+
+  async model({ username }: { username: string }): Promise<ModelType> {
+    // Look up the record in the store, in case it's already there,
+    // for example, inserted via FastBoot Shoebox
+    const existingRecord = this.#findCachedUserRecord(username);
+
+    if (existingRecord) {
+      // Trigger a fetch anyway to refresh the data
+      this.#fetchUserRecord(username);
+
+      // Return existing record, otherwise the page will blink after loading
+      return existingRecord;
+    }
+
+    // If the record doesn't exist - fetch it and return
+    return this.#fetchUserRecord(username);
   }
 }
