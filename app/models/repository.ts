@@ -11,6 +11,7 @@ import RepositoryStageListModel from 'codecrafters-frontend/models/repository-st
 import SubmissionModel from 'codecrafters-frontend/models/submission';
 import UserModel from 'codecrafters-frontend/models/user';
 import type AutofixRequestModel from './autofix-request';
+import type BuildpackModel from './buildpack';
 import type CourseExtensionModel from './course-extension';
 import type CourseStageSolutionModel from './course-stage-solution';
 import type Store from '@ember-data/store';
@@ -41,6 +42,7 @@ export default class RepositoryModel extends Model {
   };
 
   @hasMany('autofix-request', { async: false, inverse: 'repository' }) declare autofixRequests: AutofixRequestModel[];
+  @belongsTo('buildpack', { async: false, inverse: null }) declare buildpack: BuildpackModel;
   @belongsTo('course', { async: false, inverse: null }) declare course: CourseModel;
   @hasMany('course-extension-activation', { async: false, inverse: 'repository' }) declare extensionActivations: CourseExtensionActivation[];
   @hasMany('course-stage-completion', { async: false, inverse: 'repository' }) declare courseStageCompletions: CourseStageCompletionModel[];
@@ -248,8 +250,14 @@ export default class RepositoryModel extends Model {
   }
 
   declare fork: (this: Model, payload: unknown) => Promise<{ data: { id: string } }>;
+  declare updateBuildpack: (this: Model, payload: unknown) => Promise<void>;
   declare updateTesterVersion: (this: Model, payload: unknown) => Promise<void>;
 }
+
+RepositoryModel.prototype.updateBuildpack = memberAction({
+  path: 'update-buildpack',
+  type: 'post',
+});
 
 RepositoryModel.prototype.updateTesterVersion = memberAction({
   path: 'update-tester-version',

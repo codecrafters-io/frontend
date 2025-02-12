@@ -90,6 +90,27 @@
           </div>
         </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
 
+        <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Buildpack">
+          <div class="flex items-center">
+            <span class="text-gray-600">
+              {{this.buildpackSlug}}
+            </span>
+
+            {{#if @submission.repository.buildpack.isLatest}}
+              <span class="ml-1 text-gray-400 text-sm">(active)</span>
+            {{else}}
+              <TertiaryButtonWithSpinner
+                @shouldShowSpinner={{this.isUpdatingBuildpack}}
+                @size="extra-small"
+                class="ml-2"
+                {{on "click" this.handleBuildpackUpdateButtonClick}}
+              >
+                Update to active version
+              </TertiaryButtonWithSpinner>
+            {{/if}}
+          </div>
+        </CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow>
+
         <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainerRow @title="Commit SHA" data-test-commit-sha>
           <div class="flex items-center">
             <span class="mr-2 text-gray-600">

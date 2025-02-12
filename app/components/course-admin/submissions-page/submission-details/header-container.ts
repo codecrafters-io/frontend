@@ -14,11 +14,20 @@ export interface Signature {
 }
 
 export default class HeaderContainerComponent extends Component<Signature> {
+  @tracked isUpdatingBuildpack = false;
   @tracked isUpdatingTesterVersion = false;
   @tracked isForking = false;
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
+
+  get buildpackSlug() {
+    if (this.args.submission.repository.buildpack) {
+      return this.args.submission.repository.buildpack.slug;
+    } else {
+      return 'Unknown';
+    }
+  }
 
   get durationInMilliseconds() {
     return this.args.submission.evaluations[0]!.createdAt.getTime() - this.args.submission.createdAt.getTime();
@@ -54,6 +63,13 @@ export default class HeaderContainerComponent extends Component<Signature> {
     } else {
       return 'Unknown';
     }
+  }
+
+  @action
+  async handleBuildpackUpdateButtonClick() {
+    this.isUpdatingBuildpack = true;
+    await this.args.submission.repository.updateBuildpack({});
+    this.isUpdatingBuildpack = false;
   }
 
   @action
