@@ -21,6 +21,7 @@ export default async function (request, response) {
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
         AbortController,
+        URLSearchParams,
       });
     },
 
