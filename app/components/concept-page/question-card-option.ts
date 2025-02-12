@@ -1,4 +1,8 @@
 import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import type ConfettiService from 'codecrafters-frontend/services/confetti';
 
 interface QuestionOption {
   is_correct: boolean;
@@ -41,3 +45,20 @@ export default class QuestionCardOptionComponent extends Component<QuestionCardO
   get isUnselectedAndCorrect() {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
   }
+
+  @action
+  async fireCorrectAnswerConfetti(element: HTMLElement) {
+    if (this.hasShownConfetti || !this.args.isSubmitted || !this.isCorrect) {
+      return;
+    }
+
+    this.hasShownConfetti = true;
+    await this.confetti.fireFromElement(element, {
+      particleCount: 50,
+      spread: 60,
+      startVelocity: 20,
+      colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
+      disableForReducedMotion: true
+    });
+  }
+}
