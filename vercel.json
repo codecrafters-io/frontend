@@ -1,32 +1,17 @@
 {
   "buildCommand": "npm run build  > >(tee -a build-output.log) 2> >(tee -a build-output.log >&2) && ! (cat build-output.log | grep -qi error) && echo \"No errors found in build output\"",
+  "redirects": [
+    { "source": "/package.json", "destination": "/404" },
+    { "source": "/", "destination": "/catalog" },
+    { "source": "/join_team", "destination": "https://backend.codecrafters.io/join_team" },
+    { "source": "/setup_team", "destination": "https://backend.codecrafters.io/setup_team" },
+    { "source": "/r/famous-wombat-417894", "destination": "/join?via=gnomezgrave" }
+  ],
   "rewrites": [
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/:path*", "destination": "/_empty.html" }
-  ],
-  "redirects": [
-    {
-      "source": "/r/famous-wombat-417894",
-      "destination": "/join?via=gnomezgrave"
-    },
-    {
-      "source": "/",
-      "destination": "/catalog"
-    },
-    {
-      "source": "/join_team",
-      "destination": "https://backend.codecrafters.io/join_team"
-    },
-    {
-      "source": "/setup_team",
-      "destination": "https://backend.codecrafters.io/setup_team"
-    },
-    {
-      "source": "/package.json",
-      "destination": "/"
-    }
   ],
   "github": {
     "silent": true
