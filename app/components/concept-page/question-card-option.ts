@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
+import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 export interface Signature {
   Element: HTMLButtonElement;
@@ -21,11 +22,12 @@ export interface Signature {
 
 export default class QuestionCardOptionComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
+  @service declare localStorage: LocalStorageService;
   @tracked hasShownConfetti = false;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    this.hasShownConfetti = localStorage.getItem(this.storageKey) === 'true';
+    this.hasShownConfetti = this.localStorage.getItem(this.storageKey) === 'true';
   }
 
   get isCorrect() {
@@ -67,7 +69,7 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
     }
 
     this.hasShownConfetti = true;
-    localStorage.setItem(this.storageKey, 'true');
+    this.localStorage.setItem(this.storageKey, 'true');
     await this.confetti.fireFromMousePositionOrElement(element, {
       particleCount: 50,
       spread: 60,
