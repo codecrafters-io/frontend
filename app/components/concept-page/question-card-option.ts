@@ -1,6 +1,19 @@
 import Component from '@glimmer/component';
 
-export default class QuestionCardOptionComponent extends Component {
+interface QuestionOption {
+  is_correct: boolean;
+  isSelected: boolean;
+}
+
+interface QuestionCardOptionArgs {
+  option: QuestionOption;
+  isSubmitted: boolean;
+}
+
+export default class QuestionCardOptionComponent extends Component<QuestionCardOptionArgs> {
+  @service declare confetti: ConfettiService;
+  @tracked hasShownConfetti = false;
+
   get isCorrect() {
     return this.args.option.is_correct;
   }
@@ -28,4 +41,3 @@ export default class QuestionCardOptionComponent extends Component {
   get isUnselectedAndCorrect() {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
   }
-}
