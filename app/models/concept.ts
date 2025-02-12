@@ -56,7 +56,8 @@ export default class ConceptModel extends Model {
     // when we encounter an interactable block.
     // This means that there would be a last blockGroup that is empty.
     // We remove it here.
-    if (blockGroups[blockGroups.length - 1]!.blocks.length <= 0) {
+    const lastGroup = blockGroups[blockGroups.length - 1];
+    if (lastGroup && lastGroup.blocks.length <= 0 && blockGroups.length > 1) {
       blockGroups.pop();
     }
 
