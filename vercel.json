@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run build  > >(tee -a build-output.log) 2> >(tee -a build-output.log >&2) && ! (cat build-output.log | grep -qi error) && echo \"No errors found in build output\"",
+  "buildCommand": "npm run build:vercel:dist && npm run build:vercel:functions",
+  "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
     { "source": "/package.json", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
