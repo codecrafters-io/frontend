@@ -285,16 +285,16 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present after starting concept');
 
-    assert.ok(conceptPage.progress.text.includes('2/20'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].clickOnShowExplanationButton();
-    assert.ok(conceptPage.progress.text.includes('3/20'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('2/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 10%'));
 
     await conceptPage.clickOnStepBackButton();
-    assert.ok(conceptPage.progress.text.includes('2/20'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'));
 
     await conceptsPage.visit();
@@ -338,7 +338,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present');
-    assert.ok(conceptPage.progress.text.includes('2/20'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
   });
 
