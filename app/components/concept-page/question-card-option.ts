@@ -23,6 +23,11 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
   @tracked hasShownConfetti = false;
 
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+    this.hasShownConfetti = localStorage.getItem(this.storageKey) === 'true';
+  }
+
   get isCorrect() {
     return this.args.option.is_correct;
   }
@@ -51,19 +56,24 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
   }
 
+  get storageKey() {
+    return `confetti-shown-question-${this.args.questionSlug}`;
+  }
+
   @action
   async fireCorrectAnswerConfetti(element: HTMLElement) {
-    if (this.hasShownConfetti || !this.args.isSubmitted || !this.isCorrect) {
+    if (this.hasShownConfetti || !this.isSelectedAndCorrect) {
       return;
     }
 
     this.hasShownConfetti = true;
+    localStorage.setItem(this.storageKey, 'true');
     await this.confetti.fireFromElement(element, {
       particleCount: 50,
       spread: 60,
       startVelocity: 20,
       colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
-      disableForReducedMotion: true
+      disableForReducedMotion: true,
     });
   }
 }
