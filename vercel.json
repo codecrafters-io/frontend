@@ -15,6 +15,7 @@
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/users/:username", "destination": "/prerender-user-profile-page" },
+    { "source": "/concepts/:conceptSlug", "destination": "/prerender-concept-page" },
     { "source": "/:path*", "destination": "/_empty.html" }
   ],
   "github": {
