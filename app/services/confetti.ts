@@ -37,9 +37,11 @@ export default class ConfettiService extends Service {
 
     // if mouseEvent is inside the rect, return the mouseEvent's position
     const mouseEvent = window.event as MouseEvent;
+
     if (mouseEvent) {
       const x = mouseEvent.clientX;
       const y = mouseEvent.clientY;
+
       if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
         return {
           x: x / viewportWidth,
