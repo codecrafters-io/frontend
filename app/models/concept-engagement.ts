@@ -31,7 +31,7 @@ export default class ConceptEngagementModel extends Model {
       completedBlockGroups += blockGroup.blocks.length;
 
       if (completedBlocksCount <= completedBlockGroups) {
-        return blockGroup.index + 2;
+        return blockGroup.index + 1;
       }
     }
 
