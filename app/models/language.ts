@@ -1,5 +1,29 @@
 import CourseLanguageConfigurationModel from './course-language-configuration';
 import Model, { attr, hasMany } from '@ember-data/model';
+import colorLogoC from '/assets/images/language-logos/c-color.svg';
+import colorLogoCpp from '/assets/images/language-logos/cpp-color.svg';
+import colorLogoClojure from '/assets/images/language-logos/clojure-color.svg';
+import colorLogoCrystal from '/assets/images/language-logos/crystal-color.svg';
+import colorLogoCsharp from '/assets/images/language-logos/csharp-color.svg';
+import colorLogoDart from '/assets/images/language-logos/dart-color.svg';
+import colorLogoElixir from '/assets/images/language-logos/elixir-color.svg';
+import colorLogoGleam from '/assets/images/language-logos/gleam-color.svg';
+import colorLogoGo from '/assets/images/language-logos/go-color.svg';
+import colorLogoHaskell from '/assets/images/language-logos/haskell-color.svg';
+import colorLogoJava from '/assets/images/language-logos/java-color.svg';
+import colorLogoJavascript from '/assets/images/language-logos/javascript-color.svg';
+import colorLogoKotlin from '/assets/images/language-logos/kotlin-color.svg';
+import colorLogoNim from '/assets/images/language-logos/nim-color.svg';
+import colorLogoOcaml from '/assets/images/language-logos/ocaml-color.svg';
+import colorLogoPhp from '/assets/images/language-logos/php-color.svg';
+import colorLogoPython from '/assets/images/language-logos/python-color.svg';
+import colorLogoReasonml from '/assets/images/language-logos/reasonml-color.svg';
+import colorLogoRuby from '/assets/images/language-logos/ruby-color.svg';
+import colorLogoRust from '/assets/images/language-logos/rust-color.svg';
+import colorLogoScala from '/assets/images/language-logos/scala-color.svg';
+import colorLogoSwift from '/assets/images/language-logos/swift-color.svg';
+import colorLogoTypescript from '/assets/images/language-logos/typescript-color.svg';
+import colorLogoZig from '/assets/images/language-logos/zig-color.svg';
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
 import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
 import grayLogoClojure from '/assets/images/language-logos/clojure-gray-500.svg';
@@ -55,6 +79,35 @@ export default class LanguageModel extends Model {
   @attr('string') declare name: string;
   @attr('string') declare slug: string;
   @attr('string') declare trackStatus: 'live' | 'beta';
+
+  get colorLogoUrl() {
+    return {
+      c: colorLogoC,
+      cpp: colorLogoCpp,
+      clojure: colorLogoClojure,
+      crystal: colorLogoCrystal,
+      csharp: colorLogoCsharp,
+      dart: colorLogoDart,
+      elixir: colorLogoElixir,
+      gleam: colorLogoGleam,
+      go: colorLogoGo,
+      haskell: colorLogoHaskell,
+      java: colorLogoJava,
+      javascript: colorLogoJavascript,
+      kotlin: colorLogoKotlin,
+      nim: colorLogoNim,
+      ocaml: colorLogoOcaml,
+      php: colorLogoPhp,
+      python: colorLogoPython,
+      reasonml: colorLogoReasonml,
+      ruby: colorLogoRuby,
+      rust: colorLogoRust,
+      scala: colorLogoScala,
+      swift: colorLogoSwift,
+      typescript: colorLogoTypescript,
+      zig: colorLogoZig,
+    }[this.slug];
+  }
 
   get grayLogoUrl() {
     return {
