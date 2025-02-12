@@ -4,17 +4,22 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
 
-interface QuestionOption {
-  is_correct: boolean;
-  isSelected: boolean;
+export interface Signature {
+  Element: HTMLButtonElement;
+
+  Args: {
+    option: {
+      is_correct: boolean;
+      isSelected: boolean;
+      markdown: string;
+      explanation_markdown: string;
+    };
+    isSubmitted: boolean;
+    questionSlug: string;
+  };
 }
 
-interface QuestionCardOptionArgs {
-  option: QuestionOption;
-  isSubmitted: boolean;
-}
-
-export default class QuestionCardOptionComponent extends Component<QuestionCardOptionArgs> {
+export default class QuestionCardOptionComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
   @tracked hasShownConfetti = false;
 
@@ -60,5 +65,11 @@ export default class QuestionCardOptionComponent extends Component<QuestionCardO
       colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
       disableForReducedMotion: true
     });
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ConceptPage::QuestionCardOption': typeof QuestionCardOptionComponent;
   }
 }
