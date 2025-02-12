@@ -68,7 +68,7 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
 
     this.hasShownConfetti = true;
     localStorage.setItem(this.storageKey, 'true');
-    await this.confetti.fireFromElement(element, {
+    await this.confetti.fireFromMousePositionOrElement(element, {
       particleCount: 50,
       spread: 60,
       startVelocity: 20,
