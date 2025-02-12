@@ -38,7 +38,7 @@ export default class ConceptModel extends Model {
 
   @cached
   get allBlockGroups(): BlockGroup[] {
-    let blockGroups = this.parsedBlocks.reduce((groups, block) => {
+    const blockGroups = this.parsedBlocks.reduce((groups, block) => {
       if (groups.length <= 0) {
         groups.push({ index: 0, blocks: [] });
       }
