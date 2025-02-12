@@ -44,6 +44,7 @@ module.exports = function (environment) {
       helpscoutBeaconId: process.env.HELPSCOUT_BEACON_ID || 'bb089ae9-a4ae-4114-8f7a-b660f6310158',
       isCI: false, // Overridden in test environment
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
+      metaTagUserProfilePictureBaseURL: 'https://og.codecrafters.io/api/user_profile/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       vercelAnalyticsId: process.env.VERCEL_ANALYTICS_ID,
 
