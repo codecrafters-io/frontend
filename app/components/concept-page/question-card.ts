@@ -16,6 +16,11 @@ interface Signature {
 
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
+  @tracked _hasShownConfetti = false;
+
+  get hasShownConfetti() {
+    return this._hasShownConfetti;
+  }
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
@@ -134,5 +139,13 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleShowExplanationClick() {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
+  }
+
+  // TODO Search for a better way to do this
+  @action
+  handleConfettiShown() {
+    setTimeout(() => {
+      this._hasShownConfetti = true;
+    }, 0);
   }
 }

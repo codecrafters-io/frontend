@@ -12,6 +12,8 @@
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
           @questionSlug={{@question.slug}}
+          @hasShownConfetti={{this.hasShownConfetti}}
+          @onConfettiShown={{this.handleConfettiShown}}
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />

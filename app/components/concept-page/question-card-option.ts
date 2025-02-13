@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
-import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 export interface Signature {
   Element: HTMLButtonElement;
@@ -17,18 +15,13 @@ export interface Signature {
     };
     isSubmitted: boolean;
     questionSlug: string;
+    hasShownConfetti?: boolean;
+    onConfettiShown?: () => void;
   };
 }
 
 export default class QuestionCardOptionComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
-  @service declare localStorage: LocalStorageService;
-  @tracked hasShownConfetti = false;
-
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-    this.hasShownConfetti = this.localStorage.getItem(this.storageKey) === 'true';
-  }
 
   get isCorrect() {
     return this.args.option.is_correct;
@@ -58,19 +51,15 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
   }
 
-  get storageKey() {
-    return `confetti-shown-question-${this.args.questionSlug}`;
-  }
-
   @action
   async fireCorrectAnswerConfetti(element: HTMLElement) {
-    if (this.hasShownConfetti || !this.isSelectedAndCorrect) {
+    console.log('fireCorrectAnswerConfetti', this.args.hasShownConfetti, this.isSelectedAndCorrect);
+    if (this.args.hasShownConfetti || !this.isSelectedAndCorrect) {
       return;
     }
 
-    this.hasShownConfetti = true;
-    this.localStorage.setItem(this.storageKey, 'true');
-    await this.confetti.fireFromMousePositionOrElement(element, {
+    this.args.onConfettiShown?.();
+    
     await this.confetti.fireFromElement(element, {
       particleCount: 50,
       spread: 60,
