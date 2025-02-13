@@ -73,7 +73,10 @@ export default class AuthenticatorService extends Service {
   }
 
   initiateLogin(redirectPath: string | null) {
-    if (redirectPath) {
+    const isFullUrl = redirectPath?.startsWith(`${config.x.backendUrl}`);
+    if (isFullUrl) {
+      window.location.href = `${config.x.backendUrl}/login?next=` + redirectPath;
+    } else if (redirectPath) {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
     } else if (this.router.currentURL) {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
