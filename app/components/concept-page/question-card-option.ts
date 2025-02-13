@@ -15,8 +15,8 @@ export interface Signature {
     };
     isSubmitted: boolean;
     questionSlug: string;
-    hasShownConfetti?: boolean;
-    onConfettiShown?: () => void;
+    hasShownConfetti: boolean;
+    onConfettiShown: () => void;
   };
 }
 
@@ -58,8 +58,8 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
       return;
     }
 
-    this.args.onConfettiShown?.();
-    
+    this.args.onConfettiShown();
+
     await this.confetti.fireFromElement(element, {
       particleCount: 50,
       spread: 60,
