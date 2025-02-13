@@ -24,7 +24,7 @@
 
         {{#if (and this.hasCompletedConcept this.authenticator.isAnonymous)}}
           <ModalBackdrop>
-            <ConceptPage::ConceptCompletedModal @concept={{@concept}} />
+            <ConceptPage::ConceptCompletedModal @concept={{@concept}} @conceptGroup={{@conceptGroup}} />
           </ModalBackdrop>
         {{/if}}
 
