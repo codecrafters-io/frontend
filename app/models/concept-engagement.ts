@@ -1,4 +1,4 @@
-import ConceptModel, { type BlockGroup } from 'codecrafters-frontend/models/concept';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 import UserModel from 'codecrafters-frontend/models/user';
 import Model, { attr, belongsTo } from '@ember-data/model';
 
@@ -10,12 +10,22 @@ export default class ConceptEngagementModel extends Model {
   @attr('date') declare lastActivityAt: Date;
   @attr('date') declare startedAt: Date;
 
-  get completedBlocksCount() {
-    return Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
+  get completedBlockGroupsCount() {
+    let completedBlockGroups = 0;
+
+    for (const blockGroup of this.concept.blockGroups) {
+      completedBlockGroups += blockGroup.blocks.length;
+
+      if (this.completedBlocksCount <= completedBlockGroups) {
+        return blockGroup.index + 1;
+      }
+    }
+
+    return this.concept.blockGroups.length;
   }
 
-  get completedBlockGroupsCount() {
-    return this.convertBlockProgressIntoBlockGroupProgress(this.concept.blockGroups, this.completedBlocksCount);
+  get completedBlocksCount() {
+    return Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
   }
 
   get totalBlockGroupsCount() {
@@ -24,19 +34,5 @@ export default class ConceptEngagementModel extends Model {
 
   get totalBlocksCount() {
     return this.concept.parsedBlocks.length;
-  }
-
-  convertBlockProgressIntoBlockGroupProgress(blockGroups: BlockGroup[], completedBlocksCount: number) {
-    let completedBlockGroups = 0;
-
-    for (const blockGroup of blockGroups) {
-      completedBlockGroups += blockGroup.blocks.length;
-
-      if (completedBlocksCount <= completedBlockGroups) {
-        return blockGroup.index + 1;
-      }
-    }
-
-    return blockGroups.length;
   }
 }

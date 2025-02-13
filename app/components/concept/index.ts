@@ -49,13 +49,13 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @cached
-  get blockGroups(): BlockGroup[] {
-    return this.args.concept.blockGroups;
+  get allBlocks() {
+    return this.args.concept.parsedBlocks;
   }
 
   @cached
-  get allBlocks() {
-    return this.args.concept.parsedBlocks;
+  get blockGroups(): BlockGroup[] {
+    return this.args.concept.blockGroups;
   }
 
   get completedBlocksCount() {
@@ -124,7 +124,7 @@ export default class ConceptComponent extends Component<Signature> {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     }
 
-    this.enqueueConceptEngagementUpdate.perform();  
+    this.enqueueConceptEngagementUpdate.perform();
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,
