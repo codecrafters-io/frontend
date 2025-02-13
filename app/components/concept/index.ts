@@ -49,8 +49,8 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @cached
-  get allBlockGroups(): BlockGroup[] {
-    return this.args.concept.allBlockGroups;
+  get blockGroups(): BlockGroup[] {
+    return this.args.concept.blockGroups;
   }
 
   @cached
@@ -59,7 +59,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get completedBlocksCount() {
-    return this.allBlockGroups.reduce((count, blockGroup) => {
+    return this.blockGroups.reduce((count, blockGroup) => {
       if (blockGroup.index < this.currentBlockGroupIndex) {
         count += blockGroup.blocks.length;
       }
@@ -85,15 +85,15 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get visibleBlockGroups() {
-    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
+    return this.blockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
 
   findCurrentBlockGroupIndex(completedBlocksCount: number) {
     let traversedBlocksCount = 0;
     let currentBlockGroupIndex = 0;
 
-    for (let i = 0; i < this.allBlockGroups.length; i++) {
-      const blockGroup = this.allBlockGroups[i];
+    for (let i = 0; i < this.blockGroups.length; i++) {
+      const blockGroup = this.blockGroups[i];
       traversedBlocksCount = traversedBlocksCount + blockGroup!.blocks.length;
 
       if (traversedBlocksCount > completedBlocksCount) {
@@ -121,7 +121,7 @@ export default class ConceptComponent extends Component<Signature> {
     this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
     this.enqueueConceptEngagementUpdate.perform();
 
-    if (this.currentBlockGroupIndex === this.allBlockGroups.length) {
+    if (this.currentBlockGroupIndex === this.blockGroups.length) {
       this.hasFinished = true;
     }
 
@@ -147,7 +147,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
-      (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
+      (this.blockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
         if (block.type === 'concept_question') {
           this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
         }

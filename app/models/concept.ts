@@ -37,7 +37,7 @@ export default class ConceptModel extends Model {
   @equal('status', 'published') declare statusIsPublished: boolean;
 
   @cached
-  get allBlockGroups(): BlockGroup[] {
+  get blockGroups(): BlockGroup[] {
     return this.parsedBlocks.reduce((groups, block, index) => {
       if (groups.length <= 0) {
         groups.push({ index: 0, blocks: [] });

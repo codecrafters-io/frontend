@@ -13,21 +13,21 @@ export default class ConceptEngagementModel extends Model {
   get completedBlockGroupsCount() {
     const completedBlocksCount = Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
 
-    return this.convertBlockProgressIntoBlockGroupProgress(this.concept.allBlockGroups, completedBlocksCount);
+    return this.convertBlockProgressIntoBlockGroupProgress(this.concept.blockGroups, completedBlocksCount);
   }
 
   get totalBlockGroupsCount() {
-    return this.concept.allBlockGroups.length;
+    return this.concept.blockGroups.length;
   }
 
   get totalBlocksCount() {
     return this.concept.parsedBlocks.length;
   }
 
-  convertBlockProgressIntoBlockGroupProgress(allBlockGroups: BlockGroup[], completedBlocksCount: number) {
+  convertBlockProgressIntoBlockGroupProgress(blockGroups: BlockGroup[], completedBlocksCount: number) {
     let completedBlockGroups = 0;
 
-    for (const blockGroup of allBlockGroups) {
+    for (const blockGroup of blockGroups) {
       completedBlockGroups += blockGroup.blocks.length;
 
       if (completedBlocksCount <= completedBlockGroups) {
@@ -35,6 +35,6 @@ export default class ConceptEngagementModel extends Model {
       }
     }
 
-    return allBlockGroups.length;
+    return blockGroups.length;
   }
 }
