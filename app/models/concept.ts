@@ -36,7 +36,6 @@ export default class ConceptModel extends Model {
   @equal('status', 'draft') declare statusIsDraft: boolean;
   @equal('status', 'published') declare statusIsPublished: boolean;
 
-  @cached
   get blockGroups(): BlockGroup[] {
     return this.parsedBlocks.reduce((groups, block, index) => {
       if (groups.length <= 0) {

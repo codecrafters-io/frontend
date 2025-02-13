@@ -48,12 +48,10 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  @cached
   get allBlocks() {
     return this.args.concept.parsedBlocks;
   }
 
-  @cached
   get blockGroups(): BlockGroup[] {
     return this.args.concept.blockGroups;
   }
