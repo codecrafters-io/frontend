@@ -15,7 +15,7 @@
         to {{this.getAccessToMessage}} by signing in with GitHub.
       </p>
     </div>
-    <PrimaryButton @size="large">
+    <PrimaryButton @size="large" {{on "click" this.handleClicked}}>
       <div class="flex items-center gap-x-2">
         {{svg-jar "github" class="fill-current w-5"}}
 
