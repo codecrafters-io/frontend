@@ -54,6 +54,7 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
   @action
   async fireCorrectAnswerConfetti(element: HTMLElement) {
     console.log('fireCorrectAnswerConfetti', this.args.hasShownConfetti, this.isSelectedAndCorrect);
+
     if (this.args.hasShownConfetti || !this.isSelectedAndCorrect) {
       return;
     }

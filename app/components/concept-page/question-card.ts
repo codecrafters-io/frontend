@@ -18,12 +18,12 @@ export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
   @tracked _hasShownConfetti = false;
 
-  get hasShownConfetti() {
-    return this._hasShownConfetti;
-  }
-
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
+  }
+
+  get hasShownConfetti() {
+    return this._hasShownConfetti;
   }
 
   get hasSubmitted() {
@@ -53,6 +53,13 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   get selectedOptionIsCorrect() {
     return this.selectedOption && this.selectedOption.is_correct;
+  }
+
+  @action
+  handleConfettiShown() {
+    next(() => {
+      this._hasShownConfetti = true;
+    });
   }
 
   @action
@@ -139,12 +146,5 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleShowExplanationClick() {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
-  }
-
-  @action
-  handleConfettiShown() {
-    next(() => {
-      this._hasShownConfetti = true;
-    });
   }
 }
