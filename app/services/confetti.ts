@@ -27,33 +27,6 @@ export default class ConfettiService extends Service {
     return { x: originX, y: originY };
   }
 
-  #calculateConfettiOriginBasedOnMousePositionOrElementCenter(element: HTMLElement) {
-    // Get viewport dimensions
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-
-    // Get the element's bounding rectangle
-    const rect = element.getBoundingClientRect();
-
-    // if mouseEvent is inside the rect, return the mouseEvent's position
-    const mouseEvent = window.event as MouseEvent;
-
-    if (mouseEvent) {
-      const x = mouseEvent.clientX;
-      const y = mouseEvent.clientY;
-
-      if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
-        return {
-          x: x / viewportWidth,
-          y: y / viewportHeight,
-        };
-      }
-    }
-
-    // otherwise, return the rect's center position
-    return this.#calculateConfettiOrigin(element);
-  }
-
   async fire(options: confetti.Options = {}) {
     // canvas-confetti makes use of the document, doesn't make sense to run it in fastboot
     if (this.fastboot.isFastBoot) {
@@ -70,17 +43,6 @@ export default class ConfettiService extends Service {
     }
 
     options.origin = this.#calculateConfettiOrigin(element);
-
-    return confetti(options);
-  }
-
-  async fireFromMousePositionOrElement(element: HTMLElement, options: confetti.Options = {}) {
-    // canvas-confetti makes use of the document, doesn't make sense to run it in fastboot
-    if (this.fastboot.isFastBoot) {
-      return;
-    }
-
-    options.origin = this.#calculateConfettiOriginBasedOnMousePositionOrElementCenter(element);
 
     return confetti(options);
   }
