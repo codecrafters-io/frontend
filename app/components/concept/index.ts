@@ -48,22 +48,20 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  get allBlocks() {
-    return this.args.concept.parsedBlocks;
-  }
-
   get allBlockGroups(): BlockGroup[] {
     return this.args.concept.blockGroups;
   }
 
-  get completedBlocksCount() {
-    return this.allBlockGroups.reduce((count, blockGroup) => {
-      if (blockGroup.index < this.currentBlockGroupIndex) {
-        count += blockGroup.blocks.length;
-      }
+  get allBlocks() {
+    return this.args.concept.parsedBlocks;
+  }
 
-      return count;
-    }, 0);
+  get completedBlockGroups() {
+    return this.allBlockGroups.slice(0, this.currentBlockGroupIndex);
+  }
+
+  get completedBlocksCount() {
+    return this.completedBlockGroups.map((blockGroup) => blockGroup.blocks.length).reduce((a, b) => a + b, 0);
   }
 
   get computedProgressPercentage() {
