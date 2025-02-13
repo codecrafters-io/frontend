@@ -10,10 +10,12 @@ export default class ConceptEngagementModel extends Model {
   @attr('date') declare lastActivityAt: Date;
   @attr('date') declare startedAt: Date;
 
-  get completedBlockGroupsCount() {
-    const completedBlocksCount = Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
+  get completedBlocksCount() {
+    return Math.round((this.currentProgressPercentage / 100) * this.totalBlocksCount);
+  }
 
-    return this.convertBlockProgressIntoBlockGroupProgress(this.concept.blockGroups, completedBlocksCount);
+  get completedBlockGroupsCount() {
+    return this.convertBlockProgressIntoBlockGroupProgress(this.concept.blockGroups, this.completedBlocksCount);
   }
 
   get totalBlockGroupsCount() {
