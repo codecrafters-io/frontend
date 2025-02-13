@@ -8,7 +8,7 @@ import type { BlockGroup } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
