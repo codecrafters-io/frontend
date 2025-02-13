@@ -52,12 +52,12 @@ export default class ConceptComponent extends Component<Signature> {
     return this.args.concept.parsedBlocks;
   }
 
-  get blockGroups(): BlockGroup[] {
+  get allBlockGroups(): BlockGroup[] {
     return this.args.concept.blockGroups;
   }
 
   get completedBlocksCount() {
-    return this.blockGroups.reduce((count, blockGroup) => {
+    return this.allBlockGroups.reduce((count, blockGroup) => {
       if (blockGroup.index < this.currentBlockGroupIndex) {
         count += blockGroup.blocks.length;
       }
@@ -83,15 +83,15 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get visibleBlockGroups() {
-    return this.blockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
+    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
   }
 
   findCurrentBlockGroupIndex(completedBlocksCount: number) {
     let traversedBlocksCount = 0;
     let currentBlockGroupIndex = 0;
 
-    for (let i = 0; i < this.blockGroups.length; i++) {
-      const blockGroup = this.blockGroups[i];
+    for (let i = 0; i < this.allBlockGroups.length; i++) {
+      const blockGroup = this.allBlockGroups[i];
       traversedBlocksCount = traversedBlocksCount + blockGroup!.blocks.length;
 
       if (traversedBlocksCount > completedBlocksCount) {
@@ -116,7 +116,7 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   async handleContinueButtonClick() {
-    if (this.currentBlockGroupIndex === this.blockGroups.length - 1) {
+    if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
@@ -146,7 +146,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (this.currentBlockGroupIndex === 0) {
       return;
     } else {
-      (this.blockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
+      (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
         if (block.type === 'concept_question') {
           this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
         }
