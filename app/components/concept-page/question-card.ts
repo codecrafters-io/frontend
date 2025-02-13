@@ -141,11 +141,10 @@ export default class QuestionCardComponent extends Component<Signature> {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
   }
 
-  // TODO Search for a better way to do this
   @action
   handleConfettiShown() {
-    setTimeout(() => {
+    next(() => {
       this._hasShownConfetti = true;
-    }, 0);
+    });
   }
 }
