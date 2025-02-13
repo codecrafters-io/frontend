@@ -4,11 +4,11 @@ import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import config from 'codecrafters-frontend/config/environment';
-import type { Block } from 'codecrafters-frontend/models/concept';
+import type { BlockGroup } from 'codecrafters-frontend/models/concept';
 import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
-import { cached, tracked } from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
@@ -20,11 +20,6 @@ interface Signature {
   };
 
   Element: HTMLDivElement;
-}
-
-interface BlockGroup {
-  index: number;
-  blocks: Block[];
 }
 
 export default class ConceptComponent extends Component<Signature> {
@@ -53,36 +48,20 @@ export default class ConceptComponent extends Component<Signature> {
     }
   }
 
-  @cached
   get allBlockGroups(): BlockGroup[] {
-    return this.allBlocks.reduce((groups, block) => {
-      if (groups.length <= 0) {
-        groups.push({ index: 0, blocks: [] });
-      }
-
-      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
-
-      if (block.isInteractable || groups.length === 0) {
-        groups.push({ index: groups.length, blocks: [] });
-      }
-
-      return groups;
-    }, [] as BlockGroup[]);
+    return this.args.concept.blockGroups;
   }
 
-  @cached
   get allBlocks() {
     return this.args.concept.parsedBlocks;
   }
 
-  get completedBlocksCount() {
-    return this.allBlockGroups.reduce((count, blockGroup) => {
-      if (blockGroup.index < this.currentBlockGroupIndex) {
-        count += blockGroup.blocks.length;
-      }
+  get completedBlockGroups() {
+    return this.allBlockGroups.slice(0, this.currentBlockGroupIndex);
+  }
 
-      return count;
-    }, 0);
+  get completedBlocksCount() {
+    return this.completedBlockGroups.map((blockGroup) => blockGroup.blocks.length).reduce((a, b) => a + b, 0);
   }
 
   get computedProgressPercentage() {
@@ -139,8 +118,9 @@ export default class ConceptComponent extends Component<Signature> {
       this.hasFinished = true;
     } else {
       this.updateLastRevealedBlockGroupIndex(this.currentBlockGroupIndex + 1);
-      this.enqueueConceptEngagementUpdate.perform();
     }
+
+    this.enqueueConceptEngagementUpdate.perform();
 
     this.analyticsEventTracker.track('progressed_through_concept', {
       concept_id: this.args.concept.id,

@@ -14,6 +14,11 @@ export type BlockJSON = {
   args: Record<string, unknown>;
 };
 
+export interface BlockGroup {
+  index: number;
+  blocks: Block[];
+}
+
 export default class ConceptModel extends Model {
   @belongsTo('user', { async: false, inverse: null }) declare author: UserModel;
 
@@ -29,6 +34,24 @@ export default class ConceptModel extends Model {
 
   @equal('status', 'draft') declare statusIsDraft: boolean;
   @equal('status', 'published') declare statusIsPublished: boolean;
+
+  get blockGroups(): BlockGroup[] {
+    return this.parsedBlocks.reduce((groups, block, index) => {
+      if (groups.length <= 0) {
+        groups.push({ index: 0, blocks: [] });
+      }
+
+      (groups[groups.length - 1] as BlockGroup).blocks.push(block);
+
+      const isLastBlock = index === this.parsedBlocks.length - 1;
+
+      if (block.isInteractable && !isLastBlock) {
+        groups.push({ index: groups.length, blocks: [] });
+      }
+
+      return groups;
+    }, [] as BlockGroup[]);
+  }
 
   get estimatedReadingTimeInMinutes(): number {
     if (this.blocks) {

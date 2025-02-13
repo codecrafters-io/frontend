@@ -284,17 +284,17 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptPage.clickOnContinueButton();
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present after starting concept');
-    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
+
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
-    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].clickOnShowExplanationButton();
-    assert.ok(conceptPage.progress.text.includes('10%'));
+    assert.ok(conceptPage.progress.text.includes('2/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 10%'));
 
     await conceptPage.clickOnStepBackButton();
-    assert.ok(conceptPage.progress.text.includes('5%'));
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'));
 
     await conceptsPage.visit();
@@ -338,9 +338,8 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     assert.strictEqual(conceptPage.blocks.length, 2, 'Completed blocks are automatically shown');
     assert.ok(conceptPage.progress.isPresent, 'Progress bar should be present');
-    assert.ok(conceptPage.progress.text.includes('5%'), 'Progress text should reflect tracked progress in concept page');
+    assert.ok(conceptPage.progress.text.includes('1/19'), 'Progress text should reflect tracked progress in concept page');
     assert.ok(conceptPage.progress.barStyle.includes('width: 5%'), 'Progress bar should reflect tracked progress in concept page');
-    assert.ok(conceptPage.progress.text.includes('39 blocks left'), 'Remaining blocks left should be reflected properly');
   });
 
   test('progress for completed concepts is rendered properly', async function (assert) {
@@ -370,24 +369,6 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptsPage.conceptCards[0].hover();
     assert.strictEqual(conceptsPage.conceptCards[0].actionText, 'View', 'Concept card action text should be view for completed concept');
-  });
-
-  test('remaining blocks left is rendered properly', async function (assert) {
-    testScenario(this.server);
-    createConcepts(this.server);
-
-    const user = this.server.schema.users.first();
-    signIn(this.owner, this.server, user);
-
-    await conceptsPage.visit();
-    await conceptsPage.clickOnConceptCard('Network Protocols');
-    assert.notOk(conceptPage.progress.isPresent, 'Remaining blocks left should not be shown if no progress is made');
-
-    await conceptPage.clickOnContinueButton();
-    assert.contains(conceptPage.progress.text, '39 blocks left');
-
-    await conceptPage.clickOnContinueButton();
-    assert.contains(conceptPage.progress.text, '37 blocks left');
   });
 
   test('remaining blocks left is not present if user completed concept', async function (assert) {
