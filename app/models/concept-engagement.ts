@@ -11,17 +11,19 @@ export default class ConceptEngagementModel extends Model {
   @attr('date') declare startedAt: Date;
 
   get completedBlockGroupsCount() {
-    let completedBlockGroups = 0;
+    let blocksInPreviousGroupsCount = 0;
+    let result = 0;
 
     for (const blockGroup of this.concept.blockGroups) {
-      completedBlockGroups += blockGroup.blocks.length;
-
-      if (this.completedBlocksCount <= completedBlockGroups) {
-        return blockGroup.index + 1;
+      if (blocksInPreviousGroupsCount >= this.completedBlocksCount) {
+        return result;
       }
+
+      blocksInPreviousGroupsCount += blockGroup.blocks.length;
+      result += 1;
     }
 
-    return this.concept.blockGroups.length;
+    return result;
   }
 
   get completedBlocksCount() {
