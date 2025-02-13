@@ -6,7 +6,6 @@ import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, Mark
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
-import { cached } from '@glimmer/tracking';
 
 export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
 
