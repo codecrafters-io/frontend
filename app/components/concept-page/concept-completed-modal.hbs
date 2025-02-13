@@ -1,0 +1,28 @@
+<ModalBody class>
+  <div class="flex flex-col items-center justify-center">
+    <div class="text-5xl mb-4">
+      🎉
+    </div>
+    <div class="prose mb-6 text-center">
+      <p>
+        You've completed this concept!
+      </p>
+      <p>
+        Get free access to the rest of Rust Primer by signing in with GitHub:
+      </p>
+    </div>
+    <PrimaryButton @size="large">
+      <div class="flex items-center gap-x-2">
+        {{svg-jar "github" class="fill-current w-4"}}
+
+        <span>
+          Sign in with GitHub
+        </span>
+      </div>
+    </PrimaryButton>
+
+    <div class="text-xs text-gray-400 text-center mt-3 max-w-xs">
+      The only data we request from GitHub is your username, avatar and email address.
+    </div>
+  </div>
+</ModalBody>
