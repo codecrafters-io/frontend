@@ -3,7 +3,7 @@
   "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
     { "source": "/package.json", "destination": "/404" },
-    { "source": "/prerender-user-profile-page", "destination": "/404" },
+    { "source": "/prerender/:path*", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
     { "source": "/join_team", "destination": "https://backend.codecrafters.io/join_team" },
     { "source": "/setup_team", "destination": "https://backend.codecrafters.io/setup_team" },
@@ -13,7 +13,7 @@
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
-    { "source": "/users/:username", "destination": "/prerender-user-profile-page" },
+    { "source": "/users/:suffix", "destination": "/prerender/users/user" },
     { "source": "/:path*", "destination": "/_empty.html" }
   ],
   "github": {

@@ -1,17 +1,29 @@
 import fs from 'fs';
 import FastBoot from 'fastboot';
 
-export default async function (request, response) {
-  const { username } = request.query;
+function parsePrerenderPath(request) {
+  const {
+    url,
+    query: { suffix },
+  } = request;
 
-  // Check if username query parameter is provided
-  if (!username) {
-    console.error('Missing "username" query parameter');
-    response.redirect('/404');
+  let prefix = (url || '/')
+    .replace(/\?(.*)$/, '') // strip query parameters
+    .replace(/^\/prerender\//, '/') // strip /prerender
+    .replace(/([^^])\/$/, '$1'); // strip trailing /
 
-    return;
+  if (suffix) {
+    prefix = prefix.replace(/((\/[^/]+))$/, '') || '/'; // strip wildcard function name
   }
 
+  if (!prefix) {
+    throw new Error('Failed to parse prerender path prefix');
+  }
+
+  return `${[prefix, suffix].filter((e) => !!e).join('/')}` || '/';
+}
+
+export default async function (request, response) {
   // Initialize a FastBoot instance
   const app = new FastBoot({
     distPath: 'dist',
@@ -27,15 +39,17 @@ export default async function (request, response) {
     maxSandboxQueueSize: 1,
   });
 
-  // Visit the user profile page
-  const result = await app.visit(`/users/${username}`, {
+  // Visit the requested path
+  const result = await app.visit(parsePrerenderPath(request), {
     html: fs.readFileSync('dist/_empty_notags.html', 'utf-8'),
   });
+
+  // Parse status code
   const statusCode = result._fastbootInfo.response.statusCode;
 
   // Redirect to 404 page if the status code is not 200
   if (statusCode !== 200) {
-    console.warn('Error parsing FastBoot response, statusCode was:', statusCode);
+    console.warn('FastBoot response statusCode was:', statusCode);
     response.redirect('/404');
 
     return;
