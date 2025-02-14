@@ -1,12 +1,12 @@
 /**
  * This is a Vercel Middleware, which:
- * - is triggered for all `/users/:username` routes
- * - extracts `username` from the URL
- * - generates a proper Profile OG Image URL
+ * - is triggered for concept or contest routes
+ * - extracts concept or contest slug from the URL
+ * - determines a proper OG Image URL and other meta tags
  * - reads the contents of `dist/_empty.html`
- * - replaces OG meta tags with user-profile specific ones: <meta property="og:image" content="...">
+ * - replaces OG meta tags with correct ones
  * - serves the result as an HTML response
- * - passes request down the stack and returns if unable to extract `username`
+ * - passes request down the stack and returns if unable to extract parameters
  *
  * Related Docs:
  * - https://vercel.com/docs/functions/edge-middleware
@@ -19,9 +19,9 @@ import { next } from '@vercel/edge';
 import { replaceAllMetaTags } from './app/utils/replace-meta-tag';
 
 export const config = {
-  // Limit the middleware to run only for user profile and concept routes
+  // Limit the middleware to run only for concept and contest routes
   // RegExp syntax uses rules from pillarjs/path-to-regexp
-  matcher: ['/users/:path*', '/concepts/:path*', '/contests/:path*'],
+  matcher: ['/concepts/:path*', '/contests/:path*'],
 };
 
 const contestDetailsMap = {
@@ -56,15 +56,14 @@ function getContestDetails(slug) {
 }
 
 export default async function middleware(request) {
-  // Parse the users or concepts path match result from the request URL
-  const usersPathMatchResult = request.url.match(/\/users\/([^/?]+)/);
+  // Parse the concept or contest path match result from the request URL
   const conceptsPathMatchResult = request.url.match(/\/concepts\/([^/?]+)/);
   const contestsPathMatchResult = request.url.match(/\/contests\/([^/?]+)/);
 
-  // Skip the request if username or concept slug is missing
-  if (!usersPathMatchResult && !conceptsPathMatchResult && !contestsPathMatchResult) {
+  // Skip the request if concept or contest slug is missing
+  if (!conceptsPathMatchResult && !contestsPathMatchResult) {
     // Log an error to the console
-    console.error('Unable to parse username or concept slug from the URL:', request.url);
+    console.error('Unable to parse concept or contest slug from the URL:', request.url);
 
     // Pass the request down the stack for processing and return
     return next(request);
@@ -74,14 +73,7 @@ export default async function middleware(request) {
   let pageTitle;
   let pageDescription;
 
-  if (usersPathMatchResult) {
-    const username = usersPathMatchResult[1];
-
-    // Generate a proper OG Image URL for the username's Profile
-    pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`;
-    pageTitle = `${username}'s CodeCrafters Profile`;
-    pageDescription = `View ${username}'s profile on CodeCrafters`;
-  } else if (conceptsPathMatchResult) {
+  if (conceptsPathMatchResult) {
     const conceptSlug = conceptsPathMatchResult[1];
 
     // Convert the slug('network-protocols') to title('Network Protocols')
@@ -95,21 +87,17 @@ export default async function middleware(request) {
     let conceptDescription = `View the ${conceptTitle} concept on CodeCrafters`;
 
     // Get concept data from the backend
-    let conceptData;
-
     try {
-      conceptData = await fetch(`https://backend.codecrafters.io/services/dynamic_og_images/concept_data?id_or_slug=${conceptSlug}`).then((res) =>
-        res.json(),
-      );
-
+      const conceptData = await (
+        await fetch(`https://backend.codecrafters.io/services/dynamic_og_images/concept_data?id_or_slug=${conceptSlug}`)
+      ).json();
       conceptTitle = conceptData.title;
       conceptDescription = conceptData.description_markdown;
     } catch (e) {
-      console.error(e);
-      console.log('ignoring error for now');
+      console.error('Failed to fetch concept data:', e);
     }
 
-    // Generate a proper OG Image URL for the concept
+    // Override OG tag values for the concept
     pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
     pageTitle = conceptTitle;
     pageDescription = conceptDescription;
@@ -119,6 +107,7 @@ export default async function middleware(request) {
     // Fetch contest details from the hashmap
     const contestDetails = getContestDetails(contestSlug);
 
+    // Override OG tag values for the contest
     pageImageUrl = contestDetails.imageUrl;
     pageTitle = contestDetails.title;
     pageDescription = contestDetails.description;
