@@ -1,5 +1,5 @@
 {
-  "buildCommand": "scripts/build-vercel-dist.sh && scripts/build-vercel-functions.sh",
+  "buildCommand": "scripts/build-vercel-output.sh",
   "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
     { "source": "/package.json", "destination": "/404" },
