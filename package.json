@@ -16,8 +16,6 @@
     "build": "npm run build:versions && npm run tailwind:build && npm run build:ember",
     "build:versions": "echo \"npm: $(npm --version)\" && ember --version",
     "build:ember": "ember build --environment=production",
-    "build:vercel:dist": "./scripts/build-vercel-dist.sh",
-    "build:vercel:functions": "./scripts/build-vercel-functions.sh",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
