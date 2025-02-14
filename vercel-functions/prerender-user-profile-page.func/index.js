@@ -2,15 +2,18 @@ import fs from 'fs';
 import FastBoot from 'fastboot';
 
 export default async function (request, response) {
-  const { username } = request.query;
+  const { username, conceptSlug } = request.query;
 
   // Check if username query parameter is provided
-  if (!username) {
-    console.error('Missing "username" query parameter');
+  if (!username && !conceptSlug) {
+    console.error('Missing "username" or "conceptSlug" query parameter');
     response.redirect('/404');
 
     return;
   }
+
+  const routePrefix = request.url.startsWith('/prerender-user-profile-page') ? '/users/' : '/concepts/';
+  const routeSuffix = request.url.startsWith('/prerender-user-profile-page') ? username : conceptSlug;
 
   // Initialize a FastBoot instance
   const app = new FastBoot({
@@ -28,8 +31,8 @@ export default async function (request, response) {
     maxSandboxQueueSize: 1,
   });
 
-  // Visit the user profile page
-  const result = await app.visit(`/users/${username}`, {
+  // Visit the route
+  const result = await app.visit(`${routePrefix}${routeSuffix}`, {
     html: fs.readFileSync('dist/_empty_notags.html', 'utf-8'),
   });
   const statusCode = result._fastbootInfo.response.statusCode;
