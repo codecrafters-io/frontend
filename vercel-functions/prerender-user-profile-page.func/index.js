@@ -1,5 +1,5 @@
+import fs from 'fs';
 import FastBoot from 'fastboot';
-import { replaceAllMetaTags } from './replace-meta-tag.js';
 
 export default async function (request, response) {
   const { username } = request.query;
@@ -28,7 +28,9 @@ export default async function (request, response) {
   });
 
   // Visit the user profile page
-  const result = await app.visit(`/users/${username}`);
+  const result = await app.visit(`/users/${username}`, {
+    html: fs.readFileSync('dist/_empty_notags.html', 'utf-8'),
+  });
   const statusCode = result._fastbootInfo.response.statusCode;
 
   // Redirect to 404 page if the status code is not 200
@@ -42,14 +44,6 @@ export default async function (request, response) {
   // Get the HTML content of the FastBoot response
   const html = await result['html'](); // Weird VSCode syntax highlighting issue if written as result.html()
 
-  // Define meta tag values
-  const pageTitle = `${username}'s CodeCrafters Profile`;
-  const pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`;
-  const pageDescription = `View ${username}'s profile on CodeCrafters`;
-
-  // Replace meta tags in the HTML content
-  const responseText = replaceAllMetaTags(html, pageTitle, pageDescription, pageImageUrl);
-
-  // Send the modified HTML content as the response
-  response.send(responseText);
+  // Send the HTML content as result
+  response.send(html);
 }

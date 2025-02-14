@@ -27,9 +27,6 @@ find "${VERCEL_FUNCTIONS_DESTINATION}" -type d -name "*.func" | while read -r FU
   echo "Copying dist folder to ${FUNCTION_DIR}"
   cp -a dist/ "${FUNCTION_DIR}/dist/"
 
-  echo "Copying replace-meta-tag.js to ${FUNCTION_DIR}"
-  cp -a app/utils/replace-meta-tag.js "${FUNCTION_DIR}/"
-
   echo "Running npm install in ${FUNCTION_DIR}"
   (cd "${FUNCTION_DIR}" && npm install --no-fund --no-audit)
 done
