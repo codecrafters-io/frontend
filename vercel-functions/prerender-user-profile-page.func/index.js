@@ -44,7 +44,7 @@ export default async function (request, response) {
 
   // Define meta tag values
   const pageTitle = `${username}'s CodeCrafters Profile`;
-  const pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`; // TODO: Read `metaTagUserProfilePictureBaseURL` from page config
+  const pageImageUrl = `https://og.codecrafters.io/api/user_profile/${username}`;
   const pageDescription = `View ${username}'s profile on CodeCrafters`;
 
   // Replace meta tags in the HTML content

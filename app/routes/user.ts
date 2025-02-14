@@ -6,7 +6,6 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
-import config from 'codecrafters-frontend/config/environment';
 
 export type ModelType = UserModel | undefined;
 
@@ -32,7 +31,7 @@ export default class UserRoute extends BaseRoute {
     this.previousMetaTitle = this.metaData.title;
     this.previousMetaDescription = this.metaData.description;
 
-    this.metaData.imageUrl = `${config.x.metaTagUserProfilePictureBaseURL}${model.username}`;
+    this.metaData.imageUrl = `https://og.codecrafters.io/api/user_profile/${model.username}`;
     this.metaData.title = `${model.username}'s CodeCrafters Profile`;
     this.metaData.description = `View ${model.username}'s profile on CodeCrafters`;
   }
