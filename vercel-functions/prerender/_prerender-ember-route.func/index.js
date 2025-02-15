@@ -12,6 +12,7 @@ export default async function prerenderEmberRoute(request, response) {
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
         AbortController,
+        URLSearchParams,
       });
     },
 
