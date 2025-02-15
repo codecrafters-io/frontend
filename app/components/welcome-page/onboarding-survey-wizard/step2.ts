@@ -19,6 +19,7 @@ export default class Step2Component extends Component<Signature> {
     'GitHub',
     'Google',
     'Hacker News',
+    'Facebook',
     'Instagram',
     'LinkedIn',
     // 'Newsletter', // Not a lot of entries as of Jul 2024
