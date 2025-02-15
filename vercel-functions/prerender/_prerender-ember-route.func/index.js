@@ -1,29 +1,8 @@
 import fs from 'fs';
 import FastBoot from 'fastboot';
+import parsePrerenderPath from './parse-prerender-path.js';
 
-function parsePrerenderPath(request) {
-  const {
-    url,
-    query: { suffix },
-  } = request;
-
-  let prefix = (url || '/')
-    .replace(/\?(.*)$/, '') // strip query parameters
-    .replace(/^\/prerender\//, '/') // strip /prerender
-    .replace(/([^^])\/$/, '$1'); // strip trailing /
-
-  if (suffix) {
-    prefix = prefix.replace(/((\/[^/]+))$/, '') || '/'; // strip wildcard function name
-  }
-
-  if (!prefix) {
-    throw new Error('Failed to parse prerender path prefix');
-  }
-
-  return `${[prefix, suffix].filter((e) => !!e).join('/')}` || '/';
-}
-
-export default async function (request, response) {
+export default async function prerenderEmberRoute(request, response) {
   // Initialize a FastBoot instance
   const app = new FastBoot({
     distPath: 'dist',
@@ -39,9 +18,13 @@ export default async function (request, response) {
     maxSandboxQueueSize: 1,
   });
 
-  // Visit the requested path
-  const result = await app.visit(parsePrerenderPath(request), {
-    html: fs.readFileSync('dist/_empty_notags.html', 'utf-8'),
+  // Determine the prerender path for FastBoot
+  const prerenderPath = parsePrerenderPath(request);
+  console.debug('Parsed prerender path for FastBoot:', prerenderPath);
+
+  // Visit the requested path with FastBoot
+  const result = await app.visit(prerenderPath, {
+    html: fs.readFileSync('dist/_empty_notags.html', 'utf-8'), // Use the base html file without OG meta tags!
   });
 
   // Parse status code
