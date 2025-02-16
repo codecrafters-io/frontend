@@ -10,6 +10,7 @@ import RepositoryStageListItemModel from 'codecrafters-frontend/models/repositor
 import CourseCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/course-completed-step';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import IntroductionStep from 'codecrafters-frontend/utils/course-page-step-list/introduction-step';
+import PreChallengeAssessmentStep from 'codecrafters-frontend/utils/course-page-step-list/pre-challenge-assessment-step';
 import SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
 import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
 import StepGroup from 'codecrafters-frontend/utils/course-page-step-list/step-group';
@@ -31,6 +32,7 @@ export class StepList {
     const steps: Step[] = [];
 
     steps.push(new IntroductionStep(this.repository));
+    steps.push(new PreChallengeAssessmentStep(this.repository));
     steps.push(new SetupStep(this.repository));
 
     if (!this.repository.stageList) {

@@ -122,6 +122,6 @@ export default class RequestLanguageDropdownComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageDropdown': typeof RequestLanguageDropdownComponent;
+    'CoursePage::IntroductionStep::Legacy::CreateRepositoryCard::RequestLanguageDropdown': typeof RequestLanguageDropdownComponent;
   }
 }
