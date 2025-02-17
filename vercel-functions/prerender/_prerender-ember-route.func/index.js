@@ -19,7 +19,7 @@ export default async function prerenderEmberRoute(request, response) {
   });
 
   // Determine the prerender path for FastBoot
-  const prerenderPath = parsePrerenderPath(request);
+  const prerenderPath = parsePrerenderPath(request.url);
   console.debug('Parsed prerender path for FastBoot:', prerenderPath);
 
   // Visit the requested path with FastBoot

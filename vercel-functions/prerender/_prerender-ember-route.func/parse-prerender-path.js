@@ -1,6 +1,6 @@
 /**
- * Converts a Request used to access a Prerender Function into a proper URL for
- * pre-rendering an Ember route with FastBoot.
+ * Converts a Request URL used to access a Prerender Function into a proper URL
+ * for pre-rendering an Ember route with FastBoot.
  *
  * Strips `/prerender` from the start of the path, since it's the entry point
  * to prerender functions.
@@ -10,7 +10,7 @@
  * in the Vercel rewrite rule. The wildcard function name in the path will be
  * replaced with the value of the dynamic segment.
  *
- * @param {Request} request Vercel Request received by the Prerender Function.
+ * @param {string} url Vercel Request URL received by the Prerender Function.
  * @returns {string} Resolved Ember path to pre-render using FastBoot.
  * @example
   Considering the following Vercel rewrite rules:
@@ -26,10 +26,10 @@
   /demo/code-mirror -> /prerender/demo/code-mirror -> /demo/code-mirror
   /users/abcde -> /prerender/users/[user]?user=abcde -> /users/abcde
   /concepts/xyzqwe -> /prerender/concepts/[concept]?concept=xyzqwe -> /concepts/xyzqwe
-  /test?abc=xyz -> /prerender/test -> /test
+  /test?abc=xyz -> /prerender/test?abc=xyz -> /test?abc=xyz
   ```
  */
-export default function parsePrerenderPath({ url, query }) {
+export default function parsePrerenderPath(url = '/') {
   // Parse and prepare the initial path
   const path = (url || '/')
     .replace(/\?(.*)$/, '') // strip query parameters
@@ -37,12 +37,11 @@ export default function parsePrerenderPath({ url, query }) {
     .split('/') // split the path into pieces
     .filter((p) => !!p); // filter out empty elements
 
-  // Determine the name by which this function was routed to
-  const functionName = path[path.length - 1];
+  // Parse the queryParams
+  const queryParams = new URLSearchParams(((url || '').match(/\?(.*)$/) || [])[0] || '');
 
-  if (!functionName) {
-    throw new Error('Failed to parse function name from the URL');
-  }
+  // Determine the name by which this function was routed to
+  const functionName = path[path.length - 1] || '';
 
   // If function name is wrapped in [], for example [user] - it's a wildcard
   // function, it's name must be stripped from the path and replaced with a
@@ -52,20 +51,20 @@ export default function parsePrerenderPath({ url, query }) {
     const dynamicSegmentName = functionName.replace(/^\[(.+)\]$/, '$1');
 
     // Dynamic segments from rewrite rules are passed by Vercel via queryParams
-    const queryParamValue = query[dynamicSegmentName];
+    const dynamicSegmentValue = queryParams.get(dynamicSegmentName);
 
-    if (!queryParamValue) {
-      throw new Error('Failed to read query param with dynamic segment value');
+    if (!dynamicSegmentValue) {
+      throw new Error('Failed to read dynamic segment value from query params');
     }
 
     // Replace the function name in the path with dynamic segment value
     path.pop();
-    path.push(queryParamValue);
+    path.push(dynamicSegmentValue);
+
+    // Remove the dynamic segment query param from queryParams
+    queryParams.delete(dynamicSegmentName);
   }
 
-  // Parse the search string (query params)
-  // const search = (url || '').match(/\?(.*)$/)[0] || '';
-
   // Return the full path
-  return `/${path.join('/')}`;
+  return `/${path.join('/')}${queryParams.size ? `?${queryParams.toString()}` : ''}`;
 }
