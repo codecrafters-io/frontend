@@ -57,6 +57,15 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
+  handleDidInsert() {
+    console.log('handleDidInsert');
+
+    if (this.args.isCurrentBlock) {
+      this.setupKeyListeners();
+    }
+  }
+
+  @action
   async handleDidInsertCorrectAnswerEmoji(element: HTMLElement) {
     if (this.hasFiredConfetti || !this.selectedOptionIsCorrect) {
       return;
@@ -82,15 +91,6 @@ export default class QuestionCardComponent extends Component<Signature> {
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
-    }
-  }
-
-  @action
-  handleDidInsert() {
-    console.log('handleDidInsert');
-
-    if (this.args.isCurrentBlock) {
-      this.setupKeyListeners();
     }
   }
 
