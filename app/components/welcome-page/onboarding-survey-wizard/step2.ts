@@ -14,19 +14,19 @@ interface Signature {
 
 export default class Step2Component extends Component<Signature> {
   options = [
-    'Friend/Colleague',
     'YouTube',
-    'GitHub',
-    'Google',
-    'Hacker News',
-    'Facebook',
     'Instagram',
     'LinkedIn',
-    // 'Newsletter', // Not a lot of entries as of Jul 2024
-    'Reddit',
-    'TikTok',
+    'Facebook',
     'Twitter',
+    'Reddit',
+    'Hacker News',
+    'GitHub',
+    'Friend/Colleague',
+    'Google',
+    'TikTok',
     "Don't remember",
+    // 'Newsletter', // Not a lot of entries as of Jul 2024
   ];
 
   @action
