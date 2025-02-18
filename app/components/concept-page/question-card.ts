@@ -16,6 +16,7 @@ interface Signature {
 
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
+  @tracked isKeyboardNavigating = false;
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
@@ -51,11 +52,22 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
+  handleKeyDown(event: KeyboardEvent) {
+    console.log(event.key);
+    if (['Enter', 'Space', 'ArrowUp', 'ArrowDown', 'j', 'k', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'].includes(event.key)) {
+      console.log('keyboard navigating');
+      this.isKeyboardNavigating = true;
+    }
+  }
+
+  @action
   handleDidInsertOptionsList(element: HTMLElement) {
+    console.log('did insert options list');
+    console.log(this.isKeyboardNavigating);
+    console.log(element.children);
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement) {
-      // focus() doesn't seem to work unless it's called after the current runloop
+    if (firstOptionElement instanceof HTMLElement && this.isKeyboardNavigating) {
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
