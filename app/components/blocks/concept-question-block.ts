@@ -14,6 +14,7 @@ interface Signature {
     model: ConceptQuestionBlock;
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
+    onKeyDown: () => void;
     isCurrentBlock: boolean;
   };
 }
@@ -21,17 +22,10 @@ interface Signature {
 export default class ConceptQuestionBlockComponent extends Component<Signature> {
   @tracked isSubmitted = false;
   @tracked continueOrStepBackElement: HTMLDivElement | null = null;
-  @tracked isKeyboardNavigating = false;
   @service declare store: Store;
 
   get question() {
     return this.store.peekAll('concept-question').findBy('slug', this.args.model.conceptQuestionSlug);
-  }
-
-  @action
-  handleKeyDown() {
-    console.log("handleKeyDown");
-    this.isKeyboardNavigating = true;
   }
 
   @action
