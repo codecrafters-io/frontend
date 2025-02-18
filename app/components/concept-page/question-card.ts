@@ -85,7 +85,46 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
+  handleKeyPress(event: KeyboardEvent) {
+    const { key } = event;
+    console.log('handleKeyPress', key);
+
+    if (key === 'j' || key === 'ArrowDown') {
+      this.handleMoveDown(event);
+    } else if (key === 'k' || key === 'ArrowUp') {
+      this.handleMoveUp(event);
+    } else if (this.digitKeys.includes(key)) {
+      const index = this.digitKeys.indexOf(key);
+      this.handleOptionSelected(index);
+    } else if (this.letterKeys.includes(key)) {
+      const index = this.letterKeys.indexOf(key);
+      this.handleOptionSelected(index);
+    }
+  }
+
+  @action
+  setupKeyListeners() {
+    window.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  @action
+  removeKeyListeners() {
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+    this.setupKeyListeners();
+  }
+
+  willDestroy() {
+    console.log('willDestroy');
+    this.removeKeyListeners();
+  }
+
+  @action
   handleMoveDown(event: KeyboardEvent) {
+    console.log('handleMoveDown', event, this.selectedOptionIndex);
     if (this.selectedOptionIndex !== null) {
       return;
     }
@@ -112,6 +151,7 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleMoveUp(event: KeyboardEvent) {
+    console.log('handleMoveUp', event, this.selectedOptionIndex);
     if (this.selectedOptionIndex !== null) {
       return;
     }
