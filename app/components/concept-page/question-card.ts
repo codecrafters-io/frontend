@@ -85,7 +85,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
-    console.log('did insert options list with keyboardNavigationIsUsed', this.args.keyboardNavigationIsUsed);
     const firstOptionElement = element.children[0];
 
     if (firstOptionElement instanceof HTMLElement && this.args.keyboardNavigationIsUsed) {
@@ -159,7 +158,6 @@ export default class QuestionCardComponent extends Component<Signature> {
     }
 
     if (fromKeyboardNavigation) {
-      console.log('args.onKeyDown', 4);
       this.args.onKeyDown();
     }
 
