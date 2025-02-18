@@ -11,12 +11,13 @@ interface Signature {
   Args: {
     question: ConceptQuestionModel;
     onSubmit: () => void;
+    isKeyboardNavigating: boolean;
+    onKeyDown: () => void;
   };
 }
 
 export default class QuestionCardComponent extends Component<Signature> {
   @tracked selectedOptionIndex: number | null = null;
-  @tracked isKeyboardNavigating = false;
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
@@ -52,22 +53,13 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleKeyDown(event: KeyboardEvent) {
-    console.log(event.key);
-    if (['Enter', 'Space', 'ArrowUp', 'ArrowDown', 'j', 'k', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'].includes(event.key)) {
-      console.log('keyboard navigating');
-      this.isKeyboardNavigating = true;
-    }
-  }
-
-  @action
   handleDidInsertOptionsList(element: HTMLElement) {
     console.log('did insert options list');
-    console.log(this.isKeyboardNavigating);
+    console.log(this.args.isKeyboardNavigating);
     console.log(element.children);
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement && this.isKeyboardNavigating) {
+    if (firstOptionElement instanceof HTMLElement && this.args.isKeyboardNavigating) {
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
@@ -88,6 +80,8 @@ export default class QuestionCardComponent extends Component<Signature> {
     if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
       return;
     }
+
+    this.args.onKeyDown();
 
     const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
@@ -115,6 +109,8 @@ export default class QuestionCardComponent extends Component<Signature> {
       return;
     }
 
+    this.args.onKeyDown();
+
     const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
@@ -131,6 +127,8 @@ export default class QuestionCardComponent extends Component<Signature> {
     if (optionIndex >= this.args.question.options.length) {
       return;
     }
+
+    this.args.onKeyDown();
 
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 

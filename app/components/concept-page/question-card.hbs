@@ -12,9 +12,8 @@
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          @isKeyboardNavigating={{this.isKeyboardNavigating}}
+          @isKeyboardNavigating={{@isKeyboardNavigating}}
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
-          {{on "keydown" this.handleKeyDown}}
           data-test-question-card-option
         />
       {{/each}}
