@@ -26,11 +26,12 @@ export default class ContinueOrStepBackComponent extends Component<Signature> {
 
   @action
   handleEnterKeyPress(event: KeyboardEvent): void {
+    // We wan't to track all usages of the enter key
+    this.args.onKeyDown();
+
     if (event.target === this.continueButtonElement) {
       return; // Continue button already has a click handler
     }
-
-    this.args.onKeyDown();
 
     this.args.onContinueButtonClick();
   }
