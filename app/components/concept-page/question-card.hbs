@@ -11,7 +11,6 @@
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          @hasShownConfetti={{this.hasShownConfetti}}
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
           data-test-question-card-option
         />

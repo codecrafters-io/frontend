@@ -11,7 +11,6 @@ export interface Signature {
       explanation_markdown: string;
     };
     isSubmitted: boolean;
-    hasShownConfetti: boolean;
   };
 }
 
