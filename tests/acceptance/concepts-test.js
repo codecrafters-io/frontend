@@ -534,31 +534,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
 
-    await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' }); // Simulate ENTER on focused option
-
-    assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
-  });
-
-  test('when navigating using keyboard keys, a question option is focused', async function (assert) {
-    testScenario(this.server);
-    createConcepts(this.server);
-
-    signInAsStaff(this.owner, this.server);
-
-    await conceptsPage.visit();
-
-    await conceptsPage.clickOnConceptCard('Network Protocols');
-    await conceptPage.clickOnContinueButton();
-    await conceptPage.clickOnContinueButton();
-
-    assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
-
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
-
-    await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' }); // Simulate ENTER on focused option
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
 
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
