@@ -4,6 +4,7 @@
     <ConceptPage::QuestionCard
       @question={{this.question}}
       @onSubmit={{this.handleSubmit}}
+      @isCurrentBlock={{@isCurrentBlock}}
       class="w-full max-w-xl"
       {{did-insert this.handleDidInsertHTML}}
       {{did-update this.handleDidUpdateHTML}}

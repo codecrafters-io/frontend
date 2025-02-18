@@ -12,6 +12,7 @@ interface Signature {
 
   Args: {
     question: ConceptQuestionModel;
+    isCurrentBlock: boolean;
     onSubmit: () => void;
   };
 }
@@ -85,6 +86,15 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
+  handleDidInsert() {
+    console.log('handleDidInsert');
+
+    if (this.args.isCurrentBlock) {
+      this.setupKeyListeners();
+    }
+  }
+
+  @action
   handleKeyPress(event: KeyboardEvent) {
     const { key } = event;
     console.log('handleKeyPress', key);
@@ -103,28 +113,9 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  setupKeyListeners() {
-    window.addEventListener('keydown', this.handleKeyPress);
-  }
-
-  @action
-  removeKeyListeners() {
-    window.removeEventListener('keydown', this.handleKeyPress);
-  }
-
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-    this.setupKeyListeners();
-  }
-
-  willDestroy() {
-    console.log('willDestroy');
-    this.removeKeyListeners();
-  }
-
-  @action
   handleMoveDown(event: KeyboardEvent) {
     console.log('handleMoveDown', event, this.selectedOptionIndex);
+
     if (this.selectedOptionIndex !== null) {
       return;
     }
@@ -152,6 +143,7 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleMoveUp(event: KeyboardEvent) {
     console.log('handleMoveUp', event, this.selectedOptionIndex);
+
     if (this.selectedOptionIndex !== null) {
       return;
     }
@@ -196,5 +188,22 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleShowExplanationClick() {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
+  }
+
+  @action
+  removeKeyListeners() {
+    console.log('Removing listeners for question card');
+    window.removeEventListener('keydown', this.handleKeyPress);
+  }
+
+  @action
+  setupKeyListeners() {
+    console.log('Setting up listeners for question card');
+    window.addEventListener('keydown', this.handleKeyPress);
+  }
+
+  willDestroy() {
+    super.willDestroy();
+    this.removeKeyListeners();
   }
 }
