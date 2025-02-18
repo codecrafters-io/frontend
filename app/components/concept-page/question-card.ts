@@ -19,7 +19,7 @@ interface Signature {
 export default class QuestionCardComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
   @tracked selectedOptionIndex: number | null = null;
-  @tracked _hasShownConfetti = false;
+  @tracked hasShownConfetti = false;
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
@@ -42,10 +42,6 @@ export default class QuestionCardComponent extends Component<Signature> {
       colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
       disableForReducedMotion: true,
     });
-  }
-
-  get hasShownConfetti() {
-    return this._hasShownConfetti;
   }
 
   get hasSubmitted() {
@@ -80,7 +76,7 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleConfettiShown() {
     next(() => {
-      this._hasShownConfetti = true;
+      this.hasShownConfetti = true;
     });
   }
 
