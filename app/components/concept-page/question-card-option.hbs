@@ -2,7 +2,7 @@
   type="button"
   tabindex={{if @isSubmitted "-1" "0"}}
   class="flex items-start text-left gap-2 py-2
-    {{if (and this.isUnselected @isKeyboardNavigating) 'focus:bg-gray-100'}}
+    {{if (and this.isUnselected @keyboardNavigationIsUsed) 'focus:bg-gray-100'}}
     {{if this.isUnselected 'hover:bg-gray-100'}}
     {{if this.isUnselectedAndCorrect 'bg-green-200'}}
     {{if this.isSelectedAndUnsubmitted 'bg-gray-100'}}

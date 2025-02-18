@@ -11,7 +11,7 @@ interface Signature {
   Args: {
     question: ConceptQuestionModel;
     onSubmit: () => void;
-    isKeyboardNavigating: boolean;
+    keyboardNavigationIsUsed: boolean;
     onKeyDown: () => void;
   };
 }
@@ -54,10 +54,12 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
-    console.log('did insert options list with isKeyboardNavigating', this.args.isKeyboardNavigating);
+    console.log('did insert options list with keyboardNavigationIsUsed', this.args.keyboardNavigationIsUsed);
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement && this.args.isKeyboardNavigating) {
+    if (firstOptionElement instanceof HTMLElement && this.args.keyboardNavigationIsUsed) 
+      // focus() doesn't seem to work unless it's called after the current runloop
+      {
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
