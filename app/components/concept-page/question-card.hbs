@@ -45,6 +45,7 @@
       <div
         data-test-question-submitted
         class="p-3 sm:p-4 shadow-sm border rounded {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}"
+        {{did-insert this.fireCorrectAnswerConfetti}}
       >
         <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
           {{#if this.selectedOptionIsCorrect}}
