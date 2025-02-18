@@ -18,28 +18,12 @@ interface Signature {
 
 export default class QuestionCardComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
-  @tracked selectedOptionIndex: number | null = null;
+
   @tracked hasShownConfetti = false;
+  @tracked selectedOptionIndex: number | null = null;
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
-  }
-
-  @action
-  async fireCorrectAnswerConfetti(element: HTMLElement) {
-    if (this.hasShownConfetti || !this.selectedOptionIsCorrect) {
-      return;
-    }
-
-    this.handleConfettiShown();
-
-    await this.confetti.fireFromElement(element, {
-      particleCount: 50,
-      spread: 60,
-      startVelocity: 20,
-      colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
-      disableForReducedMotion: true,
-    });
   }
 
   get hasSubmitted() {
@@ -69,6 +53,23 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   get selectedOptionIsCorrect() {
     return this.selectedOption && this.selectedOption.is_correct;
+  }
+
+  @action
+  async fireCorrectAnswerConfetti(element: HTMLElement) {
+    if (this.hasShownConfetti || !this.selectedOptionIsCorrect) {
+      return;
+    }
+
+    this.handleConfettiShown();
+
+    await this.confetti.fireFromElement(element, {
+      particleCount: 50,
+      spread: 60,
+      startVelocity: 20,
+      colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
+      disableForReducedMotion: true,
+    });
   }
 
   @action
