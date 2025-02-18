@@ -11,9 +11,7 @@ export interface Signature {
       explanation_markdown: string;
     };
     isSubmitted: boolean;
-    questionSlug: string;
     hasShownConfetti: boolean;
-    onConfettiShown: () => void;
   };
 }
 

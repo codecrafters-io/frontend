@@ -61,7 +61,7 @@ export default class QuestionCardComponent extends Component<Signature> {
       return;
     }
 
-    this.handleConfettiShown();
+    this.hasShownConfetti = true;
 
     await this.confetti.fireFromElement(element, {
       particleCount: 50,
@@ -70,11 +70,6 @@ export default class QuestionCardComponent extends Component<Signature> {
       colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
       disableForReducedMotion: true,
     });
-  }
-
-  @action
-  handleConfettiShown() {
-    this.hasShownConfetti = true;
   }
 
   @action
