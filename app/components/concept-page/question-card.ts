@@ -4,6 +4,8 @@ import { action } from '@ember/object';
 import type ConceptQuestionModel from 'codecrafters-frontend/models/concept-question';
 import type { Option } from 'codecrafters-frontend/models/concept-question';
 import { next } from '@ember/runloop';
+import { service } from '@ember/service';
+import ConfettiService from 'codecrafters-frontend/services/confetti';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,11 +17,31 @@ interface Signature {
 }
 
 export default class QuestionCardComponent extends Component<Signature> {
+  @service declare confetti: ConfettiService;
   @tracked selectedOptionIndex: number | null = null;
   @tracked _hasShownConfetti = false;
 
   get digitKeys() {
     return '1 2 3 4 5 6 7 8 9'.split(' ');
+  }
+
+  @action
+  async fireCorrectAnswerConfetti(element: HTMLElement) {
+    console.log('fireCorrectAnswerConfetti', this.hasShownConfetti, this.selectedOptionIsCorrect);
+
+    if (this.hasShownConfetti || !this.selectedOptionIsCorrect) {
+      return;
+    }
+
+    this.handleConfettiShown();
+
+    await this.confetti.fireFromElement(element, {
+      particleCount: 50,
+      spread: 60,
+      startVelocity: 20,
+      colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
+      disableForReducedMotion: true,
+    });
   }
 
   get hasShownConfetti() {

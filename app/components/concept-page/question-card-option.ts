@@ -1,7 +1,4 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
-import type ConfettiService from 'codecrafters-frontend/services/confetti';
 
 export interface Signature {
   Element: HTMLButtonElement;
@@ -21,8 +18,6 @@ export interface Signature {
 }
 
 export default class QuestionCardOptionComponent extends Component<Signature> {
-  @service declare confetti: ConfettiService;
-
   get isCorrect() {
     return this.args.option.is_correct;
   }
@@ -49,25 +44,6 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
 
   get isUnselectedAndCorrect() {
     return this.args.isSubmitted && !this.args.option.isSelected && this.args.option.is_correct;
-  }
-
-  @action
-  async fireCorrectAnswerConfetti(element: HTMLElement) {
-    console.log('fireCorrectAnswerConfetti', this.args.hasShownConfetti, this.isSelectedAndCorrect);
-
-    if (this.args.hasShownConfetti || !this.isSelectedAndCorrect) {
-      return;
-    }
-
-    this.args.onConfettiShown();
-
-    await this.confetti.fireFromElement(element, {
-      particleCount: 50,
-      spread: 60,
-      startVelocity: 20,
-      colors: ['#22c55e', '#16a34a', '#15803d'], // green colors
-      disableForReducedMotion: true,
-    });
   }
 }
 
