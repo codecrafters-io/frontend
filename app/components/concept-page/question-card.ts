@@ -57,9 +57,8 @@ export default class QuestionCardComponent extends Component<Signature> {
     console.log('did insert options list with keyboardNavigationIsUsed', this.args.keyboardNavigationIsUsed);
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement && this.args.keyboardNavigationIsUsed) 
+    if (firstOptionElement instanceof HTMLElement && this.args.keyboardNavigationIsUsed) {
       // focus() doesn't seem to work unless it's called after the current runloop
-      {
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
