@@ -18,6 +18,8 @@
             @isCurrentBlock={{eq blockGroup.index this.currentBlockGroupIndex}}
             @onContinueButtonClick={{this.handleContinueButtonClick}}
             @onStepBackButtonClick={{this.handleStepBackButtonClick}}
+            @isKeyboardNavigating={{this.isKeyboardNavigating}}
+            @onKeyDown={{this.handleKeyDown}}
             class="mb-6"
             data-test-block
           />

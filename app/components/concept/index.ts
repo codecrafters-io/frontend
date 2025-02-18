@@ -30,6 +30,7 @@ export default class ConceptComponent extends Component<Signature> {
   @tracked lastRevealedBlockGroupIndex: number | null = null;
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
+  @tracked isKeyboardNavigating = false;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -185,6 +186,12 @@ export default class ConceptComponent extends Component<Signature> {
         }
       }
     });
+  }
+
+  @action
+  handleKeyDown() {
+    console.log("handleKeyDown"); 
+    this.isKeyboardNavigating = true;
   }
 }
 
