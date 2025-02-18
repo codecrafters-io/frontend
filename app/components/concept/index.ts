@@ -138,7 +138,7 @@ export default class ConceptComponent extends Component<Signature> {
   @action
   handleKeyDown() {
     // This is used to track if the user is using keyboard navigation.
-    console.log("handleKeyDown"); 
+    console.log('handleKeyDown');
     this.keyboardNavigationIsUsed = true;
   }
 
