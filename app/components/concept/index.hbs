@@ -33,6 +33,7 @@
               @shouldHighlightKeyboardShortcuts={{true}}
               @shouldShowContinueButton={{true}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
+              @onKeyDown={{this.handleKeyDown}}
               class="mb-6"
             />
           {{/if}}

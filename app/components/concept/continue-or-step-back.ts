@@ -9,6 +9,7 @@ interface Signature {
     continueButtonText: string;
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
+    onKeyDown: () => void;
     shouldHighlightKeyboardShortcuts: boolean;
     shouldShowContinueButton: boolean;
     shouldShowStepBackButton: boolean;
@@ -28,6 +29,8 @@ export default class ContinueOrStepBackComponent extends Component<Signature> {
     if (event.target === this.continueButtonElement) {
       return; // Continue button already has a click handler
     }
+
+    this.args.onKeyDown();
 
     this.args.onContinueButtonClick();
   }

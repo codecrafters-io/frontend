@@ -54,9 +54,7 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
-    console.log('did insert options list');
-    console.log(this.args.isKeyboardNavigating);
-    console.log(element.children);
+    console.log('did insert options list with isKeyboardNavigating', this.args.isKeyboardNavigating);
     const firstOptionElement = element.children[0];
 
     if (firstOptionElement instanceof HTMLElement && this.args.isKeyboardNavigating) {
