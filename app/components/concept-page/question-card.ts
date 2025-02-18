@@ -123,12 +123,15 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleOptionSelected(optionIndex: number) {
+  handleOptionSelected(optionIndex: number, fromKeyboardNavigation: boolean = false) {
     if (optionIndex >= this.args.question.options.length) {
       return;
     }
 
-    this.args.onKeyDown();
+    if (fromKeyboardNavigation) {
+      console.log('args.onKeyDown', 4);
+      this.args.onKeyDown();
+    }
 
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;
 
