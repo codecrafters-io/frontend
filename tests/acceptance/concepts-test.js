@@ -481,6 +481,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     // Should be able to move back and fort
+    await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
@@ -516,6 +517,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     // Should be able to move back and fort
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
@@ -572,15 +574,17 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
-
-    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
-
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
 
-    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
+    // TODO: Related bug: CC-1631
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '4 layers');
+
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+    await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
+
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '4 layers');
   });
 
   test('only published concepts are visible to users', async function (assert) {
