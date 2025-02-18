@@ -27,8 +27,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   async fireCorrectAnswerConfetti(element: HTMLElement) {
-    console.log('fireCorrectAnswerConfetti', this.hasShownConfetti, this.selectedOptionIsCorrect);
-
     if (this.hasShownConfetti || !this.selectedOptionIsCorrect) {
       return;
     }
@@ -75,9 +73,7 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleConfettiShown() {
-    next(() => {
-      this.hasShownConfetti = true;
-    });
+    this.hasShownConfetti = true;
   }
 
   @action
