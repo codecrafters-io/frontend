@@ -19,7 +19,7 @@ interface Signature {
 export default class QuestionCardComponent extends Component<Signature> {
   @service declare confetti: ConfettiService;
 
-  @tracked hasShownConfetti = false;
+  @tracked hasFiredConfetti = false;
   @tracked selectedOptionIndex: number | null = null;
 
   get digitKeys() {
@@ -56,12 +56,12 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  async fireCorrectAnswerConfetti(element: HTMLElement) {
-    if (this.hasShownConfetti || !this.selectedOptionIsCorrect) {
+  async handleDidInsertCorrectAnswerEmoji(element: HTMLElement) {
+    if (this.hasFiredConfetti || !this.selectedOptionIsCorrect) {
       return;
     }
 
-    this.hasShownConfetti = true;
+    this.hasFiredConfetti = true;
 
     await this.confetti.fireFromElement(element, {
       particleCount: 50,

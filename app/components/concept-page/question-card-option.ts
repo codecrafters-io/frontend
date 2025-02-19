@@ -1,14 +1,12 @@
 import Component from '@glimmer/component';
+import type { Option } from 'codecrafters-frontend/models/concept-question';
 
 export interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
-    option: {
-      is_correct: boolean;
+    option: Option & {
       isSelected: boolean;
-      markdown: string;
-      explanation_markdown: string;
     };
     isSubmitted: boolean;
   };
