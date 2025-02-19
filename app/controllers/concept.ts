@@ -11,12 +11,10 @@ export default class ConceptController extends Controller {
   async handleEngagementCreate(engagement: ConceptEngagementModel) {
     console.log('Engagement created in concept controller', engagement);
     this.model.latestConceptEngagement = engagement;
-    console.log('Force set');
-    this.set('model.latestConceptEngagement', engagement);
 
     await new Promise((resolve) => {
       next(() => {
-        this.set('model.latestConceptEngagement', engagement);
+        this.model.latestConceptEngagement = engagement;
         resolve(undefined);
       });
     });
