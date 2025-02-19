@@ -11,6 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    isCurrentBlock: boolean;
     question: ConceptQuestionModel;
     onSubmit: () => void;
   };
