@@ -1,6 +1,9 @@
 import Component from '@glimmer/component';
 import type { Option } from 'codecrafters-frontend/models/concept-question';
 
+// Note: There's a mix of camelCase and snake_case here because we're interfacing between
+// the frontend component (which uses camelCase) and the backend API response (which uses snake_case).
+// The Option type comes from the API shape, while isSelected is managed in the frontend.
 export interface Signature {
   Element: HTMLButtonElement;
 
