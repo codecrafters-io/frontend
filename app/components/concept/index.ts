@@ -18,7 +18,7 @@ interface Signature {
   Args: {
     concept: ConceptModel;
     latestConceptEngagement: ConceptEngagementModel;
-    onEngagementCreate?: (engagement: ConceptEngagementModel) => void;
+    onEngagementCreate?: (engagement: ConceptEngagementModel) => Promise<void>;
   };
 
   Element: HTMLDivElement;
