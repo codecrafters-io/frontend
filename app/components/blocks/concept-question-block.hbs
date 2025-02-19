@@ -1,7 +1,7 @@
 {{#if this.question}}
   <div ...attributes>
-    {{! @glint-expect-error not ts-ified yet }}
     <ConceptPage::QuestionCard
+      @isCurrentBlock={{@isCurrentBlock}}
       @question={{this.question}}
       @onSubmit={{this.handleSubmit}}
       class="w-full max-w-xl"

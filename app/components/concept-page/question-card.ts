@@ -11,6 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    isCurrentBlock: boolean;
     question: ConceptQuestionModel;
     onSubmit: () => void;
   };
@@ -156,5 +157,11 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleShowExplanationClick() {
     this.handleOptionSelected(this.args.question.correctOptionIndex);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ConceptPage::QuestionCard': typeof QuestionCardComponent;
   }
 }

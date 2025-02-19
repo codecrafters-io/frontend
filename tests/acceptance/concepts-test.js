@@ -501,6 +501,61 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
+  test('while navigating using keys, options are traversed one at a time', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    // Question 3
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
+    await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'HTTP');
+    await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'FTP');
+    await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'SMTP');
+
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    await conceptPage.upcomingConcept.card.click();
+    assert.strictEqual(currentURL(), '/concepts/tcp-overview', 'Clicking on the upcoming concept card navigates to the next concept');
+    assert.strictEqual(conceptPage.blocks.length, 1, 'The progress is reset when navigating to a new concept');
+    assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
+  });
+
   test('can navigate using arrow keys and select option using enter', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
