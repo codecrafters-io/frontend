@@ -142,14 +142,6 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  resetKeyboardNavigation() {
-    // Schedule the state update for the next run loop
-    next(() => {
-      this.keyboardNavigationIsUsed = false;
-    });
-  }
-
-  @action
   handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
     this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
@@ -177,6 +169,14 @@ export default class ConceptComponent extends Component<Signature> {
     if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
       this.args.latestConceptEngagement.deleteRecord();
     }
+  }
+
+  @action
+  resetKeyboardNavigation() {
+    // Schedule the state update for the next run loop
+    next(() => {
+      this.keyboardNavigationIsUsed = false;
+    });
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {
