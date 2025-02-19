@@ -139,6 +139,7 @@ export default class ConceptComponent extends Component<Signature> {
   async handleContinueButtonClick() {
     console.log('Handling continue button click');
     console.log('Latest concept engagement', this.args.latestConceptEngagement);
+
     if (!this.args.latestConceptEngagement) {
       console.log('Creating new concept engagement');
       const newConceptEngagement = this.store.createRecord('concept-engagement', {
@@ -154,11 +155,13 @@ export default class ConceptComponent extends Component<Signature> {
       if (this.args.onEngagementCreate) {
         await this.args.onEngagementCreate(newConceptEngagement);
       }
+
       newConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
 
       // Add a check to see if args were updated
       if (!this.args.latestConceptEngagement) {
         console.warn('latestConceptEngagement not updated after creation');
+
         return;
       }
 

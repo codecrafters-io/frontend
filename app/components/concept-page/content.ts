@@ -15,7 +15,7 @@ interface Signature {
     concept: ConceptModel;
     conceptGroup?: ConceptGroupModel;
     latestConceptEngagement: ConceptEngagementModel;
-    onEngagementCreate?: (engagement: ConceptEngagementModel) => void;
+    onEngagementCreate?: (engagement: ConceptEngagementModel) => Promise<void>;
   };
 }
 
