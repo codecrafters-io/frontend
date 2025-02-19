@@ -30,6 +30,7 @@ export default class ConceptComponent extends Component<Signature> {
   @tracked lastRevealedBlockGroupIndex: number | null = null;
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
+  @tracked keyboardNavigationIsUsed = false;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -135,6 +136,12 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  handleKeyDown() {
+    // This is used to track if the user is using keyboard navigation.
+    this.keyboardNavigationIsUsed = true;
+  }
+
+  @action
   handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
     this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
@@ -162,6 +169,14 @@ export default class ConceptComponent extends Component<Signature> {
     if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
       this.args.latestConceptEngagement.deleteRecord();
     }
+  }
+
+  @action
+  resetKeyboardNavigation() {
+    // Schedule the state update for the next run loop
+    next(() => {
+      this.keyboardNavigationIsUsed = false;
+    });
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {

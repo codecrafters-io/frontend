@@ -11,7 +11,8 @@
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
-          {{on "click" (fn this.handleOptionSelected optionIndex)}}
+          @keyboardNavigationIsUsed={{@keyboardNavigationIsUsed}}
+          {{on "click" (fn this.handleOptionSelected optionIndex false)}}
           data-test-question-card-option
         />
       {{/each}}
@@ -26,11 +27,11 @@
       {{on-key "ArrowDown" this.handleMoveDown}}
 
       {{#each this.digitKeys as |digitKey digitKeyIndex|}}
-        {{on-key digitKey (fn this.handleOptionSelected digitKeyIndex)}}
+        {{on-key digitKey (fn this.handleOptionSelected digitKeyIndex true)}}
       {{/each}}
 
       {{#each this.letterKeys as |letterKey letterKeyIndex|}}
-        {{on-key letterKey (fn this.handleOptionSelected letterKeyIndex)}}
+        {{on-key letterKey (fn this.handleOptionSelected letterKeyIndex true)}}
       {{/each}}
     </div>
   </div>

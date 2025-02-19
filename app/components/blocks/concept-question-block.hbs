@@ -4,6 +4,9 @@
     <ConceptPage::QuestionCard
       @question={{this.question}}
       @onSubmit={{this.handleSubmit}}
+      @keyboardNavigationIsUsed={{@keyboardNavigationIsUsed}}
+      @onKeyDown={{@onKeyDown}}
+      @resetKeyboardNavigation={{@resetKeyboardNavigation}}
       class="w-full max-w-xl"
       {{did-insert this.handleDidInsertHTML}}
       {{did-update this.handleDidUpdateHTML}}
@@ -13,6 +16,7 @@
       <Concept::ContinueOrStepBack
         @onContinueButtonClick={{@onContinueButtonClick}}
         @onStepBackButtonClick={{@onStepBackButtonClick}}
+        @onKeyDown={{@onKeyDown}}
         @continueButtonText="Continue"
         @shouldHighlightKeyboardShortcuts={{true}}
         @shouldShowContinueButton={{this.isSubmitted}}

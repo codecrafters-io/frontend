@@ -13,6 +13,9 @@ interface Signature {
   Args: {
     question: ConceptQuestionModel;
     onSubmit: () => void;
+    keyboardNavigationIsUsed: boolean;
+    onKeyDown: () => void;
+    resetKeyboardNavigation: () => void;
   };
 }
 
@@ -76,12 +79,16 @@ export default class QuestionCardComponent extends Component<Signature> {
   handleDidInsertOptionsList(element: HTMLElement) {
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement) {
+    if (firstOptionElement instanceof HTMLElement && this.args.keyboardNavigationIsUsed) {
       // focus() doesn't seem to work unless it's called after the current runloop
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });
       });
     }
+
+    // Reset the keyboard navigation flag even if we don't focus
+    // This ensures we don't carry over the flag to subsequent questions unnecessarily
+    this.args.resetKeyboardNavigation();
   }
 
   @action
@@ -98,6 +105,8 @@ export default class QuestionCardComponent extends Component<Signature> {
     if (!(currentFocusedOption instanceof HTMLElement) || !(questionCards.length > 0)) {
       return;
     }
+
+    this.args.onKeyDown();
 
     const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
@@ -125,6 +134,8 @@ export default class QuestionCardComponent extends Component<Signature> {
       return;
     }
 
+    this.args.onKeyDown();
+
     const latestQuestionCard = questionCards[questionCards.length - 1] as HTMLElement;
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
@@ -137,9 +148,13 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleOptionSelected(optionIndex: number) {
+  handleOptionSelected(optionIndex: number, fromKeyboardNavigation: boolean = false) {
     if (optionIndex >= this.args.question.options.length) {
       return;
+    }
+
+    if (fromKeyboardNavigation) {
+      this.args.onKeyDown();
     }
 
     const selectedOptionIndexWasNull = this.selectedOptionIndex === null;

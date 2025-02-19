@@ -7,6 +7,7 @@
     <Concept::ContinueOrStepBack
       @onContinueButtonClick={{(noop)}}
       @onStepBackButtonClick={{(noop)}}
+      @onKeyDown={{(noop)}}
       @continueButtonText={{this.modelAsClickToContinueBlock.buttonTextForDisplay}}
       @shouldShowContinueButton={{true}}
       @shouldShowStepBackButton={{false}}
@@ -17,6 +18,9 @@
       @model={{this.modelAsConceptQuestionBlock}}
       @onContinueButtonClick={{(noop)}}
       @onStepBackButtonClick={{(noop)}}
+      @onKeyDown={{(noop)}}
+      @resetKeyboardNavigation={{(noop)}}
+      @keyboardNavigationIsUsed={{false}}
       @isCurrentBlock={{false}}
     />
   {{else}}

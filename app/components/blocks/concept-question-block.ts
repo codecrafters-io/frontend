@@ -14,6 +14,9 @@ interface Signature {
     model: ConceptQuestionBlock;
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
+    onKeyDown: () => void;
+    resetKeyboardNavigation: () => void;
+    keyboardNavigationIsUsed: boolean;
     isCurrentBlock: boolean;
   };
 }

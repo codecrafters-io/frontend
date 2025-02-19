@@ -18,6 +18,9 @@
             @isCurrentBlock={{eq blockGroup.index this.currentBlockGroupIndex}}
             @onContinueButtonClick={{this.handleContinueButtonClick}}
             @onStepBackButtonClick={{this.handleStepBackButtonClick}}
+            @keyboardNavigationIsUsed={{this.keyboardNavigationIsUsed}}
+            @onKeyDown={{this.handleKeyDown}}
+            @resetKeyboardNavigation={{this.resetKeyboardNavigation}}
             class="mb-6"
             data-test-block
           />
@@ -31,6 +34,7 @@
               @shouldHighlightKeyboardShortcuts={{true}}
               @shouldShowContinueButton={{true}}
               @shouldShowStepBackButton={{not-eq this.currentBlockGroupIndex 0}}
+              @onKeyDown={{this.handleKeyDown}}
               class="mb-6"
             />
           {{/if}}
