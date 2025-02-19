@@ -41,7 +41,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
-      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+      const progressPercentage = this.args.latestConceptEngagement?.currentProgressPercentage ?? 0;
       const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
       const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
       this.lastRevealedBlockGroupIndex = blockGroupIndex;

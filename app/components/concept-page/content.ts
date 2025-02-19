@@ -25,7 +25,7 @@ export default class ContentComponent extends Component<Signature> {
   @service declare store: Store;
 
   get currentProgressPercentage() {
-    return this.args.latestConceptEngagement.currentProgressPercentage;
+    return this.args.latestConceptEngagement?.currentProgressPercentage ?? 0;
   }
 
   get hasCompletedConcept() {
