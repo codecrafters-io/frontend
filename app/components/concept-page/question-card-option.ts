@@ -11,6 +11,7 @@ export interface Signature {
     option: Option & {
       isSelected: boolean;
     };
+    keyboardNavigationIsUsed: boolean;
     isSubmitted: boolean;
   };
 }

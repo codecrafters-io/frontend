@@ -76,15 +76,6 @@ export default class QuestionCardComponent extends Component<Signature> {
   }
 
   @action
-  handleKeyDown(event: KeyboardEvent) {
-    console.log(event.key);
-    if (['Enter', 'Space', 'ArrowUp', 'ArrowDown', 'j', 'k', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'].includes(event.key)) {
-      console.log('keyboard navigating');
-      this.isKeyboardNavigating = true;
-    }
-  }
-
-  @action
   handleDidInsertOptionsList(element: HTMLElement) {
     const firstOptionElement = element.children[0];
 
