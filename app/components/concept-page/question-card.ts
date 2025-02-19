@@ -15,6 +15,7 @@ interface Signature {
     onSubmit: () => void;
     keyboardNavigationIsUsed: boolean;
     onKeyDown: () => void;
+    resetKeyboardNavigation: () => void;
   };
 }
 
@@ -93,6 +94,10 @@ export default class QuestionCardComponent extends Component<Signature> {
         firstOptionElement?.focus({ preventScroll: true });
       });
     }
+
+    // Reset the keyboard navigation flag even if we don't focus
+    // This ensures we don't carry over the flag to subsequent questions unnecessarily
+    this.args.resetKeyboardNavigation();
   }
 
   @action
