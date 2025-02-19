@@ -36,10 +36,7 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   async findOrCreateConceptEngagement(concept: ConceptModel) {
-    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === concept.slug)
-      .sortBy('createdAt')
-      .reverse()[0];
+    const latestConceptEngagement = this.getLatestConceptEngagement(concept);
 
     if (!latestConceptEngagement) {
       return await this.store.createRecord('concept-engagement', {
@@ -49,6 +46,13 @@ export default class ConceptRoute extends BaseRoute {
     }
 
     return latestConceptEngagement;
+  }
+
+  getLatestConceptEngagement(concept: ConceptModel) {
+    return this.authenticator.currentUser?.conceptEngagements
+      .filter((engagement) => engagement.concept.slug === concept.slug)
+      .sortBy('createdAt')
+      .reverse()[0];
   }
 
   async model(params: { concept_slug: string }) {
@@ -72,7 +76,7 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
+    const latestConceptEngagement = this.getLatestConceptEngagement(concept);
 
     return {
       allConcepts,
