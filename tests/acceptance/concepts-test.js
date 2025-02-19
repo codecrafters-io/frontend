@@ -500,7 +500,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
 
-        await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[1].clickOnShowExplanationButton();
@@ -535,7 +535,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(conceptPage.blocks.length, 1, 'The progress is reset when navigating to a new concept');
     assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
   });
-    
+
   test('while navigating using keys, options are traversed one at a time', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
