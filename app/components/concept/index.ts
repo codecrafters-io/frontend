@@ -12,11 +12,13 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
+import type Store from 'ember-data/store';
 
 interface Signature {
   Args: {
     concept: ConceptModel;
     latestConceptEngagement: ConceptEngagementModel;
+    onEngagementCreate?: (engagement: ConceptEngagementModel) => void;
   };
 
   Element: HTMLDivElement;
@@ -25,6 +27,7 @@ interface Signature {
 export default class ConceptComponent extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   @tracked containerElement: HTMLElement | null = null;
   @tracked lastRevealedBlockGroupIndex: number | null = null;
@@ -105,6 +108,26 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   enqueueConceptEngagementUpdate = task({ keepLatest: true }, async () => {
+    // console.log('Enqueuing concept engagement update');
+    // console.log('Latest concept engagement', this.args.latestConceptEngagement);
+    // if (!this.args.latestConceptEngagement) {
+    //   console.log('Creating new concept engagement');
+    //   const newConceptEngagement = this.store.createRecord('concept-engagement', {
+    //     concept: this.args.concept,
+    //     user: this.authenticator.currentUser,
+    //   });
+    //   this.args.onEngagementCreate?.(newConceptEngagement);
+
+    //   if (this.authenticator.isAuthenticated) {
+    //     await newConceptEngagement.save();
+    //   }
+
+    //   // Use the new engagement directly instead of waiting for args to update
+    //   newConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+    //   return;
+    // }
+
     this.args.latestConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
 
     if (this.authenticator.isAuthenticated) {
@@ -114,6 +137,34 @@ export default class ConceptComponent extends Component<Signature> {
 
   @action
   async handleContinueButtonClick() {
+    console.log('Handling continue button click');
+    console.log('Latest concept engagement', this.args.latestConceptEngagement);
+    if (!this.args.latestConceptEngagement) {
+      console.log('Creating new concept engagement');
+      const newConceptEngagement = this.store.createRecord('concept-engagement', {
+        concept: this.args.concept,
+        user: this.authenticator.currentUser,
+      });
+
+      if (this.authenticator.isAuthenticated) {
+        await newConceptEngagement.save();
+      }
+
+      // await this.args.onEngagementCreate?.(newConceptEngagement);      
+      if (this.args.onEngagementCreate) {
+        await this.args.onEngagementCreate(newConceptEngagement);
+      }
+      newConceptEngagement.currentProgressPercentage = this.computedProgressPercentage;
+
+      // Add a check to see if args were updated
+      if (!this.args.latestConceptEngagement) {
+        console.warn('latestConceptEngagement not updated after creation');
+        return;
+      }
+
+      return;
+    }
+
     if (this.currentBlockGroupIndex === this.allBlockGroups.length - 1) {
       this.hasFinished = true;
     } else {
