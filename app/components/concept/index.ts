@@ -142,6 +142,14 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
+  resetKeyboardNavigation() {
+    // Schedule the state update for the next run loop
+    next(() => {
+      this.keyboardNavigationIsUsed = false;
+    });
+  }
+
+  @action
   handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
     this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
