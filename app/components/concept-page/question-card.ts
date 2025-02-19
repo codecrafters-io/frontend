@@ -11,8 +11,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    question: ConceptQuestionModel;
     isCurrentBlock: boolean;
+    question: ConceptQuestionModel;
     onSubmit: () => void;
   };
 }
@@ -58,8 +58,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleDidInsert() {
-    console.log('handleDidInsert');
-
     if (this.args.isCurrentBlock) {
       this.setupKeyListeners();
     }
@@ -97,7 +95,6 @@ export default class QuestionCardComponent extends Component<Signature> {
   @action
   handleKeyPress(event: KeyboardEvent) {
     const { key } = event;
-    console.log('handleKeyPress', key);
 
     if (key === 'j' || key === 'ArrowDown') {
       this.handleMoveDown(event);
@@ -114,8 +111,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleMoveDown(event: KeyboardEvent) {
-    console.log('handleMoveDown', event, this.selectedOptionIndex);
-
     if (this.selectedOptionIndex !== null) {
       return;
     }
@@ -142,8 +137,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   handleMoveUp(event: KeyboardEvent) {
-    console.log('handleMoveUp', event, this.selectedOptionIndex);
-
     if (this.selectedOptionIndex !== null) {
       return;
     }
@@ -192,13 +185,11 @@ export default class QuestionCardComponent extends Component<Signature> {
 
   @action
   removeKeyListeners() {
-    console.log('Removing listeners for question card');
     window.removeEventListener('keydown', this.handleKeyPress);
   }
 
   @action
   setupKeyListeners() {
-    console.log('Setting up listeners for question card');
     window.addEventListener('keydown', this.handleKeyPress);
   }
 
