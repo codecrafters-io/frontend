@@ -59,4 +59,15 @@ module('Acceptance | concept-groups-test', function (hooks) {
     assert.strictEqual(conceptGroupsPage.conceptCards[0].title, 'TCP: An Overview');
     assert.strictEqual(conceptGroupsPage.conceptCards[1].title, 'Network Protocols');
   });
+
+  test('displays no progress bar if progress percentage is 0', async function (assert) {
+    await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
+
+    await conceptGroupsPage.clickOnConceptCard('TCP: An Overview');
+    
+    await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
+    
+    assert.false(conceptGroupsPage.conceptCards[0].hasProgressBar, 'Progress bar should not be visible after returning from concept');
+    assert.strictEqual(conceptGroupsPage.conceptCards[0].readingTime, '8 mins', 'Reading time should be visible after returning from concept');
+  });
 });
