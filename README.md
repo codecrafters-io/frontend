@@ -1,6 +1,6 @@
 # codecrafters-frontend
 
-The front-end app that powers [app.codecrafters.io](https://app.codecrafters.io).
+The frontend app that powers [app.codecrafters.io](https://app.codecrafters.io).
 
 ## Prerequisites
 
