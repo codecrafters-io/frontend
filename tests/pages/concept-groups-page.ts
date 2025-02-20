@@ -10,10 +10,10 @@ export default createPage({
   },
 
   conceptCards: collection('[data-test-concept-card]', {
-    title: text('[data-test-concept-title]'),
     hasProgressBar: isPresent('[data-test-concept-card-progress]'),
     progressBarText: text('[data-test-concept-card-progress-bar]'),
     readingTime: text('[data-test-concept-card-reading-time]'),
+    title: text('[data-test-concept-title]'),
   }),
 
   header: {

@@ -12,15 +12,13 @@
     </div>
   </div>
 
-  {{#if (gt @latestConceptEngagement.currentProgressPercentage 0)}}
-    <div
-      class="text-xs
-        {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500 dark:text-teal-600' 'text-blue-500 dark:text-blue-600'}}
-        mr-3"
-      data-test-concept-card-progress-text
-    >
-      <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}%</b>
-      complete
-    </div>
-  {{/if}}
+  <div
+    class="text-xs
+      {{if (eq @latestConceptEngagement.currentProgressPercentage 100) 'text-teal-500 dark:text-teal-600' 'text-blue-500 dark:text-blue-600'}}
+      mr-3"
+    data-test-concept-card-progress-text
+  >
+    <b class="font-bold">{{@latestConceptEngagement.currentProgressPercentage}}%</b>
+    complete
+  </div>
 </div>
