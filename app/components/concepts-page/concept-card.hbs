@@ -44,7 +44,7 @@
       {{else}}
         {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
 
-        <span class="text-xs text-gray-400 dark:text-gray-600">
+        <span class="text-xs text-gray-400 dark:text-gray-600" data-test-concept-card-reading-time>
           {{@concept.estimatedReadingTimeInMinutes}}
           mins
         </span>
