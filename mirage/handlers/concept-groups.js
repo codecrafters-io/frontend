@@ -3,6 +3,7 @@ export default function (server) {
     if (request.queryParams.slug) {
       return schema.conceptGroups.where({ slug: request.queryParams.slug });
     }
+
     return schema.conceptGroups.all();
   });
 

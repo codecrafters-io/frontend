@@ -64,9 +64,9 @@ module('Acceptance | concept-groups-test', function (hooks) {
     await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
 
     await conceptGroupsPage.clickOnConceptCard('TCP: An Overview');
-    
+
     await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
-    
+
     assert.false(conceptGroupsPage.conceptCards[0].hasProgressBar, 'Progress bar should not be visible after returning from concept');
     assert.strictEqual(conceptGroupsPage.conceptCards[0].readingTime, '8 mins', 'Reading time should be visible after returning from concept');
   });
