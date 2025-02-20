@@ -1,4 +1,4 @@
-import { collection, text, visitable } from 'ember-cli-page-object';
+import { collection, isPresent, text, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -11,6 +11,9 @@ export default createPage({
 
   conceptCards: collection('[data-test-concept-card]', {
     title: text('[data-test-concept-title]'),
+    hasProgressBar: isPresent('[data-test-concept-card-progress]'),
+    progressBarText: text('[data-test-concept-card-progress-bar]'),
+    readingTime: text('[data-test-concept-card-reading-time]'),
   }),
 
   header: {
