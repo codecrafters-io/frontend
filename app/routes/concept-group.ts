@@ -28,10 +28,7 @@ export default class ConceptGroupRoute extends BaseRoute {
   }
 
   async model(params: { concept_group_slug: string }) {
-    // const conceptGroup = await this.store.queryRecord('concept-group', { slug: params.concept_group_slug, include: 'author' });
-
-    const allConceptGroups = await this.store.findAll('concept-group', { include: 'author' });
-    const conceptGroup = allConceptGroups.find((group) => group.slug === params.concept_group_slug);
+    const conceptGroup = await this.store.queryRecord('concept-group', { slug: params.concept_group_slug, include: 'author' });
 
     if (!conceptGroup) {
       this.router.transitionTo('/');
