@@ -30,7 +30,7 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      {{#if this.latestConceptEngagement}}
+      {{#if (and this.latestConceptEngagement (gt this.latestConceptEngagement.currentProgressPercentage 0))}}
         {{#if (eq this.latestConceptEngagement.currentProgressPercentage 100)}}
           {{svg-jar "check-circle" class="w-4 mr-1 fill-current text-teal-500"}}
 
