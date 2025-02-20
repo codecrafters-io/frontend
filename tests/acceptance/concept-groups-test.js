@@ -16,49 +16,34 @@ function createConcepts(server) {
 module('Acceptance | concept-groups-test', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('displays concept-group page when visiting a valid concept-group', async function (assert) {
+  hooks.beforeEach(function () {
     testScenario(this.server);
     createConcepts(this.server);
 
     const user = this.server.schema.users.first();
-
-    const conceptGroup = this.server.create('concept-group', {
+    this.conceptGroup = this.server.create('concept-group', {
       author: user,
       description_markdown: 'Dummy description',
       concept_slugs: ['tcp-overview', 'network-protocols'],
       slug: 'test-concept-group',
       title: 'Test Concept Group',
     });
+  });
 
-    await conceptGroupsPage.visit({ concept_group_slug: conceptGroup.slug });
+  test('displays concept-group page when visiting a valid concept-group', async function (assert) {
+    await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
 
     assert.strictEqual(currentURL(), '/collections/test-concept-group');
   });
 
   test('redirects to / when visiting a non-existing concept-group', async function (assert) {
-    testScenario(this.server);
-    createConcepts(this.server);
-
-    await conceptGroupsPage.visit({ concept_group_slug: 'non-existent-concept-group' });
+    await conceptGroupsPage.visit({ concept_group_slug: 'nonexistent-concept-group' });
 
     assert.strictEqual(currentURL(), '/catalog');
   });
 
   test('displays the correct concept group details for the header', async function (assert) {
-    testScenario(this.server);
-    createConcepts(this.server);
-
-    const user = this.server.schema.users.first();
-
-    const conceptGroup = this.server.create('concept-group', {
-      author: user,
-      description_markdown: 'Dummy description',
-      concept_slugs: ['tcp-overview', 'network-protocols'],
-      slug: 'test-concept-group',
-      title: 'Test Concept Group',
-    });
-
-    await conceptGroupsPage.visit({ concept_group_slug: conceptGroup.slug });
+    await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
     await percySnapshot('Concept Group');
 
     assert.strictEqual(conceptGroupsPage.header.title, 'Test Concept Group');
@@ -68,20 +53,7 @@ module('Acceptance | concept-groups-test', function (hooks) {
   });
 
   test('displays the correct concept cards', async function (assert) {
-    testScenario(this.server);
-    createConcepts(this.server);
-
-    const user = this.server.schema.users.first();
-
-    const conceptGroup = this.server.create('concept-group', {
-      author: user,
-      description_markdown: 'Dummy description',
-      concept_slugs: ['tcp-overview', 'network-protocols'],
-      slug: 'test-concept-group',
-      title: 'Test Concept Group',
-    });
-
-    await conceptGroupsPage.visit({ concept_group_slug: conceptGroup.slug });
+    await conceptGroupsPage.visit({ concept_group_slug: this.conceptGroup.slug });
 
     assert.strictEqual(conceptGroupsPage.conceptCards.length, 2);
     assert.strictEqual(conceptGroupsPage.conceptCards[0].title, 'TCP: An Overview');
