@@ -134,9 +134,8 @@ module('Acceptance | concepts-test', function (hooks) {
       'Modal shows correct group access message',
     );
 
-    const expectedRedirectUrl = encodeURIComponent('/collections/network-primer');
-
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
+    const expectedRedirectUrl = encodeURIComponent('/collections/network-primer');
     const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
