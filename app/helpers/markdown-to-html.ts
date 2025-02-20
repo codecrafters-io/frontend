@@ -44,6 +44,9 @@ export default class MarkdownToHtml extends Helper<Signature> {
         node.setAttribute('target', '_blank');
         node.setAttribute('rel', 'noopener noreferrer');
       }
+      if (node.nodeName === 'PRE') {
+        node.setAttribute('tabindex', '-1');
+      }
     });
 
     return DOMPurify.sanitize(generatedHtml);
