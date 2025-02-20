@@ -15,7 +15,7 @@ module('Acceptance | forum-link-test', function (hooks) {
     signIn(this.owner, this.server);
 
     window.open = (urlToOpen) => {
-      assert.strictEqual(urlToOpen, 'https://forum.codecrafters.io/', 'should redirect to forum');
+      assert.strictEqual(urlToOpen, 'https://forum.codecrafters.io/session/sso', 'should redirect to forum with auto-login');
     };
 
     await catalogPage.visit();
