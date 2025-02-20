@@ -9,7 +9,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 type Signature = {
   Args: {
     concept: ConceptModel;
-    conceptGroup: ConceptGroupModel;
+    conceptGroup: ConceptGroupModel | undefined;
   };
 
   Element: HTMLDivElement;
@@ -17,29 +17,6 @@ type Signature = {
 
 export default class ConceptCompletedModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-
-  @action
-  handleClicked() {
-    // We use a backend redirect flow here to handle concept completion after signup.
-    // Flow:
-    // 1. User clicks "Sign up" on concept completed modal
-    // 2. Redirect to backend endpoint that:
-    //    - Marks concept as complete (once user is authenticated)
-    //    - Redirects user to their final destination
-    // 
-    // This approach ensures we don't lose the completion state during the auth flow,
-    // and handles edge cases like browser refresh during signup.
-    const markAsCompleteUrl = new URL(
-      `${config.x.backendUrl}/concepts/${this.args.concept.id}/mark_as_complete`
-    );
-    
-    markAsCompleteUrl.searchParams.set(
-      'redirect_url',
-      this.redirectPathAfterLogin
-    );
-
-    this.authenticator.initiateLogin(markAsCompleteUrl.toString());
-  }
 
   get getAccessToMessage() {
     if (this.args.conceptGroup?.title) {
@@ -55,6 +32,24 @@ export default class ConceptCompletedModal extends Component<Signature> {
     }
 
     return '/catalog';
+  }
+
+  @action
+  handleClicked() {
+    // We use a backend redirect flow here to handle concept completion after signup.
+    // Flow:
+    // 1. User clicks "Sign up" on concept completed modal
+    // 2. Redirect to backend endpoint that:
+    //    - Marks concept as complete (once user is authenticated)
+    //    - Redirects user to their final destination
+    //
+    // This approach ensures we don't lose the completion state during the auth flow,
+    // and handles edge cases like browser refresh during signup.
+    const markAsCompleteUrl = new URL(`${config.x.backendUrl}/concepts/${this.args.concept.id}/mark_as_complete`);
+
+    markAsCompleteUrl.searchParams.set('redirect_url', this.redirectPathAfterLogin);
+
+    this.authenticator.initiateLogin(markAsCompleteUrl.toString());
   }
 }
 

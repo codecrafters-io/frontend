@@ -12,10 +12,12 @@
       <p class="text-teal-700">
         Get
         <span class="font-semibold">free access</span>
-        to {{this.getAccessToMessage}} by signing in with GitHub.
+        to
+        {{this.getAccessToMessage}}
+        by signing in with GitHub.
       </p>
     </div>
-    <PrimaryButton @size="large" {{on "click" this.handleClicked}}>
+    <PrimaryButton @size="large" {{on "click" this.handleClicked}} data-test-concept-completed-modal-sign-in-button>
       <div class="flex items-center gap-x-2">
         {{svg-jar "github" class="fill-current w-5"}}
 
