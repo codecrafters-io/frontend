@@ -13,6 +13,8 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
+import windowMock from 'ember-window-mock';
+import config from 'codecrafters-frontend/config/environment';
 
 function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
@@ -125,6 +127,24 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
     assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
+
+    assert.true(conceptPage.conceptCompletedModal.isVisible, 'Concept completed modal is shown for anonymous users');
+    assert.true(
+      conceptPage.conceptCompletedModal.text.includes('Get free access to the rest of Network Primer'),
+      'Modal shows correct group access message',
+    );
+
+    const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
+    const expectedRedirectUrl = encodeURIComponent('/collections/network-primer');
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+
+    await conceptPage.conceptCompletedModal.clickOnSignInButton();
+
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      'should redirect to login URL with correct mark_as_complete endpoint',
+    );
   });
 
   test('concept question body has prism highlighting', async function (assert) {
