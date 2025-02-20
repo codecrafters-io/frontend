@@ -60,5 +60,12 @@ export default createPage({
     scope: '[data-test-upcoming-concept]',
   },
 
+  conceptCompletedModal: {
+    scope: '[data-test-concept-completed-modal]',
+    isVisible: isPresent(),
+    text: text(),
+    clickOnSignInButton: clickable('[data-test-concept-completed-modal-sign-in-button]'),
+  },
+
   visit: visitable('/concept/:slug'),
 });
