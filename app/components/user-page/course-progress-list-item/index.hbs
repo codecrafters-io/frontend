@@ -45,7 +45,7 @@
     {{/if}}
 
     <div class="flex items-center space-x-1.5">
-      {{#each @courseParticipations as |courseParticipation|}}
+      {{#each (limit-array @courseParticipations 3) as |courseParticipation|}}
         {{#if courseParticipation.isCompleted}}
           <LanguageLogo @language={{courseParticipation.language}} @variant="teal" class="h-4" />
         {{else}}
