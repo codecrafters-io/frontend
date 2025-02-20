@@ -38,6 +38,7 @@
             completed
           </span>
         {{else}}
+          {{! @glint-expect-error: incorrectly assumes @latestConceptEngagement is nullable }}
           <ConceptCard::ProgressBar @latestConceptEngagement={{this.latestConceptEngagement}} class="flex shrink-0" />
         {{/if}}
       {{else}}
