@@ -20,7 +20,7 @@
     {{#if @isComplete}}
       {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
     {{else}}
-      <div class="items-center gap-1 pl-4 hidden sm:flex flex-shrink-0">
+      <div class="flex items-center gap-1 pl-4 flex-shrink-0">
         <span class="text-xs text-gray-400 dark:text-gray-600">
           {{@concept.estimatedReadingTimeInMinutes}}
           mins
@@ -29,5 +29,7 @@
         {{svg-jar "clock" class="w-4 fill-current text-gray-300 dark:text-gray-700"}}
       </div>
     {{/if}}
+
+    <EmberTooltip @text={{@concept.descriptionMarkdown}} />
   </div>
 </LinkTo>
