@@ -49,6 +49,14 @@ export default class TrackRoute extends BaseRoute {
 
     const language = this.store.peekAll('language').findBy('slug', params.track_slug) as LanguageModel;
 
+    if (language.trackPrimerConceptGroupSlug) {
+      const conceptGroup = await this.store.queryRecord('concept-group', { slug: language.trackPrimerConceptGroupSlug, include: 'author' });
+
+      if (conceptGroup) {
+        await this.store.findAll('concept', { include: 'author,questions' });
+      }
+    }
+
     if (this.authenticator.isAuthenticated) {
       await this.store.findAll('repository', {
         include: RepositoryPoller.defaultIncludedResources,
