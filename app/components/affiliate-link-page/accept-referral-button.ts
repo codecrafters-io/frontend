@@ -64,7 +64,7 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
   @waitFor
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
-      this.authenticator.initiateLogin(null);
+      this.authenticator.initiateLogin();
     } else if (this.acceptOfferButtonIsEnabled) {
       this.isCreatingAffiliateReferral = true;
 

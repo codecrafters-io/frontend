@@ -8,7 +8,7 @@ export default class SignupToPreviewButtonComponent extends Component {
 
   @action
   handleClicked() {
-    this.authenticator.initiateLogin(null);
+    this.authenticator.initiateLogin();
   }
 }
 

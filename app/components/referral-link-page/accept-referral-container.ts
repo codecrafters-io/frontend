@@ -68,7 +68,7 @@ export default class AcceptReferralContainerComponent extends Component<Signatur
   @action
   async handleAcceptOfferButtonClick() {
     if (this.currentUserIsAnonymous) {
-      this.authenticator.initiateLogin(null);
+      this.authenticator.initiateLogin();
     } else if (this.acceptOfferButtonIsEnabled) {
       this.isCreatingReferralActivation = true;
 
