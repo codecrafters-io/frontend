@@ -22,7 +22,7 @@
         by signing in with GitHub.
       </p>
     </div>
-    <PrimaryButton @size="large" {{on "click" this.handleClicked}} data-test-concept-completed-modal-sign-in-button>
+    <PrimaryButton @size="large" {{on "click" this.handleSignInButtonClick}} data-test-concept-completed-modal-sign-in-button>
       <div class="flex items-center gap-x-2">
         {{svg-jar "github" class="fill-current w-5"}}
 
