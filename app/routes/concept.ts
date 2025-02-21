@@ -45,6 +45,7 @@ export default class ConceptRoute extends BaseRoute {
       return await this.store.createRecord('concept-engagement', {
         concept,
         user: this.authenticator.currentUser,
+        currentProgressPercentage: 0,
       });
     }
 

@@ -30,7 +30,7 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      {{#if this.latestConceptEngagement}}
+      {{#if (and this.latestConceptEngagement (gt this.latestConceptEngagement.currentProgressPercentage 0))}}
         {{#if (eq this.latestConceptEngagement.currentProgressPercentage 100)}}
           {{svg-jar "check-circle" class="w-4 mr-1 fill-current text-teal-500"}}
 
@@ -38,12 +38,13 @@
             completed
           </span>
         {{else}}
+          {{! @glint-expect-error: incorrectly assumes @latestConceptEngagement is nullable }}
           <ConceptCard::ProgressBar @latestConceptEngagement={{this.latestConceptEngagement}} class="flex shrink-0" />
         {{/if}}
       {{else}}
         {{svg-jar "clock" class="w-4 mr-1 fill-current text-gray-300 dark:text-gray-700"}}
 
-        <span class="text-xs text-gray-400 dark:text-gray-600">
+        <span class="text-xs text-gray-400 dark:text-gray-600" data-test-concept-card-reading-time>
           {{@concept.estimatedReadingTimeInMinutes}}
           mins
         </span>
