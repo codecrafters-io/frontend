@@ -72,17 +72,27 @@ export default class AuthenticatorService extends Service {
     await this.syncCurrentUser();
   }
 
-  initiateLogin(redirectPath: string | null) {
-    const isFullUrl = redirectPath?.startsWith(`${config.x.backendUrl}`);
+  initiateLogin(redirectPathOrUrl: string | null = null) {
+    if (redirectPathOrUrl) {
+      this.initiateLoginAndRedirect(redirectPathOrUrl);
 
-    if (isFullUrl) {
-      window.location.href = `${config.x.backendUrl}/login?next=` + redirectPath;
-    } else if (redirectPath) {
-      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
-    } else if (this.router.currentURL) {
+      return;
+    }
+
+    if (this.router.currentURL) {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
     } else {
       window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(window.origin);
+    }
+  }
+
+  initiateLoginAndRedirect(redirectPathOrUrl: string) {
+    if (redirectPathOrUrl.startsWith(`${config.x.backendUrl}`)) {
+      window.location.href = `${config.x.backendUrl}/login?next=` + redirectPathOrUrl;
+    } else if (redirectPathOrUrl.startsWith('/')) {
+      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPathOrUrl}`);
+    } else {
+      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(redirectPathOrUrl);
     }
   }
 
