@@ -6,7 +6,7 @@ export default class LoginRoute extends BaseRoute {
 
   beforeModel(transition) {
     if (transition.to.queryParams.next) {
-      this.authenticator.initiateLogin(transition.to.queryParams.next);
+      this.authenticator.initiateLoginAndRedirectTo(transition.to.queryParams.next);
     } else {
       this.authenticator.initiateLogin();
     }
