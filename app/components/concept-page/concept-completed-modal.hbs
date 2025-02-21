@@ -13,7 +13,12 @@
         Get
         <span class="font-semibold">free access</span>
         to
-        {{this.getAccessToMessage}}
+        {{#if @conceptGroup}}
+          the rest of
+          {{@conceptGroup.title}}
+        {{else}}
+          all CodeCrafters concepts
+        {{/if}}
         by signing in with GitHub.
       </p>
     </div>
