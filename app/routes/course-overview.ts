@@ -1,12 +1,13 @@
-import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import config from 'codecrafters-frontend/config/environment';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type Store from '@ember-data/store';
-import type MetaDataService from 'codecrafters-frontend/services/meta-data';
-import type CourseModel from 'codecrafters-frontend/models/course';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import config from 'codecrafters-frontend/config/environment';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import type MetaDataService from 'codecrafters-frontend/services/meta-data';
+import type Store from '@ember-data/store';
+import { inject as service } from '@ember/service';
 
 export interface ModelType {
   course: CourseModel;
@@ -20,6 +21,10 @@ export default class CourseOverviewRoute extends BaseRoute {
   @service declare metaData: MetaDataService;
 
   previousMetaImageUrl: string | undefined;
+
+  activate(): void {
+    scrollToTop();
+  }
 
   afterModel(model: ModelType) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
