@@ -45,6 +45,8 @@ export default class MarkdownToHtml extends Helper<Signature> {
         node.setAttribute('rel', 'noopener noreferrer');
       }
 
+      // https://github.com/PrismJS/prism/issues/3658
+      // PrismJS unconditionally adds a tabindex to <pre> elements, without any opt-out
       if (node.nodeName === 'PRE') {
         node.setAttribute('tabindex', '-1');
       }
