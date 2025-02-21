@@ -10,9 +10,10 @@
     { "source": "/r/famous-wombat-417894", "destination": "/join?via=gnomezgrave" }
   ],
   "rewrites": [
+    { "source": "/concepts/:concept", "destination": "/prerender/concepts/[concept]" },
+    { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
-    { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/users/:user", "destination": "/prerender/users/[user]" },
     { "source": "/:path*", "destination": "/_empty.html" }
   ],

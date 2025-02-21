@@ -1,7 +1,7 @@
 /**
  * This is a Vercel Middleware, which:
- * - is triggered for concept or contest routes
- * - extracts concept or contest slug from the URL
+ * - is triggered for contest routes
+ * - extracts contest slug from the URL
  * - determines a proper OG Image URL and other meta tags
  * - reads the contents of `dist/_empty.html`
  * - replaces OG meta tags with correct ones
@@ -19,9 +19,9 @@ import { next } from '@vercel/edge';
 import { replaceAllMetaTags } from './app/utils/replace-meta-tag';
 
 export const config = {
-  // Limit the middleware to run only for concept and contest routes
+  // Limit the middleware to run only for contest routes
   // RegExp syntax uses rules from pillarjs/path-to-regexp
-  matcher: ['/concepts/:path*', '/contests/:path*'],
+  matcher: ['/contests/:path*'],
 };
 
 const contestDetailsMap = {
@@ -56,62 +56,27 @@ function getContestDetails(slug) {
 }
 
 export default async function middleware(request) {
-  // Parse the concept or contest path match result from the request URL
-  const conceptsPathMatchResult = request.url.match(/\/concepts\/([^/?]+)/);
+  // Parse the contest path match result from the request URL
   const contestsPathMatchResult = request.url.match(/\/contests\/([^/?]+)/);
 
-  // Skip the request if concept or contest slug is missing
-  if (!conceptsPathMatchResult && !contestsPathMatchResult) {
+  // Skip the request if contest slug is missing
+  if (!contestsPathMatchResult) {
     // Log an error to the console
-    console.error('Unable to parse concept or contest slug from the URL:', request.url);
+    console.error('Unable to parse contest slug from the URL:', request.url);
 
     // Pass the request down the stack for processing and return
     return next(request);
   }
 
-  let pageImageUrl;
-  let pageTitle;
-  let pageDescription;
+  const contestSlug = contestsPathMatchResult[1];
 
-  if (conceptsPathMatchResult) {
-    const conceptSlug = conceptsPathMatchResult[1];
+  // Fetch contest details from the hashmap
+  const contestDetails = getContestDetails(contestSlug);
 
-    // Convert the slug('network-protocols') to title('Network Protocols')
-    // Use this as a fallback
-    let conceptTitle = conceptSlug
-      .split('-')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-
-    // Use this as a fallback
-    let conceptDescription = `View the ${conceptTitle} concept on CodeCrafters`;
-
-    // Get concept data from the backend
-    try {
-      const conceptData = await (
-        await fetch(`https://backend.codecrafters.io/services/dynamic_og_images/concept_data?id_or_slug=${conceptSlug}`)
-      ).json();
-      conceptTitle = conceptData.title;
-      conceptDescription = conceptData.description_markdown;
-    } catch (e) {
-      console.error('Failed to fetch concept data:', e);
-    }
-
-    // Override OG tag values for the concept
-    pageImageUrl = `https://og.codecrafters.io/api/concept/${conceptSlug}`;
-    pageTitle = conceptTitle;
-    pageDescription = conceptDescription;
-  } else if (contestsPathMatchResult) {
-    const contestSlug = contestsPathMatchResult[1];
-
-    // Fetch contest details from the hashmap
-    const contestDetails = getContestDetails(contestSlug);
-
-    // Override OG tag values for the contest
-    pageImageUrl = contestDetails.imageUrl;
-    pageTitle = contestDetails.title;
-    pageDescription = contestDetails.description;
-  }
+  // Override OG tag values for the contest
+  const pageImageUrl = contestDetails.imageUrl;
+  const pageTitle = contestDetails.title;
+  const pageDescription = contestDetails.description;
 
   // Determine URL for reading local `/dist/_empty.html`
   const indexFileURL = new URL('./dist/_empty.html', import.meta.url);
