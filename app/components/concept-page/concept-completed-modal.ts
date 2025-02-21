@@ -32,7 +32,7 @@ export default class ConceptCompletedModal extends Component<Signature> {
     const markAsCompleteUrl = new URL(`${config.x.backendUrl}/concepts/${this.args.concept.id}/mark_as_complete`);
 
     markAsCompleteUrl.searchParams.set('redirect_url', `${window.origin}${this.redirectPathAfterLogin}`);
-    
+
     this.authenticator.initiateLogin(markAsCompleteUrl.toString());
   }
 }
