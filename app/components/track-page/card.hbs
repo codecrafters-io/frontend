@@ -31,7 +31,7 @@
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
         {{else if (and @logoImageUrl @logoImageAltText)}}
-          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-8 md:w-12 transform scale-100 group-hover:scale-105 transition-all" />
+          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-8 transform scale-100 group-hover:scale-105 transition-all" />
         {{/if}}
       </div>
     </div>
