@@ -18,6 +18,6 @@ export default class ConceptListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::PrimerConceptGroupCard::ConceptListItem': typeof ConceptListItemComponent;
+    'TrackPage::PrimerConceptGroupSection::ConceptListItem': typeof ConceptListItemComponent;
   }
 }

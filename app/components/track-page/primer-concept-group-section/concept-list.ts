@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class TrackPagePrimerConceptGroupCardConceptListComponent extends Component<Signature> {
+export default class ConceptListComponent extends Component<Signature> {
   @service declare store: Store;
 
   get sortedConcepts() {
@@ -30,6 +30,6 @@ export default class TrackPagePrimerConceptGroupCardConceptListComponent extends
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::PrimerConceptGroupCard::ConceptList': typeof TrackPagePrimerConceptGroupCardConceptListComponent;
+    'TrackPage::PrimerConceptGroupSection::ConceptList': typeof ConceptListComponent;
   }
 }

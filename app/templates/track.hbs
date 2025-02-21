@@ -11,26 +11,12 @@
     <div class="flex items-start">
       <div class="flex-grow">
         {{#if this.trackPrimerConceptGroup}}
-          <div class="border-b pb-1 mb-4 flex">
-            <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
-              {{@model.language.name}}
-              Basics
-            </div>
-          </div>
-
-          <div class="prose dark:prose-invert mb-4">
-            <p>
-              New to
-              {{@model.language.name}}? Start with our interactive concepts that cover the basics.
-            </p>
-          </div>
-
-          <TrackPage::PrimerConceptGroupCard @language={{@model.language}} @conceptGroup={{this.trackPrimerConceptGroup}} class="w-full mb-6" />
+          <TrackPage::PrimerConceptGroupSection @language={{@model.language}} @conceptGroup={{this.trackPrimerConceptGroup}} class="w-full mb-6" />
 
           <div class="border-b pb-1 mb-4 flex">
             <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
               {{@model.language.name}}
-              Projects
+              Challenges
             </div>
           </div>
 
@@ -38,7 +24,7 @@
             <p>
               Time to put those
               {{@model.language.name}}
-              skills to the test. Practice by building these projects.
+              skills to the test. Practice by building popular open-source tools from scratch.
             </p>
           </div>
         {{/if}}
