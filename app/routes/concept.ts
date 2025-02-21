@@ -21,9 +21,9 @@ export type ConceptRouteModel = {
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
   @service declare authenticator: AuthenticatorService;
+  @service declare metaData: MetaDataService;
   @service declare router: RouterService;
   @service declare store: Store;
-  @service declare metaData: MetaDataService;
 
   previousMetaImageUrl: string | undefined;
   previousMetaTitle: string | undefined;
