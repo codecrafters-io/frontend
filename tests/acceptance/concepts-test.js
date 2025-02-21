@@ -87,7 +87,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
-  test('anonymous users can also view concepts', async function (assert) {
+  test('anonymous users can view concepts linked to a concept group', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -135,7 +135,59 @@ module('Acceptance | concepts-test', function (hooks) {
     );
 
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
-    const expectedRedirectUrl = encodeURIComponent('/collections/network-primer');
+
+    const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+
+    await conceptPage.conceptCompletedModal.clickOnSignInButton();
+
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      'should redirect to login URL with correct mark_as_complete endpoint',
+    );
+  });
+
+  test('anonymous users can view concepts not linked to a concept group', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].selectOption('PDF');
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[1].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[2].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[3].clickOnShowExplanationButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+
+    assert.true(conceptPage.conceptCompletedModal.isVisible, 'Concept completed modal is shown for anonymous users');
+    assert.true(
+      conceptPage.conceptCompletedModal.text.includes('Get free access to all CodeCrafters concepts'),
+      'Modal shows correct full catalog access message',
+    );
+
+    const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
+
+    const expectedRedirectUrl = encodeURIComponent(`${window.origin}/catalog`);
     const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
