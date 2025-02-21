@@ -1,5 +1,9 @@
-<div ...attributes>
-  <div class="border-b pb-1 mb-4 flex items-center gap-2">
+<div
+  class="relative group/concept-group-section {{unless this.conceptListIsExpanded 'cursor-pointer'}}"
+  {{on "click" this.handleSectionClick}}
+  ...attributes
+>
+  <div class="border-b pb-1 mb-4 flex items-center gap-2 {{unless this.conceptListIsExpanded 'group-hover/concept-group-section:border-gray-300'}}">
     <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
       {{@language.name}}
       Basics
@@ -17,5 +21,21 @@
     </p>
   </div>
 
-  <TrackPage::PrimerConceptGroupSection::ConceptList @conceptGroup={{@conceptGroup}} />
+  <div class={{if this.conceptListIsExpanded "" "h-60 overflow-hidden"}}>
+    <TrackPage::PrimerConceptGroupSection::ConceptList @conceptGroup={{@conceptGroup}} />
+
+    {{#if this.conceptListIsExpanded}}
+      <div class="flex items-center justify-center mt-2">
+        <PrimaryButton {{on "click" this.handleCollapseButtonClick}}>
+          ↑ Collapse ↑
+        </PrimaryButton>
+      </div>
+    {{else}}
+      <div class="absolute top-20 bottom-0 left-0 right-0 vertical-mask dark:vertical-mask-gray-850 rounded-b-md p-4 flex items-end justify-center">
+        <PrimaryButton class="mb-4 group-hover/concept-group-section:bg-teal-600 w-full sm:w-auto">
+          ↓ Show all ↓
+        </PrimaryButton>
+      </div>
+    {{/if}}
+  </div>
 </div>
