@@ -24,11 +24,7 @@ export default class ContinueOrStepBackComponent extends Component<Signature> {
   }
 
   @action
-  handleEnterKeyPress(event: KeyboardEvent, element: HTMLButtonElement): void {
-    if (element instanceof HTMLElement) {
-      element.blur();
-    }
-
+  handleEnterKeyPress(event: KeyboardEvent): void {
     if (event.target === this.continueButtonElement) {
       return; // Continue button already has a click handler
     }
