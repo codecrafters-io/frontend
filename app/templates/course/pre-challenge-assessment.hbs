@@ -1,0 +1,13 @@
+<CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
+  <div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
+    <div class="prose dark:prose-invert mb-4">
+      Complete the pre-challenge assessment below to proceed:
+    </div>
+
+    <CoursePage::IntroductionStep::Legacy::CreateRepositoryCard
+      @repository={{@model.activeRepository}}
+      @preferredLanguageSlug={{undefined}}
+      class="mb-6"
+    />
+  </div>
+</CoursePage::CurrentStepCompleteOverlay>
