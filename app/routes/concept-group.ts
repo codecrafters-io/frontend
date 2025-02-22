@@ -1,6 +1,5 @@
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import ConceptModel from 'codecrafters-frontend/models/concept';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import config from 'codecrafters-frontend/config/environment';
 import HeadDataService from 'codecrafters-frontend/services/meta-data';
@@ -28,33 +27,19 @@ export default class ConceptGroupRoute extends BaseRoute {
   }
 
   async model(params: { concept_group_slug: string }) {
-    const conceptGroup = await this.store.queryRecord('concept-group', { slug: params.concept_group_slug, include: 'author' });
+    const conceptGroup = await this.store.queryRecord('concept-group', {
+      slug: params.concept_group_slug,
+      include: 'author,concepts,concepts.author',
+    });
 
     if (!conceptGroup) {
       this.router.transitionTo('/');
     }
 
-    const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
-
-    const concepts = conceptGroup.conceptSlugs.reduce((acc: Array<ConceptModel>, slug: string) => {
-      const concept = allConcepts.find((concept) => concept.slug === slug);
-
-      if (concept) {
-        acc.push(concept);
-      }
-
-      return acc;
-    }, []);
-
     if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('concept-engagement', {
-        include: 'concept,user',
-      });
+      await this.store.findAll('concept-engagement', { include: 'concept,user' });
     }
 
-    return {
-      conceptGroup,
-      concepts,
-    };
+    return { conceptGroup };
   }
 }
