@@ -29,10 +29,12 @@
     {{#if (has-block "cta")}}
       {{yield to="cta"}}
     {{else}}
-
-      <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
-        {{#if this.currentUserHasStartedTrack}}
+      {{#if this.currentUserHasStartedTrack}}
+        <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
           <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
+
+          {{! TODO: Bring this the "Start Track" button once we can account for both concepts & challenges }}
+          {{!-- <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} /> --}}
 
           {{#if (gt this.topParticipants.length 0)}}
             <div class="hidden sm:flex items-center">
@@ -45,11 +47,8 @@
               <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
             </div>
           {{/if}}
-        {{/if}}
-
-        {{! TODO: Bring this the "Start Track" button once we can account for both concepts & challenges }}
-        {{!-- <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} /> --}}
-      </div>
+        </div>
+      {{/if}}
     {{/if}}
   </div>
   <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
