@@ -25,6 +25,7 @@ const QUERY_PARAMS = [
   'indentUnit',
   'indentWithTab',
   'language',
+  'lineComments',
   'lineNumbers',
   'lineSeparator',
   'lineWrapping',
