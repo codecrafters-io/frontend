@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
-import Sentry from '@sentry/ember';
+import * as Sentry from '@sentry/ember';
 
 export default class HelpScoutBeaconComponent extends Component {
   @tracked beaconInitialized = false;
