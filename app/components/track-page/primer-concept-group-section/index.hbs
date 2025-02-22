@@ -1,6 +1,8 @@
+{{! template-lint-disable no-invalid-interactive }}
 <div
   class="relative group/concept-group-section {{unless this.conceptListIsExpanded 'cursor-pointer'}}"
   {{on "click" this.handleSectionClick}}
+  role={{if this.conceptListIsExpanded "region" "button"}}
   ...attributes
 >
   <div class="border-b pb-1 mb-4 flex items-center gap-2 {{unless this.conceptListIsExpanded 'group-hover/concept-group-section:border-gray-300'}}">
