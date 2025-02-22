@@ -1,11 +1,15 @@
 import createTrackLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-track-leaderboard-entries';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { visit } from '@ember/test-helpers';
+import { visit, find, waitUntil, isSettled } from '@ember/test-helpers';
+import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
+import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
+import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 
 module('Acceptance | track-page | view-track', function (hooks) {
   setupApplicationTest(hooks);
@@ -13,11 +17,28 @@ module('Acceptance | track-page | view-track', function (hooks) {
   test('it renders for anonymous user', async function (assert) {
     testScenario(this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
+
+    createConceptFromFixture(this.server, tcpOverview);
+    createConceptFromFixture(this.server, networkProtocols);
+
+    this.server.create('concept-group', {
+      author: this.server.schema.users.first(),
+      description_markdown: 'Dummy description',
+      concept_slugs: ['tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols'],
+      slug: 'rust-primer',
+      title: 'Rust Primer',
+    });
 
     await visit('/tracks/go');
     assert.strictEqual(1, 1); // dummy assertion
 
     await percySnapshot('Track - Anonymous User');
+
+    await visit('/tracks/rust');
+    assert.strictEqual(1, 1); // dummy assertion
+
+    await percySnapshot('Track (With Primer) - Anonymous User');
 
     await visit('/tracks/haskell');
     assert.strictEqual(1, 1); // dummy assertion
@@ -125,5 +146,39 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Docker'));
+  });
+
+  test('visiting from catalog page has no loading page', async function (assert) {
+    testScenario(this.server);
+
+    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
+
+    createConceptFromFixture(this.server, tcpOverview);
+    createConceptFromFixture(this.server, networkProtocols);
+
+    this.server.create('concept-group', {
+      author: this.server.schema.users.first(),
+      description_markdown: 'Dummy description',
+      concept_slugs: ['tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols'],
+      slug: 'rust-primer',
+      title: 'Rust Primer',
+    });
+
+    let loadingIndicatorWasRendered = false;
+
+    await catalogPage.visit();
+    catalogPage.clickOnTrack('Rust');
+
+    await waitUntil(() => {
+      if (isSettled()) {
+        return true;
+      } else if (find('[data-test-loading]')) {
+        loadingIndicatorWasRendered = true;
+      }
+    });
+
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
+    assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
+    assert.strictEqual(trackPage.cards.length, 6, 'expected 6 track cards to be present (one per course)');
   });
 });

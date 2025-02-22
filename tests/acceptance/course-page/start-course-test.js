@@ -58,8 +58,10 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
     let baseRequestsCount = [
-      'fetch courses (courses listing page)',
-      'fetch repositories (courses listing page)',
+      'fetch courses (catalog)',
+      'fetch repositories (catalog)',
+      'fetch concepts (catalog)',
+      'fetch concept groups (catalog)',
       'fetch leaderboard entries (course overview page)',
       'refresh course (course overview page)',
       'fetch courses (course page)',

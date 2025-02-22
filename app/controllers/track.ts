@@ -1,13 +1,15 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import type Store from '@ember-data/store';
+import { inject as service } from '@ember/service';
 import { type ModelType } from 'codecrafters-frontend/routes/track';
 
 export default class TrackController extends Controller {
   declare model: ModelType;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   get courses(): CourseModel[] {
     if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {

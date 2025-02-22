@@ -7,6 +7,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import { hash as RSVPHash } from 'rsvp';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 export type ModelType = {
   repositories?: RepositoryModel[];
@@ -26,6 +27,7 @@ export default class CatalogRoute extends BaseRoute {
     const modelPromises: {
       repositories?: Promise<RepositoryModel[]>;
       courses?: Promise<CourseModel[]>;
+      _languages?: Promise<LanguageModel[]>;
     } = {};
 
     if (this.authenticator.isAuthenticated) {
@@ -38,6 +40,11 @@ export default class CatalogRoute extends BaseRoute {
     modelPromises.courses = this.store.findAll('course', {
       include: 'extensions,stages,language-configurations.language',
     }) as unknown as Promise<CourseModel[]>;
+
+    // Resources required by the track page
+    modelPromises._languages = this.store.findAll('language', {
+      include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+    }) as unknown as Promise<LanguageModel[]>;
 
     return RSVPHash(modelPromises) as Promise<ModelType>;
   }

@@ -145,6 +145,10 @@ export default class LanguageModel extends Model {
     return this.slug === 'go';
   }
 
+  get isRust() {
+    return this.slug === 'rust';
+  }
+
   get sortPositionForTrack() {
     return [
       // Popular tracks, sorted by usage
@@ -246,5 +250,13 @@ A quick welcome to CodeCrafters.
       typescript: 20228,
       zig: 7037,
     }[this.slug];
+  }
+
+  get trackPrimerConceptGroupSlug() {
+    if (this.isRust) {
+      return 'rust-primer';
+    } else {
+      return null;
+    }
   }
 }
