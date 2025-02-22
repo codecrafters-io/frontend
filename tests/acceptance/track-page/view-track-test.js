@@ -14,42 +14,46 @@ import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/netw
 module('Acceptance | track-page | view-track', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('it renders for anonymous user', async function (assert) {
+  hooks.beforeEach(function () {
     testScenario(this.server);
+
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
     createTrackLeaderboardEntries(this.server, 'rust', 'redis');
 
-    createConceptFromFixture(this.server, tcpOverview);
-    createConceptFromFixture(this.server, networkProtocols);
+    const tcpOverviewConcept = createConceptFromFixture(this.server, tcpOverview);
+    const networkProtocolsConcept = createConceptFromFixture(this.server, networkProtocols);
 
-    this.server.create('concept-group', {
+    const rustPrimerConceptGroup = this.server.create('concept-group', {
       author: this.server.schema.users.first(),
       description_markdown: 'Dummy description',
-      concept_slugs: ['tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols'],
+      concepts: [tcpOverviewConcept, networkProtocolsConcept],
+      concept_slugs: ['tcp-overview', 'network-protocols'],
       slug: 'rust-primer',
       title: 'Rust Primer',
     });
 
+    const rust = this.server.schema.languages.findBy({ slug: 'rust' });
+    rust.update({ primerConceptGroup: rustPrimerConceptGroup });
+  });
+
+  test('it renders for anonymous user', async function (assert) {
     await visit('/tracks/go');
-    assert.strictEqual(1, 1); // dummy assertion
+    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
 
     await percySnapshot('Track - Anonymous User');
 
     await visit('/tracks/rust');
-    assert.strictEqual(1, 1); // dummy assertion
+    assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
 
     await percySnapshot('Track (With Primer) - Anonymous User');
 
     await visit('/tracks/haskell');
-    assert.strictEqual(1, 1); // dummy assertion
+    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
 
     await percySnapshot('Track (Generic) - Anonymous User');
   });
 
   test('it renders in dark mode', async function (assert) {
-    testScenario(this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
-
     this.owner.lookup('service:dark-mode').isEnabledTemporarily = true;
 
     await visit('/tracks/go');
@@ -59,18 +63,13 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders the correct description for a track', async function (assert) {
-    testScenario(this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
-
     await visit('/tracks/python');
 
     assert.strictEqual(trackPage.header.descriptionText, "Python mastery exercises. Become your team's resident Python expert.");
   });
 
   test('it renders for logged-in user', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
     assert.strictEqual(1, 1); // dummy assertion
@@ -79,9 +78,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has started course', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -100,9 +97,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has finished one course', async function (assert) {
-    testScenario(this.server, ['dummy', 'sqlite']);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'dummy');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -121,7 +116,6 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it excludes alpha courses', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
 
     await trackPage.visit({ track_slug: 'javascript' });
@@ -129,9 +123,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it does not show a challenge if it is deprecated', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -149,21 +141,6 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('visiting from catalog page has no loading page', async function (assert) {
-    testScenario(this.server);
-
-    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
-
-    createConceptFromFixture(this.server, tcpOverview);
-    createConceptFromFixture(this.server, networkProtocols);
-
-    this.server.create('concept-group', {
-      author: this.server.schema.users.first(),
-      description_markdown: 'Dummy description',
-      concept_slugs: ['tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols'],
-      slug: 'rust-primer',
-      title: 'Rust Primer',
-    });
-
     let loadingIndicatorWasRendered = false;
 
     await catalogPage.visit();
