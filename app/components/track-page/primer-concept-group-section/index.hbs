@@ -1,0 +1,50 @@
+{{! template-lint-disable no-invalid-interactive }}
+<div
+  class="relative group/concept-group-section {{unless this.conceptListIsExpanded 'cursor-pointer'}}"
+  {{on "click" this.handleSectionClick}}
+  role={{if this.conceptListIsExpanded "region" "button"}}
+  ...attributes
+  data-test-primer-concept-group-section
+>
+  <div class="border-b pb-1 mb-4 flex items-center gap-2 {{unless this.conceptListIsExpanded 'group-hover/concept-group-section:border-gray-300'}}">
+    <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+      {{@language.name}}
+      Basics
+    </div>
+    <Pill @color="green">
+      FREE
+      <EmberTooltip @text="These interactive guides are 100% free to access." />
+    </Pill>
+  </div>
+
+  <div class="prose dark:prose-invert mb-4">
+    <p>
+      New to
+      {{@language.name}}? Start with our interactive byte-sized guides that cover the basics.
+    </p>
+  </div>
+
+  <div class={{if this.conceptListIsExpanded "" "h-60 overflow-hidden"}}>
+    <TrackPage::PrimerConceptGroupSection::ConceptList @conceptGroup={{@conceptGroup}} />
+
+    {{#if this.conceptListIsExpanded}}
+      <div class="flex items-center justify-center mt-2">
+        <PrimaryButton {{on "click" this.handleCollapseButtonClick}}>
+          ↑ Collapse ↑
+        </PrimaryButton>
+      </div>
+    {{else}}
+      <div class="absolute top-20 bottom-0 left-0 right-0 vertical-mask dark:vertical-mask-gray-850 rounded-b-md p-4 flex items-end justify-center">
+        {{#if this.authenticator.isAuthenticated}}
+          <PrimaryButton class="mb-4 group-hover/concept-group-section:bg-teal-600 w-full sm:w-auto">
+            ↓ Show all ↓
+          </PrimaryButton>
+        {{else}}
+          <PrimaryButton class="mb-4 group-hover/concept-group-section:bg-teal-600 w-full sm:w-auto">
+            <span>Start learning →</span>
+          </PrimaryButton>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>
