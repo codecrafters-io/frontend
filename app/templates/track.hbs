@@ -10,8 +10,12 @@
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
     <div class="flex items-start">
       <div class="flex-grow">
-        {{#if @model.primerConceptGroup}}
-          <TrackPage::PrimerConceptGroupSection @language={{@model.language}} @conceptGroup={{@model.primerConceptGroup}} class="w-full mb-6" />
+        {{#if @model.language.primerConceptGroup}}
+          <TrackPage::PrimerConceptGroupSection
+            @language={{@model.language}}
+            @conceptGroup={{@model.language.primerConceptGroup}}
+            class="w-full mb-6"
+          />
         {{/if}}
 
         <div class="border-b pb-1 mb-4 flex">

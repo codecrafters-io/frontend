@@ -35,8 +35,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.strictEqual(
       apiRequestsCount(this.server),
       [
-        'fetch courses (courses listing page)',
-        'fetch repositories (courses listing page)',
+        'fetch courses (catalog)',
+        'fetch repositories (catalog)',
+        'fetch concepts (catalog)',
+        'fetch concept groups (catalog)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',

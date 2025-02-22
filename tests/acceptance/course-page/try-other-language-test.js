@@ -30,8 +30,10 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     });
 
     let expectedRequestsCount = [
-      'fetch courses (courses listing page)',
-      'fetch repositories (courses listing page)',
+      'fetch courses (catalog)',
+      'fetch repositories (catalog)',
+      'fetch concepts (catalog)',
+      'fetch concept groups (catalog)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',

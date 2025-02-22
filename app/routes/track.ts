@@ -9,12 +9,10 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
-import type ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 
 export type ModelType = {
   courses: CourseModel[];
   language: LanguageModel;
-  primerConceptGroup: ConceptGroupModel | null;
 };
 
 export default class TrackRoute extends BaseRoute {
@@ -49,25 +47,19 @@ export default class TrackRoute extends BaseRoute {
       include: 'extensions,stages,language-configurations.language',
     })) as unknown as CourseModel[];
 
-    const language = this.store.peekAll('language').findBy('slug', params.track_slug) as LanguageModel;
+    const languages = (await this.store.findAll('language', {
+      include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+    })) as unknown as LanguageModel[];
 
-    const relatedResourcePromises: Promise<unknown>[] = [];
-
-    if (language.trackPrimerConceptGroupSlug) {
-      relatedResourcePromises.push(this.store.findAll('concept-group', { include: 'author' }));
-      relatedResourcePromises.push(this.store.findAll('concept', { include: 'author,questions' }));
-    }
+    const language = languages.find((language) => language.slug === params.track_slug)!;
 
     if (this.authenticator.isAuthenticated) {
-      relatedResourcePromises.push(this.store.findAll('repository', { include: RepositoryPoller.defaultIncludedResources }));
+      await this.store.findAll('repository', { include: RepositoryPoller.defaultIncludedResources });
     }
-
-    await Promise.all(relatedResourcePromises);
 
     return {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
-      primerConceptGroup: this.store.peekAll('concept-group').find((conceptGroup) => conceptGroup.slug === language.trackPrimerConceptGroupSlug),
     };
   }
 }
