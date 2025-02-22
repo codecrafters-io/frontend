@@ -8,7 +8,7 @@ LOG_FILENAME="build-output.log"
 VERCEL_FUNCTIONS_DESTINATION="/vercel/output/functions"
 
 # Run `npm run build` and capture the output into build output log
-npm run build > >(tee -a "${LOG_FILENAME}") 2> >(tee -a "${LOG_FILENAME}" >&2)
+npm run build 2>&1 | tee -a "${LOG_FILENAME}"
 
 # If there are errors in build output log - exit with error status code
 if cat "${LOG_FILENAME}" | grep -qi "error"; then
