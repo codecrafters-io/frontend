@@ -37,7 +37,15 @@ export default class ConceptRoute extends BaseRoute {
     });
   }
 
-  afterModel({ concept }: ConceptRouteModel): void {
+  afterModel(model: ConceptRouteModel): void {
+    if (!model) {
+      this.router.transitionTo('not-found');
+
+      return;
+    }
+
+    const { concept } = model;
+
     // Save previous OG meta tags
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.previousMetaTitle = this.metaData.title;
@@ -65,6 +73,12 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   async findOrCreateConceptEngagement(concept: ConceptModel) {
+    if (this.authenticator.isAuthenticated) {
+      await this.store.findAll('concept-engagement', {
+        include: 'concept,user',
+      });
+    }
+
     const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
       .filter((engagement) => engagement.concept.slug === concept.slug)
       .sortBy('createdAt')
@@ -86,21 +100,13 @@ export default class ConceptRoute extends BaseRoute {
     const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
     if (!concept) {
-      this.router.transitionTo('not-found');
-
-      return;
+      return; // will redirect to 404 in afterModel
     }
 
     const allConceptGroups = await this.store.findAll('concept-group');
     const relatedConceptGroups = allConceptGroups
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
-
-    if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('concept-engagement', {
-        include: 'concept,user',
-      });
-    }
 
     const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
 
