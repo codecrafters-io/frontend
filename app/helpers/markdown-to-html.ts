@@ -31,9 +31,8 @@ export default class MarkdownToHtml extends Helper<Signature> {
       disableForced4SpacesIndentedSublists: true,
     }).makeHtml(markdown);
 
+    // DOMPurify is not available in FastBoot mode, so we return the generated HTML as is
     if (this.fastboot.isFastBoot) {
-      console.warn('DOMPurify unavailable in FastBoot mode, skipping sanitize');
-
       return generatedHtml;
     }
 
