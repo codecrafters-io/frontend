@@ -33,8 +33,9 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     assert.strictEqual(
       apiRequestsCount(this.server),
       [
-        'fetch courses (courses listing page)',
-        'fetch repositories (courses listing page)',
+        'fetch courses (catalog)',
+        'fetch repositories (catalog)',
+        'fetch languages (catalog)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
