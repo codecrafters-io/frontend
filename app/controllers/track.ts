@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
