@@ -39,8 +39,9 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     const baseRequestsCount = [
-      'fetch courses (courses listing page)',
-      'fetch repositories (courses listing page)',
+      'fetch courses (catalog)',
+      'fetch repositories (catalog)',
+      'fetch languages (catalog)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
