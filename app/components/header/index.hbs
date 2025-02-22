@@ -39,8 +39,8 @@
         {{/each}}
       </div>
 
-      {{! Account Dropdown on Desktop }}
-      <div class="invisible md:visible flex items-center ml-6">
+      {{! Account Dropdown on Desktop. Hidden in fastboot since we don't know if the user is authed or not }}
+      <div class="invisible {{unless (is-fastboot) 'md:visible'}} flex items-center ml-6">
         {{#if (and this.authenticator.currentUser.isStaff this.versionTracker.currentVersionIsOutdated)}}
           <OutdatedClientBadge class="mr-4" />
         {{/if}}

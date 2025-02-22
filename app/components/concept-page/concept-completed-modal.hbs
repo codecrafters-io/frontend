@@ -1,0 +1,39 @@
+<div class="flex w-full max-w-sm relative" data-test-concept-completed-modal ...attributes>
+  <div
+    class="flex flex-col items-center justify-center bg-gradient-to-t from-teal-50 via-teal-50 to-teal-100 border border-teal-600 rounded-lg px-6 py-10 md:px-8 md:py-16 shadow-2xl"
+  >
+    <div class="text-5xl mb-4">
+      🎉
+    </div>
+    <div class="prose mb-6 text-center leading-6">
+      <p class="text-teal-700">
+        You've completed this concept!
+      </p>
+      <p class="text-teal-700">
+        Get
+        <span class="font-semibold">free access</span>
+        to
+        {{#if @conceptGroup}}
+          the rest of
+          {{@conceptGroup.title}}
+        {{else}}
+          all CodeCrafters concepts
+        {{/if}}
+        by signing in with GitHub.
+      </p>
+    </div>
+    <PrimaryButton @size="large" {{on "click" this.handleSignInButtonClick}} data-test-concept-completed-modal-sign-in-button>
+      <div class="flex items-center gap-x-2">
+        {{svg-jar "github" class="fill-current w-5"}}
+
+        <span>
+          Sign in with GitHub
+        </span>
+      </div>
+    </PrimaryButton>
+
+    <div class="text-xs text-gray-400 text-center mt-4 max-w-xs">
+      We use GitHub for authentication. The only data we request is your username, avatar and email address.
+    </div>
+  </div>
+</div>

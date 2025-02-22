@@ -1,5 +1,6 @@
 import CourseLanguageConfigurationModel from './course-language-configuration';
-import Model, { attr, hasMany } from '@ember-data/model';
+import ConceptGroupModel from './concept-group';
+import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import colorLogoC from '/assets/images/language-logos/c-color.svg';
 import colorLogoCpp from '/assets/images/language-logos/cpp-color.svg';
 import colorLogoClojure from '/assets/images/language-logos/clojure-color.svg';
@@ -75,6 +76,8 @@ import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 
 export default class LanguageModel extends Model {
   @hasMany('course-language-configuration', { async: false, inverse: 'language' }) declare courseConfigurations: CourseLanguageConfigurationModel[];
+
+  @belongsTo('concept-group', { async: false, inverse: null }) declare primerConceptGroup: ConceptGroupModel | null;
 
   @attr('string') declare name: string;
   @attr('string') declare slug: string;

@@ -28,7 +28,7 @@ export default class AccountDropdownComponent extends Component {
 
   @action
   handleForumLinkClick(dropdownActions: { close: () => void }) {
-    window.open('https://forum.codecrafters.io/', '_blank');
+    window.open('https://forum.codecrafters.io/session/sso', '_blank');
     dropdownActions.close();
   }
 

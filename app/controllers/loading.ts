@@ -3,10 +3,10 @@ import { action } from '@ember/object';
 import { later, cancel } from '@ember/runloop';
 
 export default class LoadingController extends Controller {
-  cancellable;
+  cancellable: ReturnType<typeof later> | null = null;
 
   @action
-  async handleDidInsertLoadingIndicator(element) {
+  async handleDidInsertLoadingIndicator(element: HTMLDivElement) {
     this.cancellable = later(() => {
       if (element) {
         element.classList.add('opacity-100');
@@ -17,6 +17,8 @@ export default class LoadingController extends Controller {
 
   @action
   async handleWillDestroyLoadingIndicator() {
-    cancel(this.cancellable);
+    if (this.cancellable) {
+      cancel(this.cancellable);
+    }
   }
 }

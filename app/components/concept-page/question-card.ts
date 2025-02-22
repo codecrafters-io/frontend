@@ -77,7 +77,7 @@ export default class QuestionCardComponent extends Component<Signature> {
   handleDidInsertOptionsList(element: HTMLElement) {
     const firstOptionElement = element.children[0];
 
-    if (firstOptionElement instanceof HTMLElement) {
+    if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
       // focus() doesn't seem to work unless it's called after the current runloop
       next(() => {
         firstOptionElement?.focus({ preventScroll: true });

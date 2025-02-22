@@ -10,7 +10,30 @@
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
     <div class="flex items-start">
       <div class="flex-grow">
-        <TrackPage::IntroductionAndCourses @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
+        {{#if @model.language.primerConceptGroup}}
+          <TrackPage::PrimerConceptGroupSection
+            @language={{@model.language}}
+            @conceptGroup={{@model.language.primerConceptGroup}}
+            class="w-full mb-6"
+          />
+        {{/if}}
+
+        <div class="border-b pb-1 mb-4 flex">
+          <div class="text-2xl font-semibold text-gray-800 dark:text-gray-200">
+            {{@model.language.name}}
+            Challenges
+          </div>
+        </div>
+
+        <div class="prose dark:prose-invert mb-4">
+          <p>
+            Put your
+            {{@model.language.name}}
+            skills to the test. Practice by building popular open-source tools from scratch.
+          </p>
+        </div>
+
+        <TrackPage::CourseCardList @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
       <div class="hidden lg:block w-80 flex-shrink-0 sticky top-4 ml-2">

@@ -1,8 +1,10 @@
-import Model, { belongsTo, attr } from '@ember-data/model';
+import Model, { belongsTo, attr, hasMany } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
+import ConceptModel from 'codecrafters-frontend/models/concept';
 
 export default class ConceptGroupModel extends Model {
   @belongsTo('user', { async: false, inverse: null }) author!: UserModel;
+  @hasMany('concept', { async: false, inverse: null }) concepts!: ConceptModel[];
 
   @attr() conceptSlugs!: Array<string>;
   @attr('string') descriptionMarkdown!: string;

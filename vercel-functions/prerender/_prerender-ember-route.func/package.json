@@ -1,0 +1,9 @@
+{
+  "name": "prerender-ember-route",
+  "dependencies": {
+    "abortcontroller-polyfill": "^1.7.8",
+    "fastboot": "^4.1.5",
+    "node-fetch": "^2.7.0"
+  },
+  "type": "module"
+}

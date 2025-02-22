@@ -31,9 +31,8 @@ export default class MarkdownToHtml extends Helper<Signature> {
       disableForced4SpacesIndentedSublists: true,
     }).makeHtml(markdown);
 
+    // DOMPurify is not available in FastBoot mode, so we return the generated HTML as is
     if (this.fastboot.isFastBoot) {
-      console.warn('DOMPurify unavailable in FastBoot mode, skipping sanitize');
-
       return generatedHtml;
     }
 
@@ -43,6 +42,12 @@ export default class MarkdownToHtml extends Helper<Signature> {
       if (node.nodeName === 'A') {
         node.setAttribute('target', '_blank');
         node.setAttribute('rel', 'noopener noreferrer');
+      }
+
+      // https://github.com/PrismJS/prism/issues/3658
+      // PrismJS unconditionally adds a tabindex to <pre> elements, without any opt-out
+      if (node.nodeName === 'PRE') {
+        node.setAttribute('tabindex', '-1');
       }
     });
 

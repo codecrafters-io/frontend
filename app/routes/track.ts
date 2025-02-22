@@ -1,14 +1,15 @@
-import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
-import config from 'codecrafters-frontend/config/environment';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type Store from '@ember-data/store';
-import type MetaDataService from 'codecrafters-frontend/services/meta-data';
-import type CourseModel from 'codecrafters-frontend/models/course';
-import type LanguageModel from 'codecrafters-frontend/models/language';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import config from 'codecrafters-frontend/config/environment';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import type FastbootService from 'ember-cli-fastboot/services/fastboot';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type MetaDataService from 'codecrafters-frontend/services/meta-data';
+import type Store from '@ember-data/store';
+import { inject as service } from '@ember/service';
 
 export type ModelType = {
   courses: CourseModel[];
@@ -19,8 +20,9 @@ export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
+  @service declare fastboot: FastbootService;
   @service declare metaData: MetaDataService;
+  @service declare store: Store;
 
   previousMetaImageUrl: string | undefined;
 
@@ -47,12 +49,17 @@ export default class TrackRoute extends BaseRoute {
       include: 'extensions,stages,language-configurations.language',
     })) as unknown as CourseModel[];
 
-    const language = this.store.peekAll('language').findBy('slug', params.track_slug) as LanguageModel;
+    // TODO: Investigate why running this in FastBoot causes a build error
+    if (!this.fastboot.isFastBoot) {
+      (await this.store.findAll('language', {
+        include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+      })) as unknown as LanguageModel[];
+    }
+
+    const language = this.store.peekAll('language').find((language) => language.slug === params.track_slug)!;
 
     if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('repository', {
-        include: RepositoryPoller.defaultIncludedResources,
-      });
+      await this.store.findAll('repository', { include: RepositoryPoller.defaultIncludedResources });
     }
 
     return {
