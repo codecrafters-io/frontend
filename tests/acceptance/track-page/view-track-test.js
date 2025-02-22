@@ -1,34 +1,59 @@
 import createTrackLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-track-leaderboard-entries';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { visit } from '@ember/test-helpers';
+import { visit, find, waitUntil, isSettled } from '@ember/test-helpers';
+import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
+import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
+import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 
 module('Acceptance | track-page | view-track', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('it renders for anonymous user', async function (assert) {
+  hooks.beforeEach(function () {
     testScenario(this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
+    createTrackLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
+
+    const tcpOverviewConcept = createConceptFromFixture(this.server, tcpOverview);
+    const networkProtocolsConcept = createConceptFromFixture(this.server, networkProtocols);
+
+    const rustPrimerConceptGroup = this.server.create('concept-group', {
+      author: this.server.schema.users.first(),
+      description_markdown: 'Dummy description',
+      concepts: [tcpOverviewConcept, networkProtocolsConcept],
+      concept_slugs: ['tcp-overview', 'network-protocols'],
+      slug: 'rust-primer',
+      title: 'Rust Primer',
+    });
+
+    const rust = this.server.schema.languages.findBy({ slug: 'rust' });
+    rust.update({ primerConceptGroup: rustPrimerConceptGroup });
+  });
+
+  test('it renders for anonymous user', async function (assert) {
     await visit('/tracks/go');
-    assert.strictEqual(1, 1); // dummy assertion
+    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
 
     await percySnapshot('Track - Anonymous User');
 
+    await visit('/tracks/rust');
+    assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
+
+    await percySnapshot('Track (With Primer) - Anonymous User');
+
     await visit('/tracks/haskell');
-    assert.strictEqual(1, 1); // dummy assertion
+    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
 
     await percySnapshot('Track (Generic) - Anonymous User');
   });
 
   test('it renders in dark mode', async function (assert) {
-    testScenario(this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
-
     this.owner.lookup('service:dark-mode').isEnabledTemporarily = true;
 
     await visit('/tracks/go');
@@ -38,18 +63,13 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders the correct description for a track', async function (assert) {
-    testScenario(this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
-
     await visit('/tracks/python');
 
     assert.strictEqual(trackPage.header.descriptionText, "Python mastery exercises. Become your team's resident Python expert.");
   });
 
   test('it renders for logged-in user', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     await visit('/tracks/go');
     assert.strictEqual(1, 1); // dummy assertion
@@ -58,9 +78,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has started course', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -79,9 +97,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it renders for logged-in user who has finished one course', async function (assert) {
-    testScenario(this.server, ['dummy', 'sqlite']);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'dummy');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -100,7 +116,6 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it excludes alpha courses', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
 
     await trackPage.visit({ track_slug: 'javascript' });
@@ -108,9 +123,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
   });
 
   test('it does not show a challenge if it is deprecated', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -125,5 +138,24 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Docker'));
+  });
+
+  test('visiting from catalog page has no loading page', async function (assert) {
+    let loadingIndicatorWasRendered = false;
+
+    await catalogPage.visit();
+    catalogPage.clickOnTrack('Rust');
+
+    await waitUntil(() => {
+      if (isSettled()) {
+        return true;
+      } else if (find('[data-test-loading]')) {
+        loadingIndicatorWasRendered = true;
+      }
+    });
+
+    assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
+    assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
+    assert.strictEqual(trackPage.cards.length, 6, 'expected 6 track cards to be present (one per course)');
   });
 });

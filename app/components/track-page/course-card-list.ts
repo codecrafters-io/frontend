@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class TrackPageIntroductionAndCoursesComponent extends Component<Signature> {
+export default class TrackPageCourseCardListComponent extends Component<Signature> {
   logoImage = logoImage;
   comingSoonImage = comingSoonImage;
 
@@ -37,17 +37,10 @@ export default class TrackPageIntroductionAndCoursesComponent extends Component<
       };
     });
   }
-
-  get userHasStartedTrack() {
-    return (
-      this.authenticator.currentUser &&
-      this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('lastSubmissionAt')[0]
-    );
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::IntroductionAndCourses': typeof TrackPageIntroductionAndCoursesComponent;
+    'TrackPage::CourseCardList': typeof TrackPageCourseCardListComponent;
   }
 }
