@@ -22,5 +22,9 @@ export default createPage({
     scope: '[data-test-track-header]',
   },
 
+  primerConceptGroupSection: {
+    scope: '[data-test-primer-concept-group-section]',
+  },
+
   visit: visitable('/tracks/:track_slug'),
 });
