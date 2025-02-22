@@ -1,15 +1,19 @@
 import Component from '@glimmer/component';
-import ConceptModel from 'codecrafters-frontend/models/concept';
+import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 
 interface Signature {
   Element: HTMLDivElement;
 
-  Args: {
-    concepts: Array<ConceptModel>;
-  };
+  Args: { conceptGroup: ConceptGroupModel };
 }
 
-export default class ContentComponent extends Component<Signature> {}
+export default class ContentComponent extends Component<Signature> {
+  get sortedConcepts() {
+    return this.args.conceptGroup.concepts.toArray().sort((a, b) => {
+      return this.args.conceptGroup.conceptSlugs.indexOf(a.slug) - this.args.conceptGroup.conceptSlugs.indexOf(b.slug);
+    });
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
