@@ -4,6 +4,10 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
+import { service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type RouterService from '@ember/routing/router-service';
+
 interface Signature {
   Element: HTMLDivElement;
 
@@ -14,6 +18,9 @@ interface Signature {
 }
 
 export default class TrackPagePrimerConceptGroupSectionComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+  @service declare router: RouterService;
+
   @tracked conceptListIsExpanded = false;
 
   @action
@@ -25,8 +32,14 @@ export default class TrackPagePrimerConceptGroupSectionComponent extends Compone
 
   @action
   handleSectionClick() {
-    if (!this.conceptListIsExpanded) {
+    if (this.conceptListIsExpanded) {
+      return;
+    }
+
+    if (this.authenticator.isAuthenticated) {
       this.conceptListIsExpanded = true;
+    } else {
+      this.router.transitionTo('concept', this.args.conceptGroup.conceptSlugs[0]!);
     }
   }
 }

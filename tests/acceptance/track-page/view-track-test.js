@@ -6,6 +6,9 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
+import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
+import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
+import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 
 module('Acceptance | track-page | view-track', function (hooks) {
   setupApplicationTest(hooks);
@@ -13,11 +16,28 @@ module('Acceptance | track-page | view-track', function (hooks) {
   test('it renders for anonymous user', async function (assert) {
     testScenario(this.server);
     createTrackLeaderboardEntries(this.server, 'go', 'redis');
+    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
+
+    createConceptFromFixture(this.server, tcpOverview);
+    createConceptFromFixture(this.server, networkProtocols);
+
+    this.server.create('concept-group', {
+      author: this.server.schema.users.first(),
+      description_markdown: 'Dummy description',
+      concept_slugs: ['tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols', 'tcp-overview', 'network-protocols'],
+      slug: 'rust-primer',
+      title: 'Rust Primer',
+    });
 
     await visit('/tracks/go');
     assert.strictEqual(1, 1); // dummy assertion
 
     await percySnapshot('Track - Anonymous User');
+
+    await visit('/tracks/rust');
+    assert.strictEqual(1, 1); // dummy assertion
+
+    await percySnapshot('Track (With Primer) - Anonymous User');
 
     await visit('/tracks/haskell');
     assert.strictEqual(1, 1); // dummy assertion
