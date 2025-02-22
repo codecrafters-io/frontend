@@ -20,10 +20,14 @@ module('Acceptance | concept-groups-test', function (hooks) {
     testScenario(this.server);
     createConcepts(this.server);
 
+    const tcpOverviewConcept = this.server.schema.concepts.findBy({ slug: 'tcp-overview' });
+    const networkProtocolsConcept = this.server.schema.concepts.findBy({ slug: 'network-protocols' });
+
     const user = this.server.schema.users.first();
     this.conceptGroup = this.server.create('concept-group', {
       author: user,
       description_markdown: 'Dummy description',
+      concepts: [tcpOverviewConcept, networkProtocolsConcept],
       concept_slugs: ['tcp-overview', 'network-protocols'],
       slug: 'test-concept-group',
       title: 'Test Concept Group',
