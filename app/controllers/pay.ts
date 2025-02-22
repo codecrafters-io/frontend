@@ -58,7 +58,7 @@ export default class PayController extends Controller {
       this.configureCheckoutSessionModalIsOpen = true;
       this.selectedPricingFrequency = pricingFrequency;
     } else {
-      this.authenticator.initiateLogin(null);
+      this.authenticator.initiateLogin();
     }
   }
 

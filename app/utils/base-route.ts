@@ -29,9 +29,9 @@ export default class BaseRoute extends Route {
 
       if (params.length > 0) {
         const paramValues = params.map(([_, value]) => value);
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to?.name || 'catalog', ...paramValues));
+        this.authenticator.initiateLoginAndRedirectTo(this.router.urlFor(transition.to?.name || 'catalog', ...paramValues));
       } else {
-        this.authenticator.initiateLogin(this.router.urlFor(transition.to?.name || 'catalog'));
+        this.authenticator.initiateLoginAndRedirectTo(this.router.urlFor(transition.to?.name || 'catalog'));
       }
 
       transition.abort();
