@@ -27,12 +27,4 @@ export default class TrackController extends Controller {
   get testimonials(): CourseModel['testimonials'] {
     return this.sortedCourses[0] ? this.sortedCourses[0].testimonials : [];
   }
-
-  get trackPrimerConceptGroup(): ConceptGroupModel | null {
-    if (!this.model.language.trackPrimerConceptGroupSlug) {
-      return null;
-    }
-
-    return this.store.peekAll('concept-group').find((conceptGroup) => conceptGroup.slug === this.model.language.trackPrimerConceptGroupSlug);
-  }
 }

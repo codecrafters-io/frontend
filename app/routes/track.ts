@@ -9,10 +9,12 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import type ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 
 export type ModelType = {
   courses: CourseModel[];
   language: LanguageModel;
+  primerConceptGroup: ConceptGroupModel | null;
 };
 
 export default class TrackRoute extends BaseRoute {
@@ -49,23 +51,23 @@ export default class TrackRoute extends BaseRoute {
 
     const language = this.store.peekAll('language').findBy('slug', params.track_slug) as LanguageModel;
 
-    if (language.trackPrimerConceptGroupSlug) {
-      const conceptGroup = await this.store.queryRecord('concept-group', { slug: language.trackPrimerConceptGroupSlug, include: 'author' });
+    const relatedResourcePromises: Promise<unknown>[] = [];
 
-      if (conceptGroup) {
-        await this.store.findAll('concept', { include: 'author,questions' });
-      }
+    if (language.trackPrimerConceptGroupSlug) {
+      relatedResourcePromises.push(this.store.findAll('concept-group', { include: 'author' }));
+      relatedResourcePromises.push(this.store.findAll('concept', { include: 'author,questions' }));
     }
 
     if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('repository', {
-        include: RepositoryPoller.defaultIncludedResources,
-      });
+      relatedResourcePromises.push(this.store.findAll('repository', { include: RepositoryPoller.defaultIncludedResources }));
     }
+
+    await Promise.all(relatedResourcePromises);
 
     return {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
       language: language,
+      primerConceptGroup: this.store.peekAll('concept-group').find((conceptGroup) => conceptGroup.slug === language.trackPrimerConceptGroupSlug),
     };
   }
 }
