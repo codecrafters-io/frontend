@@ -148,7 +148,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
-  test('users can view concepts and interact with them', async function (assert) {
+  test('users can interact with concepts, and the expected elements are focused', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -162,21 +162,26 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.visit();
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
+
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
+
+    // Question 1
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
     await conceptPage.questionCards[0].keydown({ keyCode: 65 }); // Send enter key
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
+
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
+    // Question 2
     assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
     await conceptPage.questionCards[1].keydown({ keyCode: 74 }); // Send j key
     assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '4 layers');
@@ -184,20 +189,17 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    /////
-
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
+    // Question 3
     assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
     await conceptPage.questionCards[2].keydown({ keyCode: 65 }); // Send enter key
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    /////
-
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
@@ -209,14 +211,13 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
+    // Question 4
     assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'TCP');
     await conceptPage.questionCards[3].keydown({ keyCode: 74 }); // Send j key
     assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'UDP');
     await conceptPage.questionCards[3].keydown({ keyCode: 65 }); // Send enter key
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-
-    /////
 
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
