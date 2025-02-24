@@ -49,6 +49,10 @@ export default createPage({
     selectOption: clickOnText('[data-test-question-card-option]'),
   }),
 
+  focusedContinueButton: {
+    scope: '[data-test-continue-button]:focus',
+  },
+
   shareConceptContainer: {
     clickOnCopyButton: clickable('[data-test-copy-button]'),
     scope: '[data-test-share-concept-container]',

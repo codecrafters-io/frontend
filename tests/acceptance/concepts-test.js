@@ -148,6 +148,108 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
+  test('users can view concepts and interact with them', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
+    await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
+    await conceptPage.questionCards[0].keydown({ keyCode: 65 }); // Send enter key
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
+    await conceptPage.questionCards[1].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '4 layers');
+    await conceptPage.questionCards[1].keydown({ keyCode: 65 }); // Send enter key
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    /////
+
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
+    await conceptPage.questionCards[2].keydown({ keyCode: 65 }); // Send enter key
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    /////
+
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'TCP');
+    await conceptPage.questionCards[3].keydown({ keyCode: 74 }); // Send j key
+    assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'UDP');
+    await conceptPage.questionCards[3].keydown({ keyCode: 65 }); // Send enter key
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    /////
+
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
+    await conceptPage.clickOnContinueButton();
+
+    assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
+    assert.true(conceptPage.upcomingConcept.card.title.text.includes('TCP: An Overview'), 'Next concept title is correct');
+
+    assert.true(conceptPage.conceptCompletedModal.isVisible, 'Concept completed modal is shown for anonymous users');
+    assert.true(
+      conceptPage.conceptCompletedModal.text.includes('Get free access to the rest of Network Primer'),
+      'Modal shows correct group access message',
+    );
+
+    const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
+
+    const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+
+    await conceptPage.conceptCompletedModal.clickOnSignInButton();
+
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      'should redirect to login URL with correct mark_as_complete endpoint',
+    );
+  });
+
   test('anonymous users can view concepts not linked to a concept group', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
