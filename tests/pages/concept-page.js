@@ -35,8 +35,6 @@ export default createPage({
       hasPrismHighlighting: hasClass('has-prism-highlighting'),
     },
 
-    clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
-    clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
 
     focusedOption: {
