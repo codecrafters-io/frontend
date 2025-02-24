@@ -143,7 +143,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      `${windowMock.location.origin}/login?next=${encodeURIComponent(nextUrl)}`,
       'should redirect to login URL with correct mark_as_complete endpoint',
     );
   });
@@ -194,7 +194,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      `${windowMock.location.origin}/login?next=${encodeURIComponent(nextUrl)}`,
       'should redirect to login URL with correct mark_as_complete endpoint',
     );
   });

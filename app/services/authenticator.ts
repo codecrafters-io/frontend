@@ -72,18 +72,18 @@ export default class AuthenticatorService extends Service {
     await this.syncCurrentUser();
   }
 
-  initiateLogin(redirectPath: string | null) {
-    const isFullUrl = redirectPath?.startsWith(`${config.x.backendUrl}`);
-
-    if (isFullUrl) {
-      window.location.href = `${config.x.backendUrl}/login?next=` + redirectPath;
-    } else if (redirectPath) {
-      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${redirectPath}`);
-    } else if (this.router.currentURL) {
-      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(`${window.origin}${this.router.currentURL}`);
+  initiateLogin() {
+    if (this.router.currentURL) {
+      this.initiateLoginAndRedirectTo(`${window.origin}${this.router.currentURL}`);
     } else {
-      window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(window.origin);
+      this.initiateLoginAndRedirectTo(window.origin);
     }
+  }
+
+  initiateLoginAndRedirectTo(redirectPathOrUrl: string) {
+    const redirectUrl = redirectPathOrUrl.startsWith('/') ? `${window.origin}${redirectPathOrUrl}` : redirectPathOrUrl;
+
+    window.location.href = `${config.x.backendUrl}/login?next=` + encodeURIComponent(redirectUrl);
   }
 
   logout(): void {

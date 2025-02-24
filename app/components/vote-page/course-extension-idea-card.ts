@@ -42,7 +42,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
   @action
   async handleVoteButtonClick() {
     if (this.authenticator.isAnonymous) {
-      this.authenticator.initiateLogin(null);
+      this.authenticator.initiateLogin();
 
       return;
     }
