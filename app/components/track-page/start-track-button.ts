@@ -21,14 +21,14 @@ export default class CourseOverviewStartTrackButtonComponent extends Component<S
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
-  get currentUserIsAnonymous() {
-    return this.authenticator.isAnonymous;
-  }
-
   @action
   handleClicked() {
-    if (this.currentUserIsAnonymous) {
-      this.authenticator.initiateLogin();
+    if (this.authenticator.isAnonymous) {
+      if (this.args.language.primerConceptGroup) {
+        this.router.transitionTo('concept', this.args.language.primerConceptGroup.concepts[0]!.slug);
+      } else {
+        this.authenticator.initiateLogin();
+      }
     } else {
       this.router.transitionTo('course', this.args.courses[0]!.slug, { queryParams: { repo: null, track: this.args.language.slug } });
     }
