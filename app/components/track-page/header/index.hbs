@@ -29,12 +29,14 @@
     {{#if (has-block "cta")}}
       {{yield to="cta"}}
     {{else}}
-      {{#if this.currentUserHasStartedTrack}}
+      {{#if this.authenticator.isAnonymous}}
+        <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
+          {{! TODO: Bring this back for authed users once we can account for both concepts & challenges }}
+          <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
+        </div>
+      {{else if this.currentUserHasStartedTrack}}
         <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
           <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
-
-          {{! TODO: Bring this the "Start Track" button once we can account for both concepts & challenges }}
-          {{!-- <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} /> --}}
 
           {{#if (gt this.topParticipants.length 0)}}
             <div class="hidden sm:flex items-center">
