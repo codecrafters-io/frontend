@@ -11,15 +11,15 @@ module('Acceptance | header-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('header should show sign-in & upgrade button if user is unauthenticated', async function (assert) {
+  test('header should show sign-in & pricing link if user is unauthenticated', async function (assert) {
     testScenario(this.server);
 
     await catalogPage.visit();
 
     assert.true(catalogPage.header.signInButton.isVisible, 'expect sign-in button to be visible');
-    assert.true(catalogPage.header.upgradeButton.isVisible, 'expect billing status  badge to be visible');
-    await catalogPage.header.upgradeButton.click();
+    assert.true(catalogPage.header.hasLink('Pricing'), 'expect pricing link to be visible');
 
+    await catalogPage.header.clickOnHeaderLink('Pricing');
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
 
