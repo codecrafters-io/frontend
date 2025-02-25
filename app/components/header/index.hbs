@@ -57,9 +57,8 @@
           </div>
         </FeedbackButton>
 
-        <BillingStatusBadge @size="small" class="mr-3" />
-
         {{#if this.authenticator.isAuthenticated}}
+          <BillingStatusBadge @size="small" class="mr-3" />
           <Header::AccountDropdown />
         {{else}}
           <div class="flex items-center">

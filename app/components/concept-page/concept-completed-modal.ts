@@ -33,7 +33,7 @@ export default class ConceptCompletedModal extends Component<Signature> {
 
     markAsCompleteUrl.searchParams.set('redirect_url', `${window.origin}${this.redirectPathAfterLogin}`);
 
-    this.authenticator.initiateLogin(markAsCompleteUrl.toString());
+    this.authenticator.initiateLoginAndRedirectTo(markAsCompleteUrl.toString());
   }
 }
 

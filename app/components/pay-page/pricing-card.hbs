@@ -72,10 +72,14 @@
         {{svg-jar "github" class="fill-current w-4 transform transition-all mr-2"}}
       {{/unless}}
 
-      Start membership →
+      {{#if this.authenticator.isAuthenticated}}
+        Start membership&nbsp;→
+      {{else}}
+        Try a free project&nbsp;→
+      {{/if}}
 
       {{#unless this.authenticator.isAuthenticated}}
-        <EmberTooltip @text="Login via GitHub to start a membership." />
+        <EmberTooltip @text="Login via GitHub to try a free project." />
       {{/unless}}
     </button>
 

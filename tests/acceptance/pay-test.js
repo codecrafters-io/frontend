@@ -25,19 +25,16 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.pricingCards[0].startPaymentButton.hover();
 
     assertTooltipContent(assert, {
-      contentString: 'Login via GitHub to start a membership.',
+      contentString: 'Login via GitHub to try a free project.',
     });
   });
 
-  test('user can view the page through the upgrade button', async function (assert) {
+  test('user can view the page through the pricing link', async function (assert) {
     testScenario(this.server);
 
     await catalogPage.visit();
 
-    assert.ok(catalogPage.header.upgradeButton.isVisible, 'Upgrade button is visible');
-
-    await catalogPage.header.upgradeButton.click();
-
+    await catalogPage.header.clickOnHeaderLink('Pricing');
     assert.strictEqual(currentURL(), '/pay');
   });
 
@@ -49,7 +46,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcatalog`,
       'should redirect to login URL',
     );
   });

@@ -1,4 +1,4 @@
-import { clickOnText, clickable, fillable, isVisible } from 'ember-cli-page-object';
+import { clickOnText, collection, clickable, fillable, isVisible } from 'ember-cli-page-object';
 import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/billing-status-badge';
 
 export default {
@@ -16,8 +16,12 @@ export default {
     toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
   },
 
-  freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
+  hasLink: function (linkText) {
+    return !!this.links.toArray().find((link) => link.text === linkText);
+  },
 
+  freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
+  links: collection('[data-test-header-link]'),
   memberBadge: BillingStatusBadge.memberBadge,
 
   scope: '[data-test-header]',
