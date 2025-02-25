@@ -39,6 +39,21 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   get links(): { text: string; route: string; type: 'route' | 'link' }[] {
+    if (this.currentUser) {
+      return this.linksForAuthenticatedUser;
+    } else {
+      return this.linksForAnonymousUser;
+    }
+  }
+
+  get linksForAnonymousUser(): { text: string; route: string; type: 'route' | 'link' }[] {
+    return [
+      { text: 'Catalog', route: 'catalog', type: 'route' },
+      { text: 'Pricing', route: 'pay', type: 'route' },
+    ];
+  }
+
+  get linksForAuthenticatedUser(): { text: string; route: string; type: 'route' | 'link' }[] {
     const links: { text: string; route: string; type: 'route' | 'link' }[] = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
       { text: 'Badges', route: 'badges', type: 'route' },
