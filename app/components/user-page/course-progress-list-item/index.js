@@ -3,6 +3,8 @@ import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
+const MAX_LANGUAGES_TO_DISPLAY = 5;
+
 export default class CourseProgressListItemComponent extends Component {
   @service router;
 
@@ -32,6 +34,29 @@ export default class CourseProgressListItemComponent extends Component {
     } else {
       return `using ${arrayToSentence(this.args.courseParticipations.mapBy('language.name').uniq())}`;
     }
+  }
+
+  get languagesToDisplay() {
+    // First, get all completed course participations sorted by completion time (most recent first)
+    const completedParticipations = this.completedCourseParticipations.sort(
+      (a, b) => new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
+    );
+    
+    // Next, get incomplete participations sorted by activity time (most recent first)
+    const incompleteParticipations = this.args.courseParticipations
+      .filter(p => !p.isCompleted)
+      .sort((a, b) => new Date(b.lastSubmissionAt).getTime() - new Date(a.lastSubmissionAt).getTime());
+    
+    // If we have 5 or fewer completed participations, show all of them
+    if (completedParticipations.length >= MAX_LANGUAGES_TO_DISPLAY) {
+      return completedParticipations.slice(0, MAX_LANGUAGES_TO_DISPLAY);
+    }
+    
+    // Otherwise, show all completed participations + recent incomplete ones (up to 5 total)
+    return [
+      ...completedParticipations,
+      ...incompleteParticipations.slice(0, MAX_LANGUAGES_TO_DISPLAY - completedParticipations.length)
+    ];
   }
 
   @action
