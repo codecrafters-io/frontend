@@ -58,7 +58,8 @@ export default class PayController extends Controller {
       this.configureCheckoutSessionModalIsOpen = true;
       this.selectedPricingFrequency = pricingFrequency;
     } else {
-      this.authenticator.initiateLogin();
+      // The CTA is "Try a free project ->", so doesn't make sense to redirect to /pay again
+      this.authenticator.initiateLoginAndRedirectTo('/catalog');
     }
   }
 
