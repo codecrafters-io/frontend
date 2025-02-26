@@ -2,12 +2,14 @@ import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
 import { posthog } from 'posthog-js';
+import type FastbootService from 'ember-cli-fastboot/services/fastboot';
 import type SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
 
+  @service declare fastboot: FastbootService;
   @service declare sessionTokenStorage: SessionTokenStorageService;
   @service declare versionTracker: VersionTrackerService;
 
@@ -33,5 +35,17 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
 
   get host() {
     return config.x.backendUrl;
+  }
+
+  shouldBackgroundReloadAll() {
+    // Don't use background reloading under FastBoot, otherwise it will run
+    // after the app is destroyed and crash the build in a very funny way.
+    return !this.fastboot.isFastBoot;
+  }
+
+  shouldBackgroundReloadRecord() {
+    // Don't use background reloading under FastBoot, otherwise it will run
+    // after the app is destroyed and crash the build in a very funny way.
+    return !this.fastboot.isFastBoot;
   }
 }
