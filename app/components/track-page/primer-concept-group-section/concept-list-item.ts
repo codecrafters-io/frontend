@@ -7,13 +7,22 @@ interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
-    isComplete: boolean;
     concept: ConceptModel;
   };
 }
 
 export default class ConceptListItemComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+
+  get isComplete() {
+    if (!this.authenticator.currentUser) {
+      return false;
+    }
+
+    return this.authenticator.currentUser.conceptEngagements.some(
+      (engagement) => engagement.concept.slug === this.args.concept.slug && engagement.isCompleted,
+    );
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

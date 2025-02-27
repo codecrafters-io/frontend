@@ -7,17 +7,17 @@
 >
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <div class="w-2 h-2 {{if @isComplete 'bg-teal-500' 'bg-gray-200 dark:bg-gray-700'}} rounded-full mr-2"></div>
+      <div class="w-2 h-2 {{if this.isComplete 'bg-teal-500' 'bg-gray-200 dark:bg-gray-700'}} rounded-full mr-2"></div>
 
       {{! TODO: Qualify all heroicons with solid/outline }}
-      {{svg-jar "book-open-outline" class="w-6 mr-2 text-gray-400 dark:text-gray-600"}}
+      {{svg-jar "book-open-outline" class=(concat "w-6 mr-2 text-gray-400 dark:text-gray-600 " (if this.isComplete "opacity-50"))}}
 
-      <div class="prose dark:prose-invert prose-sm">
+      <div class="prose dark:prose-invert prose-sm {{if this.isComplete 'opacity-50'}}">
         {{@concept.title}}
       </div>
     </div>
 
-    {{#if @isComplete}}
+    {{#if this.isComplete}}
       {{svg-jar "check" class="ml-1 w-5 text-teal-500"}}
     {{else}}
       <div class="flex items-center gap-1 pl-4 flex-shrink-0">
@@ -30,6 +30,8 @@
       </div>
     {{/if}}
 
-    <EmberTooltip @text={{@concept.descriptionMarkdown}} />
+    {{#unless this.isComplete}}
+      <EmberTooltip @text={{@concept.descriptionMarkdown}} />
+    {{/unless}}
   </div>
 </LinkTo>

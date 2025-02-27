@@ -2,7 +2,9 @@ import Component from '@glimmer/component';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { waitFor } from '@ember/test-waiters';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -25,6 +27,12 @@ export default class ConceptListComponent extends Component<Signature> {
 
       return acc;
     }, [] as ConceptModel[]);
+  }
+
+  @action
+  @waitFor
+  async handleDidInsertContainerElement() {
+    await this.store.findAll('concept-engagement', { include: 'concept,user' });
   }
 }
 
