@@ -137,7 +137,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
-    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
@@ -240,7 +240,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
-    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
@@ -291,7 +291,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/catalog`);
-    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
+    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
