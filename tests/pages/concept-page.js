@@ -24,6 +24,10 @@ export default createPage({
     text: text(),
   },
 
+  focusedContinueButton: {
+    scope: '[data-test-continue-button]:focus',
+  },
+
   progress: {
     barStyle: attribute('style', '[data-test-concept-progress-bar]'),
     scope: '[data-test-concept-progress]',
@@ -35,8 +39,6 @@ export default createPage({
       hasPrismHighlighting: hasClass('has-prism-highlighting'),
     },
 
-    clickOnSubmitButton: clickable('[data-test-question-card-submit-button]'),
-    clickOnContinueButton: clickable('[data-test-question-card-continue-button]'),
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
 
     focusedOption: {
