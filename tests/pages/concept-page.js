@@ -24,6 +24,10 @@ export default createPage({
     text: text(),
   },
 
+  focusedContinueButton: {
+    scope: '[data-test-continue-button]:focus',
+  },
+
   progress: {
     barStyle: attribute('style', '[data-test-concept-progress-bar]'),
     scope: '[data-test-concept-progress]',
@@ -46,10 +50,6 @@ export default createPage({
     keydown: triggerable('keydown', '.question-card-option-container'),
     selectOption: clickOnText('[data-test-question-card-option]'),
   }),
-
-  focusedContinueButton: {
-    scope: '[data-test-continue-button]:focus',
-  },
 
   shareConceptContainer: {
     clickOnCopyButton: clickable('[data-test-copy-button]'),
