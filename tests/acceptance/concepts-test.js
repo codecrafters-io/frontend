@@ -137,7 +137,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
-    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
@@ -240,13 +240,17 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
-    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
+    console.log('nextUrl', nextUrl);
+    console.log('encodedNextUrl', nextUrl);
+    console.log('windowMock.location.href', windowMock.location.href);
+
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=${nextUrl}`,
+      `${windowMock.location.origin}/login?next=${nextUrl.toString()}`,
       'should redirect to login URL with correct mark_as_complete endpoint',
     );
   });
@@ -291,7 +295,7 @@ module('Acceptance | concepts-test', function (hooks) {
     const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
 
     const expectedRedirectUrl = encodeURIComponent(`${window.origin}/catalog`);
-    const nextUrl = encodeURIComponent(config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl);
+    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
