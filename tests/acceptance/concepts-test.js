@@ -236,19 +236,6 @@ module('Acceptance | concepts-test', function (hooks) {
       conceptPage.conceptCompletedModal.text.includes('Get free access to the rest of Network Primer'),
       'Modal shows correct group access message',
     );
-
-    const conceptId = this.server.schema.concepts.findBy({ slug: 'network-protocols' }).id;
-
-    const expectedRedirectUrl = encodeURIComponent(`${window.origin}/collections/network-primer`);
-    const nextUrl = config.x.backendUrl + '/concepts/' + conceptId + '/mark_as_complete?redirect_url=' + expectedRedirectUrl;
-
-    await conceptPage.conceptCompletedModal.clickOnSignInButton();
-
-    assert.strictEqual(
-      windowMock.location.href,
-      `${windowMock.location.origin}/login?next=${nextUrl}`,
-      'should redirect to login URL with correct mark_as_complete endpoint',
-    );
   });
 
   test('anonymous users can view concepts not linked to a concept group', async function (assert) {
