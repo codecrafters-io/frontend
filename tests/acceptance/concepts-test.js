@@ -244,13 +244,9 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptPage.conceptCompletedModal.clickOnSignInButton();
 
-    console.log('nextUrl', nextUrl);
-    console.log('encodedNextUrl', nextUrl);
-    console.log('windowMock.location.href', windowMock.location.href);
-
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=${nextUrl.toString()}`,
+      `${windowMock.location.origin}/login?next=${nextUrl}`,
       'should redirect to login URL with correct mark_as_complete endpoint',
     );
   });
