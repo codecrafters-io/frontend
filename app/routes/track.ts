@@ -5,7 +5,6 @@ import config from 'codecrafters-frontend/config/environment';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
-import type FastbootService from 'ember-cli-fastboot/services/fastboot';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type Store from '@ember-data/store';
@@ -20,7 +19,6 @@ export default class TrackRoute extends BaseRoute {
   allowsAnonymousAccess = true;
 
   @service declare authenticator: AuthenticatorService;
-  @service declare fastboot: FastbootService;
   @service declare metaData: MetaDataService;
   @service declare store: Store;
 
@@ -49,12 +47,9 @@ export default class TrackRoute extends BaseRoute {
       include: 'extensions,stages,language-configurations.language',
     })) as unknown as CourseModel[];
 
-    // TODO: Investigate why running this in FastBoot causes a build error
-    if (!this.fastboot.isFastBoot) {
-      (await this.store.findAll('language', {
-        include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
-      })) as unknown as LanguageModel[];
-    }
+    (await this.store.findAll('language', {
+      include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+    })) as unknown as LanguageModel[];
 
     const language = this.store.peekAll('language').find((language) => language.slug === params.track_slug)!;
 

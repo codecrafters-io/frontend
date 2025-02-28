@@ -22,10 +22,10 @@ export default class CourseOverviewStartTrackButtonComponent extends Component<S
   @service declare router: RouterService;
 
   @action
-  handleClicked() {
+  handleClick() {
     if (this.authenticator.isAnonymous) {
       if (this.args.language.primerConceptGroup) {
-        this.router.transitionTo('concept', this.args.language.primerConceptGroup.concepts[0]!.slug);
+        this.router.transitionTo('concept', this.args.language.primerConceptGroup.conceptSlugs[0]!);
       } else {
         this.authenticator.initiateLogin();
       }
