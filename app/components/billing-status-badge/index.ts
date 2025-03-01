@@ -26,13 +26,25 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     return this.currentUser?.activeDiscountFromAffiliateReferral || this.currentUser?.activeDiscountFromSignup || null;
   }
 
-  get badgeType(): 'vip' | 'member' | 'discount-timer' | 'discount-timer-excluding-stage-2-completion' | 'free-weeks-left' | 'upgrade' {
-    if (this.shouldShowVipBadge) {
+  get badgeType():
+    | 'vip'
+    | 'member'
+    | 'indirect-member'
+    | 'discount-timer'
+    | 'discount-timer-excluding-stage-2-completion'
+    | 'free-weeks-left'
+    | 'upgrade' {
+    if (this.currentUser?.isVip) {
       return 'vip';
     }
 
-    if (this.shouldShowMemberBadge) {
+    if (this.currentUser?.hasActiveSubscription) {
       return 'member';
+    }
+
+    // We don't have individual badges for all member types (like via team sub / team pilot), so let's use a common one
+    if (this.currentUser?.canAccessMembershipBenefits) {
+      return 'indirect-member';
     }
 
     // Stage 2 completion discounts gets higher priority
@@ -68,22 +80,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       this.currentUser.hasActiveFreeUsageGrants &&
       !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated
     );
-  }
-
-  get shouldShowMemberBadge(): boolean {
-    return !!this.currentUser && this.currentUser.hasActiveSubscription;
-  }
-
-  get shouldShowUpgradeButton(): boolean {
-    if (this.currentUser) {
-      return !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
-    } else {
-      return true;
-    }
-  }
-
-  get shouldShowVipBadge(): boolean {
-    return !!this.currentUser && this.currentUser.isVip;
   }
 }
 
