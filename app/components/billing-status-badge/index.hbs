@@ -3,6 +3,8 @@
     <BillingStatusBadge::VipBadge @size={{@size}} />
   {{else if (eq this.badgeType "member")}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
+  {{else if (eq this.badgeType "indirect-member")}}
+    <BillingStatusBadge::IndirectMemberBadge @size={{@size}} />
   {{else if (eq this.badgeType "discount-timer")}}
     {{! @glint-expect-error: incorrectly assumes @discount is nullable}}
     <BillingStatusBadge::DiscountTimerBadge @discount={{this.activeDiscountForYearlyPlan}} @size={{@size}} />
