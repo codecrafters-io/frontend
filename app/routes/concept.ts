@@ -72,14 +72,14 @@ export default class ConceptRoute extends BaseRoute {
     this.metaData.description = this.previousMetaDescription;
   }
 
-  async #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
+  #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
     const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
       .filter((engagement) => engagement.concept.slug === concept.slug)
       .sortBy('createdAt')
       .reverse()[0];
 
     if (!latestConceptEngagement) {
-      return await this.store.createRecord('concept-engagement', {
+      return this.store.createRecord('concept-engagement', {
         concept,
         user: this.authenticator.currentUser,
         currentProgressPercentage: 0,
@@ -108,7 +108,7 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    const latestConceptEngagement = await this.#findCachedOrCreateNewConceptEngagement(concept);
+    const latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
 
     return {
       allConcepts,
