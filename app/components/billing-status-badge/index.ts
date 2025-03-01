@@ -42,6 +42,7 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       return 'member';
     }
 
+    // We don't have individual badges for all member types (like via team sub / team pilot), so let's use a common one
     if (this.currentUser?.canAccessMembershipBenefits) {
       return 'indirect-member';
     }
