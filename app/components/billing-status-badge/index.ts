@@ -34,11 +34,11 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     | 'discount-timer-excluding-stage-2-completion'
     | 'free-weeks-left'
     | 'upgrade' {
-    if (this.shouldShowVipBadge) {
+    if (this.currentUser?.isVip) {
       return 'vip';
     }
 
-    if (this.shouldShowMemberBadge) {
+    if (this.currentUser?.hasActiveSubscription) {
       return 'member';
     }
 
@@ -80,22 +80,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
       this.currentUser.hasActiveFreeUsageGrants &&
       !this.currentUser.hasActiveFreeUsageGrantsValueIsOutdated
     );
-  }
-
-  get shouldShowMemberBadge(): boolean {
-    return !!this.currentUser && this.currentUser.hasActiveSubscription;
-  }
-
-  get shouldShowUpgradeButton(): boolean {
-    if (this.currentUser) {
-      return !this.currentUser.canAccessPaidContent && this.router.currentRouteName !== 'pay';
-    } else {
-      return true;
-    }
-  }
-
-  get shouldShowVipBadge(): boolean {
-    return !!this.currentUser && this.currentUser.isVip;
   }
 }
 
