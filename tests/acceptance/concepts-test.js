@@ -100,11 +100,11 @@ module('Acceptance | concepts-test', function (hooks) {
       title: 'Network Primer',
     });
 
-    await conceptsPage.visitConcept({ concept_slug: 'network-protocols' });
+    await conceptPage.visit({ slug: 'network-protocols' });
 
     assert.strictEqual(currentURL(), '/concepts/network-protocols', 'Existing concept renders on correct concept URL');
 
-    await conceptsPage.visitConcept({ concept_slug: 'nonexistent-concept' });
+    await conceptPage.visit({ slug: 'nonexistent-concept' });
 
     assert.strictEqual(currentURL(), '/404', 'Non-existing concept redirects to /404');
   });

@@ -75,5 +75,5 @@ export default createPage({
     scope: '[data-test-upcoming-concept]',
   },
 
-  visit: visitable('/concept/:slug'),
+  visit: visitable('/concepts/:slug'),
 });

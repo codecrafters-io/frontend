@@ -10,13 +10,31 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import { tracked } from '@glimmer/tracking';
 
-export type ConceptRouteModel = {
+export class ConceptRouteModel {
   allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
-  latestConceptEngagement: ConceptEngagementModel;
-};
+  @tracked latestConceptEngagement: ConceptEngagementModel;
+
+  constructor({
+    allConcepts,
+    concept,
+    conceptGroup,
+    latestConceptEngagement,
+  }: {
+    allConcepts: ConceptModel[];
+    concept: ConceptModel;
+    conceptGroup: ConceptGroupModel;
+    latestConceptEngagement: ConceptEngagementModel;
+  }) {
+    this.allConcepts = allConcepts;
+    this.concept = concept;
+    this.conceptGroup = conceptGroup;
+    this.latestConceptEngagement = latestConceptEngagement;
+  }
+}
 
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -73,28 +91,37 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
-    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === concept.slug)
+    const cachedEngagement = this.store
+      .peekAll('concept-engagement')
+      .filter((engagement) => {
+        return engagement.concept.slug === concept.slug && engagement.user === this.authenticator.currentUser;
+      })
       .sortBy('createdAt')
       .reverse()[0];
 
-    if (!latestConceptEngagement) {
-      return this.store.createRecord('concept-engagement', {
+    return (
+      cachedEngagement ||
+      this.store.createRecord('concept-engagement', {
         concept,
         user: this.authenticator.currentUser,
         currentProgressPercentage: 0,
-      });
-    }
-
-    return latestConceptEngagement;
+      })
+    );
   }
 
   async model(params: { concept_slug: string }) {
-    const allConcepts = await this.store.findAll('concept', { include: 'author,questions', reload: true });
-    const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
+    // First, try finding the concept already cached in the store
+    let allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
+    let concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
     if (!concept) {
-      return; // will redirect to 404 in afterModel
+      // If no concept found, re-fetch concepts and try again
+      allConcepts = await this.store.findAll('concept', { include: 'author,questions', reload: true });
+      concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
+
+      if (!concept) {
+        return; // will redirect to 404 in afterModel
+      }
     }
 
     const allConceptGroups = await this.store.findAll('concept-group');
@@ -102,19 +129,27 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
-    if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('concept-engagement', {
-        include: 'concept,user',
-      });
-    }
-
     const latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
 
-    return {
-      allConcepts,
+    if (this.authenticator.isAuthenticated) {
+      this.#updateConceptEngagements(concept);
+    }
+
+    return new ConceptRouteModel({
+      allConcepts: allConcepts as unknown as ConceptModel[],
       concept,
       conceptGroup: relatedConceptGroups[0],
       latestConceptEngagement,
-    };
+    });
+  }
+
+  async #updateConceptEngagements(concept: ConceptModel) {
+    await this.store.findAll('concept-engagement', {
+      include: 'concept,user',
+      reload: true,
+    });
+
+    const model = this.controller.model as ConceptRouteModel;
+    model.latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
   }
 }
