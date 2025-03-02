@@ -41,10 +41,7 @@ export default class ConceptComponent extends Component<Signature> {
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
     } else {
-      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
-      const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
-      const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
-      this.lastRevealedBlockGroupIndex = blockGroupIndex;
+      this.recalculateLastRevealedBlockGroupIndex();
     }
   }
 
@@ -162,6 +159,13 @@ export default class ConceptComponent extends Component<Signature> {
     if (!this.authenticator.isAuthenticated && config.environment !== 'test') {
       this.args.latestConceptEngagement.deleteRecord();
     }
+  }
+
+  @action recalculateLastRevealedBlockGroupIndex() {
+    const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+    const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
+    const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
+    this.lastRevealedBlockGroupIndex = blockGroupIndex;
   }
 
   updateLastRevealedBlockGroupIndex(newBlockGroupIndex: number) {

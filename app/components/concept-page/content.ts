@@ -45,6 +45,7 @@ export default class ContentComponent extends Component<Signature> {
 
   @action
   handleDidInsertConfettiEmoji(emojiElement: HTMLElement) {
+    console.debug('Firing confetti for element', emojiElement);
     this.confetti.fireFromElement(emojiElement);
   }
 }

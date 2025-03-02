@@ -10,13 +10,31 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import { tracked } from '@glimmer/tracking';
 
-export type ConceptRouteModel = {
+export class ConceptRouteModel {
   allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
-  latestConceptEngagement: ConceptEngagementModel;
-};
+  @tracked latestConceptEngagement: ConceptEngagementModel;
+
+  constructor({
+    allConcepts,
+    concept,
+    conceptGroup,
+    latestConceptEngagement,
+  }: {
+    allConcepts: ConceptModel[];
+    concept: ConceptModel;
+    conceptGroup: ConceptGroupModel;
+    latestConceptEngagement: ConceptEngagementModel;
+  }) {
+    this.allConcepts = allConcepts;
+    this.concept = concept;
+    this.conceptGroup = conceptGroup;
+    this.latestConceptEngagement = latestConceptEngagement;
+  }
+}
 
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -33,6 +51,7 @@ export default class ConceptRoute extends BaseRoute {
     super(...args);
 
     this.router.on('routeDidChange', () => {
+      console.debug('Scrolling to top');
       scheduleOnce('afterRender', this, scrollToTop);
     });
   }
@@ -66,27 +85,28 @@ export default class ConceptRoute extends BaseRoute {
     return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
+  #createNewConceptEngagement(concept: ConceptModel) {
+    return this.store.createRecord('concept-engagement', {
+      concept,
+      user: this.authenticator.currentUser,
+      currentProgressPercentage: 0,
+    });
+  }
+
   deactivate() {
     this.metaData.imageUrl = this.previousMetaImageUrl;
     this.metaData.title = this.previousMetaTitle;
     this.metaData.description = this.previousMetaDescription;
   }
 
-  #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
-    const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === concept.slug)
+  #findCachedConceptEngagement(concept: ConceptModel) {
+    return this.store
+      .peekAll('concept-engagement')
+      .filter((engagement) => {
+        return engagement.concept.slug === concept.slug && engagement.user === this.authenticator.currentUser;
+      })
       .sortBy('createdAt')
       .reverse()[0];
-
-    if (!latestConceptEngagement) {
-      return this.store.createRecord('concept-engagement', {
-        concept,
-        user: this.authenticator.currentUser,
-        currentProgressPercentage: 0,
-      });
-    }
-
-    return latestConceptEngagement;
   }
 
   async model(params: { concept_slug: string }) {
@@ -102,19 +122,27 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
+    const latestConceptEngagement = this.#findCachedConceptEngagement(concept) || this.#createNewConceptEngagement(concept);
+
     if (this.authenticator.isAuthenticated) {
-      await this.store.findAll('concept-engagement', {
-        include: 'concept,user',
-      });
+      this.#updateConceptEngagements(concept);
     }
 
-    const latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
-
-    return {
-      allConcepts,
+    return new ConceptRouteModel({
+      allConcepts: allConcepts as unknown as ConceptModel[],
       concept,
       conceptGroup: relatedConceptGroups[0],
       latestConceptEngagement,
-    };
+    });
+  }
+
+  async #updateConceptEngagements(concept: ConceptModel) {
+    await this.store.findAll('concept-engagement', {
+      include: 'concept,user',
+      reload: true,
+    });
+
+    const model = this.controller.model as ConceptRouteModel;
+    model.latestConceptEngagement = this.#findCachedConceptEngagement(concept);
   }
 }
