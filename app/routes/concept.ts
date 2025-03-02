@@ -37,7 +37,15 @@ export default class ConceptRoute extends BaseRoute {
     });
   }
 
-  afterModel({ concept }: ConceptRouteModel): void {
+  afterModel(model: ConceptRouteModel): void {
+    if (!model) {
+      this.router.transitionTo('not-found');
+
+      return;
+    }
+
+    const { concept } = model;
+
     // Save previous OG meta tags
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.previousMetaTitle = this.metaData.title;
@@ -64,7 +72,7 @@ export default class ConceptRoute extends BaseRoute {
     this.metaData.description = this.previousMetaDescription;
   }
 
-  async findOrCreateConceptEngagement(concept: ConceptModel) {
+  async #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
     const latestConceptEngagement = this.authenticator.currentUser?.conceptEngagements
       .filter((engagement) => engagement.concept.slug === concept.slug)
       .sortBy('createdAt')
@@ -86,9 +94,7 @@ export default class ConceptRoute extends BaseRoute {
     const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
     if (!concept) {
-      this.router.transitionTo('not-found');
-
-      return;
+      return; // will redirect to 404 in afterModel
     }
 
     const allConceptGroups = await this.store.findAll('concept-group');
@@ -102,7 +108,7 @@ export default class ConceptRoute extends BaseRoute {
       });
     }
 
-    const latestConceptEngagement = await this.findOrCreateConceptEngagement(concept);
+    const latestConceptEngagement = await this.#findCachedOrCreateNewConceptEngagement(concept);
 
     return {
       allConcepts,

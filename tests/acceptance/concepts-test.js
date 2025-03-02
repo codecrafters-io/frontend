@@ -87,6 +87,28 @@ module('Acceptance | concepts-test', function (hooks) {
     await percySnapshot('Concept - Completed');
   });
 
+  test('visiting a non-existing concept redirects to 404', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    this.server.schema.conceptGroups.create({
+      conceptSlugs: ['network-protocols', 'tcp-overview'],
+      descriptionMarkdown: 'This is a group about network concepts',
+      slug: 'network-primer',
+      title: 'Network Primer',
+    });
+
+    await conceptsPage.visitConcept({ concept_slug: 'network-protocols' });
+
+    assert.strictEqual(currentURL(), '/concepts/network-protocols', 'Existing concept renders on correct concept URL');
+
+    await conceptsPage.visitConcept({ concept_slug: 'nonexistent-concept' });
+
+    assert.strictEqual(currentURL(), '/404', 'Non-existing concept redirects to /404');
+  });
+
   test('anonymous users can view concepts linked to a concept group', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
