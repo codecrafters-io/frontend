@@ -3,7 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, pauseTest } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -15,13 +15,27 @@ module('Acceptance | view-user-profile', function (hooks) {
 
   test('it renders courses with proper ordering', async function (assert) {
     testScenario(this.server);
-
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let git = this.server.schema.courses.findBy({ slug: 'git' });
     let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let cpp = this.server.schema.languages.findBy({ slug: 'cpp' });
+    let java = this.server.schema.languages.findBy({ slug: 'java' });
+    let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
+    let haskell = this.server.schema.languages.findBy({ slug: 'haskell' });
+    let c = this.server.schema.languages.findBy({ slug: 'c' });
+    let rust = this.server.schema.languages.findBy({ slug: 'rust' });
+    let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
+    let php = this.server.schema.languages.findBy({ slug: 'php' });
+    let swift = this.server.schema.languages.findBy({ slug: 'swift' });
+    let typescript = this.server.schema.languages.findBy({ slug: 'typescript' });
+    let kotlin = this.server.schema.languages.findBy({ slug: 'kotlin' });
+    let objectivec = this.server.schema.languages.findBy({ slug: 'objectivec' });
+    let scala = this.server.schema.languages.findBy({ slug: 'scala' });
+    let shell = this.server.schema.languages.findBy({ slug: 'shell' });
+    let elixir = this.server.schema.languages.findBy({ slug: 'elixir' });
 
     this.server.create('course-participation', {
       course: redis,
@@ -37,6 +51,91 @@ module('Acceptance | view-user-profile', function (hooks) {
       user: currentUser,
       completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
       lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: cpp,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: java,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: javascript,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: haskell,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: c,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: rust,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: ruby,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: php,
+      user: currentUser,
+      completedAt: new Date('2020-01-01'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: swift,
+      user: currentUser,
+      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: typescript,
+      user: currentUser,
+      completedAt: new Date('2021-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: kotlin,
+      user: currentUser,
+      completedAt: new Date('2021-10-11'),
     });
 
     this.server.create('course-participation', {
@@ -84,6 +183,7 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
     // Completed course will be listed first.
+    await this.pauseTest();
     assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker');
     // Then ordering is done on latest submission, earlier comes first.
     assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep');
