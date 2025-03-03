@@ -3,7 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import profilePage from 'codecrafters-frontend/tests/pages/settings/profile-page';
 import userPage from 'codecrafters-frontend/tests/pages/user-page';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL, pauseTest } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -15,13 +15,14 @@ module('Acceptance | view-user-profile', function (hooks) {
 
   test('it renders courses with proper ordering', async function (assert) {
     testScenario(this.server);
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let docker = this.server.schema.courses.findBy({ slug: 'docker' });
     let grep = this.server.schema.courses.findBy({ slug: 'grep' });
-  
+
     this.server.create('course-participation', {
       course: redis,
       language: python,
