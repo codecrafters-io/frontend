@@ -90,7 +90,7 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   async model(params: { concept_slug: string }) {
-    const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
+    const allConcepts = await this.store.findAll('concept', { include: 'author,questions', reload: true });
     const concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
     if (!concept) {
