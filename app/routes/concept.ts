@@ -111,7 +111,8 @@ export default class ConceptRoute extends BaseRoute {
 
   async model(params: { concept_slug: string }) {
     const allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
-    const concept = await this.store.findRecord('concept', params.concept_slug);
+    const concept =
+      this.store.peekRecord('concept', params.concept_slug) || (await this.store.findRecord('concept', params.concept_slug, { reload: true }));
 
     if (!concept) {
       return; // will redirect to 404 in afterModel
