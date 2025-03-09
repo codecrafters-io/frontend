@@ -29,5 +29,4 @@ export default createPage({
   helpscoutBeacon: helpscoutBeacon,
 
   visit: visitable('/concepts'),
-  visitConcept: visitable('/concepts/:concept_slug'),
 });
