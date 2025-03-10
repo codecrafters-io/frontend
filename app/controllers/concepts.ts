@@ -33,9 +33,9 @@ export default class ConceptsController extends Controller {
 
   get visibleConcepts(): ConceptModel[] {
     return this.model.concepts.filter((concept) => {
-      const canViewDraft = this.currentUser?.isStaff || concept.author === this.currentUser;
+      const canViewIfDraft = this.currentUser?.isStaff || concept.author === this.currentUser;
 
-      return concept.statusIsPublished || (concept.statusIsDraft && canViewDraft);
+      return concept.statusIsPublished || (concept.statusIsDraft && canViewIfDraft);
     });
   }
 
