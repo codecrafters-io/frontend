@@ -22,10 +22,6 @@ export default class ImplementSolutionStepComponent extends Component<Signature>
   @service declare featureFlags: FeatureFlagsService;
   @tracked solutionIsBlurred = true;
 
-  get canSeeLanguageGuideBeforeSolution() {
-    return this.featureFlags.canSeeLanguageGuideBeforeSolutionForStage2;
-  }
-
   get solution() {
     return this.args.repository.secondStageSolution;
   }

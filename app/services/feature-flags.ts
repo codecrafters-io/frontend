@@ -18,10 +18,6 @@ export default class FeatureFlagsService extends Service {
     return Boolean(this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor));
   }
 
-  get canSeeLanguageGuideBeforeSolutionForStage2(): boolean {
-    return Boolean(this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-language-guide-before-solution-for-stage-2') === 'test');
-  }
-
   get canSeeStage2CompletionDiscount(): boolean {
     return Boolean(this.currentUser?.isStaff || this.getFeatureFlagValue('can-see-stage2-completion-discount') === 'test');
   }
