@@ -4,37 +4,19 @@ import { inject as service } from '@ember/service';
 import { scheduleOnce } from '@ember/runloop';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
-import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
-import { tracked } from '@glimmer/tracking';
+import type Transition from '@ember/routing/transition';
+import type ConceptController from 'codecrafters-frontend/controllers/concept';
 
-export class ConceptRouteModel {
+export type ConceptRouteModel = {
   allConcepts: ConceptModel[];
   concept: ConceptModel;
   conceptGroup: ConceptGroupModel;
-  @tracked latestConceptEngagement: ConceptEngagementModel;
-
-  constructor({
-    allConcepts,
-    concept,
-    conceptGroup,
-    latestConceptEngagement,
-  }: {
-    allConcepts: ConceptModel[];
-    concept: ConceptModel;
-    conceptGroup: ConceptGroupModel;
-    latestConceptEngagement: ConceptEngagementModel;
-  }) {
-    this.allConcepts = allConcepts;
-    this.concept = concept;
-    this.conceptGroup = conceptGroup;
-    this.latestConceptEngagement = latestConceptEngagement;
-  }
-}
+};
 
 export default class ConceptRoute extends BaseRoute {
   allowsAnonymousAccess = true;
@@ -90,25 +72,6 @@ export default class ConceptRoute extends BaseRoute {
     this.metaData.description = this.previousMetaDescription;
   }
 
-  #findCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
-    const cachedEngagement = this.store
-      .peekAll('concept-engagement')
-      .filter((engagement) => {
-        return engagement.concept.slug === concept.slug && engagement.user === this.authenticator.currentUser;
-      })
-      .sortBy('createdAt')
-      .reverse()[0];
-
-    return (
-      cachedEngagement ||
-      this.store.createRecord('concept-engagement', {
-        concept,
-        user: this.authenticator.currentUser,
-        currentProgressPercentage: 0,
-      })
-    );
-  }
-
   async model(params: { concept_slug: string }) {
     // First, try finding the concept already cached in the store
     let allConcepts = await this.store.findAll('concept', { include: 'author,questions' });
@@ -119,6 +82,7 @@ export default class ConceptRoute extends BaseRoute {
       allConcepts = await this.store.findAll('concept', { include: 'author,questions', reload: true });
       concept = allConcepts.find((concept) => concept.slug === params.concept_slug);
 
+      // If still no concept found, return undefined
       if (!concept) {
         return; // will redirect to 404 in afterModel
       }
@@ -129,27 +93,46 @@ export default class ConceptRoute extends BaseRoute {
       .filter((group) => group.conceptSlugs.includes(concept.slug))
       .sort((a, b) => a.slug.localeCompare(b.slug));
 
-    const latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
-
-    if (this.authenticator.isAuthenticated) {
-      this.#updateConceptEngagements(concept);
-    }
-
-    return new ConceptRouteModel({
-      allConcepts: allConcepts as unknown as ConceptModel[],
+    return {
+      allConcepts,
       concept,
       conceptGroup: relatedConceptGroups[0],
-      latestConceptEngagement,
-    });
+    };
   }
 
-  async #updateConceptEngagements(concept: ConceptModel) {
-    await this.store.findAll('concept-engagement', {
-      include: 'concept,user',
-      reload: true,
-    });
+  #peekCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
+    const user = this.authenticator.currentUser;
+    const cachedEngagement = this.store
+      .peekAll('concept-engagement')
+      .filter((e) => e.concept.slug === concept.slug && e.user === user)
+      .sortBy('createdAt')
+      .reverse()[0];
 
-    const model = this.controller.model as ConceptRouteModel;
-    model.latestConceptEngagement = this.#findCachedOrCreateNewConceptEngagement(concept);
+    return (
+      cachedEngagement ||
+      this.store.createRecord('concept-engagement', {
+        concept,
+        user,
+        currentProgressPercentage: 0,
+      })
+    );
+  }
+
+  setupController(controller: ConceptController, model: ConceptRouteModel, _transition: Transition): void {
+    // First, use an existing concept engagement (or create a new one)
+    controller.latestConceptEngagement = this.#peekCachedOrCreateNewConceptEngagement(model.concept);
+
+    if (this.authenticator.isAuthenticated) {
+      // If the user is authenticated — fetch his real engagements...
+      this.store
+        .findAll('concept-engagement', {
+          include: 'concept,user',
+          reload: true, // force reloading from the back-end
+        })
+        .then(() => {
+          // ... and then update the controller with the real engagement (or create a new one, if still none found)
+          controller.latestConceptEngagement = this.#peekCachedOrCreateNewConceptEngagement(model.concept);
+        });
+    }
   }
 }
