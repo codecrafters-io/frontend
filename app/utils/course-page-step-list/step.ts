@@ -3,6 +3,7 @@ import { type ProgressIndicatorWithDot } from 'codecrafters-frontend/utils/cours
 
 export type StepType =
   | 'IntroductionStep'
+  | 'PreChallengeAssessmentStep'
   | 'SetupStep'
   | 'CourseStageStep'
   | 'BaseStagesCompletedStep'

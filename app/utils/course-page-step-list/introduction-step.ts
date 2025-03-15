@@ -15,13 +15,7 @@ export default class IntroductionStep extends Step {
     if (this.status === 'complete') {
       return {
         dotType: 'none',
-        text: 'Introduction complete.',
-      };
-    } else if (this.status === 'in_progress') {
-      return {
-        dotColor: 'yellow',
-        dotType: 'blinking',
-        text: 'Complete pre-challenge assessment to proceed',
+        text: 'Language selected.',
       };
     } else {
       return {
@@ -40,27 +34,11 @@ export default class IntroductionStep extends Step {
   }
 
   get status() {
-    // @ts-ignore
-    if (this.repository.isNew) {
-      return 'not_started';
-    }
-
-    // Old users don't have a pre-challenge assessment, let's still show this as completed for them.
-    // @ts-ignore
-    if (this.repository.firstSubmissionCreated) {
-      return 'complete';
-    }
-
-    // @ts-ignore
-    if (this.repository.preChallengeAssessmentSectionList.isComplete) {
-      return 'complete';
-    }
-
-    return 'in_progress';
+    return this.repository.language ? 'complete' : 'not_started';
   }
 
   get title() {
-    return 'Introduction';
+    return 'Select language';
   }
 
   get type(): 'IntroductionStep' {
