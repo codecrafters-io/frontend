@@ -22,12 +22,14 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
       headers['x-session-token'] = this.sessionTokenStorage.currentToken;
     }
 
-    if (this.cookies.read('_fbp')) {
-      headers['x-meta-browser-id'] = this.cookies.read('_fbp')!;
-    }
+    if (!this.fastboot.isFastBoot) {
+      if (this.cookies.read('_fbp')) {
+        headers['x-meta-browser-id'] = this.cookies.read('_fbp')!;
+      }
 
-    if (this.cookies.read('_fbc')) {
-      headers['x-meta-click-id'] = this.cookies.read('_fbc')!;
+      if (this.cookies.read('_fbc')) {
+        headers['x-meta-click-id'] = this.cookies.read('_fbc')!;
+      }
     }
 
     headers['x-codecrafters-client-version'] = this.versionTracker.currentVersion;
