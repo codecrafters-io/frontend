@@ -1,14 +1,16 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
-import { inject as service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
-import { posthog } from 'posthog-js';
+import type CookiesService from 'ember-cookies/services/cookies';
 import type FastbootService from 'ember-cli-fastboot/services/fastboot';
 import type SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
+import { inject as service } from '@ember/service';
+import { posthog } from 'posthog-js';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   namespace = 'api/v1';
 
+  @service declare cookies: CookiesService;
   @service declare fastboot: FastbootService;
   @service declare sessionTokenStorage: SessionTokenStorageService;
   @service declare versionTracker: VersionTrackerService;
@@ -18,6 +20,14 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
 
     if (this.sessionTokenStorage.currentToken) {
       headers['x-session-token'] = this.sessionTokenStorage.currentToken;
+    }
+
+    if (this.cookies.read('_fbp')) {
+      headers['x-meta-browser-id'] = this.cookies.read('_fbp')!;
+    }
+
+    if (this.cookies.read('_fbc')) {
+      headers['x-meta-click-id'] = this.cookies.read('_fbc')!;
     }
 
     headers['x-codecrafters-client-version'] = this.versionTracker.currentVersion;
