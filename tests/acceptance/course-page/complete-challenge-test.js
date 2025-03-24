@@ -20,6 +20,12 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
+    // Default completion message from the backend
+    // TODO: Add to fixtures ?
+    docker.update({
+      completionMessageMarkdown: "Congratulations! You've completed all stages of this course. 🎉"
+    });
+
     this.server.create('repository', 'withAllStagesCompleted', {
       course: docker,
       language: python,
