@@ -27,7 +27,7 @@ export default class ActionButtonListComponent extends Component<Signature> {
   }
 
   get shouldShowCodeExamplesButton() {
-    return !this.args.courseStage.isFirst;
+    return !this.args.courseStage.isFirst && this.args.courseStage.course.visibility === 'public';
   }
 
   get shouldShowViewScreencastsButton() {
