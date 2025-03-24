@@ -84,8 +84,6 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
-    console.log(this.completionMessageMarkdown);
-
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
   }
 
