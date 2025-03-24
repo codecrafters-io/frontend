@@ -23,7 +23,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     // Default completion message from the backend
     // TODO: Add to fixtures ?
     docker.update({
-      completionMessageMarkdown: "Congratulations! You've completed all stages of this course. 🎉"
+      completionMessageMarkdown: "Congratulations! You've completed all stages of this course. 🎉",
     });
 
     this.server.create('repository', 'withAllStagesCompleted', {
