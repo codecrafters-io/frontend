@@ -100,6 +100,7 @@ export default class CodeExamplesController extends Controller {
     // Check if course is private before loading solutions
     if (this.courseStage.course.visibility === 'private') {
       this.router.transitionTo('not-found');
+
       return;
     }
 
