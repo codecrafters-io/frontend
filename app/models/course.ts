@@ -44,6 +44,7 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
+  @attr('string') declare completionMessageMarkdown: string;
 
   @attr() declare testimonials: {
     author_name: string;
@@ -83,6 +84,7 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
+    console.log(this.completionMessageMarkdown)
     return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
   }
 
