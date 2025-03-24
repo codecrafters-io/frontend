@@ -338,4 +338,37 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
     assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Docker'), 'docker should not be included');
   });
+
+  test('it should not show private courses in catalog', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ visibility: 'private' });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should not be included');
+  });
+
+  test('it should show private courses in catalog if user has repository', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ visibility: 'private' });
+
+    this.server.create('repository', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+
+    assert.ok(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should be included');
+  });
 });
