@@ -279,9 +279,6 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
     assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
-    assert.notOk(
-      userPage.courseProgressListItems.mapBy('name').includes('Build your own Redis'),
-      'private course should not be included'
-    );
+    assert.notOk(userPage.courseProgressListItems.mapBy('name').includes('Build your own Redis'), 'private course should not be included');
   });
 });
