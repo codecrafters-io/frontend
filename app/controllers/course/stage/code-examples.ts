@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import type Store from '@ember-data/store';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import type RouterService from '@ember/routing/router-service';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
@@ -16,6 +17,7 @@ export default class CodeExamplesController extends Controller {
   };
 
   @service declare store: Store;
+  @service declare router: RouterService;
 
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
@@ -92,6 +94,12 @@ export default class CodeExamplesController extends Controller {
   @action
   async loadSolutions() {
     if (!this.currentLanguage) {
+      return;
+    }
+
+    // Check if course is private before loading solutions
+    if (this.courseStage.course.visibility === 'private') {
+      this.router.transitionTo('not-found');
       return;
     }
 
