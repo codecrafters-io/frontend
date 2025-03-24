@@ -14,6 +14,11 @@
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
-    <CoursePage::ConfigureGithubIntegrationModal @repository={{@repository}} @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}} />
+    {{! @glint-expect-error: not ts-ified yet }}
+    <CoursePage::ConfigureGithubIntegrationModal
+      @repository={{@repository}}
+      {{! @glint-expect-error: mut not ts-ified yet }}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
+    />
   </ModalBackdrop>
 {{/if}}
