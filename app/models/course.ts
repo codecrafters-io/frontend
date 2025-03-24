@@ -44,6 +44,7 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
+  @attr('string') declare visibility: 'public' | 'private';
 
   @attr() declare testimonials: {
     author_name: string;
