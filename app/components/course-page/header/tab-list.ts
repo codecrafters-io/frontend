@@ -103,54 +103,56 @@ export default class TabListComponent extends Component<Signature> {
       isActive: this.router.currentRouteName === 'course.stage.instructions',
     });
 
-    tabs.push({
-      icon: 'code',
-      name: 'Code Examples',
-      slug: 'code_examples',
-      internalLink: {
-        route: 'course.stage.code-examples',
-        models: this.args.currentStep.routeParams.models,
-      },
-      isActive: this.router.currentRouteName === 'course.stage.code-examples',
-    });
-
-    // @ts-ignore
-    if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
+    if (this.args.course.visibility === 'public') {
       tabs.push({
-        icon: 'play',
-        name: 'Screencasts',
-        slug: 'screencasts',
+        icon: 'code',
+        name: 'Code Examples',
+        slug: 'code_examples',
         internalLink: {
-          route: 'course.stage.screencasts',
+          route: 'course.stage.code-examples',
           models: this.args.currentStep.routeParams.models,
         },
-        isActive: this.router.currentRouteName === 'course.stage.screencasts',
+        isActive: this.router.currentRouteName === 'course.stage.code-examples',
       });
-    }
 
-    // @ts-ignore
-    if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.course.hasConcepts) {
+      // @ts-ignore
+      if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
+        tabs.push({
+          icon: 'play',
+          name: 'Screencasts',
+          slug: 'screencasts',
+          internalLink: {
+            route: 'course.stage.screencasts',
+            models: this.args.currentStep.routeParams.models,
+          },
+          isActive: this.router.currentRouteName === 'course.stage.screencasts',
+        });
+      }
+
+      // @ts-ignore
+      if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.course.hasConcepts) {
+        tabs.push({
+          icon: 'academic-cap',
+          name: 'Concepts',
+          slug: 'concepts',
+          internalLink: {
+            route: 'course.stage.concepts',
+            models: this.args.currentStep.routeParams.models,
+          },
+          isActive: this.router.currentRouteName === 'course.stage.concepts',
+        });
+      }
+
       tabs.push({
-        icon: 'academic-cap',
-        name: 'Concepts',
-        slug: 'concepts',
-        internalLink: {
-          route: 'course.stage.concepts',
-          models: this.args.currentStep.routeParams.models,
+        icon: 'chat-alt-2',
+        name: 'Forum',
+        slug: 'forum',
+        externalLink: {
+          url: this.args.course.forumUrl,
         },
-        isActive: this.router.currentRouteName === 'course.stage.concepts',
+        isActive: false,
       });
     }
-
-    tabs.push({
-      icon: 'chat-alt-2',
-      name: 'Forum',
-      slug: 'forum',
-      externalLink: {
-        url: this.args.course.forumUrl,
-      },
-      isActive: false,
-    });
 
     return tabs;
   }
