@@ -14,7 +14,7 @@ export default class TrackController extends Controller {
       return this.model.courses;
     }
 
-    return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').rejectBy('visibility', 'private');
+    return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').rejectBy('visibilityIsPrivate');
   }
 
   get sortedCourses(): CourseModel[] {

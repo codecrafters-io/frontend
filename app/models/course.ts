@@ -81,6 +81,9 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
   @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
 
+  @equal('visibility', 'public') declare visibilityIsPublic: boolean;
+  @equal('visibility', 'private') declare visibilityIsPrivate: boolean;
+
   @service declare date: DateService;
 
   get baseStages() {
