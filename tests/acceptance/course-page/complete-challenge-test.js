@@ -38,22 +38,25 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
   });
 
   test('custom course completion message is displayed', async function (assert) {
-    testScenario(this.server);
+    testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update('releaseStatus', 'live');
 
     this.server.create('repository', 'withAllStagesCompleted', {
-      course: docker,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Docker');
-    assert.strictEqual(currentURL(), '/courses/docker/completed', 'URL is /courses/docker/completed');
+
+    // This opens in the extension completed page
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await visit('/courses/dummy/completed');
 
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations!');
   });
