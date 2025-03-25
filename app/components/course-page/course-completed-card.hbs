@@ -35,6 +35,7 @@
           <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>. We respond to every single email.
         </p>
       {{else}}
+        {{! @glint-expect-error the else condition is guarded by a null check }}
         {{markdown-to-html @repository.course.completionMessageMarkdown}}
       {{/if}}
     </div>
