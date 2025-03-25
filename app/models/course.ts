@@ -16,6 +16,7 @@ import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittor
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
+import gleamChessBotLogo from '/assets/images/challenge-logos/challenge-logo-gleam-chess-bot.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
 import interpreterLogo from '/assets/images/challenge-logos/challenge-logo-interpreter.svg';
@@ -125,6 +126,7 @@ export default class CourseModel extends Model {
         'dns-server': dnsServerLogo,
         docker: dockerLogo,
         git: gitLogo,
+        'gleam-chess-bot': gleamChessBotLogo,
         grep: grepLogo,
         'http-server': httpServerLogo,
         interpreter: interpreterLogo,
@@ -146,7 +148,19 @@ export default class CourseModel extends Model {
   }
 
   get sortPositionForTrack() {
-    const orderedSlugs = ['shell', 'grep', 'interpreter', 'http-server', 'redis', 'bittorrent', 'kafka', 'git', 'sqlite', 'dns-server'];
+    const orderedSlugs = [
+      'shell',
+      'grep',
+      'interpreter',
+      'http-server',
+      'redis',
+      'bittorrent',
+      'kafka',
+      'git',
+      'sqlite',
+      'dns-server',
+      'gleam-chess-bot',
+    ];
     const index = orderedSlugs.indexOf(this.slug);
 
     return index === -1 ? 100 : index;
