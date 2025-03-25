@@ -6,6 +6,7 @@ export default {
   "description_md": "Add a description for your course here.",
   "short_description_md": "Add a short description for your course here.",
   "completion_percentage": 15,
+  "completion_message_markdown": "Congratulations! You've completed all stages of this course. 🎉\nWe recommend you to take a break and celebrate your achievement!",
   "languages": [
     {
       "slug": "go"
@@ -52,7 +53,7 @@ export default {
   ],
   "stages": [
     {
-      "slug": "yz1",
+      "slug": "ah7",
       "name": "The first stage",
       "difficulty": "very_easy",
       "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.\n\nHere's a sample table:\n\n| Column 1 Header | Column 2 Header | Column 3 Header |\n| --------------- | --------------- | --------------- |\n| Row 1, Col 1    | Row 1, Col 2    | Row 1, Col 3    |\n| Row 2, Col 1    | Row 2, Col 2    | Row 2, Col 3    |\n| Row 3, Col 1    | Row 3, Col 2    | Row 3, Col 3    |\n\nAnd a new edit that must be synced automatically",
