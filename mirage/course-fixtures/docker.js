@@ -6,6 +6,7 @@ export default {
   "description_md": "Docker is a tool used to build & run applications in containers. In this challenge, you'll build\nyour own Docker implementation that can pull an image from Docker Hub and execute commands in it.\n\nAlong the way, you'll learn about chroot, kernel namespaces, the Docker registry API and much more.",
   "short_description_md": "Learn about kernel namespaces, chroot, the registry API and more",
   "completion_percentage": 30,
+  "completion_message_markdown": "Congratulations!",
   "languages": [
     {
       "slug": "c"

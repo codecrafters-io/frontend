@@ -18,9 +18,33 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const grep = this.server.schema.courses.findBy({ slug: 'grep' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: grep,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Grep');
+    assert.strictEqual(currentURL(), '/courses/grep/completed', 'URL is /courses/redis/completed');
+    assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations are in order. Only ~30% of users');
+
+    await percySnapshot('Course Completed Page');
+
+    await coursePage.courseCompletedCard.clickOnPublishToGithubLink();
+    assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github integration modal is open');
+  });
+
+  test('custom course completion message is displayed', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
     const docker = this.server.schema.courses.findBy({ slug: 'docker' });
 
-    // Default completion message from the backend is null
     this.server.create('repository', 'withAllStagesCompleted', {
       course: docker,
       language: python,
@@ -31,12 +55,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     assert.strictEqual(currentURL(), '/courses/docker/completed', 'URL is /courses/docker/completed');
 
-    assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations are in order. Only ~30% of users');
-
-    await percySnapshot('Course Completed Page');
-
-    await coursePage.courseCompletedCard.clickOnPublishToGithubLink();
-    assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github integration modal is open');
+    assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations!');
   });
 
   test('visiting /completed route without completing course redirects to correct stage', async function (assert) {
