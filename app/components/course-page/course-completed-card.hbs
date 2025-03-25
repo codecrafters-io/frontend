@@ -7,38 +7,49 @@
   </:header>
   <:content>
     <div class="prose dark:prose-invert" data-test-instructions-text>
-      <p>
-        Congratulations are in order. Only ~{{@repository.course.roundedCompletionPercentage}}% of users that attempt this challenge end up completing
-        all stages, and you're one of them!
-      </p>
-      <p>
-        Here's what you can do next:
-      </p>
-      <ul>
-        <li>
-          <strong>Polish your code. </strong>Perhaps you took a shortcut when approaching the challenge the first time. Now is a great time to clean
-          up your code. You can simply push new commits to the existing repo, and we'll run tests just like before.
-        </li>
-        <li>
-          <strong>Publish to GitHub. </strong>Share your work with the world. With one click, you can publish your CodeCrafters project to GitHub.
-          <span role="button" class="underline" {{on "click" (fn (mut this.configureGithubIntegrationModalIsOpen) true)}}><strong>Click here</strong></span>
-          to get started.
-        </li>
-        <li>
-          <strong>Try a different approach. </strong>You can re-approach the same challenge with a new programming language, a new constraint, or a
-          new style. To launch the challenge again, use the dropdown on the top left.
-        </li>
-      </ul>
-      <p>
-        If you've got any feedback or feature requests, feel free to let us know at
-        <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>. We respond to every single email.
-      </p>
+      {{! If there's no completion_message set, the backend returns null }}
+      {{#if (eq @repository.course.completionMessageMarkdown null)}}
+        <p>
+          Congratulations are in order. Only ~{{@repository.course.roundedCompletionPercentage}}% of users that attempt this challenge end up
+          completing all stages, and you're one of them!
+        </p>
+        <p>
+          Here's what you can do next:
+        </p>
+        <ul>
+          <li>
+            <strong>Polish your code. </strong>Perhaps you took a shortcut when approaching the challenge the first time. Now is a great time to clean
+            up your code. You can simply push new commits to the existing repo, and we'll run tests just like before.
+          </li>
+          <li>
+            <strong>Publish to GitHub. </strong>Share your work with the world. With one click, you can publish your CodeCrafters project to GitHub.
+            <span role="button" class="underline" {{on "click" (fn (mut this.configureGithubIntegrationModalIsOpen) true)}}><strong>Click here</strong></span>
+            to get started.
+          </li>
+          <li>
+            <strong>Try a different approach. </strong>You can re-approach the same challenge with a new programming language, a new constraint, or a
+            new style. To launch the challenge again, use the dropdown on the top left.
+          </li>
+        </ul>
+        <p>
+          If you've got any feedback or feature requests, feel free to let us know at
+          <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>. We respond to every single email.
+        </p>
+      {{else}}
+        {{! @glint-expect-error the else condition is guarded by a null check }}
+        {{markdown-to-html @repository.course.completionMessageMarkdown}}
+      {{/if}}
     </div>
   </:content>
 </CoursePage::InstructionsCard>
 
 {{#if this.configureGithubIntegrationModalIsOpen}}
   <ModalBackdrop>
-    <CoursePage::ConfigureGithubIntegrationModal @repository={{@repository}} @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}} />
+    {{! @glint-expect-error: not ts-ified yet }}
+    <CoursePage::ConfigureGithubIntegrationModal
+      @repository={{@repository}}
+      {{! @glint-expect-error: mut not ts-ified yet }}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
+    />
   </ModalBackdrop>
 {{/if}}
