@@ -29,6 +29,7 @@ type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
 export default class CourseModel extends Model {
   @attr('date') declare buildpacksLastSyncedAt: Date;
+  @attr('string') declare completionMessageMarkdown: string | null;
   @attr('number') declare completionPercentage: number;
   @attr() declare conceptSlugs: string[];
   @attr('string') declare definitionRepositoryFullName: string;
@@ -44,7 +45,6 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
-  @attr('string') declare completionMessageMarkdown: string | null;
 
   @attr() declare testimonials: {
     author_name: string;

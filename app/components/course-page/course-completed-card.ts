@@ -15,12 +15,6 @@ export default class CourseCompletedCardComponent extends Component<Signature> {
   congratulationsImage = congratulationsImage;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
-
-  get shouldRenderDefaultCompletionMessage() {
-    // If there is no custom completion message set, the backend will return
-    // null, based on that we can render the default message
-    return this.args.repository.course.completionMessageMarkdown === null;
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

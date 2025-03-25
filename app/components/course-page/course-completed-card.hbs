@@ -7,7 +7,8 @@
   </:header>
   <:content>
     <div class="prose dark:prose-invert" data-test-instructions-text>
-      {{#if this.shouldRenderDefaultCompletionMessage}}
+      {{!-- If there's no completion_message set, the backend returns null --}}
+      {{#if (eq @repository.course.completionMessageMarkdown null)}}
         <p>
           Congratulations are in order. Only ~{{@repository.course.roundedCompletionPercentage}}% of users that attempt this challenge end up
           completing all stages, and you're one of them!
@@ -35,7 +36,6 @@
           <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>. We respond to every single email.
         </p>
       {{else}}
-        {{! @glint-expect-error the else condition is guarded by a null check }}
         {{markdown-to-html @repository.course.completionMessageMarkdown}}
       {{/if}}
     </div>
