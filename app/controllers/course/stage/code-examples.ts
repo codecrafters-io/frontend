@@ -97,8 +97,8 @@ export default class CodeExamplesController extends Controller {
       return;
     }
 
-    // Check if course is private before loading solutions
-    if (this.courseStage.course.visibility === 'private') {
+    // TODO: Remove: Temporary measure for private course
+    if (this.courseStage.course.slug === 'gleam-chess-bot') {
       this.router.transitionTo('not-found');
 
       return;

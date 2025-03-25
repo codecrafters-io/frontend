@@ -103,7 +103,8 @@ export default class TabListComponent extends Component<Signature> {
       isActive: this.router.currentRouteName === 'course.stage.instructions',
     });
 
-    if (this.args.course.visibility === 'public') {
+    // TODO: Remove. Temporary measure for private course
+    if (this.args.course.slug !== 'gleam-chess-bot') {
       tabs.push({
         icon: 'code',
         name: 'Code Examples',
@@ -114,7 +115,9 @@ export default class TabListComponent extends Component<Signature> {
         },
         isActive: this.router.currentRouteName === 'course.stage.code-examples',
       });
+    }
 
+    if (this.args.course.visibility === 'public') {
       // @ts-ignore
       if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
         tabs.push({
