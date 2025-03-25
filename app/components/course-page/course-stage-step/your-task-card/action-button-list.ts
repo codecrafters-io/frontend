@@ -27,7 +27,8 @@ export default class ActionButtonListComponent extends Component<Signature> {
   }
 
   get shouldShowCodeExamplesButton() {
-    return !this.args.courseStage.isFirst && this.args.courseStage.course.visibility === 'public';
+    // TODO: Remove. Temporary measure for private course
+    return !this.args.courseStage.isFirst && this.args.courseStage.slug !== 'gleam-chess-bot';
   }
 
   get shouldShowViewScreencastsButton() {
