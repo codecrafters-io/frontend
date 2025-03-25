@@ -27,11 +27,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     });
 
     await catalogPage.visit();
-    await this.pauseTest();
     await catalogPage.clickOnCourse('Build your own grep');
-    await this.pauseTest();
     assert.strictEqual(currentURL(), '/courses/grep/completed', 'URL is /courses/redis/completed');
-    await this.pauseTest();
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations are in order. Only ~30% of users');
 
     await percySnapshot('Course Completed Page');
