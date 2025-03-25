@@ -33,9 +33,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await percySnapshot('Course Completed Page');
 
-    await this.pauseTest();
     await coursePage.courseCompletedCard.clickOnPublishToGithubLink();
-    await this.pauseTest();
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github integration modal is open');
   });
 
