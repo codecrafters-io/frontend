@@ -44,6 +44,7 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
+  @attr('string') declare visibility: 'public' | 'private';
 
   @attr() declare testimonials: {
     author_name: string;
@@ -79,6 +80,9 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
   @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
+
+  @equal('visibility', 'public') declare visibilityIsPublic: boolean;
+  @equal('visibility', 'private') declare visibilityIsPrivate: boolean;
 
   @service declare date: DateService;
 

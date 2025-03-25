@@ -31,6 +31,7 @@ export default class CourseExtensionIdeasController extends Controller {
       .uniq()
       .rejectBy('releaseStatusIsDeprecated')
       .rejectBy('releaseStatusIsAlpha')
+      .rejectBy('visibilityIsPrivate')
       .sortBy('sortPositionForTrack');
   }
 
