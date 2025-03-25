@@ -17,9 +17,9 @@ export default class CourseCompletedCardComponent extends Component<Signature> {
   @tracked configureGithubIntegrationModalIsOpen = false;
 
   get shouldRenderDefaultCompletionMessage() {
-    // The default message has frontend features that are not supported in markdown
-    // Specifically, the github link to publish repo
-    return this.args.repository.course.completionMessageMarkdown === "Congratulations! You've completed all stages of this course. 🎉";
+    // If there is no custom completion message set, the backend will return
+    // null, based on that we can render the default message
+    return this.args.repository.course.completionMessageMarkdown === null;
   }
 }
 
