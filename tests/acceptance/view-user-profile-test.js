@@ -250,4 +250,35 @@ module('Acceptance | view-user-profile', function (hooks) {
     assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
     assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
   });
+
+  test('it does not show private courses in user profile', async function (assert) {
+    testScenario(this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    redis.update({ visibility: 'private' });
+
+    this.server.create('course-participation', {
+      course: grep,
+      language: go,
+      user: currentUser,
+      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      lastSubmissionAt: new Date('2020-10-10'),
+    });
+
+    this.server.create('course-participation', {
+      course: redis,
+      language: go,
+      user: currentUser,
+      completedAt: new Date('2020-01-01'),
+    });
+
+    await userPage.visit({ username: 'rohitpaulk' });
+
+    assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
+    assert.notOk(userPage.courseProgressListItems.mapBy('name').includes('Build your own Redis'), 'private course should not be included');
+  });
 });

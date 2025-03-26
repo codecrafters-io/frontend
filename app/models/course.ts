@@ -16,6 +16,7 @@ import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittor
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
+import gleamChessBotLogo from '/assets/images/challenge-logos/challenge-logo-gleam-chess-bot.svg';
 import grepLogo from '/assets/images/challenge-logos/challenge-logo-grep.svg';
 import httpServerLogo from '/assets/images/challenge-logos/challenge-logo-http-server.svg';
 import interpreterLogo from '/assets/images/challenge-logos/challenge-logo-interpreter.svg';
@@ -29,6 +30,7 @@ type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
 export default class CourseModel extends Model {
   @attr('date') declare buildpacksLastSyncedAt: Date;
+  @attr('string') declare completionMessageMarkdown: string | null;
   @attr('number') declare completionPercentage: number;
   @attr() declare conceptSlugs: string[];
   @attr('string') declare definitionRepositoryFullName: string;
@@ -44,6 +46,7 @@ export default class CourseModel extends Model {
   @attr('string') declare shortName: string;
   @attr('string') declare slug: string;
   @attr('string') declare testerRepositoryFullName: string;
+  @attr('string') declare visibility: 'public' | 'private';
 
   @attr() declare testimonials: {
     author_name: string;
@@ -79,6 +82,9 @@ export default class CourseModel extends Model {
   @equal('releaseStatus', 'beta') declare releaseStatusIsBeta: boolean;
   @equal('releaseStatus', 'live') declare releaseStatusIsLive: boolean;
   @equal('releaseStatus', 'deprecated') declare releaseStatusIsDeprecated: boolean;
+
+  @equal('visibility', 'public') declare visibilityIsPublic: boolean;
+  @equal('visibility', 'private') declare visibilityIsPrivate: boolean;
 
   @service declare date: DateService;
 
@@ -125,6 +131,7 @@ export default class CourseModel extends Model {
         'dns-server': dnsServerLogo,
         docker: dockerLogo,
         git: gitLogo,
+        'gleam-chess-bot': gleamChessBotLogo,
         grep: grepLogo,
         'http-server': httpServerLogo,
         interpreter: interpreterLogo,
@@ -146,7 +153,19 @@ export default class CourseModel extends Model {
   }
 
   get sortPositionForTrack() {
-    const orderedSlugs = ['shell', 'grep', 'interpreter', 'http-server', 'redis', 'bittorrent', 'kafka', 'git', 'sqlite', 'dns-server'];
+    const orderedSlugs = [
+      'shell',
+      'grep',
+      'interpreter',
+      'http-server',
+      'redis',
+      'bittorrent',
+      'kafka',
+      'git',
+      'sqlite',
+      'dns-server',
+      'gleam-chess-bot',
+    ];
     const index = orderedSlugs.indexOf(this.slug);
 
     return index === -1 ? 100 : index;

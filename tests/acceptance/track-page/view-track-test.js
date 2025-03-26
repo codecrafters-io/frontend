@@ -140,6 +140,34 @@ module('Acceptance | track-page | view-track', function (hooks) {
     assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Docker'));
   });
 
+  test('it does not show a challenge if it is private', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ visibility: 'private' });
+
+    await visit('/tracks/python');
+    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Redis'), 'private course should not be included');
+  });
+
+  test('it does not show a challenge if it is private and user has repository', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    redis.update({ visibility: 'private' });
+
+    this.server.create('repository', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    await visit('/tracks/python');
+    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Redis'), 'private course should not be included');
+  });
+
   test('visiting from catalog page has no loading page', async function (assert) {
     let loadingIndicatorWasRendered = false;
 

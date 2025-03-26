@@ -83,7 +83,7 @@
       </div>
     {{/if}}
 
-    {{#if this.shouldShowStage1ForumLinkCTA}}
+    {{#if (and this.shouldShowStage1ForumLinkCTA this.currentCourse.visibilityIsPublic)}}
       <div class="prose dark:prose-invert prose-sm prose-compact ml-4 mb-10">
         <p>
           Need help?

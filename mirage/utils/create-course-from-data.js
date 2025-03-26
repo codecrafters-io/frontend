@@ -73,6 +73,7 @@ function createLanguageConfigurations(server, course, courseData) {
 
 function courseAttributesFromData(courseData) {
   return {
+    completionMessageMarkdown: courseData.completion_message_markdown || null,
     completionPercentage: courseData.completion_percentage,
     descriptionMarkdown: courseData.description_md,
     difficulty: courseData.marketing.difficulty,

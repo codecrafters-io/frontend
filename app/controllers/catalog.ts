@@ -104,7 +104,7 @@ export default class CatalogController extends Controller {
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
     const userHasRepository = this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
 
-    if (course.releaseStatusIsDeprecated) {
+    if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
       return userHasRepository;
     }
 
