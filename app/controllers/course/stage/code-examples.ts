@@ -97,13 +97,6 @@ export default class CodeExamplesController extends Controller {
       return;
     }
 
-    // TODO: Remove: Temporary measure for private course
-    if (this.courseStage.course.slug === 'gleam-chess-bot') {
-      this.router.transitionTo('not-found');
-
-      return;
-    }
-
     this.isLoading = true;
 
     this.solutions = (await this.store.query('community-course-stage-solution', {
