@@ -118,7 +118,7 @@
         </ol>
       </div>
 
-      {{#if (eq this.currentCourse.visibility "public")}}
+      {{#if this.currentCourse.visibilityIsPublic}}
         <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
           <p>
             Need help?
@@ -190,7 +190,7 @@
         </ol>
       </div>
 
-      {{#if (eq this.currentCourse.visibility "public")}}
+      {{#if this.currentCourse.visibilityIsPublic}}
         <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
           <p>
             Need help?

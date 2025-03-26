@@ -117,7 +117,7 @@ export default class TabListComponent extends Component<Signature> {
       });
     }
 
-    if (this.args.course.visibility === 'public') {
+    if (this.args.course.visibilityIsPublic) {
       // @ts-ignore
       if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
         tabs.push({

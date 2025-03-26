@@ -16,8 +16,8 @@ export default class CodeExamplesController extends Controller {
     activeRepository: RepositoryModel;
   };
 
-  @service declare store: Store;
   @service declare router: RouterService;
+  @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
   @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
