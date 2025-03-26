@@ -8,6 +8,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import type Store from '@ember-data/store';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import type RouterService from '@ember/routing/router-service';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
@@ -15,6 +16,7 @@ export default class CodeExamplesController extends Controller {
     activeRepository: RepositoryModel;
   };
 
+  @service declare router: RouterService;
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
