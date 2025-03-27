@@ -28,11 +28,9 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own SQLite');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own Docker');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Redis').hasBetaLabel, 'live challenges should not have beta label');
-    assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
   });
@@ -88,7 +86,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 3, 'expected 3 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
@@ -97,7 +95,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressBar);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/44 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/55 stages');
     assert.strictEqual(catalogPage.courseCards[0].progressBarStyle, 'width:2%');
   });
 
@@ -119,7 +117,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.true(catalogPage.courseCards[0].hasProgressBar);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/44 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/55 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -209,11 +207,9 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[2].name, 'Build your own Git');
     assert.strictEqual(catalogPage.courseCards[3].name, 'Build your own SQLite');
-    assert.strictEqual(catalogPage.courseCards[4].name, 'Build your own Docker');
 
     assert.ok(catalogPage.courseCardByName('Build your own grep').hasBetaLabel, 'beta challenges should have beta label');
     assert.ok(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should have free label');
-    assert.notOk(catalogPage.courseCardByName('Build your own Docker').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
   });
@@ -348,7 +344,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 3, 'expected 3 course cards to be present');
     assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should not be included');
   });
 
