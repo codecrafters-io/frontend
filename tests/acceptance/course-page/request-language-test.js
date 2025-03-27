@@ -66,9 +66,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await this.pauseTest();
     await catalogPage.clickOnCourse('Build your own grep');
-    await this.pauseTest();
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
