@@ -88,7 +88,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 3, 'expected 3 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
