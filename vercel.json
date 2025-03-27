@@ -2,6 +2,7 @@
   "buildCommand": "scripts/build-vercel-output.sh",
   "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
+    { "source": "/(.*)", "destination": "https://codecrafters.io/heroku_pages/maintenance.html", "permanent": false },
     { "source": "/package.json", "destination": "/404" },
     { "source": "/prerender/:path*", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
