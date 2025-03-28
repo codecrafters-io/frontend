@@ -1,20 +1,13 @@
-import { clickOnText, collection, clickable, fillable, isVisible } from 'ember-cli-page-object';
+import { clickOnText, collection } from 'ember-cli-page-object';
 import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/billing-status-badge';
+import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 
 export default {
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
 
   discountTimerBadge: BillingStatusBadge.discountTimerBadge,
 
-  feedbackDropdown: {
-    clickOnSendButton: clickable('[data-test-send-button]'),
-    fillInExplanation: fillable('textarea'),
-    isOpen: isVisible('[data-test-feedback-dropdown-content]', { resetScope: true }),
-    resetScope: true,
-    sendButtonIsVisible: isVisible('[data-test-send-button]'),
-    scope: '[data-test-feedback-dropdown-content]',
-    toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
-  },
+  feedbackDropdown: FeedbackDropdown,
 
   hasLink: function (linkText) {
     return !!this.links.toArray().find((link) => link.text === linkText);
