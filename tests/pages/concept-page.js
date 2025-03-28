@@ -1,6 +1,7 @@
 import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
+import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 
 export default createPage({
   blocks: collection('[data-test-block]'),
@@ -23,6 +24,8 @@ export default createPage({
     scope: '[data-test-concept-completed-modal]',
     text: text(),
   },
+
+  feedbackDropdown: FeedbackDropdown,
 
   focusedContinueButton: {
     scope: '[data-test-continue-button]:focus',
