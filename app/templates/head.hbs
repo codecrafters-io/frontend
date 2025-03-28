@@ -21,3 +21,7 @@
 <meta name="twitter:title" content={{or @metaData.title @defaults.title}} />
 <meta name="twitter:description" content={{or @metaData.description @defaults.description}} />
 <meta name="twitter:image" content={{or @metaData.imageUrl @defaults.imageUrl}} />
+
+{{#if @metaData.shouldRenderNoIndexTag}}
+  <meta name="robots" content="noindex" />
+{{/if}}
