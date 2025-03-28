@@ -4,6 +4,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = {
@@ -12,13 +13,15 @@ export type ModelType = {
 };
 
 export default class PayRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   activate() {
     scrollToTop();
+  }
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 
   async model() {

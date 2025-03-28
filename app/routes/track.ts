@@ -16,8 +16,6 @@ export type ModelType = {
 };
 
 export default class TrackRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare metaData: MetaDataService;
   @service declare store: Store;
@@ -34,7 +32,7 @@ export default class TrackRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   deactivate(): void {

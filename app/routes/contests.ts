@@ -11,13 +11,11 @@ export type ModelType = {
 };
 
 export default class ContestsRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare router: RouterService;
   @service declare store: Store;
 
   buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 
   async model(): Promise<ModelType> {

@@ -10,14 +10,21 @@ export enum HelpscoutBeaconVisibility {
 }
 
 export default class RouteInfoMetadata {
-  colorScheme: RouteColorScheme = RouteColorScheme.Light;
+  allowsAnonymousAccess = false;
   beaconVisibility: HelpscoutBeaconVisibility = HelpscoutBeaconVisibility.Visible;
+  colorScheme: RouteColorScheme = RouteColorScheme.Light;
 
   constructor({
-    colorScheme = RouteColorScheme.Light,
+    allowsAnonymousAccess = false,
     beaconVisibility = HelpscoutBeaconVisibility.Visible,
-  }: { colorScheme?: RouteColorScheme; beaconVisibility?: HelpscoutBeaconVisibility } = {}) {
-    this.colorScheme = colorScheme;
+    colorScheme = RouteColorScheme.Light,
+  }: {
+    allowsAnonymousAccess?: boolean;
+    beaconVisibility?: HelpscoutBeaconVisibility;
+    colorScheme?: RouteColorScheme;
+  } = {}) {
+    this.allowsAnonymousAccess = allowsAnonymousAccess;
     this.beaconVisibility = beaconVisibility;
+    this.colorScheme = colorScheme;
   }
 }

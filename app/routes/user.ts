@@ -10,7 +10,6 @@ import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-front
 export type ModelType = UserModel | undefined;
 
 export default class UserRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
@@ -37,7 +36,7 @@ export default class UserRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   deactivate() {

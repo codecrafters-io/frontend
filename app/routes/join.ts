@@ -5,14 +5,13 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   affiliateLink: AffiliateLinkModel;
 };
 
 export default class JoinRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -25,6 +24,10 @@ export default class JoinRoute extends BaseRoute {
     if (!model.affiliateLink) {
       this.router.transitionTo('not-found');
     }
+  }
+
+  buildRouteInfoMetadata(): RouteInfoMetadata {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 
   async model(params: { affiliateLinkSlug: string }) {

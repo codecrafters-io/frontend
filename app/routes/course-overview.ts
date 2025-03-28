@@ -14,8 +14,6 @@ export interface ModelType {
 }
 
 export default class CourseOverviewRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare metaData: MetaDataService;
@@ -32,7 +30,7 @@ export default class CourseOverviewRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   deactivate() {

@@ -11,13 +11,11 @@ export type ModelType = {
 };
 
 export default class BadgesRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 
   async model(): Promise<ModelType> {

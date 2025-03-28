@@ -19,7 +19,6 @@ export type ConceptRouteModel = {
 };
 
 export default class ConceptRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
   @service declare authenticator: AuthenticatorService;
   @service declare metaData: MetaDataService;
   @service declare router: RouterService;
@@ -63,7 +62,7 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   deactivate() {
