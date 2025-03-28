@@ -7,6 +7,7 @@ import Header from 'codecrafters-frontend/tests/pages/components/course-page/hea
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageTutorialCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-tutorial-card';
 import LanguageDropdown from './components/language-dropdown';
+import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
@@ -16,7 +17,7 @@ import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/si
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
-import { clickOnText, clickable, collection, create, fillable, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -166,16 +167,7 @@ export default create({
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     clickOnCollapseButton: clickable('[data-test-collapse-button]'),
 
-    feedbackDropdown: {
-      clickOnSendButton: clickable('[data-test-send-button]'),
-      fillInExplanation: fillable('textarea'),
-      isOpen: isVisible('[data-test-feedback-dropdown-content]', { resetScope: true }),
-      resetScope: true,
-      sendButtonIsVisible: isVisible('[data-test-send-button]'),
-      scope: '[data-test-feedback-dropdown-content]',
-      toggle: clickable('[data-test-feedback-button]', { resetScope: true }),
-    },
-
+    feedbackDropdown: FeedbackDropdown,
     languageDropdown: LanguageDropdown,
     scope: '[data-test-language-guide-card]',
   },
