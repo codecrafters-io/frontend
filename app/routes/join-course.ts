@@ -34,7 +34,7 @@ export default class JoinCourseRoute extends BaseRoute {
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 

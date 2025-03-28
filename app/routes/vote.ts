@@ -30,7 +30,7 @@ export default class VoteRoute extends BaseRoute {
     }
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 

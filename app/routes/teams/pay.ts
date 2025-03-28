@@ -11,7 +11,7 @@ import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 export default class TeamsPayRoute extends BaseRoute {
   @service declare store: Store;
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 

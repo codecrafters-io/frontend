@@ -31,7 +31,7 @@ export default class TrackRoute extends BaseRoute {
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 

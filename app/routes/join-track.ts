@@ -35,7 +35,7 @@ export default class JoinTrackRoute extends BaseRoute {
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${model.language.slug}.jpg`;
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 

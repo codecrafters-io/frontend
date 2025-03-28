@@ -35,7 +35,7 @@ export default class CourseRoute extends BaseRoute {
     },
   };
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
 

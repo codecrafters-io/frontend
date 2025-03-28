@@ -20,7 +20,7 @@ export default class PayRoute extends BaseRoute {
     scrollToTop();
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 

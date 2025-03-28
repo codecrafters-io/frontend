@@ -18,7 +18,7 @@ export default class CatalogRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 

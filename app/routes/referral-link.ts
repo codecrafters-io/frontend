@@ -23,7 +23,7 @@ export default class ReferralLinkRoute extends BaseRoute {
     }
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 

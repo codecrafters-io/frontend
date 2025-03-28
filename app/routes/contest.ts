@@ -22,7 +22,7 @@ export default class ContestRoute extends BaseRoute {
     }
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 

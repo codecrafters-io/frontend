@@ -26,7 +26,7 @@ export default class JoinRoute extends BaseRoute {
     }
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 

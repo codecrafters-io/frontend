@@ -14,7 +14,7 @@ export default class ContestsRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 
