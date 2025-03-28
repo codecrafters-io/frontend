@@ -21,7 +21,7 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     await courseOverviewPage.clickOnStartCourse();
 
     // Stages count (44) + 2 (introduction and repository setup)
-    assert.strictEqual(coursePage.sidebar.stepListItems.length, 46, 'step list has 46 items');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 57, 'step list has 57 items');
 
     await coursePage.sidebar.clickOnStepListItem('RDB file config');
     assert.strictEqual(currentURL(), '/courses/redis/stages/zg5', 'current URL is stage page URL');

@@ -23,7 +23,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
     assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
@@ -31,7 +31,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await percySnapshot('Requested Languages Prompt');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
     assert.notOk(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
@@ -42,20 +42,20 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
-    let kotlin = this.server.schema.languages.findBy({ name: 'Kotlin' });
-    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    let nim = this.server.schema.languages.findBy({ name: 'Nim' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    this.server.create('course-language-request', { user: currentUser, language: kotlin, course: docker });
+    this.server.create('course-language-request', { user: currentUser, language: nim, course: redis });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Docker');
+    await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Kotlin');
+    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
     assert.notOk(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
@@ -66,7 +66,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Docker');
+    await catalogPage.clickOnCourse('Build your own grep');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
@@ -108,7 +108,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),
-      language: this.server.schema.languages.findBy({ name: 'Kotlin' }),
+      language: this.server.schema.languages.findBy({ name: 'Nim' }),
       course: this.server.schema.courses.findBy({ slug: 'redis' }),
     });
 
@@ -121,7 +121,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     assert.strictEqual(
       coursePage.createRepositoryCard.requestedLanguagesPrompt.willLetYouKnowText,
-      "We'll let you know once Kotlin support is available on this challenge.",
+      "We'll let you know once Nim support is available on this challenge.",
     );
   });
 });
