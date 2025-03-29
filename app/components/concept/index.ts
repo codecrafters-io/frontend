@@ -40,11 +40,6 @@ export default class ConceptComponent extends Component<Signature> {
 
     if (bgiQueryParam) {
       this.lastRevealedBlockGroupIndex = parseInt(bgiQueryParam);
-    } else {
-      const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
-      const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
-      const blockGroupIndex = this.findCurrentBlockGroupIndex(completedBlocksCount);
-      this.lastRevealedBlockGroupIndex = blockGroupIndex;
     }
   }
 
@@ -65,7 +60,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get computedProgressPercentage() {
-    if (!this.lastRevealedBlockGroupIndex) {
+    if (!this.currentBlockGroupIndex) {
       return 0; // The user hasn't interacted with any blocks yet
     }
 
@@ -77,11 +72,18 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   get currentBlockGroupIndex() {
-    return this.lastRevealedBlockGroupIndex || 0;
+    return this.lastRevealedBlockGroupIndex !== null ? this.lastRevealedBlockGroupIndex : this.lastRevealedBlockGroupIndexFromConceptEngagement;
+  }
+
+  get lastRevealedBlockGroupIndexFromConceptEngagement() {
+    const progressPercentage = this.args.latestConceptEngagement.currentProgressPercentage;
+    const completedBlocksCount = Math.round((progressPercentage / 100) * this.allBlocks.length);
+
+    return this.findCurrentBlockGroupIndex(completedBlocksCount);
   }
 
   get visibleBlockGroups() {
-    return this.allBlockGroups.slice(0, (this.lastRevealedBlockGroupIndex || 0) + 1);
+    return this.allBlockGroups.slice(0, (this.currentBlockGroupIndex || 0) + 1);
   }
 
   findCurrentBlockGroupIndex(completedBlocksCount: number) {
