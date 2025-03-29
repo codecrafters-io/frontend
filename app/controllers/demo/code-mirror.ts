@@ -6,6 +6,36 @@ import { type Extension } from '@codemirror/state';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
+import { LineData, LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+
+function generateRandomLineData(linesCount = 0) {
+  function getRandomInt(inclusiveMin: number, exclusiveMax: number) {
+    const minCeiled = Math.ceil(inclusiveMin);
+    const maxFloored = Math.floor(exclusiveMax);
+
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+  }
+
+  const lineData = Array.from({ length: linesCount }).map(function (_v, lineNumber) {
+    const rnd = Math.random();
+
+    let commentsCount;
+
+    if (rnd < 0.05) {
+      commentsCount = getRandomInt(100, 1000);
+    } else if (rnd < 0.1) {
+      commentsCount = getRandomInt(10, 100);
+    } else if (rnd < 0.8) {
+      commentsCount = 0;
+    } else {
+      commentsCount = getRandomInt(1, 10);
+    }
+
+    return new LineData({ commentsCount, lineNumber });
+  });
+
+  return new LineDataCollection(lineData);
+}
 
 const THEME_EXTENSIONS: {
   [key: string]: Extension;
@@ -54,6 +84,7 @@ const OPTION_DEFAULTS = {
   indentWithTab: true,
   language: true,
   lineNumbers: true,
+  lineComments: false,
   lineSeparator: true,
   lineWrapping: true,
   maxHeight: true,
@@ -108,6 +139,7 @@ export default class DemoCodeMirrorController extends Controller {
     'indentUnit',
     'indentWithTab',
     'language',
+    'lineComments',
     'lineNumbers',
     'lineSeparator',
     'lineWrapping',
@@ -160,6 +192,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked indentUnits = INDENT_UNITS;
   @tracked indentWithTab = OPTION_DEFAULTS.indentWithTab;
   @tracked language = OPTION_DEFAULTS.language;
+  @tracked lineComments = OPTION_DEFAULTS.lineComments;
   @tracked lineNumbers = OPTION_DEFAULTS.lineNumbers;
   @tracked lineSeparator = OPTION_DEFAULTS.lineSeparator;
   @tracked lineSeparators = LINE_SEPARATORS;
@@ -195,6 +228,10 @@ export default class DemoCodeMirrorController extends Controller {
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex] || ExampleDocument.createEmpty();
+  }
+
+  get selectedDocumentLineData() {
+    return generateRandomLineData(this.selectedDocument.document.split(/$/gm).length);
   }
 
   get selectedIndentUnit() {
