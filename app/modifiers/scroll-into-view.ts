@@ -1,3 +1,4 @@
+import { later } from '@ember/runloop';
 import Modifier from 'ember-modifier';
 
 interface Signature {
@@ -7,14 +8,17 @@ interface Signature {
     Named: {
       behavior?: ScrollBehavior;
       block?: ScrollLogicalPosition;
+      delay?: number;
     };
   };
 }
 
 export default class ScrollIntoViewModifier extends Modifier<Signature> {
   modify(element: Element, _positional: [], named: Signature['Args']['Named']) {
-    const { behavior = 'smooth', block = 'nearest' } = named;
-    element.scrollIntoView({ behavior, block });
+    const { behavior = 'smooth', block = 'nearest', delay = 0 } = named;
+    later(() => {
+      element.scrollIntoView({ behavior, block });
+    }, delay);
   }
 }
 

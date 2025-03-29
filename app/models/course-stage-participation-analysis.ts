@@ -78,7 +78,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     if (this.attemptPercentage === null) {
       return {
         title: 'Attempt Rate',
-        label: 'attempt rate',
+        label: 'attempt', // 10% attempt
         value: null,
         color: 'gray',
         explanationMarkdown: attemptRateStatisticExplanationMarkdown,
@@ -86,7 +86,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     } else {
       return {
         title: 'Attempt Rate',
-        label: 'attempt rate',
+        label: 'attempt', // 10% attempt
         value: `${Math.floor(this.attemptPercentage)}%`,
         color: this.calculateColorUsingThresholds(this.attemptPercentage, attemptRateThresholds),
         explanationMarkdown: attemptRateStatisticExplanationMarkdown,
@@ -102,7 +102,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     if (this.attemptToCompletionPercentage === null) {
       return {
         title: 'Attempt to Completion Rate',
-        label: 'completion rate',
+        label: 'complete', // 15% complete
         value: null,
         color: 'gray',
         explanationMarkdown: completionRateStatisticExplanationMarkdown,
@@ -110,7 +110,7 @@ export default class CourseStageParticipationAnalysisModel extends Model {
     } else {
       return {
         title: 'Attempt to Completion Rate',
-        label: 'completion rate',
+        label: 'complete', // 15% complete
         value: `${Math.floor(this.attemptToCompletionPercentage)}%`,
         color: this.calculateColorUsingThresholds(this.attemptToCompletionPercentage, completionRateThresholds),
         explanationMarkdown: completionRateStatisticExplanationMarkdown,

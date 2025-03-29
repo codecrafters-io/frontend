@@ -20,7 +20,7 @@ module('Acceptance | view-user-profile', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    let git = this.server.schema.courses.findBy({ slug: 'git' });
     let grep = this.server.schema.courses.findBy({ slug: 'grep' });
 
     this.server.create('course-participation', {
@@ -48,14 +48,14 @@ module('Acceptance | view-user-profile', function (hooks) {
     });
 
     this.server.create('course-participation', {
-      course: docker,
+      course: git,
       language: python,
       user: currentUser,
-      completedStageSlugs: docker.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: git.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
     });
 
     this.server.create('course-participation', {
-      course: docker,
+      course: git,
       language: go,
       user: currentUser,
       completedAt: new Date('2020-01-01'),
@@ -84,7 +84,7 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
     // Completed course will be listed first.
-    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Git');
     // Then ordering is done on latest submission, earlier comes first.
     assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep');
     assert.strictEqual(userPage.courseProgressListItems[2].name, 'Build your own Redis');

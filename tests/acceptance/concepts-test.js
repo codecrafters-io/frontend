@@ -100,11 +100,11 @@ module('Acceptance | concepts-test', function (hooks) {
       title: 'Network Primer',
     });
 
-    await conceptsPage.visitConcept({ concept_slug: 'network-protocols' });
+    await conceptPage.visit({ slug: 'network-protocols' });
 
     assert.strictEqual(currentURL(), '/concepts/network-protocols', 'Existing concept renders on correct concept URL');
 
-    await conceptsPage.visitConcept({ concept_slug: 'nonexistent-concept' });
+    await conceptPage.visit({ slug: 'nonexistent-concept' });
 
     assert.strictEqual(currentURL(), '/404', 'Non-existing concept redirects to /404');
   });
@@ -917,5 +917,31 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(conceptsPage.conceptCards.length, 4, 'Draft concepts are visible to concept author');
     assert.strictEqual(conceptsPage.conceptCards[3].title, 'New Concept', 'Draft concepts are visible to concept author');
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
+  });
+
+  test('can use Delete and Backspace keys in the feedback popup', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+
+    await conceptsPage.clickOnConceptCard('Dummy Concept');
+
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.clickOnContinueButton();
+    await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
+    await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' });
+    await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' });
+    await conceptPage.feedbackDropdown.toggle();
+    await conceptPage.feedbackDropdown.fillInExplanation('Testing feedback');
+    await conceptPage.feedbackDropdown.focusTextArea();
+    await conceptPage.feedbackDropdown.sendKeyToTextArea({ keyCode: 'Enter' });
+    await conceptPage.feedbackDropdown.sendKeyToTextArea({ keyCode: 'Backspace' });
+    await conceptPage.feedbackDropdown.sendKeyToTextArea({ keyCode: 'Backspace' });
+
+    assert.ok(conceptPage.feedbackDropdown.isVisible, 'Feedback dropdown is open');
   });
 });

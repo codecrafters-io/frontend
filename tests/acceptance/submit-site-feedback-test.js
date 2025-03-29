@@ -27,15 +27,15 @@ module('Acceptance | submit-site-feedback', function (hooks) {
     await catalogPage.visit();
 
     await feedbackDropdown.toggle();
-    assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is open');
+    assert.ok(feedbackDropdown.isVisible, 'Feedback dropdown is open');
 
     await percySnapshot('Feedback widget - before submission');
 
     await feedbackDropdown.toggle();
-    assert.notOk(feedbackDropdown.isOpen, 'Feedback dropdown is closed');
+    assert.notOk(feedbackDropdown.isVisible, 'Feedback dropdown is closed');
 
     await feedbackDropdown.toggle();
-    assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is open');
+    assert.ok(feedbackDropdown.isVisible, 'Feedback dropdown is open');
 
     await feedbackDropdown.clickOnSendButton();
     assert.ok(feedbackDropdown.sendButtonIsVisible, 'Send button is still visible');
@@ -44,7 +44,7 @@ module('Acceptance | submit-site-feedback', function (hooks) {
 
     await feedbackDropdown.clickOnSendButton();
     assert.notOk(feedbackDropdown.sendButtonIsVisible, 'Send button is not visible');
-    assert.ok(feedbackDropdown.isOpen, 'Feedback dropdown is still open (has completed message)');
+    assert.ok(feedbackDropdown.isVisible, 'Feedback dropdown is still open (has completed message)');
 
     const feedbackSubmission = server.schema.siteFeedbackSubmissions.first();
     assert.strictEqual(feedbackSubmission.source, 'header');

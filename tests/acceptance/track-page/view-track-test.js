@@ -184,6 +184,6 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
     assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
-    assert.strictEqual(trackPage.cards.length, 6, 'expected 6 track cards to be present (one per course)');
+    assert.strictEqual(trackPage.cards.length, 5, 'expected 5 track cards to be present (one per course)');
   });
 });
