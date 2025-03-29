@@ -4,11 +4,10 @@ import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-front
 import { hash as RSVPHash } from 'rsvp';
 
 export default class ConceptsRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
   @service store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   async model() {

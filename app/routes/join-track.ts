@@ -17,8 +17,6 @@ export interface ModelType {
 }
 
 export default class JoinTrackRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare metaData: MetaDataService;
   @service declare router: RouterService;
@@ -37,8 +35,8 @@ export default class JoinTrackRoute extends BaseRoute {
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${model.language.slug}.jpg`;
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   deactivate() {

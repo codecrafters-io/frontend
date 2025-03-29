@@ -16,16 +16,14 @@ export type ModelType = {
 };
 
 export default class ContestRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   afterModel(model: ModelType): void {
     if (!model || !model.contest) {
       this.router.transitionTo('not-found');
     }
   }
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Dark });
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 
   @service declare router: RouterService;

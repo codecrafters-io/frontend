@@ -15,12 +15,11 @@ export type ModelType = {
 };
 
 export default class CatalogRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   model(): Promise<ModelType> {
