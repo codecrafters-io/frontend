@@ -13,7 +13,7 @@ export default class SettingsRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
-  buildRouteInfoMetadata(): RouteInfoMetadata {
+  buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
 

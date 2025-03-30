@@ -6,10 +6,9 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ReferralLinkRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -22,6 +21,10 @@ export default class ReferralLinkRoute extends BaseRoute {
     if (!model.referralLink) {
       this.router.transitionTo('not-found');
     }
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 
   async model(params: { referral_link_slug: string }) {
