@@ -154,10 +154,10 @@ export default class CourseModel extends Model {
 
   get sortPositionForTrack() {
     const orderedSlugs = [
+      'http-server',
       'shell',
       'grep',
       'interpreter',
-      'http-server',
       'redis',
       'bittorrent',
       'kafka',
