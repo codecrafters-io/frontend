@@ -6,11 +6,11 @@ import paramsFromRouteInfo from 'codecrafters-frontend/utils/params-from-route-i
 import { posthog } from 'posthog-js';
 import window from 'ember-window-mock';
 import { inject as service } from '@ember/service';
+import RouteInfoMetadata from './route-info-metadata';
 
 type Transition = ReturnType<RouterService['transitionTo']>;
 
 export default class BaseRoute extends Route {
-  allowsAnonymousAccess = false;
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare utmCampaignIdTracker: unknown;
@@ -19,12 +19,15 @@ export default class BaseRoute extends Route {
   beforeModel(transition: Transition) {
     this.authenticator.authenticate();
 
+    const routeMeta = this.buildRouteInfoMetadata();
+    const allowsAnonymousAccess = routeMeta instanceof RouteInfoMetadata && routeMeta.allowsAnonymousAccess;
+
     // Routes attempting to call `initiateLogin` don't support FastBoot at this time
-    if (!this.allowsAnonymousAccess && this.fastboot.isFastBoot) {
+    if (!allowsAnonymousAccess && this.fastboot.isFastBoot) {
       throw new Error('FastBoot is not supported on routes without "allowsAnonymousAccess=true"');
     }
 
-    if (!this.allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
+    if (!allowsAnonymousAccess && !this.authenticator.isAuthenticated) {
       const params = transition.to ? paramsFromRouteInfo(transition.to) : [];
 
       if (params.length > 0) {

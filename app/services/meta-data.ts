@@ -1,7 +1,18 @@
-import Service from '@ember/service';
+import type RouterService from '@ember/routing/router-service';
+import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class HeadDataService extends Service {
+  @service declare router: RouterService;
+
+  get shouldRenderNoIndexTag() {
+    const routeMeta = this.router.currentRoute.metadata;
+    const allowsAnonymousAccess = routeMeta instanceof RouteInfoMetadata && routeMeta.allowsAnonymousAccess;
+
+    return !allowsAnonymousAccess;
+  }
+
   @tracked title?: string;
   @tracked description?: string;
   @tracked imageUrl?: string;

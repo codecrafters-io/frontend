@@ -6,10 +6,9 @@ import HeadDataService from 'codecrafters-frontend/services/meta-data';
 import Store from '@ember-data/store';
 import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ConceptGroupRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare metaData: HeadDataService;
   @service declare store: Store;
@@ -20,6 +19,10 @@ export default class ConceptGroupRoute extends BaseRoute {
   afterModel(model: { conceptGroup: ConceptGroupModel }) {
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}collection-${model.conceptGroup.slug}.png`;
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 
   deactivate() {

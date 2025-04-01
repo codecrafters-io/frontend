@@ -33,7 +33,13 @@
     {{/each}}
   {{else}}
     <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded mb-4">
-      This submission doesn't have any changed files.
+      {{#if @submission.hasChanges}}
+        This submission has changed files, but none of them were
+        {{@submission.repository.language.name}}
+        files.
+      {{else}}
+        This submission doesn't have any changed files.
+      {{/if}}
     </div>
   {{/if}}
 </div>
