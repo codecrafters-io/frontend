@@ -24,6 +24,6 @@ export default class Stage2CompletionDiscountNoticeComponent extends Component<S
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::ExperimentalStage2CompletionDiscountNotice': typeof Stage2CompletionDiscountNoticeComponent;
+    'PayPage::Stage2CompletionDiscountNotice': typeof Stage2CompletionDiscountNoticeComponent;
   }
 }

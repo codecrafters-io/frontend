@@ -48,7 +48,7 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
     }
 
     // Stage 2 completion discounts gets higher priority
-    if (this.activeDiscountForYearlyPlan?.isFromStage2Completion && this.featureFlags.canSeeStage2CompletionDiscount) {
+    if (this.activeDiscountForYearlyPlan?.isFromStage2Completion) {
       return 'discount-timer';
     }
 
