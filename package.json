@@ -64,7 +64,7 @@
     "@sentry/webpack-plugin": "^2.22.7",
     "@shikijs/rehype": "^2.1.0",
     "@shikijs/transformers": "^2.1.0",
-    "@tsconfig/ember": "^3.0.9",
+    "@tsconfig/ember": "^3.0.10",
     "@types/canvas-confetti": "^1.9.0",
     "@types/dompurify": "^3.2.0",
     "@types/ember": "^4.0.11",
