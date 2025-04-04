@@ -100,7 +100,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
-    assert.ok(coursePage.completedStepNotice.isVisible, 'Completed step notice is visible');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 
   test('cannot complete second stage if tests passed via CLI', async function (assert) {
@@ -152,7 +152,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
-    assert.ok(coursePage.completedStepNotice.isVisible, 'Completed step notice is visible');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 
   test('passing stage 2 should show valid clickable stage 2 completion discount', async function (assert) {
