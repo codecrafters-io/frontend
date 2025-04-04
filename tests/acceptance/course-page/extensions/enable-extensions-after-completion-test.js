@@ -68,7 +68,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is enabled');
 
-    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     await percySnapshot('Extension - First Stage Page');
 
     // Enable Extension 2
