@@ -43,7 +43,7 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
-    assert.ok(coursePage.completedStepNotice.isVisible, 'Completed step notice is visible');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 
   test('cannot complete second stage if tests passed via CLI', async function (assert) {
@@ -95,6 +95,6 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
-    assert.ok(coursePage.completedStepNotice.isVisible, 'Completed step notice is visible');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 });
