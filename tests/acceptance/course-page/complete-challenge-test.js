@@ -79,7 +79,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/docker/stages/kf3', 'URL is /stages/kf3');
   });
 
-  test('next step button in completed step notice redirects to next step if the next step is base stages completed', async function (assert) {
+  test('next step button in completed step modal/notice redirects to next step if the next step is base stages completed', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -97,13 +97,19 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await coursePage.sidebar.clickOnStepListItem('Expiry');
 
-    assert.true(
-      coursePage.completedStepNotice.nextOrActiveStepButton.text.includes('View next step'),
-      'copy for next or active step button is correct',
-    );
+    // Try using current step complete modal first
+    assert.contains(coursePage.currentStepCompleteModal.nextOrActiveStepButton.text, 'View next step');
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
+
+    assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
+
+    // Try the same using the completed step notice
+    await coursePage.sidebar.clickOnStepListItem('Expiry');
+    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+
+    assert.contains(coursePage.completedStepNotice.nextOrActiveStepButton.text, 'View next step', 'copy for next or active step button is correct');
 
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
-
     assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
 });

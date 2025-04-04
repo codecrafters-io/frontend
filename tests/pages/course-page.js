@@ -109,6 +109,18 @@ export default create({
 
   createRepositoryCard: CreateRepositoryCard,
 
+  currentStepCompleteModal: {
+    clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
+    clickOnViewInstructionsButton: clickable('[data-test-view-instructions-button]'),
+    completionMessage: text('[data-test-completion-message]'),
+
+    nextOrActiveStepButton: {
+      scope: '[data-test-next-or-active-step-button]',
+    },
+
+    scope: '[data-test-current-step-complete-modal]',
+  },
+
   deleteRepositoryModal: {
     get isOpen() {
       return this.isVisible;
