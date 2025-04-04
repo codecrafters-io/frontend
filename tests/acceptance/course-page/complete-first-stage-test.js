@@ -6,6 +6,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | complete-first-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -74,8 +75,10 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is collapsed');
 
     await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'header shows current step');
 
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'header says stage completed');
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'header shows next step');
   });
 
   test('retains state when navigating to other course page areas', async function (assert) {
