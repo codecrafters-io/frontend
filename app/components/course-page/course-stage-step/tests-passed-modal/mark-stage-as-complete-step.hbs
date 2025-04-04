@@ -1,0 +1,35 @@
+<div class="flex flex-col items-center w-full relative">
+  <div class="absolute top-0 left-0">
+    <button {{on "click" @onBackButtonClick}}>
+      {{svg-jar "arrow-left" class="w-6 h-6 text-gray-300"}}
+    </button>
+  </div>
+  {{svg-jar "check" class="w-20 h-20 mb-2 text-teal-500"}}
+
+  <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100">
+    Mark stage as complete
+  </div>
+
+  <div class="prose dark:prose-invert mb-3 text-center text-balance">
+    <p>
+      Run the
+
+      {{#if (gt this.selectedCommandVariant.commands.length 1)}}
+        following commands
+      {{else}}
+        following command
+      {{/if}}
+
+      to submit your code.
+    </p>
+  </div>
+
+  <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
+
+  <div class="prose dark:prose-invert mt-3 text-center text-balance">
+    <p>
+      We recommend using the
+      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters CLI</a>, but you can use Git too.
+    </p>
+  </div>
+</div>

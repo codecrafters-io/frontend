@@ -1,0 +1,38 @@
+{{svg-jar "check-circle" class="w-20 h-20 text-teal-500 mb-2"}}
+
+<div class="mb-2 font-bold text-2xl text-gray-700 dark:text-gray-100">
+  Tests Passed!
+</div>
+
+<div class="prose dark:prose-invert mb-5 text-center">
+  <p>
+    You can now mark this stage as complete.
+  </p>
+</div>
+
+<div class="flex flex-col gap-2 w-full">
+  <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
+    @icon="check"
+    @title="Mark stage as complete"
+    @description="Submit code and proceed to the next stage"
+    data-test-mark-stage-as-complete-button
+    {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}
+  />
+
+  <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
+    @icon="code"
+    @title="Refactor Code"
+    @description="Edit your code before moving to the next stage"
+    data-test-refactor-code-button
+    {{on "click" (fn @onActionButtonClick "refactor_code")}}
+  />
+</div>
+
+<div
+  class="mt-4 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0 text-xs"
+  role="button"
+  {{on "click" @onViewInstructionsLinkClick}}
+  data-test-view-instructions-button
+>
+  Show instructions again
+</div>
