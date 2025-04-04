@@ -111,6 +111,7 @@ export default create({
 
   currentStepCompleteModal: {
     clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
+    completionMessage: text('[data-test-completion-message]'),
 
     scope: '[data-test-current-step-complete-modal]',
   },

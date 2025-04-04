@@ -8,7 +8,7 @@
       {{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
     </div>
 
-    <div class="prose dark:prose-invert mb-5">
+    <div class="prose dark:prose-invert mb-5" data-test-completion-message>
       <p>
         {{this.currentStep.completionNoticeMessage}}
       </p>
