@@ -54,7 +54,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     // URL should still be stage 2
     assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
-    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
     assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'current URL is /base-stages-complete');
 
     await percySnapshot('Base Stages Completed Page');
