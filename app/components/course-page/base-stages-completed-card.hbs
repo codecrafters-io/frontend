@@ -25,7 +25,6 @@
 
 {{#if this.configureExtensionsModalIsOpen}}
   <ModalBackdrop>
-    {{! @glint-expect-error mut signature doesn't agree? }}
     <CoursePage::ConfigureExtensionsModal @repository={{@repository}} @onClose={{this.handleConfigureExtensionsModalClose}} />
   </ModalBackdrop>
 {{/if}}

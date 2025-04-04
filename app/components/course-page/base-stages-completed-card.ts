@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type RouterService from '@ember/routing/router-service';
-import { waitFor } from '@ember/test-waiters';
 
 interface Signature {
   Element: HTMLDivElement;

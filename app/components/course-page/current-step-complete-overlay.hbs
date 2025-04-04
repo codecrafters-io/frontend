@@ -7,8 +7,9 @@
   <:content>
     {{#if this.modalWasDismissed}}
       <CoursePage::CompletedStepNotice
+        {{! @glint-expect-error repository is nullable according to coursePageState }}
+        @repository={{this.coursePageState.stepList.repository}}
         @step={{@currentStep}}
-        @repository={{@repository}}
         class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
         {{! Ensure this is visible when modal is dismissed }}
         {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
