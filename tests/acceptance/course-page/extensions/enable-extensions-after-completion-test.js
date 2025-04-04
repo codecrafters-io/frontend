@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, settled } from '@ember/test-helpers';
+import baseStagesCompletePage from 'codecrafters-frontend/tests/pages/course/base-stages-complete-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
@@ -62,13 +63,14 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 5, 'step list has 5 items before first extension is enabled');
 
     // Enable Extension 1
-    await coursePage.sidebar.configureExtensionsButton.click();
+    await baseStagesCompletePage.clickOnConfigureExtensionsButton();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    await coursePage.configureExtensionsModal.clickOnCloseButton();
-
+    assert.strictEqual(coursePage.header.stepName, 'Base stages complete!', 'still on base stages completed page');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 7, 'step list has 7 items when first extension is enabled');
 
-    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
+    await coursePage.configureExtensionsModal.clickOnCloseButton();
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', 'navigated to first extension stage');
+
     await percySnapshot('Extension - First Stage Page');
 
     // Enable Extension 2

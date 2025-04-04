@@ -17,7 +17,7 @@
       </p>
     </div>
 
-    <PrimaryButton data-test-configure-extensions-button class="mt-4" {{on "click" (fn (mut this.configureExtensionsModalIsOpen) true)}}>
+    <PrimaryButton data-test-configure-extensions-button class="mt-4" {{on "click" this.handleConfigureExtensionsButtonClick}}>
       Choose Extensions
     </PrimaryButton>
   </:content>
@@ -26,6 +26,6 @@
 {{#if this.configureExtensionsModalIsOpen}}
   <ModalBackdrop>
     {{! @glint-expect-error mut signature doesn't agree? }}
-    <CoursePage::ConfigureExtensionsModal @repository={{@repository}} @onClose={{fn (mut this.configureExtensionsModalIsOpen) false}} />
+    <CoursePage::ConfigureExtensionsModal @repository={{@repository}} @onClose={{this.handleConfigureExtensionsModalClose}} />
   </ModalBackdrop>
 {{/if}}
