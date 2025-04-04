@@ -93,7 +93,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.', 'footer text is stage passed');
+    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage today.');
   });
 
   test('can pass tests using CLI', async function (assert) {
