@@ -96,10 +96,10 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     assert.notOk(coursePage.secondStageTutorialCard.steps[0].isExpanded, 'First step is collapsed');
     assert.notOk(coursePage.secondStageTutorialCard.steps[1].isExpanded, 'Second step is collapsed');
 
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
-    assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
+    assert.notOk(coursePage.testsPassedModal.isVisible, 'Tests passed modal disappears');
     assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 
@@ -134,8 +134,11 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     assert.ok(coursePage.secondStageTutorialCard.steps[0].isComplete, 'First step is complete');
     assert.ok(coursePage.secondStageTutorialCard.steps[1].isComplete, 'Second step is complete');
 
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    assert.notOk(coursePage.testRunnerCard.markStageAsCompleteButton.isVisible, 'Mark stage as complete button is not visible');
+    assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    assert.strictEqual(coursePage.testsPassedModal.title, 'Tests passed!', 'Tests passed modal title is correct');
+
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
+    assert.strictEqual(coursePage.testsPassedModal.title, 'Submit code', 'Tests passed modal title is correct');
 
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'git',
@@ -146,12 +149,12 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    assert.ok(coursePage.testRunnerCard.markStageAsCompleteButton.isVisible, 'Mark stage as complete button is visible');
+    assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    assert.strictEqual(coursePage.testsPassedModal.title, 'Submit code', 'Tests passed modal title is correct');
 
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
-    assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
+    assert.notOk(coursePage.testsPassedModal.isVisible, 'Tests passed modal is not visible');
     assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 
@@ -192,7 +195,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 30 * 60 * 1000), // Subtract 30 minutes from the expiration time
     });
 
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
     assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge is visible');
     assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '23 hours left', 'should show correct time remaining');

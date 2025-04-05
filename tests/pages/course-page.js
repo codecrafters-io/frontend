@@ -240,6 +240,12 @@ export default create({
     scope: '[data-test-test-runner-card]',
   },
 
+  testsPassedModal: {
+    clickOnActionButton: clickOnText('[data-test-action-button-title]'),
+    scope: '[data-test-tests-passed-modal]',
+    title: text('[data-test-modal-title]'),
+  },
+
   upgradeModal: {
     scope: '[data-test-upgrade-modal]',
   },
