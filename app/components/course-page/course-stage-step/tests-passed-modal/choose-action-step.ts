@@ -5,6 +5,7 @@ type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    isCreatingCourseStageCompletion: boolean;
     onActionButtonClick: (action: 'refactor_code' | 'mark_stage_as_complete') => void;
     onViewInstructionsLinkClick: () => void;
   };

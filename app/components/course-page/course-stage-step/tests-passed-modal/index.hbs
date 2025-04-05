@@ -5,11 +5,12 @@
         <CoursePage::CourseStageStep::TestsPassedModal::ChooseActionStep
           @onActionButtonClick={{fn this.handleActionButtonClick}}
           @onViewInstructionsLinkClick={{@onClose}}
+          @isCreatingCourseStageCompletion={{this.createCourseStageCompletionTask.isRunning}}
         />
       {{/animated-if}}
 
-      {{#animated-if (eq this.action "mark_stage_as_complete")}}
-        <CoursePage::CourseStageStep::TestsPassedModal::MarkStageAsCompleteStep
+      {{#animated-if (eq this.action "submit_code")}}
+        <CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep
           @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
           @onViewInstructionsLinkClick={{@onClose}}
         />

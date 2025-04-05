@@ -7,6 +7,7 @@ interface Signature {
     icon: string;
     title: string;
     description: string;
+    isProcessing: boolean;
   };
 }
 
