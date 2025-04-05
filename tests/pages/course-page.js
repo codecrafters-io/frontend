@@ -243,6 +243,7 @@ export default create({
   testsPassedModal: {
     clickOnActionButton: clickOnText('[data-test-action-button-title]'),
     scope: '[data-test-tests-passed-modal]',
+    title: text('[data-test-modal-title]'),
   },
 
   upgradeModal: {
