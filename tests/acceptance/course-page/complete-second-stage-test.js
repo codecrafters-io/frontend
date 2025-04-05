@@ -192,7 +192,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000 - 30 * 60 * 1000), // Subtract 30 minutes from the expiration time
     });
 
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
     assert.ok(coursePage.header.discountTimerBadge.isVisible, 'Badge is visible');
     assert.strictEqual(coursePage.header.discountTimerBadge.timeLeftText, '23 hours left', 'should show correct time remaining');

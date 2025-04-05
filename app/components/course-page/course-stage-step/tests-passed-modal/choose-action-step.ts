@@ -1,10 +1,12 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 type Signature = {
   Element: HTMLDivElement;
 
   Args: {
+    currentStep: CourseStageStep;
     isCreatingCourseStageCompletion: boolean;
     onActionButtonClick: (action: 'refactor_code' | 'mark_stage_as_complete') => void;
     onViewInstructionsLinkClick: () => void;

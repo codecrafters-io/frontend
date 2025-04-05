@@ -21,10 +21,10 @@
       </p>
     </div>
 
-    <PrimaryButton @size="large" {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}>
+    <PrimaryButton @size="large" {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}} data-test-mark-stage-as-complete-button>
       <div class="flex items-center gap-2">
         {{svg-jar "check-circle" class="w-6 h-6"}}
-        <span>Mark stage as complete</span>
+        <span data-test-action-button-title>Mark stage as complete</span>
       </div>
     </PrimaryButton>
   {{else}}

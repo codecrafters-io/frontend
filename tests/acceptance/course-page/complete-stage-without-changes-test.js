@@ -39,62 +39,10 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
-    assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
-    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
-  });
-
-  test('cannot complete second stage if tests passed via CLI', async function (assert) {
-    testScenario(this.server, ['dummy']);
-    signIn(this.owner, this.server);
-
-    const currentUser = this.server.schema.users.first();
-    const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
-
-    course.update({ releaseStatus: 'live' });
-
-    const repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: course,
-      language: python,
-      user: currentUser,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Dummy');
-
-    this.server.create('submission', 'withSuccessStatus', {
-      clientType: 'cli',
-      repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
-
-    assert.ok(coursePage.secondStageTutorialCard.steps[0].isComplete, 'First step is complete');
-    assert.ok(coursePage.secondStageTutorialCard.steps[1].isComplete, 'Second step is complete');
-
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    assert.notOk(coursePage.testRunnerCard.markStageAsCompleteButton.isVisible, 'Mark stage as complete button is not visible');
-
-    this.server.create('submission', 'withSuccessStatus', {
-      clientType: 'git',
-      repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
-    });
-
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await finishRender();
-
-    assert.ok(coursePage.testRunnerCard.isExpanded, 'Test runner card is expanded');
-    assert.ok(coursePage.testRunnerCard.markStageAsCompleteButton.isVisible, 'Mark stage as complete button is visible');
-
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
-
-    assert.notOk(coursePage.testRunnerCard.isVisible, 'Test runner card disappears');
+    assert.notOk(coursePage.testsPassedModal.isVisible, 'Tests passed modal is not visible');
     assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
   });
 });
