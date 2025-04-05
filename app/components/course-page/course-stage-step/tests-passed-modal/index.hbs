@@ -4,7 +4,7 @@
       {{#animated-if (eq this.action "choose_action")}}
         <CoursePage::CourseStageStep::TestsPassedModal::ChooseActionStep
           @currentStep={{@currentStep}}
-          @onActionButtonClick={{fn this.handleActionButtonClick}}
+          @onActionButtonClick={{this.handleActionButtonClick}}
           @onViewInstructionsLinkClick={{@onClose}}
           @isCreatingCourseStageCompletion={{this.courseStageCompletion.createTask.isRunning}}
         />
@@ -12,7 +12,7 @@
 
       {{#animated-if (eq this.action "submit_code")}}
         <CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep
-          @onActionButtonClick={{fn this.handleActionButtonClick}}
+          @onActionButtonClick={{this.handleActionButtonClick}}
           @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
           @onViewInstructionsLinkClick={{@onClose}}
           @repository={{@currentStep.repository}}
