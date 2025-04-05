@@ -16,9 +16,11 @@
       {{/animated-if}}
 
       {{#animated-if (eq this.action "refactor_code")}}
-        <div>
-          Refactor code
-        </div>
+        <CoursePage::CourseStageStep::TestsPassedModal::RefactorCodeStep
+          @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
+          @onViewInstructionsLinkClick={{@onClose}}
+          @currentStep={{@currentStep}}
+        />
       {{/animated-if}}
     </div>
   </AnimatedContainer>
