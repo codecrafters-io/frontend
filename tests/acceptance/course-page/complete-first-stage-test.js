@@ -73,7 +73,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     assert.ok(coursePage.firstStageTutorialCard.steps[1].isComplete, 'Second step is complete');
     assert.notOk(coursePage.firstStageTutorialCard.steps[1].isExpanded, 'Second step is collapsed');
 
-    await coursePage.testRunnerCard.clickOnMarkStageAsCompleteButton();
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
     assert.strictEqual(coursePage.header.stepName, 'The first stage', 'header shows current step');
 
     await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();

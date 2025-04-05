@@ -32,14 +32,17 @@
         data-test-mark-stage-as-complete-button
         {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}
       />
-      <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
-        @icon="code"
-        @title="Refactor code"
-        @description="Edit your code before moving to the next stage"
-        @isProcessing={{false}}
-        data-test-refactor-code-button
-        {{on "click" (fn @onActionButtonClick "refactor_code")}}
-      />
+
+      {{#unless @currentStep.courseStage.isFirst}}
+        <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
+          @icon="code"
+          @title="Refactor code"
+          @description="Edit your code before moving to the next stage"
+          @isProcessing={{false}}
+          data-test-refactor-code-button
+          {{on "click" (fn @onActionButtonClick "refactor_code")}}
+        />
+      {{/unless}}
 
       <div
         class="inline-flex mt-4 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0 text-xs"
