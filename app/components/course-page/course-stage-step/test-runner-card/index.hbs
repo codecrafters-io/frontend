@@ -17,14 +17,10 @@
 
   {{#if this.isExpanded}}
     <div class="py-3" data-test-expanded-content>
-      {{#if (eq this.testsStatus "passed")}}
-        <CoursePage::CourseStageStep::TestRunnerCard::TestsPassedInstructions @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} />
-      {{else}}
-        <CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions
-          @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
-          @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
-        />
-      {{/if}}
+      <CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions
+        @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+        @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
+      />
     </div>
   {{/if}}
 </div>

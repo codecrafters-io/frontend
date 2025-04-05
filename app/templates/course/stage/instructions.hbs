@@ -23,17 +23,6 @@
           <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
         {{/if}}
 
-        {{!-- {{#if (and this.shouldShowTestRunnerCard (eq this.currentStep.testsStatus "passed"))}}
-          <CoursePage::CourseStageStep::TestRunnerCard
-            class="mb-6"
-            id="test-runner-card"
-            @isCollapsible={{false}}
-            @repository={{@model.activeRepository}}
-            @stage={{@model.courseStage}}
-            {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-          />
-        {{/if}} --}}
-
         {{#if @model.courseStage.isFirst}}
           <CoursePage::CourseStageStep::FirstStageTutorialCard
             @repository={{@model.activeRepository}}
@@ -52,18 +41,18 @@
           />
         {{/if}}
 
-        {{#if (and this.shouldShowTestRunnerCard (not-eq this.currentStep.testsStatus "passed"))}}
+        {{#if this.shouldShowTestRunnerCard}}
           <div class="mb-6">
             <CoursePage::CourseStageStep::TestRunnerCard
               {{! template-lint-disable no-duplicate-id }}
               id="test-runner-card"
-              @isCollapsible={{or this.shouldSuppressTestRunnerCardExpands (not-eq this.currentStep.testsStatus "passed")}}
+              @isCollapsible={{not @model.courseStage.isFirst}}
               @repository={{@model.activeRepository}}
               @stage={{@model.courseStage}}
-              @onExpand={{if this.shouldSuppressTestRunnerCardExpands this.handleTestRunnerCardExpandedOnFirstStage undefined}}
+              @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
             />
 
-            {{#if this.shouldSuppressTestRunnerCardExpands}}
+            {{#if @model.courseStage.isFirst}}
               <EmberPopover @popperContainer="body">
                 <div class="prose prose-sm prose-invert text-white">
                   {{#if (eq this.currentStep.testsStatus "failed")}}

@@ -11,7 +11,23 @@
     Submit code
   </div>
 
-  {{#if (not @repository.lastSubmissionCanBeUsedForStageCompletion)}}
+  {{#if @repository.lastSubmissionCanBeUsedForStageCompletion}}
+    <div class="prose prose-compact dark:prose-invert mb-6 text-center text-balance">
+      <p>
+        Code submitted!
+      </p>
+      <p>
+        You can now mark this stage as complete.
+      </p>
+    </div>
+
+    <PrimaryButton @size="large" {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}>
+      <div class="flex items-center gap-2">
+        {{svg-jar "check-circle" class="w-6 h-6"}}
+        <span>Mark stage as complete</span>
+      </div>
+    </PrimaryButton>
+  {{else}}
     <div class="prose dark:prose-invert mb-3 text-center text-balance">
       <p>
         Run the
@@ -45,21 +61,5 @@
         Waiting for command...
       </span>
     </div>
-  {{else}}
-    <div class="prose prose-compact dark:prose-invert mb-6 text-center text-balance">
-      <p>
-        Code submitted!
-      </p>
-      <p>
-        You can now mark this stage as complete.
-      </p>
-    </div>
-
-    <PrimaryButton @size="large" {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}>
-      <div class="flex items-center gap-2">
-        {{svg-jar "check-circle" class="w-6 h-6"}}
-        <span>Mark stage as complete</span>
-      </div>
-    </PrimaryButton>
   {{/if}}
 </div>
