@@ -4,30 +4,29 @@
       {{svg-jar "arrow-left" class="w-6 h-6 text-gray-300"}}
     </button>
   </div>
-  {{svg-jar "check" class="w-20 h-20 mb-2 text-teal-500"}}
+
+  {{svg-jar "code" class="w-20 h-20 mb-2 text-teal-500"}}
 
   <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100">
-    Mark stage as complete
+    Refactor code
   </div>
 
   <div class="prose dark:prose-invert mb-3 text-center text-balance">
     <p>
-      Run the
+      To run tests again, make changes to your code and run the
 
       {{#if (gt this.selectedCommandVariant.commands.length 1)}}
-        following commands
+        following commands.
       {{else}}
-        <code>submit</code>
-        command
+        <code>test</code>
+        command.
       {{/if}}
-
-      to submit your code.
     </p>
   </div>
 
   <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
 
-  <div class="prose dark:prose-invert mt-3 text-center prose-sm text-balance">
+  <div class="prose dark:prose-invert mt-3 text-center text-balance prose-sm">
     <p>
       Unable to use the
       <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters&nbsp;CLI</a>? You can use Git too.
