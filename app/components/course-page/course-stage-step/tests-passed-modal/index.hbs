@@ -11,8 +11,10 @@
 
       {{#animated-if (eq this.action "submit_code")}}
         <CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep
+          @onActionButtonClick={{fn this.handleActionButtonClick}}
           @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
           @onViewInstructionsLinkClick={{@onClose}}
+          @repository={{@currentStep.repository}}
         />
       {{/animated-if}}
 

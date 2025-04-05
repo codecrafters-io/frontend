@@ -7,49 +7,59 @@
 
   {{svg-jar "cloud-upload" class="w-20 h-20 mb-2 text-teal-500"}}
 
-  <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100">
+  <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100" data-test-modal-title>
     Submit code
   </div>
 
-  <div class="prose dark:prose-invert mb-3 text-center text-balance">
-    <p>
-      Run the
+  {{#if (not @repository.lastSubmissionCanBeUsedForStageCompletion)}}
+    <div class="prose dark:prose-invert mb-3 text-center text-balance">
+      <p>
+        Run the
 
-      {{#if (gt this.selectedCommandVariant.commands.length 1)}}
-        following commands
-      {{else}}
-        <code>submit</code>
-        command
-      {{/if}}
+        {{#if (gt this.selectedCommandVariant.commands.length 1)}}
+          following commands
+        {{else}}
+          <code>submit</code>
+          command
+        {{/if}}
 
-      to submit your code.
-    </p>
-  </div>
+        to submit your code.
+      </p>
+    </div>
 
-  <CopyableTerminalCommandWithVariants class="mb-3" @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
+    <CopyableTerminalCommandWithVariants class="mb-3" @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
 
-  <div class="prose dark:prose-invert mb-5 text-center prose-sm text-balance">
-    <p class="text-xs">
-      Unable to use the
-      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters&nbsp;CLI</a>? You can use Git too.
-    </p>
-  </div>
+    <div class="prose dark:prose-invert mb-5 text-center prose-sm text-balance">
+      <p class="text-xs">
+        Unable to use the
+        <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters&nbsp;CLI</a>? You can use Git too.
+      </p>
+    </div>
 
-  <div class="flex items-center text-sm" ...attributes>
-    <AnimatedContainer>
-      <BlinkingDot class="mr-2" @color="yellow" />
-    </AnimatedContainer>
+    <div class="flex items-center text-sm" ...attributes>
+      <AnimatedContainer>
+        <BlinkingDot class="mr-2" @color="yellow" />
+      </AnimatedContainer>
 
-    <span class="text-yellow-600 dark:text-yellow-500 font-medium" data-test-progress-indicator-text>
-      Waiting for command...
-    </span>
-  </div>
+      <span class="text-yellow-600 dark:text-yellow-500 font-medium" data-test-progress-indicator-text>
+        Waiting for command...
+      </span>
+    </div>
+  {{else}}
+    <div class="prose prose-compact dark:prose-invert mb-6 text-center text-balance">
+      <p>
+        Code submitted!
+      </p>
+      <p>
+        You can now mark this stage as complete.
+      </p>
+    </div>
 
-  {{! TODO: Implement this }}
-  {{!-- <PrimaryButton {{on "click" @onBackButtonClick}}>
+    <PrimaryButton @size="large" {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}>
       <div class="flex items-center gap-2">
-        {{svg-jar "check-circle" class="w-5 h-5"}}
+        {{svg-jar "check-circle" class="w-6 h-6"}}
         <span>Mark stage as complete</span>
       </div>
-    </PrimaryButton> --}}
+    </PrimaryButton>
+  {{/if}}
 </div>

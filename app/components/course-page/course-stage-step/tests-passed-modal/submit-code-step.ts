@@ -1,14 +1,17 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    onActionButtonClick: (action: 'mark_stage_as_complete' | 'refactor_code') => void;
     onBackButtonClick: () => void;
     onViewInstructionsLinkClick: () => void;
+    repository: RepositoryModel;
   };
 }
 
