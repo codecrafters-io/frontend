@@ -222,8 +222,6 @@ export default create({
   testResultsBar: TestResultsBar,
 
   testRunnerCard: {
-    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
-
     async clickOnMarkStageAsCompleteButton() {
       await this.markStageAsCompleteButton.click();
     },
