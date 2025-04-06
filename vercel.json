@@ -11,6 +11,7 @@
   ],
   "rewrites": [
     { "source": "/concepts/:concept", "destination": "/prerender/concepts/[concept]" },
+    { "source": "/contests/:contest", "destination": "/prerender/contests/[contest]" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
