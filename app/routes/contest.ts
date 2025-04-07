@@ -2,17 +2,18 @@ import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
-import type ContestModel from 'codecrafters-frontend/models/contest';
-import type LanguageModel from 'codecrafters-frontend/models/language';
-import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
+import ContestModel from 'codecrafters-frontend/models/contest';
+import LanguageModel from 'codecrafters-frontend/models/language';
+import LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import type Transition from '@ember/routing/transition';
+import type ContestController from 'codecrafters-frontend/controllers/contest';
 
-export type ModelType = {
+export type ContestRouteModel = {
   contest: ContestModel;
   allContests: ContestModel[];
   topLeaderboardEntries: LeaderboardEntryModel[];
-  surroundingLeaderboardEntries: LeaderboardEntryModel[];
   languages: LanguageModel[];
 };
 
@@ -25,7 +26,7 @@ export default class ContestRoute extends BaseRoute {
   previousMetaTitle: string | undefined;
   previousMetaDescription: string | undefined;
 
-  afterModel(model: ModelType): void {
+  afterModel(model: ContestRouteModel): void {
     if (!model || !model.contest) {
       this.router.transitionTo('not-found');
 
@@ -78,43 +79,54 @@ export default class ContestRoute extends BaseRoute {
   }
 
   async model(params: { contest_slug: string }) {
-    const allContests = (await this.store.query('contest', { include: 'leaderboard' })) as unknown as ContestModel[];
-
-    const contest = allContests.find((contest) => contest.slug === params.contest_slug) as ContestModel;
+    // First, try finding the contest already cached in the store
+    let allContests = await this.store.findAll('contest', { include: 'leaderboard' });
+    let contest = allContests.find((contest) => contest.slug === params.contest_slug);
 
     if (!contest) {
-      return {
-        contest: null,
-        allContests: [],
-        topLeaderboardEntries: [],
-        surroundingLeaderboardEntries: [],
-        languages: [],
-      } as unknown as ModelType;
+      // If no contest found, re-fetch contests and try again
+      allContests = await this.store.findAll('contest', { include: 'leaderboard', reload: true });
+      contest = allContests.find((contest) => contest.slug === params.contest_slug);
+
+      // If still no contest found, return undefined
+      if (!contest) {
+        return {
+          contest: undefined, // will redirect to 404 in afterModel
+          allContests: [],
+          topLeaderboardEntries: [],
+          languages: [],
+        };
+      }
     }
 
-    const topLeaderboardEntries = (await this.store.query('leaderboard-entry', {
-      leaderboard_id: contest.leaderboard.id,
-      include: 'user,leaderboard',
-    })) as unknown as LeaderboardEntryModel[];
-
-    let surroundingLeaderboardEntries: LeaderboardEntryModel[] = [];
-
-    if (this.authenticator.isAuthenticated) {
-      surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
+    const topLeaderboardEntries = await this.store.findAll('leaderboard-entry', {
+      adapterOptions: {
         leaderboard_id: contest.leaderboard.id,
-        include: 'leaderboard,user',
-        filter_type: 'around_me',
-      })) as unknown as LeaderboardEntryModel[];
-    }
+      },
+      include: 'user,leaderboard',
+    });
 
-    const languages = (await this.store.findAll('language')) as unknown as LanguageModel[];
+    const languages = await this.store.findAll('language');
 
     return {
       contest,
-      allContests,
-      topLeaderboardEntries,
-      surroundingLeaderboardEntries,
-      languages,
-    } as ModelType;
+      allContests: allContests as unknown as ContestModel[],
+      topLeaderboardEntries: topLeaderboardEntries as unknown as LeaderboardEntryModel[],
+      languages: languages as unknown as LanguageModel[],
+    };
+  }
+
+  async setupController(controller: ContestController, model: ContestRouteModel, _transition: Transition) {
+    if (this.authenticator.isAuthenticated) {
+      // Fetch real surroundingLeaderboardEntries and set them in the controller
+      controller.surroundingLeaderboardEntries = (await this.store.findAll('leaderboard-entry', {
+        adapterOptions: {
+          filter_type: 'around_me',
+          leaderboard_id: model.contest.leaderboard.id,
+        },
+        include: 'leaderboard,user',
+        reload: true, // force reloading from the back-end
+      })) as unknown as LeaderboardEntryModel[];
+    }
   }
 }
