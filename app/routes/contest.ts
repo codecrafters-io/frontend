@@ -119,13 +119,10 @@ export default class ContestRoute extends BaseRoute {
   async setupController(controller: ContestController, model: ContestRouteModel, _transition: Transition) {
     if (this.authenticator.isAuthenticated) {
       // Fetch real surroundingLeaderboardEntries and set them in the controller
-      controller.surroundingLeaderboardEntries = (await this.store.findAll('leaderboard-entry', {
-        adapterOptions: {
-          filter_type: 'around_me',
-          leaderboard_id: model.contest.leaderboard.id,
-        },
+      controller.surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
         include: 'leaderboard,user',
-        reload: true, // force reloading from the back-end
+        leaderboard_id: model.contest.leaderboard.id,
+        filter_type: 'around_me',
       })) as unknown as LeaderboardEntryModel[];
     }
   }
