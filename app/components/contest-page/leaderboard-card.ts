@@ -20,12 +20,16 @@ interface Signature {
 export default class ContestPageLeaderboardCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
+  get filteredTopEntries() {
+    return this.args.topEntries.filter((e) => e.leaderboard.id === this.args.contest.leaderboard.id);
+  }
+
   get orderedSurroundingEntries(): LeaderboardEntryModel[] {
     return this.args.surroundingEntries.toArray().sort((a, b) => b.score - a.score);
   }
 
   get orderedTopEntries(): LeaderboardEntryModel[] {
-    return this.args.topEntries
+    return this.filteredTopEntries
       .toArray()
       .sort((a, b) => b.score - a.score)
       .filter((entry) => !entry.isBanned || (this.authenticator.currentUser && entry.user.id === this.authenticator.currentUser.id));
@@ -40,7 +44,7 @@ export default class ContestPageLeaderboardCardComponent extends Component<Signa
       return false;
     }
 
-    return this.args.topEntries.some((entry) => entry.user.id === (this.authenticator.currentUser as UserModel).id);
+    return this.filteredTopEntries.some((entry) => entry.user.id === (this.authenticator.currentUser as UserModel).id);
   }
 }
 
