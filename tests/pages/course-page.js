@@ -17,7 +17,7 @@ import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/si
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
-import { clickOnText, clickable, collection, create, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -222,8 +222,6 @@ export default create({
   testResultsBar: TestResultsBar,
 
   testRunnerCard: {
-    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
-
     async clickOnMarkStageAsCompleteButton() {
       await this.markStageAsCompleteButton.click();
     },
@@ -238,6 +236,12 @@ export default create({
 
     isExpanded: isVisible('[data-test-expanded-content]'),
     scope: '[data-test-test-runner-card]',
+  },
+
+  testsPassedModal: {
+    clickOnActionButton: clickOnText('[data-test-action-button-title]'),
+    scope: '[data-test-tests-passed-modal]',
+    title: text('[data-test-modal-title]'),
   },
 
   upgradeModal: {

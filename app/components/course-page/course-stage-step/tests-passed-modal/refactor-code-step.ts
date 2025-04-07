@@ -1,18 +1,20 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    onBackButtonClick: () => void;
+    onViewInstructionsLinkClick: () => void;
     currentStep: CourseStageStep;
   };
 }
 
-export default class RefactorCodeInstructionsComponent extends Component<Signature> {
+export default class RefactorCodeStepComponent extends Component<Signature> {
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -24,7 +26,7 @@ export default class RefactorCodeInstructionsComponent extends Component<Signatu
   get commandVariants(): CopyableTerminalCommandVariant[] {
     const cliVariant = {
       label: 'codecrafters cli',
-      commands: ['codecrafters test # Visit https://codecrafters.io/cli to install'],
+      commands: ['codecrafters submit'],
     };
 
     const gitVariant = {
@@ -55,6 +57,6 @@ export default class RefactorCodeInstructionsComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestRunnerCard::RefactorCodeInstructions': typeof RefactorCodeInstructionsComponent;
+    'CoursePage::CourseStageStep::TestsPassedModal::RefactorCodeStep': typeof RefactorCodeStepComponent;
   }
 }

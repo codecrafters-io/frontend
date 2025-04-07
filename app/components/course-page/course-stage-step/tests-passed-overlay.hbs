@@ -1,0 +1,31 @@
+<BlurredOverlay
+  @isBlurred={{this.shouldShowModal}}
+  {{did-update this.handleStepIdUpdated @currentStep.id}}
+  @overlayClass="bg-gray-200 bg-opacity-20 dark:bg-gray-800 dark:bg-opacity-20"
+  ...attributes
+>
+  <:content>
+    {{! TODO: Customize this to show correct "tests passed" notice }}
+    <AnimatedContainer>
+      {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
+        <CoursePage::CourseStageStep::TestsPassedNotice
+          class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
+          {{! Ensure this is visible when modal is dismissed }}
+          {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+          {{on "click" (fn (mut this.modalWasDismissed) false)}}
+        />
+      {{/animated-if}}
+    </AnimatedContainer>
+
+    {{yield}}
+  </:content>
+  <:overlay>
+    <CoursePage::CourseStageStep::TestsPassedModal
+      {{! Ensure this is visible on insert }}
+      {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+      class="mt-8 mx-3 md:mx-6"
+      @onClose={{this.handleModalDismissed}}
+      @currentStep={{@currentStep}}
+    />
+  </:overlay>
+</BlurredOverlay>
