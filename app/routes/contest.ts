@@ -9,6 +9,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import type Transition from '@ember/routing/transition';
 import type ContestController from 'codecrafters-frontend/controllers/contest';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export type ContestRouteModel = {
   contest: ContestModel;
@@ -18,6 +19,7 @@ export type ContestRouteModel = {
 };
 
 export default class ContestRoute extends BaseRoute {
+  @service declare authenticator: AuthenticatorService;
   @service declare metaData: MetaDataService;
   @service declare router: RouterService;
   @service declare store: Store;
