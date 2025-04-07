@@ -110,10 +110,10 @@ export default class ContestRoute extends BaseRoute {
 
     return {
       contest,
-      allContests: allContests as unknown as ContestModel[],
-      topLeaderboardEntries: topLeaderboardEntries as unknown as LeaderboardEntryModel[],
-      languages: languages as unknown as LanguageModel[],
-    };
+      allContests,
+      topLeaderboardEntries,
+      languages,
+    } as unknown as ContestRouteModel;
   }
 
   async setupController(controller: ContestController, model: ContestRouteModel, _transition: Transition) {
