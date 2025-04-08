@@ -25,6 +25,7 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(votePage.selectedCourseName, 'Build your own Redis');
     assert.strictEqual(votePage.courseExtensionIdeaCards.length, 2);
     assert.strictEqual(votePage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(votePage.findCourseExtensionIdeaCard(courseExtensionIdea.name).isGreyedOut, true);
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login

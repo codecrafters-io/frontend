@@ -17,11 +17,12 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     let courseIdea = this.server.schema.courseIdeas.first();
     courseIdea.update({ votesCount: 1 });
-
+    
     await votePage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
     assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).isGreyedOut, true);
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
