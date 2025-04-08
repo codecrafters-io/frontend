@@ -4,6 +4,7 @@ export default [
     course_slug: 'redis',
     name: 'Persistence',
     development_status: 'released',
+    development_status_label: 'released',
     description_md:
       "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) are patterns used to match character combinations in strings. In this challenge you'll build your own version of `grep`, a CLI tool for searching using Regexes. \n\nAlong the way you'll learn about basic Regex syntax, [character classes](https://www.regular-expressions.info/refcharclass.html), [quantifiers](https://www.regular-expressions.info/refrepeat.html), [metacharacters](https://www.regular-expressions.info/characters.html) and more.",
   },
