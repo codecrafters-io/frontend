@@ -116,7 +116,7 @@
     "ember-animated": "~2.1.0",
     "ember-api-actions": "github:codecrafters-io/ember-api-actions",
     "ember-auto-import": "^2.10.0",
-    "ember-autoresize-modifier": "^0.7.0",
+    "ember-autoresize-modifier": "^0.8.0",
     "ember-basic-dropdown": "^8.4.0",
     "ember-cli": "~5.8.0",
     "ember-cli-app-version": "^7.0.0",
