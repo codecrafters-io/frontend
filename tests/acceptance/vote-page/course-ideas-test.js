@@ -17,7 +17,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     let courseIdea = this.server.schema.courseIdeas.first();
     courseIdea.update({ votesCount: 1 });
-    
+
     await votePage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
