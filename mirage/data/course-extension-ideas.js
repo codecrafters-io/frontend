@@ -11,7 +11,7 @@ export default [
     slug: 'redis-geospatial-commands',
     course_slug: 'redis',
     name: 'Geospatial commands',
-    development_status: 'in-progress',
+    development_status: 'not-started',
     description_md:
       "[HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) is the protocol that powers the web. In this challenge, you'll build a HTTP/1.1 server that is capable of serving multiple clients. \n\nAlong the way you'll learn about TCP servers, [HTTP request syntax](https://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html), HTTP/1.1's [request pipelining](https://en.wikipedia.org/wiki/HTTP_pipelining) and more.",
   },

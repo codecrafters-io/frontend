@@ -25,7 +25,15 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(votePage.selectedCourseName, 'Build your own Redis');
     assert.strictEqual(votePage.courseExtensionIdeaCards.length, 2);
     assert.strictEqual(votePage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
-    assert.true(votePage.findCourseExtensionIdeaCard(courseExtensionIdea.name).isGreyedOut);
+
+    const releasedIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
+    const notStartedIdeaCard = votePage.findCourseExtensionIdeaCard('Geospatial commands');
+
+    assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
+    assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
+
+    assert.false(notStartedIdeaCard.developmentStatusLabel.isPresent, 'not started idea has no label');
+    assert.false(notStartedIdeaCard.isGreyedOut, 'not started idea is not greyed out');
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
