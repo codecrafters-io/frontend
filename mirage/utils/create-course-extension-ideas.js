@@ -7,7 +7,7 @@ export default function createCourseExtensionIdeas(server) {
       createdAt: new Date(),
       descriptionMarkdown: courseExtensionIdeaData.description_md,
       developmentStatus: courseExtensionIdeaData.development_status,
-      developmentStatusLabelText: courseExtensionIdeaData.development_status_label,
+      developmentStatusLabelText: courseExtensionIdeaData.development_status,
       name: courseExtensionIdeaData.name,
       slug: courseExtensionIdeaData.slug,
       votesCount: 0,
