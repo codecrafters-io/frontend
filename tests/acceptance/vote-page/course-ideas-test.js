@@ -23,6 +23,15 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
 
+    const releasedIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
+    const notStartedIdeaCard = votePage.findCourseIdeaCard('Build your own Shell');
+
+    assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
+    assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
+
+    assert.notEqual(notStartedIdeaCard.developmentStatusLabelText, 'released', 'not started idea has no label');
+    assert.false(notStartedIdeaCard.isGreyedOut, 'not started idea is not greyed out');
+
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
     // TODO: Can navigate directly to course extension ideas
