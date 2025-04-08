@@ -22,7 +22,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     await percySnapshot('Challenge Ideas (anonymous)');
 
     assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
-    assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).isGreyedOut, true);
+    assert.true(votePage.findCourseIdeaCard(courseIdea.name).isGreyedOut);
 
     // TODO: Test that hovering on vote shows tooltip
     // TODO: Test that clicking on vote will redirect to login
