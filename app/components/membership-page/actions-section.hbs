@@ -1,13 +1,5 @@
 <MembershipPage::Section @title="Actions" ...attributes>
-  {{#if (and @subscription.isActive (not @subscription.cancelAt))}}
-    <ButtonWithSpinner
-      class="bg-red-600 hover:bg-red-700 text-sm mt-4 text-white"
-      {{on "click" @onCancelSubscriptionButtonClick}}
-      data-test-cancel-subscription-button
-    >
-      Cancel Subscription
-    </ButtonWithSpinner>
-  {{else if @subscription.isInactive}}
+  {{#if @subscription.isInactive}}
     <ButtonWithSpinner
       class="bg-teal-500 hover:bg-teal-600 text-sm mt-4 text-white"
       {{on "click" this.handleStartMembershipButtonClick}}
