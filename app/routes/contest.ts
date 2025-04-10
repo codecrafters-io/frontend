@@ -118,7 +118,9 @@ export default class ContestRoute extends BaseRoute {
     } as unknown as ContestRouteModel;
   }
 
-  async setupController(controller: ContestController, model: ContestRouteModel, _transition: Transition) {
+  async setupController(controller: ContestController, model: ContestRouteModel, transition: Transition) {
+    super.setupController(controller, model, transition);
+
     if (this.authenticator.isAuthenticated) {
       // Fetch real surroundingLeaderboardEntries and set them in the controller
       controller.surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {

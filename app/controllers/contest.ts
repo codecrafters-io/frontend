@@ -6,4 +6,8 @@ import type { ContestRouteModel } from 'codecrafters-frontend/routes/contest';
 export default class ContestController extends Controller {
   declare model: ContestRouteModel;
   @tracked surroundingLeaderboardEntries: LeaderboardEntryModel[] = [];
+
+  get filteredTopLeaderboardEntries() {
+    return this.model.topLeaderboardEntries.filter((e) => e.leaderboard.id === this.model.contest.leaderboard.id) || [];
+  }
 }

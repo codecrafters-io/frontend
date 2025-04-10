@@ -8,7 +8,7 @@
         <ContestPage::LeaderboardCard
           @contest={{@model.contest}}
           @languages={{@model.languages}}
-          @topEntries={{@model.topLeaderboardEntries}}
+          @topEntries={{this.filteredTopLeaderboardEntries}}
           @surroundingEntries={{this.surroundingLeaderboardEntries}}
         />
 
