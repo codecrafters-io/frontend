@@ -3,10 +3,9 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import { formatWithOptions } from 'date-fns/fp';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { currentURL, settled } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | manage-membership-test', function (hooks) {
   setupApplicationTest(hooks);
