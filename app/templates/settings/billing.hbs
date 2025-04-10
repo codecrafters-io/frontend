@@ -1,5 +1,7 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
-  <div class="inline-flex items-center gap-2 mb-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
+  {{! Membership active }}
+
+  {{! <div class="inline-flex items-center gap-2 mb-3 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
     <StaticDot @color="green" @size="large" />
     <div class="text-teal-500 font-semibold uppercase text-sm">
       Membership active
@@ -10,13 +12,50 @@
       Your membership is valid until
       <b class="font-semibold">April 10th, 2026 at 7:41 AM</b>.
     </p>
+  </div> }}
+
+  {{! No membership found }}
+
+  {{! <div class="inline-flex items-center gap-2 mb-3 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500">
+    <StaticDot @color="yellow" @size="large" />
+    <div class="text-yellow-500 font-semibold uppercase text-sm">
+      No membership found
+    </div>
   </div>
+  <div class="prose prose-sm prose-compact mb-4">
+    <p>
+      You don't have a CodeCrafters membership. Start one to get access to
+      <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
+    </p>
+  </div>
+  <PrimaryLinkButton @size="small" @route="pay">
+    Start membership →
+  </PrimaryLinkButton> }}
+
+  {{! Membership inactive }}
+
+  <div class="inline-flex items-center gap-2 mb-3 rounded-full bg-red-50 px-2 py-1 border border-red-500">
+    <StaticDot @color="red" @size="large" />
+    <div class="text-red-500 font-semibold uppercase text-sm">
+      Membership expired
+    </div>
+  </div>
+  <div class="prose prose-sm prose-compact mb-4">
+    <p>
+      Your membership expired on
+      <b class="font-semibold">April 10th, 2026 at 7:41 AM</b>. Start a new membership to get access to
+      <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
+    </p>
+  </div>
+  <PrimaryLinkButton @size="small" @route="pay">
+    Start membership →
+  </PrimaryLinkButton>
 </Settings::FormSection>
 
 <Settings::FormDivider />
 
 <Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
-  <div class="inline-flex items-center gap-2 mb-2 rounded-full bg-gray-50 px-2 py-1 border border-gray-300">
+  <div class="inline-flex items-center gap-2 mb-3 rounded-full bg-gray-50 px-2 py-1 border border-gray-300">
     <StaticDot @color="gray" @size="large" />
     <div class="text-gray-400 font-semibold uppercase text-sm">
       Auto-renew disabled
@@ -30,18 +69,18 @@
 <Settings::FormDivider />
 
 <Settings::FormSection @title="Support" @description="How to get help with billing">
-  <a href="mailto:hello@codecrafters.io?subject=Billing help (account: {{this.model.username}})">
-    <PrimaryButton @size="small">
-      Get help
-    </PrimaryButton>
-  </a>
-  <div class="prose prose-sm prose-compact mt-3">
+  <div class="prose prose-sm prose-compact mb-4">
     <p>
-      Questions? Click the button above or write to us at
+      Questions? Click the button below or write to us at
       <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
       and we'll help sort things out.
     </p>
   </div>
+  <a href="mailto:hello@codecrafters.io?subject=Billing help (account: {{this.model.username}})">
+    <PrimaryButton @size="small">
+      Get help →
+    </PrimaryButton>
+  </a>
 </Settings::FormSection>
 
 <Settings::FormDivider />
