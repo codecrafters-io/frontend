@@ -2,6 +2,8 @@
   "buildCommand": "scripts/build-vercel-output.sh",
   "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
+    { "source": "/_empty.html", "destination": "/404" },
+    { "source": "/_empty_notags.html", "destination": "/404" },
     { "source": "/package.json", "destination": "/404" },
     { "source": "/prerender/:path*", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
