@@ -80,6 +80,7 @@ Router.map(function () {
   this.route('referral-link', { path: '/r/:referral_link_slug' }); // TODO: Add dark mode support
 
   this.route('settings', function () {
+    this.route('billing');
     this.route('profile');
     this.route('account');
   });

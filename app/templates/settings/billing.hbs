@@ -1,0 +1,88 @@
+<Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
+  <div class="inline-flex items-center gap-2 mb-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
+    <StaticDot @color="green" @size="large" />
+    <div class="text-teal-500 font-semibold uppercase text-sm">
+      Membership active
+    </div>
+  </div>
+  <div class="prose prose-sm prose-compact">
+    <p>
+      Your membership is valid until
+      <b class="font-semibold">April 10th, 2026 at 7:41 AM</b>.
+    </p>
+  </div>
+</Settings::FormSection>
+
+<Settings::FormDivider />
+
+<Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
+  <div class="inline-flex items-center gap-2 mb-2 rounded-full bg-gray-50 px-2 py-1 border border-gray-300">
+    <StaticDot @color="gray" @size="large" />
+    <div class="text-gray-400 font-semibold uppercase text-sm">
+      Auto-renew disabled
+    </div>
+  </div>
+  <div class="prose prose-sm prose-compact">
+    Your membership does not renew automatically. Once your membership expires, you'll be able to make a new one-time payment.
+  </div>
+</Settings::FormSection>
+
+<Settings::FormDivider />
+
+<Settings::FormSection @title="Support" @description="How to get help with billing">
+  <a href="mailto:hello@codecrafters.io?subject=Billing help (account: {{this.model.username}})">
+    <PrimaryButton @size="small">
+      Get help
+    </PrimaryButton>
+  </a>
+  <div class="prose prose-sm prose-compact mt-3">
+    <p>
+      Questions? Click the button above or write to us at
+      <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
+      and we'll help sort things out.
+    </p>
+  </div>
+</Settings::FormSection>
+
+<Settings::FormDivider />
+
+<Settings::FormSection @title="Payment history" @description="Details of your previous payments">
+  <div>
+    <div class="grid grid-cols-3 gap-y-3">
+      {{! Header }}
+      <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
+      <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
+      <div class="border-b pb-2"></div>
+
+      <div class="text-gray-700 text-sm">April 10th, 2025</div>
+
+      <div class="text-gray-700 text-sm text-right">
+        <span class="font-semibold">$79.00</span>
+        {{!-- {{#if (gt charge.amountRefunded 0)}}
+          {{#if charge.isFullyRefunded}}
+            (refunded)
+          {{else}}
+            (<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
+            refunded)
+          {{/if}}
+        {{/if}} --}}
+      </div>
+
+      <div class="flex items-center justify-end">
+        <a
+          href="https://google.com"
+          target="_blank"
+          class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
+          data-test-download-invoice-link
+          rel="noopener noreferrer"
+        >
+          Download Invoice
+        </a>
+        {{!-- {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
+        {{else if charge.statusIsFailed}}
+          <span class="text-gray-600 text-sm">Payment failed</span>
+        {{/if}} --}}
+      </div>
+    </div>
+  </div>
+</Settings::FormSection>
