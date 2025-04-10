@@ -106,17 +106,3 @@ export function signInAsSubscribedTeamMember(owner, server) {
 
   return signIn(owner, server, user);
 }
-
-// TODO: Remove this?
-export function signInAsTrialingSubscriber(owner, server, user) {
-  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
-
-  server.create('subscription', {
-    currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-    user: user,
-    pricingPlanName: 'Monthly',
-    trialEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-  });
-
-  return signIn(owner, server, user);
-}

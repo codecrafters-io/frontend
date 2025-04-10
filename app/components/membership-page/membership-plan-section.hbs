@@ -1,11 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <MembershipPage::Section @title="Membership Plan" data-test-membership-plan-section>
   <div class="text-gray-700 {{if @subscription.user.isVip 'line-through' ''}}" data-test-membership-plan-description>
-    {{#if @subscription.isTrialing}}
-      Your trial for the
-      <b class="font-semibold">{{@subscription.pricingPlanName}}</b>
-      plan is currently active.
-    {{else if @subscription.isActive}}
+    {{#if @subscription.isActive}}
       {{#if @subscription.cancelAt}}
         <p class="mb-3">
           Your CodeCrafters membership is valid until

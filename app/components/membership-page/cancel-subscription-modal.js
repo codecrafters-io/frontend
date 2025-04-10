@@ -21,8 +21,9 @@ export default class CancelSubscriptionModalComponent extends Component {
     return this.selectedReason || (this.otherReasonIsSelected && this.reasonDescription.length > 0);
   }
 
+  // TODO: See if we can remove this
   get cancellationIsWithinTrialPeriod() {
-    return this.subscription.isTrialing;
+    return false;
   }
 
   get placeholderTextForReasonDescriptionInput() {

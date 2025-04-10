@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import { signInAsSubscriber, signInAsTrialingSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import { formatWithOptions } from 'date-fns/fp';
 import membershipPage from 'codecrafters-frontend/tests/pages/membership-page';
@@ -55,36 +55,6 @@ module('Acceptance | manage-membership-test', function (hooks) {
     assert
       .dom('[data-test-membership-plan-section] div:nth-of-type(3)')
       .includesText('🎉 You have VIP access to all CodeCrafters content, valid until');
-  });
-
-  test('subscriber can cancel trial', async function (assert) {
-    testScenario(this.server);
-    signInAsTrialingSubscriber(this.owner, this.server);
-
-    await membershipPage.visit();
-    assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your trial for the Monthly plan is currently active.');
-
-    await membershipPage.clickOnCancelTrialButton();
-    assert.ok(membershipPage.cancelSubscriptionModal.isVisible);
-    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled without selecting a reason');
-
-    await membershipPage.cancelSubscriptionModal.selectReason('I need more content');
-    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled after selecting a reason');
-
-    await membershipPage.cancelSubscriptionModal.selectReason('Other reason');
-    assert.ok(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is disabled if other reason is selected');
-
-    await membershipPage.cancelSubscriptionModal.fillInReasonDescription('Feeling Blue');
-    assert.notOk(membershipPage.cancelSubscriptionModal.cancelButtonIsDisabled, 'cancel button is enabled if other reason is provided');
-
-    assert.strictEqual(membershipPage.cancelSubscriptionModal.cancelButtonText, 'Cancel Trial');
-
-    await membershipPage.cancelSubscriptionModal.clickOnCancelSubscriptionButton();
-    await settled(); // Investigate why clickable() doesn't call settled()
-
-    assert.notOk(membershipPage.cancelSubscriptionModal.isVisible);
-
-    assert.strictEqual(membershipPage.membershipPlanSection.descriptionText, 'Your CodeCrafters membership is currently inactive.');
   });
 
   test('subscriber can cancel subscription', async function (assert) {
