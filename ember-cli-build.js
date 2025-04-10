@@ -56,7 +56,13 @@ module.exports = function (defaults) {
     prember: {
       urls: async function generatePremberUrls() {
         // Default routes to pre-generate with FastBoot
-        const urls = ['/', '/catalog', '/concepts/test-concept-for-ci', '/users/codecrafters-bot'];
+        const urls = [
+          '/',
+          '/catalog',
+          '/concepts/test-concept-for-ci',
+          '/contests/weekly-7', // TODO: Render the currently active contest instead of hardcoding weekly-7
+          '/users/codecrafters-bot',
+        ];
 
         // Get a list of Courses and Languages from the API
         const apiResponse = await fetch(`${config.x.backendUrl}/api/v1/courses?include=language-configurations.language`);

@@ -32,7 +32,7 @@ export default class ContestPageLeaderboardCardComponent extends Component<Signa
   }
 
   get shouldShowSurroundingEntries(): boolean {
-    return !!(this.authenticator.currentUser && !this.userIsInTopLeaderboardEntries);
+    return !!(this.authenticator.currentUser && !this.userIsInTopLeaderboardEntries && this.orderedSurroundingEntries.length);
   }
 
   get userIsInTopLeaderboardEntries(): boolean {
