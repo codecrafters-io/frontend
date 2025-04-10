@@ -8,7 +8,6 @@ export default class SubscriptionModel extends Model {
   @attr('date') declare endedAt: Date | null;
   @attr('string') declare pricingPlanName: string;
   @attr('date') declare startDate: Date;
-  @attr('date') declare trialEnd: Date | null;
 
   @belongsTo('user', { async: false, inverse: 'subscriptions' }) declare user: UserModel;
 
@@ -18,10 +17,6 @@ export default class SubscriptionModel extends Model {
 
   get isInactive() {
     return this.endedAt;
-  }
-
-  get isTrialing() {
-    return this.isActive && this.trialEnd && new Date() < this.trialEnd;
   }
 
   declare cancel: (this: Model, payload: unknown) => Promise<void>;

@@ -16,12 +16,13 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     createCourseIdeas(this.server);
 
     let courseIdea = this.server.schema.courseIdeas.first();
-    courseIdea.update({ votesCount: 1 });
+    courseIdea.update({ votesCount: 1, developmentStatus: 'released' });
 
     await votePage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
     assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
+    assert.ok(votePage.findCourseIdeaCard(courseIdea.name).isGreyedOut, 'should be greyed out if released');
 
     const releasedIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
     const notStartedIdeaCard = votePage.findCourseIdeaCard('Build your own Shell');
