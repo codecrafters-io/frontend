@@ -1,14 +1,15 @@
 import Component from '@glimmer/component';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import { action } from '@ember/object';
+import { next } from '@ember/runloop';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -28,6 +29,7 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   @service declare coursePageState: CoursePageStateService;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
 
   get accessibleSolutions() {
     if (this.shouldShowInaccessibleSolutionsList) {
@@ -66,10 +68,21 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   }
 
   @action
-  handleSolutionExpand(solution: CommunityCourseStageSolutionModel, solutionIndex: number) {
+  handleDidInsert() {
+    this.expandedSolution ||= this.accessibleSolutions[0] || null;
+  }
+
+  @action
+  handleSolutionExpandButtonClick(solution: CommunityCourseStageSolutionModel, solutionIndex: number, containerElement: HTMLDivElement) {
     if (this.authenticator.isAuthenticated) {
       solution.createView({ position_in_list: solutionIndex + 1 });
     }
+
+    this.expandedSolution = solution;
+
+    next(() => {
+      containerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }
 }
 

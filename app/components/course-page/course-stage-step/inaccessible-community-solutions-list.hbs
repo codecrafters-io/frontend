@@ -2,10 +2,10 @@
   <:content>
     {{#each @inaccessibleSolutions as |solution|}}
       <CoursePage::CourseStageStep::CommunitySolutionCard
-        @isCollapsedByDefault={{true}}
+        @isExpanded={{false}}
         @metadataForDownvote={{hash}}
         @metadataForUpvote={{hash}}
-        @onExpand={{(noop)}}
+        @onExpandButtonClick={{(noop)}}
         @onPublishToGithubButtonClick={{(noop)}}
         @solution={{solution}}
         {{! account for the sticky menu bar }}

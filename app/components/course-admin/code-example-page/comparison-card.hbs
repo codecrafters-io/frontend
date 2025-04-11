@@ -73,11 +73,7 @@
         </div>
       </div>
 
-      <CoursePage::CourseStageStep::CommunitySolutionCard
-        @solution={{this.solutionForSecondUser}}
-        @isCollapsedByDefault={{true}}
-        class="w-full flex-shrink"
-      />
+      <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{this.solutionForSecondUser}} @isExpanded={{true}} class="w-full flex-shrink" />
     </div>
 
   {{/if}}
