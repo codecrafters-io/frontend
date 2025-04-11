@@ -30,6 +30,7 @@ const LINE_SEPARATORS = [
 
 const OPTION_DEFAULTS = {
   allowMultipleSelections: true,
+  allowInlineDiffs: false,
   autocompletion: true,
   bracketMatching: true,
   closeBrackets: true,
@@ -84,6 +85,7 @@ export default class DemoCodeMirrorController extends Controller {
   @service declare darkMode: DarkModeService;
 
   queryParams = [
+    'allowInlineDiffs',
     'allowMultipleSelections',
     'autocompletion',
     'bracketMatching',
@@ -135,6 +137,7 @@ export default class DemoCodeMirrorController extends Controller {
     'unchangedMinSize',
   ];
 
+  @tracked allowInlineDiffs = OPTION_DEFAULTS.allowInlineDiffs;
   @tracked allowMultipleSelections = OPTION_DEFAULTS.allowMultipleSelections;
   @tracked autocompletion = OPTION_DEFAULTS.autocompletion;
   @tracked bracketMatching = OPTION_DEFAULTS.bracketMatching;
