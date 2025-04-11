@@ -128,6 +128,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
     syntaxHighlightDeletions,
     unchangedMargin = 3,
     unchangedMinSize = 4,
+    allowInlineDiffs,
   }) => {
     return originalDocument
       ? [
@@ -137,6 +138,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
+            allowInlineDiffs: !!allowInlineDiffs,
           }),
           collapseUnchanged ? collapseUnchangedGutter() : [],
         ]
@@ -190,6 +192,10 @@ export interface Signature {
        * Theme to use for the editor
        */
       theme?: Extension;
+      /**
+       * Display chunks with only limited inline changes inline in the code
+       */
+      allowInlineDiffs?: boolean;
       /**
        * Allow multiple selections by using CTRL/CMD key
        */
