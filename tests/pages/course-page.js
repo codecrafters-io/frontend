@@ -55,13 +55,7 @@ export default create({
 
     solutionCards: collection('[data-test-community-solution-card]', {
       changedFiles: collection('[data-test-community-solution-changed-file]'),
-
       unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
-
-      clickOnCollapseButton: async function () {
-        await this.collapseButtons[0].click();
-      },
-
       clickOnExpandButton: clickable('[data-test-expand-button]'),
       commentCards: collection('[data-test-comment-card]', CommentCard),
       collapseButtons: collection('[data-test-collapse-button]'),

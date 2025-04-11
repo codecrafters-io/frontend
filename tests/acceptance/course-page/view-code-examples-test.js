@@ -57,7 +57,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
 
     // Trigger logic that runs on expand
     await coursePage.codeExamplesTab.solutionCards[1].clickOnExpandButton();
-    await coursePage.codeExamplesTab.solutionCards[1].clickOnCollapseButton();
 
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
@@ -598,7 +597,6 @@ module('Acceptance | course-page | view-code-examples', function (hooks) {
     await coursePage.codeExamplesTab.languageDropdown.toggle();
     await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Go');
     await coursePage.codeExamplesTab.stageIncompleteModal.clickOnShowCodeButton();
-    await coursePage.codeExamplesTab.solutionCards[0].clickOnCollapseButton();
     assert.strictEqual(coursePage.codeExamplesTab.solutionCards.length, 6, 'expected 6 Go solutions to be present');
     assert.ok(coursePage.upgradePrompt.isVisible, 'code examples list should include upgrade prompt');
 
