@@ -12,7 +12,7 @@ export interface Signature {
 
 export default class PromptTabComponent extends Component<Signature> {
   @action
-  handleDownloadPromptButtonClick() {
+  handleCopyPromptButtonClick() {
     if (this.args.evaluation.promptFileContents) {
       navigator.clipboard.writeText(this.args.evaluation.promptFileContents);
     } else {
