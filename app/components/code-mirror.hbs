@@ -28,7 +28,16 @@
   {{did-update
     this.optionDidChange
     "originalDocumentOrDiffRelatedOption"
-    (array @originalDocument @mergeControls @collapseUnchanged @highlightChanges @syntaxHighlightDeletions @unchangedMargin @unchangedMinSize)
+    (array
+      @originalDocument
+      @mergeControls
+      @collapseUnchanged
+      @highlightChanges
+      @syntaxHighlightDeletions
+      @unchangedMargin
+      @unchangedMinSize
+      @allowInlineDiffs
+    )
   }}
   {{did-update this.optionDidChange "placeholder" @placeholder}}
   {{did-update this.optionDidChange "readOnly" @readOnly}}
