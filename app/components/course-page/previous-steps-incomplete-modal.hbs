@@ -22,7 +22,7 @@
     >
       <div class="flex items-center justify-center">
         {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
-        <span>Back to current stage</span>
+        <span>Back to current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
       </div>
     </PrimaryLinkButton>
 
