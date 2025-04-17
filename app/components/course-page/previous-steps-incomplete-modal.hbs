@@ -1,16 +1,16 @@
 <ModalBody @allowManualClose={{false}} @onClose={{@onClose}} class="w-full" data-test-previous-steps-incomplete-modal ...attributes>
   <div class="flex flex-col items-center w-full">
-    <div class="text-[60px]">
+    <div class="text-[60px] text-center">
       ⚠️
     </div>
 
-    <div class="mb-1 font-bold text-2xl text-gray-700 dark:text-gray-100">
-      Previous steps incomplete
+    <div class="mb-1 font-bold text-2xl text-gray-700 dark:text-gray-100 text-center">
+      Previous steps incomplete!
     </div>
 
-    <div class="prose dark:prose-invert mb-5" data-test-completion-message>
+    <div class="prose dark:prose-invert mb-5 text-center" data-test-completion-message>
       <p>
-        This step depends on previous steps that you haven't completed yet.
+        This step depends on previous steps<br> that you haven't completed yet.
       </p>
     </div>
 
@@ -22,17 +22,18 @@
     >
       <div class="flex items-center justify-center">
         {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+        
         <span>Back to current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
       </div>
     </PrimaryLinkButton>
 
     <div
-      class="mt-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0 text-xs"
+      class="mt-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0 text-xs text-center"
       role="button"
       {{on "click" @onClose}}
       data-test-just-exploring-button
     >
-      I'm just exploring 👀
+      I'm just exploring  👀
     </div>
   </div>
 </ModalBody>
