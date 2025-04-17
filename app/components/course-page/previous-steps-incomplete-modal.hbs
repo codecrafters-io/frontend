@@ -10,7 +10,8 @@
 
     <div class="prose dark:prose-invert mb-5 text-center" data-test-completion-message>
       <p>
-        This step depends on previous steps<br> that you haven't completed yet.
+        This step depends on previous steps<br />
+        that you haven't completed yet.
       </p>
     </div>
 
@@ -22,7 +23,7 @@
     >
       <div class="flex items-center justify-center">
         {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
-        
+
         <span>Back to current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
       </div>
     </PrimaryLinkButton>
@@ -33,7 +34,7 @@
       {{on "click" @onClose}}
       data-test-just-exploring-button
     >
-      I'm just exploring  👀
+      I'm just exploring 👀
     </div>
   </div>
 </ModalBody>
