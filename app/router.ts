@@ -94,8 +94,8 @@ Router.map(function () {
 
   // TODO: Add dark mode support
   this.route('vote', function () {
-    this.route('course-ideas', { path: '/challenge-ideas' });
-    this.route('course-extension-ideas', { path: '/challenge-extension-ideas' });
+    this.route('course-ideas', { path: '/challenges' });
+    this.route('course-extension-ideas', { path: '/challenge-extensions' });
   });
 
   this.route('welcome');
