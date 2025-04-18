@@ -30,6 +30,6 @@ export default createPage({
 
   selectedCourseName: text('[data-test-course-pill].bg-white'),
 
-  visit: visitable('/vote'), // Should redirect to /vote/challenge-ideas
-  visitCourseExtensionIdeasTab: visitable('/vote/challenge-extension-ideas'),
+  visit: visitable('/vote'), // Should redirect to /vote/challenges
+  visitCourseExtensionIdeasTab: visitable('/vote/challenge-extensions'),
 });
