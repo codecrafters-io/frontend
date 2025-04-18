@@ -8,8 +8,8 @@
     <!-- DEFAULT_META_TAGS -->
 
     <script type="text/javascript">
-      // Remove default meta tags between DEFAULT_META_TAGS_BEGIN & DEFAULT_META_TAGS_END to prevent duplication after Ember loads
-      !function () { var e = !1, t = [], n = document.head.childNodes; for (var o = 0; o < n.length; o++) { var d = n[o]; if (d.nodeType === Node.COMMENT_NODE) { if ("DEFAULT_META_TAGS_BEGIN" === d.textContent.trim()) { e = !0; continue } if ("DEFAULT_META_TAGS_END" === d.textContent.trim()) break } else "META" === d.nodeName && e && t.push(d) } for (var i = 0; i < t.length; i++)t[i].parentNode.removeChild(t[i]) }();
+      // Remove default meta tags to prevent tag duplication after Ember loads
+      !function () { var tags = document.head.querySelectorAll('meta[data-default-meta-tag]'); for (var i = 0; i < tags.length; i++) { tags[i].parentNode.removeChild(tags[i]); } }();
     </script>
 
     {{content-for "head"}}

@@ -23,9 +23,3 @@
     />
   </div>
 </div>
-
-{{#if this.isCancellingSubscription}}
-  <ModalBackdrop>
-    <MembershipPage::CancelSubscriptionModal @subscription={{this.activeSubscription}} @onClose={{this.handleCancelSubscriptionModalClose}} />
-  </ModalBackdrop>
-{{/if}}

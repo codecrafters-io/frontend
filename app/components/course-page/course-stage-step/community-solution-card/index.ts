@@ -8,52 +8,30 @@ import type UserModel from 'codecrafters-frontend/models/user';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
+import { task } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    solution: CommunityCourseStageSolutionModel;
-    onPublishToGithubButtonClick?: () => void;
-    onExpand?: () => void;
-    metadataForUpvote?: Record<string, unknown>;
+    isExpanded: boolean;
     metadataForDownvote?: Record<string, unknown>;
-    isCollapsedByDefault?: boolean;
+    metadataForUpvote?: Record<string, unknown>;
+    onExpandButtonClick?: (containerElement: HTMLDivElement) => void;
+    onPublishToGithubButtonClick?: () => void;
+    solution: CommunityCourseStageSolutionModel;
   };
 }
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked fileComparisons: FileComparison[] = [];
-  @tracked isExpanded = false;
-  @tracked isLoadingComments = false;
-  @tracked isLoadingFileComparisons = false;
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  constructor(owner: unknown, args: Signature['Args']) {
-    super(owner, args);
-
-    this.isExpanded = !this.isCollapsedByDefault;
-  }
-
   get currentUser() {
     return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
-  }
-
-  get isCollapsed() {
-    return !this.isExpanded;
-  }
-
-  get isCollapsedByDefault() {
-    return this.args.isCollapsedByDefault; // TODO: Compute based on lines of code
-  }
-
-  @action
-  handleCollapseButtonClick() {
-    this.isExpanded = false;
-    this.containerElement!.scrollIntoView({ behavior: 'smooth' });
   }
 
   @action
@@ -61,47 +39,48 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.containerElement = element;
 
     // Trigger comments, expand event etc.
-    if (this.isExpanded) {
-      this.handleExpandButtonClick();
+    if (this.args.isExpanded) {
+      this.loadAsyncResources.perform();
+    }
+  }
+
+  @action
+  handleDidUpdateIsExpanded(_div: HTMLDivElement, [isExpanded]: [boolean]) {
+    if (isExpanded) {
+      this.loadAsyncResources.perform();
     }
   }
 
   @action
   handleExpandButtonClick() {
-    this.isExpanded = true;
-    this.loadComments();
-    this.loadFileComparisons();
-
-    if (this.args.onExpand) {
-      this.args.onExpand();
+    if (this.args.onExpandButtonClick) {
+      this.args.onExpandButtonClick(this.containerElement!);
     }
+
+    this.loadAsyncResources.perform();
   }
 
-  @action
-  async loadComments() {
-    this.isLoadingComments = true;
-
+  loadComments = task(async () => {
     await this.store.query('community-course-stage-solution-comment', {
       target_id: this.args.solution.id,
       include:
         'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
       reload: true,
     });
+  });
 
-    this.isLoadingComments = false;
-  }
-
-  @action
-  async loadFileComparisons() {
+  loadFileComparisons = task(async () => {
     // Already loaded
     if (this.fileComparisons.length > 0) {
       return;
     }
 
-    this.isLoadingFileComparisons = true;
     this.fileComparisons = await this.args.solution.fetchFileComparisons({});
-    this.isLoadingFileComparisons = false;
-  }
+  });
+
+  loadAsyncResources = task({ keepLatest: true }, async () => {
+    await Promise.all([this.loadComments.perform(), this.loadFileComparisons.perform()]);
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

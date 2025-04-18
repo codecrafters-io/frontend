@@ -31,6 +31,9 @@ export default class YourTaskCardComponent extends Component<Signature> {
       variables[`lang_is_${(language as LanguageModel).slug}`] = this.args.repository.language === language;
     });
 
+    // Set placeholder language_name to a concrete one (Python) since it's the least awkward among all other options
+    variables['language_name'] = this.args.repository.language?.name || 'Python';
+
     return Mustache.render(this.args.courseStage.descriptionMarkdownTemplate, variables);
   }
 

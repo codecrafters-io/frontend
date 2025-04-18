@@ -54,6 +54,11 @@
   white-space: pre;
 }
 
+.prose code {
+  overflow-wrap: break-word;
+  text-wrap: auto;
+}
+
 .vertical-mask {
   background: linear-gradient(
     to bottom,

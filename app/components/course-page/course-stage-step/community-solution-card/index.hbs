@@ -3,6 +3,7 @@
   data-test-community-solution-card
   ...attributes
   {{did-insert this.handleDidInsert}}
+  {{did-update this.handleDidUpdateIsExpanded @isExpanded}}
 >
   <CoursePage::CourseStageStep::CommunitySolutionCard::Header
     @metadataForDownvote={{@metadataForDownvote}}
@@ -11,22 +12,8 @@
     class="mb-3"
   />
 
-  <div class={{if this.isExpanded "visible" "hidden"}}>
-    <button
-      class="mb-3 border dark:border-white/5 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-white/10 px-4 py-5 text-gray-700 dark:text-gray-200 text-sm rounded flex flex-col items-center w-full group"
-      type="button"
-      {{on "click" this.handleCollapseButtonClick}}
-      data-test-collapse-button
-    >
-      <div class="font-bold flex items-center sm:mb-0">
-        Collapse example
-        {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
-      </div>
-    </button>
-  </div>
-
   <div>
-    {{#if this.isExpanded}}
+    {{#if @isExpanded}}
       <CoursePage::CourseStageStep::CommunitySolutionCard::Content
         @solution={{@solution}}
         @fileComparisons={{this.fileComparisons}}
@@ -34,7 +21,7 @@
       />
     {{/if}}
 
-    {{#if this.isCollapsed}}
+    {{#unless @isExpanded}}
       <button
         class="mt-4 border dark:border-white/5 hover:bg-gray-100 dark:hover:bg-gray-700/50 hover:border-gray-300 dark:hover:border-white/10 px-4 py-5 text-gray-700 dark:text-gray-200 text-sm rounded flex flex-col items-center w-full group"
         type="button"
@@ -46,18 +33,6 @@
           {{svg-jar "arrow-down" class="w-4 ml-2 fill-current"}}
         </div>
       </button>
-    {{else}}
-      <button
-        class="mt-4 border dark:border-white/5 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-700/60 transition-colors px-4 py-5 text-gray-700 dark:text-gray-200 text-sm rounded flex flex-col items-center w-full group"
-        type="button"
-        {{on "click" this.handleCollapseButtonClick}}
-        data-test-collapse-button
-      >
-        <div class="font-bold flex items-center sm:mb-0">
-          Collapse example
-          {{svg-jar "arrow-up" class="w-4 ml-2 fill-current"}}
-        </div>
-      </button>
-    {{/if}}
+    {{/unless}}
   </div>
 </div>

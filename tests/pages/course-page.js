@@ -17,7 +17,7 @@ import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/si
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
-import { clickOnText, clickable, collection, create, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -55,13 +55,7 @@ export default create({
 
     solutionCards: collection('[data-test-community-solution-card]', {
       changedFiles: collection('[data-test-community-solution-changed-file]'),
-
       unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
-
-      clickOnCollapseButton: async function () {
-        await this.collapseButtons[0].click();
-      },
-
       clickOnExpandButton: clickable('[data-test-expand-button]'),
       commentCards: collection('[data-test-comment-card]', CommentCard),
       collapseButtons: collection('[data-test-collapse-button]'),
@@ -108,6 +102,18 @@ export default create({
   },
 
   createRepositoryCard: CreateRepositoryCard,
+
+  currentStepCompleteModal: {
+    clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
+    clickOnViewInstructionsButton: clickable('[data-test-view-instructions-button]'),
+    completionMessage: text('[data-test-completion-message]'),
+
+    nextOrActiveStepButton: {
+      scope: '[data-test-next-or-active-step-button]',
+    },
+
+    scope: '[data-test-current-step-complete-modal]',
+  },
 
   deleteRepositoryModal: {
     get isOpen() {
@@ -210,8 +216,6 @@ export default create({
   testResultsBar: TestResultsBar,
 
   testRunnerCard: {
-    borderIsTeal: hasClass('border-teal-500'), // Used when tests have passed
-
     async clickOnMarkStageAsCompleteButton() {
       await this.markStageAsCompleteButton.click();
     },
@@ -226,6 +230,12 @@ export default create({
 
     isExpanded: isVisible('[data-test-expanded-content]'),
     scope: '[data-test-test-runner-card]',
+  },
+
+  testsPassedModal: {
+    clickOnActionButton: clickOnText('[data-test-action-button-title]'),
+    scope: '[data-test-tests-passed-modal]',
+    title: text('[data-test-modal-title]'),
   },
 
   upgradeModal: {

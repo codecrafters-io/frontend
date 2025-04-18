@@ -270,7 +270,11 @@
     </label>
     <label class="{{labelClasses}}" title="Enable syntax highlighting in the deleted chunks of the diff">
       <Input @type="checkbox" @checked={{this.syntaxHighlightDeletions}} disabled={{or (not this.originalDocument) (not this.syntaxHighlighting)}} />
-      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">syntaxHighlightDeletions</span>
+      <span class="ml-2 {{unless (and this.originalDocument this.syntaxHighlighting) 'text-gray-300'}}">syntaxHighlightDeletions</span>
+    </label>
+    <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
+      <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
+      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">allowInlineDiffs</span>
     </label>
   </codemirror-options>
 
@@ -321,6 +325,7 @@
   @tabSize={{if this.tabSize this.selectedTabSize}}
   @theme={{if this.theme this.selectedTheme}}
   {{! Boolean Options }}
+  @allowInlineDiffs={{this.allowInlineDiffs}}
   @allowMultipleSelections={{this.allowMultipleSelections}}
   @autocompletion={{this.autocompletion}}
   @bracketMatching={{this.bracketMatching}}

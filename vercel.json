@@ -2,15 +2,28 @@
   "buildCommand": "scripts/build-vercel-output.sh",
   "installCommand": "npm install --no-fund --no-audit",
   "redirects": [
+    { "source": "/_empty.html", "destination": "/404" },
+    { "source": "/_empty_notags.html", "destination": "/404" },
     { "source": "/package.json", "destination": "/404" },
     { "source": "/prerender/:path*", "destination": "/404" },
     { "source": "/", "destination": "/catalog" },
     { "source": "/join_team", "destination": "https://backend.codecrafters.io/join_team" },
     { "source": "/setup_team", "destination": "https://backend.codecrafters.io/setup_team" },
-    { "source": "/r/famous-wombat-417894", "destination": "/join?via=gnomezgrave" }
+    { "source": "/r/famous-wombat-417894", "destination": "/join?via=gnomezgrave" },
+    {
+      "source": "/vote/challenge-ideas",
+      "destination": "/vote/challenges",
+      "permanent": true
+    },
+    {
+      "source": "/vote/challenge-extension-ideas",
+      "destination": "/vote/challenge-extensions",
+      "permanent": true
+    }
   ],
   "rewrites": [
     { "source": "/concepts/:concept", "destination": "/prerender/concepts/[concept]" },
+    { "source": "/contests/:contest", "destination": "/prerender/contests/[contest]" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },

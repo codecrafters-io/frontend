@@ -21,6 +21,10 @@ export default class CurrentStepCompleteModalComponent extends Component<Signatu
   get nextStep() {
     return this.coursePageState.nextStep;
   }
+
+  get stepForNextOrActiveStepButton() {
+    return this.nextStep?.type === 'BaseStagesCompletedStep' ? this.nextStep : this.args.activeStep;
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

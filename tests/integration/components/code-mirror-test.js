@@ -86,6 +86,18 @@ module('Integration | Component | code-mirror', function (hooks) {
   });
 
   module('Options', function () {
+    module('allowInlineDiffs', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('allowInlineDiffs', true);
+        await render(hbs`<CodeMirror @allowInlineDiffs={{this.allowInlineDiffs}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('allowInlineDiffs', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('allowMultipleSelections', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('allowMultipleSelections', true);

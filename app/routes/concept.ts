@@ -117,7 +117,9 @@ export default class ConceptRoute extends BaseRoute {
     );
   }
 
-  setupController(controller: ConceptController, model: ConceptRouteModel, _transition: Transition): void {
+  setupController(controller: ConceptController, model: ConceptRouteModel, transition: Transition): void {
+    super.setupController(controller, model, transition);
+
     // First, use an existing concept engagement (or create a new one)
     controller.latestConceptEngagement = this.#peekCachedOrCreateNewConceptEngagement(model.concept);
 

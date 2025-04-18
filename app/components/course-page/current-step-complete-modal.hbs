@@ -1,24 +1,27 @@
-<ModalBody @allowManualClose={{false}} @onClose={{@onClose}} class="w-full" data-test-current-step-complete-modal ...attributes>
-  <div class="mb-8 font-semibold text-2xl text-gray-800 dark:text-gray-100 mr-6">
-    {{! template-lint-disable no-whitespace-for-layout }}
-    🎉&nbsp;&nbsp;{{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
-  </div>
+<ModalBody @allowManualClose={{false}} @onClose={{@onClose}} data-test-current-step-complete-modal ...attributes>
+  <div class="flex flex-col items-center w-full">
+    <div class="text-[60px]">
+      🎉
+    </div>
 
-  <div class="prose dark:prose-invert mb-8">
-    <p>
-      {{this.currentStep.completionNoticeMessage}}
-    </p>
-  </div>
+    <div class="mb-1 font-bold text-2xl text-gray-700 dark:text-gray-100">
+      {{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
+    </div>
 
-  <div class="flex items-center gap-x-6 gap-y-4 flex-wrap">
+    <div class="prose dark:prose-invert mb-5" data-test-completion-message>
+      <p>
+        {{this.currentStep.completionNoticeMessage}}
+      </p>
+    </div>
+
     <PrimaryLinkButton
-      @route={{@activeStep.routeParams.route}}
-      @models={{@activeStep.routeParams.models}}
-      data-test-next-step-button
-      class="flex-shrink-0"
+      @route={{this.stepForNextOrActiveStepButton.routeParams.route}}
+      @models={{this.stepForNextOrActiveStepButton.routeParams.models}}
+      data-test-next-or-active-step-button
+      class="flex-shrink-0 w-full"
     >
-      <div class="flex items-center">
-        {{#if (eq this.nextStep @activeStep)}}
+      <div class="flex items-center justify-center">
+        {{#if (eq this.nextStep this.stepForNextOrActiveStepButton)}}
           {{#if (eq this.nextStep.type "CourseStageStep")}}
             <span>View next stage</span>
           {{else}}
@@ -33,10 +36,10 @@
     </PrimaryLinkButton>
 
     <div
-      class="text-gray-500 hover:text-gray-800 dark:text-gray-300 text-sm pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0"
+      class="mt-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0 text-xs"
       role="button"
       {{on "click" @onClose}}
-      data-test-stay-on-current-step-button
+      data-test-view-instructions-button
     >
       Show instructions again
     </div>

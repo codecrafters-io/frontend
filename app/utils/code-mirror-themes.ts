@@ -63,6 +63,16 @@ const BASE_STYLE = {
           color: 'rgb(102 153 0)',
         },
       },
+
+      '&.cm-inlineChangedLineGutter': {
+        background: 'rgba(0, 255, 0, 0.15)',
+
+        '&:before': {
+          content: '"+"',
+          padding: '0 0.5rem',
+          color: 'rgb(102 153 0)',
+        },
+      },
     },
   },
 

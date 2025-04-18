@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 
 const QUERY_PARAMS = [
+  'allowInlineDiffs',
   'allowMultipleSelections',
   'autocompletion',
   'bracketMatching',
