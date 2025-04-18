@@ -1,6 +1,6 @@
-<div class="relative pl-11">
-  <a href={{@author.codecraftersProfileUrl}} class="absolute left-0 top-0.5 flex items-center" target="_blank" rel="noopener noreferrer">
-    <AvatarImage @user={{@author}} class="w-8 h-8 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 rounded-full shadow" />
+<div class="flex items-start">
+  <a href={{@author.codecraftersProfileUrl}} class="mt-0.5 flex items-center flex-shrink-0" target="_blank" rel="noopener noreferrer">
+    <AvatarImage @user={{@author}} class="w-8 h-8 mr-3 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 rounded-full shadow" />
   </a>
 
   {{yield}}
