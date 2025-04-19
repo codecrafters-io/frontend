@@ -7,7 +7,7 @@ export default class HeadDataService extends Service {
   @service declare router: RouterService;
 
   get shouldRenderNoIndexTag() {
-    const routeMeta = this.router.currentRoute.metadata;
+    const routeMeta = this.router.currentRoute?.metadata;
     const allowsAnonymousAccess = routeMeta instanceof RouteInfoMetadata && routeMeta.allowsAnonymousAccess;
 
     return !allowsAnonymousAccess;
