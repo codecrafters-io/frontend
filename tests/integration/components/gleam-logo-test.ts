@@ -64,7 +64,7 @@ class MockRive {
   triggerEvent(event: string, ...args: any[]) {
     const listeners = this._listeners.get(event);
     if (listeners) {
-      listeners.forEach(callback => callback(...args));
+      listeners.forEach((callback) => callback(...args));
     }
   }
 
@@ -99,61 +99,57 @@ module('Integration | Component | gleam-logo', function (hooks) {
 
   test('it renders and initializes Rive', async function (assert) {
     await render(hbs`<GleamLogo />`);
-    
+
     // Verify canvas is in the DOM
     assert.dom('canvas').exists('Canvas element is rendered');
-    
+
     // Get the container and create mock Rive instance
     const container = document.querySelector('.gleam-logo-container') as HTMLElement;
     const canvas = container?.querySelector('canvas');
     assert.ok(canvas, 'Canvas element exists');
-    
+
     // Create and attach mock Rive instance
     const mockRive = new MockRive({ canvas: canvas as HTMLCanvasElement });
     (container as any).__riveInstance = mockRive;
-    
+
     // Simulate Rive load
     mockRive.simulateLoad();
     await settled();
-    
+
     // Verify state machines are available
-    assert.deepEqual(
-      mockRive.stateMachineNames,
-      ['State Machine 1', 'State Machine 2'],
-      'State machines are available'
-    );
+    assert.deepEqual(mockRive.stateMachineNames, ['State Machine 1', 'State Machine 2'], 'State machines are available');
   });
 
   test('it handles hover events', async function (assert) {
     await render(hbs`<GleamLogo />`);
-    
+
     // Get the container and create mock Rive instance
     const container = document.querySelector('.gleam-logo-container') as HTMLElement;
     const canvas = container?.querySelector('canvas');
     assert.ok(canvas, 'Canvas element exists');
-    
+
     // Create and attach mock Rive instance
     const mockRive = new MockRive({ canvas: canvas as HTMLCanvasElement });
     (container as any).__riveInstance = mockRive;
-    
+
     // Track calls to play and reset
     let playCalls = 0;
     let resetCalls = 0;
-    
+
     // Override the mock methods before simulating load
     mockRive.play = (stateMachineName: string) => {
       playCalls++;
       assert.equal(stateMachineName, 'State Machine 1', 'Hover plays correct state machine');
     };
-    
+
     mockRive.reset = () => {
       resetCalls++;
     };
-    
+
     // Simulate Rive load
     mockRive.simulateLoad();
     await settled();
-    
+
     // Add event handler directly to the container
     const handleMouseEnter = () => {
       if (mockRive) {
@@ -167,48 +163,48 @@ module('Integration | Component | gleam-logo', function (hooks) {
         }
       }
     };
-    
+
     container.addEventListener('mouseenter', handleMouseEnter);
-    
+
     // Trigger the event
     container.dispatchEvent(new MouseEvent('mouseenter'));
     await settled();
-    
+
     assert.equal(playCalls, 1, 'Play was called once on hover');
     assert.equal(resetCalls, 1, 'Reset was called once on hover');
-    
+
     // Clean up
     container.removeEventListener('mouseenter', handleMouseEnter);
   });
 
   test('it cleans up resources on destroy', async function (this: TestContext, assert) {
     await render(hbs`<GleamLogo />`);
-    
+
     // Get the container and create mock Rive instance
     const container = document.querySelector('.gleam-logo-container') as HTMLElement;
     const canvas = container?.querySelector('canvas');
     assert.ok(canvas, 'Canvas element exists');
-    
+
     // Create and attach mock Rive instance
     const mockRive = new MockRive({ canvas: canvas as HTMLCanvasElement });
     (container as any).__riveInstance = mockRive;
-    
+
     // Track cleanup calls
     let stopCalls = 0;
     let resetCalls = 0;
-    
+
     mockRive.stop = () => {
       stopCalls++;
     };
-    
+
     mockRive.reset = () => {
       resetCalls++;
     };
-    
+
     // Simulate Rive load
     mockRive.simulateLoad();
     await settled();
-    
+
     // Add cleanup handler directly
     const cleanupRive = () => {
       if (mockRive) {
@@ -216,13 +212,13 @@ module('Integration | Component | gleam-logo', function (hooks) {
         mockRive.reset();
       }
     };
-    
+
     // Trigger cleanup
     cleanupRive();
     await settled();
-    
+
     assert.equal(stopCalls, 1, 'Stop was called on destroy');
     assert.equal(resetCalls, 1, 'Reset was called on destroy');
     assert.equal(mockRive.interval, null, 'Animation interval was cleared');
   });
-}); 
+});
