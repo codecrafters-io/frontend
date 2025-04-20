@@ -32,7 +32,6 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
 
       if (stateMachines && stateMachines.length > 0) {
         const stateMachineName = stateMachines[0];
-        console.log('Playing hover animation with state machine:', stateMachineName);
         this.riveInstance.reset();
         this.riveInstance.play(stateMachineName);
       }
@@ -59,7 +58,6 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       canvas.height = 144;
       canvas.style.width = '100%';
       canvas.style.height = '100%';
-      canvas.style.border = '1px solid red'; // Visual debugging
       element.appendChild(canvas);
 
       // Initialize Rive
@@ -68,22 +66,6 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
         canvas: canvas,
         autoplay: false,
         onLoad: () => {
-          console.log('Gleam logo animation loaded');
-
-          // Log available state machines
-          const stateMachines = this.riveInstance?.stateMachineNames;
-          console.log('All State Machines:', stateMachines);
-
-          if (stateMachines && stateMachines.length > 0) {
-            // Log details about each state machine
-            stateMachines.forEach((name, index) => {
-              console.log(`State Machine ${index + 1}:`, {
-                name,
-                inputs: this.riveInstance?.stateMachineInputs(name),
-              });
-            });
-          }
-
           // Play initial animation directly with longer delay
           setTimeout(() => {
             if (this.riveInstance) {
@@ -92,24 +74,9 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
               if (stateMachines && stateMachines.length > 0) {
                 // Try each state machine
                 stateMachines.forEach((stateMachineName) => {
-                  console.log('Attempting to play with state machine:', stateMachineName);
-
                   // Reset and play
                   this.riveInstance?.reset();
                   this.riveInstance?.play(stateMachineName);
-
-                  // Log animation state after a short delay
-                  setTimeout(() => {
-                    if (this.riveInstance) {
-                      console.log('Animation state after play:', {
-                        stateMachine: stateMachineName,
-                        isPlaying: this.riveInstance.isPlaying,
-                        isPaused: this.riveInstance.isPaused,
-                        isStopped: this.riveInstance.isStopped,
-                        allStateMachines: this.riveInstance.stateMachineNames,
-                      });
-                    }
-                  }, 500);
                 });
               }
             }
