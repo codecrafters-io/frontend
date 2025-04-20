@@ -3,12 +3,53 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { Rive } from '@rive-app/canvas';
 
-export default class GleamLogoComponent extends Component {
+interface GleamLogoSignature {
+  Element: HTMLDivElement;
+  Args: {
+    class?: string;
+    style?: string;
+    [key: string]: unknown;
+  };
+  Blocks: Record<string, never>;
+}
+
+export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   @tracked riveInstance: Rive | null = null;
   container: HTMLElement | null = null;
 
   @action
-  setupRive(element: HTMLElement) {
+  cleanupRive() {
+    if (this.riveInstance) {
+      this.riveInstance.stop();
+      this.riveInstance = null;
+    }
+  }
+
+  @action
+  handleMouseEnter() {
+    if (this.riveInstance) {
+      const stateMachines = this.riveInstance.stateMachineNames;
+
+      if (stateMachines && stateMachines.length > 0) {
+        const stateMachineName = stateMachines[0];
+        console.log('Playing hover animation with state machine:', stateMachineName);
+        this.riveInstance.reset();
+        this.riveInstance.play(stateMachineName);
+      }
+    }
+  }
+
+  @action
+  handleMouseLeave() {
+    if (this.riveInstance) {
+      // Stop the animation and reset to initial state
+      this.riveInstance.stop();
+      this.riveInstance.reset();
+    }
+  }
+
+  @action
+  setupRive(element: HTMLDivElement) {
     this.container = element;
 
     try {
@@ -47,6 +88,7 @@ export default class GleamLogoComponent extends Component {
           setTimeout(() => {
             if (this.riveInstance) {
               const stateMachines = this.riveInstance.stateMachineNames;
+
               if (stateMachines && stateMachines.length > 0) {
                 // Try each state machine
                 stateMachines.forEach((stateMachineName) => {
@@ -76,36 +118,6 @@ export default class GleamLogoComponent extends Component {
       });
     } catch (error: unknown) {
       console.error('Error setting up Rive:', error);
-    }
-  }
-
-  @action
-  handleMouseEnter() {
-    if (this.riveInstance) {
-      const stateMachines = this.riveInstance.stateMachineNames;
-      if (stateMachines && stateMachines.length > 0) {
-        const stateMachineName = stateMachines[0];
-        console.log('Playing hover animation with state machine:', stateMachineName);
-        this.riveInstance.reset();
-        this.riveInstance.play(stateMachineName);
-      }
-    }
-  }
-
-  @action
-  handleMouseLeave() {
-    if (this.riveInstance) {
-      // Stop the animation and reset to initial state
-      this.riveInstance.stop();
-      this.riveInstance.reset();
-    }
-  }
-
-  @action
-  cleanupRive() {
-    if (this.riveInstance) {
-      this.riveInstance.stop();
-      this.riveInstance = null;
     }
   }
 }
