@@ -381,6 +381,12 @@ export default class CodeMirrorComponent extends Component<Signature> {
       });
     }
 
+    if (optionName === 'lineCommentsOrLineData') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('lineCommentsOrLineData'),
+      });
+    }
+
     // Reconfigure the changed compartment with new options and dispatch new effects to the view
     this.#updateRenderedView({
       effects: await this.#updateCompartment(optionName),
