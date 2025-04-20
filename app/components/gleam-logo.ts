@@ -24,6 +24,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       clearInterval(this.animationInterval);
       this.animationInterval = null;
     }
+
     if (this.riveInstance) {
       this.riveInstance.stop();
       this.riveInstance = null;
@@ -33,12 +34,15 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   @action
   handleMouseEnter() {
     console.log('Hover animation starting');
+
     if (this.riveInstance) {
       console.log('Hover - Rive instance:', this.riveInstance);
       const stateMachines = this.riveInstance.stateMachineNames;
       console.log('Hover - Available state machines:', stateMachines);
+
       if (stateMachines && stateMachines.length > 0) {
         const stateMachineName = 'State Machine 1';
+
         if (stateMachines.includes(stateMachineName)) {
           console.log('Hover - Playing state machine:', stateMachineName);
           const inputs = this.riveInstance.stateMachineInputs(stateMachineName);
@@ -56,6 +60,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   @action
   handleMouseLeave() {
     console.log('Hover animation stopping');
+
     if (this.riveInstance) {
       this.riveInstance.stop();
       this.riveInstance.reset();
@@ -65,7 +70,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   @action
   setupRive(element: HTMLDivElement) {
     this.container = element;
-    
+
     try {
       const canvas = document.createElement('canvas');
       canvas.width = 141;
@@ -84,12 +89,15 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
           // Set up interval to play animation every 15 seconds
           this.animationInterval = window.setInterval(() => {
             console.log('Interval - Playing animation');
+
             if (this.riveInstance) {
               console.log('Interval - Rive instance:', this.riveInstance);
               const stateMachines = this.riveInstance.stateMachineNames;
               console.log('Interval - Available state machines:', stateMachines);
+
               if (stateMachines && stateMachines.length > 0) {
                 const stateMachineName = 'State Machine 2';
+
                 if (stateMachines.includes(stateMachineName)) {
                   console.log('Interval - Playing state machine:', stateMachineName);
                   const inputs = this.riveInstance.stateMachineInputs(stateMachineName);
@@ -102,6 +110,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
                 }
               }
             }
+
             // Simulate mouse leave after a short delay
             setTimeout(() => {
               this.handleMouseLeave();
@@ -111,14 +120,16 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
           setTimeout(() => {
             if (this.riveInstance) {
               const stateMachines = this.riveInstance.stateMachineNames;
+
               if (stateMachines && stateMachines.length > 0) {
                 // First play State Machine 2
                 const stateMachine2 = 'State Machine 2';
+
                 if (stateMachines.includes(stateMachine2)) {
                   console.log('Initial - Playing state machine:', stateMachine2);
                   this.riveInstance.reset();
                   this.riveInstance.play(stateMachine2);
-                  
+
                   // Then after 800ms, reset State Machine 2
                   setTimeout(() => {
                     if (this.riveInstance) {
