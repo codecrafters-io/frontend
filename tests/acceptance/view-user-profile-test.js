@@ -84,7 +84,7 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
     // Completed course will be listed first.
-    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Git');
     // Then ordering is done on latest submission, earlier comes first.
     assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep');
     assert.strictEqual(userPage.courseProgressListItems[2].name, 'Build your own Redis');
