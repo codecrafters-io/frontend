@@ -10,11 +10,11 @@ export default class GleamLogoComponent extends Component {
   @action
   setupRive(element: HTMLElement) {
     this.container = element;
-    
+
     try {
       // Create canvas element
       const canvas = document.createElement('canvas');
-      canvas.width = 141;  // Fixed size for crisp rendering
+      canvas.width = 141; // Fixed size for crisp rendering
       canvas.height = 144;
       canvas.style.width = '100%';
       canvas.style.height = '100%';
@@ -28,21 +28,21 @@ export default class GleamLogoComponent extends Component {
         autoplay: false,
         onLoad: () => {
           console.log('Gleam logo animation loaded');
-          
+
           // Log available state machines
           const stateMachines = this.riveInstance?.stateMachineNames;
           console.log('All State Machines:', stateMachines);
-          
+
           if (stateMachines && stateMachines.length > 0) {
             // Log details about each state machine
             stateMachines.forEach((name, index) => {
               console.log(`State Machine ${index + 1}:`, {
                 name,
-                inputs: this.riveInstance?.stateMachineInputs(name)
+                inputs: this.riveInstance?.stateMachineInputs(name),
               });
             });
           }
-          
+
           // Play initial animation directly with longer delay
           setTimeout(() => {
             if (this.riveInstance) {
@@ -51,11 +51,11 @@ export default class GleamLogoComponent extends Component {
                 // Try each state machine
                 stateMachines.forEach((stateMachineName) => {
                   console.log('Attempting to play with state machine:', stateMachineName);
-                  
+
                   // Reset and play
                   this.riveInstance?.reset();
                   this.riveInstance?.play(stateMachineName);
-                  
+
                   // Log animation state after a short delay
                   setTimeout(() => {
                     if (this.riveInstance) {
@@ -64,7 +64,7 @@ export default class GleamLogoComponent extends Component {
                         isPlaying: this.riveInstance.isPlaying,
                         isPaused: this.riveInstance.isPaused,
                         isStopped: this.riveInstance.isStopped,
-                        allStateMachines: this.riveInstance.stateMachineNames
+                        allStateMachines: this.riveInstance.stateMachineNames,
                       });
                     }
                   }, 500);
@@ -72,7 +72,7 @@ export default class GleamLogoComponent extends Component {
               }
             }
           }, 2000);
-        }
+        },
       });
     } catch (error: unknown) {
       console.error('Error setting up Rive:', error);
