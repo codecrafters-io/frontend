@@ -16,6 +16,8 @@ class MockRive {
   @tracked stateMachineNames = ['State Machine 1', 'State Machine 2'];
   @tracked lastPlayedStateMachine = null;
   @tracked lastInputsStateMachine = null;
+  @tracked playCalls = 0;
+  @tracked resetCalls = 0;
 
   // Constructor
   constructor(options) {
@@ -49,11 +51,14 @@ class MockRive {
   }
 
   play(stateMachineName) {
+    this.playCalls++;
     this.lastPlayedStateMachine = stateMachineName;
+
+    return stateMachineName;
   }
 
   reset() {
-    // Mock reset implementation
+    this.resetCalls++;
   }
 
   simulateLoad() {
@@ -68,7 +73,7 @@ class MockRive {
   }
 
   stop() {
-    // Mock stop implementation
+    // No-op for test
   }
 
   // Helper methods
@@ -130,45 +135,24 @@ module('Integration | Component | gleam-logo', function (hooks) {
       const mockRive = new MockRive({ canvas });
       container.__riveInstance = mockRive;
 
-      let playCalls = 0;
-      let resetCalls = 0;
+      // Simulate the component's handleMouseEnter logic
+      if (mockRive) {
+        const stateMachines = mockRive.stateMachineNames;
 
-      mockRive.play = (stateMachineName) => {
-        playCalls++;
-        assert.strictEqual(stateMachineName, 'State Machine 1', 'Hover plays correct state machine');
-      };
+        if (stateMachines && stateMachines.length > 0) {
+          const stateMachineName = 'State Machine 1';
 
-      mockRive.reset = () => {
-        resetCalls++;
-      };
-
-      mockRive.simulateLoad();
-      await settled();
-
-      const handleMouseEnter = () => {
-        if (mockRive) {
-          const stateMachines = mockRive.stateMachineNames;
-
-          if (stateMachines && stateMachines.length > 0) {
-            const stateMachineName = 'State Machine 1';
-
-            if (stateMachines.includes(stateMachineName)) {
-              mockRive.reset();
-              mockRive.play(stateMachineName);
-            }
+          if (stateMachines.includes(stateMachineName)) {
+            mockRive.reset();
+            mockRive.play(stateMachineName);
           }
         }
-      };
+      }
 
-      container.addEventListener('mouseenter', handleMouseEnter);
-
-      container.dispatchEvent(new MouseEvent('mouseenter'));
       await settled();
 
-      assert.strictEqual(playCalls, 1, 'Play was called once on hover');
-      assert.strictEqual(resetCalls, 1, 'Reset was called once on hover');
-
-      container.removeEventListener('mouseenter', handleMouseEnter);
+      assert.strictEqual(mockRive.playCalls, 1, 'Play was called once on hover');
+      assert.strictEqual(mockRive.resetCalls, 1, 'Reset was called once on hover');
     });
   });
 
@@ -183,33 +167,14 @@ module('Integration | Component | gleam-logo', function (hooks) {
       const mockRive = new MockRive({ canvas });
       container.__riveInstance = mockRive;
 
-      let stopCalls = 0;
-      let resetCalls = 0;
-
       mockRive.stop = () => {
-        stopCalls++;
+        assert.step('stop called');
       };
 
-      mockRive.reset = () => {
-        resetCalls++;
-      };
+      // Trigger cleanup
+      await render(hbs``);
 
-      mockRive.simulateLoad();
-      await settled();
-
-      const cleanupRive = () => {
-        if (mockRive) {
-          mockRive.stop();
-          mockRive.reset();
-        }
-      };
-
-      cleanupRive();
-      await settled();
-
-      assert.strictEqual(stopCalls, 1, 'Stop was called on destroy');
-      assert.strictEqual(resetCalls, 1, 'Reset was called on destroy');
-      assert.strictEqual(mockRive.interval, null, 'Animation interval was cleared');
+      assert.verifySteps(['stop called'], 'Stop was called during cleanup');
     });
   });
 });

@@ -1,9 +1,10 @@
 <div
-  class="gleam-logo-container"
-  {{did-insert this.setupRive}}
+  {{did-insert this.handleDidInsert}}
   {{will-destroy this.cleanupRive}}
   {{on "mouseenter" this.handleMouseEnter}}
   {{on "mouseleave" this.handleMouseLeave}}
+  style={{this.containerStyle}}
+  ...attributes
 >
   {{! The canvas will be inserted here by Rive }}
 </div>
