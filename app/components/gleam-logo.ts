@@ -61,9 +61,8 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
 
     try {
       const canvas = document.createElement('canvas');
-      const devicePixelRatio = window.devicePixelRatio || 1;
 
-      // Set the canvas size to be 2x the original size for better quality
+      // Set the canvas size to be 4x the original size for better quality
       canvas.width = 141 * 4;
       canvas.height = 144 * 4;
 
