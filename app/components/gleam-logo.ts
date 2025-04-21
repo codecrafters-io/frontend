@@ -61,10 +61,17 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
 
     try {
       const canvas = document.createElement('canvas');
-      canvas.width = 141;
-      canvas.height = 144;
+      const devicePixelRatio = window.devicePixelRatio || 1;
+
+      // Set the canvas size to be 2x the original size for better quality
+      canvas.width = 141 * 4;
+      canvas.height = 144 * 4;
+
+      // Scale the canvas to fit the container while maintaining aspect ratio
       canvas.style.width = '100%';
       canvas.style.height = '100%';
+      canvas.style.objectFit = 'contain';
+
       element.appendChild(canvas);
 
       this.riveInstance = new Rive({
