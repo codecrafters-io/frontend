@@ -132,6 +132,7 @@ export default class CourseModel extends Model {
         docker: dockerLogo,
         git: gitLogo,
         'gleam-chess-bot': gleamChessBotLogo,
+        'gleam-chess-bot-js': gleamChessBotLogo,
         grep: grepLogo,
         'http-server': httpServerLogo,
         interpreter: interpreterLogo,
@@ -165,6 +166,7 @@ export default class CourseModel extends Model {
       'sqlite',
       'dns-server',
       'gleam-chess-bot',
+      'gleam-chess-bot-js',
     ];
     const index = orderedSlugs.indexOf(this.slug);
 
