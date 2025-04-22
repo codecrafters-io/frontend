@@ -104,7 +104,7 @@ export default class TabListComponent extends Component<Signature> {
     });
 
     // TODO: Remove. Temporary measure for private course
-    if (this.args.course.slug !== 'gleam-chess-bot') {
+    if (this.args.course.slug !== 'gleam-chess-bot' && this.args.course.slug !== 'gleam-chess-bot-js') {
       tabs.push({
         icon: 'code',
         name: 'Code Examples',
