@@ -10,7 +10,7 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 
-module('Acceptance | course-page | view-code-examples', function (hooks) {
+module('Acceptance | course-page | code-examples | view', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
