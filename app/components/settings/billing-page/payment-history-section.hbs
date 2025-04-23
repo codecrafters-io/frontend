@@ -1,4 +1,4 @@
-<div>
+{{#if (gt @charges.length 0)}}
   <div class="grid grid-cols-3 gap-y-3">
     {{! Header }}
     <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
@@ -6,8 +6,8 @@
     <div class="border-b pb-2"></div>
 
     {{#each @charges as |charge|}}
-      <div class="text-gray-700 text-sm">{{format-date charge.createdAt}}</div>
-      <div class="text-gray-700 text-sm text-right">
+      <div class="text-gray-600 text-sm">{{date-format charge.createdAt format="PPP"}}</div>
+      <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
         <span class="font-semibold">{{charge.displayString}}</span>
         {{#if (gt charge.amountRefunded 0)}}
           {{#if charge.isFullyRefunded}}
@@ -21,7 +21,7 @@
       <div class="flex items-center justify-end">
         {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
           <a
-            href={{charge.invoiceUrl}}
+            href={{charge.invoiceDownloadUrl}}
             target="_blank"
             class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
             data-test-download-invoice-link
@@ -35,4 +35,8 @@
       </div>
     {{/each}}
   </div>
-</div> 
+{{else}}
+  <div class="text-gray-700">
+    No payment history found.
+  </div>
+{{/if}}
