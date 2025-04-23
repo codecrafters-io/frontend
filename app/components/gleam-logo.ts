@@ -25,6 +25,19 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   }
 
   @action
+  cleanupRive() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
+
+    if (this.riveInstance) {
+      this.riveInstance.stop();
+      this.riveInstance = null;
+    }
+  }
+
+  @action
   handleDidInsert(element: HTMLDivElement) {
     this.container = element;
 
@@ -48,72 +61,42 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
         layout: new Layout({
           fit: Fit.Contain,
         }),
-        autoplay: true,
-        automaticallyHandleEvents: true,
+        autoplay: false,
         onLoad: () => {
-          // Play initial animation with State Machine 2
-          setTimeout(() => {
-            if (this.riveInstance) {
-              const stateMachines = this.riveInstance.stateMachineNames;
+          console.log('onLoad');
 
-              if (stateMachines && stateMachines.length > 0) {
-                const stateMachine2 = 'State Machine 2';
+          if (this.riveInstance) {
+            const stateMachines = this.riveInstance.stateMachineNames;
 
-                if (stateMachines.includes(stateMachine2)) {
-                  this.riveInstance.reset();
-                  this.riveInstance.play(stateMachine2);
-
-                  // Then after 800ms, reset State Machine 2
-                  setTimeout(() => {
-                    if (this.riveInstance) {
-                      this.riveInstance.reset();
-                    }
-                  }, 800);
-                }
-              }
+            if (stateMachines?.includes('State Machine 2')) {
+              // Play first time immediately
+              this.riveInstance.play('State Machine 2');
             }
-          }, 500);
+
+            // Play State Machine 3 after 1 second to reset
+            setTimeout(() => {
+              if (this.riveInstance) {
+                this.riveInstance.play('State Machine 3');
+              }
+            }, 1000);
+
+            // Set up hover state machine
+            canvas.addEventListener('mouseenter', () => {
+              if (this.riveInstance) {
+                this.riveInstance.play('State Machine 1');
+              }
+            });
+
+            canvas.addEventListener('mouseleave', () => {
+              if (this.riveInstance) {
+                this.riveInstance.play('State Machine 1');
+              }
+            });
+          }
         },
       });
     } catch (error: unknown) {
       console.error('Error setting up Rive:', error);
-    }
-  }
-
-  @action
-  handleMouseEnter() {
-    if (this.riveInstance) {
-      const stateMachines = this.riveInstance.stateMachineNames;
-
-      if (stateMachines && stateMachines.length > 0) {
-        const stateMachineName = 'State Machine 1';
-
-        if (stateMachines.includes(stateMachineName)) {
-          this.riveInstance.reset();
-          this.riveInstance.play(stateMachineName);
-        }
-      }
-    }
-  }
-
-  @action
-  handleMouseLeave() {
-    if (this.riveInstance) {
-      this.riveInstance.stop();
-      this.riveInstance.reset();
-    }
-  }
-
-  @action
-  cleanupRive() {
-    if (this.animationInterval) {
-      clearInterval(this.animationInterval);
-      this.animationInterval = null;
-    }
-
-    if (this.riveInstance) {
-      this.riveInstance.stop();
-      this.riveInstance = null;
     }
   }
 }
