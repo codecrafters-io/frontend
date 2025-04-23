@@ -1,0 +1,38 @@
+<div>
+  <div class="grid grid-cols-3 gap-y-3">
+    {{! Header }}
+    <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
+    <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
+    <div class="border-b pb-2"></div>
+
+    {{#each @charges as |charge|}}
+      <div class="text-gray-700 text-sm">{{format-date charge.createdAt}}</div>
+      <div class="text-gray-700 text-sm text-right">
+        <span class="font-semibold">{{charge.displayString}}</span>
+        {{#if (gt charge.amountRefunded 0)}}
+          {{#if charge.isFullyRefunded}}
+            (refunded)
+          {{else}}
+            (<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
+            refunded)
+          {{/if}}
+        {{/if}}
+      </div>
+      <div class="flex items-center justify-end">
+        {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
+          <a
+            href={{charge.invoiceUrl}}
+            target="_blank"
+            class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
+            data-test-download-invoice-link
+            rel="noopener noreferrer"
+          >
+            Download Invoice
+          </a>
+        {{else if charge.statusIsFailed}}
+          <span class="text-gray-600 text-sm">Payment failed</span>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+</div> 
