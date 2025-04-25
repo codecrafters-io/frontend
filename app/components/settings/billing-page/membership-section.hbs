@@ -42,7 +42,7 @@
       </p>
     {{/if}}
   </div>
-{{else if @user.activeSubscription}}
+{{else if @user.expiredSubscription}}
   <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500" data-test-membership-section>
     <StaticDot @color="red" @size="large" />
     <div class="text-red-500 font-semibold uppercase text-sm">

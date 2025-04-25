@@ -226,7 +226,7 @@ module('Acceptance | pay-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await payPage.visit();
+    await visit('/pay');
 
     assert.strictEqual(currentURL(), '/settings/billing');
   });

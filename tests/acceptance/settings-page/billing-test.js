@@ -122,4 +122,35 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     assert.strictEqual(billingPage.paymentHistorySection.charges[1].amount, '$120', 'shows correct amount for second charge');
     assert.notOk(billingPage.paymentHistorySection.charges[1].failed, 'shows succeeded status for second charge');
   });
+
+  test('payment history section shows refunded charges correctly', async function (assert) {
+    testScenario(this.server);
+    const user = signInAsSubscriber(this.owner, this.server);
+
+    // Fully refunded charge
+    this.server.create('charge', {
+      user: user,
+      amount: 12000,
+      amountRefunded: 12000,
+      currency: 'usd',
+      createdAt: new Date(),
+      status: 'succeeded',
+    });
+
+    // Partially refunded charge
+    this.server.create('charge', {
+      user: user,
+      amount: 12000,
+      amountRefunded: 6000,
+      currency: 'usd',
+      createdAt: new Date(),
+      status: 'succeeded',
+    });
+
+    await billingPage.visit();
+    await settled();
+
+    assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges');
+    assert.dom('[data-test-refund-text]').exists({ count: 2 }, 'shows refund text for both charges');
+  });
 });

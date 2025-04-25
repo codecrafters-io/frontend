@@ -13,9 +13,9 @@
         <span class="font-semibold" data-test-amount>{{charge.displayString}}</span>
         {{#if (gt charge.amountRefunded 0)}}
           {{#if charge.isFullyRefunded}}
-            <span data-test-refund-text>(refunded)</span>
+            <span class="text-red-600" data-test-refund-text>(refunded)</span>
           {{else}}
-            <span data-test-refund-text>(<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
+            <span class="text-red-600" data-test-refund-text>(<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
               refunded)</span>
           {{/if}}
         {{/if}}

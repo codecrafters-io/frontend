@@ -13,7 +13,16 @@ export default class BillingRoute extends Route {
 
   async model(): Promise<BillingModelType> {
     const user = this.modelFor('settings') as SettingsModelType;
-    const charges = await this.store.findAll('charge');
+    let charges;
+
+    try {
+      charges = await this.store.query('charge', {
+        filter: { user_id: user.user.id },
+      });
+    } catch (error) {
+      console.error('Failed to fetch charges:', error);
+      charges = [];
+    }
 
     return {
       user: user.user,
