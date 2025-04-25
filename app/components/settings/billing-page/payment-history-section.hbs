@@ -1,20 +1,22 @@
 {{#if (gt @charges.length 0)}}
-  <div class="grid grid-cols-3 gap-y-3">
-    {{! Header }}
+  <div class="grid grid-cols-3 gap-y-3" data-test-payment-history-section>
+
     <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
     <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
     <div class="border-b pb-2"></div>
 
     {{#each @charges as |charge|}}
-      <div class="text-gray-600 text-sm">{{date-format charge.createdAt format="PPP"}}</div>
-      <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right">
+      <div class="text-gray-600 text-sm" data-test-payment-history-item>
+        {{date-format charge.createdAt format="PPP"}}
+      </div>
+      <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right" data-test-charge-id="{{charge.id}}">
         <span class="font-semibold">{{charge.displayString}}</span>
         {{#if (gt charge.amountRefunded 0)}}
           {{#if charge.isFullyRefunded}}
-            (refunded)
+            <span data-test-refund-text>(refunded)</span>
           {{else}}
-            (<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
-            refunded)
+            <span data-test-refund-text>(<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
+              refunded)</span>
           {{/if}}
         {{/if}}
       </div>
@@ -24,19 +26,20 @@
             href={{charge.invoiceDownloadUrl}}
             target="_blank"
             class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
+            data-test-status
             data-test-download-invoice-link
             rel="noopener noreferrer"
           >
             Download Invoice
           </a>
         {{else if charge.statusIsFailed}}
-          <span class="text-gray-600 text-sm">Payment failed</span>
+          <span class="text-gray-600 text-sm" data-test-status>Payment failed</span>
         {{/if}}
       </div>
     {{/each}}
   </div>
 {{else}}
-  <div class="text-gray-700">
+  <div class="text-gray-700 is-empty" data-test-payment-history-section data-test-empty-state>
     No payment history found.
   </div>
 {{/if}}

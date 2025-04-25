@@ -1,5 +1,8 @@
 {{#if @user.isVip}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
+  <div
+    class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan has-vip-access"
+    data-test-membership-section
+  >
     <StaticDot @color="green" @size="large" />
     <div class="text-teal-500 font-semibold uppercase text-sm">
       VIP Access
@@ -17,7 +20,7 @@
     </p>
   </div>
 {{else if @user.hasActiveSubscription}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
+  <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan" data-test-membership-section>
     <StaticDot @color="green" @size="large" />
     <div class="text-teal-500 font-semibold uppercase text-sm">
       Membership active
@@ -25,23 +28,35 @@
   </div>
 
   <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-    <p>
-      Your membership is valid until
-      <b class="font-semibold">{{date-format @user.activeSubscription.endedAt format="PPPp"}}</b>.
-    </p>
+    {{#if @user.activeSubscription.cancelAt}}
+      <p class="mb-3">
+        Your CodeCrafters membership is valid until
+        <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+      </p>
+      <p>Your membership doesn't renew automatically. To restart your membership, make a new one-time payment.</p>
+    {{else}}
+      <p>
+        You are currently subscribed to the
+        <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
+        plan.
+      </p>
+    {{/if}}
   </div>
 {{else if @user.activeSubscription}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500">
+  <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500" data-test-membership-section>
     <StaticDot @color="red" @size="large" />
     <div class="text-red-500 font-semibold uppercase text-sm">
-      Membership expired
+      Membership inactive
     </div>
   </div>
 
   <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
     <p>
-      Your membership expired on
-      <b class="font-semibold">{{date-format @user.activeSubscription.endedAt format="PPPp"}}</b>. Start a new membership to get access to
+      Your CodeCrafters membership is
+      <b class="text-red-600 font-semibold">currently inactive</b>.
+    </p>
+    <p>
+      Start a new membership to get access to
       <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
     </p>
   </div>
@@ -49,7 +64,7 @@
     Start membership →
   </PrimaryLinkButton>
 {{else}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500">
+  <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500" data-test-membership-section>
     <StaticDot @color="yellow" @size="large" />
     <div class="text-yellow-500 font-semibold uppercase text-sm">
       No membership found
