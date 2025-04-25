@@ -1,10 +1,16 @@
 import Component from '@glimmer/component';
 
+interface User {
+  username: string;
+  id?: string;
+  isVip?: boolean;
+}
+
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    username: string;
+    user: User;
   };
 }
 

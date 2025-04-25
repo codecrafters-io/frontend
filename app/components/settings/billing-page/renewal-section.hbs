@@ -1,10 +1,12 @@
-<div class="inline-flex items-center gap-2 rounded-full bg-gray-50 px-2 py-1 border border-gray-300">
-  <StaticDot @color="gray" @size="large" />
-  <div class="text-gray-400 font-semibold uppercase text-sm">
-    Auto-renew disabled
+<Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
+  <div class="inline-flex items-center gap-2 rounded-full bg-gray-50 px-2 py-1 border border-gray-300">
+    <StaticDot @color="gray" @size="large" />
+    <div class="text-gray-400 font-semibold uppercase text-sm">
+      Auto-renew disabled
+    </div>
   </div>
-</div>
 
-<div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-  Your membership does not renew automatically. Once your membership expires, you'll be able to make a new one-time payment.
-</div>
+  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+    Your membership does not renew automatically. Once your membership expires, you'll be able to make a new one-time payment.
+  </div>
+</Settings::FormSection>

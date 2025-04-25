@@ -1,83 +1,85 @@
-{{#if @user.isVip}}
-  <div
-    class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan has-vip-access"
-    data-test-membership-section
-  >
-    <StaticDot @color="green" @size="large" />
-    <div class="text-teal-500 font-semibold uppercase text-sm">
-      VIP Access
+<Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
+  {{#if @user.isVip}}
+    <div
+      class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan has-vip-access"
+      data-test-membership-section
+    >
+      <StaticDot @color="green" @size="large" />
+      <div class="text-teal-500 font-semibold uppercase text-sm">
+        VIP Access
+      </div>
     </div>
-  </div>
 
-  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-    <p>
-      {{#if @user.vipStatusExpiresAt}}
-        🎉 You have VIP access to all CodeCrafters content, valid until
-        <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>.
-      {{else}}
-        🎉 You have VIP access to all CodeCrafters content.
-      {{/if}}
-    </p>
-  </div>
-{{else if @user.hasActiveSubscription}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan" data-test-membership-section>
-    <StaticDot @color="green" @size="large" />
-    <div class="text-teal-500 font-semibold uppercase text-sm">
-      Membership active
-    </div>
-  </div>
-
-  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-    {{#if @user.activeSubscription.cancelAt}}
-      <p class="mb-3">
-        Your CodeCrafters membership is valid until
-        <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
-      </p>
-      <p>Your membership doesn't renew automatically. To restart your membership, make a new one-time payment.</p>
-    {{else}}
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
-        You are currently subscribed to the
-        <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
-        plan.
+        {{#if @user.vipStatusExpiresAt}}
+          🎉 You have VIP access to all CodeCrafters content, valid until
+          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>.
+        {{else}}
+          🎉 You have VIP access to all CodeCrafters content.
+        {{/if}}
       </p>
-    {{/if}}
-  </div>
-{{else if @user.expiredSubscription}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500" data-test-membership-section>
-    <StaticDot @color="red" @size="large" />
-    <div class="text-red-500 font-semibold uppercase text-sm">
-      Membership inactive
     </div>
-  </div>
-
-  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-    <p>
-      Your CodeCrafters membership is
-      <b class="text-red-600 font-semibold">currently inactive</b>.
-    </p>
-    <p>
-      Start a new membership to get access to
-      <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
-    </p>
-  </div>
-  <PrimaryLinkButton @size="small" @route="pay" class="mt-3">
-    Start membership →
-  </PrimaryLinkButton>
-{{else}}
-  <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500" data-test-membership-section>
-    <StaticDot @color="yellow" @size="large" />
-    <div class="text-yellow-500 font-semibold uppercase text-sm">
-      No membership found
+  {{else if @user.hasActiveSubscription}}
+    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan" data-test-membership-section>
+      <StaticDot @color="green" @size="large" />
+      <div class="text-teal-500 font-semibold uppercase text-sm">
+        Membership active
+      </div>
     </div>
-  </div>
 
-  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-    <p>
-      You don't have a CodeCrafters membership. Start one to get access to
-      <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
-    </p>
-  </div>
-  <PrimaryLinkButton @size="small" @route="pay" class="mt-3">
-    Start membership →
-  </PrimaryLinkButton>
-{{/if}}
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+      {{#if @user.activeSubscription.cancelAt}}
+        <p class="mb-3">
+          Your CodeCrafters membership is valid until
+          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+        </p>
+        <p>Your membership doesn't renew automatically. To restart your membership, make a new one-time payment.</p>
+      {{else}}
+        <p>
+          You are currently subscribed to the
+          <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
+          plan.
+        </p>
+      {{/if}}
+    </div>
+  {{else if @user.expiredSubscription}}
+    <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500" data-test-membership-section>
+      <StaticDot @color="red" @size="large" />
+      <div class="text-red-500 font-semibold uppercase text-sm">
+        Membership inactive
+      </div>
+    </div>
+
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+      <p>
+        Your CodeCrafters membership is
+        <b class="text-red-600 font-semibold">currently inactive</b>.
+      </p>
+      <p>
+        Start a new membership to get access to
+        <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
+      </p>
+    </div>
+    <PrimaryLinkButton @size="small" @route="pay" class="mt-3">
+      Start membership →
+    </PrimaryLinkButton>
+  {{else}}
+    <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500" data-test-membership-section>
+      <StaticDot @color="yellow" @size="large" />
+      <div class="text-yellow-500 font-semibold uppercase text-sm">
+        No membership found
+      </div>
+    </div>
+
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+      <p>
+        You don't have a CodeCrafters membership. Start one to get access to
+        <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
+      </p>
+    </div>
+    <PrimaryLinkButton @size="small" @route="pay" class="mt-3">
+      Start membership →
+    </PrimaryLinkButton>
+  {{/if}}
+</Settings::FormSection>

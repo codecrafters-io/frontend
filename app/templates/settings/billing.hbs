@@ -1,24 +1,9 @@
-{{! template-lint-disable no-implicit-this }}
-<Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
-  <Settings::BillingPage::MembershipSection @user={{this.model.user}} />
-</Settings::FormSection>
-
+<Settings::BillingPage::MembershipSection @user={{@model.user}} />
 <Settings::FormDivider />
-
-<Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
-  <Settings::BillingPage::RenewalSection />
-</Settings::FormSection>
-
+<Settings::BillingPage::RenewalSection />
 <Settings::FormDivider />
-
-<Settings::FormSection @title="Support" @description="How to get help with billing">
-  <Settings::BillingPage::SupportSection @username={{this.model.user.username}} />
-</Settings::FormSection>
-
+<Settings::BillingPage::SupportSection @user={{@model.user}} />
 <Settings::FormDivider />
-
-<Settings::FormSection @title="Payment history" @description="Details of your previous payments">
-  {{#let this.model.charges as |charges|}}
-    <Settings::BillingPage::PaymentHistorySection @charges={{charges}} />
-  {{/let}}
-</Settings::FormSection>
+{{#let @model.charges as |charges|}}
+  <Settings::BillingPage::PaymentHistorySection @charges={{charges}} />
+{{/let}}

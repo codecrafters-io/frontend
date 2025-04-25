@@ -77,6 +77,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
+    assert.dom('[data-test-payment-history-section]').hasText('No payment history found.', 'shows empty state text');
   });
 
   test('payment history section shows charges after creation', async function (assert) {
