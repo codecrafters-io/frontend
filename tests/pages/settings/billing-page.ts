@@ -1,4 +1,4 @@
-import { clickable, hasClass, isVisible, visitable, attribute } from 'ember-cli-page-object';
+import { clickable, hasClass, isVisible, visitable, attribute, collection, text } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -13,6 +13,10 @@ export default createPage({
     scope: '[data-test-payment-history-section]',
     isVisible: isVisible(),
     isEmpty: attribute('data-test-empty-state'),
+    charges: collection('[data-test-payment-history-item]', {
+      amount: text('[data-test-amount]'),
+      failed: hasClass('text-red-600'),
+    }),
   },
 
   supportSection: {

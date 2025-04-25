@@ -68,29 +68,58 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     // Commented out because it opens the email client, if behavior changes, uncomment
   });
 
-  test('payment history section shows correct information', async function (assert) {
+  test('payment history section shows empty state initially', async function (assert) {
     testScenario(this.server);
-    const user = signInAsSubscriber(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     await billingPage.visit();
     await settled();
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
-    assert.equal(billingPage.paymentHistorySection.isEmpty, '', 'shows empty state initially');
+    assert.equal(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
+  });
+
+  test('payment history section shows charges after creation', async function (assert) {
+    testScenario(this.server);
+    const user = signInAsSubscriber(this.owner, this.server);
+    user.update({
+      id: '63c51e91-e448-4ea9-821b-a80415f266d3',
+      email: 'test@example.com',
+      name: 'Test User',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
 
     this.server.create('charge', {
+      id: 'charge-1',
       user: user,
       amount: 12000,
       amountRefunded: 0,
       currency: 'usd',
+      createdAt: new Date(),
+      invoiceId: 'invoice-1',
+      status: 'failed',
+    });
+
+    this.server.create('charge', {
+      id: 'charge-2',
+      user: user,
+      amount: 12000,
+      amountRefunded: 0,
+      currency: 'usd',
+      createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7),
+      invoiceId: 'invoice-2',
       status: 'succeeded',
     });
 
-    await settled();
-    
     await billingPage.visit();
     await settled();
-    
-    assert.notEqual(billingPage.paymentHistorySection.isEmpty, '', 'shows payment history after charge is created');
+
+    assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
+    assert.equal(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges after creation');
+    assert.equal(billingPage.paymentHistorySection.charges[0].amount, '$120', 'shows correct amount for first charge');
+    assert.ok(billingPage.paymentHistorySection.charges[0].failed, 'shows failed status for first charge');
+    assert.equal(billingPage.paymentHistorySection.charges[1].amount, '$120', 'shows correct amount for second charge');
+    assert.notOk(billingPage.paymentHistorySection.charges[1].failed, 'shows succeeded status for second charge');
   });
 });

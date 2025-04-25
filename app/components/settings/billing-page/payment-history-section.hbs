@@ -6,11 +6,11 @@
     <div class="border-b pb-2"></div>
 
     {{#each @charges as |charge|}}
-      <div class="text-gray-600 text-sm" data-test-payment-history-item>
+      <div class="text-gray-600 text-sm">
         {{date-format charge.createdAt format="PPP"}}
       </div>
-      <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right" data-test-charge-id="{{charge.id}}">
-        <span class="font-semibold">{{charge.displayString}}</span>
+      <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right" data-test-payment-history-item>
+        <span class="font-semibold" data-test-amount>{{charge.displayString}}</span>
         {{#if (gt charge.amountRefunded 0)}}
           {{#if charge.isFullyRefunded}}
             <span data-test-refund-text>(refunded)</span>
