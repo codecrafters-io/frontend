@@ -4,6 +4,4 @@
 <Settings::FormDivider />
 <Settings::BillingPage::SupportSection @user={{@model.user}} />
 <Settings::FormDivider />
-{{#let @model.charges as |charges|}}
-  <Settings::BillingPage::PaymentHistorySection @charges={{charges}} />
-{{/let}}
+<Settings::BillingPage::PaymentHistorySection @user={{@model.user}} />

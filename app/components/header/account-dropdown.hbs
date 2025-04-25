@@ -23,6 +23,7 @@
       {{else}}
         <Header::AccountDropdownLink @text="Subscribe" @icon="credit-card" {{on "click" (fn this.handleSubscribeClick dd.actions)}} />
       {{/if}}
+      
       <Header::AccountDropdownLink @text="Your Profile" @icon="user" {{on "click" (fn this.handleViewProfileClick dd.actions)}} />
 
       {{#if this.currentUser.isTeamAdmin}}

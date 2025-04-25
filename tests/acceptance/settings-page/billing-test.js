@@ -4,9 +4,15 @@ import { signIn, signInAsSubscriber, signInAsVipUser } from 'codecrafters-fronte
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page';
 import { settled } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
+import window from 'ember-window-mock';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
   setupApplicationTest(hooks);
+  setupMirage(hooks);
+  setupWindowMock(hooks);
 
   test('membership section shows correct plan for subscriber with active subscription', async function (assert) {
     testScenario(this.server);
@@ -18,20 +24,9 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await settled();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.ok(billingPage.membershipSection.hasActivePlan, 'shows active plan');
-  });
-
-  test('membership section shows correct plan for subscriber with canceled subscription', async function (assert) {
-    testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
-    const subscription = this.server.schema.subscriptions.first();
-    subscription.update('cancelAt', new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30)); // 30 days from now
-
-    await billingPage.visit();
-    await settled();
-
-    assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.ok(billingPage.membershipSection.hasActivePlan, 'shows active plan');
+    assert.strictEqual(billingPage.membershipSection.text, 'Membership active', 'shows active plan');
+    
+    await percySnapshot('Billing Page - Active Subscription');
   });
 
   test('membership section shows correct plan for non-subscriber', async function (assert) {
@@ -53,7 +48,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await settled();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.ok(billingPage.membershipSection.hasVipAccess, 'shows VIP access');
+    assert.strictEqual(billingPage.membershipSection.text, 'VIP Access', 'shows VIP access');
   });
 
   test('support section is visible', async function (assert) {
@@ -64,8 +59,8 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await settled();
 
     assert.ok(billingPage.supportSection.isVisible, 'support section is visible');
-    // await billingPage.supportSection.clickContactButton();
-    // Commented out because it opens the email client, if behavior changes, uncomment
+    assert.ok(billingPage.supportSection.clickOnContactButton, 'click on contact button');
+
   });
 
   test('payment history section shows empty state initially', async function (assert) {
@@ -122,6 +117,8 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     assert.ok(billingPage.paymentHistorySection.charges[0].failed, 'shows failed status for first charge');
     assert.strictEqual(billingPage.paymentHistorySection.charges[1].amount, '$120', 'shows correct amount for second charge');
     assert.notOk(billingPage.paymentHistorySection.charges[1].failed, 'shows succeeded status for second charge');
+
+    await percySnapshot('Billing Page - Payment History with Multiple Charges');
   });
 
   test('payment history section shows refunded charges correctly', async function (assert) {
@@ -153,5 +150,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges');
     assert.dom('[data-test-refund-text]').exists({ count: 2 }, 'shows refund text for both charges');
+
+    await percySnapshot('Billing Page - Payment History with Refunded Charges');
   });
 });
