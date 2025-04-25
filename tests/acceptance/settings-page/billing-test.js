@@ -6,7 +6,6 @@ import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page
 import { settled } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
-import window from 'ember-window-mock';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
@@ -25,7 +24,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.strictEqual(billingPage.membershipSection.text, 'Membership active', 'shows active plan');
-    
+
     await percySnapshot('Billing Page - Active Subscription');
   });
 
@@ -60,7 +59,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.supportSection.isVisible, 'support section is visible');
     assert.ok(billingPage.supportSection.clickOnContactButton, 'click on contact button');
-
   });
 
   test('payment history section shows empty state initially', async function (assert) {
