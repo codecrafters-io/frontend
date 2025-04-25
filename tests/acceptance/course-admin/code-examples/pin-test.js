@@ -8,7 +8,7 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
-module('Acceptance | course-admin | pin-code-example', function (hooks) {
+module('Acceptance | course-admin | code-examples | pin', function (hooks) {
   setupApplicationTest(hooks);
 
   test('can pin code example', async function (assert) {
