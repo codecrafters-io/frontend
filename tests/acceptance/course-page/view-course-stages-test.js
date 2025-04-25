@@ -747,15 +747,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
   });
 
-  test('member badge redirects to /membership', async function (assert) {
+  test('member badge redirects to /settings/billing', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.visit();
     await coursePage.header.memberBadge.click();
 
-    assert.strictEqual(currentURL(), '/membership', 'expect to be redirected to membership page');
+    assert.strictEqual(currentURL(), '/settings/billing', 'expect to be redirected to settings billing page');
   });
 });

@@ -222,12 +222,12 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(currentURL(), '/catalog');
   });
 
-  test('user should be redirected to /membership if user is authenticated and has an active subscription', async function (assert) {
+  test('user should be redirected to /settings/billing if user is authenticated and has an active subscription', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await visit('/pay');
+    await payPage.visit();
 
-    assert.strictEqual(currentURL(), '/membership');
+    assert.strictEqual(currentURL(), '/settings/billing');
   });
 });
