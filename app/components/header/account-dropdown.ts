@@ -52,7 +52,7 @@ export default class AccountDropdownComponent extends Component {
   @action
   async handleManageSubscriptionClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
-    this.router.transitionTo('membership');
+    this.router.transitionTo('settings.billing');
   }
 
   @action
