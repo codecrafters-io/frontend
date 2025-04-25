@@ -751,7 +751,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
-    await coursePage.visit({ course_slug: 'redis' });
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.header.memberBadge.click();
 
     assert.strictEqual(currentURL(), '/settings/billing', 'expect to be redirected to settings billing page');
