@@ -3,7 +3,6 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsVipUser } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page';
-import { settled } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
@@ -20,7 +19,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     subscription.update('pricingPlanName', 'Yearly Plan');
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.strictEqual(billingPage.membershipSection.text, 'Membership active', 'shows active plan');
@@ -33,7 +31,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.notOk(billingPage.membershipSection.hasActivePlan, 'does not show active plan');
@@ -44,7 +41,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     signInAsVipUser(this.owner, this.server);
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.strictEqual(billingPage.membershipSection.text, 'VIP Access', 'shows VIP access');
@@ -55,7 +51,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.supportSection.isVisible, 'support section is visible');
     assert.ok(billingPage.supportSection.clickOnContactButton, 'click on contact button');
@@ -66,7 +61,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
@@ -107,7 +101,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     });
 
     await billingPage.visit();
-    await settled();
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges after creation');
@@ -144,7 +137,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     });
 
     await billingPage.visit();
-    await settled();
 
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges');
     assert.dom('[data-test-refund-text]').exists({ count: 2 }, 'shows refund text for both charges');
