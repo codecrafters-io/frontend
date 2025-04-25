@@ -22,7 +22,7 @@ export default createPage({
   supportSection: {
     scope: '[data-test-support-section]',
     isVisible: isVisible(),
-    clickContactButton: clickable('[data-test-support-contact-button]'),
+    clickOnContactButton: clickable('[data-test-support-contact-button]'),
   },
 
   visit: visitable('/settings/billing'),
