@@ -76,7 +76,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await settled();
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
-    assert.equal(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
+    assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
   });
 
   test('payment history section shows charges after creation', async function (assert) {
@@ -116,10 +116,10 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await settled();
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
-    assert.equal(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges after creation');
-    assert.equal(billingPage.paymentHistorySection.charges[0].amount, '$120', 'shows correct amount for first charge');
+    assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges after creation');
+    assert.strictEqual(billingPage.paymentHistorySection.charges[0].amount, '$120', 'shows correct amount for first charge');
     assert.ok(billingPage.paymentHistorySection.charges[0].failed, 'shows failed status for first charge');
-    assert.equal(billingPage.paymentHistorySection.charges[1].amount, '$120', 'shows correct amount for second charge');
+    assert.strictEqual(billingPage.paymentHistorySection.charges[1].amount, '$120', 'shows correct amount for second charge');
     assert.notOk(billingPage.paymentHistorySection.charges[1].failed, 'shows succeeded status for second charge');
   });
 });
