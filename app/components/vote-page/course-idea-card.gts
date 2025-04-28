@@ -74,8 +74,8 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white p-5 rounded-md shadow-sm flex flex-col justify-between border
-        {{if this.userHasVoted "border-gray-300"}}
+      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm dark:shadow-gray-900/20 flex flex-col justify-between border
+        {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
         relative
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
       data-test-course-idea-card
@@ -83,13 +83,13 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
       {{! Text }}
       <div class='mb-4'>
         <div class='flex items-start justify-between mb-3'>
-          <div class='text-gray-700 mr-2 mb-0.5 font-bold text-xl tracking-tight' data-test-course-idea-name>
+          <div class='text-gray-700 dark:text-gray-200 mr-2 mb-0.5 font-bold text-xl tracking-tight' data-test-course-idea-name>
             {{@courseIdea.name}}
           </div>
 
           {{#if @courseIdea.developmentStatusIsInProgress}}
             <div
-              class='text-xs text-white font-semibold bg-yellow-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
+              class='text-xs text-white font-semibold bg-yellow-500 dark:bg-yellow-600 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
               data-test-development-status-label
             >
               in progress
@@ -102,7 +102,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
             </div>
           {{else if @courseIdea.developmentStatusIsReleased}}
             <div
-              class='text-xs text-white font-semibold bg-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
+              class='text-xs text-white font-semibold bg-teal-500 dark:bg-teal-600 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
               data-test-development-status-label
             >
               <LinkTo @route='catalog'>released</LinkTo>
@@ -110,12 +110,12 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
               <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
             </div>
           {{else if this.userHasVoted}}
-            <div class='h-7 w-7 bg-teal-500 rounded flex items-center justify-center'>
+            <div class='h-7 w-7 bg-teal-500 dark:bg-teal-600 rounded flex items-center justify-center'>
               {{svgJar 'chevron-up' class='w-7 fill-current text-white'}}
             </div>
           {{else if @courseIdea.isNewlyCreated}}
             <div
-              class='text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5'
+              class='text-xs text-teal-500 dark:text-teal-400 font-semibold border border-teal-500 dark:border-teal-400 rounded px-1.5 py-1 ml-3 mt-0.5'
               data-test-development-status-label
             >
               new
@@ -123,7 +123,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
             </div>
           {{/if}}
         </div>
-        <div class='prose prose-sm'>
+        <div class='prose dark:prose-invert prose-sm'>
           {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
         </div>
       </div>
@@ -134,7 +134,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} class='mr-2' />
 
           {{#if (and this.userHasVoted this.isVotingOrUnvoting)}}
-            <svg class='animate-spin ml-2 w-3 text-teal-500' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+            <svg class='animate-spin ml-2 w-3 text-teal-500 dark:text-teal-400' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
               <circle class='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' stroke-width='4'></circle>
               <path
                 class='opacity-75'
