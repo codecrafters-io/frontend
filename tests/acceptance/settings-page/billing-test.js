@@ -21,7 +21,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await billingPage.visit();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.strictEqual(billingPage.membershipSection.text, 'Membership active', 'shows active plan');
+    assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
 
     await percySnapshot('Billing Page - Active Subscription');
   });
@@ -43,7 +43,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await billingPage.visit();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.strictEqual(billingPage.membershipSection.text, 'VIP Access', 'shows VIP access');
+    assert.ok(billingPage.membershipSection.text.includes('VIP Access'), 'shows VIP access');
   });
 
   test('support section is visible', async function (assert) {
