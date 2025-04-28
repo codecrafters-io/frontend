@@ -4,7 +4,6 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 export default createPage({
   membershipSection: {
     scope: '[data-test-membership-section]',
-    text: text(),
   },
 
   paymentHistorySection: {

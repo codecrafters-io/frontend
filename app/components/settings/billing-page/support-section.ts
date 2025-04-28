@@ -1,20 +1,17 @@
 import Component from '@glimmer/component';
-
-interface User {
-  username: string;
-  id?: string;
-  isVip?: boolean;
-}
+import type UserModel from 'codecrafters-frontend/models/user';
 
 interface Signature {
-  Element: HTMLDivElement;
-
   Args: {
-    user: User;
+    user: UserModel;
   };
 }
 
-export default class SupportSectionComponent extends Component<Signature> {}
+export default class SupportSectionComponent extends Component<Signature> {
+  get supportEmail() {
+    return `support+${this.args.user.username}@codecrafters.io`;
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
