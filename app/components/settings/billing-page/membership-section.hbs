@@ -1,6 +1,6 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
   {{#if (and @user.isVip @user.hasActiveSubscription)}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500" data-test-membership-section>
+    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 dark:bg-teal-900 px-2 py-1 border border-teal-500 dark:border-teal-400" data-test-membership-section>
       {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         VIP Access + Membership Active

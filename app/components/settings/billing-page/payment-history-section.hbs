@@ -1,36 +1,36 @@
 <Settings::FormSection @title="Payment history" @description="Details of your previous payments">
   {{#if this.isLoading}}
     <div class="flex justify-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100"></div>
     </div>
   {{else if this.errorMessage}}
-    <div class="bg-red-50 border border-red-200 rounded-md p-4">
+    <div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-400 rounded-md p-4">
       <div class="flex">
         <div class="flex-shrink-0">
-          {{svg-jar "x-circle" class="h-5 w-5 text-red-400"}}
+          {{svg-jar "x-circle" class="h-5 w-5 text-red-400 dark:text-red-300"}}
         </div>
         <div class="ml-3">
-          <p class="text-sm text-red-700">{{this.errorMessage}}</p>
+          <p class="text-sm text-red-700 dark:text-red-300">{{this.errorMessage}}</p>
         </div>
       </div>
     </div>
   {{else if (gt this.charges.length 0)}}
     <div class="grid grid-cols-3 gap-y-3" data-test-payment-history-section>
-      <div class="border-b pb-2 text-gray-500 text-sm">Date</div>
-      <div class="border-b pb-2 text-gray-500 text-sm text-right">Amount</div>
+      <div class="border-b pb-2 text-gray-500 dark:text-gray-400 text-sm">Date</div>
+      <div class="border-b pb-2 text-gray-500 dark:text-gray-400 text-sm text-right">Amount</div>
       <div class="border-b pb-2"></div>
 
       {{#each this.charges as |charge|}}
-        <div class="text-gray-600 text-sm">
+        <div class="text-gray-600 dark:text-gray-300 text-sm">
           {{date-format charge.createdAt format="PPP"}}
         </div>
-        <div class="{{if charge.statusIsFailed 'text-red-600' 'text-gray-600'}} text-sm text-right" data-test-payment-history-item>
+        <div class="{{if charge.statusIsFailed 'text-red-600 dark:text-red-400' 'text-gray-600 dark:text-gray-300'}} text-sm text-right" data-test-payment-history-item>
           <span class="font-semibold" data-test-amount>{{charge.displayString}}</span>
           {{#if (gt charge.amountRefunded 0)}}
             {{#if charge.isFullyRefunded}}
-              <span class="text-red-600" data-test-refund-text>(refunded)</span>
+              <span class="text-red-600 dark:text-red-400" data-test-refund-text>(refunded)</span>
             {{else}}
-              <span class="text-red-600" data-test-refund-text>(<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
+              <span class="text-red-600 dark:text-red-400" data-test-refund-text>(<span class="font-semibold">{{charge.refundedAmountDisplayString}}</span>
                 refunded)</span>
             {{/if}}
           {{/if}}
@@ -40,20 +40,20 @@
             <a
               href={{charge.invoiceDownloadUrl}}
               target="_blank"
-              class="text-teal-500 hover:text-teal-600 font-semibold text-sm"
+              class="text-teal-500 dark:text-teal-400 hover:text-teal-600 dark:hover:text-teal-300 font-semibold text-sm"
               data-test-download-invoice-link
               rel="noopener noreferrer"
             >
               Download Invoice
             </a>
           {{else if charge.statusIsFailed}}
-            <span class="text-gray-600 text-sm">Payment failed</span>
+            <span class="text-gray-600 dark:text-gray-300 text-sm">Payment failed</span>
           {{/if}}
         </div>
       {{/each}}
     </div>
   {{else}}
-    <div class="text-gray-700" data-test-payment-history-section>
+    <div class="text-gray-700 dark:text-gray-200" data-test-payment-history-section>
       No payment history found.
     </div>
   {{/if}}
