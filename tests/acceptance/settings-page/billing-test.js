@@ -54,6 +54,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.supportSection.isVisible, 'support section is visible');
     assert.ok(billingPage.supportSection.clickOnContactButton, 'click on contact button');
+    assert.dom('[data-test-support-section]').hasAttribute('href', /^mailto:hello@codecrafters.io/);
   });
 
   test('payment history section shows empty state initially', async function (assert) {
