@@ -1,12 +1,47 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details">
-  {{#if @user.isVip}}
+  {{#if (and @user.isVip @user.hasActiveSubscription)}}
+    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500" data-test-membership-section>
+      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
+      <div class="text-teal-500 font-semibold uppercase text-sm">
+        VIP Access + Membership Active
+      </div>
+    </div>
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+      <p>
+        🎉 You have VIP access to all CodeCrafters content{{#if @user.vipStatusExpiresAt}}, valid until <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>{{/if}}.
+      </p>
+      <p>
+        You are currently subscribed to the <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b> plan{{#if @user.activeSubscription.cancelAt}}, valid until <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>{{/if}}.
+      </p>
+    </div>
+  {{else if @user.hasActiveSubscription}}
+    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan" data-test-membership-section>
+      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
+      <div class="text-teal-500 font-semibold uppercase text-sm">
+        Membership active
+      </div>
+    </div>
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+      {{#if @user.activeSubscription.cancelAt}}
+        <p class="mb-3">
+          Your CodeCrafters membership is valid until
+          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+        </p>
+      {{else}}
+        <p>
+          You are currently subscribed to the
+          <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
+          plan.
+        </p>
+      {{/if}}
+    </div>
+  {{else if @user.isVip}}
     <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500" data-test-membership-section>
       {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         VIP Access
       </div>
     </div>
-
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         {{#if @user.vipStatusExpiresAt}}
@@ -17,29 +52,6 @@
         {{/if}}
       </p>
     </div>
-  {{else if @user.hasActiveSubscription}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan" data-test-membership-section>
-      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
-      <div class="text-teal-500 font-semibold uppercase text-sm">
-        Membership active
-      </div>
-    </div>
-
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-      {{#if @user.activeSubscription.cancelAt}}
-        <p class="mb-3">
-          Your CodeCrafters membership is valid until
-          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
-        </p>
-        <p>Your membership doesn't renew automatically. To restart your membership, make a new one-time payment.</p>
-      {{else}}
-        <p>
-          You are currently subscribed to the
-          <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
-          plan.
-        </p>
-      {{/if}}
-    </div>
   {{else if @user.expiredSubscription}}
     <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500" data-test-membership-section>
       {{svg-jar "x-circle" class="h-5 w-5 text-red-500"}}
@@ -47,7 +59,6 @@
         Membership inactive
       </div>
     </div>
-
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         Your CodeCrafters membership is
@@ -68,7 +79,6 @@
         No membership found
       </div>
     </div>
-
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         You don't have a CodeCrafters membership. Start one to get access to
