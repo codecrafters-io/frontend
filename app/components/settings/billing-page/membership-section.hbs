@@ -8,10 +8,14 @@
     </div>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
-        🎉 You have VIP access to all CodeCrafters content{{#if @user.vipStatusExpiresAt}}, valid until <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>{{/if}}.
+        🎉 You have VIP access to all CodeCrafters content{{#if @user.vipStatusExpiresAt}}, valid until
+          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>{{/if}}.
       </p>
       <p>
-        You are currently subscribed to the <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b> plan{{#if @user.activeSubscription.cancelAt}}, valid until <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>{{/if}}.
+        You are currently subscribed to the
+        <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
+        plan{{#if @user.activeSubscription.cancelAt}}, valid until
+          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>{{/if}}.
       </p>
     </div>
   {{else if @user.hasActiveSubscription}}
