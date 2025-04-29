@@ -74,7 +74,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm dark:shadow-gray-900/20 flex flex-col justify-between border
+      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm flex flex-col justify-between border
         {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
         relative
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
@@ -115,7 +115,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
             </div>
           {{else if @courseIdea.isNewlyCreated}}
             <div
-              class='text-xs text-teal-500 dark:text-teal-400 font-semibold border border-teal-500 dark:border-teal-400 rounded px-1.5 py-1 ml-3 mt-0.5'
+              class='text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5'
               data-test-development-status-label
             >
               new
@@ -134,7 +134,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} class='mr-2' />
 
           {{#if (and this.userHasVoted this.isVotingOrUnvoting)}}
-            <svg class='animate-spin ml-2 w-3 text-teal-500 dark:text-teal-400' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
+            <svg class='animate-spin ml-2 w-3 text-teal-500' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
               <circle class='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' stroke-width='4'></circle>
               <path
                 class='opacity-75'

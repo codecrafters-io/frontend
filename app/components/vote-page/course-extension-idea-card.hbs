@@ -1,5 +1,5 @@
 <div
-  class="relative group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm dark:shadow-gray-900/20 flex flex-col justify-between border
+  class="relative group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm flex flex-col justify-between border
     {{if this.userHasVoted 'border-gray-300 dark:border-gray-700' 'border-gray-200 dark:border-white/5'}}
     {{if @courseExtensionIdea.developmentStatusIsReleased 'opacity-50'}}"
   data-test-course-extension-idea-card
@@ -40,7 +40,7 @@
         </div>
       {{else if @courseExtensionIdea.isNewlyCreated}}
         <div
-          class="text-xs text-teal-500 dark:text-teal-400 font-semibold border border-teal-500 dark:border-teal-400 rounded px-1.5 py-1 ml-3 mt-0.5"
+          class="text-xs text-teal-500 dark:text-teal-600 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5"
           data-test-development-status-label
         >
           new
