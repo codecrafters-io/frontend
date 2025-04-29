@@ -21,7 +21,7 @@ export default class SubmitCourseIdeaCardComponent extends Component {
 
   <template>
     <div
-      class='group border-2 border-dashed hover:border-gray-400 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 hover:text-gray-600'
+      class='group border-2 border-dashed dark:border-white/5 hover:border-gray-400 dark:hover:border-gray-700 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400'
       data-test-submit-course-idea-card
       role='button'
       {{on 'click' this.handleClick}}

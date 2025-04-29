@@ -8,7 +8,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { hash as RSVPHash } from 'rsvp';
 import type Transition from '@ember/routing/transition';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   courseIdeas: CourseIdeaModel[];
@@ -31,7 +31,7 @@ export default class VoteRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   async model(): Promise<ModelType> {
