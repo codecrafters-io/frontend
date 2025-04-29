@@ -242,6 +242,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
 
+    assert.strictEqual(currentURL(), '/courses/dummy/overview', 'should navigate to overview page first');
+    await courseOverviewPage.clickOnStartCourse();
+
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.contains(currentURL(), '/courses/dummy/introduction', 'has correct URL');
 
