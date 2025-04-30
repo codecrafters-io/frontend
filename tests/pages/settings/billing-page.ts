@@ -12,6 +12,7 @@ export default createPage({
       failed: hasClass('text-red-600'),
     }),
     scope: '[data-test-payment-history-section]',
+    
   },
 
   supportSection: {

@@ -17,8 +17,8 @@ export default class PaymentHistorySectionComponent extends Component<Signature>
   @service declare store: Store;
 
   @tracked charges: ChargeModel[] = [];
-  @tracked isLoading = true;
   @tracked errorMessage: string | null = null;
+  @tracked isLoading = true;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);

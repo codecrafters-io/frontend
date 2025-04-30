@@ -1,47 +1,29 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
-  {{#if (and @user.isVip @user.hasActiveSubscription)}}
+  {{#if @user.hasActiveSubscription}}
     <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 dark:bg-teal-900 px-2 py-1 border border-teal-500 dark:border-teal-400">
-      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
-      <div class="text-teal-500 font-semibold uppercase text-sm">
-        VIP Access + Membership Active
-      </div>
-    </div>
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-      <p>
-        🎉 You have VIP access to all CodeCrafters content{{#if @user.vipStatusExpiresAt}}, valid until
-          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>{{/if}}.
-      </p>
-      <p>
-        You are currently subscribed to the
-        <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
-        plan{{#if @user.activeSubscription.cancelAt}}, valid until
-          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>{{/if}}.
-      </p>
-    </div>
-  {{else if @user.hasActiveSubscription}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500 has-active-plan">
-      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         Membership active
       </div>
     </div>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
-      {{#if @user.activeSubscription.cancelAt}}
-        <p class="mb-3">
-          Your CodeCrafters membership is valid until
+      {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
+        <p class="line-through">
+          You have access to all CodeCrafters content, valid until
           <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+        </p>
+        <p>
+          🎉 You have VIP access to all CodeCrafters content, valid until
+          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>.
         </p>
       {{else}}
         <p>
-          You are currently subscribed to the
-          <b class="font-semibold">{{@user.activeSubscription.pricingPlanName}}</b>
-          plan.
+          You have access to all CodeCrafters content, valid until
+          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
         </p>
       {{/if}}
     </div>
   {{else if @user.isVip}}
     <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
-      {{svg-jar "check-circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         VIP Access
       </div>
@@ -58,7 +40,6 @@
     </div>
   {{else if @user.expiredSubscription}}
     <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500">
-      {{svg-jar "x-circle" class="h-5 w-5 text-red-500"}}
       <div class="text-red-500 font-semibold uppercase text-sm">
         Membership inactive
       </div>
@@ -78,7 +59,6 @@
     </PrimaryLinkButton>
   {{else}}
     <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500">
-      {{svg-jar "question-mark-circle" class="h-5 w-5 text-yellow-500"}}
       <div class="text-yellow-500 font-semibold uppercase text-sm">
         No membership found
       </div>

@@ -34,6 +34,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.notOk(billingPage.membershipSection.hasActivePlan, 'does not show active plan');
+    await percySnapshot('Billing Page - No Active Subscription');
   });
 
   test('membership section shows VIP access for subscriber with VIP access', async function (assert) {
@@ -44,6 +45,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.ok(billingPage.membershipSection.text.includes('VIP Access'), 'shows VIP access');
+    await percySnapshot('Billing Page - VIP Access');
   });
 
   test('support section is visible', async function (assert) {
@@ -65,7 +67,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
-    assert.dom('[data-test-payment-history-section]').hasText('No payment history found.', 'shows empty state text');
+    assert.dom('[data-test-payment-history-section] > div:last-child').hasText('No payment history found.', 'shows empty state text');
   });
 
   test('payment history section shows charges after creation', async function (assert) {
