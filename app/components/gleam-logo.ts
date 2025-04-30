@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { Fit, Layout, Rive } from '@rive-app/canvas';
+import * as Sentry from '@sentry/ember';
 
 interface GleamLogoSignature {
   Element: HTMLDivElement;
@@ -96,6 +97,12 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       });
     } catch (error: unknown) {
       console.error('Error setting up Rive:', error);
+      Sentry.captureException(error, {
+        tags: {
+          component: 'GleamLogo',
+          action: 'handleDidInsert',
+        },
+      });
     }
   }
 }
