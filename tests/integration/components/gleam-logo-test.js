@@ -85,6 +85,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
 
   test('it renders and initializes correctly', async function (assert) {
     await render(hbs`<GleamLogo @height={{200}} />`);
+    await settled();
 
     // Check container dimensions
     const container = this.element.querySelector('div');
@@ -105,9 +106,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
 
   test('it handles hover state correctly', async function (assert) {
     await render(hbs`<GleamLogo />`);
-
-    // Wait for the component to fully initialize
-    await new Promise((resolve) => setTimeout(resolve, 0));
+    await settled();
 
     const container = this.element.querySelector('div');
     assert.ok(container, 'Container exists');
@@ -131,7 +130,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
     assert.false(hoverInput.value, 'Hover input is initially false');
 
     // Wait for hover out timeout
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await settled();
     assert.false(hoverInput.value, 'Hover input is set to false after timeout');
   });
 });
