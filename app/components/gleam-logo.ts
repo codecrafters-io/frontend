@@ -1,7 +1,7 @@
+import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
-import { Rive, Layout, Fit, EventType, RiveEventType } from '@rive-app/canvas';
+import { Fit, Layout, Rive } from '@rive-app/canvas';
 
 interface GleamLogoSignature {
   Element: HTMLDivElement;
@@ -16,9 +16,9 @@ interface GleamLogoSignature {
 }
 
 export default class GleamLogoComponent extends Component<GleamLogoSignature> {
-  @tracked riveInstance: Rive | null = null;
-  container: HTMLElement | null = null;
   animationInterval: number | null = null;
+  container: HTMLElement | null = null;
+  @tracked riveInstance: Rive | null = null;
 
   get containerStyle(): string {
     // Ensure minimum size on mobile while maintaining aspect ratio
@@ -90,18 +90,6 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
                 }
               });
             }
-            
-            // Handle state changes for hover
-            this.riveInstance.on(EventType.StateChange, (event: any) => {
-              const stateName = event.data[0]; // State name is the first element in the array
-
-              // Handle different states
-              if (stateName === 'Hover') {
-                // Add any hover-specific logic here
-              } else if (stateName === 'Idle') {
-                // Add any idle-specific logic here
-              }
-            });
           }
         },
       });
