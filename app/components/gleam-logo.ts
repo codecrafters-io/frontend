@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { Rive, Layout, Fit } from '@rive-app/canvas';
+import { Rive, Layout, Fit, EventType, RiveEventType } from '@rive-app/canvas';
 
 interface GleamLogoSignature {
   Element: HTMLDivElement;
@@ -21,7 +21,9 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   animationInterval: number | null = null;
 
   get containerStyle(): string {
-    return `height: ${this.args.height}px; width: auto;`;
+    // Ensure minimum size on mobile while maintaining aspect ratio
+    const minSize = Math.min(this.args.height, 200);
+    return `height: ${minSize}px; width: ${minSize}px; max-width: 100%;`;
   }
 
   @action
@@ -45,51 +47,59 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       const canvas = document.createElement('canvas');
 
       // Set initial canvas size for high quality
-      canvas.width = 400; // Base size for quality
-      canvas.height = 400; // Will adjust based on container
+      const baseSize = 400; // Base size for quality
+      canvas.width = baseSize;
+      canvas.height = baseSize;
 
       // Let the canvas scale naturally within its container
       canvas.style.width = '100%';
       canvas.style.height = '100%';
       canvas.style.display = 'block';
+      canvas.style.maxWidth = '100%'; // Ensure it doesn't overflow on mobile
 
       element.appendChild(canvas);
 
       this.riveInstance = new Rive({
         src: '/assets/animations/gleam_logo_animation.riv',
         canvas: canvas,
+        stateMachines: 'State Machine 1',
+        autoplay: true,
+        automaticallyHandleEvents: true,
         layout: new Layout({
           fit: Fit.Contain,
         }),
-        autoplay: false,
         onLoad: () => {
-          console.log('onLoad');
-
           if (this.riveInstance) {
-            const stateMachines = this.riveInstance.stateMachineNames;
+            // Initial resize
+            this.riveInstance.resizeDrawingSurfaceToCanvas();
 
-            if (stateMachines?.includes('State Machine 2')) {
-              // Play first time immediately
-              this.riveInstance.play('State Machine 2');
+            const inputs = this.riveInstance.stateMachineInputs('State Machine 1');
+
+            // Try to trigger hover state
+            if (inputs) {
+              inputs.forEach(input => {
+                if (input.name.toLowerCase().includes('hover')) {
+                  input.value = true;
+                  
+                  // Set timeout to trigger hover out after 1 second
+                  setTimeout(() => {
+                    if (this.riveInstance) {
+                      input.value = false;
+                    }
+                  }, 1000);
+                }
+              });
             }
+            
+            // Handle state changes for hover
+            this.riveInstance.on(EventType.StateChange, (event: any) => {
+              const stateName = event.data[0]; // State name is the first element in the array
 
-            // Play State Machine 3 after 1 second to reset
-            setTimeout(() => {
-              if (this.riveInstance) {
-                this.riveInstance.play('State Machine 3');
-              }
-            }, 1000);
-
-            // Set up hover state machine
-            canvas.addEventListener('mouseenter', () => {
-              if (this.riveInstance) {
-                this.riveInstance.play('State Machine 1');
-              }
-            });
-
-            canvas.addEventListener('mouseleave', () => {
-              if (this.riveInstance) {
-                this.riveInstance.play('State Machine 1');
+              // Handle different states
+              if (stateName === 'Hover') {
+                // Add any hover-specific logic here
+              } else if (stateName === 'Idle') {
+                // Add any idle-specific logic here
               }
             });
           }
