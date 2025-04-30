@@ -23,6 +23,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   get containerStyle(): string {
     // Ensure minimum size on mobile while maintaining aspect ratio
     const minSize = Math.min(this.args.height, 200);
+
     return `height: ${minSize}px; width: ${minSize}px; max-width: 100%;`;
   }
 
@@ -77,10 +78,10 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
 
             // Try to trigger hover state
             if (inputs) {
-              inputs.forEach(input => {
+              inputs.forEach((input) => {
                 if (input.name.toLowerCase().includes('hover')) {
                   input.value = true;
-                  
+
                   // Set timeout to trigger hover out after 1 second
                   setTimeout(() => {
                     if (this.riveInstance) {

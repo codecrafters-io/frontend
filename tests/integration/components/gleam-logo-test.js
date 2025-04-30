@@ -11,50 +11,55 @@ class MockRive {
     this._onLoadCallback = null;
   }
 
-  on(event, callback) {
-    if (!this._listeners.has(event)) {
-      this._listeners.set(event, []);
-    }
-    this._listeners.get(event)?.push(callback);
-  }
-
   off(event, callback) {
     const listeners = this._listeners.get(event);
+
     if (listeners) {
       const index = listeners.indexOf(callback);
+
       if (index > -1) {
         listeners.splice(index, 1);
       }
     }
   }
 
-  stateMachineInputs(stateMachineName) {
-    return [{
-      name: 'Hover',
-      value: false,
-      type: 'boolean'
-    }];
-  }
+  on(event, callback) {
+    if (!this._listeners.has(event)) {
+      this._listeners.set(event, []);
+    }
 
-  stop() {
-    // No-op for test
+    this._listeners.get(event)?.push(callback);
   }
 
   resizeDrawingSurfaceToCanvas() {
     // No-op for test
   }
 
-  triggerEvent(event, ...args) {
-    const listeners = this._listeners.get(event);
-    if (listeners) {
-      listeners.forEach(callback => callback(event, ...args));
-    }
-  }
-
-  // Helper to simulate Rive's onLoad behavior
   simulateLoad() {
     if (this._onLoadCallback) {
       this._onLoadCallback();
+    }
+  }
+
+  stateMachineInputs() {
+    return [
+      {
+        name: 'Hover',
+        value: false,
+        type: 'boolean',
+      },
+    ];
+  }
+
+  stop() {
+    // No-op for test
+  }
+
+  triggerEvent(event, ...args) {
+    const listeners = this._listeners.get(event);
+
+    if (listeners) {
+      listeners.forEach((callback) => callback(event, ...args));
     }
   }
 }
@@ -68,6 +73,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
       constructor(options) {
         const instance = new MockRive(options);
         this._onLoadCallback = options.onLoad;
+
         return instance;
       }
     };
@@ -79,31 +85,29 @@ module('Integration | Component | gleam-logo', function (hooks) {
 
   test('it renders and initializes correctly', async function (assert) {
     await render(hbs`<GleamLogo @height={{200}} />`);
-    await settled();
 
     // Check container dimensions
     const container = this.element.querySelector('div');
     assert.ok(container, 'Container element exists');
-    assert.equal(container?.style.height, '200px', 'Height is set correctly');
-    assert.equal(container?.style.width, '200px', 'Width is set correctly');
+    assert.strictEqual(container?.style.height, '200px', 'Height is set correctly');
+    assert.strictEqual(container?.style.width, '200px', 'Width is set correctly');
 
     // Check canvas dimensions and styles
     const canvas = this.element.querySelector('canvas');
     assert.ok(canvas, 'Canvas element exists');
-    assert.equal(canvas?.width, 400, 'Canvas width is set to base size for quality');
-    assert.equal(canvas?.height, 400, 'Canvas height is set to base size for quality');
-    assert.equal(canvas?.style.width, '100%', 'Canvas width style is set correctly');
-    assert.equal(canvas?.style.height, '100%', 'Canvas height style is set correctly');
-    assert.equal(canvas?.style.display, 'block', 'Canvas display style is set correctly');
-    assert.equal(canvas?.style.maxWidth, '100%', 'Canvas max-width style is set correctly');
+    assert.strictEqual(canvas?.width, 400, 'Canvas width is set to base size for quality');
+    assert.strictEqual(canvas?.height, 400, 'Canvas height is set to base size for quality');
+    assert.strictEqual(canvas?.style.width, '100%', 'Canvas width style is set correctly');
+    assert.strictEqual(canvas?.style.height, '100%', 'Canvas height style is set correctly');
+    assert.strictEqual(canvas?.style.display, 'block', 'Canvas display style is set correctly');
+    assert.strictEqual(canvas?.style.maxWidth, '100%', 'Canvas max-width style is set correctly');
   });
 
   test('it handles hover state correctly', async function (assert) {
     await render(hbs`<GleamLogo />`);
-    await settled();
 
     // Wait for the component to fully initialize
-    await new Promise(resolve => setTimeout(resolve, 0));
+    await new Promise((resolve) => setTimeout(resolve, 0));
 
     const container = this.element.querySelector('div');
     assert.ok(container, 'Container exists');
@@ -117,17 +121,17 @@ module('Integration | Component | gleam-logo', function (hooks) {
     mockRive.simulateLoad();
     await settled();
 
-    const inputs = mockRive.stateMachineInputs('State Machine 1');
+    const inputs = mockRive.stateMachineInputs();
     assert.ok(inputs, 'State machine inputs exist');
-    
-    const hoverInput = inputs.find(input => input.name.toLowerCase().includes('hover'));
+
+    const hoverInput = inputs.find((input) => input.name.toLowerCase().includes('hover'));
     assert.ok(hoverInput, 'Hover input exists');
-    
+
     // Verify initial hover state
     assert.false(hoverInput.value, 'Hover input is initially false');
-    
+
     // Wait for hover out timeout
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     assert.false(hoverInput.value, 'Hover input is set to false after timeout');
   });
 });
