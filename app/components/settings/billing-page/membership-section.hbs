@@ -1,6 +1,7 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
     <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 dark:bg-teal-900 px-2 py-1 border border-teal-500 dark:border-teal-400">
+      {{svg-jar "circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         Membership active
       </div>
@@ -24,6 +25,7 @@
     </div>
   {{else if @user.isVip}}
     <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
+      {{svg-jar "circle" class="h-5 w-5 text-teal-500"}}
       <div class="text-teal-500 font-semibold uppercase text-sm">
         VIP Access
       </div>
@@ -40,7 +42,8 @@
     </div>
   {{else if @user.expiredSubscription}}
     <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500">
-      <div class="text-red-500 font-semibold uppercase text-sm">
+      {{svg-jar "circle" class="h-5 w-5 text-red-700 dark:text-red-300"}}
+      <div class="text-red-700 dark:text-red-300 font-semibold uppercase text-sm">
         Membership inactive
       </div>
     </div>
@@ -59,6 +62,7 @@
     </PrimaryLinkButton>
   {{else}}
     <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500">
+      {{svg-jar "circle" class="h-5 w-5 text-yellow-500"}}
       <div class="text-yellow-500 font-semibold uppercase text-sm">
         No membership found
       </div>
