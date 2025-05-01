@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center gap-2" ...attributes>
   <AnimatedContainer class="w-full">
     <div class="text-sm text-gray-700 dark:text-gray-300 text-center w-full">
-      {{#animated-if this.tempHasVotedRecently use=this.transition duration=200}}
+      {{#animated-if this.flashSuccessMessageTask.isRunning use=this.transition duration=200}}
         <p class="text-teal-500 font-medium">
           Thanks for your feedback!
         </p>
@@ -15,13 +15,14 @@
 
   <div class="flex items-center gap-1.5 flex-wrap">
     <TertiaryButton
-      {{on "click" this.handleUpvoteButtonClick}}
-      class={{if this.tempHasDownvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
+      {{on "click" (perform this.handleUpvoteClickTask)}}
+      disabled={{this.handleUpvoteClickTask.isRunning}}
+      class={{if this.currentUserHasDownvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
     >
       <div class="flex items-center gap-1">
-        {{svg-jar "thumb-up" class=(concat "w-5 " (if this.tempHasUpvoted "text-teal-500" "text-gray-400 dark:text-gray-600"))}}
+        {{svg-jar "thumb-up" class=(concat "w-5 " (if this.currentUserHasUpvoted "text-teal-500" "text-gray-400 dark:text-gray-600"))}}
 
-        <span class={{if this.tempHasUpvoted "text-teal-500" "text-gray-500"}}>
+        <span class={{if this.currentUserHasUpvoted "text-teal-500" "text-gray-500"}}>
           Helpful
         </span>
       </div>
@@ -29,13 +30,14 @@
       <EmberTooltip @text="Your feedback helps us surface better examples." @side="bottom" @delay={{250}} />
     </TertiaryButton>
     <TertiaryButton
-      {{on "click" this.handleDownvoteButtonClick}}
-      class={{if this.tempHasUpvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
+      {{on "click" (perform this.handleDownvoteClickTask)}}
+      disabled={{this.handleDownvoteClickTask.isRunning}}
+      class={{if this.currentUserHasUpvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
     >
       <div class="flex items-center gap-1">
-        {{svg-jar "thumb-down" class=(concat "w-5 " (if this.tempHasDownvoted "text-red-600" "text-gray-400 dark:text-gray-600"))}}
+        {{svg-jar "thumb-down" class=(concat "w-5 " (if this.currentUserHasDownvoted "text-red-600" "text-gray-400 dark:text-gray-600"))}}
 
-        <span class={{if this.tempHasDownvoted "text-red-600" "text-gray-500"}}>
+        <span class={{if this.currentUserHasDownvoted "text-red-600" "text-gray-500"}}>
           Not helpful
         </span>
       </div>
