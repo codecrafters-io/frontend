@@ -36,7 +36,7 @@ export default class PaymentHistorySectionComponent extends Component<Signature>
       this.charges = result.toArray();
     } catch (error) {
       console.error('Failed to fetch charges:', error);
-      this.errorMessage = 'Failed to load payment history. Please try again later.';
+      this.errorMessage = 'Failed to load payment history. Please contact us at hello@codecrafters.io if this error persists.';
       Sentry.captureException(error);
       this.charges = [];
     } finally {
