@@ -86,4 +86,9 @@
   </FileContentsCard>
 {{/each}}
 
-<CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection class="pt-6 pb-3" />
+<CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection
+  @metadataForDownvote={{@metadataForDownvote}}
+  @metadataForUpvote={{@metadataForUpvote}}
+  @solution={{@solution}}
+  class="pt-6 pb-3"
+/>
