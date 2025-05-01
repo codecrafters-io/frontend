@@ -49,7 +49,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.hover();
 
     assertTooltipContent(assert, {
-      contentString: "Upvote this example and we'll show it more often.",
+      contentString: "Your feedback helps us surface better examples.",
     });
 
     await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
@@ -94,7 +94,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.hover();
 
     assertTooltipContent(assert, {
-      contentString: "Downvote this example and we'll show it less often.",
+      contentString: "Your feedback helps us identify examples that need review.",
     });
 
     await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
