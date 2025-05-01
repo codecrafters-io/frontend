@@ -20,13 +20,6 @@
   </div>
 
   <div class="flex items-center shrink-0">
-    {{! Remove, replace with buttons at the bottom of the card }}
-    {{!-- {{#unless (eq @solution.user this.authenticator.currentUser)}}
-      <CoursePage::CourseStageStep::CommunitySolutionCard::UpvoteButton @solution={{@solution}} @metadata={{@metadataForUpvote}} class="mr-2" />
-      <CoursePage::CourseStageStep::CommunitySolutionCard::DownvoteButton @solution={{@solution}} @metadata={{@metadataForDownvote}} />
-      <div class="w-px h-3 bg-gray-200 dark:bg-white/5 mx-2"></div>
-    {{/unless}} --}}
-
     {{#if (gt @solution.approvedCommentsCount 0)}}
       <div class="flex items-center">
         {{svg-jar "chat-alt" class="w-4 text-gray-400 dark:text-gray-600 mr-1"}}
