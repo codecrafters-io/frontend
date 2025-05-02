@@ -52,6 +52,11 @@ export default class ContestRoute extends BaseRoute {
         title = 'CodeCrafters x Amazon';
         description = 'Compete in the first ever contest exclusively for Amazonians on CodeCrafters.';
         break;
+      case 'amazon-2':
+        imageUrl = '/assets/images/contest-og-images/og-amazon-contest-2.png';
+        title = 'CodeCrafters x Amazon';
+        description = 'Compete in the second contest exclusively for Amazonians on CodeCrafters.';
+        break;
       case 'github-1':
         imageUrl = '/assets/images/contest-og-images/og-amazon-contest-1.png';
         title = 'CodeCrafters x GitHub';
