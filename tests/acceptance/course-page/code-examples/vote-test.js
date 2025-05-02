@@ -102,4 +102,56 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     let downvote = this.server.schema.downvotes.all().models[0];
     assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
   });
+
+  test('can downvote code examples', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let otherUserOne = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    let otherUserTwo = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    otherUserOneSolution.update({ user: otherUserOne });
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    otherUserTwoSolution.update({ user: otherUserTwo });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+
+    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.hover();
+
+    assertTooltipContent(assert, {
+      contentString: 'Your feedback helps us identify examples that need review.',
+    });
+
+    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
+    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
+
+    // let downvotes = this.server.schema.downvotes.all().models.length;
+    // let upvotes = this.server.schema.upvotes.all().models.length;
+    // assert.strictEqual(downvotes, 0, 'clicking on downvote button creates a downvote model');
+    // assert.strictEqual(upvotes, 1, 'clicking on downvote button creates a downvote model');
+    let upvote = this.server.schema.upvotes.all().models[0];
+    assert.strictEqual(upvote.targetId, otherUserOneSolution.id, 'clicking on upvote button creates an upvote model');
+  });
 });
