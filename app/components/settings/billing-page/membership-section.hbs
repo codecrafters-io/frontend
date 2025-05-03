@@ -1,11 +1,8 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 dark:bg-teal-900 px-2 py-1 border border-teal-500 dark:border-teal-400">
-      {{svg-jar "circle" class="h-5 w-5 text-teal-500"}}
-      <div class="text-teal-500 font-semibold uppercase text-sm">
-        Membership active
-      </div>
-    </div>
+    <Settings::BillingPage::MembershipSection::StatusPill @variant="teal">
+      Membership active
+    </Settings::BillingPage::MembershipSection::StatusPill>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
         <p class="line-through">
@@ -24,12 +21,9 @@
       {{/if}}
     </div>
   {{else if @user.isVip}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-teal-50 px-2 py-1 border border-teal-500">
-      {{svg-jar "circle" class="h-5 w-5 text-teal-500"}}
-      <div class="text-teal-500 font-semibold uppercase text-sm">
-        VIP Access
-      </div>
-    </div>
+    <Settings::BillingPage::MembershipSection::StatusPill @variant="teal">
+      VIP Access
+    </Settings::BillingPage::MembershipSection::StatusPill>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         {{#if @user.vipStatusExpiresAt}}
@@ -41,12 +35,9 @@
       </p>
     </div>
   {{else if @user.expiredSubscription}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-red-50 px-2 py-1 border border-red-500">
-      {{svg-jar "circle" class="h-5 w-5 text-red-700 dark:text-red-300"}}
-      <div class="text-red-700 dark:text-red-300 font-semibold uppercase text-sm">
-        Membership inactive
-      </div>
-    </div>
+    <Settings::BillingPage::MembershipSection::StatusPill @variant="red">
+      Membership inactive
+    </Settings::BillingPage::MembershipSection::StatusPill>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         Your CodeCrafters membership is
@@ -61,12 +52,9 @@
       Start membership →
     </PrimaryLinkButton>
   {{else}}
-    <div class="inline-flex items-center gap-2 rounded-full bg-yellow-50 px-2 py-1 border border-yellow-500">
-      {{svg-jar "circle" class="h-5 w-5 text-yellow-500"}}
-      <div class="text-yellow-500 font-semibold uppercase text-sm">
-        No membership found
-      </div>
-    </div>
+    <Settings::BillingPage::MembershipSection::StatusPill @variant="yellow">
+      No membership found
+    </Settings::BillingPage::MembershipSection::StatusPill>
     <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
       <p>
         You don't have a CodeCrafters membership. Start one to get access to

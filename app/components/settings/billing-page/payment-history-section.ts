@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
+import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type ChargeModel from 'codecrafters-frontend/models/charge';
@@ -16,6 +17,7 @@ interface Signature {
 export default class PaymentHistorySectionComponent extends Component<Signature> {
   @service declare store: Store;
 
+  rippleSpinnerImage = rippleSpinnerImage;
   @tracked charges: ChargeModel[] = [];
   @tracked errorMessage: string | null = null;
   @tracked isLoading = true;

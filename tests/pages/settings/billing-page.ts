@@ -1,4 +1,4 @@
-import { clickable, hasClass, visitable, collection, text } from 'ember-cli-page-object';
+import { hasClass, visitable, collection, text, attribute } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -15,8 +15,8 @@ export default createPage({
   },
 
   supportSection: {
-    clickOnContactButton: clickable('[data-test-support-contact-button]'),
     scope: '[data-test-support-section]',
+    contactButtonHref: attribute('href', '[data-test-support-contact-button]'),
   },
 
   visit: visitable('/settings/billing'),

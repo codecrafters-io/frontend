@@ -1,7 +1,8 @@
 <Settings::FormSection @title="Payment history" @description="Details of your previous payments" data-test-payment-history-section>
   {{#if this.isLoading}}
-    <div class="flex justify-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100"></div>
+    <div class="flex items-center justify-center py-8">
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+      <span class="ml-3 text-gray-700 dark:text-gray-200">Loading payment history...</span>
     </div>
   {{else if this.errorMessage}}
     <div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-400 rounded-md p-4">
