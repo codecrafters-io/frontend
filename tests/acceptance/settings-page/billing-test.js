@@ -33,7 +33,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await billingPage.visit();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.notOk(billingPage.membershipSection.hasActivePlan, 'does not show active plan');
+    assert.notOk(billingPage.membershipSection.text.includes('Membership active'), 'does not show active plan');
     await percySnapshot('Billing Page - No Active Subscription');
   });
 
