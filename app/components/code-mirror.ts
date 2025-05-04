@@ -87,7 +87,8 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
-  lineCommentsOrLineData: ({ lineData, lineComments: enabled }) => (enabled && lineData ? [lineComments(lineData)] : []),
+  lineCommentsOrCommentsRelatedOption: ({ lineComments: enabled, lineData, readOnly }) =>
+    enabled && lineData && readOnly ? [lineComments(lineData)] : [],
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -414,10 +415,10 @@ export default class CodeMirror extends Component<Signature> {
       });
     }
 
-    // // When lineCommentsOrLineData changes - completely unload the lineCommentsOrLineData compartment to avoid any side-effects
-    if (optionName === 'lineCommentsOrLineData') {
+    // // When lineCommentsOrCommentsRelatedOption changes - completely unload the lineCommentsOrCommentsRelatedOption compartment to avoid any side-effects
+    if (optionName === 'lineCommentsOrCommentsRelatedOption') {
       this.#updateRenderedView({
-        effects: this.#resetCompartment('lineCommentsOrLineData'),
+        effects: this.#resetCompartment('lineCommentsOrCommentsRelatedOption'),
       });
     }
 
