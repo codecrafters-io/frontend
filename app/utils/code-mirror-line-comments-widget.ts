@@ -36,10 +36,10 @@ class LineCommentsWidget extends WidgetType {
 
 function lineCommentsWidgetDecoration(line: Line) {
   return Decoration.widget({
-    widget: new LineCommentsWidget(line),
-    side: 10,
+    block: true,
     // inlineOrder: true,
-    // block: true,
+    side: 10,
+    widget: new LineCommentsWidget(line),
   }).range(line.to);
 }
 
@@ -52,6 +52,8 @@ const lineCommentsWidgetStateField = StateField.define<DecorationSet>({
     if (transaction.docChanged) {
       return this.create(transaction.state);
     }
+
+    return decorations;
 
     // let newDecorations = decorations.map(transaction.changes);
 
@@ -66,8 +68,6 @@ const lineCommentsWidgetStateField = StateField.define<DecorationSet>({
     // }
 
     // return newDecorations;
-
-    return decorations;
   },
 
   provide(field) {
@@ -77,7 +77,7 @@ const lineCommentsWidgetStateField = StateField.define<DecorationSet>({
 
 const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
   '.cm-line': {
-    '& .cm-lineCommentsWidget': {
+    '& + .cm-lineCommentsWidget': {
       display: 'none',
       backgroundColor: '#009bff40',
       paddingLeft: '1rem',
@@ -85,13 +85,13 @@ const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
     },
 
     '&.cm-lineCommentsExpanded': {
-      '& .cm-lineCommentsWidget': {
+      '& + .cm-lineCommentsWidget': {
         display: 'block',
         backgroundColor: '#009bff80',
       },
     },
 
-    '& .cm-lineCommentsWidget + br': {
+    '& + .cm-lineCommentsWidget + br': {
       display: 'none',
     },
 
