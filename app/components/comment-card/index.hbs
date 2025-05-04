@@ -1,4 +1,4 @@
-<div data-test-comment-card class="w-full {{if @comment.parentComment '' 'bg-white dark:bg-gray-850 rounded'}}" ...attributes>
+<div data-test-comment-card class="w-full {{if @comment.parentComment 'min-w-0' 'bg-white dark:bg-gray-850 rounded'}}" ...attributes>
   {{#if this.isEditing}}
     <CommentForm
       @comment={{@comment}}
