@@ -63,16 +63,22 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            '--tw-prose-body': colors.slate[700],
             '--tw-prose-bold': colors.slate[800],
             '--tw-prose-code': colors.slate[700],
+            '--tw-prose-code-border': colors.gray[200],
+            '--tw-prose-headings': colors.slate[800],
             '--tw-prose-links': colors.sky[500],
             '--tw-prose-pre-bg': colors.slate[100],
             '--tw-prose-pre-code': colors.slate[700],
+            '--tw-prose-invert-body': colors.slate[300],
             '--tw-prose-invert-bold': colors.slate[200],
             '--tw-prose-invert-code': colors.slate[300],
+            '--tw-prose-invert-code-border': 'rgba(255,255,255,0.1)',
             '--tw-prose-invert-headings': colors.slate[200],
             '--tw-prose-invert-links': colors.sky[500],
             '--tw-prose-invert-pre-bg': colors.slate[900],
+            '--tw-prose-invert-pre-code': colors.slate[300],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
@@ -99,10 +105,13 @@ module.exports = {
               fontWeight: 'normal',
               padding: '0.2em 0.4em',
               borderWidth: '1px',
-              borderColor: colors.gray[200],
+              borderColor: 'var(--tw-prose-code-border)',
               borderRadius: '4px',
               whiteSpace: 'nowrap',
               backgroundColor: 'var(--tw-prose-pre-bg)',
+            },
+            '.dark code': {
+              borderColor: 'var(--tw-prose-invert-code-border)',
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },
