@@ -24,13 +24,13 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     return this.args.solution.currentUserUpvotes.length > 0;
   }
 
-  flashSuccessMessageTask = task({ keepLatest: true }, async () => {
+  flashSuccessMessageTask = task({ restartable: true }, async () => {
     // This task now only controls the visibility duration of the "Thanks" message.
     // We track its running state in the template.
     await timeout(1500);
   });
 
-  handleUpvoteClickTask = task({ keepLatest: true }, async () => {
+  handleUpvoteClickTask = task({ restartable: true }, async () => {
     if (this.currentUserHasUpvoted) {
       await this.args.solution.unvote({});
     } else {
@@ -39,7 +39,7 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     }
   });
 
-  handleDownvoteClickTask = task({ keepLatest: true }, async () => {
+  handleDownvoteClickTask = task({ restartable: true }, async () => {
     if (this.currentUserHasDownvoted) {
       await this.args.solution.unvote({});
     } else {
