@@ -1,7 +1,7 @@
 <div class="flex flex-col items-center gap-2" ...attributes>
   <AnimatedContainer class="w-full">
     <div class="text-sm text-gray-700 dark:text-gray-300 text-center w-full">
-      {{#animated-if this.flashSuccessMessageTask.isRunning use=this.transition duration=200}}
+      {{#animated-if (or this.flashSuccessMessageTask.isRunning this.handleUpvoteClickTask.isRunning this.handleDownvoteClickTask.isRunning) use=this.transition duration=200}}
         <p class="text-teal-500 font-medium">
           Thanks for your feedback!
         </p>
@@ -16,8 +16,7 @@
   <div class="flex items-center gap-1.5 flex-wrap">
     <TertiaryButton
       {{on "click" (perform this.handleUpvoteClickTask)}}
-      disabled={{this.handleUpvoteClickTask.isRunning}}
-      class={{if this.currentUserHasDownvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
+      class={{if (or this.handleDownvoteClickTask.isRunning this.currentUserHasDownvoted) "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
       data-test-solution-card-upvote-button
     >
       <div class="flex items-center gap-1">
@@ -32,8 +31,7 @@
     </TertiaryButton>
     <TertiaryButton
       {{on "click" (perform this.handleDownvoteClickTask)}}
-      disabled={{this.handleDownvoteClickTask.isRunning}}
-      class={{if this.currentUserHasUpvoted "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
+      class={{if (or this.handleUpvoteClickTask.isRunning this.currentUserHasUpvoted) "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
       data-test-solution-card-downvote-button
     >
       <div class="flex items-center gap-1">
