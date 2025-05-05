@@ -90,14 +90,20 @@ CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
     for (const record of [...this.currentUserUpvotes]) {
       // @ts-expect-error Model mixin methods/properties are not recognized
       this.upvotesCount -= 1;
-      record.unloadRecord();
+      // Ensure the record is not in-flight before unloading
+      if (!record.isSaving) {
+        record.unloadRecord();
+      }
     }
 
     // @ts-expect-error Model mixin methods/properties are not recognized
     for (const record of [...this.currentUserDownvotes]) {
       // @ts-expect-error Model mixin methods/properties are not recognized
       this.downvotesCount -= 1;
-      record.unloadRecord();
+      // Ensure the record is not in-flight before unloading
+      if (!record.isSaving) {
+        record.unloadRecord();
+      }
     }
   },
 });
