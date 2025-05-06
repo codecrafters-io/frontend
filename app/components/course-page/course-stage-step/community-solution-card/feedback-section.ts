@@ -56,11 +56,11 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     const toggleUnvote = this.unsavedUserActionValue === 'unvote';
 
     if (toggleUpvote) {
+      this.flashSuccessMessageTask.perform();
       await this.args.solution.upvote(this.args.metadataForUpvote || {});
-      this.flashSuccessMessageTask.perform();
     } else if (toggleDownvote) {
-      await this.args.solution.downvote(this.args.metadataForDownvote || {});
       this.flashSuccessMessageTask.perform();
+      await this.args.solution.downvote(this.args.metadataForDownvote || {});
     } else if (toggleUnvote) {
       await this.args.solution.unvote({});
     }
