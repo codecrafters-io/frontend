@@ -18,7 +18,7 @@ interface Signature {
 export default class CommunitySolutionCardFeedbackSectionComponent extends Component<Signature> {
   transition = fade;
 
-  @tracked unsavedUserActionValue: 'upvote' | 'downvote' | null = null;
+  @tracked unsavedUserActionValue: 'upvote' | 'downvote' | 'unvote' | null = null;
 
   get currentUserHasDownvoted() {
     return this.args.solution.currentUserDownvotes.length > 0;
@@ -29,13 +29,10 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
   }
 
   get optimisticValueForUserAction() {
-    // If the user action is not yet saved, use the unsaved value
-    // Because that is the latest value
-    if (this.unsavedUserActionValue !== null) {
+    if (this.unsavedUserActionValue !== 'unvote' && this.unsavedUserActionValue !== null) {
       return this.unsavedUserActionValue;
-    } else {
-      return this.currentUserHasDownvoted ? 'downvote' : this.currentUserHasUpvoted ? 'upvote' : null;
     }
+    return this.currentUserHasDownvoted ? 'downvote' : this.currentUserHasUpvoted ? 'upvote' : null;
   }
 
   get optimisticValueForUserActionIsUpvote() {
@@ -46,44 +43,33 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     return this.optimisticValueForUserAction === 'downvote';
   }
 
-  get optimisticValueForUserActionIsNull() {
-    return this.optimisticValueForUserAction === null;
-  }
-
   flashSuccessMessageTask = task({ restartable: true }, async () => {
     await timeout(1500);
   });
 
   syncUserAction = task({ keepLatest: true }, async () => {
-    if (this.unsavedUserActionValue === null) {
-      return;
-    }
-
     const toggleUpvote = this.unsavedUserActionValue === 'upvote';
     const toggleDownvote = this.unsavedUserActionValue === 'downvote';
+    const toggleUnvote = this.unsavedUserActionValue === 'unvote';
 
     if (toggleUpvote) {
-      if (this.currentUserHasUpvoted) {
-        await this.args.solution.unvote({});
-      } else {
-        await this.args.solution.upvote(this.args.metadataForUpvote || {});
-        this.flashSuccessMessageTask.perform();
-      }
+      await this.args.solution.upvote(this.args.metadataForUpvote || {});
+      this.flashSuccessMessageTask.perform();
     } else if (toggleDownvote) {
-      if (this.currentUserHasDownvoted) {
-        await this.args.solution.unvote({});
-      } else {
-        await this.args.solution.downvote(this.args.metadataForDownvote || {});
-        this.flashSuccessMessageTask.perform();
-      }
+      await this.args.solution.downvote(this.args.metadataForDownvote || {});
+      this.flashSuccessMessageTask.perform();
+    } else if (toggleUnvote) {
+      await this.args.solution.unvote({});
     }
-
-    this.unsavedUserActionValue = null;
   });
 
   @action
   async handleClick(action: 'upvote' | 'downvote'): Promise<void> {
-    this.unsavedUserActionValue = action;
+    if (this.unsavedUserActionValue === action) {
+      this.unsavedUserActionValue = 'unvote';
+    } else {
+      this.unsavedUserActionValue = action;
+    }
     this.syncUserAction.perform();
   }
 }
