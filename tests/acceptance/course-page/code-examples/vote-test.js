@@ -143,15 +143,17 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     });
 
     await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
     await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
+    assert.ok(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
     await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
     await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
+    assert.ok(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
+    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
 
-    // let downvotes = this.server.schema.downvotes.all().models.length;
-    // let upvotes = this.server.schema.upvotes.all().models.length;
-    // assert.strictEqual(downvotes, 0, 'clicking on downvote button creates a downvote model');
-    // assert.strictEqual(upvotes, 1, 'clicking on downvote button creates a downvote model');
-    let upvote = this.server.schema.upvotes.all().models[0];
-    assert.strictEqual(upvote.targetId, otherUserOneSolution.id, 'clicking on upvote button creates an upvote model');
+    let downvote = this.server.schema.downvotes.all().models[0];
+    assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
   });
 });
