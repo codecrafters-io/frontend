@@ -35,7 +35,10 @@
       data-test-solution-card-downvote-button
     >
       <div class="flex items-center gap-1">
-        {{svg-jar "thumb-down" class=(concat "w-5 " (if this.optimisticValueForUserActionIsDownvote "text-red-600" "text-gray-400 dark:text-gray-600"))}}
+        {{svg-jar
+          "thumb-down"
+          class=(concat "w-5 " (if this.optimisticValueForUserActionIsDownvote "text-red-600" "text-gray-400 dark:text-gray-600"))
+        }}
 
         <span class={{if this.optimisticValueForUserActionIsDownvote "text-red-600" "text-gray-500"}}>
           Not helpful

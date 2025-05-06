@@ -32,18 +32,20 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     if (this.unsavedUserActionValue !== 'unvote' && this.unsavedUserActionValue !== null) {
       return this.unsavedUserActionValue;
     }
+
     if (this.unsavedUserActionValue === 'unvote') {
       return null;
     }
-    return this.currentUserHasDownvoted ? 'downvote' : this.currentUserHasUpvoted ? 'upvote' : null;
-  }
 
-  get optimisticValueForUserActionIsUpvote() {
-    return this.optimisticValueForUserAction === 'upvote';
+    return this.currentUserHasDownvoted ? 'downvote' : this.currentUserHasUpvoted ? 'upvote' : null;
   }
 
   get optimisticValueForUserActionIsDownvote() {
     return this.optimisticValueForUserAction === 'downvote';
+  }
+
+  get optimisticValueForUserActionIsUpvote() {
+    return this.optimisticValueForUserAction === 'upvote';
   }
 
   flashSuccessMessageTask = task({ keepLatest: true }, async () => {
@@ -73,6 +75,7 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     } else {
       this.unsavedUserActionValue = action;
     }
+
     this.syncUserAction.perform();
   }
 }

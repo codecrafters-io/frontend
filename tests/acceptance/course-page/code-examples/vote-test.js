@@ -58,7 +58,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     assert.strictEqual(upvote.targetId, otherUserOneSolution.id, 'clicking on upvote button creates an upvote model');
   });
 
-  test('can downvote code examples', async function (assert) {
+  test('can upvote and downvote code examples', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
