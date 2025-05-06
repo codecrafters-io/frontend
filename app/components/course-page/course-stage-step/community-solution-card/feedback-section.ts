@@ -46,7 +46,7 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     return this.optimisticValueForUserAction === 'downvote';
   }
 
-  flashSuccessMessageTask = task({ restartable: true }, async () => {
+  flashSuccessMessageTask = task({ keepLatest: true }, async () => {
     await timeout(1500);
   });
 
