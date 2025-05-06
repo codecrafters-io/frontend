@@ -32,6 +32,9 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
     if (this.unsavedUserActionValue !== 'unvote' && this.unsavedUserActionValue !== null) {
       return this.unsavedUserActionValue;
     }
+    if (this.unsavedUserActionValue === 'unvote') {
+      return null;
+    }
     return this.currentUserHasDownvoted ? 'downvote' : this.currentUserHasUpvoted ? 'upvote' : null;
   }
 
