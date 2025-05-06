@@ -47,7 +47,7 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
   }
 
   flashSuccessMessageTask = task({ keepLatest: true }, async () => {
-    await timeout(1500);
+    await timeout(500);
   });
 
   syncUserAction = task({ keepLatest: true }, async () => {
