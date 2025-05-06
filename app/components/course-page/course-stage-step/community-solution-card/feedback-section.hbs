@@ -16,8 +16,7 @@
   <div class="flex items-center gap-1.5 flex-wrap">
     <TertiaryButton
       {{on "click" (fn this.handleClick "upvote")}}
-      class={{if (or this.syncUserAction.isRunning this.optimisticValueForUserActionIsDownvote) "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
-      disabled={{this.syncUserAction.isRunning}}
+      class={{if this.optimisticValueForUserActionIsDownvote "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
       data-test-solution-card-upvote-button
     >
       <div class="flex items-center gap-1">
@@ -32,8 +31,7 @@
     </TertiaryButton>
     <TertiaryButton
       {{on "click" (fn this.handleClick "downvote")}}
-      class={{if (or this.syncUserAction.isRunning this.optimisticValueForUserActionIsUpvote) "opacity-50 hover:opacity-100 transition-opacity duration-100"}}
-      disabled={{this.syncUserAction.isRunning}}
+      class={{if this.optimisticValueForUserActionIsUpvote "opacity-50 hover:opacity-100 transition-opacity duration-100"}}
       data-test-solution-card-downvote-button
     >
       <div class="flex items-center gap-1">
