@@ -10,12 +10,14 @@
       </div>
     </div>
     <dd class="flex items-baseline gap-1">
-      <p class="text-2xl font-semibold 
-        {{if (eq @statistic.color "red") "text-red-600"}}
-        {{if (eq @statistic.color "yellow") "text-yellow-600"}}
-        {{if (eq @statistic.color "green") "text-green-600"}}
-        {{if (eq @statistic.color "gray") "text-gray-400"}}
-      ">
+      <p
+        class="text-2xl font-semibold
+          {{if (eq @statistic.color 'red') 'text-red-600'}}
+          {{if (eq @statistic.color 'yellow') 'text-yellow-600'}}
+          {{if (eq @statistic.color 'green') 'text-green-600'}}
+          {{if (eq @statistic.color 'gray') 'text-gray-400'}}
+          "
+      >
         {{if @statistic.value @statistic.value "No data"}}
       </p>
       <p class="text-sm text-gray-500">
@@ -23,10 +25,12 @@
       </p>
     </dd>
   </div>
-  <div class="absolute bottom-0 inset-x-0 h-0.5
-    {{if (eq @statistic.color "red") "bg-red-500"}}
-    {{if (eq @statistic.color "yellow") "bg-yellow-500"}}
-    {{if (eq @statistic.color "green") "bg-green-500"}}
-    {{if (eq @statistic.color "gray") "bg-gray-300"}}
-  "></div>
+  <div
+    class="absolute bottom-0 inset-x-0 h-0.5
+      {{if (eq @statistic.color 'red') 'bg-red-500'}}
+      {{if (eq @statistic.color 'yellow') 'bg-yellow-500'}}
+      {{if (eq @statistic.color 'green') 'bg-green-500'}}
+      {{if (eq @statistic.color 'gray') 'bg-gray-300'}}
+      "
+  ></div>
 </div>
