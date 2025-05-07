@@ -1,0 +1,88 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="py-3 border-b mb-6">
+      <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Community Solutions Analysis</h1>
+      <p class="text-gray-600 mt-2">
+        Statistics about community solutions and code examples for {{@model.course.name}}
+      </p>
+
+      <div class="mt-4 mb-3 flex items-center">
+        <label for="language-selector" class="mr-2 text-sm font-medium text-gray-700">Language:</label>
+        <select 
+          id="language-selector" 
+          class="form-select rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" 
+          onchange={{this.onLanguageChange}} 
+          value={{if @model.selectedLanguage @model.selectedLanguage.slug null}}
+        >
+          <option value="" disabled selected={{not @model.selectedLanguage}}>Select a language</option>
+          {{#each @model.languages as |language|}}
+            <option value={{language.slug}} selected={{eq language.id @model.selectedLanguage.id}}>
+              {{language.name}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+
+    {{#if @model.selectedLanguage}}
+      {{#if (gt @model.analyses.length 0)}}
+        <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {{#each this.stagesWithAnalyses as |stageWithAnalysis|}}
+            <div class="bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
+              <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  {{stageWithAnalysis.stage.title}}
+                </h3>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                  {{stageWithAnalysis.stage.description}}
+                </p>
+              </div>
+              <div class="px-4 py-5 sm:p-6">
+                <dl class="grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2">
+                  <div class="sm:col-span-1">
+                    <CourseAdmin::CodeExamplesIndexPage::StatisticCard
+                      @statistic={{stageWithAnalysis.analysis.solutionsCountStatistic}}
+                    />
+                  </div>
+                  <div class="sm:col-span-1">
+                    <CourseAdmin::CodeExamplesIndexPage::StatisticCard
+                      @statistic={{stageWithAnalysis.analysis.medianChangedLinesStatistic}}
+                    />
+                  </div>
+                  <div class="sm:col-span-1">
+                    <CourseAdmin::CodeExamplesIndexPage::StatisticCard
+                      @statistic={{stageWithAnalysis.analysis.upvotesCountStatistic}}
+                    />
+                  </div>
+                  <div class="sm:col-span-1">
+                    <CourseAdmin::CodeExamplesIndexPage::StatisticCard
+                      @statistic={{stageWithAnalysis.analysis.downvotesCountStatistic}}
+                    />
+                  </div>
+                </dl>
+              </div>
+              <div class="px-4 py-4 sm:px-6">
+                <a 
+                  href={{this.getCourseStageCodeExamplesUrl @model.course stageWithAnalysis.stage @model.selectedLanguage}}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-medium text-blue-600 hover:text-blue-500"
+                >
+                  View Code Examples <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <AlertWithIcon @type="info">
+          No code examples data available for this language. This could mean there are no community solutions for this language yet.
+        </AlertWithIcon>
+      {{/if}}
+    {{else}}
+      <AlertWithIcon @type="info">
+        Please select a language to view code examples statistics.
+      </AlertWithIcon>
+    {{/if}}
+  </div>
+</div>
