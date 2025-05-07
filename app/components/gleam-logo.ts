@@ -84,34 +84,16 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       this.riveInstance = new Rive({
         src: '/assets/animations/gleam_logo_animation.riv',
         canvas: canvas,
-        stateMachines: 'State Machine 1',
+        stateMachines: 'Default',
         autoplay: true,
         automaticallyHandleEvents: true,
         layout: new Layout({
           fit: Fit.Contain,
         }),
-        onLoad: () => {
+        onLoad: async () => {
           if (this.riveInstance) {
             // Initial resize
             this.riveInstance.resizeDrawingSurfaceToCanvas();
-
-            const inputs = this.riveInstance.stateMachineInputs('State Machine 1');
-
-            // Try to trigger hover state
-            if (inputs) {
-              inputs.forEach((input) => {
-                if (input.name.toLowerCase().includes('hover')) {
-                  input.value = true;
-
-                  // Set timeout to trigger hover out after 1 second
-                  setTimeout(() => {
-                    if (this.riveInstance) {
-                      input.value = false;
-                    }
-                  }, 1000);
-                }
-              });
-            }
           }
         },
       });
