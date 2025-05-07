@@ -55,6 +55,7 @@ export function signInAsSubscriber(owner, server, user) {
     user: user,
     pricingPlanName: 'Monthly',
     currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    cancelAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
   return signIn(owner, server, user);

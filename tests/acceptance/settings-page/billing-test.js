@@ -22,6 +22,23 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
+    await this.pauseTest();
+    assert.ok(billingPage.membershipSection.text.includes('Yearly Plan'), 'shows correct plan name');
+
+    subscription.update('expiresAt', new Date('2024-01-01'));
+    await billingPage.visit();
+
+    assert.ok(billingPage.membershipSection.text.includes('Membership expires on January 1, 2024'), 'shows expiry date');
+
+    // Test VIP access expiry
+    testScenario(this.server);
+    signInAsVipUser(this.owner, this.server);
+    const user = this.server.schema.users.first();
+    user.update('vipAccessExpiresAt', new Date('2024-06-30'));
+
+    await billingPage.visit();
+
+    assert.ok(billingPage.membershipSection.text.includes('VIP Access expires on June 30, 2024'), 'shows VIP access expiry date');
 
     await percySnapshot('Billing Page - Active Subscription');
   });

@@ -1,12 +1,8 @@
 <Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
-  <div class="inline-flex items-center gap-2 rounded-full bg-gray-50 dark:bg-gray-800 px-2 py-1 border border-gray-300 dark:border-gray-600">
-    <div class="h-5 w-5 rounded-full bg-gray-400 dark:bg-gray-600"></div>
-    <div class="text-gray-400 font-semibold uppercase text-sm">
-      Auto-renew disabled
-    </div>
-  </div>
-
-  <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+  <Settings::BillingPage::StatusPill @color="gray" class="mb-3">
+    Auto-renew disabled
+  </Settings::BillingPage::StatusPill>
+  <div class="prose prose-sm prose-compact dark:prose-invert">
     Your membership does not renew automatically. Once your membership expires, you'll be able to make a new one-time payment.
   </div>
 </Settings::FormSection>

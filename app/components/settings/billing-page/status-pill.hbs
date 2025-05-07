@@ -1,0 +1,17 @@
+<div
+  class="inline-flex items-center gap-2 rounded-full px-2 py-1 border mb-4
+    {{if (eq @color 'teal') 'bg-teal-50 border border-teal-500 dark:bg-teal-950 dark:border-teal-400'}}
+    {{if (eq @color 'red') 'bg-red-50 border border-red-500 dark:bg-red-950 dark:border-red-400'}}
+    {{if (eq @color 'yellow') 'bg-yellow-50 border border-yellow-500 dark:bg-yellow-950 dark:border-yellow-400'}}
+    {{if (eq @color 'gray') 'bg-gray-50 border border-gray-300 dark:bg-gray-800 dark:border-gray-600'}}"
+  ...attributes
+>
+  <StaticDot @color={{if (eq @color 'teal') 'green' @color}} @size="large" />
+  <div class="uppercase text-sm font-semibold
+    {{if (eq @color 'teal') 'text-teal-500 dark:text-teal-400'}}
+    {{if (eq @color 'red') 'text-red-500 dark:text-red-400'}}
+    {{if (eq @color 'yellow') 'text-yellow-500 dark:text-yellow-400'}}
+    {{if (eq @color 'gray') 'text-gray-400 dark:text-gray-500'}}">
+    {{yield}}
+  </div>
+</div> 

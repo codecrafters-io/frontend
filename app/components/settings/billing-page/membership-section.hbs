@@ -1,47 +1,47 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
-    <Settings::BillingPage::MembershipSection::StatusPill @variant="teal">
+    <Settings::BillingPage::StatusPill @color="teal">
       Membership active
-    </Settings::BillingPage::MembershipSection::StatusPill>
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+    </Settings::BillingPage::StatusPill>
+    <div class="prose prose-sm prose-compact dark:prose-invert">
       {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
         <p class="line-through">
           You have access to all CodeCrafters content, valid until
-          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
         </p>
         <p>
           🎉 You have VIP access to all CodeCrafters content, valid until
-          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>.
+          <strong>{{date-format @user.vipStatusExpiresAt format="PPPp"}}</strong>.
         </p>
       {{else}}
         <p>
           You have access to all CodeCrafters content, valid until
-          <b class="font-semibold">{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</b>.
+          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
         </p>
       {{/if}}
     </div>
   {{else if @user.isVip}}
-    <Settings::BillingPage::MembershipSection::StatusPill @variant="teal">
+    <Settings::BillingPage::StatusPill @color="teal">
       VIP Access
-    </Settings::BillingPage::MembershipSection::StatusPill>
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+    </Settings::BillingPage::StatusPill>
+    <div class="prose prose-sm prose-compact dark:prose-invert">
       <p>
         {{#if @user.vipStatusExpiresAt}}
           🎉 You have VIP access to all CodeCrafters content, valid until
-          <b class="font-semibold">{{date-format @user.vipStatusExpiresAt format="PPPp"}}</b>.
+          <strong>{{date-format @user.vipStatusExpiresAt format="PPPp"}}</strong>.
         {{else}}
           🎉 You have VIP access to all CodeCrafters content.
         {{/if}}
       </p>
     </div>
   {{else if @user.expiredSubscription}}
-    <Settings::BillingPage::MembershipSection::StatusPill @variant="red">
+    <Settings::BillingPage::StatusPill @color="red">
       Membership inactive
-    </Settings::BillingPage::MembershipSection::StatusPill>
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+    </Settings::BillingPage::StatusPill>
+    <div class="prose prose-sm prose-compact dark:prose-invert">
       <p>
         Your CodeCrafters membership is
-        <b class="text-red-600 font-semibold">currently inactive</b>.
+        <strong class="text-red-600">currently inactive</strong>.
       </p>
       <p>
         Start a new membership to get access to
@@ -52,10 +52,10 @@
       Start membership →
     </PrimaryLinkButton>
   {{else}}
-    <Settings::BillingPage::MembershipSection::StatusPill @variant="yellow">
+    <Settings::BillingPage::StatusPill @color="yellow">
       No membership found
-    </Settings::BillingPage::MembershipSection::StatusPill>
-    <div class="text-gray-500 dark:text-gray-400 text-xs mt-2">
+    </Settings::BillingPage::StatusPill>
+    <div class="prose prose-sm prose-compact dark:prose-invert">
       <p>
         You don't have a CodeCrafters membership. Start one to get access to
         <a href="https://docs.codecrafters.io/membership" target="_blank" rel="noopener noreferrer">membership benefits</a>.
