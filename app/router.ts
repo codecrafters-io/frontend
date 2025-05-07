@@ -32,6 +32,7 @@ Router.map(function () {
     this.route('code-example', { path: '/code-examples/:code_example_id' });
     this.route('code-example-evaluators');
     this.route('code-example-evaluator', { path: '/code-example-evaluators/:evaluator_slug' });
+    this.route('code-examples-index', { path: '/community-solutions-analyses' });
     this.route('feedback');
     this.route('insights');
     this.route('stage-insights-index', { path: '/stage-insights' });
