@@ -1,13 +1,13 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
-    <Settings::BillingPage::StatusPill @color="teal">
+    <Settings::BillingPage::StatusPill @color="green">
       Membership active
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">
-      {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
+      {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.currentPeriodEnd))}}
         <p class="line-through">
           You have access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
+          <strong>{{date-format @user.activeSubscription.currentPeriodEnd format="PPPp"}}</strong>.
         </p>
         <p>
           🎉 You have VIP access to all CodeCrafters content, valid until
@@ -16,12 +16,12 @@
       {{else}}
         <p>
           You have access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
+          <strong>{{date-format @user.activeSubscription.currentPeriodEnd format="PPPp"}}</strong>.
         </p>
       {{/if}}
     </div>
   {{else if @user.isVip}}
-    <Settings::BillingPage::StatusPill @color="teal">
+    <Settings::BillingPage::StatusPill @color="green">
       VIP Access
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">

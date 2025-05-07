@@ -6,6 +6,7 @@ import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
+import { format } from 'date-fns';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -22,25 +23,36 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
-    await this.pauseTest();
-    assert.ok(billingPage.membershipSection.text.includes('Yearly Plan'), 'shows correct plan name');
 
-    subscription.update('expiresAt', new Date('2024-01-01'));
-    await billingPage.visit();
-
-    assert.ok(billingPage.membershipSection.text.includes('Membership expires on January 1, 2024'), 'shows expiry date');
-
-    // Test VIP access expiry
-    testScenario(this.server);
-    signInAsVipUser(this.owner, this.server);
-    const user = this.server.schema.users.first();
-    user.update('vipAccessExpiresAt', new Date('2024-06-30'));
-
-    await billingPage.visit();
-
-    assert.ok(billingPage.membershipSection.text.includes('VIP Access expires on June 30, 2024'), 'shows VIP access expiry date');
+    assert.ok(
+      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), 'PPPp')),
+      'shows correct end of current period',
+    );
 
     await percySnapshot('Billing Page - Active Subscription');
+  });
+
+  test('membership section shows correct plan for subscriber with VIP access', async function (assert) {
+    testScenario(this.server);
+    let usr = signInAsSubscriber(this.owner, this.server);
+    usr.update('isVip', true);
+    usr.update('vipStatusExpiresAt', new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30));
+
+    await billingPage.visit();
+
+    assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
+    assert.ok(
+      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), 'PPPp')),
+      'shows correct end of current period as line through text',
+    );
+
+    assert.ok(billingPage.membershipSection.text.includes('VIP access'), 'shows VIP access');
+    assert.ok(
+      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30), 'PPPp')),
+      'shows correct VIP access expiry date',
+    );
+
+    await percySnapshot('Billing Page - VIP Access with Active Subscription');
   });
 
   test('membership section shows correct plan for non-subscriber', async function (assert) {
@@ -50,11 +62,11 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await billingPage.visit();
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
-    assert.ok(billingPage.membershipSection.text.includes('Membership not found'), 'does not show active plan');
+    assert.ok(billingPage.membershipSection.text.includes('No membership found'), 'does not show active plan');
     await percySnapshot('Billing Page - No Active Subscription');
   });
 
-  test('membership section shows VIP access for subscriber with VIP access', async function (assert) {
+  test('membership section shows VIP access for user with VIP access', async function (assert) {
     testScenario(this.server);
     signInAsVipUser(this.owner, this.server);
 
@@ -62,6 +74,12 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
     assert.ok(billingPage.membershipSection.text.includes('VIP Access'), 'shows VIP access');
+
+    assert.ok(
+      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30), 'PPPp')),
+      'shows correct VIP access expiry date',
+    );
+
     await percySnapshot('Billing Page - VIP Access');
   });
 
@@ -87,7 +105,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
-    assert.dom('[data-test-payment-history-section] > div:last-child').hasText('No payment history found.', 'shows empty state text');
+    assert.dom('[data-test-payment-history-section] > div:last-child').hasText('No payments found.', 'shows empty state text');
   });
 
   test('payment history section shows charges after creation', async function (assert) {
