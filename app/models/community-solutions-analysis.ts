@@ -112,6 +112,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     if (thresholds.green !== undefined && value <= thresholds.green) return 'green';
     if (thresholds.yellow !== undefined && value <= thresholds.yellow) return 'yellow';
     if (thresholds.red !== undefined && value >= thresholds.red) return 'red';
+
     return 'yellow';
   }
 
@@ -119,6 +120,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     if (thresholds.green !== undefined && value >= thresholds.green) return 'green';
     if (thresholds.yellow !== undefined && value >= thresholds.yellow) return 'yellow';
     if (thresholds.red !== undefined && value >= thresholds.red) return 'red';
+
     return 'yellow';
   }
 }

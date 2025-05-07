@@ -25,7 +25,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
     const languages = await this.store.findAll('language');
-    
+
     let selectedLanguage: LanguageModel | null = null;
     let analyses: CommunitySolutionsAnalysisModel[] = [];
 
@@ -33,11 +33,11 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
       selectedLanguage = languages.find((language) => language.slug === params.language) as LanguageModel;
 
       if (selectedLanguage) {
-        analyses = await this.store.query('community-solutions-analysis', {
+        analyses = (await this.store.query('community-solutions-analysis', {
           course_id: course.id,
           language_id: selectedLanguage.id,
           include: 'stage,language',
-        }) as unknown as CommunitySolutionsAnalysisModel[];
+        })) as unknown as CommunitySolutionsAnalysisModel[];
       }
     }
 
