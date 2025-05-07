@@ -1,4 +1,5 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -28,6 +29,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own grep');
+    await courseOverviewPage.clickOnStartCourse();
+
     assert.strictEqual(currentURL(), '/courses/grep/completed', 'URL is /courses/redis/completed');
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations are in order. Only ~30% of users');
 
@@ -56,6 +59,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     // This opens in the extension completed page
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await visit('/courses/dummy/completed');
 
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations!');
@@ -95,6 +99,8 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
     await coursePage.sidebar.clickOnStepListItem('Expiry');
 
     // Try using current step complete modal first

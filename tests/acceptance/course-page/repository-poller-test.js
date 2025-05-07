@@ -1,3 +1,4 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -29,6 +30,7 @@ module('Acceptance | course-page | repository-poller', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
     assert.strictEqual(window.pollerInstances.length, 2, 'poller instance is created');

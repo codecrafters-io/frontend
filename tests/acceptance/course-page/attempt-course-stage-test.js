@@ -1,4 +1,5 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
@@ -29,6 +30,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
@@ -43,6 +45,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
         'fetch leaderboard entries (course page)',
         'fetch hints (course page)',
         'fetch language guide (course page)',
+        'fetch course stage comments (course page)',
+        'fetch leaderboard entries (course page)',
       ].length,
     );
 
@@ -81,6 +85,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
@@ -112,6 +117,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.ok(coursePage.testRunnerCard.isVisible, 'test runner card is visible');

@@ -1,3 +1,4 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
@@ -37,6 +38,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.secondStageTutorialCard.steps[0].isComplete, 'First step is not complete');
     assert.ok(coursePage.secondStageTutorialCard.steps[0].isExpanded, 'First step is expanded');
@@ -121,6 +123,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'cli',
@@ -174,6 +177,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
