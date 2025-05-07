@@ -15,23 +15,23 @@ type StageWithAnalysis = {
 
 export default class CodeExampleInsightsIndexController extends Controller {
   @service declare router: RouterService;
-  
+
   queryParams = ['language'];
   language: string | null = null;
-  
+
   declare model: ModelType;
-  
+
   get stagesWithAnalyses(): StageWithAnalysis[] {
     const stagesWithAnalyses: StageWithAnalysis[] = [];
-    
+
     if (!this.model.selectedLanguage) {
       return [];
     }
-    
+
     // For each stage in the course, find the corresponding analysis if it exists
     this.model.course.stages.forEach((stage) => {
       const analysis = this.model.analyses.find((analysis) => analysis.stage.id === stage.id);
-      
+
       if (analysis) {
         stagesWithAnalyses.push({
           stage,
@@ -39,22 +39,19 @@ export default class CodeExampleInsightsIndexController extends Controller {
         });
       }
     });
-    
+
     return stagesWithAnalyses;
   }
-  
+
   @action
-  onLanguageChange(event: Event): void {
-    const select = event.target as HTMLSelectElement;
-    const languageSlug = select.value;
-    
+  onLanguageChange(language: LanguageModel | null): void {
     this.router.transitionTo({
       queryParams: {
-        language: languageSlug
-      }
+        language: language?.slug || null,
+      },
     });
   }
-  
+
   getCourseStageCodeExamplesUrl(course: CourseModel, stage: CourseStageModel, language: LanguageModel): string {
     return `/courses/${course.slug}/stages/${stage.identifier}/code-examples?language=${language.slug}`;
   }
