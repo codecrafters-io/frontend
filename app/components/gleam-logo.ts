@@ -8,7 +8,8 @@ interface GleamLogoSignature {
   Element: HTMLDivElement;
 
   Args: {
-    height: number;
+    // Optional size for the logo
+    size?: number;
   };
 
   Blocks: {
@@ -19,37 +20,56 @@ interface GleamLogoSignature {
 export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   animationInterval: number | null = null;
   container: HTMLElement | null = null;
+  resizeObserver: ResizeObserver | null = null;
   @tracked riveInstance: Rive | null = null;
+  @tracked containerSize: number = 0;
 
   get containerStyle(): string {
-    // Ensure minimum size on mobile while maintaining aspect ratio
-    const minSize = Math.min(this.args.height, 200);
+    const size = this.args.size || this.containerSize;
 
-    return `height: ${minSize}px; width: ${minSize}px; max-width: 100%;`;
-  }
-
-  @action
-  cleanupRive() {
-    if (this.animationInterval) {
-      clearInterval(this.animationInterval);
-      this.animationInterval = null;
-    }
-
-    if (this.riveInstance) {
-      this.riveInstance.stop();
-      this.riveInstance = null;
-    }
+    return `height: ${size}px; width: ${size}px; max-width: 100%; display: block;`;
   }
 
   @action
   handleDidInsert(element: HTMLDivElement) {
     this.container = element;
 
+    // Set up ResizeObserver if no size is provided
+    if (!this.args.size) {
+      // Get initial size from parent
+      const parentElement = element.parentElement;
+
+      if (parentElement) {
+        // Force a layout calculation to get accurate dimensions
+        const parentRect = parentElement.getBoundingClientRect();
+        this.containerSize = Math.min(parentRect.width, parentRect.height);
+
+        // Set up ResizeObserver to update the container size
+        this.resizeObserver = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            const newSize = Math.min(entry.contentRect.width, entry.contentRect.height);
+
+            if (newSize > 0) {
+              this.containerSize = newSize;
+            }
+          }
+        });
+
+        // Only observe the immediate parent element
+        this.resizeObserver.observe(parentElement);
+      }
+    }
+
     try {
       const canvas = document.createElement('canvas');
 
-      // Set initial canvas size for high quality
-      const baseSize = 400; // Base size for quality
+      // Calculate base size based on device pixel ratio and container size
+      const pixelRatio = window.devicePixelRatio || 1;
+      const containerSize = this.args.size || this.containerSize;
+      // Use 2x the container size for high quality, but cap at 4x for performance
+      const qualityMultiplier = Math.min(4, Math.max(2, pixelRatio));
+      const baseSize = Math.round(containerSize * qualityMultiplier);
+
       canvas.width = baseSize;
       canvas.height = baseSize;
 
@@ -103,6 +123,24 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
           action: 'handleDidInsert',
         },
       });
+    }
+  }
+
+  @action
+  handleWillDestroy() {
+    if (this.animationInterval) {
+      clearInterval(this.animationInterval);
+      this.animationInterval = null;
+    }
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = null;
+    }
+
+    if (this.riveInstance) {
+      this.riveInstance.stop();
+      this.riveInstance = null;
     }
   }
 }
