@@ -103,6 +103,9 @@ module.exports = {
               borderRadius: '4px',
               whiteSpace: 'nowrap',
               backgroundColor: 'var(--tw-prose-pre-bg)',
+              '.dark &': {
+                borderColor: 'rgba(255,255,255,0.1)',
+              },
             },
             'code::before': { content: 'none' },
             'code::after': { content: 'none' },
