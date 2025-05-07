@@ -83,9 +83,10 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
 
     baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
-    baseRequestsCount += 1; // An extra request for leaderboard-entries started happening after ember-data upgrade
+    baseRequestsCount += 2; // An extra request for leaderboard-entries started happening after ember-data upgrade
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 1, 'create repository request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, 'create repository request was executed');
+
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
@@ -93,7 +94,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 3, 'poll request was executed');
+    baseRequestsCount += 1; // 1 refreshed poll
+
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
 
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
@@ -134,7 +137,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
+    baseRequestsCount += 1; // 1 refreshed poll
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
+
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
     await percySnapshot('Start Course - Git Push Received');
@@ -172,7 +177,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
-
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.content.actions[2].hover();
 
@@ -182,6 +187,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
@@ -192,6 +199,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.content.actions[2].hover();

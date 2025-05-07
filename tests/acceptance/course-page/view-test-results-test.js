@@ -48,6 +48,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     assert.ok(coursePage.testResultsBar.logsPreview.isPresent);
@@ -77,6 +78,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await waitUntil(() => coursePage.testResultsBar.logsPreview.logs !== ''); // Logs are fetched on-demand
@@ -107,6 +109,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await waitUntil(() => coursePage.testResultsBar.logsPreview.logs !== ''); // Logs are fetched on-demand
