@@ -105,7 +105,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
-    assert.dom('[data-test-payment-history-section] > div:last-child').hasText('No payments found.', 'shows empty state text');
+    assert.strictEqual(billingPage.paymentHistorySection.emptyStateText, 'No payments found.', 'shows empty state text');
   });
 
   test('payment history section shows charges after creation', async function (assert) {
@@ -180,7 +180,8 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await billingPage.visit();
 
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 2, 'shows two charges');
-    assert.dom('[data-test-refund-text]').exists({ count: 2 }, 'shows refund text for both charges');
+    assert.strictEqual(billingPage.paymentHistorySection.charges[0].refundText, '(refunded)', 'shows refund text for first charge');
+    assert.strictEqual(billingPage.paymentHistorySection.charges[1].refundText, '($60 refunded)', 'shows refund text for second charge');
 
     await percySnapshot('Billing Page - Payment History with Refunded Charges');
   });
