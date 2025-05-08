@@ -1,6 +1,6 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
-    <Settings::BillingPage::StatusPill @color="green">
+    <Settings::BillingPage::StatusPill @color="green" class="mb-3">
       Membership active
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">
@@ -21,7 +21,7 @@
       {{/if}}
     </div>
   {{else if @user.isVip}}
-    <Settings::BillingPage::StatusPill @color="green">
+    <Settings::BillingPage::StatusPill @color="green" class="mb-3">
       VIP Access
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">
@@ -35,7 +35,7 @@
       </p>
     </div>
   {{else if @user.expiredSubscription}}
-    <Settings::BillingPage::StatusPill @color="red">
+    <Settings::BillingPage::StatusPill @color="red" class="mb-3">
       Membership inactive
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">
@@ -52,7 +52,7 @@
       Start membership →
     </PrimaryLinkButton>
   {{else}}
-    <Settings::BillingPage::StatusPill @color="yellow">
+    <Settings::BillingPage::StatusPill @color="yellow" class="mb-3">
       No membership found
     </Settings::BillingPage::StatusPill>
     <div class="prose prose-sm prose-compact dark:prose-invert">
