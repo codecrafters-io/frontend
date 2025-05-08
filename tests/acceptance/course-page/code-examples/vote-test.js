@@ -112,7 +112,6 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
   });
 
-
   test('can upvote and downvote code examples', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -156,5 +155,28 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     let downvote = this.server.schema.downvotes.all().models[0];
     assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
+  });
+
+  test('user does not see their feedback buttons on their own code examples', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let currentUserSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    currentUserSolution.update({ user: currentUser });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+
+    assert.false(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
+    assert.false(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on own solution');
   });
 });

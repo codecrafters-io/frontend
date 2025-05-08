@@ -86,9 +86,11 @@
   </FileContentsCard>
 {{/each}}
 
-<CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection
-  @metadataForDownvote={{@metadataForDownvote}}
-  @metadataForUpvote={{@metadataForUpvote}}
-  @solution={{@solution}}
-  class="pt-6 pb-3"
-/>
+{{#unless (eq @solution.user this.authenticator.currentUser)}}
+  <CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection
+    @metadataForDownvote={{@metadataForDownvote}}
+    @metadataForUpvote={{@metadataForUpvote}}
+    @solution={{@solution}}
+    class="pt-6 pb-3"
+  />
+{{/unless}}
