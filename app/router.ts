@@ -81,6 +81,7 @@ Router.map(function () {
 
   this.route('settings', function () {
     this.route('profile');
+    this.route('billing');
     this.route('account');
   });
 

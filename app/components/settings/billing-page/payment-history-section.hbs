@@ -1,0 +1,67 @@
+<Settings::FormSection @title="Payment history" @description="Details of your previous payments" data-test-payment-history-section>
+  {{#if this.isLoading}}
+    <div class="flex items-center justify-center py-8">
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+      <span class="ml-3 text-gray-700 dark:text-gray-200">Loading payments...</span>
+    </div>
+  {{else if this.errorMessage}}
+    <div class="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-400 rounded-md p-4">
+      <div class="flex gap-3">
+        <div class="flex-shrink-0">
+          {{svg-jar "x-circle" class="h-5 w-5 text-red-700 dark:text-red-300"}}
+        </div>
+        <p class="text-sm text-red-700 dark:text-red-300">{{this.errorMessage}}</p>
+      </div>
+    </div>
+  {{else if (gt this.charges.length 0)}}
+    <div>
+      <div class="grid grid-cols-3 gap-y-3">
+        {{! Header }}
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-2 text-gray-500 dark:text-gray-400 text-sm">Date</div>
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-2 text-gray-500 dark:text-gray-400 text-sm text-right">Amount</div>
+        <div class="border-b border-gray-200 dark:border-gray-700 pb-2"></div>
+
+        {{#each this.charges as |charge|}}
+          <div class="text-gray-700 dark:text-gray-300 text-sm">
+            {{date-format charge.createdAt format="PPP"}}
+          </div>
+          <div
+            class="{{if charge.statusIsFailed 'text-red-600 dark:text-red-400' 'text-gray-700 dark:text-gray-300'}} text-sm text-right"
+            data-test-payment-history-item
+          >
+            <span class="font-semibold" data-test-amount>{{charge.displayString}}</span>
+            {{#if (gt charge.amountRefunded 0)}}
+              {{#if charge.isFullyRefunded}}
+                <span class="text-red-600 dark:text-red-400" data-test-refund-text>(refunded)</span>
+              {{else}}
+                <span class="text-red-600 dark:text-red-400" data-test-refund-text>(<span
+                    class="font-semibold"
+                  >{{charge.refundedAmountDisplayString}}</span>
+                  refunded)</span>
+              {{/if}}
+            {{/if}}
+          </div>
+          <div class="flex items-center justify-end">
+            {{#if (and charge.invoiceId charge.statusIsSucceeded)}}
+              <a
+                href={{charge.invoiceDownloadUrl}}
+                target="_blank"
+                class="text-teal-500 dark:text-teal-400 hover:text-teal-600 dark:hover:text-teal-300 font-semibold text-sm"
+                data-test-download-invoice-link
+                rel="noopener noreferrer"
+              >
+                Download Invoice
+              </a>
+            {{else if charge.statusIsFailed}}
+              <span class="text-gray-600 dark:text-gray-300 text-sm">Payment failed</span>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{else}}
+    <div class="text-gray-700 dark:text-gray-200">
+      No payments found.
+    </div>
+  {{/if}}
+</Settings::FormSection>

@@ -28,7 +28,7 @@ export default class PayRoute extends BaseRoute {
     await this.authenticator.authenticate();
 
     if (this.authenticator.currentUser && this.authenticator.currentUser.hasActiveSubscription) {
-      this.router.transitionTo('membership');
+      this.router.transitionTo('settings.billing');
 
       return;
     }
