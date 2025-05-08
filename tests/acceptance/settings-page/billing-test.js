@@ -6,7 +6,6 @@ import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
-import { format } from 'date-fns';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +17,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
     const subscription = this.server.schema.subscriptions.first();
     subscription.update('pricingPlanName', 'Yearly Plan');
+    subscription.update('currentPeriodEnd', new Date('2035-07-31T01:00:00Z'));
 
     await billingPage.visit();
 
@@ -25,7 +25,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
 
     assert.ok(
-      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), 'PPPp')),
+      billingPage.membershipSection.text.includes('You have access to all CodeCrafters content, valid until July 31st, 2035'),
       'shows correct end of current period',
     );
 
@@ -34,21 +34,24 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
   test('membership section shows correct plan for subscriber with VIP access', async function (assert) {
     testScenario(this.server);
-    let usr = signInAsSubscriber(this.owner, this.server);
-    usr.update('isVip', true);
-    usr.update('vipStatusExpiresAt', new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30));
+    let user = signInAsSubscriber(this.owner, this.server);
+    user.update('isVip', true);
+    user.update('vipStatusExpiresAt', new Date('2035-08-31T01:00:00Z'));
+    const subscription = this.server.schema.subscriptions.first();
+    subscription.update('currentPeriodEnd', new Date('2035-07-31T01:00:00Z'));
 
     await billingPage.visit();
 
     assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
     assert.ok(
-      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000), 'PPPp')),
+      billingPage.membershipSection.text.includes('You have access to all CodeCrafters content, valid until July 31st, 2035'),
       'shows correct end of current period as line through text',
     );
 
     assert.ok(billingPage.membershipSection.text.includes('VIP access'), 'shows VIP access');
+    console.log(billingPage.membershipSection.text);
     assert.ok(
-      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30), 'PPPp')),
+      billingPage.membershipSection.text.includes('You have VIP access to all CodeCrafters content, valid until August 31st, 2035'),
       'shows correct VIP access expiry date',
     );
 
@@ -68,7 +71,8 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
   test('membership section shows VIP access for user with VIP access', async function (assert) {
     testScenario(this.server);
-    signInAsVipUser(this.owner, this.server);
+    let user = signInAsVipUser(this.owner, this.server);
+    user.update('vipStatusExpiresAt', new Date('2035-08-31T01:00:00Z'));
 
     await billingPage.visit();
 
@@ -76,7 +80,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     assert.ok(billingPage.membershipSection.text.includes('VIP Access'), 'shows VIP access');
 
     assert.ok(
-      billingPage.membershipSection.text.includes(format(new Date(new Date().getTime() + 24 * 60 * 60 * 1000 * 30), 'PPPp')),
+      billingPage.membershipSection.text.includes('You have VIP access to all CodeCrafters content, valid until August 31st, 2035'),
       'shows correct VIP access expiry date',
     );
 
@@ -105,7 +109,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(billingPage.paymentHistorySection.isVisible, 'payment history section is visible');
     assert.strictEqual(billingPage.paymentHistorySection.charges.length, 0, 'shows no charges initially');
-    assert.strictEqual(billingPage.paymentHistorySection.emptyStateText, 'No payments found.', 'shows empty state text');
+    assert.ok(billingPage.paymentHistorySection.text.includes('No payments found.'), 'shows empty state text');
   });
 
   test('payment history section shows charges after creation', async function (assert) {

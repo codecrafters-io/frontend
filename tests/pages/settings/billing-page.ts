@@ -12,7 +12,6 @@ export default createPage({
       failed: hasClass('text-red-600'),
       refundText: text('[data-test-refund-text]'),
     }),
-    emptyStateText: text('> div:last-child'),
     scope: '[data-test-payment-history-section]',
   },
 
