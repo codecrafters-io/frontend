@@ -1,6 +1,4 @@
-{{#if (and (eq @language.slug "gleam") (eq @variant "color"))}}
-  <GleamLogo ...attributes />
-{{else if (eq @variant "color")}}
+{{#if (eq @variant "color")}}
   <img alt={{@language.name}} src="{{@language.colorLogoUrl}}" ...attributes />
 {{else if (eq @variant "gray")}}
   <img alt={{@language.name}} src="{{@language.grayLogoUrl}}" ...attributes />

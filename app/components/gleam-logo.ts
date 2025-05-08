@@ -6,15 +6,6 @@ import * as Sentry from '@sentry/ember';
 
 interface GleamLogoSignature {
   Element: HTMLDivElement;
-
-  Args: {
-    // Optional size for the logo
-    size?: number;
-  };
-
-  Blocks: {
-    default: [];
-  };
 }
 
 export default class GleamLogoComponent extends Component<GleamLogoSignature> {
@@ -22,64 +13,56 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
   container: HTMLElement | null = null;
   resizeObserver: ResizeObserver | null = null;
   @tracked riveInstance: Rive | null = null;
-  @tracked containerSize: number = 0;
+  @tracked containerWidth: number = 0;
+  @tracked containerHeight: number = 0;
 
   get containerStyle(): string {
-    const size = this.args.size || this.containerSize;
-
-    return `height: ${size}px; width: ${size}px; max-width: 100%; display: block;`;
+    return `width: ${this.containerWidth}px; height: ${this.containerHeight}px; max-width: 100%; display: block;`;
   }
 
   @action
   handleDidInsert(element: HTMLDivElement) {
     this.container = element;
 
-    // Set up ResizeObserver if no size is provided
-    if (!this.args.size) {
-      // Get initial size from parent
-      const parentElement = element.parentElement;
+    // Get initial size from parent
+    const parentElement = element.parentElement;
 
-      if (parentElement) {
-        // Force a layout calculation to get accurate dimensions
-        const parentRect = parentElement.getBoundingClientRect();
-        this.containerSize = Math.min(parentRect.width, parentRect.height);
+    if (parentElement) {
+      // Force a layout calculation to get accurate dimensions
+      const parentRect = parentElement.getBoundingClientRect();
+      this.containerWidth = parentRect.width;
+      this.containerHeight = parentRect.height;
 
-        // Set up ResizeObserver to update the container size
-        this.resizeObserver = new ResizeObserver((entries) => {
-          for (const entry of entries) {
-            const newSize = Math.min(entry.contentRect.width, entry.contentRect.height);
+      // Set up ResizeObserver to update the container size
+      this.resizeObserver = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const newWidth = entry.contentRect.width;
+          const newHeight = entry.contentRect.height;
 
-            if (newSize > 0) {
-              this.containerSize = newSize;
-            }
+          if (newWidth > 0 && newHeight > 0) {
+            this.containerWidth = newWidth;
+            this.containerHeight = newHeight;
           }
-        });
+        }
+      });
 
-        // Only observe the immediate parent element
-        this.resizeObserver.observe(parentElement);
-      }
+      // Only observe the immediate parent element
+      this.resizeObserver.observe(parentElement);
     }
 
     try {
-      const canvas = document.createElement('canvas');
+      const canvas = element.querySelector('canvas');
+      if (!canvas) return;
 
       // Calculate base size based on device pixel ratio and container size
       const pixelRatio = window.devicePixelRatio || 1;
-      const containerSize = this.args.size || this.containerSize;
       // Use 2x the container size for high quality, but cap at 4x for performance
       const qualityMultiplier = Math.min(4, Math.max(2, pixelRatio));
-      const baseSize = Math.round(containerSize * qualityMultiplier);
+      const baseWidth = Math.round(this.containerWidth * qualityMultiplier);
+      const baseHeight = Math.round(this.containerHeight * qualityMultiplier);
 
-      canvas.width = baseSize;
-      canvas.height = baseSize;
-
-      // Let the canvas scale naturally within its container
-      canvas.style.width = '100%';
-      canvas.style.height = '100%';
-      canvas.style.display = 'block';
-      canvas.style.maxWidth = '100%'; // Ensure it doesn't overflow on mobile
-
-      element.appendChild(canvas);
+      canvas.width = baseWidth;
+      canvas.height = baseHeight;
 
       this.riveInstance = new Rive({
         src: '/assets/animations/gleam_logo_animation.riv',
@@ -99,12 +82,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       });
     } catch (error: unknown) {
       console.error('Error setting up Rive:', error);
-      Sentry.captureException(error, {
-        tags: {
-          component: 'GleamLogo',
-          action: 'handleDidInsert',
-        },
-      });
+      Sentry.captureException(error);
     }
   }
 

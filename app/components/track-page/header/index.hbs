@@ -16,44 +16,50 @@
 
     <div class="flex items-center gap-3 flex-wrap">
       {{#if (gt @language.trackLearnersCount 3000)}}
-        {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
-        {{#if @language.trackLearnersCount}}
-          <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="flex-shrink-0" />
-          <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
-        {{/if}}
+      {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
+      {{#if @language.trackLearnersCount}}
+      <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users"
+        class="flex-shrink-0" />
+      <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
+      {{/if}}
       {{/if}}
 
-      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
+      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal"
+        class="flex-shrink-0" />
     </div>
 
     {{#if (has-block "cta")}}
-      {{yield to="cta"}}
+    {{yield to="cta"}}
     {{else}}
-      {{#if this.authenticator.isAnonymous}}
-        <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
-          {{! TODO: Bring this back for authed users once we can account for both concepts & challenges }}
-          <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
-        </div>
-      {{else if this.currentUserHasStartedTrack}}
-        <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
-          <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
+    {{#if this.authenticator.isAnonymous}}
+    <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
+      {{! TODO: Bring this back for authed users once we can account for both concepts & challenges }}
+      <TrackPage::StartTrackButton @language={{@language}} @courses={{@courses}} />
+    </div>
+    {{else if this.currentUserHasStartedTrack}}
+    <div class="flex items-center flex-wrap gap-x-2 gap-y-4 mt-5">
+      <TrackPage::ResumeTrackButton @language={{@language}} @courses={{@courses}} />
 
-          {{#if (gt this.topParticipants.length 0)}}
-            <div class="hidden sm:flex items-center">
-              <div class="flex -space-x-1 hover:space-x-1 items-center">
-                {{#each this.topParticipants as |user|}}
-                  <TrackPage::Header::TopParticipantAvatar @user={{user}} />
-                {{/each}}
-              </div>
-
-              <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
-            </div>
-          {{/if}}
+      {{#if (gt this.topParticipants.length 0)}}
+      <div class="hidden sm:flex items-center">
+        <div class="flex -space-x-1 hover:space-x-1 items-center">
+          {{#each this.topParticipants as |user|}}
+          <TrackPage::Header::TopParticipantAvatar @user={{user}} />
+          {{/each}}
         </div>
+
+        <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">Join the best</span>
+      </div>
       {{/if}}
+    </div>
+    {{/if}}
     {{/if}}
   </div>
   <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
+    {{#if (eq @language.name "Gleam")}}
+    <GleamLogo />
+    {{else}}
     <LanguageLogo @language={{@language}} @variant="color" class="dark:opacity-90" />
+    {{/if}}
   </div>
 </div>
