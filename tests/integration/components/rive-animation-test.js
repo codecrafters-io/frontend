@@ -75,8 +75,7 @@ module('Integration | Component | rive-animation', function (hooks) {
       constructor(options) {
         const instance = new MockRive(options);
         this._onLoadCallback = options.onLoad;
-
-        return instance;
+        Object.assign(this, instance);
       }
     };
   });
