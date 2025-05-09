@@ -18,7 +18,7 @@ interface Signature {
 export default class CommunitySolutionCardFeedbackSectionComponent extends Component<Signature> {
   transition = fade;
 
-  @tracked unsavedUserActionValue: 'upvote' | 'downvote' | 'unvote' | null = null;
+  @tracked lastUserActionValue: 'upvote' | 'downvote' | 'unvote' | null = null;
 
   get currentUserHasDownvoted() {
     return this.args.solution.currentUserDownvotes.length > 0;
@@ -29,11 +29,11 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
   }
 
   get optimisticValueForUserAction() {
-    if (this.unsavedUserActionValue !== 'unvote' && this.unsavedUserActionValue !== null) {
-      return this.unsavedUserActionValue;
+    if (this.lastUserActionValue !== 'unvote' && this.lastUserActionValue !== null) {
+      return this.lastUserActionValue;
     }
 
-    if (this.unsavedUserActionValue === 'unvote') {
+    if (this.lastUserActionValue === 'unvote') {
       return null;
     }
 
@@ -53,9 +53,9 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
   });
 
   syncUserAction = task({ keepLatest: true }, async () => {
-    const toggleUpvote = this.unsavedUserActionValue === 'upvote';
-    const toggleDownvote = this.unsavedUserActionValue === 'downvote';
-    const toggleUnvote = this.unsavedUserActionValue === 'unvote';
+    const toggleUpvote = this.lastUserActionValue === 'upvote';
+    const toggleDownvote = this.lastUserActionValue === 'downvote';
+    const toggleUnvote = this.lastUserActionValue === 'unvote';
 
     if (toggleUpvote) {
       this.flashSuccessMessageTask.perform();
@@ -70,10 +70,10 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
 
   @action
   async handleClick(action: 'upvote' | 'downvote'): Promise<void> {
-    if (this.unsavedUserActionValue === action) {
-      this.unsavedUserActionValue = 'unvote';
+    if (this.lastUserActionValue === action) {
+      this.lastUserActionValue = 'unvote';
     } else {
-      this.unsavedUserActionValue = action;
+      this.lastUserActionValue = action;
     }
 
     this.syncUserAction.perform();
