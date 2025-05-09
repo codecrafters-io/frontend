@@ -42,18 +42,10 @@ export default class CourseCardComponent extends Component {
       };
     }
 
-    if (this.lastUsedRepository) {
-      return {
-        name: 'course',
-        model: this.args.course.slug,
-        query: { repo: null }, // Route will pickup the last used repository by default
-      };
-    } else {
-      return {
-        name: 'course-overview',
-        model: this.args.course.slug,
-        query: {},
-      };
-    }
+    return {
+      name: 'course-overview',
+      model: this.args.course.slug,
+      query: {},
+    };
   }
 }

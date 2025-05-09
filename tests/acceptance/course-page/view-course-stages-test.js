@@ -27,6 +27,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    assert.strictEqual(currentURL(), '/courses/redis/overview', 'should navigate to overview page first');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');

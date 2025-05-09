@@ -6,6 +6,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | test-runner-card', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,6 +28,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
@@ -78,6 +80,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/wy1', 'current URL is course page URL');
 

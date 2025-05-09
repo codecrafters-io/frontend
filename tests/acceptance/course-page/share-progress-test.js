@@ -1,6 +1,7 @@
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
@@ -26,6 +27,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
@@ -57,6 +59,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
@@ -111,6 +114,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
