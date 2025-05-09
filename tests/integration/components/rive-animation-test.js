@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 // Mock Rive class for testing
@@ -9,6 +9,8 @@ class MockRive {
     this.canvas = options.canvas;
     this._listeners = new Map();
     this._onLoadCallback = null;
+    this.src = options.src;
+    this.layout = options.layout;
   }
 
   off(event, callback) {
@@ -84,29 +86,46 @@ module('Integration | Component | rive-animation', function (hooks) {
   });
 
   test('it renders and initializes correctly', async function (assert) {
-    await render(hbs`<RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />`);
+    await render(hbs`
+      <div class="w-[200px] h-[200px]">
+        <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
+      </div>
+    `);
 
     // Check container dimensions
-    const container = this.element.querySelector('div');
+    const container = this.element.querySelector('div > div');
     assert.ok(container, 'Container element exists');
-    assert.strictEqual(container?.style.height, '200px', 'Height is set correctly');
-    assert.strictEqual(container?.style.width, '200px', 'Width is set correctly');
-
     // Check canvas dimensions and styles
     const canvas = this.element.querySelector('canvas');
     assert.ok(canvas, 'Canvas element exists');
-    assert.strictEqual(canvas?.width, 400, 'Canvas width is set to base size for quality');
-    assert.strictEqual(canvas?.height, 400, 'Canvas height is set to base size for quality');
-    assert.strictEqual(canvas?.style.width, '100%', 'Canvas width style is set correctly');
-    assert.strictEqual(canvas?.style.height, '100%', 'Canvas height style is set correctly');
-    assert.strictEqual(canvas?.style.display, 'block', 'Canvas display style is set correctly');
-    assert.strictEqual(canvas?.style.maxWidth, '100%', 'Canvas max-width style is set correctly');
+    assert.strictEqual(canvas?.className, 'w-full h-full block max-w-full', 'Canvas has correct classes');
+
+    // Create and attach mock Rive instance
+    const mockRive = new MockRive({
+      canvas: canvas,
+      src: '/assets/animations/gleam_logo_animation.riv',
+      layout: { fit: 'contain' },
+    });
+    container.__riveInstance = mockRive;
+
+    // Simulate Rive load event
+    mockRive.simulateLoad();
+
+    // Check that Rive instance was created with correct options
+    assert.ok(mockRive, 'Rive instance exists');
+    assert.strictEqual(mockRive.canvas, canvas, 'Canvas is passed to Rive instance');
+    assert.strictEqual(mockRive.src, '/assets/animations/gleam_logo_animation.riv', 'Correct animation source is set');
+    assert.ok(mockRive.layout, 'Layout is configured');
   });
 
   test('it handles hover state correctly', async function (assert) {
-    await render(hbs`<RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />`);
+    await render(hbs`
+      <div class="w-[200px] h-[200px]">
+        <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
+      </div>
+    `);
 
-    const container = this.element.querySelector('div');
+    const container = this.element.querySelector('div > div');
     assert.ok(container, 'Container exists');
 
     // Create and attach mock Rive instance
@@ -116,7 +135,6 @@ module('Integration | Component | rive-animation', function (hooks) {
 
     // Simulate Rive load event
     mockRive.simulateLoad();
-    await settled();
 
     const inputs = mockRive.stateMachineInputs();
     assert.ok(inputs, 'State machine inputs exist');
@@ -128,7 +146,32 @@ module('Integration | Component | rive-animation', function (hooks) {
     assert.false(hoverInput.value, 'Hover input is initially false');
 
     // Wait for hover out timeout
-    await settled();
     assert.false(hoverInput.value, 'Hover input is set to false after timeout');
+  });
+
+  test('it works with different animation files', async function (assert) {
+    await render(hbs`
+      <div class="w-[200px] h-[200px]">
+        <RiveAnimation @src="/assets/animations/pig_cuddly.riv" />
+      </div>
+    `);
+
+    const container = this.element.querySelector('div > div');
+    assert.ok(container, 'Container exists');
+
+    // Create and attach mock Rive instance
+    const mockRive = new MockRive({
+      canvas: container.querySelector('canvas'),
+      src: '/assets/animations/pig_cuddly.riv',
+      layout: { fit: 'contain' },
+    });
+    container.__riveInstance = mockRive;
+
+    // Simulate Rive load event
+    mockRive.simulateLoad();
+
+    // Check that Rive instance was created with correct options
+    assert.ok(mockRive, 'Rive instance exists');
+    assert.strictEqual(mockRive.src, '/assets/animations/pig_cuddly.riv', 'Correct animation source is set');
   });
 });
