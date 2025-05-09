@@ -1,0 +1,32 @@
+<div class="relative rounded-md overflow-hidden">
+  <div class="flex flex-col">
+    <div class="flex items-center">
+      <dt class="text-sm font-medium text-gray-500 truncate pr-1">
+        {{@statistic.title}}
+      </dt>
+      <div class="ml-1">
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300 hover:text-gray-400 cursor-help"}}
+        <EmberTooltip @text={{@statistic.explanationMarkdown}} />
+      </div>
+    </div>
+    <dd class="flex items-baseline gap-1">
+      <p class="text-2xl font-semibold 
+        {{if (eq @statistic.color "red") "text-red-600"}}
+        {{if (eq @statistic.color "yellow") "text-yellow-600"}}
+        {{if (eq @statistic.color "green") "text-green-600"}}
+        {{if (eq @statistic.color "gray") "text-gray-400"}}
+      ">
+        {{if @statistic.value @statistic.value "No data"}}
+      </p>
+      <p class="text-sm text-gray-500">
+        {{@statistic.label}}
+      </p>
+    </dd>
+  </div>
+  <div class="absolute bottom-0 inset-x-0 h-0.5
+    {{if (eq @statistic.color "red") "bg-red-500"}}
+    {{if (eq @statistic.color "yellow") "bg-yellow-500"}}
+    {{if (eq @statistic.color "green") "bg-green-500"}}
+    {{if (eq @statistic.color "gray") "bg-gray-300"}}
+  "></div>
+</div>
