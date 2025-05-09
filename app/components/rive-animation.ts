@@ -45,6 +45,11 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
           if (newWidth > 0 && newHeight > 0) {
             this.containerWidth = newWidth;
             this.containerHeight = newHeight;
+            
+            // Let Rive handle the resizing
+            if (this.riveInstance) {
+              this.riveInstance.resizeDrawingSurfaceToCanvas();
+            }
           }
         }
       });
@@ -56,16 +61,6 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
     try {
       const canvas = element.querySelector('canvas');
       if (!canvas) return;
-
-      // Calculate base size based on device pixel ratio and container size
-      const pixelRatio = window.devicePixelRatio || 1;
-      // Use 2x the container size for high quality, but cap at 4x for performance
-      const qualityMultiplier = Math.min(4, Math.max(2, pixelRatio));
-      const baseWidth = Math.round(this.containerWidth * qualityMultiplier);
-      const baseHeight = Math.round(this.containerHeight * qualityMultiplier);
-
-      canvas.width = baseWidth;
-      canvas.height = baseHeight;
 
       this.riveInstance = new Rive({
         src: this.args.src,
