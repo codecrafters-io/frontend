@@ -47,9 +47,7 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
             this.containerHeight = newHeight;
 
             // Let Rive handle the resizing
-            if (this.riveInstance) {
-              this.riveInstance.resizeDrawingSurfaceToCanvas();
-            }
+            this.riveInstance?.resizeDrawingSurfaceToCanvas();
           }
         }
       });
@@ -72,10 +70,8 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
           fit: Fit.Contain,
         }),
         onLoad: async () => {
-          if (this.riveInstance) {
-            // Initial resize
-            this.riveInstance.resizeDrawingSurfaceToCanvas();
-          }
+          // Initial resize
+          this.riveInstance?.resizeDrawingSurfaceToCanvas();
         },
       });
     } catch (error: unknown) {
