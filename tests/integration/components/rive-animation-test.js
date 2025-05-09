@@ -64,7 +64,7 @@ class MockRive {
   }
 }
 
-module('Integration | Component | gleam-logo', function (hooks) {
+module('Integration | Component | rive-animation', function (hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
@@ -84,7 +84,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
   });
 
   test('it renders and initializes correctly', async function (assert) {
-    await render(hbs`<GleamLogo @height={{200}} />`);
+    await render(hbs`<RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />`);
 
     // Check container dimensions
     const container = this.element.querySelector('div');
@@ -104,7 +104,7 @@ module('Integration | Component | gleam-logo', function (hooks) {
   });
 
   test('it handles hover state correctly', async function (assert) {
-    await render(hbs`<GleamLogo />`);
+    await render(hbs`<RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />`);
 
     const container = this.element.querySelector('div');
     assert.ok(container, 'Container exists');

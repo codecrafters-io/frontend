@@ -4,11 +4,14 @@ import { tracked } from '@glimmer/tracking';
 import { Fit, Layout, Rive } from '@rive-app/canvas';
 import * as Sentry from '@sentry/ember';
 
-interface GleamLogoSignature {
+interface RiveAnimationSignature {
   Element: HTMLDivElement;
+  Args: {
+    src: string;
+  };
 }
 
-export default class GleamLogoComponent extends Component<GleamLogoSignature> {
+export default class RiveAnimationComponent extends Component<RiveAnimationSignature> {
   animationInterval: number | null = null;
   container: HTMLElement | null = null;
   resizeObserver: ResizeObserver | null = null;
@@ -65,7 +68,7 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
       canvas.height = baseHeight;
 
       this.riveInstance = new Rive({
-        src: '/assets/animations/gleam_logo_animation.riv',
+        src: this.args.src,
         canvas: canvas,
         stateMachines: 'Default',
         autoplay: true,
@@ -107,6 +110,6 @@ export default class GleamLogoComponent extends Component<GleamLogoSignature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    GleamLogo: typeof GleamLogoComponent;
+    RiveAnimation: typeof RiveAnimationComponent;
   }
 }
