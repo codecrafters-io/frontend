@@ -45,7 +45,7 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
           if (newWidth > 0 && newHeight > 0) {
             this.containerWidth = newWidth;
             this.containerHeight = newHeight;
-            
+
             // Let Rive handle the resizing
             if (this.riveInstance) {
               this.riveInstance.resizeDrawingSurfaceToCanvas();
