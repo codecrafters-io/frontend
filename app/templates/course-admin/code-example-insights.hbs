@@ -1,6 +1,7 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+    {{! Header start }}
+    <div class="pt-3 pb-6 border-b flex items-start justify-between mb-8">
       <div>
         <TertiaryLinkButton @route="course-admin.stage-insights-index" @size="small" class="pl-1.5 mb-3">
           <div class="flex items-center">
@@ -34,5 +35,59 @@
         />
       </div>
     </div>
+    {{! Header end }}
+
+    {{! Content start }}
+    <div class="prose mb-8">
+      Displaying code examples sorted by
+      <div class="inline-block">
+        <BasicDropdown as |dd|>
+          <dd.Trigger>
+            <b class="font-semibold underline decoration-dashed">Diff size ↕</b>
+            (smallest first).
+          </dd.Trigger>
+          <dd.Content>
+            <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850">
+              <Header::AccountDropdownLink @text="Diff size" @icon="code" {{on "click" (noop)}} />
+              <Header::AccountDropdownLink @text="Recency" @icon="clock" {{on "click" (noop)}} />
+            </div>
+          </dd.Content>
+        </BasicDropdown>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-5">
+      {{#each @model.solutions as |solution solutionIndex|}}
+        <div>
+          <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{solution}} @isExpanded={{false}} class="w-full flex-shrink" />
+        </div>
+        <div class="prose prose-sm">
+          <ul>
+            <li>
+              ⭐ Concise
+            </li>
+            <li>
+              ✅ Passed
+              <code>relevance</code>
+              check
+            </li>
+            <li>
+              ❌ Failed flakiness check
+            </li>
+            <li>
+              ❌ Failed tester verification check
+            </li>
+            <li>
+              ± 5 lines changed
+            </li>
+          </ul>
+        </div>
+        {{#unless (eq solutionIndex (sub @model.solutions.length 1))}}
+          <div class="col-span-2 bg-gray-200 h-px">
+          </div>
+        {{/unless}}
+      {{/each}}
+    </div>
+    {{! Content end }}
   </div>
 </div>
