@@ -109,5 +109,6 @@ Router.map(function () {
     this.route('dark-mode-toggle');
     this.route('file-contents-card');
     this.route('file-diff-card');
+    this.route('rive-animation');
   });
 });
