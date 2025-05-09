@@ -17,7 +17,7 @@ import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/si
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
-import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -62,6 +62,7 @@ export default create({
 
       downvoteButton: {
         hover: triggerable('mouseenter'),
+        isInactive: hasClass('opacity-50'),
         scope: '[data-test-solution-card-downvote-button]',
       },
 
@@ -69,6 +70,7 @@ export default create({
 
       upvoteButton: {
         hover: triggerable('mouseenter'),
+        isInactive: hasClass('opacity-50'),
         scope: '[data-test-solution-card-upvote-button]',
       },
     }),
