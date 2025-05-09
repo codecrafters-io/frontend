@@ -5,4 +5,4 @@ export default class DemoRiveAnimationRoute extends Route {
   buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
-} 
+}
