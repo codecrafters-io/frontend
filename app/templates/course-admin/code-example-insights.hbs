@@ -1,0 +1,38 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+      <div>
+        <TertiaryLinkButton @route="course-admin.stage-insights-index" @size="small" class="pl-1.5 mb-3">
+          <div class="flex items-center">
+            {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+            <span>
+              Back
+            </span>
+          </div>
+        </TertiaryLinkButton>
+        <h3 class="text-xl font-bold text-gray-800">
+          Code Examples in
+          {{@model.language.name}}
+          for
+          {{@model.courseStage.name}}
+        </h3>
+      </div>
+      <div class="flex items-center gap-3">
+        <CourseStageDropdown
+          @course={{@model.courseStage.course}}
+          @selectedCourseStage={{@model.courseStage}}
+          @onAllCourseStagesDropdownLinkClick={{(noop)}}
+          @onSelectedCourseStageChange={{(noop)}}
+        />
+        <LanguageDropdown
+          @languages={{@model.courseStage.course.betaOrLiveLanguages}}
+          @onRequestedLanguageChange={{(noop)}}
+          @requestedLanguage={{null}}
+          @selectedLanguage={{@model.language}}
+          @shouldShowAllLanguagesOption={{false}}
+        />
+      </div>
+    </div>
+  </div>
+</div>
