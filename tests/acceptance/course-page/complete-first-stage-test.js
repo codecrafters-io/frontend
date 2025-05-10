@@ -1,3 +1,4 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
@@ -36,6 +37,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.firstStageTutorialCard.scrollIntoView();
 
@@ -106,6 +108,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.firstStageTutorialCard.scrollIntoView();
     await coursePage.firstStageTutorialCard.steps[0].click();

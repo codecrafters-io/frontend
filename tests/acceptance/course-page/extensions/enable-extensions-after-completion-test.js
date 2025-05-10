@@ -8,6 +8,7 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | extensions | enable-extensions-after-completion', function (hooks) {
   setupApplicationTest(hooks);
@@ -30,6 +31,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
@@ -105,6 +107,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/qh7', 'current URL is first extension stage URL');
 
@@ -129,6 +132,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     // Now go back to catalog page and click on the course again
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is extension completed page');
 

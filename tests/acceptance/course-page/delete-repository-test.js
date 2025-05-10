@@ -43,6 +43,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -68,6 +69,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -82,6 +84,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -96,6 +99,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -110,6 +114,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 
@@ -139,6 +144,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
 

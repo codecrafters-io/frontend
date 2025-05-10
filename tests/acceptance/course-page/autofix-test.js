@@ -1,4 +1,5 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -40,6 +41,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnTab('AI Hints');
@@ -128,6 +130,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnTab('AI Hints');
@@ -176,6 +179,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
     assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'AI Hints']);
@@ -213,7 +217,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
-
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.testResultsBar.clickOnBottomSection();
 
     const desiredHeight = 500;
@@ -263,6 +267,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
 

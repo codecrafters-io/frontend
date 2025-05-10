@@ -5,6 +5,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 
 module('Acceptance | course-page | course-stage-solutions', function (hooks) {
@@ -38,6 +39,7 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
   });
 
   test('can view solution', async function (assert) {
