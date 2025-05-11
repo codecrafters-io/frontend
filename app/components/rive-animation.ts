@@ -18,6 +18,7 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
   @tracked riveInstance: Rive | null = null;
   @tracked containerWidth: number = 0;
   @tracked containerHeight: number = 0;
+  @tracked animationAspectRatio: number = 0;
 
   get containerStyle(): string {
     return `width: ${this.containerWidth}px; height: ${this.containerHeight}px; max-width: 100%; display: block;`;
@@ -31,10 +32,9 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
     const parentElement = element.parentElement;
 
     if (parentElement) {
-      // Force a layout calculation to get accurate dimensions
-      const parentRect = parentElement.getBoundingClientRect();
-      this.containerWidth = parentRect.width;
-      this.containerHeight = parentRect.height;
+      // Set to zero initially to avoid squished initial render
+      this.containerWidth = 0;
+      this.containerHeight = 0;
 
       // Set up ResizeObserver to update the container size
       this.resizeObserver = new ResizeObserver((entries) => {
@@ -43,11 +43,12 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
           const newHeight = entry.contentRect.height;
 
           if (newWidth > 0 && newHeight > 0) {
-            this.containerWidth = newWidth;
-            this.containerHeight = newHeight;
+            this.updateDimensions(newWidth, newHeight);
 
             // Let Rive handle the resizing
-            this.riveInstance?.resizeDrawingSurfaceToCanvas();
+            if (this.riveInstance) {
+              this.riveInstance.resizeDrawingSurfaceToCanvas();
+            }
           }
         }
       });
@@ -70,8 +71,27 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
           fit: Fit.Contain,
         }),
         onLoad: async () => {
-          // Initial resize
-          this.riveInstance?.resizeDrawingSurfaceToCanvas();
+          if (this.riveInstance) {
+            // Get the animation bounds and calculate aspect ratio
+            const bounds = this.riveInstance.bounds;
+
+            if (bounds) {
+              const width = bounds.maxX - bounds.minX;
+              const height = bounds.maxY - bounds.minY;
+              this.animationAspectRatio = width / height;
+
+              // Get parent size again and update dimensions
+              const parentElement = this.container?.parentElement;
+
+              if (parentElement) {
+                const parentRect = parentElement.getBoundingClientRect();
+                this.updateDimensions(parentRect.width, parentRect.height);
+              }
+            }
+
+            // Initial resize
+            this.riveInstance.resizeDrawingSurfaceToCanvas();
+          }
         },
       });
     } catch (error: unknown) {
@@ -96,6 +116,37 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
       this.riveInstance.stop();
       this.riveInstance = null;
     }
+  }
+
+  private updateDimensions(width: number, height: number) {
+    if (!this.animationAspectRatio) return;
+
+    const containerAspectRatio = width / height;
+    let newWidth = width;
+    let newHeight = height;
+
+    if (containerAspectRatio > this.animationAspectRatio) {
+      // Container is wider than animation
+      newHeight = width / this.animationAspectRatio;
+
+      // If the calculated height is larger than container height, scale down
+      if (newHeight > height) {
+        newHeight = height;
+        newWidth = height * this.animationAspectRatio;
+      }
+    } else {
+      // Container is taller than animation
+      newWidth = height * this.animationAspectRatio;
+
+      // If the calculated width is larger than container width, scale down
+      if (newWidth > width) {
+        newWidth = width;
+        newHeight = width / this.animationAspectRatio;
+      }
+    }
+
+    this.containerWidth = newWidth;
+    this.containerHeight = newHeight;
   }
 }
 
