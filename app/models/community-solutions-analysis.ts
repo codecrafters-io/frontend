@@ -68,6 +68,24 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   @attr('number') declare p90: number;
   @attr('number') declare p95: number;
 
+  static urlForQuery(query: Record<string, unknown>): string {
+    const courseSlug = query['course_slug'];
+    delete query['course_slug'];
+
+    const languageSlug = query['language_slug'];
+    delete query['language_slug'];
+
+    const params = new URLSearchParams();
+    if (courseSlug) {
+      params.append('course_slug', courseSlug as string);
+    }
+    if (languageSlug) {
+      params.append('language_slug', languageSlug as string);
+    }
+
+    return `/community-solutions-analyses?${params.toString()}`;
+  }
+
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
       title: 'Solutions Count',
@@ -108,19 +126,23 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     };
   }
 
-  calculateColorUsingInverseThresholds(value: number, thresholds: { green?: number; yellow?: number; red?: number }): 'green' | 'yellow' | 'red' {
-    if (thresholds.green !== undefined && value <= thresholds.green) return 'green';
-    if (thresholds.yellow !== undefined && value <= thresholds.yellow) return 'yellow';
-    if (thresholds.red !== undefined && value >= thresholds.red) return 'red';
-
-    return 'yellow';
+  private calculateColorUsingThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
+    if (value >= thresholds['green']) {
+      return 'green';
+    } else if (value >= thresholds['yellow']) {
+      return 'yellow';
+    } else {
+      return 'gray';
+    }
   }
 
-  calculateColorUsingThresholds(value: number, thresholds: { green?: number; yellow?: number; red?: number }): 'green' | 'yellow' | 'red' {
-    if (thresholds.green !== undefined && value >= thresholds.green) return 'green';
-    if (thresholds.yellow !== undefined && value >= thresholds.yellow) return 'yellow';
-    if (thresholds.red !== undefined && value >= thresholds.red) return 'red';
-
-    return 'yellow';
+  private calculateColorUsingInverseThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
+    if (value <= thresholds['green']) {
+      return 'green';
+    } else if (value <= thresholds['yellow']) {
+      return 'yellow';
+    } else {
+      return 'red';
+    }
   }
 }
