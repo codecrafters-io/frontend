@@ -28,6 +28,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
     let analyses: CommunitySolutionsAnalysisModel[] = [];
+
     if (selectedLanguage) {
       analyses = (await this.store.query('community-solutions-analysis', {
         course_slug: course.slug,

@@ -43,6 +43,10 @@ export default class CodeExampleInsightsIndexController extends Controller {
     return stagesWithAnalyses;
   }
 
+  getCourseStageCodeExamplesUrl(course: CourseModel, stage: CourseStageModel): string {
+    return `/courses/${course.slug}/stages/${stage.slug}/code-examples`;
+  }
+
   @action
   onLanguageChange(language: LanguageModel | null) {
     if (language) {
@@ -54,9 +58,5 @@ export default class CodeExampleInsightsIndexController extends Controller {
         queryParams: {},
       });
     }
-  }
-
-  getCourseStageCodeExamplesUrl(course: CourseModel, stage: CourseStageModel): string {
-    return `/courses/${course.slug}/stages/${stage.slug}/code-examples`;
   }
 }

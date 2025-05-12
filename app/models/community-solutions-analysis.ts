@@ -1,7 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type CourseStageModel from './course-stage';
 import type LanguageModel from './language';
-import config from 'codecrafters-frontend/config/environment';
 
 export type CommunitySolutionsAnalysisStatistic = {
   title: string;
@@ -69,23 +68,13 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   @attr('number') declare p90: number;
   @attr('number') declare p95: number;
 
-  static urlForQuery(query: Record<string, unknown>): string {
-    const courseSlug = query['course_slug'];
-    delete query['course_slug'];
-
-    const languageSlug = query['language_slug'];
-    delete query['language_slug'];
-
-    return `${config.x.backendUrl}/api/v1/community-solutions-analyses/course/${courseSlug}/language/${languageSlug}`;
-  }
-
-  get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
+  get downvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
-      title: 'Solutions Count',
-      label: 'solutions',
-      value: this.solutionsCount.toString(),
-      color: this.calculateColorUsingThresholds(this.solutionsCount, solutionsCountThresholds),
-      explanationMarkdown: solutionsCountExplanationMarkdown,
+      title: 'Downvotes on Scored Solutions',
+      label: 'downvotes',
+      value: this.scoredSolutionDownvotesCount.toString(),
+      color: this.calculateColorUsingInverseThresholds(this.scoredSolutionDownvotesCount, downvotesCountThresholds),
+      explanationMarkdown: downvotesCountExplanationMarkdown,
     };
   }
 
@@ -99,6 +88,16 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     };
   }
 
+  get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
+    return {
+      title: 'Solutions Count',
+      label: 'solutions',
+      value: this.solutionsCount.toString(),
+      color: this.calculateColorUsingThresholds(this.solutionsCount, solutionsCountThresholds),
+      explanationMarkdown: solutionsCountExplanationMarkdown,
+    };
+  }
+
   get upvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
       title: 'Upvotes on Scored Solutions',
@@ -109,14 +108,14 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     };
   }
 
-  get downvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
-    return {
-      title: 'Downvotes on Scored Solutions',
-      label: 'downvotes',
-      value: this.scoredSolutionDownvotesCount.toString(),
-      color: this.calculateColorUsingInverseThresholds(this.scoredSolutionDownvotesCount, downvotesCountThresholds),
-      explanationMarkdown: downvotesCountExplanationMarkdown,
-    };
+  private calculateColorUsingInverseThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
+    if (value <= thresholds['green']) {
+      return 'green';
+    } else if (value <= thresholds['yellow']) {
+      return 'yellow';
+    } else {
+      return 'red';
+    }
   }
 
   private calculateColorUsingThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
@@ -126,16 +125,6 @@ export default class CommunitySolutionsAnalysisModel extends Model {
       return 'yellow';
     } else {
       return 'gray';
-    }
-  }
-
-  private calculateColorUsingInverseThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
-    if (value <= thresholds['green']) {
-      return 'green';
-    } else if (value <= thresholds['yellow']) {
-      return 'yellow';
-    } else {
-      return 'red';
     }
   }
 }
