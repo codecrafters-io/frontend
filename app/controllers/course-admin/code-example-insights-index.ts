@@ -44,15 +44,19 @@ export default class CodeExampleInsightsIndexController extends Controller {
   }
 
   @action
-  onLanguageChange(language: LanguageModel | null): void {
-    this.router.transitionTo({
-      queryParams: {
-        language: language?.slug || null,
-      },
-    });
+  onLanguageChange(language: LanguageModel | null) {
+    if (language) {
+      this.router.transitionTo({
+        queryParams: { language_slug: language.slug },
+      });
+    } else {
+      this.router.transitionTo({
+        queryParams: {},
+      });
+    }
   }
 
-  getCourseStageCodeExamplesUrl(course: CourseModel, stage: CourseStageModel, language: LanguageModel): string {
-    return `/courses/${course.slug}/stages/${stage.identifier}/code-examples?language=${language.slug}`;
+  getCourseStageCodeExamplesUrl(course: CourseModel, stage: CourseStageModel): string {
+    return `/courses/${course.slug}/stages/${stage.slug}/code-examples`;
   }
 }

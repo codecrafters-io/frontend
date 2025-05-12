@@ -10,12 +10,27 @@
         </div>
       </div>
       <div>
+        {{#if @model.selectedLanguage}}
+          <div class="flex items-center gap-2">
+            <div class="text-sm text-gray-400">
+              Showing insights for
+              <span class="font-semibold text-gray-600">{{@model.selectedLanguage.name}}</span>
+            </div>
+            <LinkTo
+              class="text-sm text-gray-400 hover:text-gray-500"
+              @route="course-admin.code-example-insights-index"
+            >
+              Clear
+            </LinkTo>
+          </div>
+        {{/if}}
+
         <LanguageDropdown
-          @languages={{@model.course.betaOrLiveLanguages}}
-          @onRequestedLanguageChange={{(noop)}}
-          @requestedLanguage={{null}}
-          @selectedLanguage={{@model.course.betaOrLiveLanguages.lastObject}}
-          @shouldShowAllLanguagesOption={{false}}
+          @languages={{@model.languages}}
+          @onRequestedLanguageChange={{this.onLanguageChange}}
+          @requestedLanguage={{@model.selectedLanguage}}
+          @selectedLanguage={{@model.selectedLanguage}}
+          class="mt-4"
         />
       </div>
     </div>
