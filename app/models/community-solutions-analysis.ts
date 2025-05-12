@@ -1,6 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type CourseStageModel from './course-stage';
 import type LanguageModel from './language';
+import config from 'codecrafters-frontend/config/environment';
 
 export type CommunitySolutionsAnalysisStatistic = {
   title: string;
@@ -75,15 +76,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     const languageSlug = query['language_slug'];
     delete query['language_slug'];
 
-    const params = new URLSearchParams();
-    if (courseSlug) {
-      params.append('course_slug', courseSlug as string);
-    }
-    if (languageSlug) {
-      params.append('language_slug', languageSlug as string);
-    }
-
-    return `/community-solutions-analyses?${params.toString()}`;
+    return `${config.x.backendUrl}/api/v1/community-solutions-analyses/course/${courseSlug}/language/${languageSlug}`;
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
