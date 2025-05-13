@@ -12,18 +12,42 @@
       <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
         <circle cx="1" cy="1" r="1" />
       </svg>
-      <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="examples" @value={{@stage.codeExamplesCount}} />
+      <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+        @color="green"
+        @label="examples"
+        @value={{if @stage.communitySolutionsAnalysis @stage.communitySolutionsAnalysis.solutionsCount null}}
+      />
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-2">
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="loc" @value={{@stage.totalLinesOfCode}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @color="green"
+      @label="loc"
+      @value={{if
+        @stage.communitySolutionsAnalysis
+        (if
+          @stage.communitySolutionsAnalysis.p50
+          @stage.communitySolutionsAnalysis.p50
+          (get @stage.communitySolutionsAnalysis.changedLinesCountDistribution "p50")
+        )
+        null
+      }}
+    />
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
       <circle cx="1" cy="1" r="1" />
     </svg>
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="upvotes" @value={{@stage.upvotesCount}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @color="green"
+      @label="upvotes"
+      @value={{if @stage.communitySolutionsAnalysis @stage.communitySolutionsAnalysis.scoredSolutionUpvotesCount null}}
+    />
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
       <circle cx="1" cy="1" r="1" />
     </svg>
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="downvotes" @value={{@stage.downvotesCount}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @color="green"
+      @label="downvotes"
+      @value={{if @stage.communitySolutionsAnalysis @stage.communitySolutionsAnalysis.scoredSolutionDownvotesCount null}}
+    />
   </div>
 </LinkTo>
