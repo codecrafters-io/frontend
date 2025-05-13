@@ -67,27 +67,6 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   @attr('number') declare scoredSolutionDownvotesCount: number;
   @attr() declare changedLinesCountDistribution: Record<string, number>;
 
-  get p25(): number {
-    return this.changedLinesCountDistribution?.p25 || 0;
-  }
-
-  get p50(): number {
-    // median changed lines
-    return this.changedLinesCountDistribution?.p50 || 0;
-  }
-
-  get p75(): number {
-    return this.changedLinesCountDistribution?.p75 || 0;
-  }
-
-  get p90(): number {
-    return this.changedLinesCountDistribution?.p90 || 0;
-  }
-
-  get p95(): number {
-    return this.changedLinesCountDistribution?.p95 || 0;
-  }
-
   get downvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
       title: 'Downvotes on Scored Solutions',
@@ -109,6 +88,27 @@ export default class CommunitySolutionsAnalysisModel extends Model {
       color: this.p50 !== undefined ? this.calculateColorUsingInverseThresholds(this.p50, medianChangedLinesThresholds) : 'gray',
       explanationMarkdown: medianChangedLinesExplanationMarkdown,
     };
+  }
+
+  get p25(): number {
+    return this.changedLinesCountDistribution['p25'] || 0;
+  }
+
+  get p50(): number {
+    // median changed lines
+    return this.changedLinesCountDistribution['p50'] || 0;
+  }
+
+  get p75(): number {
+    return this.changedLinesCountDistribution['p75'] || 0;
+  }
+
+  get p90(): number {
+    return this.changedLinesCountDistribution['p90'] || 0;
+  }
+
+  get p95(): number {
+    return this.changedLinesCountDistribution['p95'] || 0;
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
