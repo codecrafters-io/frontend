@@ -13,21 +13,25 @@ export type CommunitySolutionsAnalysisStatistic = {
 const solutionsCountThresholds = {
   green: 10,
   yellow: 5,
+  red: 0,
 };
 
 const upvotesCountThresholds = {
   green: 10,
   yellow: 5,
+  red: 0,
 };
 
 const downvotesCountThresholds = {
   red: 10,
   yellow: 5,
+  green: 0,
 };
 
 const medianChangedLinesThresholds = {
   green: 10,
   yellow: 20,
+  red: 30,
 };
 
 const solutionsCountExplanationMarkdown = `
@@ -55,25 +59,44 @@ A high number may indicate that the stage requires extensive changes, while a lo
 `.trim();
 
 export default class CommunitySolutionsAnalysisModel extends Model {
-  @belongsTo('course-stage', { async: false, inverse: null }) declare stage: CourseStageModel;
+  @belongsTo('course-stage', { async: false, inverse: 'communitySolutionsAnalysis', key: 'course-stage' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
 
   @attr('number') declare solutionsCount: number;
   @attr('number') declare scoredSolutionUpvotesCount: number;
   @attr('number') declare scoredSolutionDownvotesCount: number;
-  @attr('number') declare p50: number; // median changed lines
   @attr() declare changedLinesCountDistribution: Record<string, number>;
-  @attr('number') declare p25: number;
-  @attr('number') declare p75: number;
-  @attr('number') declare p90: number;
-  @attr('number') declare p95: number;
+
+  get p25(): number {
+    return this.changedLinesCountDistribution?.p25 || 0;
+  }
+
+  get p50(): number {
+    // median changed lines
+    return this.changedLinesCountDistribution?.p50 || 0;
+  }
+
+  get p75(): number {
+    return this.changedLinesCountDistribution?.p75 || 0;
+  }
+
+  get p90(): number {
+    return this.changedLinesCountDistribution?.p90 || 0;
+  }
+
+  get p95(): number {
+    return this.changedLinesCountDistribution?.p95 || 0;
+  }
 
   get downvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
       title: 'Downvotes on Scored Solutions',
       label: 'downvotes',
-      value: this.scoredSolutionDownvotesCount.toString(),
-      color: this.calculateColorUsingInverseThresholds(this.scoredSolutionDownvotesCount, downvotesCountThresholds),
+      value: this.scoredSolutionDownvotesCount !== undefined ? this.scoredSolutionDownvotesCount.toString() : null,
+      color:
+        this.scoredSolutionDownvotesCount !== undefined
+          ? this.calculateColorUsingInverseThresholds(this.scoredSolutionDownvotesCount, downvotesCountThresholds)
+          : 'gray',
       explanationMarkdown: downvotesCountExplanationMarkdown,
     };
   }
@@ -82,8 +105,8 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     return {
       title: 'Median Changed Lines',
       label: 'lines',
-      value: this.p50.toString(),
-      color: this.calculateColorUsingInverseThresholds(this.p50, medianChangedLinesThresholds),
+      value: this.p50 !== undefined ? this.p50.toString() : null,
+      color: this.p50 !== undefined ? this.calculateColorUsingInverseThresholds(this.p50, medianChangedLinesThresholds) : 'gray',
       explanationMarkdown: medianChangedLinesExplanationMarkdown,
     };
   }
@@ -92,8 +115,8 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     return {
       title: 'Solutions Count',
       label: 'solutions',
-      value: this.solutionsCount.toString(),
-      color: this.calculateColorUsingThresholds(this.solutionsCount, solutionsCountThresholds),
+      value: this.solutionsCount !== undefined ? this.solutionsCount.toString() : null,
+      color: this.solutionsCount !== undefined ? this.calculateColorUsingThresholds(this.solutionsCount, solutionsCountThresholds) : 'gray',
       explanationMarkdown: solutionsCountExplanationMarkdown,
     };
   }
@@ -102,29 +125,38 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     return {
       title: 'Upvotes on Scored Solutions',
       label: 'upvotes',
-      value: this.scoredSolutionUpvotesCount.toString(),
-      color: this.calculateColorUsingThresholds(this.scoredSolutionUpvotesCount, upvotesCountThresholds),
+      value: this.scoredSolutionUpvotesCount !== undefined ? this.scoredSolutionUpvotesCount.toString() : null,
+      color:
+        this.scoredSolutionUpvotesCount !== undefined
+          ? this.calculateColorUsingThresholds(this.scoredSolutionUpvotesCount, upvotesCountThresholds)
+          : 'gray',
       explanationMarkdown: upvotesCountExplanationMarkdown,
     };
   }
 
-  private calculateColorUsingInverseThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
-    if (value <= thresholds['green']) {
+  private calculateColorUsingInverseThresholds(
+    value: number,
+    thresholds: { green: number; yellow: number; red: number },
+  ): 'green' | 'yellow' | 'red' | 'gray' {
+    if (value <= thresholds.green) {
       return 'green';
-    } else if (value <= thresholds['yellow']) {
+    } else if (value <= thresholds.yellow) {
       return 'yellow';
     } else {
       return 'red';
     }
   }
 
-  private calculateColorUsingThresholds(value: number, thresholds: Record<string, number>): 'green' | 'yellow' | 'red' | 'gray' {
-    if (value >= thresholds['green']) {
+  private calculateColorUsingThresholds(
+    value: number,
+    thresholds: { green: number; yellow: number; red: number },
+  ): 'green' | 'yellow' | 'red' | 'gray' {
+    if (value >= thresholds.green) {
       return 'green';
-    } else if (value >= thresholds['yellow']) {
+    } else if (value >= thresholds.yellow) {
       return 'yellow';
     } else {
-      return 'gray';
+      return 'red'; // TODO: gray
     }
   }
 }
