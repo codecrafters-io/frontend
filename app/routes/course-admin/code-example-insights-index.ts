@@ -31,8 +31,9 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
 
     if (selectedLanguage) {
       analyses = (await this.store.query('community-solutions-analysis', {
-        course_slug: course.slug,
-        language_slug: selectedLanguage?.slug,
+        course_id: course.id,
+        language_id: selectedLanguage.id,
+        include: 'course-stage,language',
       })) as unknown as CommunitySolutionsAnalysisModel[];
     }
 
