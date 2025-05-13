@@ -37,6 +37,45 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
       })) as unknown as CommunitySolutionsAnalysisModel[];
     }
 
+    console.log(
+      'Raw analyses with relationships:',
+      analyses.map((a) => ({
+        id: a.id,
+        hasStage: Boolean(a.belongsTo('courseStage').id()),
+        stageId: a.belongsTo('courseStage').id(),
+        stageLoaded: Boolean(a.belongsTo('courseStage').id()),
+      })),
+    );
+
+    // Manually connect analyses to stages
+    analyses.forEach((analysis) => {
+      const stageId = analysis.belongsTo('courseStage').id();
+      const stage = course.sortedBaseStages.find((s) => s.id === stageId);
+
+      if (stage) {
+        // Manually set the relationship on the stage
+        stage.set('communitySolutionsAnalysis', analysis);
+      }
+    });
+
+    // console.log(course, languages, selectedLanguage, analyses);
+    // console.log(course.sortedBaseStages);
+    console.log(analyses);
+
+    for (const stage of course.sortedBaseStages) {
+      console.log(`Stage ${stage.name} (${stage.id}):`);
+      console.log('- Analysis:', stage?.communitySolutionsAnalysis);
+
+      if (stage?.communitySolutionsAnalysis) {
+        console.log('- changedLinesCountDistribution:', stage?.communitySolutionsAnalysis?.changedLinesCountDistribution);
+        console.log('- solutionsCount:', stage?.communitySolutionsAnalysis?.solutionsCount);
+        console.log('- upvotes:', stage?.communitySolutionsAnalysis?.scoredSolutionUpvotesCount);
+        console.log('- downvotes:', stage?.communitySolutionsAnalysis?.scoredSolutionDownvotesCount);
+      } else {
+        console.log('- No analysis available for this stage');
+      }
+    }
+
     return {
       course,
       languages,
