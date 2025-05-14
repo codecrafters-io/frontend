@@ -11,27 +11,22 @@ export type CommunitySolutionsAnalysisStatistic = {
 };
 
 const solutionsCountThresholds = {
-  green: 10,
-  yellow: 5,
+  green: 100,
+  yellow: 15,
   red: 0,
 };
 
 const upvotesCountThresholds = {
-  green: 10,
+  green: 5,
   yellow: 5,
-  red: 0,
+  red: 5,
+  // <5: gray
 };
 
 const downvotesCountThresholds = {
-  red: 10,
-  yellow: 5,
+  red: 3,
+  yellow: 3, // would be subsumed by red
   green: 0,
-};
-
-const medianChangedLinesThresholds = {
-  green: 10,
-  yellow: 20,
-  red: 30,
 };
 
 const solutionsCountExplanationMarkdown = `
@@ -85,7 +80,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
       title: 'Median Changed Lines',
       label: 'lines',
       value: this.p50 !== undefined ? this.p50.toString() : null,
-      color: this.p50 !== undefined ? this.calculateColorUsingInverseThresholds(this.p50, medianChangedLinesThresholds) : 'gray',
+      color: 'gray',
       explanationMarkdown: medianChangedLinesExplanationMarkdown,
     };
   }
@@ -95,7 +90,6 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   }
 
   get p50(): number {
-    // median changed lines
     return this.changedLinesCountDistribution['p50'] || 0;
   }
 
@@ -112,6 +106,10 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
+    console.log('Hi');
+    console.log('fc', this.solutionsCount);
+    console.log('fc', this.solutionsCount !== undefined ? this.solutionsCount.toString() : null);
+
     return {
       title: 'Solutions Count',
       label: 'solutions',
@@ -138,12 +136,12 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     value: number,
     thresholds: { green: number; yellow: number; red: number },
   ): 'green' | 'yellow' | 'red' | 'gray' {
-    if (value <= thresholds.green) {
-      return 'green';
-    } else if (value <= thresholds.yellow) {
+    if (value >= thresholds.red) {
+      return 'red';
+    } else if (value >= thresholds.yellow) {
       return 'yellow';
     } else {
-      return 'red';
+      return 'green';
     }
   }
 
@@ -155,8 +153,10 @@ export default class CommunitySolutionsAnalysisModel extends Model {
       return 'green';
     } else if (value >= thresholds.yellow) {
       return 'yellow';
+    } else if (value >= thresholds.red) {
+      return 'red';
     } else {
-      return 'red'; // TODO: gray
+      return 'gray';
     }
   }
 }
