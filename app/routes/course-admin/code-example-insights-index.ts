@@ -45,16 +45,10 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
       })) as unknown as CommunitySolutionsAnalysisModel[];
     }
 
-    // Manually connect analyses to stages
-    // analyses.forEach((analysis) => {
-      // const stageId = analysis.belongsTo('courseStage').id();
-      // const stage = course.sortedBaseStages.find((s) => s.id === stageId);
-
-      // if (stage) {
-      //   // Manually link the analysis using direct assignment
-      //   stage.communitySolutionsAnalysis = analysis;
-      // }
-    // });
+    // stage-to-analysis relationships will be handled by Ember Data
+    course.stages.sortBy('position').forEach(stage => {
+      console.log(stage.communitySolutionsAnalyses, stage.communitySolutionsAnalyses.length, stage.slug, stage.communitySolutionsAnalyses.map(a => a.language.slug))
+    })
 
     return {
       course,
