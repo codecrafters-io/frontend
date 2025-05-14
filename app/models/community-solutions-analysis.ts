@@ -106,10 +106,6 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
-    console.log('Hi');
-    console.log('fc', this.solutionsCount);
-    console.log('fc', this.solutionsCount !== undefined ? this.solutionsCount.toString() : null);
-
     return {
       title: 'Solutions Count',
       label: 'solutions',
