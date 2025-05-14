@@ -1,23 +1,26 @@
 import Component from '@glimmer/component';
+import type { CommunitySolutionsAnalysisStatistic } from 'codecrafters-frontend/models/community-solutions-analysis';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    color: 'green' | 'yellow' | 'red' | 'gray';
-    label: string;
-    value: number | null;
+    statistic: CommunitySolutionsAnalysisStatistic;
   };
 }
 
 export default class StatisticComponent extends Component<Signature> {
   get valueColorClasses(): string {
+    if (!this.args.statistic || !this.args.statistic.value) {
+      return 'text-gray-500';
+    }
+
     return {
       green: 'text-teal-500',
       yellow: 'text-yellow-500',
       red: 'text-red-500',
       gray: 'text-gray-500',
-    }[this.args.color];
+    }[this.args.statistic.color];
   }
 }
 

@@ -9,7 +9,12 @@ interface Signature {
   };
 }
 
-export default class StageListItemComponent extends Component<Signature> {}
+export default class StageListItemComponent extends Component<Signature> {
+  get analysis() {
+    // TODO: Make sure only the analysis for the selected language is returned
+    return this.args.stage.communitySolutionsAnalyses[0]!;
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
