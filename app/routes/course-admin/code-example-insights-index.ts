@@ -24,14 +24,6 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
   async model(params: { language_slug?: string }): Promise<ModelType> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
-    // Clear any previous language-specific analysis assignments to avoid stale data
-    // Reset communitySolutionsAnalysis on all stages before loading new analyses
-    // TODO : Is this required for cleaning up the stale data ?
-    // course.stages.forEach(stage => {
-    //   // use direct assignment to trigger the belongsTo setter on native class
-    //   stage.set('communitySolutionsAnalysis', null);
-    // });
-
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
@@ -46,9 +38,14 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     }
 
     // stage-to-analysis relationships will be handled by Ember Data
-    course.stages.sortBy('position').forEach(stage => {
-      console.log(stage.communitySolutionsAnalyses, stage.communitySolutionsAnalyses.length, stage.slug, stage.communitySolutionsAnalyses.map(a => a.language.slug))
-    })
+    course.stages.sortBy('position').forEach((stage) => {
+      console.log(
+        stage.communitySolutionsAnalyses,
+        stage.communitySolutionsAnalyses.length,
+        stage.slug,
+        stage.communitySolutionsAnalyses.map((a) => a.language.slug),
+      );
+    });
 
     return {
       course,
