@@ -33,7 +33,7 @@ Router.map(function () {
     this.route('code-example-evaluator', { path: '/code-example-evaluators/:evaluator_slug' });
     this.route('code-example-evaluators');
     this.route('code-example-insights', { path: '/code-examples/stage/:stage_slug' });
-    this.route('code-example-insights-index', { path: '/community-solutions-analyses' });
+    this.route('code-example-insights-index', { path: '/code-examples' });
     this.route('feedback');
     this.route('insights');
     this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
