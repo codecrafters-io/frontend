@@ -16,8 +16,8 @@ import type CommunitySolutionsAnalysisModel from './community-solutions-analysis
 export default class CourseStageModel extends Model {
   @belongsTo('course', { async: false, inverse: 'stages' }) declare course: CourseModel;
 
-  @belongsTo('community-solutions-analysis', { async: false, inverse: 'courseStage' })
-  declare communitySolutionsAnalysis: CommunitySolutionsAnalysisModel;
+  @hasMany('community-solutions-analysis', { async: false, inverse: 'courseStage' })
+  declare communitySolutionsAnalyses: CommunitySolutionsAnalysisModel[];
 
   @hasMany('course-stage-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' })
