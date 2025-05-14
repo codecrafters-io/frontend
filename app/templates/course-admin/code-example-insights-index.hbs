@@ -32,28 +32,34 @@
       </div>
     </div>
 
-    {{#if (gt @model.course.stages.length 0)}}
-      <ul role="list" class="divide-y divide-gray-100">
-        {{#each @model.course.sortedBaseStages as |stage|}}
-          <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} />
-        {{/each}}
-      </ul>
-
-      {{#each @model.course.sortedExtensions as |extension|}}
-        <h3 class="font-semibold text-gray-400 text-center relative mt-8 mb-3">
-          <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
-          <span class="relative px-6 bg-white">{{extension.name}}</span>
-        </h3>
-
+    {{#if @model.selectedLanguage}}
+      {{#if (gt @model.course.stages.length 0)}}
         <ul role="list" class="divide-y divide-gray-100">
-          {{#each extension.sortedStages as |stage|}}
+          {{#each @model.course.sortedBaseStages as |stage|}}
             <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} />
           {{/each}}
         </ul>
-      {{/each}}
+
+        {{#each @model.course.sortedExtensions as |extension|}}
+          <h3 class="font-semibold text-gray-400 text-center relative mt-8 mb-3">
+            <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
+            <span class="relative px-6 bg-white">{{extension.name}}</span>
+          </h3>
+
+          <ul role="list" class="divide-y divide-gray-100">
+            {{#each extension.sortedStages as |stage|}}
+              <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} />
+            {{/each}}
+          </ul>
+        {{/each}}
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No stages found.
+        </div>
+      {{/if}}
     {{else}}
       <div class="text-gray-400 py-32 flex items-center justify-center">
-        No stages found.
+        No language selected.
       </div>
     {{/if}}
   </div>
