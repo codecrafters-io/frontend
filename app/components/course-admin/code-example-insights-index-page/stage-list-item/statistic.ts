@@ -5,13 +5,14 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    statistic: CommunitySolutionsAnalysisStatistic;
+    statistic?: CommunitySolutionsAnalysisStatistic;
+    fallbackLabel?: string;
   };
 }
 
 export default class StatisticComponent extends Component<Signature> {
   get valueColorClasses(): string {
-    if (!this.args.statistic || !this.args.statistic.value) {
+    if (!this.args.statistic) {
       return 'text-gray-500';
     }
 

@@ -12,7 +12,7 @@ interface Signature {
 export default class StageListItemComponent extends Component<Signature> {
   get analysis() {
     // TODO: Make sure only the analysis for the selected language is returned
-    return this.args.stage.communitySolutionsAnalyses[0]!;
+    return this.args.stage.communitySolutionsAnalyses[0];
   }
 }
 

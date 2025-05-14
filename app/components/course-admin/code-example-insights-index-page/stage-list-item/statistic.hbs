@@ -1,6 +1,6 @@
 <div class="inline-flex items-center gap-x-1 text-xs">
   <div class="{{this.valueColorClasses}}">
-    {{#if @statistic.value}}
+    {{#if (and @statistic @statistic.value)}}
       <span class="font-semibold">
         {{@statistic.value}}
       </span>
@@ -9,12 +9,18 @@
     {{/if}}
   </div>
   <div class="text-gray-400">
-    {{@statistic.label}}
+    {{#if @statistic}}
+      {{@statistic.label}}
+    {{else if @fallbackLabel}}
+      {{@fallbackLabel}}
+    {{/if}}
   </div>
 
-  <EmberTooltip>
-    <div class="prose prose-sm prose-invert text-white">
-      {{markdown-to-html @statistic.explanationMarkdown}}
-    </div>
-  </EmberTooltip>
+  {{#if @statistic}}
+    <EmberTooltip>
+      <div class="prose prose-sm prose-invert text-white">
+        {{markdown-to-html @statistic.explanationMarkdown}}
+      </div>
+    </EmberTooltip>
+  {{/if}}
 </div>
