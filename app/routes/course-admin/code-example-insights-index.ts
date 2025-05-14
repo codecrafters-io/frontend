@@ -27,6 +27,13 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
+    // Clear existing analyses from the store to avoid stale data
+    this.store.peekAll('community-solutions-analysis').forEach((record) => {
+      if (!record.isDeleted) {
+        record.unloadRecord();
+      }
+    });
+
     let analyses: CommunitySolutionsAnalysisModel[] = [];
 
     if (selectedLanguage) {
@@ -36,16 +43,6 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
         include: 'course-stage,language',
       })) as unknown as CommunitySolutionsAnalysisModel[];
     }
-
-    // stage-to-analysis relationships will be handled by Ember Data
-    course.stages.sortBy('position').forEach((stage) => {
-      console.log(
-        stage.communitySolutionsAnalyses,
-        stage.communitySolutionsAnalyses.length,
-        stage.slug,
-        stage.communitySolutionsAnalyses.map((a) => a.language.slug),
-      );
-    });
 
     return {
       course,

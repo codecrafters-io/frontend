@@ -11,7 +11,8 @@ interface Signature {
 
 export default class StageListItemComponent extends Component<Signature> {
   get analysis() {
-    // TODO: Make sure only the analysis for the selected language is returned
+    // Since we're clearing the store before fetching new analyses,
+    // we can safely use the first analysis (if any)
     return this.args.stage.communitySolutionsAnalyses[0];
   }
 }
