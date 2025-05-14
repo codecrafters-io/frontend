@@ -24,6 +24,9 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
   async model(params: { language_slug?: string }): Promise<ModelType> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
+    // Clear any previous language-specific analysis assignments to avoid stale data
+    // Reset communitySolutionsAnalysis on all stages before loading new analyses
+    course.stages.forEach(stage => stage.set('communitySolutionsAnalysis', null));
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
