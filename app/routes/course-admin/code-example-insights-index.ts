@@ -26,7 +26,12 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     const course = this.modelFor('course-admin').course as CourseModel;
     // Clear any previous language-specific analysis assignments to avoid stale data
     // Reset communitySolutionsAnalysis on all stages before loading new analyses
-    course.stages.forEach(stage => stage.set('communitySolutionsAnalysis', null));
+    // TODO : Is this required for cleaning up the stale data ?
+    // course.stages.forEach(stage => {
+    //   // use direct assignment to trigger the belongsTo setter on native class
+    //   stage.set('communitySolutionsAnalysis', null);
+    // });
+
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
@@ -41,15 +46,15 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     }
 
     // Manually connect analyses to stages
-    analyses.forEach((analysis) => {
-      const stageId = analysis.belongsTo('courseStage').id();
-      const stage = course.sortedBaseStages.find((s) => s.id === stageId);
+    // analyses.forEach((analysis) => {
+      // const stageId = analysis.belongsTo('courseStage').id();
+      // const stage = course.sortedBaseStages.find((s) => s.id === stageId);
 
-      if (stage) {
-        // Manually set the relationship on the stage
-        stage.set('communitySolutionsAnalysis', analysis);
-      }
-    });
+      // if (stage) {
+      //   // Manually link the analysis using direct assignment
+      //   stage.communitySolutionsAnalysis = analysis;
+      // }
+    // });
 
     return {
       course,
