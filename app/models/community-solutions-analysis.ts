@@ -59,7 +59,7 @@ A high number may indicate that the stage requires extensive changes, while a lo
 `.trim();
 
 export default class CommunitySolutionsAnalysisModel extends Model {
-  @belongsTo('course-stage', { async: false, inverse: 'communitySolutionsAnalysis', key: 'course-stage' }) declare courseStage: CourseStageModel;
+  @belongsTo('course-stage', { async: false, inverse: 'communitySolutionsAnalysis' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
 
   @attr('number') declare solutionsCount: number;
