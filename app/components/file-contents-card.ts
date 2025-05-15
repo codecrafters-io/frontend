@@ -23,10 +23,6 @@ interface Signature {
      */
     language: string;
     /**
-     * Enable code folding and fold gutter in CodeMirror
-     */
-    foldGutter?: boolean;
-    /**
      * Enable collapsing of the file card to just the header
      */
     isCollapsible?: boolean;

@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 const OPTION_DEFAULTS = {
-  foldGutter: true,
   headerTooltipText: false,
   isCollapsed: false,
   isCollapsible: false,
@@ -13,11 +12,9 @@ const OPTION_DEFAULTS = {
 };
 
 export default class DemoFileContentsCardController extends Controller {
-  queryParams = ['foldGutter', 'headerTooltipText', 'isCollapsed', 'isCollapsible', 'scrollIntoViewOnCollapse', 'selectedDocumentIndex'];
+  queryParams = ['headerTooltipText', 'isCollapsed', 'isCollapsible', 'scrollIntoViewOnCollapse', 'selectedDocumentIndex'];
 
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
-
-  @tracked foldGutter: boolean = OPTION_DEFAULTS.foldGutter;
   @tracked headerTooltipText: boolean = OPTION_DEFAULTS.headerTooltipText;
   @tracked isCollapsed: boolean = OPTION_DEFAULTS.isCollapsed;
   @tracked isCollapsible: boolean = OPTION_DEFAULTS.isCollapsible;
