@@ -27,15 +27,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
 
-    // Clear existing analyses from the store to avoid stale data
-    this.store.peekAll('community-solutions-analysis').forEach((record) => {
-      if (!record.isDeleted) {
-        record.unloadRecord();
-      }
-    });
-
     let analyses: CommunitySolutionsAnalysisModel[] = [];
-
     if (selectedLanguage) {
       analyses = (await this.store.query('community-solutions-analysis', {
         course_id: course.id,
