@@ -124,10 +124,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     };
   }
 
-  private calculateColorUsingInverseThresholds(
-    value: number,
-    thresholds: { red: number; yellow: number },
-  ): 'red' | 'yellow' | 'green' {
+  private calculateColorUsingInverseThresholds(value: number, thresholds: { red: number; yellow: number }): 'red' | 'yellow' | 'green' {
     if (value >= thresholds.red) {
       return 'red';
     } else if (value >= thresholds.yellow) {
@@ -137,10 +134,7 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     }
   }
 
-  private calculateColorUsingThresholds(
-    value: number,
-    thresholds: { green: number; yellow: number },
-  ): 'green' | 'yellow' | 'red' {
+  private calculateColorUsingThresholds(value: number, thresholds: { green: number; yellow: number }): 'green' | 'yellow' | 'red' {
     if (value >= thresholds.green) {
       return 'green';
     } else if (value >= thresholds.yellow) {
