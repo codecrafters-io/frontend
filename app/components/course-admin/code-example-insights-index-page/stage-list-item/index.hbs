@@ -4,6 +4,7 @@
   role="button"
   @route="course.stage.code-examples"
   @models={{array @stage.course.slug @stage.slug}}
+  target="_blank"
   ...attributes
 >
   <div class="min-w-0">
@@ -12,18 +13,30 @@
       <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
         <circle cx="1" cy="1" r="1" />
       </svg>
-      <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="examples" @value={{20}} />
+      <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+        @statistic={{this.analysis.solutionsCountStatistic}}
+        @fallbackLabel="solutions"
+      />
     </div>
   </div>
   <div class="flex flex-none items-center gap-x-2">
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="loc" @value={{15}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @statistic={{this.analysis.medianChangedLinesStatistic}}
+      @fallbackLabel="lines"
+    />
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
       <circle cx="1" cy="1" r="1" />
     </svg>
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="upvotes" @value={{1}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @statistic={{this.analysis.upvotesCountStatistic}}
+      @fallbackLabel="upvotes"
+    />
     <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current text-gray-300">
       <circle cx="1" cy="1" r="1" />
     </svg>
-    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic @color="green" @label="downvotes" @value={{1}} />
+    <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic
+      @statistic={{this.analysis.downvotesCountStatistic}}
+      @fallbackLabel="downvotes"
+    />
   </div>
 </LinkTo>

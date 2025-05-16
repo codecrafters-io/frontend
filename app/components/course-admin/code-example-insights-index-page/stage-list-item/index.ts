@@ -9,7 +9,13 @@ interface Signature {
   };
 }
 
-export default class StageListItemComponent extends Component<Signature> {}
+export default class StageListItemComponent extends Component<Signature> {
+  get analysis() {
+    // Since we're clearing the store before fetching new analyses,
+    // we can safely use the first analysis (if any)
+    return this.args.stage.communitySolutionsAnalyses[0];
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
