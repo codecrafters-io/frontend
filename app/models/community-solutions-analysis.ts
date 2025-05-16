@@ -13,20 +13,16 @@ export type CommunitySolutionsAnalysisStatistic = {
 const solutionsCountThresholds = {
   green: 100,
   yellow: 15,
-  red: 0,
 };
 
 const upvotesCountThresholds = {
   green: 5,
-  yellow: 5,
-  red: 5,
-  // <5: gray
+  yellow: 1,
 };
 
 const downvotesCountThresholds = {
   red: 3,
-  yellow: 3, // would be subsumed by red
-  green: 0,
+  yellow: 3,
 };
 
 const solutionsCountExplanationMarkdown = `
@@ -86,23 +82,23 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   }
 
   get p25(): number {
-    return this.changedLinesCountDistribution['p25'] || 0;
+    return this.changedLinesCountDistribution?.['p25'] || 0;
   }
 
   get p50(): number {
-    return this.changedLinesCountDistribution['p50'] || 0;
+    return this.changedLinesCountDistribution?.['p50'] || 0;
   }
 
   get p75(): number {
-    return this.changedLinesCountDistribution['p75'] || 0;
+    return this.changedLinesCountDistribution?.['p75'] || 0;
   }
 
   get p90(): number {
-    return this.changedLinesCountDistribution['p90'] || 0;
+    return this.changedLinesCountDistribution?.['p90'] || 0;
   }
 
   get p95(): number {
-    return this.changedLinesCountDistribution['p95'] || 0;
+    return this.changedLinesCountDistribution?.['p95'] || 0;
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
@@ -130,8 +126,8 @@ export default class CommunitySolutionsAnalysisModel extends Model {
 
   private calculateColorUsingInverseThresholds(
     value: number,
-    thresholds: { green: number; yellow: number; red: number },
-  ): 'green' | 'yellow' | 'red' | 'gray' {
+    thresholds: { red: number; yellow: number },
+  ): 'red' | 'yellow' | 'green' {
     if (value >= thresholds.red) {
       return 'red';
     } else if (value >= thresholds.yellow) {
@@ -143,16 +139,14 @@ export default class CommunitySolutionsAnalysisModel extends Model {
 
   private calculateColorUsingThresholds(
     value: number,
-    thresholds: { green: number; yellow: number; red: number },
-  ): 'green' | 'yellow' | 'red' | 'gray' {
+    thresholds: { green: number; yellow: number },
+  ): 'green' | 'yellow' | 'red' {
     if (value >= thresholds.green) {
       return 'green';
     } else if (value >= thresholds.yellow) {
       return 'yellow';
-    } else if (value >= thresholds.red) {
-      return 'red';
     } else {
-      return 'gray';
+      return 'red';
     }
   }
 }
