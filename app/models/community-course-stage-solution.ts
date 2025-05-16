@@ -34,6 +34,9 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
 
+  // @ts-expect-error empty '' not supported
+  @attr('') highlightedFiles: { filename: string; contents: string; highlightedRanges: { startLine: number; endLine: number }[] }[]; // free-form JSON
+
   @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;

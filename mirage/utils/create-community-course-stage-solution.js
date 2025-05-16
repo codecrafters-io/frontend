@@ -34,6 +34,35 @@ export default function createCourseStageSolution(server, course, stagePosition,
   end`,
       },
     ],
+    highlightedFiles: [
+      {
+        filename: 'server.rb',
+        contents: `class Server
+  def listen
+    loop do
+      client = @server.accept
+      handle_client(client)
+    end
+  end
+
+  def handle_client(client)
+    loop do
+      client.gets
+
+      # TODO: Handle commands other than PING
+      client.write("+PONG\\r\\n")
+    end
+  end
+end`,
+        highlightedRanges: [
+          {
+            startLine: 3,
+            endLine: 6,
+          },
+        ],
+      },
+    ],
+
     courseStage: stage,
     language: language,
   });
