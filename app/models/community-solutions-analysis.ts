@@ -53,10 +53,10 @@ export default class CommunitySolutionsAnalysisModel extends Model {
   @belongsTo('course-stage', { async: false, inverse: 'communitySolutionsAnalyses' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
 
-  @attr('number') declare solutionsCount: number;
-  @attr('number') declare scoredSolutionUpvotesCount: number;
-  @attr('number') declare scoredSolutionDownvotesCount: number;
   @attr() declare changedLinesCountDistribution: Record<string, number>;
+  @attr('number') declare scoredSolutionDownvotesCount: number;
+  @attr('number') declare scoredSolutionUpvotesCount: number;
+  @attr('number') declare solutionsCount: number;
 
   get downvotesCountStatistic(): CommunitySolutionsAnalysisStatistic {
     return {
@@ -81,24 +81,8 @@ export default class CommunitySolutionsAnalysisModel extends Model {
     };
   }
 
-  get p25(): number {
-    return this.changedLinesCountDistribution?.['p25'] || 0;
-  }
-
   get p50(): number {
     return this.changedLinesCountDistribution?.['p50'] || 0;
-  }
-
-  get p75(): number {
-    return this.changedLinesCountDistribution?.['p75'] || 0;
-  }
-
-  get p90(): number {
-    return this.changedLinesCountDistribution?.['p90'] || 0;
-  }
-
-  get p95(): number {
-    return this.changedLinesCountDistribution?.['p95'] || 0;
   }
 
   get solutionsCountStatistic(): CommunitySolutionsAnalysisStatistic {
