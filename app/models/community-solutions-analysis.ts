@@ -3,11 +3,11 @@ import type CourseStageModel from './course-stage';
 import type LanguageModel from './language';
 
 export type CommunitySolutionsAnalysisStatistic = {
-  title: string;
-  label: string;
-  value: string | null;
   color: 'green' | 'yellow' | 'red' | 'gray';
   explanationMarkdown: string;
+  label: string;
+  title: string;
+  value: string | null;
 };
 
 const solutionsCountThresholds = {
@@ -25,6 +25,18 @@ const downvotesCountThresholds = {
   yellow: 3,
 };
 
+const downvotesCountExplanationMarkdown = `
+The number of downvotes on "scored" community solutions for this stage and language.
+
+Solutions are "scored" when they are recommended by our system. Downvotes indicate that users did not find these solutions helpful.
+`.trim();
+
+const medianChangedLinesExplanationMarkdown = `
+The median number of changed lines across all solutions for this stage and language.
+
+A high number may indicate that the stage requires extensive changes, while a low number typically indicates a more focused stage.
+`.trim();
+
 const solutionsCountExplanationMarkdown = `
 The number of community solutions available for this stage and language.
 
@@ -35,18 +47,6 @@ const upvotesCountExplanationMarkdown = `
 The number of upvotes on "scored" community solutions for this stage and language.
 
 Solutions are "scored" when they are recommended by our system. Upvotes indicate that users found these solutions helpful.
-`.trim();
-
-const downvotesCountExplanationMarkdown = `
-The number of downvotes on "scored" community solutions for this stage and language.
-
-Solutions are "scored" when they are recommended by our system. Downvotes indicate that users did not find these solutions helpful.
-`.trim();
-
-const medianChangedLinesExplanationMarkdown = `
-The median number of changed lines across all solutions for this stage and language.
-
-A high number may indicate that the stage requires extensive changes, while a low number typically indicates a more focused challenge.
 `.trim();
 
 export default class CommunitySolutionsAnalysisModel extends Model {
