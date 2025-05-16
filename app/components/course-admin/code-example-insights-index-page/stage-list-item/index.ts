@@ -1,19 +1,19 @@
 import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
+    language: LanguageModel;
     stage: CourseStageModel;
   };
 }
 
 export default class StageListItemComponent extends Component<Signature> {
   get analysis() {
-    // Since we're clearing the store before fetching new analyses,
-    // we can safely use the first analysis (if any)
-    return this.args.stage.communitySolutionsAnalyses[0];
+    return this.args.stage.communitySolutionsAnalyses.findBy('language', this.args.language);
   }
 }
 

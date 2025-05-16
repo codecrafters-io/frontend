@@ -40,7 +40,7 @@
       {{#if (gt @model.course.stages.length 0)}}
         <ul role="list" class="divide-y divide-gray-100">
           {{#each @model.course.sortedBaseStages as |stage|}}
-            <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} />
+            <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} @language={{@model.selectedLanguage}} />
           {{/each}}
         </ul>
 
@@ -52,7 +52,7 @@
 
           <ul role="list" class="divide-y divide-gray-100">
             {{#each extension.sortedStages as |stage|}}
-              <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} />
+              <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} @language={{@model.selectedLanguage}} />
             {{/each}}
           </ul>
         {{/each}}
