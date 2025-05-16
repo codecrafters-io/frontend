@@ -5,8 +5,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    statistic?: CommunitySolutionsAnalysisStatistic;
     fallbackLabel?: string;
+    statistic?: CommunitySolutionsAnalysisStatistic;
   };
 }
 

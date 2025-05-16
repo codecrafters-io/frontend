@@ -6,10 +6,10 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunitySolutionsAnalysisModel from 'codecrafters-frontend/models/community-solutions-analysis';
 
 export type ModelType = {
+  analyses: CommunitySolutionsAnalysisModel[];
   course: CourseModel;
   languages: LanguageModel[];
   selectedLanguage: LanguageModel | null;
-  analyses: CommunitySolutionsAnalysisModel[];
 };
 
 export default class CodeExampleInsightsIndexRoute extends BaseRoute {
