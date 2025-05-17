@@ -16,13 +16,6 @@
               Showing insights for
               <span class="font-semibold text-gray-600">{{@model.selectedLanguage.name}}</span>
             </div>
-            <LinkTo
-              class="text-sm text-gray-400 hover:text-gray-500"
-              @route="course-admin.code-example-insights-index"
-              @query={{hash language_slug=null}}
-            >
-              Clear
-            </LinkTo>
           </div>
         {{/if}}
 
