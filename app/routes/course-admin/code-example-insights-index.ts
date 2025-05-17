@@ -9,7 +9,7 @@ export type ModelType = {
   analyses: CommunitySolutionsAnalysisModel[];
   course: CourseModel;
   languages: LanguageModel[];
-  selectedLanguage: LanguageModel | null;
+  selectedLanguage: LanguageModel;
 };
 
 export default class CodeExampleInsightsIndexRoute extends BaseRoute {
@@ -25,17 +25,24 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
     const languages = course.betaOrLiveLanguages;
-    const selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) || null : null;
+    // Default to the first language in the list
+    let selectedLanguage: LanguageModel = languages.sortBy('slug')[0]!;
+
+    if (params.language_slug) {
+      const found = languages.find((l) => l.slug === params.language_slug);
+
+      if (found) {
+        selectedLanguage = found;
+      }
+    }
 
     let analyses: CommunitySolutionsAnalysisModel[] = [];
 
-    if (selectedLanguage) {
-      analyses = (await this.store.query('community-solutions-analysis', {
-        course_id: course.id,
-        language_id: selectedLanguage.id,
-        include: 'course-stage,language',
-      })) as unknown as CommunitySolutionsAnalysisModel[];
-    }
+    analyses = (await this.store.query('community-solutions-analysis', {
+      course_id: course.id,
+      language_id: selectedLanguage.id,
+      include: 'course-stage,language',
+    })) as unknown as CommunitySolutionsAnalysisModel[];
 
     return {
       course,
