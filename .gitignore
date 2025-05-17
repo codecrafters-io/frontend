@@ -29,4 +29,7 @@
 
 # broccoli-debug
 /DEBUG/
+
 .aider*
+.claude/
+.machtiani.ignore
