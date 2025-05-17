@@ -108,7 +108,7 @@
     </codemirror-options-right>
   </codemirror-options>
 
-  <codemirror-options class="{{groupClasses}} border-dotted">
+  <codemirror-options class="{{groupClasses}} border-dotted flex-nowrap">
     <codemirror-options-left class="flex flex-grow flex-wrap">
       <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
         <Input @type="checkbox" @checked={{this.originalDocument}} />
@@ -122,8 +122,12 @@
         <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
       </label>
+      <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
+        <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
+        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">allowInlineDiffs</span>
+      </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex flex-wrap">
+    <codemirror-options-right class="flex flex-wrap justify-end h-[20px]">
       <label class="{{labelClasses}}" title="Number of lines to leave visible after/before a change before collapsing unchanged lines">
         {{#let (not (and this.originalDocument this.collapseUnchanged)) as |isDisabled|}}
           <Input @type="checkbox" @checked={{this.unchangedMargin}} disabled={{isDisabled}} />
@@ -271,10 +275,6 @@
     <label class="{{labelClasses}}" title="Enable syntax highlighting in the deleted chunks of the diff">
       <Input @type="checkbox" @checked={{this.syntaxHighlightDeletions}} disabled={{or (not this.originalDocument) (not this.syntaxHighlighting)}} />
       <span class="ml-2 {{unless (and this.originalDocument this.syntaxHighlighting) 'text-gray-300'}}">syntaxHighlightDeletions</span>
-    </label>
-    <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
-      <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
-      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">allowInlineDiffs</span>
     </label>
   </codemirror-options>
 
