@@ -13,15 +13,9 @@ export default class CodeExampleInsightsIndexController extends Controller {
   declare model: ModelType;
 
   @action
-  onLanguageChange(language: LanguageModel | null) {
-    if (language) {
-      this.router.transitionTo({
-        queryParams: { language_slug: language.slug },
-      });
-    } else {
-      this.router.transitionTo({
-        queryParams: {},
-      });
-    }
+  onLanguageChange(language: LanguageModel) {
+    this.router.transitionTo({
+      queryParams: { language_slug: language.slug },
+    });
   }
 }
