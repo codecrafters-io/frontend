@@ -44,6 +44,7 @@ const OPTION_DEFAULTS = {
   foldGutter: true,
   highlightActiveLine: true,
   highlightChanges: false,
+  highlightedRanges: false,
   highlightNewlines: false,
   highlightSelectionMatches: true,
   highlightSpecialChars: true,
@@ -100,6 +101,7 @@ export default class DemoCodeMirrorController extends Controller {
     'foldGutter',
     'highlightActiveLine',
     'highlightChanges',
+    'highlightedRanges',
     'highlightNewlines',
     'highlightSelectionMatches',
     'highlightSpecialChars',
@@ -152,6 +154,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked foldGutter = OPTION_DEFAULTS.foldGutter;
   @tracked highlightActiveLine = OPTION_DEFAULTS.highlightActiveLine;
   @tracked highlightChanges = OPTION_DEFAULTS.highlightChanges;
+  @tracked highlightedRanges = OPTION_DEFAULTS.highlightedRanges;
   @tracked highlightNewlines = OPTION_DEFAULTS.highlightNewlines;
   @tracked highlightSelectionMatches = OPTION_DEFAULTS.highlightSelectionMatches;
   @tracked highlightSpecialChars = OPTION_DEFAULTS.highlightSpecialChars;

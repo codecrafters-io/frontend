@@ -99,6 +99,10 @@
         <Input @type="checkbox" @checked={{this.filename}} disabled={{eq this.language true}} />
         <span class="ml-2 {{if this.language 'text-gray-300'}}">filename</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable highlighting of specified line ranges">
+        <Input @type="checkbox" @checked={{this.highlightedRanges}} />
+        <span class="ml-2">highlightedRanges</span>
+      </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
@@ -337,6 +341,7 @@
   @foldGutter={{this.foldGutter}}
   @highlightActiveLine={{this.highlightActiveLine}}
   @highlightChanges={{this.highlightChanges}}
+  @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
   @highlightNewlines={{this.highlightNewlines}}
   @highlightSelectionMatches={{this.highlightSelectionMatches}}
   @highlightSpecialChars={{this.highlightSpecialChars}}
