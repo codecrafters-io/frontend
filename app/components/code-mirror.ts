@@ -40,6 +40,7 @@ import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highl
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-documents';
+import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -59,6 +60,9 @@ type Argument = boolean | string | number | undefined | Extension | DocumentUpda
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
+/**
+ * Order of keys in this object matters, do not sort alphabetically
+ */
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
@@ -70,7 +74,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) =>
     enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
-  highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? [] : []),
+  highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? highlightRanges(highlightedRanges) : []),
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
