@@ -340,7 +340,7 @@ export default {
               'MAC addresses  are not used in identifying a TCP connection as they pertain to the data link layer and not the \ntransport layer where TCP operates.',
           },
           {
-            markdown: 'The source & destionation port numbers',
+            markdown: 'The source & destination port numbers',
             is_correct: false,
             explanation_markdown:
               'The source and destination port numbers are indeed used to identify a TCP connection, they help differentiate between \nmultiple programs running on the same host.\n\nThe correct answer is the source & destination MAC addresses, which are not used in identifying a TCP connection, \nas they pertain to the data link layer and not the transport layer where TCP operates.',
