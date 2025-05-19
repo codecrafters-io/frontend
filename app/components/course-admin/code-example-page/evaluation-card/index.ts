@@ -63,12 +63,16 @@ export default class EvaluationCard extends Component<Signature> {
 
   @action
   handleExpandButtonClick() {
-    this.args.evaluation.fetchLogsFileContentsIfNeeded();
-    this.args.evaluation.fetchPromptFileContentsIfNeeded();
-
-    next(() => {
+    if (!this.args.evaluation.logsFileUrl) {
       this.isExpanded = true;
-    });
+    } else {
+      this.args.evaluation.fetchLogsFileContentsIfNeeded();
+      this.args.evaluation.fetchPromptFileContentsIfNeeded();
+ 
+      next(() => {
+        this.isExpanded = true;
+      });
+    }
   }
 }
 
