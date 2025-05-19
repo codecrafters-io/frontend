@@ -48,6 +48,9 @@ export default class CodeExampleRoute extends BaseRoute {
 
       // Trusted evaluations
       this.store.query('trusted-community-solution-evaluation', {
+        course_id: course.id, 
+        // TODO: we might open this page from the "wrong" course's admin page
+        // For now, later on we should add an index page for all code examples
         community_solution_id: params.code_example_id,
         include: ['community-solution', 'evaluator'].join(','),
       }),
