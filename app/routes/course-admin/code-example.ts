@@ -21,12 +21,9 @@ export default class CodeExampleRoute extends BaseRoute {
     const course = this.modelFor('course-admin').course;
 
     // Include trusted evaluations for admin UI
-    const solutionIncludes = [
-      ...CommunityCourseStageSolutionModel.defaultIncludedResources,
-      'trusted-evaluations',
-    ];
+    const solutionIncludes = [...CommunityCourseStageSolutionModel.defaultIncludedResources, 'trusted-evaluations'];
 
-    const [solution, comparisons, evaluations] = await Promise.all([
+    const [solution, comparisons, evaluations, trustedEvaluations] = await Promise.all([
       // Solution
       this.store.findRecord('community-course-stage-solution', params.code_example_id, {
         include: solutionIncludes.join(','),
@@ -48,12 +45,21 @@ export default class CodeExampleRoute extends BaseRoute {
         community_solution_id: params.code_example_id,
         include: ['community-solution', 'evaluator'].join(','),
       }),
+
+      // Trusted evaluations
+      this.store.query('trusted-community-solution-evaluation', {
+        community_solution_id: params.code_example_id,
+        include: ['community-solution', 'evaluator'].join(','),
+      }),
     ]);
+
+    let allEvaluations = evaluations.toArray();
+    allEvaluations = allEvaluations.concat(trustedEvaluations);
 
     return {
       course: course,
       comparisons: comparisons as unknown as SolutionComparisonModel[],
-      evaluations: evaluations as unknown as CommunitySolutionEvaluationModel[],
+      evaluations: allEvaluations as CommunitySolutionEvaluationModel[],
       solution: solution,
     };
   }
