@@ -1,11 +1,9 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import codeExampleInsightsIndexPage from 'codecrafters-frontend/tests/pages/course-admin/code-example-insights-index-page';
-import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import { currentURL } from '@ember/test-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import createLanguages from 'codecrafters-frontend/mirage/utils/create-languages';
-import createCourseFromData from 'codecrafters-frontend/mirage/utils/create-course-from-data';
 import createCommunitySolutionsAnalysis from 'codecrafters-frontend/mirage/utils/create-community-solutions-analysis';
 
 // 1. Visiting /courses/shell/admin/code-examples should redirect to ?language_slug=c for the first language in the list
@@ -25,18 +23,14 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     this.courseStage_1 = this.course.stages.models.sortBy('position')[0];
     this.courseStage_2 = this.course.stages.models.sortBy('position')[1];
 
-    this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_1, this.language_1)
-    this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_2, this.language_2)
+    this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_1, this.language_1);
+    this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_2, this.language_2);
 
     await codeExampleInsightsIndexPage.visit({ course_slug: this.course.slug });
-    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55); 
-    
-    let itemsText = codeExampleInsightsIndexPage.stageListItems[0].text;
-    assert.strictEqual(
-      itemsText,
-      `${this.courseStage_1.name} 1 solutions 10 lines 0 upvotes 0 downvotes`,
-      'Stage list item text is correct'
-    );
+    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55);
+
+    let stageEntries_1 = codeExampleInsightsIndexPage.stageListItems[0].text;
+    assert.strictEqual(stageEntries_1, `${this.courseStage_1.name} 1 solutions 10 lines 0 upvotes 0 downvotes`, 'Stage list item text is correct');
 
     assert.strictEqual(codeExampleInsightsIndexPage.languageDropdown.currentLanguageName, 'C');
 
@@ -45,11 +39,9 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     assert.strictEqual(codeExampleInsightsIndexPage.languageDropdown.currentLanguageName, 'Python');
     assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55);
 
-    let itemsText_2 = codeExampleInsightsIndexPage.stageListItems[1].text;
-    assert.strictEqual(
-      itemsText_2,
-      `${this.courseStage_2.name} 1 solutions 10 lines 0 upvotes 0 downvotes`,
-      'Stage list item text is correct'
-    );
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-examples?language_slug=python');
+
+    let stageEntries_2 = codeExampleInsightsIndexPage.stageListItems[1].text;
+    assert.strictEqual(stageEntries_2, `${this.courseStage_2.name} 1 solutions 10 lines 0 upvotes 0 downvotes`, 'Stage list item text is correct');
   });
 });

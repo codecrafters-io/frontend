@@ -1,4 +1,4 @@
-import { create, visitable, text, collection, isVisible, clickable } from 'ember-cli-page-object';
+import { create, visitable, text, collection } from 'ember-cli-page-object';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/course-admin/language-dropdown';
 
 export default create({
