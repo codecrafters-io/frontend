@@ -49,6 +49,7 @@ import teamSubscriptions from './handlers/team-subscriptions';
 import teams from './handlers/teams';
 import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import trustedCommunitySolutionEvaluations from './handlers/trusted-community-solution-evaluations';
+import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
 import views from './handlers/views';
@@ -165,6 +166,7 @@ function routes() {
   teams(this);
   trackLeaderboardEntries(this);
   trustedCommunitySolutionEvaluations(this);
+  communitySolutionsAnalyses(this);
   upvotes(this);
   users(this);
   views(this);
