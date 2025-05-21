@@ -6,22 +6,20 @@
   data-test-diff-source-switcher
 >
   <div
-    class="w-6 h-6 flex items-center justify-center rounded-l
-      {{if (eq @diffSource 'highlighted-files') 'bg-white dark:bg-gray-700/50' 'bg-gray-50 dark:bg-gray-700/50'}}"
+    class="w-6 h-6 flex items-center justify-center rounded-l {{if (not-eq @diffSource 'highlighted-files') 'opacity-50'}}"
     data-test-highlighted-files-icon
   >
     {{svg-jar
       "code"
-      class=(concat "w-3 h-3 " (if (eq @diffSource "highlighted-files") "text-gray-700 dark:text-gray-300" "text-gray-300 dark:text-gray-700"))
+      class=(concat "w-3 h-3 " (if (eq @diffSource "highlighted-files") "text-gray-700 dark:text-gray-300" "text-gray-400 dark:text-gray-500"))
     }}
   </div>
   <div class="w-px bg-gray-200 dark:bg-white/5"></div>
   <div
-    class="w-6 h-6 flex items-center justify-center rounded-r
-      {{if (eq @diffSource 'changed-files') 'bg-white dark:bg-gray-700/50' 'bg-gray-50 dark:bg-gray-700/50'}}"
+    class="w-6 h-6 flex items-center justify-center rounded-r {{if (not-eq @diffSource 'changed-files') 'opacity-50'}}"
     data-test-changed-files-icon
   >
-    <span class="{{if (eq @diffSource 'changed-files') 'text-gray-700 dark:text-gray-300' 'text-gray-300 dark:text-gray-700'}}">±</span>
+    <span class="{{if (eq @diffSource 'changed-files') 'text-gray-700 dark:text-gray-300' 'text-gray-400 dark:text-gray-500'}}">±</span>
   </div>
   <EmberTooltip
     @text={{if
