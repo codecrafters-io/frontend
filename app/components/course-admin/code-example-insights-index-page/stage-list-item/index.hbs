@@ -3,7 +3,8 @@
   data-test-code-example-insights-index-list-item
   role="button"
   @route="course-admin.code-example-insights"
-  @models={{array @stage.slug @language.slug}}
+  @model={{@stage.slug}}
+  @query={{hash language=@language.slug}}
   ...attributes
 >
   <div class="min-w-0">
