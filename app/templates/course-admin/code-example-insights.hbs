@@ -100,6 +100,15 @@
               {{this.diffStatistics solution}}
               lines changed
             </li>
+            {{#if (this.isScored solution)}}
+              <li>
+                {{solution.scoreReason}}
+              </li>
+            {{else}}
+              <li>
+                Not Scored
+              </li>
+            {{/if}}
           </ul>
         </div>
         {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
