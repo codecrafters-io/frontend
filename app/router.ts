@@ -27,15 +27,17 @@ Router.map(function () {
   this.route('courses');
 
   this.route('course-admin', { path: '/courses/:course_slug/admin' }, function () {
-    this.route('buildpacks');
     this.route('buildpack', { path: '/buildpacks/:buildpack_id' });
+    this.route('buildpacks');
     this.route('code-example', { path: '/code-examples/:code_example_id' });
-    this.route('code-example-evaluators');
     this.route('code-example-evaluator', { path: '/code-example-evaluators/:evaluator_slug' });
+    this.route('code-example-evaluators');
+    this.route('code-example-insights', { path: '/code-examples/stage/:stage_slug' });
+    this.route('code-example-insights-index', { path: '/code-examples' });
     this.route('feedback');
     this.route('insights');
-    this.route('stage-insights-index', { path: '/stage-insights' });
     this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
+    this.route('stage-insights-index', { path: '/stage-insights' });
     this.route('submissions');
     this.route('tester-version', { path: '/tester-versions/:tester_version_id' });
     this.route('tester-versions');
