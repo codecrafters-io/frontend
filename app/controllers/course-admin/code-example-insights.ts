@@ -33,6 +33,12 @@ export default class CodeExampleInsightsController extends Controller {
     return { added, removed };
   }
 
+  @action
+  diffStatisticsForSolution(solution: CommunityCourseStageSolutionModel) {
+    const stats = this.diffStatistics(solution);
+    return stats.added + stats.removed;
+  }
+
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
     if (!this.model?.solutions) return [];
 
