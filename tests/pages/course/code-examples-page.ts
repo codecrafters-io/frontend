@@ -1,4 +1,4 @@
-import { collection, clickable, hasClass, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, hasClass, notHasClass, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
@@ -15,8 +15,8 @@ export default createPage({
     commentCards: collection('[data-test-comment-card]', CommentCard),
 
     diffSourceSwitcher: {
-      changedFilesIconIsActive: hasClass('bg-white', '[data-test-changed-files-icon]'),
-      highlightedFilesIconIsActive: hasClass('bg-white', '[data-test-highlighted-files-icon]'),
+      changedFilesIconIsActive: notHasClass('opacity-50', '[data-test-changed-files-icon]'),
+      highlightedFilesIconIsActive: notHasClass('opacity-50', '[data-test-highlighted-files-icon]'),
       scope: '[data-test-diff-source-switcher]',
     },
 
