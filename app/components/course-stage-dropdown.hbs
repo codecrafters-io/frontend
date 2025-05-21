@@ -21,7 +21,7 @@
     </dd.Trigger>
     <dd.Content>
       <div class="bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto border py-2 my-1 w-56" data-test-course-stage-dropdown-content>
-        {{#if (not this.shouldHideAllCourseStagesOption)}}
+        {{#unless this.shouldHideAllCourseStagesOption}}
           <div
             class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
             role="button"
@@ -32,7 +32,7 @@
               All Stages
             </span>
           </div>
-        {{/if}}
+        {{/unless}}
 
         <div class="w-full flex items-center px-4 py-2 gap-2">
           <span class="border-b h-px w-full"></span>
