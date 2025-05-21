@@ -37,7 +37,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
         course_stage_id: courseStage.id,
         language_id: selectedLanguage?.id,
         include: 'user',
-        order: "recommended",
+        order: 'recommended',
       })) as unknown as CommunityCourseStageSolutionModel[],
     };
   }
