@@ -1,4 +1,5 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-examples-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
