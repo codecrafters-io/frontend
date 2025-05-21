@@ -19,6 +19,20 @@ export default class CodeExampleInsightsController extends Controller {
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
   @tracked sortMode: 'diff-size' | 'recency' = 'diff-size';
 
+  diffStatistics(solution: CommunityCourseStageSolutionModel) {
+    let added = 0,
+      removed = 0;
+
+    for (const changedFile of solution.changedFiles) {
+      const diff = changedFile['diff'];
+      const lines = diff.split('\n');
+      added += lines.filter((line: string) => line.startsWith('+')).length;
+      removed += lines.filter((line: string) => line.startsWith('-')).length;
+    }
+
+    return { added, removed };
+  }
+
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
     if (!this.model?.solutions) return [];
 
@@ -26,17 +40,8 @@ export default class CodeExampleInsightsController extends Controller {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
         const getDiffCount = (solution: CommunityCourseStageSolutionModel) => {
-          let added = 0,
-            removed = 0;
-
-          for (const changedFile of solution.changedFiles) {
-            const diff = changedFile['diff'];
-            const lines = diff.split('\n');
-            added += lines.filter((line: string) => line.startsWith('+')).length;
-            removed += lines.filter((line: string) => line.startsWith('-')).length;
-          }
-
-          return added + removed;
+          const stats = this.diffStatistics(solution);
+          return stats.added + stats.removed;
         };
 
         return getDiffCount(a) - getDiffCount(b);
