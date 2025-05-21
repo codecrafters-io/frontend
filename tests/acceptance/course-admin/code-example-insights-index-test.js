@@ -6,13 +6,10 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createCommunitySolutionsAnalysis from 'codecrafters-frontend/mirage/utils/create-community-solutions-analysis';
 
-// 1. Visiting /courses/shell/admin/code-examples should redirect to ?language_slug=c for the first language in the list
-// 2. Language dropdown should work
-// 3. Clicking on a stage should redirect to the code example insights page for that stage
 module('Acceptance | course-admin | code-example-insights-index', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('opening insights index page with no language slug redirects to language slug "c"', async function (assert) {
+  test('code examlpe insights index page tests', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -26,6 +23,8 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_1, this.language_1);
     this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_2, this.language_2);
 
+    // Visiting /courses/shell/admin/code-examples should redirect to
+    // the page for the first language in the list
     await codeExampleInsightsIndexPage.visit({ course_slug: this.course.slug });
     assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55);
 
@@ -34,6 +33,7 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
 
     assert.strictEqual(codeExampleInsightsIndexPage.languageDropdown.currentLanguageName, 'C');
 
+    // Language dropdown should work
     await codeExampleInsightsIndexPage.languageDropdown.click();
     await codeExampleInsightsIndexPage.languageDropdown.clickOnLanguageLink('Python');
     assert.strictEqual(codeExampleInsightsIndexPage.languageDropdown.currentLanguageName, 'Python');
