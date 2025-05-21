@@ -82,10 +82,10 @@
             </li>
           </ul>
         </div>
-        {{#unless (eq solutionIndex (sub @model.solutions.length 1))}}
+        {{#if (not-eq solutionIndex (sub @model.solutions.length 1))}}
           <div class="col-span-2 bg-gray-200 h-px">
           </div>
-        {{/unless}}
+        {{/if}}
       {{/each}}
     </div>
     {{! Content end }}
