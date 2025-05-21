@@ -40,13 +40,29 @@
       <div class="inline-block">
         <BasicDropdown as |dd|>
           <dd.Trigger>
-            <b class="font-semibold underline decoration-dashed">Diff size ↕</b>
-            (smallest first).
+            <b class="font-semibold underline decoration-dashed">
+              {{if (eq this.sortMode "diff-size") "Diff size ↕" "Recency"}}
+            </b>
+            {{#if (eq this.sortMode "diff-size")}}
+              (smallest first).
+            {{else}}
+              (most recent first).
+            {{/if}}
           </dd.Trigger>
           <dd.Content>
             <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850">
-              <Header::AccountDropdownLink @text="Diff size" @icon="code" {{on "click" (noop)}} />
-              <Header::AccountDropdownLink @text="Recency" @icon="clock" {{on "click" (noop)}} />
+              <Header::AccountDropdownLink
+                @text="Diff size"
+                @icon="code"
+                class={{if (eq this.sortMode "diff-size") "font-bold"}}
+                {{on "click" (fn this.setSortMode "diff-size")}}
+              />
+              <Header::AccountDropdownLink
+                @text="Recency"
+                @icon="clock"
+                class={{if (eq this.sortMode "recency") "font-bold"}}
+                {{on "click" (fn this.setSortMode "recency")}}
+              />
             </div>
           </dd.Content>
         </BasicDropdown>
@@ -54,7 +70,7 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-5">
-      {{#each @model.solutions as |solution solutionIndex|}}
+      {{#each this.sortedSolutions as |solution solutionIndex|}}
         <div>
           <CoursePage::CourseStageStep::CommunitySolutionCard
             @solution={{solution}}
@@ -80,11 +96,13 @@
               ❌ Failed tester verification check
             </li>
             <li>
-              ± 5 lines changed
+              ±
+              {{this.diffStatisticsForSolution solution}}
+              lines changed
             </li>
           </ul>
         </div>
-        {{#if (not-eq solutionIndex (sub @model.solutions.length 1))}}
+        {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
           <div class="col-span-2 bg-gray-200 h-px">
           </div>
         {{/if}}
