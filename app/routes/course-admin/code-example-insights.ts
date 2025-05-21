@@ -14,23 +14,19 @@ export type ModelType = {
 export default class CodeExampleInsightsRoute extends BaseRoute {
   @service declare store: Store;
 
-  async model(params: { stage_slug: string }): Promise<ModelType> {
+  async model(params: { stage_slug: string; language_slug: string }): Promise<ModelType> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
     const courseStage = course.stages.findBy('slug', params.stage_slug);
-    const language = courseStage.course.betaOrLiveLanguages.findBy('slug', 'go');
-
-    // (await this.store.query('course-stage-participation-analysis', {
-    //   course_id: course.id,
-    //   include: 'stage',
-    // })) as unknown as CourseStageParticipationAnalysisModel[];
+    const languages = course.betaOrLiveLanguages;
+    const selectedLanguage = languages.findBy('slug', params.language_slug);
 
     return {
       courseStage: courseStage,
-      language: language,
+      language: selectedLanguage,
       solutions: (await this.store.query('community-course-stage-solution', {
         course_stage_id: courseStage.id,
-        language_id: language.id,
+        language_id: selectedLanguage.id,
         include: 'user',
       })) as unknown as CommunityCourseStageSolutionModel[],
     };
