@@ -89,7 +89,7 @@ export default class CodeExampleInsightsController extends Controller {
   @action
   scoreReason(solution: CommunityCourseStageSolutionModel) {
     if (this.isScored(solution) && solution.scoreReason) {
-      return '⭐' + capitalize(solution.scoreReason);
+      return '⭐' + ' ' + capitalize(solution.scoreReason);
     } else {
       return 'Not Scored';
     }
