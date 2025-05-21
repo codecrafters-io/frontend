@@ -5,7 +5,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 
-export type ModelType = {
+export type CodeExampleInsightsRouteModel = {
   courseStage: CourseStageModel;
   language: LanguageModel;
   solutions: CommunityCourseStageSolutionModel[];
@@ -20,7 +20,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
     },
   };
 
-  async model(params: { stage_slug: string; language_slug?: string }): Promise<ModelType> {
+  async model(params: { stage_slug: string; language_slug?: string }): Promise<CodeExampleInsightsRouteModel> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
     console.log(params);

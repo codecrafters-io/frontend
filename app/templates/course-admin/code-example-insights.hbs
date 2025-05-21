@@ -21,8 +21,9 @@
         <CourseStageDropdown
           @course={{@model.courseStage.course}}
           @selectedCourseStage={{@model.courseStage}}
+          @shouldHideAllCourseStagesOption={{true}}
           @onAllCourseStagesDropdownLinkClick={{(noop)}}
-          @onSelectedCourseStageChange={{(noop)}}
+          @onSelectedCourseStageChange={{this.handleCourseStageChange}}
         />
         <LanguageDropdown
           @languages={{@model.courseStage.course.betaOrLiveLanguages}}
