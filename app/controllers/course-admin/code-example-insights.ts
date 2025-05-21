@@ -17,11 +17,7 @@ export default class CodeExampleInsightsController extends Controller {
     // Get the current language_slug query param if present
     const languageSlug = this.router.currentRoute.queryParams['language_slug'];
     // Transition to the route with the stage slug as a model param and preserve language_slug
-    this.router.transitionTo(
-      'course-admin.code-example-insights',
-      stage.slug,
-      { queryParams: { language_slug: languageSlug } }
-    );
+    this.router.transitionTo('course-admin.code-example-insights', stage.slug, { queryParams: { language_slug: languageSlug } });
   }
 
   @action
