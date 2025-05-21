@@ -17,9 +17,12 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
   async model(params: { stage_slug: string; language_slug: string }): Promise<ModelType> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
+    console.log(params);
     const courseStage = course.stages.findBy('slug', params.stage_slug);
     const languages = course.betaOrLiveLanguages;
     const selectedLanguage = languages.findBy('slug', params.language_slug);
+
+    console.log(course, courseStage, selectedLanguage);
 
     return {
       courseStage: courseStage,
