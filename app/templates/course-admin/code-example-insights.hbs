@@ -27,8 +27,8 @@
         />
         <LanguageDropdown
           @languages={{@model.courseStage.course.betaOrLiveLanguages}}
-          @onRequestedLanguageChange={{(noop)}}
-          @requestedLanguage={{null}}
+          @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+          @requestedLanguage={{@model.language}}
           @selectedLanguage={{@model.language}}
           @shouldShowAllLanguagesOption={{false}}
         />
