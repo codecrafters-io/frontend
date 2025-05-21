@@ -14,6 +14,12 @@ export type ModelType = {
 export default class CodeExampleInsightsRoute extends BaseRoute {
   @service declare store: Store;
 
+  queryParams = {
+    language: {
+      refreshModel: true,
+    },
+  };
+
   async model(params: { stage_slug: string; language?: string }): Promise<ModelType> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
