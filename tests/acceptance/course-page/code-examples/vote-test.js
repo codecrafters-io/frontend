@@ -46,13 +46,13 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.hover();
+    await codeExamplesPage.solutionCards[0].upvoteButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'Your feedback helps us surface better examples.',
     });
 
-    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
+    await codeExamplesPage.solutionCards[0].upvoteButton.click();
 
     let upvote = this.server.schema.upvotes.all().models[0];
     assert.strictEqual(upvote.targetId, otherUserOneSolution.id, 'clicking on upvote button creates an upvote model');
@@ -91,22 +91,22 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.hover();
+    await codeExamplesPage.solutionCards[0].downvoteButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'Your feedback helps us identify examples that need review.',
     });
 
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
-    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
-    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
-    assert.ok(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
-    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
-    await coursePage.codeExamplesTab.solutionCards[0].upvoteButton.click();
-    assert.ok(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
-    assert.ok(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
+    await codeExamplesPage.solutionCards[0].downvoteButton.click();
+    assert.ok(codeExamplesPage.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
+    await codeExamplesPage.solutionCards[0].upvoteButton.click();
+    assert.ok(codeExamplesPage.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
+    await codeExamplesPage.solutionCards[0].downvoteButton.click();
+    assert.ok(codeExamplesPage.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
+    await codeExamplesPage.solutionCards[0].upvoteButton.click();
+    assert.ok(codeExamplesPage.solutionCards[0].downvoteButton.isInactive, 'downvote button is inactive');
+    await codeExamplesPage.solutionCards[0].downvoteButton.click();
+    assert.ok(codeExamplesPage.solutionCards[0].upvoteButton.isInactive, 'upvote button is inactive');
 
     let downvote = this.server.schema.downvotes.all().models[0];
     assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
@@ -145,13 +145,13 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.hover();
+    await codeExamplesPage.solutionCards[0].downvoteButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'Your feedback helps us identify examples that need review.',
     });
 
-    await coursePage.codeExamplesTab.solutionCards[0].downvoteButton.click();
+    await codeExamplesPage.solutionCards[0].downvoteButton.click();
 
     let downvote = this.server.schema.downvotes.all().models[0];
     assert.strictEqual(downvote.targetId, otherUserOneSolution.id, 'clicking on downvote button creates a downvote model');
@@ -176,7 +176,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    assert.false(coursePage.codeExamplesTab.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
-    assert.false(coursePage.codeExamplesTab.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on own solution');
+    assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
+    assert.false(codeExamplesPage.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on own solution');
   });
 });
