@@ -11,14 +11,33 @@ import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class CodeExampleInsightsController extends Controller {
-  declare model: CodeExampleInsightsRouteModel;
-
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
   @tracked sortMode: 'diff-size' | 'recency' = 'diff-size';
 
+  declare model: CodeExampleInsightsRouteModel;
+
+  get sortedSolutions(): CommunityCourseStageSolutionModel[] {
+    if (!this.model?.solutions) return [];
+
+    if (this.sortMode === 'diff-size') {
+      // Sort by (added_lines_count + removed_lines_count), ascending
+      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
+        return this.diffStatistics(a) - this.diffStatistics(b);
+      });
+    } else if (this.sortMode === 'recency') {
+      // Sort by submittedAt, descending (most recent first)
+      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
+        return new Date(b.submittedAt ?? '').getTime() - new Date(a.submittedAt ?? '').getTime();
+      });
+    }
+
+    return this.model.solutions;
+  }
+
+  @action
   diffStatistics(solution: CommunityCourseStageSolutionModel) {
     let added = 0,
       removed = 0;
@@ -30,36 +49,7 @@ export default class CodeExampleInsightsController extends Controller {
       removed += lines.filter((line: string) => line.startsWith('-')).length;
     }
 
-    return { added, removed };
-  }
-
-  @action
-  diffStatisticsForSolution(solution: CommunityCourseStageSolutionModel) {
-    const stats = this.diffStatistics(solution);
-    return stats.added + stats.removed;
-  }
-
-  get sortedSolutions(): CommunityCourseStageSolutionModel[] {
-    if (!this.model?.solutions) return [];
-
-    if (this.sortMode === 'diff-size') {
-      // Sort by (added_lines_count + removed_lines_count), ascending
-      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        const getDiffCount = (solution: CommunityCourseStageSolutionModel) => {
-          const stats = this.diffStatistics(solution);
-          return stats.added + stats.removed;
-        };
-
-        return getDiffCount(a) - getDiffCount(b);
-      });
-    } else if (this.sortMode === 'recency') {
-      // Sort by submittedAt, descending (most recent first)
-      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return new Date(b.submittedAt ?? '').getTime() - new Date(a.submittedAt ?? '').getTime();
-      });
-    }
-
-    return this.model.solutions;
+    return added + removed;
   }
 
   @action
