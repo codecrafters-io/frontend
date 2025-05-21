@@ -79,6 +79,13 @@ export default class CodeExampleInsightsController extends Controller {
     });
   }
 
+  // TODO this shouldn't be an action
+  @action
+  isScored(solution: CommunityCourseStageSolutionModel) {
+    return solution.score !== null && solution.score > 0;
+  }
+
+
   @action
   setSortMode(mode: 'diff-size' | 'recency') {
     this.sortMode = mode;
