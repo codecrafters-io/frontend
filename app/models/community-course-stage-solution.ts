@@ -35,7 +35,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
 
   // @ts-expect-error empty '' not supported
-  @attr('') highlightedFiles: { filename: string; contents: string; highlightedRanges: { startLine: number; endLine: number }[] }[]; // free-form JSON
+  @attr('') highlightedFiles: { filename: string; contents: string; highlighted_ranges: { start_line: number; end_line: number }[] }[] | null; // free-form JSON
 
   @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
@@ -43,10 +43,33 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('string') declare githubRepositoryName: string;
   @attr('boolean') declare githubRepositoryIsPrivate: boolean;
   @attr('boolean') declare isPinned: boolean;
+  @attr('number') declare ratingMean: number | null;
   @attr('number') declare score: number | null;
   @attr('string') declare scoreReason: 'concise' | 'pinned' | null;
   @attr('date') declare submittedAt: Date;
   @attr('boolean') declare isRestrictedToTeam: boolean; // if true, only fellow team members can see this solution
+
+  get changedFilesFromHighlightedFiles() {
+    if (!this.highlightedFiles) {
+      return [];
+    }
+
+    return this.highlightedFiles.map((highlightedFile) => {
+      return {
+        diff: highlightedFile.contents
+          .split('\n')
+          .map((line, index) => {
+            if (highlightedFile.highlighted_ranges.some((range) => range.start_line <= index + 1 && range.end_line >= index + 1)) {
+              return `+${line}`;
+            } else {
+              return ` ${line}`;
+            }
+          })
+          .join('\n'),
+        filename: highlightedFile.filename,
+      };
+    });
+  }
 
   // We don't render explanations at the moment
   get hasExplanation() {

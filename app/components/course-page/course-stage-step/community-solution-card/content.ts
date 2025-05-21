@@ -15,11 +15,12 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    diffSource: 'changed-files' | 'highlighted-files';
+    fileComparisons: FileComparison[];
     metadataForDownvote?: Record<string, unknown>;
     metadataForUpvote?: Record<string, unknown>;
-    solution: CommunityCourseStageSolutionModel;
-    fileComparisons: FileComparison[];
     onPublishToGithubButtonClick?: () => void;
+    solution: CommunityCourseStageSolutionModel;
   };
 }
 
@@ -29,12 +30,21 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   get changedFilesForRender() {
-    return this.args.solution.changedFiles.map((changedFile) => {
-      return {
-        ...changedFile,
-        comments: this.shouldShowComments ? this.commentsGroupedByFilename[changedFile.filename] || [] : [],
-      };
-    });
+    if (this.args.diffSource === 'highlighted-files') {
+      return this.args.solution.changedFilesFromHighlightedFiles.map((changedFile) => {
+        return {
+          ...changedFile,
+          comments: [],
+        };
+      });
+    } else {
+      return this.args.solution.changedFiles.map((changedFile) => {
+        return {
+          ...changedFile,
+          comments: this.shouldShowComments ? this.commentsGroupedByFilename[changedFile.filename] || [] : [],
+        };
+      });
+    }
   }
 
   get comments() {

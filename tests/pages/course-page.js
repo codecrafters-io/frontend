@@ -1,4 +1,3 @@
-import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
@@ -16,8 +15,7 @@ import SecondStageTutorialCard from 'codecrafters-frontend/tests/pages/component
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
-import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
-import { clickOnText, clickable, collection, create, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
   adminButton: {
@@ -48,40 +46,6 @@ export default create({
     clickOnPublishToGithubLink: clickable('span:contains("Click here")'),
     instructionsText: text('[data-test-instructions-text]'),
     scope: '[data-test-course-completed-card]',
-  },
-
-  codeExamplesTab: {
-    languageDropdown: LanguageDropdown,
-
-    solutionCards: collection('[data-test-community-solution-card]', {
-      changedFiles: collection('[data-test-community-solution-changed-file]'),
-      unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
-      clickOnExpandButton: clickable('[data-test-expand-button]'),
-      commentCards: collection('[data-test-comment-card]', CommentCard),
-      collapseButtons: collection('[data-test-collapse-button]'),
-
-      downvoteButton: {
-        hover: triggerable('mouseenter'),
-        isInactive: hasClass('opacity-50'),
-        scope: '[data-test-solution-card-downvote-button]',
-      },
-
-      toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
-
-      upvoteButton: {
-        hover: triggerable('mouseenter'),
-        isInactive: hasClass('opacity-50'),
-        scope: '[data-test-solution-card-upvote-button]',
-      },
-    }),
-
-    scope: '[data-test-code-examples-tab]',
-
-    stageIncompleteModal: {
-      clickOnInstructionsButton: clickable('[data-test-instructions-button]'),
-      clickOnShowCodeButton: clickable('[data-test-show-code-button]'),
-      scope: '[data-test-stage-incomplete-modal]',
-    },
   },
 
   commentList: CommentList,

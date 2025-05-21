@@ -25,6 +25,7 @@ interface Signature {
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
+  @tracked diffSource: 'changed-files' | 'highlighted-files' = 'changed-files';
   @tracked fileComparisons: FileComparison[] = [];
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
@@ -49,6 +50,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     if (isExpanded) {
       this.loadAsyncResources.perform();
     }
+  }
+
+  @action
+  handleDiffSourceChange(diffSource: 'changed-files' | 'highlighted-files') {
+    this.diffSource = diffSource;
   }
 
   @action

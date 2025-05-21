@@ -1,15 +1,16 @@
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-examples-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL } from '@ember/test-helpers';
 
 module('Acceptance | course-page | community-solution-comments', function (hooks) {
   setupApplicationTest(hooks);
@@ -51,40 +52,36 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
     assert.notOk(coursePage.previousStepsIncompleteModal.isVisible, 'modal should be hidden');
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
-
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
+    await codeExamplesPage.languageDropdown.toggle();
+    await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
-    assert.strictEqual(codeExamplesTab.solutionCards.length, 1, 'should have 1 solution card');
+    assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'should have 1 solution card');
 
     assert.notOk(coursePage.previousStepsIncompleteModal.isVisible, 'modal should be hidden'); // Assert before percy
     await percySnapshot('Community Solution Comments - Collapsed');
 
-    assert.strictEqual(codeExamplesTab.solutionCards[0].toggleCommentsButtons.length, 2, 'should have 2 comment buttons');
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 0, 'should have 0 comment cards');
+    assert.strictEqual(codeExamplesPage.solutionCards[0].toggleCommentsButtons.length, 2, 'should have 2 comment buttons');
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards.length, 0, 'should have 0 comment cards');
 
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
+    await codeExamplesPage.solutionCards[0].toggleCommentsButtons[0].click();
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards.length, 1);
 
     await percySnapshot('Community Solution Comments - Expanded');
 
     // Clicking 2nd button should collapse first and open 2nd
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[1].click();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
+    await codeExamplesPage.solutionCards[0].toggleCommentsButtons[1].click();
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards.length, 1);
 
     // Clicking 2nd button again should collapse 2nd
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[1].click();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 0);
+    await codeExamplesPage.solutionCards[0].toggleCommentsButtons[1].click();
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards.length, 0);
   });
 
   test('can upvote / downvote comments', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
-
-    const codeExamplesTab = coursePage.codeExamplesTab;
 
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -116,13 +113,13 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await animationsSettled();
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
+    await codeExamplesPage.languageDropdown.toggle();
+    await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
-    await codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards.length, 1);
+    await codeExamplesPage.solutionCards[0].toggleCommentsButtons[0].click();
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards.length, 1);
 
-    const firstCommentCard = codeExamplesTab.solutionCards[0].commentCards[0];
+    const firstCommentCard = codeExamplesPage.solutionCards[0].commentCards[0];
     assert.strictEqual(firstCommentCard.upvoteButton.text, '1', 'upvote count should be 1');
 
     await firstCommentCard.upvoteButton.click();
@@ -142,8 +139,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
-
     const python = this.server.schema.languages.findBy({ slug: 'python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
     const user = this.server.schema.users.first();
@@ -172,10 +167,10 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    await codeExamplesTab.languageDropdown.toggle();
-    await codeExamplesTab.languageDropdown.clickOnLink('Python');
+    await codeExamplesPage.languageDropdown.toggle();
+    await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
-    const solutionCard = codeExamplesTab.solutionCards[0];
+    const solutionCard = codeExamplesPage.solutionCards[0];
 
     await solutionCard.toggleCommentsButtons[0].click();
 
@@ -303,29 +298,26 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
     const user = this.server.schema.users.first();
-
     await createComment(this.server, user);
 
     await navigateToComment();
-    assert.false(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
+    assert.false(codeExamplesPage.solutionCards[0].commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
   });
 
   test('comment has staff label for staff user', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
     const user = this.server.schema.users.first();
     user.update({ isStaff: true });
 
     await createComment(this.server, user);
 
     await navigateToComment();
-    assert.strictEqual(codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
+    assert.strictEqual(codeExamplesPage.solutionCards[0].commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
 
-    await codeExamplesTab.solutionCards[0].commentCards[0].userLabel.hover();
+    await codeExamplesPage.solutionCards[0].commentCards[0].userLabel.hover();
     assertTooltipContent(assert, {
       contentString: 'This user works at CodeCrafters',
     });
@@ -335,7 +327,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
     const user = this.server.schema.users.first();
     user.update({ authoredCourseSlugs: ['redis'] });
 
@@ -343,12 +334,12 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     await navigateToComment();
 
     assert.strictEqual(
-      codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
+      codeExamplesPage.solutionCards[0].commentCards[0].userLabel.text,
       'challenge author',
       'should have challenge author label if comment is on authored course',
     );
 
-    await codeExamplesTab.solutionCards[0].commentCards[0].userLabel.hover();
+    await codeExamplesPage.solutionCards[0].commentCards[0].userLabel.hover();
     assertTooltipContent(assert, {
       contentString: 'This user is the author of this challenge',
     });
@@ -358,7 +349,6 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
     testScenario(this.server);
     signIn(this.owner, this.server); // Move off of staff
 
-    const codeExamplesTab = coursePage.codeExamplesTab;
     const user = this.server.schema.users.first();
     user.update({ isStaff: true, authoredCourseSlugs: ['redis'] });
 
@@ -366,7 +356,7 @@ module('Acceptance | course-page | community-solution-comments', function (hooks
 
     await navigateToComment();
     assert.strictEqual(
-      codeExamplesTab.solutionCards[0].commentCards[0].userLabel.text,
+      codeExamplesPage.solutionCards[0].commentCards[0].userLabel.text,
       'staff',
       'should have staff label if staff and course author',
     );
@@ -400,8 +390,8 @@ async function navigateToComment() {
   await animationsSettled();
 
   await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-  await coursePage.codeExamplesTab.languageDropdown.toggle();
-  await coursePage.codeExamplesTab.languageDropdown.clickOnLink('Python');
+  await codeExamplesPage.languageDropdown.toggle();
+  await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
-  await coursePage.codeExamplesTab.solutionCards[0].toggleCommentsButtons[0].click();
+  await codeExamplesPage.solutionCards[0].toggleCommentsButtons[0].click();
 }
