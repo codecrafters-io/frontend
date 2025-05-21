@@ -56,7 +56,12 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-5">
       {{#each @model.solutions as |solution solutionIndex|}}
         <div>
-          <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{solution}} @isExpanded={{false}} class="w-full flex-shrink" />
+          <CoursePage::CourseStageStep::CommunitySolutionCard
+            @solution={{solution}}
+            @isExpanded={{eq this.expandedSolution solution}}
+            @onExpandButtonClick={{fn this.handleSolutionExpandButtonClick solution solutionIndex}}
+            class="w-full flex-shrink"
+          />
         </div>
         <div class="prose prose-sm">
           <ul>
