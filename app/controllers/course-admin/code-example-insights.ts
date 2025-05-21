@@ -9,6 +9,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-insights';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import { capitalize } from '@ember/string';
 
 export default class CodeExampleInsightsController extends Controller {
   @service declare authenticator: AuthenticatorService;
@@ -85,6 +86,14 @@ export default class CodeExampleInsightsController extends Controller {
     return solution.score !== null && solution.score > 0;
   }
 
+  @action
+  scoreReason(solution: CommunityCourseStageSolutionModel) {
+    if (this.isScored(solution) && solution.scoreReason) {
+      return '⭐' + capitalize(solution.scoreReason);
+    } else {
+      return 'Not Scored';
+    }
+  }
 
   @action
   setSortMode(mode: 'diff-size' | 'recency') {
