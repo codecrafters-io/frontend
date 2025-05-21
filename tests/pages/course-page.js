@@ -50,40 +50,6 @@ export default create({
     scope: '[data-test-course-completed-card]',
   },
 
-  codeExamplesTab: {
-    languageDropdown: LanguageDropdown,
-
-    solutionCards: collection('[data-test-community-solution-card]', {
-      changedFiles: collection('[data-test-community-solution-changed-file]'),
-      unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
-      clickOnExpandButton: clickable('[data-test-expand-button]'),
-      commentCards: collection('[data-test-comment-card]', CommentCard),
-      collapseButtons: collection('[data-test-collapse-button]'),
-
-      downvoteButton: {
-        hover: triggerable('mouseenter'),
-        isInactive: hasClass('opacity-50'),
-        scope: '[data-test-solution-card-downvote-button]',
-      },
-
-      toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
-
-      upvoteButton: {
-        hover: triggerable('mouseenter'),
-        isInactive: hasClass('opacity-50'),
-        scope: '[data-test-solution-card-upvote-button]',
-      },
-    }),
-
-    scope: '[data-test-code-examples-tab]',
-
-    stageIncompleteModal: {
-      clickOnInstructionsButton: clickable('[data-test-instructions-button]'),
-      clickOnShowCodeButton: clickable('[data-test-show-code-button]'),
-      scope: '[data-test-stage-incomplete-modal]',
-    },
-  },
-
   commentList: CommentList,
   configureExtensionsModal: ConfigureExtensionsModal,
 

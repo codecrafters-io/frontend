@@ -54,10 +54,10 @@ export default function createCourseStageSolution(server, course, stagePosition,
     end
   end
 end`,
-        highlightedRanges: [
+        highlighted_ranges: [
           {
-            startLine: 3,
-            endLine: 6,
+            start_line: 3,
+            end_line: 6,
           },
         ],
       },
