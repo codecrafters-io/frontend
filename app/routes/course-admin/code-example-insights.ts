@@ -33,7 +33,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
       solutions: (await this.store.query('community-course-stage-solution', {
         course_stage_id: courseStage.id,
         language_id: selectedLanguage?.id,
-        include: 'user',
+        include: 'user,evaluations,evaluations.evaluator',
         order: 'recommended',
       })) as unknown as CommunityCourseStageSolutionModel[],
     };

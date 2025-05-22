@@ -11,6 +11,11 @@ import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { capitalize } from '@ember/string';
 
+interface EvaluationResult {
+  result: "✅ Passed" | "❌ Failed";
+  check: string;
+}
+
 export default class CodeExampleInsightsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
@@ -92,6 +97,31 @@ export default class CodeExampleInsightsController extends Controller {
       return '⭐' + ' ' + capitalize(solution.scoreReason);
     } else {
       return 'Not Scored';
+    }
+  }
+
+  @action
+  formattedEvaluationResults(solution: CommunityCourseStageSolutionModel): EvaluationResult[] {
+    if (solution.evaluations.length === 0) {
+      return [];
+    } else {
+      const results: EvaluationResult[] = [];
+
+      for (const evaluation of solution.evaluations) {
+        if (evaluation.result === 'pass') {
+          results.push({
+            result: "✅ Passed",
+            check: evaluation.evaluator.slug
+          });
+        } else if (evaluation.result === 'fail') {
+          results.push({
+            result: "❌ Failed",
+            check: evaluation.evaluator.slug
+          });
+        }
+      }
+
+      return results;
     }
   }
 
