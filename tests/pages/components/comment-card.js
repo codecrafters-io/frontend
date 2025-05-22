@@ -1,5 +1,5 @@
 import { clickOnText, clickable, collection, text, triggerable } from 'ember-cli-page-object';
-import CommentForm from './course-page/course-stage-solution-modal/comment-form';
+import CommentForm from 'codecrafters-frontend/tests/pages/components/comment-form';
 
 export default {
   clickOnDropdownLink: clickOnText('[data-test-more-dropdown-content] div[role="button"]'),
