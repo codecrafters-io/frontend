@@ -84,17 +84,13 @@
             <li>
               {{this.scoreReason solution}}
             </li>
-            <li>
-              ✅ Passed
-              <code>relevance</code>
-              check
-            </li>
-            <li>
-              ❌ Failed flakiness check
-            </li>
-            <li>
-              ❌ Failed tester verification check
-            </li>
+            {{#each (this.formattedEvaluationResults solution) as |evaluation|}}
+              <li>
+                {{evaluation.result}}
+                <code>{{evaluation.check}}</code>
+                check
+              </li>
+            {{/each}}
             <li>
               ±
               {{this.diffStatistics solution}}
