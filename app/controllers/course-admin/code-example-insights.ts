@@ -12,7 +12,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import { capitalize } from '@ember/string';
 
 interface EvaluationResult {
-  result: "✅ Passed" | "❌ Failed";
+  result: '✅ Passed' | '❌ Failed';
   check: string;
 }
 
@@ -110,13 +110,13 @@ export default class CodeExampleInsightsController extends Controller {
       for (const evaluation of solution.evaluations) {
         if (evaluation.result === 'pass') {
           results.push({
-            result: "✅ Passed",
-            check: evaluation.evaluator.slug
+            result: '✅ Passed',
+            check: evaluation.evaluator.slug,
           });
         } else if (evaluation.result === 'fail') {
           results.push({
-            result: "❌ Failed",
-            check: evaluation.evaluator.slug
+            result: '❌ Failed',
+            check: evaluation.evaluator.slug,
           });
         }
       }
