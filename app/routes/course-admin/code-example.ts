@@ -22,8 +22,6 @@ export default class CodeExampleRoute extends BaseRoute {
 
     const solutionIncludes = [
       ...CommunityCourseStageSolutionModel.defaultIncludedResources,
-      'evaluations',
-      'evaluations.evaluator',
       'trusted-evaluations',
       'trusted-evaluations.evaluator',
     ];
