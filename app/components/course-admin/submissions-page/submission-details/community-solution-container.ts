@@ -12,7 +12,7 @@ interface Signature {
 
 export default class CommunitySolutionContainerComponent extends Component<Signature> {
   get communitySolution(): CommunityCourseStageSolutionModel | null {
-    return this.args.submission.communityCourseStageSolution;
+    return this.args.submission.communitySolution;
   }
 }
 
