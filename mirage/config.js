@@ -74,8 +74,10 @@ export default function (config) {
           courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          evaluations: hasMany('community-solution-evaluation', { inverse: 'communitySolution' }),
           language: belongsTo('language', { inverse: null }),
           screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
+          trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
           user: belongsTo('user', { inverse: null }),
         }),
         communityCourseStageSolutionComment: Model.extend({
