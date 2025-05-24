@@ -39,6 +39,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { highlightRanges, type LinesRange } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -54,10 +55,13 @@ enum FoldGutterIcon {
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LinesRange[];
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
+/**
+ * Order of keys in this object matters, do not sort alphabetically
+ */
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
@@ -69,6 +73,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) =>
     enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
+  highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? highlightRanges(highlightedRanges) : []),
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
@@ -240,6 +245,10 @@ export interface Signature {
        * Enable inline highlighting of changes in the diff
        */
       highlightChanges?: boolean;
+      /**
+       * Enable highlighting of specified line ranges
+       */
+      highlightedRanges?: LinesRange[];
       /**
        * Enable highlighting of new line symbols
        */

@@ -1,6 +1,7 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {
@@ -20,6 +21,10 @@ interface Signature {
      * Always render CodeMirror/SyntaxHighlightedDiff using Dark Theme
      */
     forceDarkTheme?: boolean;
+    /**
+     * Enable highlighting of specified line ranges
+     */
+    highlightedRanges?: LinesRange[];
     /**
      * Override language auto-detected from `filename` and set it manually
      */

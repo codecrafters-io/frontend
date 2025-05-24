@@ -26,6 +26,10 @@ py-2"
         <Input @type="checkbox" @checked={{this.forceDarkTheme}} />
         <span class="ml-2">forceDarkTheme</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable highlighting of specified line ranges">
+        <Input @type="checkbox" @checked={{this.highlightedRanges}} />
+        <span class="ml-2">highlightedRanges</span>
+      </label>
     </component-options-right>
   </component-options>
 {{/let}}
@@ -36,6 +40,7 @@ py-2"
   @filename={{this.selectedDocument.filename}}
   @language={{this.selectedDocument.language}}
   @forceDarkTheme={{this.forceDarkTheme}}
+  @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
   class="mt-4 {{if this.forceDarkTheme 'dark'}}"
 />
 
