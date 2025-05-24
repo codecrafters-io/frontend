@@ -6,7 +6,11 @@
         {{@language.name}}.
       </h1>
       <div class="flex md:hidden h-12 w-12 flex-shrink-0">
-        <LanguageLogo @language={{@language}} @variant="color" class="dark:opacity-90" />
+        {{#if (eq @language.name "Gleam")}}
+          <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
+        {{else}}
+          <LanguageLogo @language={{@language}} @variant="color" class="dark:opacity-90" />
+        {{/if}}
       </div>
     </div>
 
@@ -54,6 +58,10 @@
     {{/if}}
   </div>
   <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
-    <LanguageLogo @language={{@language}} @variant="color" class="dark:opacity-90" />
+    {{#if (eq @language.name "Gleam")}}
+      <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
+    {{else}}
+      <LanguageLogo @language={{@language}} @variant="color" class="dark:opacity-90" />
+    {{/if}}
   </div>
 </div>

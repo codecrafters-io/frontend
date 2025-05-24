@@ -202,6 +202,7 @@
   },
   "dependencies": {
     "@rails/actioncable": "^8.0.200",
+    "@rive-app/canvas": "^2.27.0",
     "@stripe/stripe-js": "^5.5.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.16",
