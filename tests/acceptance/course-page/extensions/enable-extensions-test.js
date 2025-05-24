@@ -32,7 +32,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
-    await courseOverviewPage.clickOnStartCourse();
+    await courseOverviewPage.adminPanel.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
