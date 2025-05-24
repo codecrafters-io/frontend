@@ -37,7 +37,7 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
         autoplay: true,
         automaticallyHandleEvents: true,
         layout: new Layout({
-          fit: Fit.Cover,
+          fit: Fit.Contain,
         }),
         onLoad: async () => {
           if (this.riveInstance) {
