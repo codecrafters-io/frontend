@@ -93,8 +93,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    baseRequestsCount += 1; // 1 refreshed poll
-
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
 
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
