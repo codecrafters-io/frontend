@@ -60,19 +60,19 @@ const highlightedLinesGutterHighlighter = gutterLineClass.compute(['doc', highli
   const highlightedRanges = state.facet(highlightedRangesFacet)[0] || [];
   const marks = [];
 
-  for (const range of highlightedRanges) {
-    for (let lineNumber = range.startLine; lineNumber <= range.endLine; lineNumber++) {
-      if (lineNumber <= state.doc.lines) {
-        const linePos = state.doc.line(lineNumber).from;
-        marks.push(new HighlightedLineGutterMarker().range(linePos));
+  try {
+    for (const range of highlightedRanges) {
+      for (let lineNumber = range.startLine; lineNumber <= range.endLine; lineNumber++) {
+        if (lineNumber <= state.doc.lines) {
+          const linePos = state.doc.line(lineNumber).from;
+          marks.push(new HighlightedLineGutterMarker().range(linePos));
+        }
       }
     }
-  }
 
-  try {
     return RangeSet.of(marks);
   } catch (e) {
-    console.error(`Failed to highlight lines in the gutter: ${e instanceof Error ? e.message : e}`);
+    console.error(`Failed to highlight line ranges in the gutter: ${e instanceof Error ? e.message : e}`);
 
     return RangeSet.of([]);
   }
