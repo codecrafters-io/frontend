@@ -1,3 +1,4 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -38,6 +39,7 @@ module('Acceptance | course-page | view-upgrade-prompt', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.contains(
       coursePage.upgradePrompt.secondaryCopy,
@@ -61,6 +63,7 @@ module('Acceptance | course-page | view-upgrade-prompt', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.contains(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/month when billed annually. Save 40% by joining within 60 minutes.');
   });
@@ -76,6 +79,7 @@ module('Acceptance | course-page | view-upgrade-prompt', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.contains(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/month $15/month (discounted price for India) when billed annually.');
   });
@@ -89,7 +93,7 @@ module('Acceptance | course-page | view-upgrade-prompt', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
-
+    await courseOverviewPage.clickOnStartCourse();
     assert.contains(coursePage.upgradePrompt.secondaryCopy, 'Plans start at $30/month when billed annually.');
   });
 });

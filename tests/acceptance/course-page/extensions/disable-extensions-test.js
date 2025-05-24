@@ -3,6 +3,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -28,6 +29,7 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is /stages/2');
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items');

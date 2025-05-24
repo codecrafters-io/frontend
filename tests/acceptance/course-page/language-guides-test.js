@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -43,6 +44,7 @@ module('Acceptance | course-page | language-guides', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.secondStageTutorialCard.clickOnSolutionBlurredOverlay();
 

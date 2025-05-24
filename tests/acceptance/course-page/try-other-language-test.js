@@ -7,6 +7,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
@@ -38,10 +39,13 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch leaderboard entries (course page)',
       'fetch hints (course page)',
       'fetch language guides (course page)',
+      'fetch courses (extra)',
+      'fetch languages (extra)',
     ].length;
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
@@ -94,12 +98,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run again');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 9, 'polling should have run again');
   });
 
   test('can try other language from repository setup page (regression)', async function (assert) {
@@ -121,6 +125,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Repository Setup');
 

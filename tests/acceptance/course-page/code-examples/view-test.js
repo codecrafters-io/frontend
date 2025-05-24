@@ -118,6 +118,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     // Stage 2: (Completed, has solutions & comments)
     await coursePage.sidebar.clickOnStepListItem('Respond to PING').click();
@@ -234,6 +235,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
@@ -259,6 +261,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
@@ -301,6 +304,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
@@ -342,6 +346,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnInstructionsButton();
 
@@ -380,6 +385,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
@@ -415,6 +421,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
@@ -454,6 +461,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
@@ -499,6 +507,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
@@ -546,6 +555,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible the first time');

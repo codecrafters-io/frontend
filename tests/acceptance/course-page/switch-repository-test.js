@@ -1,4 +1,5 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -37,6 +38,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     const baseRequestsCount = [
       'fetch courses (catalog)',
@@ -45,8 +47,10 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'fetch courses (course page)',
       'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'fetch courses (course page)',
       'fetch hints (course page)',
       'fetch language guides (course page)',
+      'fetch course stage comments (course page)',
     ].length;
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
