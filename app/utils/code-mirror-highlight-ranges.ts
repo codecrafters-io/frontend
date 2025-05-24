@@ -1,6 +1,7 @@
 import { Decoration, EditorView, gutter, gutterLineClass, GutterMarker, ViewPlugin, type DecorationSet, type ViewUpdate } from '@codemirror/view';
 import { RangeSetBuilder, Facet, RangeSet } from '@codemirror/state';
-import type { LinesRange } from './code-mirror-documents';
+
+export type LinesRange = { startLine: number; endLine: number };
 
 const highlightedRangesFacet = Facet.define<LinesRange[]>({
   static: true,
