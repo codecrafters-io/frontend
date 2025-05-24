@@ -39,6 +39,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { lineComments, type LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -54,7 +55,7 @@ enum FoldGutterIcon {
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineDataCollection;
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
@@ -78,6 +79,8 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
+  lineCommentsOrCommentsRelatedOption: ({ lineComments: enabled, lineData, readOnly }) =>
+    enabled && lineData && readOnly ? [lineComments(lineData)] : [],
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -273,6 +276,14 @@ export interface Signature {
        */
       indentWithTab?: boolean;
       /**
+       * Enable line comments
+       */
+      lineComments?: boolean;
+      /**
+       * Line data containing comments counts or other line-related metadata
+       */
+      lineData?: LineDataCollection;
+      /**
        * Enable the line numbers gutter
        */
       lineNumbers?: boolean;
@@ -368,6 +379,12 @@ export default class CodeMirrorComponent extends Component<Signature> {
     if (optionName === 'originalDocumentOrDiffRelatedOption') {
       this.#updateRenderedView({
         effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+    }
+
+    if (optionName === 'lineCommentsOrCommentsRelatedOption') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('lineCommentsOrCommentsRelatedOption'),
       });
     }
 
