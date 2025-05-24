@@ -230,6 +230,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('highlightedRanges', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('highlightedRanges', []);
+        await render(hbs`<CodeMirror @highlightedRanges={{this.highlightedRanges}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('highlightedRanges', [{ startLine: 1, endLine: 1 }]);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('highlightNewlines', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightNewlines', true);
