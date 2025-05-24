@@ -36,7 +36,7 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    
+
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 

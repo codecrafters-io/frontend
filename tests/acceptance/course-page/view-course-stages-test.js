@@ -388,6 +388,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
+    await settled(); // Wait for everything to settle before checking the step name
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
   });
 

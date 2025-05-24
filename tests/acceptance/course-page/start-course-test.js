@@ -87,7 +87,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, 'create repository request was executed');
 
-
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
 
