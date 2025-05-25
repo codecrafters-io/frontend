@@ -212,6 +212,10 @@ export default [
       { startLine: 7, endLine: 7 },
       { startLine: 9, endLine: 9 },
     ],
+    collapsedRanges: [
+      { startLine: 2, endLine: 4 },
+      { startLine: 6, endLine: 8 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -231,6 +235,10 @@ export default [
     ].join('\n'),
     filename: 'test.py',
     language: 'python',
+    collapsedRanges: [
+      { startLine: 1, endLine: 1 },
+      { startLine: 3, endLine: 9 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -293,6 +301,10 @@ export default [
       { startLine: 14, endLine: 20 },
       { startLine: 35, endLine: 39 },
     ],
+    collapsedRanges: [
+      { startLine: 15, endLine: 19 },
+      { startLine: 24, endLine: 26 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -325,6 +337,10 @@ export default [
     highlightedRanges: [
       { startLine: 12, endLine: 12 },
       { startLine: 18, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 1, endLine: 6 },
+      { startLine: 21, endLine: 21 },
     ],
   }),
 
@@ -361,6 +377,10 @@ export default [
     highlightedRanges: [
       { startLine: 7, endLine: 7 },
       { startLine: 17, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 12, endLine: 15 },
+      { startLine: 22, endLine: 23 },
     ],
   }),
 ];
