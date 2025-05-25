@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 
 const QUERY_PARAMS = [
+  'collapsedRanges',
   'foldGutter',
   'headerTooltipText',
   'highlightedRanges',

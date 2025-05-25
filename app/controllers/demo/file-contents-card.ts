@@ -5,6 +5,7 @@ import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/
 
 const OPTION_DEFAULTS = {
   headerTooltipText: false,
+  collapsedRanges: false,
   highlightedRanges: false,
   isCollapsed: false,
   isCollapsible: false,
@@ -17,6 +18,7 @@ export default class DemoFileContentsCardController extends Controller {
 
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
   @tracked headerTooltipText: boolean = OPTION_DEFAULTS.headerTooltipText;
+  @tracked collapsedRanges: boolean = OPTION_DEFAULTS.collapsedRanges;
   @tracked highlightedRanges: boolean = OPTION_DEFAULTS.highlightedRanges;
   @tracked isCollapsed: boolean = OPTION_DEFAULTS.isCollapsed;
   @tracked isCollapsible: boolean = OPTION_DEFAULTS.isCollapsible;

@@ -36,6 +36,10 @@ interface Signature {
      */
     headerTooltipText?: string;
     /**
+     * Enable collapsing of specified line ranges
+     */
+    collapsedRanges?: LinesRange[];
+    /**
      * Enable highlighting of specified line ranges
      */
     highlightedRanges?: LineRange[];
