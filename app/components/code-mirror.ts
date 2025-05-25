@@ -41,6 +41,7 @@ import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
+import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -149,11 +150,11 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
           }),
-          collapseUnchanged ? collapseUnchangedGutter() : [],
+          collapseUnchanged && !collapsedRanges ? collapseUnchangedGutter() : [],
         ]
       : [];
   },
-  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? collapseRanges(collapsedRanges) : []),
+  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? [collapseRanges(collapsedRanges), collapseRangesGutter()] : []),
 };
 
 export interface Signature {
