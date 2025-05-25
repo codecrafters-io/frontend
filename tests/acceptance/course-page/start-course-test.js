@@ -135,7 +135,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     baseRequestsCount += 1; // 1 refreshed poll
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 6, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
 
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
