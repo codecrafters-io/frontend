@@ -68,14 +68,16 @@ function buildCollapsedRangesDecorations(state: EditorState, collapsedRanges: Li
   const builder = new RangeSetBuilder<Decoration>();
 
   for (const { startLine, endLine } of collapsedRanges) {
-    builder.add(
-      state.doc.line(startLine).from,
-      state.doc.line(endLine).to,
-      Decoration.replace({
-        widget: new CollapsedRangesWidget(startLine, endLine),
-        block: true,
-      }),
-    );
+    if (startLine <= state.doc.lines && endLine <= state.doc.lines) {
+      builder.add(
+        state.doc.line(startLine).from,
+        state.doc.line(endLine).to,
+        Decoration.replace({
+          widget: new CollapsedRangesWidget(startLine, endLine),
+          block: true,
+        }),
+      );
+    }
   }
 
   return builder.finish();
