@@ -40,6 +40,7 @@ import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highl
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -69,6 +70,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
   bracketMatching: ({ bracketMatching: enabled }) => (enabled ? [bracketMatching()] : []),
   closeBrackets: ({ closeBrackets: enabled }) => (enabled ? [closeBrackets(), keymap.of(closeBracketsKeymap)] : []),
+  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? collapseRanges(collapsedRanges) : []),
   crosshairCursor: ({ crosshairCursor: enabled }) => (enabled ? [crosshairCursor()] : []),
   drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
@@ -219,6 +221,10 @@ export interface Signature {
        * Automatically close brackets when typing
        */
       closeBrackets?: boolean;
+      /**
+       * Enable collapsing of specified line ranges
+       */
+      collapsedRanges?: LineRange[];
       /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */

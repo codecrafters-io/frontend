@@ -34,6 +34,7 @@ const OPTION_DEFAULTS = {
   autocompletion: true,
   bracketMatching: true,
   closeBrackets: true,
+  collapsedRanges: false,
   collapseUnchanged: true,
   crosshairCursor: true,
   document: true,
@@ -91,6 +92,7 @@ export default class DemoCodeMirrorController extends Controller {
     'autocompletion',
     'bracketMatching',
     'closeBrackets',
+    'collapsedRanges',
     'collapseUnchanged',
     'crosshairCursor',
     'document',
@@ -144,6 +146,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked autocompletion = OPTION_DEFAULTS.autocompletion;
   @tracked bracketMatching = OPTION_DEFAULTS.bracketMatching;
   @tracked closeBrackets = OPTION_DEFAULTS.closeBrackets;
+  @tracked collapsedRanges = OPTION_DEFAULTS.collapsedRanges;
   @tracked crosshairCursor = OPTION_DEFAULTS.crosshairCursor;
   @tracked document = OPTION_DEFAULTS.document;
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;

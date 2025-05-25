@@ -6,6 +6,7 @@ const QUERY_PARAMS = [
   'autocompletion',
   'bracketMatching',
   'closeBrackets',
+  'collapsedRanges',
   'collapseUnchanged',
   'crosshairCursor',
   'document',

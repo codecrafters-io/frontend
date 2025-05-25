@@ -8,6 +8,7 @@ export class ExampleDocument {
   @tracked filename: string;
   @tracked language: string;
   @tracked highlightedRanges: LineRange[];
+  @tracked collapsedRanges: LineRange[];
 
   constructor({
     document = '',
@@ -15,18 +16,21 @@ export class ExampleDocument {
     filename,
     language,
     highlightedRanges = [],
+    collapsedRanges = [],
   }: {
     document?: string;
     originalDocument?: string;
     filename: string;
     language: string;
     highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
   }) {
     this.document = document;
     this.originalDocument = originalDocument || document;
     this.filename = filename;
     this.language = language;
     this.highlightedRanges = highlightedRanges;
+    this.collapsedRanges = collapsedRanges;
   }
 
   static createEmpty() {
@@ -42,11 +46,13 @@ export class DiffBasedExampleDocument extends ExampleDocument {
     filename,
     language,
     highlightedRanges = [],
+    collapsedRanges = [],
   }: {
     diff?: string;
     filename: string;
     language: string;
     highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
   }) {
     const { current: document, original: originalDocument } = parseDiffAsDocument(diff);
 
@@ -56,6 +62,7 @@ export class DiffBasedExampleDocument extends ExampleDocument {
       filename,
       language,
       highlightedRanges,
+      collapsedRanges,
     });
 
     this.diff = diff;
@@ -116,6 +123,10 @@ export default [
       { startLine: 2, endLine: 4 },
       { startLine: 7, endLine: 10 },
       { startLine: 18, endLine: 20 },
+    ],
+    collapsedRanges: [
+      { startLine: 12, endLine: 15 },
+      { startLine: 25, endLine: 27 },
     ],
   }),
 

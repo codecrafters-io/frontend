@@ -242,6 +242,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('collapsedRanges', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('collapsedRanges', []);
+        await render(hbs`<CodeMirror @collapsedRanges={{this.collapsedRanges}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('collapsedRanges', [{ startLine: 1, endLine: 1 }]);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('highlightNewlines', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('highlightNewlines', true);

@@ -103,6 +103,10 @@
         <Input @type="checkbox" @checked={{this.highlightedRanges}} />
         <span class="ml-2">highlightedRanges</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable collapsing of specified line ranges">
+        <Input @type="checkbox" @checked={{this.collapsedRanges}} />
+        <span class="ml-2">collapsedRanges</span>
+      </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
@@ -333,6 +337,7 @@
   @allowMultipleSelections={{this.allowMultipleSelections}}
   @autocompletion={{this.autocompletion}}
   @bracketMatching={{this.bracketMatching}}
+  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
   @closeBrackets={{this.closeBrackets}}
   @crosshairCursor={{this.crosshairCursor}}
   @drawSelection={{this.drawSelection}}
