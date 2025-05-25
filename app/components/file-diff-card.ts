@@ -24,7 +24,7 @@ interface Signature {
     /**
      * Enable collapsing of specified line ranges
      */
-    collapsedRanges?: LinesRange[];
+    collapsedRanges?: LineRange[];
     /**
      * Enable highlighting of specified line ranges
      */

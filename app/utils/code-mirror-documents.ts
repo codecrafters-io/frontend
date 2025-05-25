@@ -125,8 +125,11 @@ export default [
       { startLine: 18, endLine: 20 },
     ],
     collapsedRanges: [
+      { startLine: 1, endLine: 7 },
       { startLine: 12, endLine: 15 },
       { startLine: 25, endLine: 27 },
+      { startLine: 30, endLine: 31 },
+      { startLine: 38, endLine: 39 },
     ],
   }),
 
@@ -180,6 +183,10 @@ export default [
       { startLine: 16, endLine: 17 },
       { startLine: 21, endLine: 22 },
       { startLine: 26, endLine: 27 },
+    ],
+    collapsedRanges: [
+      { startLine: 7, endLine: 13 },
+      { startLine: 20, endLine: 28 },
     ],
   }),
 

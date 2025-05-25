@@ -127,8 +127,8 @@
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
       </label>
       <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
-        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
-        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
+        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{or (not this.originalDocument) this.collapsedRanges}} />
+        <span class="ml-2 {{if (or (not this.originalDocument) this.collapsedRanges) 'text-gray-300'}}">collapseUnchanged</span>
       </label>
       <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
         <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />

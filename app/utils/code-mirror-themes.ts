@@ -159,6 +159,44 @@ const BASE_STYLE = {
     },
   },
 
+  // Expand collapsed ranges bar
+  '.cm-collapsedRanges': {
+    height: '1.75rem', // h7
+    borderTopWidth: '1px',
+    borderBottomWidth: '1px',
+    fontSize: '0.75rem', // text-xs
+    fontFamily: 'Montserrat, sans-serif',
+    lineHeight: '1rem', // text-xs
+    background: tailwindColors.sky['50'],
+    color: tailwindColors.sky['700'],
+    borderColor: tailwindColors.sky['100'],
+
+    '&:hover': {
+      background: tailwindColors.sky['100'],
+      color: tailwindColors.sky['800'],
+    },
+
+    '&:before': {
+      content: 'none',
+    },
+
+    '&:after': {
+      content: 'none',
+    },
+
+    '&:first-child': {
+      borderTop: 'none',
+      marginTop: '-0.5rem',
+      marginBottom: '0.5rem',
+    },
+
+    '&:last-child': {
+      borderBottom: 'none',
+      marginTop: '0.5rem',
+      marginBottom: '-0.5rem',
+    },
+  },
+
   // All lines in the document
   '.cm-line': {
     lineHeight: '1.5rem',
@@ -251,6 +289,18 @@ export const codeCraftersDark = [
 
       // Expand unchanged lines bar
       '.cm-collapsedLines': {
+        background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
+        color: tailwindColors.sky['400'],
+        borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+
+        '&:hover': {
+          background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+          color: tailwindColors.sky['300'],
+        },
+      },
+
+      // Expand collapsed ranges bar
+      '.cm-collapsedRanges': {
         background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
         color: tailwindColors.sky['400'],
         borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),

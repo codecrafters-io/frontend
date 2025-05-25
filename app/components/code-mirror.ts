@@ -70,7 +70,6 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
   bracketMatching: ({ bracketMatching: enabled }) => (enabled ? [bracketMatching()] : []),
   closeBrackets: ({ closeBrackets: enabled }) => (enabled ? [closeBrackets(), keymap.of(closeBracketsKeymap)] : []),
-  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? collapseRanges(collapsedRanges) : []),
   crosshairCursor: ({ crosshairCursor: enabled }) => (enabled ? [crosshairCursor()] : []),
   drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
@@ -131,6 +130,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   originalDocumentOrDiffRelatedOption: ({
     originalDocument,
     mergeControls,
+    collapsedRanges,
     collapseUnchanged,
     highlightChanges,
     syntaxHighlighting,
@@ -144,7 +144,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
+            collapseUnchanged: collapseUnchanged && !collapsedRanges ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
@@ -153,6 +153,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
         ]
       : [];
   },
+  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? collapseRanges(collapsedRanges) : []),
 };
 
 export interface Signature {
@@ -385,6 +386,13 @@ export default class CodeMirrorComponent extends Component<Signature> {
     if (optionName === 'originalDocumentOrDiffRelatedOption') {
       this.#updateRenderedView({
         effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+    }
+
+    // When collapsedRanges changes - completely unload the collapsedRanges compartment to avoid any side-effects
+    if (optionName === 'collapsedRanges') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('collapsedRanges'),
       });
     }
 
