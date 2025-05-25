@@ -98,7 +98,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
+    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 5, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
