@@ -39,7 +39,8 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
-import { highlightRanges, type LinesRange } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');

@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-documents';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {
