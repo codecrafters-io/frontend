@@ -13,6 +13,12 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { type FileComparison, FileComparisonFromJSON } from 'codecrafters-frontend/utils/file-comparison';
+import { capitalize } from '@ember/string';
+
+interface EvaluationResult {
+  result: '✅ Passed' | '❌ Failed';
+  check: string;
+}
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
   static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
@@ -71,6 +77,44 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
     });
   }
 
+  get diffStatistics() {
+    let added = 0,
+      removed = 0;
+
+    for (const changedFile of this.changedFiles) {
+      const diff = changedFile['diff'];
+      const lines = diff.split('\n');
+      added += lines.filter((line: string) => line.startsWith('+')).length;
+      removed += lines.filter((line: string) => line.startsWith('-')).length;
+    }
+
+    return added + removed;
+  }
+
+  get formattedEvaluationResults(): EvaluationResult[] {
+    if (this.evaluations.length === 0) {
+      return [];
+    } else {
+      const results: EvaluationResult[] = [];
+
+      for (const evaluation of this.evaluations) {
+        if (evaluation.result === 'pass') {
+          results.push({
+            result: '✅ Passed',
+            check: evaluation.evaluator.slug,
+          });
+        } else if (evaluation.result === 'fail') {
+          results.push({
+            result: '❌ Failed',
+            check: evaluation.evaluator.slug,
+          });
+        }
+      }
+
+      return results;
+    }
+  }
+
   // We don't render explanations at the moment
   get hasExplanation() {
     return !!this.explanationMarkdown;
@@ -82,6 +126,18 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   get isPublishedToPublicGithubRepository() {
     return this.isPublishedToGithub && !this.githubRepositoryIsPrivate;
+  }
+
+  get isScored() {
+    return this.score !== null && this.score > 0;
+  }
+
+  get scoreReasonFormatted() {
+    if (this.isScored && this.scoreReason) {
+      return '⭐' + ' ' + capitalize(this.scoreReason);
+    } else {
+      return 'Not Scored';
+    }
   }
 
   get screencast() {

@@ -9,12 +9,6 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-insights';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { capitalize } from '@ember/string';
-
-interface EvaluationResult {
-  result: '✅ Passed' | '❌ Failed';
-  check: string;
-}
 
 export default class CodeExampleInsightsController extends Controller {
   @service declare authenticator: AuthenticatorService;
@@ -31,7 +25,7 @@ export default class CodeExampleInsightsController extends Controller {
     if (this.sortMode === 'diff-size') {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return this.diffStatistics(a) - this.diffStatistics(b);
+        return a.diffStatistics - b.diffStatistics;
       });
     } else if (this.sortMode === 'recency') {
       // Sort by submittedAt, descending (most recent first)
@@ -41,44 +35,6 @@ export default class CodeExampleInsightsController extends Controller {
     }
 
     return this.model.solutions;
-  }
-
-  diffStatistics(solution: CommunityCourseStageSolutionModel) {
-    let added = 0,
-      removed = 0;
-
-    for (const changedFile of solution.changedFiles) {
-      const diff = changedFile['diff'];
-      const lines = diff.split('\n');
-      added += lines.filter((line: string) => line.startsWith('+')).length;
-      removed += lines.filter((line: string) => line.startsWith('-')).length;
-    }
-
-    return added + removed;
-  }
-
-  formattedEvaluationResults(solution: CommunityCourseStageSolutionModel): EvaluationResult[] {
-    if (solution.evaluations.length === 0) {
-      return [];
-    } else {
-      const results: EvaluationResult[] = [];
-
-      for (const evaluation of solution.evaluations) {
-        if (evaluation.result === 'pass') {
-          results.push({
-            result: '✅ Passed',
-            check: evaluation.evaluator.slug,
-          });
-        } else if (evaluation.result === 'fail') {
-          results.push({
-            result: '❌ Failed',
-            check: evaluation.evaluator.slug,
-          });
-        }
-      }
-
-      return results;
-    }
   }
 
   @action
@@ -106,18 +62,6 @@ export default class CodeExampleInsightsController extends Controller {
     next(() => {
       containerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-  }
-
-  isScored(solution: CommunityCourseStageSolutionModel) {
-    return solution.score !== null && solution.score > 0;
-  }
-
-  scoreReason(solution: CommunityCourseStageSolutionModel) {
-    if (this.isScored(solution) && solution.scoreReason) {
-      return '⭐' + ' ' + capitalize(solution.scoreReason);
-    } else {
-      return 'Not Scored';
-    }
   }
 
   @action
