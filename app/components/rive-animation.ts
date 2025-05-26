@@ -4,17 +4,16 @@ import { tracked } from '@glimmer/tracking';
 import { Fit, Layout, Rive } from '@rive-app/canvas';
 import * as Sentry from '@sentry/ember';
 
-interface RiveAnimationSignature {
+interface Signature {
   Element: HTMLCanvasElement;
   Args: {
     src: string;
   };
 }
 
-export default class RiveAnimationComponent extends Component<RiveAnimationSignature> {
+export default class RiveAnimationComponent extends Component<Signature> {
   resizeObserver: ResizeObserver | null = null;
   @tracked riveInstance: Rive | null = null;
-  @tracked animationAspectRatio: number = 0;
 
   @action
   handleDidInsert(element: HTMLCanvasElement) {
@@ -40,15 +39,6 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
         }),
         onLoad: async () => {
           if (this.riveInstance) {
-            // Get the animation bounds and calculate aspect ratio
-            const bounds = this.riveInstance.bounds;
-
-            if (bounds) {
-              const width = bounds.maxX - bounds.minX;
-              const height = bounds.maxY - bounds.minY;
-              this.animationAspectRatio = width / height;
-            }
-
             // Initial resize
             this.riveInstance.resizeDrawingSurfaceToCanvas();
           }
