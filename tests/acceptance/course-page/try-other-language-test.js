@@ -31,23 +31,22 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     });
 
     let expectedRequestsCount = [
-      'fetch courses (catalog)',
-      'fetch repositories (catalog)',
+      'fetch repositories (course page)',
+      'fetch courses (course page)',
       'fetch languages (catalog)',
       'fetch courses (course page)',
-      'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
+      'fetch courses (course page)',
+      'fetch repositories (course page)',
       'fetch hints (course page)',
       'fetch language guides (course page)',
-      'fetch courses (extra)',
-      'fetch languages (extra)',
+      'fetch leaderboard entries (course page)',
     ].length;
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    
-    console.log('first assert with expectedRequestsCount', expectedRequestsCount);
+
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
@@ -64,7 +63,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch leaderboard entries (after ember-data upgrade)',
     ].length;
 
-    console.log('second assert with expectedRequestsCount', expectedRequestsCount);
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=new');
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
@@ -80,7 +78,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       'fetch leaderboard entries',
     ].length;
 
-    console.log('third assert with expectedRequestsCount', expectedRequestsCount);
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=2', 'current URL is course page URL with repo query param');
@@ -101,13 +98,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    console.log('fourth assert with expectedRequestsCount', expectedRequestsCount);
+    console.log('polling should have run');
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    console.log('fifth assert with expectedRequestsCount', expectedRequestsCount);
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 9, 'polling should have run again');
   });
 
