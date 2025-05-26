@@ -39,7 +39,6 @@ export default class CodeExampleInsightsController extends Controller {
 
   @action
   handleCourseStageChange(stage: CourseStageModel) {
-    console.log('handleCourseStageChange', stage.slug);
     const languageSlug = this.router.currentRoute.queryParams['language_slug'];
 
     this.router.transitionTo('course-admin.code-example-insights', stage.slug, { queryParams: { language_slug: languageSlug } });
