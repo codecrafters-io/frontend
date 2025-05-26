@@ -82,9 +82,9 @@
         <div class="prose prose-sm">
           <ul>
             <li>
-              {{this.scoreReason solution}}
+              {{solution.scoreReasonFormatted}}
             </li>
-            {{#each (this.formattedEvaluationResults solution) as |evaluation|}}
+            {{#each solution.formattedEvaluationResults as |evaluation|}}
               <li>
                 {{evaluation.result}}
                 <code>{{evaluation.check}}</code>
@@ -93,7 +93,7 @@
             {{/each}}
             <li>
               ±
-              {{this.diffStatistics solution}}
+              {{solution.diffStatistics}}
               lines changed
             </li>
           </ul>
