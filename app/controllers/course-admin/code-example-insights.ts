@@ -43,7 +43,6 @@ export default class CodeExampleInsightsController extends Controller {
     return this.model.solutions;
   }
 
-  @action
   diffStatistics(solution: CommunityCourseStageSolutionModel) {
     let added = 0,
       removed = 0;
@@ -56,6 +55,30 @@ export default class CodeExampleInsightsController extends Controller {
     }
 
     return added + removed;
+  }
+
+  formattedEvaluationResults(solution: CommunityCourseStageSolutionModel): EvaluationResult[] {
+    if (solution.evaluations.length === 0) {
+      return [];
+    } else {
+      const results: EvaluationResult[] = [];
+
+      for (const evaluation of solution.evaluations) {
+        if (evaluation.result === 'pass') {
+          results.push({
+            result: '✅ Passed',
+            check: evaluation.evaluator.slug,
+          });
+        } else if (evaluation.result === 'fail') {
+          results.push({
+            result: '❌ Failed',
+            check: evaluation.evaluator.slug,
+          });
+        }
+      }
+
+      return results;
+    }
   }
 
   @action
@@ -85,43 +108,15 @@ export default class CodeExampleInsightsController extends Controller {
     });
   }
 
-  // TODO this shouldn't be an action
-  @action
   isScored(solution: CommunityCourseStageSolutionModel) {
     return solution.score !== null && solution.score > 0;
   }
 
-  @action
   scoreReason(solution: CommunityCourseStageSolutionModel) {
     if (this.isScored(solution) && solution.scoreReason) {
       return '⭐' + ' ' + capitalize(solution.scoreReason);
     } else {
       return 'Not Scored';
-    }
-  }
-
-  @action
-  formattedEvaluationResults(solution: CommunityCourseStageSolutionModel): EvaluationResult[] {
-    if (solution.evaluations.length === 0) {
-      return [];
-    } else {
-      const results: EvaluationResult[] = [];
-
-      for (const evaluation of solution.evaluations) {
-        if (evaluation.result === 'pass') {
-          results.push({
-            result: '✅ Passed',
-            check: evaluation.evaluator.slug,
-          });
-        } else if (evaluation.result === 'fail') {
-          results.push({
-            result: '❌ Failed',
-            check: evaluation.evaluator.slug,
-          });
-        }
-      }
-
-      return results;
     }
   }
 
