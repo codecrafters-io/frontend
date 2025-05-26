@@ -12,7 +12,6 @@ interface RiveAnimationSignature {
 }
 
 export default class RiveAnimationComponent extends Component<RiveAnimationSignature> {
-  animationInterval: number | null = null;
   resizeObserver: ResizeObserver | null = null;
   @tracked riveInstance: Rive | null = null;
   @tracked animationAspectRatio: number = 0;
@@ -63,11 +62,6 @@ export default class RiveAnimationComponent extends Component<RiveAnimationSigna
 
   @action
   handleWillDestroy() {
-    if (this.animationInterval) {
-      clearInterval(this.animationInterval);
-      this.animationInterval = null;
-    }
-
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
       this.resizeObserver = null;
