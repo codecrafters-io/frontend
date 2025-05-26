@@ -25,7 +25,7 @@ export default class CodeExampleInsightsController extends Controller {
     if (this.sortMode === 'diff-size') {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return a.diffStatistics - b.diffStatistics;
+        return a.totalChangedLinesInDiff - b.totalChangedLinesInDiff;
       });
     } else if (this.sortMode === 'recency') {
       // Sort by submittedAt, descending (most recent first)
@@ -40,9 +40,8 @@ export default class CodeExampleInsightsController extends Controller {
   @action
   handleCourseStageChange(stage: CourseStageModel) {
     console.log('handleCourseStageChange', stage.slug);
-    // Get the current language_slug query param if present
     const languageSlug = this.router.currentRoute.queryParams['language_slug'];
-    // Transition to the route with the stage slug as a model param and preserve language_slug
+
     this.router.transitionTo('course-admin.code-example-insights', stage.slug, { queryParams: { language_slug: languageSlug } });
   }
 
