@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-documents';
+import type { LineRange } from 'codecrafters-frontend/utils/code-mirror-documents';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {
@@ -38,7 +38,7 @@ interface Signature {
     /**
      * Enable highlighting of specified line ranges
      */
-    highlightedRanges?: LinesRange[];
+    highlightedRanges?: LineRange[];
     /**
      * Scroll the component into view after it's collapsed
      */

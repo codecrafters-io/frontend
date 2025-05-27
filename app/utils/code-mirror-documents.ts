@@ -1,14 +1,14 @@
 import { tracked } from '@glimmer/tracking';
 import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
 
-export type LinesRange = { startLine: number; endLine: number };
+export type LineRange = { startLine: number; endLine: number };
 
 export class ExampleDocument {
   @tracked document: string = '';
   @tracked originalDocument: string;
   @tracked filename: string;
   @tracked language: string;
-  @tracked highlightedRanges: LinesRange[];
+  @tracked highlightedRanges: LineRange[];
 
   constructor({
     document = '',
@@ -21,7 +21,7 @@ export class ExampleDocument {
     originalDocument?: string;
     filename: string;
     language: string;
-    highlightedRanges?: LinesRange[];
+    highlightedRanges?: LineRange[];
   }) {
     this.document = document;
     this.originalDocument = originalDocument || document;
@@ -47,7 +47,7 @@ export class DiffBasedExampleDocument extends ExampleDocument {
     diff?: string;
     filename: string;
     language: string;
-    highlightedRanges?: LinesRange[];
+    highlightedRanges?: LineRange[];
   }) {
     const { current: document, original: originalDocument } = parseDiffAsDocument(diff);
 

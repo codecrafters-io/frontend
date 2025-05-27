@@ -1,7 +1,7 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import type { LinesRange } from 'codecrafters-frontend/utils/code-mirror-documents';
+import type { LineRange } from 'codecrafters-frontend/utils/code-mirror-documents';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {
@@ -24,7 +24,7 @@ interface Signature {
     /**
      * Enable highlighting of specified line ranges
      */
-    highlightedRanges?: LinesRange[];
+    highlightedRanges?: LineRange[];
     /**
      * Override language auto-detected from `filename` and set it manually
      */
