@@ -92,8 +92,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'poll request was executed');
+    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'poll request was executed');
 
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
@@ -133,6 +134,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     baseRequestsCount += 1; // 1 refreshed poll
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');

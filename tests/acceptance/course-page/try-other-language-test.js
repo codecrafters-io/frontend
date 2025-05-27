@@ -99,11 +99,14 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     console.log('polling should have run');
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 9, 'polling should have run again');
   });
 
