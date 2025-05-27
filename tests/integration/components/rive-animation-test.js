@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
-import { render, settled } from '@ember/test-helpers';
+import { render, settled, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 module('Integration | Component | rive-animation', function (hooks) {
@@ -20,8 +20,25 @@ module('Integration | Component | rive-animation', function (hooks) {
 
     // Wait for the animation to load and render
     await settled();
-    // Give Rive time to actually render
-    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // Wait until the canvas has non-transparent pixels
+    await waitUntil(
+      () => {
+        const context = canvas.getContext('2d');
+        if (!context) return false;
+
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+        for (let i = 0; i < imageData.length; i += 4) {
+          if (imageData[i + 3] !== 0) {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      { timeout: 5000 },
+    );
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
@@ -57,8 +74,25 @@ module('Integration | Component | rive-animation', function (hooks) {
 
     // Wait for the animation to load and render
     await settled();
-    // Give Rive time to actually render
-    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    // Wait until the canvas has non-transparent pixels
+    await waitUntil(
+      () => {
+        const context = canvas.getContext('2d');
+        if (!context) return false;
+
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+        for (let i = 0; i < imageData.length; i += 4) {
+          if (imageData[i + 3] !== 0) {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      { timeout: 5000 },
+    );
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
