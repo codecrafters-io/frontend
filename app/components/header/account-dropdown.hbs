@@ -15,11 +15,7 @@
   <dd.Content>
     <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850" data-test-account-dropdown-content>
       {{#if this.currentUser.hasActiveSubscription}}
-        <DropdownLink
-          @text="Manage Membership"
-          @icon="credit-card"
-          {{on "click" (fn this.handleManageSubscriptionClick dd.actions)}}
-        />
+        <DropdownLink @text="Manage Membership" @icon="credit-card" {{on "click" (fn this.handleManageSubscriptionClick dd.actions)}} />
       {{else}}
         <DropdownLink @text="Subscribe" @icon="credit-card" {{on "click" (fn this.handleSubscribeClick dd.actions)}} />
       {{/if}}
