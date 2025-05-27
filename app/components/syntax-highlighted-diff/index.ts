@@ -22,11 +22,11 @@ interface Signature {
 
   Args: {
     code: string;
-    comments: CommunityCourseStageSolutionCommentModel[];
-    language: string;
-    shouldCollapseUnchangedLines: boolean;
+    comments?: CommunityCourseStageSolutionCommentModel[];
     forceDarkTheme?: boolean;
+    language: string;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
+    shouldCollapseUnchangedLines: boolean;
   };
 }
 
