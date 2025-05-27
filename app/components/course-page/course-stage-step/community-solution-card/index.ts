@@ -39,7 +39,6 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   handleDidInsert(element: HTMLDivElement) {
     this.containerElement = element;
 
-    // Trigger comments, expand event etc.
     if (this.args.isExpanded) {
       this.loadAsyncResources.perform();
     }
@@ -66,15 +65,6 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     this.loadAsyncResources.perform();
   }
 
-  loadComments = task(async () => {
-    await this.store.query('community-course-stage-solution-comment', {
-      target_id: this.args.solution.id,
-      include:
-        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
-      reload: true,
-    });
-  });
-
   loadFileComparisons = task(async () => {
     // Already loaded
     if (this.fileComparisons.length > 0) {
@@ -85,7 +75,7 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   });
 
   loadAsyncResources = task({ keepLatest: true }, async () => {
-    await Promise.all([this.loadComments.perform(), this.loadFileComparisons.perform()]);
+    await Promise.all([this.loadFileComparisons.perform()]);
   });
 }
 
