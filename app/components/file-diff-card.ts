@@ -1,7 +1,7 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import type { LineRange } from 'codecrafters-frontend/utils/code-mirror-documents';
+import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {

@@ -1,7 +1,6 @@
 import { tracked } from '@glimmer/tracking';
+import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
 import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
-
-export type LineRange = { startLine: number; endLine: number };
 
 export class ExampleDocument {
   @tracked document: string = '';

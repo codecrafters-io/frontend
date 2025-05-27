@@ -40,7 +40,6 @@ import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highl
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
-import type { LineRange } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -53,6 +52,8 @@ enum FoldGutterIcon {
   Expanded = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path></svg>',
   Collapsed = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path></svg>',
 }
+
+export type LineRange = { startLine: number; endLine: number };
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
