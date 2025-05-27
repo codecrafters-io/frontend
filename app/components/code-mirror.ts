@@ -39,6 +39,7 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -52,12 +53,17 @@ enum FoldGutterIcon {
   Collapsed = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path></svg>',
 }
 
+export type LineRange = { startLine: number; endLine: number };
+
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[];
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
+/**
+ * Order of keys in this object matters, do not sort alphabetically
+ */
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
@@ -69,6 +75,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) =>
     enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
+  highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? highlightRanges(highlightedRanges) : []),
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
@@ -240,6 +247,10 @@ export interface Signature {
        * Enable inline highlighting of changes in the diff
        */
       highlightChanges?: boolean;
+      /**
+       * Enable highlighting of specified line ranges
+       */
+      highlightedRanges?: LineRange[];
       /**
        * Enable highlighting of new line symbols
        */

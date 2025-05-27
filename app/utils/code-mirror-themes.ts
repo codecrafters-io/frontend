@@ -203,6 +203,26 @@ export const codeCraftersDark = [
         backgroundColor: tailwindColors.gray['900'],
       },
 
+      // All gutter elements
+      '.cm-gutterElement': {
+        '&.cm-highlightedLineGutterSibling': {
+          '&:before': {
+            backgroundColor: 'rgba(187, 128, 9, 0.15)',
+          },
+        },
+      },
+
+      // Highlight ranges gutter
+      '.cm-highlightedRangesGutter': {
+        '& .cm-gutterElement': {
+          '&.cm-highlightedLineGutterSibling': {
+            '&:before': {
+              boxShadow: 'inset 2px 0 0 rgba(210, 153, 34, 1)',
+            },
+          },
+        },
+      },
+
       // Collapse unchanged lines gutter
       '.cm-collapseUnchangedGutter': {
         '& .cm-gutterElement': {
@@ -240,7 +260,17 @@ export const codeCraftersDark = [
           color: tailwindColors.sky['300'],
         },
       },
+
+      // All lines in the document
+      '.cm-line': {
+        '&.cm-highlightedLine': {
+          '&:before': {
+            backgroundColor: 'rgba(187, 128, 9, 0.15)',
+          },
+        },
+      },
     },
+
     { dark: true },
   ),
   EditorView.theme(BASE_STYLE, { dark: true }),
