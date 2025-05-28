@@ -15,19 +15,20 @@ export default class CodeExampleInsightsController extends Controller {
   @service declare router: RouterService;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
-  @tracked sortMode: 'diff-size' | 'recency' = 'diff-size';
+  queryParams = ['sort_mode'];
+  @tracked sort_mode: 'diff_size' | 'newest' = 'newest';
 
   declare model: CodeExampleInsightsRouteModel;
 
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
-    if (!this.model?.solutions) return [];
+    if (!this.model.solutions) return [];
 
-    if (this.sortMode === 'diff-size') {
+    if (this.sort_mode === 'diff_size') {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return a.totalChangedLinesInDiff - b.totalChangedLinesInDiff;
+        return a.changedLinesCount - b.changedLinesCount;
       });
-    } else if (this.sortMode === 'recency') {
+    } else if (this.sort_mode === 'newest') {
       // Sort by submittedAt, descending (most recent first)
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
         return new Date(b.submittedAt ?? '').getTime() - new Date(a.submittedAt ?? '').getTime();
@@ -63,7 +64,7 @@ export default class CodeExampleInsightsController extends Controller {
   }
 
   @action
-  setSortMode(mode: 'diff-size' | 'recency') {
-    this.sortMode = mode;
+  setSortMode(mode: 'diff_size' | 'newest') {
+    this.router.transitionTo({ queryParams: { sort_mode: mode } });
   }
 }
