@@ -16,20 +16,6 @@ interface EvaluationResult {
 }
 
 export default class CodeExampleInsightsMetadataComponent extends Component<Signature> {
-  get changedLinesCount() {
-    let added = 0,
-      removed = 0;
-
-    for (const changedFile of this.args.solution.changedFiles) {
-      const diff = changedFile['diff'];
-      const lines = diff.split('\n');
-      added += lines.filter((line: string) => line.startsWith('+')).length;
-      removed += lines.filter((line: string) => line.startsWith('-')).length;
-    }
-
-    return added + removed;
-  }
-
   get formattedEvaluationResults(): EvaluationResult[] {
     if (this.args.solution.evaluations.length === 0) {
       return [];
