@@ -89,8 +89,8 @@ const baseTheme = EditorView.baseTheme({
         right: 0,
         top: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 248, 197, 1)',
-        opacity: 0.6,
+        backgroundColor: 'rgba(0, 255, 0, 0.1)', // Green
+        opacity: 1,
         zIndex: -1,
       },
     },
@@ -104,7 +104,7 @@ const baseTheme = EditorView.baseTheme({
     '& .cm-gutterElement': {
       '&.cm-highlightedLineGutterSibling': {
         '&:before': {
-          boxShadow: 'inset 2px 0 0 rgba(154, 103, 0, 1)',
+          boxShadow: 'inset 2px 0 0 rgba(102, 153, 0, 0.8)', // Green
           zIndex: 1,
         },
         '&.cm-activeLineGutter': {
@@ -128,37 +128,9 @@ const baseTheme = EditorView.baseTheme({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255, 248, 197, 1)',
-        opacity: 0.6,
+        backgroundColor: 'rgba(0, 255, 0, 0.1)', // Green
+        opacity: 1,
         zIndex: -1,
-      },
-    },
-  },
-
-  '&dark': {
-    '& .cm-gutterElement': {
-      '&.cm-highlightedLineGutterSibling': {
-        '&:before': {
-          backgroundColor: 'rgba(187, 128, 9, 0.15)',
-        },
-      },
-    },
-
-    '& .cm-highlightedRangesGutter': {
-      '& .cm-gutterElement': {
-        '&.cm-highlightedLineGutterSibling': {
-          '&:before': {
-            boxShadow: 'inset 2px 0 0 rgba(210, 153, 34, 1)',
-          },
-        },
-      },
-    },
-
-    '& .cm-line': {
-      '&.cm-highlightedLine': {
-        '&:before': {
-          backgroundColor: 'rgba(187, 128, 9, 0.15)',
-        },
       },
     },
   },
