@@ -18,9 +18,12 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
     language_slug: {
       refreshModel: true,
     },
+    sort_mode: {
+      refreshModel: true,
+    },
   };
 
-  async model(params: { stage_slug: string; language_slug?: string }): Promise<CodeExampleInsightsRouteModel> {
+  async model(params: { stage_slug: string; language_slug?: string; sort_mode?: string }): Promise<CodeExampleInsightsRouteModel> {
     // @ts-ignore
     const course = this.modelFor('course-admin').course as CourseModel;
     const courseStage = course.stages.findBy('slug', params.stage_slug);
@@ -34,7 +37,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
         course_stage_id: courseStage.id,
         language_id: selectedLanguage?.id,
         include: 'user,evaluations,evaluations.evaluator',
-        order: 'recommended',
+        order: params.sort_mode || 'newest',
       })) as unknown as CommunityCourseStageSolutionModel[],
     };
   }
