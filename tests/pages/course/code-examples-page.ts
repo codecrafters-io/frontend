@@ -14,12 +14,6 @@ export default createPage({
     collapseButtons: collection('[data-test-collapse-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
 
-    diffSourceSwitcher: {
-      changedFilesIconIsActive: notHasClass('opacity-50', '[data-test-changed-files-icon]'),
-      highlightedFilesIconIsActive: notHasClass('opacity-50', '[data-test-highlighted-files-icon]'),
-      scope: '[data-test-diff-source-switcher]',
-    },
-
     downvoteButton: {
       hover: triggerable('mouseenter'),
       isInactive: hasClass('opacity-50'),
