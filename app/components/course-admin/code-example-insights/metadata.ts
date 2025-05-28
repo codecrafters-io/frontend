@@ -15,7 +15,7 @@ interface EvaluationResult {
   check: string;
 }
 
-export default class CodeExampleInsightsPageComponent extends Component<Signature> {
+export default class CodeExampleInsightsMetadataComponent extends Component<Signature> {
   get changedLinesCount() {
     let added = 0,
       removed = 0;
@@ -69,6 +69,6 @@ export default class CodeExampleInsightsPageComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsightsPage': typeof CodeExampleInsightsPageComponent;
+    'CourseAdmin::CodeExampleInsights::Metadata': typeof CodeExampleInsightsMetadataComponent;
   }
 }
