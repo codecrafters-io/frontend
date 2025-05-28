@@ -40,6 +40,8 @@ import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highl
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
+import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -129,6 +131,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   originalDocumentOrDiffRelatedOption: ({
     originalDocument,
     mergeControls,
+    collapsedRanges,
     collapseUnchanged,
     highlightChanges,
     syntaxHighlighting,
@@ -142,15 +145,16 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
+            collapseUnchanged: collapseUnchanged && !collapsedRanges ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
           }),
-          collapseUnchanged ? collapseUnchangedGutter() : [],
+          collapseUnchanged && !collapsedRanges ? collapseUnchangedGutter() : [],
         ]
       : [];
   },
+  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? [collapseRanges(collapsedRanges), collapseRangesGutter()] : []),
 };
 
 export interface Signature {
@@ -219,6 +223,10 @@ export interface Signature {
        * Automatically close brackets when typing
        */
       closeBrackets?: boolean;
+      /**
+       * Enable collapsing of specified line ranges
+       */
+      collapsedRanges?: LineRange[];
       /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */
@@ -379,6 +387,13 @@ export default class CodeMirrorComponent extends Component<Signature> {
     if (optionName === 'originalDocumentOrDiffRelatedOption') {
       this.#updateRenderedView({
         effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+    }
+
+    // When collapsedRanges changes - completely unload the collapsedRanges compartment to avoid any side-effects
+    if (optionName === 'collapsedRanges') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('collapsedRanges'),
       });
     }
 

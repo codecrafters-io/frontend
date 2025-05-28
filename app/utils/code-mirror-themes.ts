@@ -116,6 +116,46 @@ const BASE_STYLE = {
     },
   },
 
+  // Collapse ranges gutter
+  '.cm-collapseRangesGutter': {
+    '& .cm-gutterElement': {
+      '& .cm-collapseRangesGutterElement': {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        height: '1.75rem',
+        borderTopWidth: '1px',
+        borderBottomWidth: '1px',
+        borderColor: tailwindColors.sky['100'],
+        backgroundColor: tailwindColors.sky['50'],
+        backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle.svg")',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: '12px 12px',
+        cursor: 'pointer',
+
+        '&.cm-collapseRangesGutterElementFirst': {
+          borderTop: 'none',
+          marginTop: '-0.5rem',
+          backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
+        },
+
+        '&.cm-collapseRangesGutterElementLast': {
+          borderBottom: 'none',
+          marginTop: '0.5rem',
+          backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
+        },
+      },
+
+      '&:hover': {
+        '& .cm-collapseRangesGutterElement': {
+          backgroundColor: tailwindColors.sky['100'],
+          color: tailwindColors.sky['800'],
+        },
+      },
+    },
+  },
+
   // Document content area
   '.cm-content': {
     padding: '0.5rem 0',
@@ -123,6 +163,44 @@ const BASE_STYLE = {
 
   // Expand unchanged lines bar
   '.cm-collapsedLines': {
+    height: '1.75rem', // h7
+    borderTopWidth: '1px',
+    borderBottomWidth: '1px',
+    fontSize: '0.75rem', // text-xs
+    fontFamily: 'Montserrat, sans-serif',
+    lineHeight: '1rem', // text-xs
+    background: tailwindColors.sky['50'],
+    color: tailwindColors.sky['700'],
+    borderColor: tailwindColors.sky['100'],
+
+    '&:hover': {
+      background: tailwindColors.sky['100'],
+      color: tailwindColors.sky['800'],
+    },
+
+    '&:before': {
+      content: 'none',
+    },
+
+    '&:after': {
+      content: 'none',
+    },
+
+    '&:first-child': {
+      borderTop: 'none',
+      marginTop: '-0.5rem',
+      marginBottom: '0.5rem',
+    },
+
+    '&:last-child': {
+      borderBottom: 'none',
+      marginTop: '0.5rem',
+      marginBottom: '-0.5rem',
+    },
+  },
+
+  // Expand collapsed ranges bar
+  '.cm-collapsedRanges': {
     height: '1.75rem', // h7
     borderTopWidth: '1px',
     borderBottomWidth: '1px',
@@ -249,8 +327,46 @@ export const codeCraftersDark = [
         },
       },
 
+      // Collapse ranges gutter
+      '.cm-collapseRangesGutter': {
+        '& .cm-gutterElement': {
+          '& .cm-collapseRangesGutterElement': {
+            borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+            backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
+            backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
+
+            '&.cm-collapseRangesGutterElementFirst': {
+              backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
+            },
+
+            '&.cm-collapseRangesGutterElementLast': {
+              backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
+            },
+          },
+
+          '&:hover': {
+            '& .cm-collapseRangesGutterElement': {
+              backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+              color: tailwindColors.sky['300'],
+            },
+          },
+        },
+      },
+
       // Expand unchanged lines bar
       '.cm-collapsedLines': {
+        background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
+        color: tailwindColors.sky['400'],
+        borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+
+        '&:hover': {
+          background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+          color: tailwindColors.sky['300'],
+        },
+      },
+
+      // Expand collapsed ranges bar
+      '.cm-collapsedRanges': {
         background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
         color: tailwindColors.sky['400'],
         borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),

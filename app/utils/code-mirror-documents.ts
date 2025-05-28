@@ -8,6 +8,7 @@ export class ExampleDocument {
   @tracked filename: string;
   @tracked language: string;
   @tracked highlightedRanges: LineRange[];
+  @tracked collapsedRanges: LineRange[];
 
   constructor({
     document = '',
@@ -15,18 +16,21 @@ export class ExampleDocument {
     filename,
     language,
     highlightedRanges = [],
+    collapsedRanges = [],
   }: {
     document?: string;
     originalDocument?: string;
     filename: string;
     language: string;
     highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
   }) {
     this.document = document;
     this.originalDocument = originalDocument || document;
     this.filename = filename;
     this.language = language;
     this.highlightedRanges = highlightedRanges;
+    this.collapsedRanges = collapsedRanges;
   }
 
   static createEmpty() {
@@ -42,11 +46,13 @@ export class DiffBasedExampleDocument extends ExampleDocument {
     filename,
     language,
     highlightedRanges = [],
+    collapsedRanges = [],
   }: {
     diff?: string;
     filename: string;
     language: string;
     highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
   }) {
     const { current: document, original: originalDocument } = parseDiffAsDocument(diff);
 
@@ -56,6 +62,7 @@ export class DiffBasedExampleDocument extends ExampleDocument {
       filename,
       language,
       highlightedRanges,
+      collapsedRanges,
     });
 
     this.diff = diff;
@@ -117,6 +124,13 @@ export default [
       { startLine: 7, endLine: 10 },
       { startLine: 18, endLine: 20 },
     ],
+    collapsedRanges: [
+      { startLine: 1, endLine: 7 },
+      { startLine: 12, endLine: 15 },
+      { startLine: 25, endLine: 27 },
+      { startLine: 30, endLine: 31 },
+      { startLine: 38, endLine: 39 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -170,6 +184,10 @@ export default [
       { startLine: 21, endLine: 22 },
       { startLine: 26, endLine: 27 },
     ],
+    collapsedRanges: [
+      { startLine: 7, endLine: 13 },
+      { startLine: 20, endLine: 28 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -194,6 +212,10 @@ export default [
       { startLine: 7, endLine: 7 },
       { startLine: 9, endLine: 9 },
     ],
+    collapsedRanges: [
+      { startLine: 2, endLine: 4 },
+      { startLine: 6, endLine: 8 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -213,6 +235,10 @@ export default [
     ].join('\n'),
     filename: 'test.py',
     language: 'python',
+    collapsedRanges: [
+      { startLine: 1, endLine: 1 },
+      { startLine: 3, endLine: 9 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -275,6 +301,10 @@ export default [
       { startLine: 14, endLine: 20 },
       { startLine: 35, endLine: 39 },
     ],
+    collapsedRanges: [
+      { startLine: 15, endLine: 19 },
+      { startLine: 24, endLine: 26 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -307,6 +337,10 @@ export default [
     highlightedRanges: [
       { startLine: 12, endLine: 12 },
       { startLine: 18, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 1, endLine: 6 },
+      { startLine: 21, endLine: 21 },
     ],
   }),
 
@@ -343,6 +377,10 @@ export default [
     highlightedRanges: [
       { startLine: 7, endLine: 7 },
       { startLine: 17, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 12, endLine: 15 },
+      { startLine: 22, endLine: 23 },
     ],
   }),
 ];

@@ -103,6 +103,10 @@
         <Input @type="checkbox" @checked={{this.highlightedRanges}} />
         <span class="ml-2">highlightedRanges</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable collapsing of specified line ranges">
+        <Input @type="checkbox" @checked={{this.collapsedRanges}} />
+        <span class="ml-2">collapsedRanges</span>
+      </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
@@ -123,8 +127,8 @@
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
       </label>
       <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
-        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
-        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
+        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{or (not this.originalDocument) this.collapsedRanges}} />
+        <span class="ml-2 {{if (or (not this.originalDocument) this.collapsedRanges) 'text-gray-300'}}">collapseUnchanged</span>
       </label>
       <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
         <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
@@ -333,6 +337,7 @@
   @allowMultipleSelections={{this.allowMultipleSelections}}
   @autocompletion={{this.autocompletion}}
   @bracketMatching={{this.bracketMatching}}
+  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
   @closeBrackets={{this.closeBrackets}}
   @crosshairCursor={{this.crosshairCursor}}
   @drawSelection={{this.drawSelection}}

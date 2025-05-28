@@ -22,6 +22,10 @@ interface Signature {
      */
     forceDarkTheme?: boolean;
     /**
+     * Enable collapsing of specified line ranges
+     */
+    collapsedRanges?: LineRange[];
+    /**
      * Enable highlighting of specified line ranges
      */
     highlightedRanges?: LineRange[];
