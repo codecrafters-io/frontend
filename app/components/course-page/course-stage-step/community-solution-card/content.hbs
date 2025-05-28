@@ -10,14 +10,25 @@
   </div>
 {{/if}}
 
-{{#each this.changedFilesForRender key="filename" as |changedFile index|}}
-  <CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard
-    @changedFile={{changedFile}}
-    @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
-    @solution={{@solution}}
-    class={{if (not-eq index (sub @solution.changedFiles.length 1)) "mb-4"}}
-  />
-{{/each}}
+{{#if (eq @diffSource "highlighted-files")}}
+  {{#each @solution.highlightedFiles key="filename" as |highlightedFile index|}}
+    <CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard
+      @highlightedFile={{highlightedFile}}
+      @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+      @solution={{@solution}}
+      class={{if (not-eq index (sub @solution.highlightedFiles.length 1)) "mb-4"}}
+    />
+  {{/each}}
+{{else}}
+  {{#each @solution.changedFiles key="filename" as |changedFile index|}}
+    <CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard
+      @changedFile={{changedFile}}
+      @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+      @solution={{@solution}}
+      class={{if (not-eq index (sub @solution.changedFiles.length 1)) "mb-4"}}
+    />
+  {{/each}}
+{{/if}}
 
 {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
   <FileContentsCard
