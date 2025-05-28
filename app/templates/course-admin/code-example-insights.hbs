@@ -41,9 +41,9 @@
         <BasicDropdown as |dd|>
           <dd.Trigger>
             <b class="font-semibold underline decoration-dashed">
-              {{if (eq this.sortMode "diff-size") "Diff size ↕" "Recency"}}
+              {{if (eq this.sort_mode "diff_size") "Diff size" "Recency"}} ↕
             </b>
-            {{#if (eq this.sortMode "diff-size")}}
+            {{#if (eq this.sort_mode "diff_size")}}
               (smallest first).
             {{else}}
               (most recent first).
@@ -54,14 +54,14 @@
               <Header::AccountDropdownLink
                 @text="Diff size"
                 @icon="code"
-                class={{if (eq this.sortMode "diff-size") "font-bold"}}
-                {{on "click" (fn this.setSortMode "diff-size")}}
+                class={{if (eq this.sort_mode "diff_size") "font-bold"}}
+                {{on "click" (fn this.setSortMode "diff_size")}}
               />
               <Header::AccountDropdownLink
                 @text="Recency"
                 @icon="clock"
-                class={{if (eq this.sortMode "recency") "font-bold"}}
-                {{on "click" (fn this.setSortMode "recency")}}
+                class={{if (eq this.sort_mode "newest") "font-bold"}}
+                {{on "click" (fn this.setSortMode "newest")}}
               />
             </div>
           </dd.Content>
@@ -93,7 +93,7 @@
             {{/each}}
             <li>
               ±
-              {{solution.totalChangedLinesInDiff}}
+              {{solution.changedLinesCount}}
               lines changed
             </li>
           </ul>
