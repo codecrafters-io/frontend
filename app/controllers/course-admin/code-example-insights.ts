@@ -26,7 +26,7 @@ export default class CodeExampleInsightsController extends Controller {
     if (this.sort_mode === 'shortest_diff') {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return a.changedLinesCount - b.changedLinesCount;
+        return this.changedLinesCount(a) - this.changedLinesCount(b);
       });
     } else if (this.sort_mode === 'newest') {
       // Sort by submittedAt, descending (most recent first)
@@ -36,6 +36,20 @@ export default class CodeExampleInsightsController extends Controller {
     }
 
     return this.model.solutions;
+  }
+
+  changedLinesCount(solution: CommunityCourseStageSolutionModel): number {
+    let added = 0,
+      removed = 0;
+
+    for (const changedFile of solution.changedFiles) {
+      const diff = changedFile['diff'];
+      const lines = diff.split('\n');
+      added += lines.filter((line: string) => line.startsWith('+')).length;
+      removed += lines.filter((line: string) => line.startsWith('-')).length;
+    }
+
+    return added + removed;
   }
 
   @action
