@@ -1,4 +1,4 @@
-import { collection, clickable, hasClass, notHasClass, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, hasClass, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
@@ -14,19 +14,29 @@ export default createPage({
     collapseButtons: collection('[data-test-collapse-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
 
-    diffSourceSwitcher: {
-      changedFilesIconIsActive: notHasClass('opacity-50', '[data-test-changed-files-icon]'),
-      highlightedFilesIconIsActive: notHasClass('opacity-50', '[data-test-highlighted-files-icon]'),
-      scope: '[data-test-diff-source-switcher]',
-    },
-
     downvoteButton: {
       hover: triggerable('mouseenter'),
       isInactive: hasClass('opacity-50'),
       scope: '[data-test-solution-card-downvote-button]',
     },
 
+    moreDropdown: {
+      clickOnLink: clickOnText('[data-test-dropdown-link]'),
+
+      hasLink(linkText: string) {
+        return this.links.length > 0 && this.links.toArray().some((link) => link.text === linkText);
+      },
+
+      links: collection('[data-test-dropdown-link]', {
+        click: clickable(),
+      }),
+
+      resetScope: true,
+      scope: '[data-test-more-dropdown-content]',
+    },
+
     toggleCommentsButtons: collection('[data-test-toggle-comments-button]'),
+    toggleMoreDropdown: clickable('[data-test-more-dropdown-toggle]'),
     unchangedFiles: collection('[data-test-community-solution-unchanged-file]', FileContentsCard),
 
     upvoteButton: {
