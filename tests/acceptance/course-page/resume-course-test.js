@@ -1,5 +1,6 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
@@ -27,6 +28,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
@@ -39,8 +41,10 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
         'fetch courses (course page)',
         'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
+        'fetch courses (course overview)',
         'fetch hints (course page)',
         'fetch language guide (course page)',
+        'fetch course stage comments (course page)',
       ].length,
     );
   });

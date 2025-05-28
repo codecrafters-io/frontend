@@ -1,3 +1,4 @@
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -37,6 +38,7 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
     await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');

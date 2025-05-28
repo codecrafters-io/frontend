@@ -4,6 +4,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -35,6 +36,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'stage 4 is active');
 
@@ -100,6 +102,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '4th is expanded');
 
@@ -175,6 +178,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '3rd stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is git push listener');
@@ -198,6 +202,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('Expiry');
     await coursePage.feedbackPrompt.clickOnOption('😍');
