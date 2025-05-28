@@ -8,6 +8,7 @@ import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-exam
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
+import { waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | course-page | code-examples | toggle-diff-source', function (hooks) {
   setupApplicationTest(hooks);
@@ -30,15 +31,17 @@ module('Acceptance | course-page | code-examples | toggle-diff-source', function
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'expected 1 Go solution to be present');
 
-    assert.ok(codeExamplesPage.solutionCards[0].diffSourceSwitcher.changedFilesIconIsActive, 'expected changed files icon to be active');
-    assert.notOk(codeExamplesPage.solutionCards[0].diffSourceSwitcher.highlightedFilesIconIsActive, 'expected highlighted files icon to be inactive');
+    const moreDropdown = codeExamplesPage.solutionCards[0].moreDropdown;
 
-    await codeExamplesPage.solutionCards[0].diffSourceSwitcher.click();
-    assert.notOk(codeExamplesPage.solutionCards[0].diffSourceSwitcher.changedFilesIconIsActive, 'expected changed files icon to be inactive');
-    assert.ok(codeExamplesPage.solutionCards[0].diffSourceSwitcher.highlightedFilesIconIsActive, 'expected highlighted files icon to be active');
+    await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
+    await waitUntil(() => moreDropdown.links.length === 1);
+    assert.ok(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to be present');
+    assert.notOk(moreDropdown.hasLink('View full diff'), 'expected View full diff link to not be present');
 
-    await codeExamplesPage.solutionCards[0].diffSourceSwitcher.click();
-    assert.ok(codeExamplesPage.solutionCards[0].diffSourceSwitcher.changedFilesIconIsActive, 'expected changed files icon to be active');
-    assert.notOk(codeExamplesPage.solutionCards[0].diffSourceSwitcher.highlightedFilesIconIsActive, 'expected highlighted files icon to be inactive');
+    await moreDropdown.clickOnLink('View highlighted files');
+
+    await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
+    assert.notOk(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to be removed');
+    assert.ok(moreDropdown.hasLink('View full diff'), 'expected View full diff link to be present');
   });
 });
