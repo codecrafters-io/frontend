@@ -1,0 +1,19 @@
+<div class="prose prose-sm">
+  <ul>
+    <li>
+      {{this.formattedScoreReason}}
+    </li>
+    {{#each this.formattedEvaluationResults as |evaluation|}}
+      <li>
+        {{evaluation.result}}
+        <code>{{evaluation.check}}</code>
+        check
+      </li>
+    {{/each}}
+    <li>
+      ±
+      {{this.changedLinesCount}}
+      lines changed
+    </li>
+  </ul>
+</div>

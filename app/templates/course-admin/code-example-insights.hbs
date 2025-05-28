@@ -80,25 +80,7 @@
             class="w-full flex-shrink"
           />
         </div>
-        <div class="prose prose-sm">
-          <ul>
-            <li>
-              {{solution.formattedScoreReason}}
-            </li>
-            {{#each solution.formattedEvaluationResults as |evaluation|}}
-              <li>
-                {{evaluation.result}}
-                <code>{{evaluation.check}}</code>
-                check
-              </li>
-            {{/each}}
-            <li>
-              ±
-              {{solution.changedLinesCount}}
-              lines changed
-            </li>
-          </ul>
-        </div>
+        <CourseAdmin::CodeExampleInsightsPage @solution={{solution}} />
         {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
           <div class="col-span-2 bg-gray-200 h-px">
           </div>
