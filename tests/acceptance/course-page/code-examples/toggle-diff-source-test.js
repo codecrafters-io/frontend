@@ -35,13 +35,13 @@ module('Acceptance | course-page | code-examples | toggle-diff-source', function
 
     await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
     await waitUntil(() => moreDropdown.links.length === 1);
-    assert.ok(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to be present');
-    assert.notOk(moreDropdown.hasLink('View full diff'), 'expected View full diff link to not be present');
+    assert.ok(moreDropdown.hasLink('View full diff'), 'expected View full diff link to be present');
+    assert.notOk(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to not be present');
 
-    await moreDropdown.clickOnLink('View highlighted files');
+    await moreDropdown.clickOnLink('View full diff');
 
     await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
-    assert.notOk(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to be removed');
-    assert.ok(moreDropdown.hasLink('View full diff'), 'expected View full diff link to be present');
+    assert.notOk(moreDropdown.hasLink('View full diff'), 'expected View full diff link to be removed');
+    assert.ok(moreDropdown.hasLink('View highlighted files'), 'expected View highlighted files link to be present');
   });
 });

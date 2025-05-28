@@ -42,6 +42,10 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
     if (this.args.isExpanded) {
       this.loadAsyncResources.perform();
     }
+
+    if (this.authenticator.currentUser?.isStaff && this.args.solution.highlightedFiles && this.args.solution.highlightedFiles.length > 0) {
+      this.diffSource = 'highlighted-files';
+    }
   }
 
   @action
