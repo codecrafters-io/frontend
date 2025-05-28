@@ -16,14 +16,14 @@ export default class CodeExampleInsightsController extends Controller {
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
   queryParams = ['sort_mode'];
-  @tracked sort_mode: 'diff_size' | 'newest' = 'newest';
+  @tracked sort_mode: 'shortest_diff' | 'newest' = 'newest';
 
   declare model: CodeExampleInsightsRouteModel;
 
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
     if (!this.model.solutions) return [];
 
-    if (this.sort_mode === 'diff_size') {
+    if (this.sort_mode === 'shortest_diff') {
       // Sort by (added_lines_count + removed_lines_count), ascending
       return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
         return a.changedLinesCount - b.changedLinesCount;
@@ -64,7 +64,7 @@ export default class CodeExampleInsightsController extends Controller {
   }
 
   @action
-  setSortMode(mode: 'diff_size' | 'newest') {
+  setSortMode(mode: 'shortest_diff' | 'newest') {
     this.router.transitionTo({ queryParams: { sort_mode: mode } });
   }
 }

@@ -41,9 +41,10 @@
         <BasicDropdown as |dd|>
           <dd.Trigger>
             <b class="font-semibold underline decoration-dashed">
-              {{if (eq this.sort_mode "diff_size") "Diff size" "Recency"}} ↕
+              {{if (eq this.sort_mode "shortest_diff") "Diff size" "Recency"}}
+              ↕
             </b>
-            {{#if (eq this.sort_mode "diff_size")}}
+            {{#if (eq this.sort_mode "shortest_diff")}}
               (smallest first).
             {{else}}
               (most recent first).
@@ -54,8 +55,8 @@
               <Header::AccountDropdownLink
                 @text="Diff size"
                 @icon="code"
-                class={{if (eq this.sort_mode "diff_size") "font-bold"}}
-                {{on "click" (fn this.setSortMode "diff_size")}}
+                class={{if (eq this.sort_mode "shortest_diff") "font-bold"}}
+                {{on "click" (fn this.setSortMode "shortest_diff")}}
               />
               <Header::AccountDropdownLink
                 @text="Recency"
