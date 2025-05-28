@@ -9,6 +9,7 @@ interface Signature {
 
   Args: {
     changedFile: CommunityCourseStageSolution['changedFiles'][number];
+    onPublishToGithubButtonClick: () => void;
     solution: CommunityCourseStageSolution;
   };
 }
@@ -18,11 +19,6 @@ export default class ChangedFileCardComponent extends Component<Signature> {
 
   get shouldShowPublishToGithubButton(): boolean {
     return this.args.solution.user.id === this.authenticator.currentUser?.id && !this.args.solution.isPublishedToPublicGithubRepository;
-  }
-
-  @action
-  handlePublishToGithubButtonClick(): void {
-    // TODO: Implement publish to GitHub functionality
   }
 }
 

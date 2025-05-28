@@ -182,7 +182,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
-    assert.strictEqual(codeExamplesPage.solutionCards[0].changedFiles.length, 2, 'shows 2 changed files');
+    assert.strictEqual(codeExamplesPage.solutionCards[0].changedFileCards.length, 2, 'shows 2 changed files');
     assert.strictEqual(codeExamplesPage.solutionCards[0].unchangedFiles.length, 2, 'shows 2 unchanged files');
 
     await codeExamplesPage.solutionCards[0].unchangedFiles[0].header.click();

@@ -9,7 +9,9 @@ export default createPage({
   scope: '[data-test-code-examples-page]',
 
   solutionCards: collection('[data-test-community-solution-card]', {
-    changedFiles: collection('[data-test-community-solution-changed-file]'),
+    changedFileCards: collection('[data-test-community-solution-changed-file-card]', {
+      clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
+    }),
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     collapseButtons: collection('[data-test-collapse-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
