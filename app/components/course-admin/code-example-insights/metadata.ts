@@ -3,7 +3,7 @@ import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models
 import { capitalize } from '@ember/string';
 
 interface Signature {
-  Element: HTMLAnchorElement;
+  Element: HTMLDivElement;
 
   Args: {
     solution: CommunityCourseStageSolutionModel;
