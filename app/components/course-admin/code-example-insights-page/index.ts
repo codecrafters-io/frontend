@@ -69,6 +69,6 @@ export default class CodeExampleInsightsPageComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsightsPage::StageListItemInsights': typeof CodeExampleInsightsPageComponent;
+    'CourseAdmin::CodeExampleInsightsPage': typeof CodeExampleInsightsPageComponent;
   }
 }
