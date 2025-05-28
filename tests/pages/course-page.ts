@@ -52,7 +52,8 @@ export default create({
   configureExtensionsModal: ConfigureExtensionsModal,
 
   configureGithubIntegrationModal: {
-    get isOpen() {
+    get isOpen(): boolean {
+      // @ts-expect-error isVisible is not typed
       return this.isVisible;
     },
 
@@ -82,7 +83,8 @@ export default create({
   },
 
   deleteRepositoryModal: {
-    get isOpen() {
+    get isOpen(): boolean {
+      // @ts-expect-error isVisible is not typed
       return this.isVisible;
     },
 
@@ -183,6 +185,7 @@ export default create({
 
   testRunnerCard: {
     async clickOnMarkStageAsCompleteButton() {
+      // @ts-expect-error markStageAsCompleteButton is not typed
       await this.markStageAsCompleteButton.click();
     },
 

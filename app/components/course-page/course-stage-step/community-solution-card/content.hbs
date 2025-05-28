@@ -13,6 +13,7 @@
 {{#each this.changedFilesForRender key="filename" as |changedFile index|}}
   <CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard
     @changedFile={{changedFile}}
+    @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
     @solution={{@solution}}
     class={{if (not-eq index (sub @solution.changedFiles.length 1)) "mb-4"}}
   />
