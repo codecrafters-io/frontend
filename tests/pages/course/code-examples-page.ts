@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, hasClass, notHasClass, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, hasClass, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
