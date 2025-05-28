@@ -77,6 +77,20 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
     });
   }
 
+  get changedLinesCount() {
+    let added = 0,
+      removed = 0;
+
+    for (const changedFile of this.changedFiles) {
+      const diff = changedFile['diff'];
+      const lines = diff.split('\n');
+      added += lines.filter((line: string) => line.startsWith('+')).length;
+      removed += lines.filter((line: string) => line.startsWith('-')).length;
+    }
+
+    return added + removed;
+  }
+
   get formattedEvaluationResults(): EvaluationResult[] {
     if (this.evaluations.length === 0) {
       return [];
@@ -128,20 +142,6 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   get screencast() {
     return this.screencasts[0];
-  }
-
-  get totalChangedLinesInDiff() {
-    let added = 0,
-      removed = 0;
-
-    for (const changedFile of this.changedFiles) {
-      const diff = changedFile['diff'];
-      const lines = diff.split('\n');
-      added += lines.filter((line: string) => line.startsWith('+')).length;
-      removed += lines.filter((line: string) => line.startsWith('-')).length;
-    }
-
-    return added + removed;
   }
 
   @action
