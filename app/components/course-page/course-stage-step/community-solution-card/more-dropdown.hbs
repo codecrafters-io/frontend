@@ -6,15 +6,19 @@
   </dd.Trigger>
   <dd.Content>
     <div class="py-2 border dark:border-white/10 rounded shadow bg-white dark:bg-gray-850" data-test-more-dropdown-content>
-      {{#if (eq @diffSource "highlighted-files")}}
-        <DropdownLink @text="View full diff" @icon="switch-horizontal" {{on "click" (fn this.handleViewFullDiffLinkClick dd.actions)}} />
-      {{else}}
-        <DropdownLink
-          @text="View highlighted files"
-          @icon="switch-horizontal"
-          {{on "click" (fn this.handleViewHighlightedFilesLinkClick dd.actions)}}
-        />
+      {{#if (and (current-user-is-staff) @solution.highlightedFiles)}}
+        {{#if (eq @diffSource "highlighted-files")}}
+          <DropdownLink @text="View full diff" @icon="switch-horizontal" {{on "click" (fn this.handleViewFullDiffLinkClick dd.actions)}} />
+        {{else}}
+          <DropdownLink
+            @text="View highlighted files"
+            @icon="switch-horizontal"
+            {{on "click" (fn this.handleViewHighlightedFilesLinkClick dd.actions)}}
+          />
+        {{/if}}
       {{/if}}
+
+      <DropdownLink @text="Collapse example" @icon="x-circle" {{on "click" (fn this.handleCollapseExampleLinkClick dd.actions)}} />
     </div>
   </dd.Content>
 </BasicDropdown>

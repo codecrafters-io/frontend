@@ -56,10 +56,12 @@
       {{@solution.ratingMean}}
     </div> --}}
 
-    {{#if (and (current-user-is-staff) @solution.highlightedFiles @contentIsExpanded)}}
+    {{#if @contentIsExpanded}}
       <CoursePage::CourseStageStep::CommunitySolutionCard::MoreDropdown
         @diffSource={{@diffSource}}
+        @onCollapseExampleLinkClick={{@onCollapseButtonClick}}
         @onDiffSourceChange={{@onDiffSourceChange}}
+        @solution={{@solution}}
         class="ml-3"
       />
     {{/if}}
