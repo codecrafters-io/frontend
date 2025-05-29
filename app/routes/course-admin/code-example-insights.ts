@@ -4,6 +4,7 @@ import Store from '@ember-data/store';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
+import type CourseModel from 'codecrafters-frontend/models/course';
 
 export type CodeExampleInsightsRouteModel = {
   courseStage: CourseStageModel;
@@ -24,18 +25,33 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
   };
 
   async model(params: { stage_slug: string; language_slug?: string; sort_mode?: string }): Promise<CodeExampleInsightsRouteModel> {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
     const courseStage = course.stages.findBy('slug', params.stage_slug);
+
+    if (!courseStage) {
+      throw new Error(`Course stage with slug "${params.stage_slug}" not found`);
+    }
+
     const languages = course.betaOrLiveLanguages;
-    const selectedLanguage = languages.findBy('slug', params.language_slug);
+
+    // Default to the first language in the list
+    let selectedLanguage: LanguageModel = languages.sortBy('slug')[0]!;
+
+    if (params.language_slug) {
+      const found = languages.find((l) => l.slug === params.language_slug);
+
+      if (found) {
+        selectedLanguage = found;
+      }
+    }
 
     return {
       courseStage: courseStage,
       language: selectedLanguage,
       solutions: (await this.store.query('community-course-stage-solution', {
         course_stage_id: courseStage.id,
-        language_id: selectedLanguage?.id,
+        language_id: selectedLanguage.id,
         include: 'user,evaluations,evaluations.evaluator',
         order: params.sort_mode || 'newest',
       })) as unknown as CommunityCourseStageSolutionModel[],
