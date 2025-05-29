@@ -80,7 +80,7 @@
             class="w-full flex-shrink"
           />
         </div>
-        <CourseAdmin::CodeExampleInsights::Metadata @solution={{solution}} />
+        <CourseAdmin::CodeExampleInsights::MetadataContainer @solution={{solution}} />
         {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
           <div class="col-span-2 bg-gray-200 h-px">
           </div>

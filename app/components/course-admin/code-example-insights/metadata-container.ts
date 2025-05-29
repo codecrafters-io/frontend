@@ -55,6 +55,6 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsights::Metadata': typeof CodeExampleInsightsMetadataComponent;
+    'CourseAdmin::CodeExampleInsights::MetadataContainer': typeof CodeExampleInsightsMetadataComponent;
   }
 }
