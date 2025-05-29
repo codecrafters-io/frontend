@@ -51,6 +51,23 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
   get isScored() {
     return this.args.solution.score !== null && this.args.solution.score > 0;
   }
+
+  get markdownContent() {
+    const lines = [];
+
+    // Add score reason
+    lines.push(`* ${this.formattedScoreReason}`);
+
+    // Add evaluation results
+    for (const evaluation of this.formattedEvaluationResults) {
+      lines.push(`* ${evaluation.result} \`${evaluation.check}\` check`);
+    }
+
+    // Add changed lines count
+    lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
+
+    return lines.join('\n');
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
