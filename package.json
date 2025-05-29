@@ -184,7 +184,7 @@
     "qunit-dom": "^3.4.0",
     "rgb-hex": "^4.1.0",
     "shiki": "^2.0.3",
-    "sinon": "^19.0.2",
+    "sinon": "^20.0.0",
     "stylelint": "^16.13.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-prettier": "^5.0.3",
