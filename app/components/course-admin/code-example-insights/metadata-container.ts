@@ -10,29 +10,20 @@ interface Signature {
   };
 }
 
-interface EvaluationResult {
-  result: '✅ Passed' | '❌ Failed';
-  check: string;
-}
-
 export default class CodeExampleInsightsMetadataComponent extends Component<Signature> {
-  get formattedEvaluationResults(): EvaluationResult[] {
+  get formattedEvaluationResults(): string[] {
     if (this.args.solution.evaluations.length === 0) {
       return [];
     } else {
-      const results: EvaluationResult[] = [];
+      const results: string[] = [];
 
       for (const evaluation of this.args.solution.evaluations) {
         if (evaluation.result === 'pass') {
-          results.push({
-            result: '✅ Passed',
-            check: evaluation.evaluator.slug,
-          });
+          results.push(`✅ Passed \`${evaluation.evaluator.slug}\` check`);
         } else if (evaluation.result === 'fail') {
-          results.push({
-            result: '❌ Failed',
-            check: evaluation.evaluator.slug,
-          });
+          results.push(`❌ Failed \`${evaluation.evaluator.slug}\` check`);
+        } else {
+          results.push(`⚠️ ${evaluation.result}ed \`${evaluation.evaluator.slug}\` check`);
         }
       }
 
@@ -55,15 +46,12 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
   get markdownContent() {
     const lines = [];
 
-    // Add score reason
     lines.push(`* ${this.formattedScoreReason}`);
 
-    // Add evaluation results
     for (const evaluation of this.formattedEvaluationResults) {
-      lines.push(`* ${evaluation.result} \`${evaluation.check}\` check`);
+      lines.push(`* ${evaluation}`);
     }
 
-    // Add changed lines count
     lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
 
     return lines.join('\n');
