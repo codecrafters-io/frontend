@@ -39,11 +39,7 @@ export default class CodeExampleInsightsController extends Controller {
   }
 
   @action
-  handleSolutionExpandButtonClick(solution: CommunityCourseStageSolutionModel, solutionIndex: number, containerElement: HTMLDivElement) {
-    if (this.authenticator.isAuthenticated) {
-      solution.createView({ position_in_list: solutionIndex + 1 });
-    }
-
+  handleSolutionExpandButtonClick(solution: CommunityCourseStageSolutionModel, containerElement: HTMLDivElement) {
     this.expandedSolution = solution;
 
     next(() => {
