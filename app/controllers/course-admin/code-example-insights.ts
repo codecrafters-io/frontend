@@ -11,30 +11,18 @@ import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class CodeExampleInsightsController extends Controller {
+  queryParams = ['sort_mode'];
+
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
-  queryParams = ['sort_mode'];
   @tracked sort_mode: 'shortest_diff' | 'newest' = 'newest';
 
   declare model: CodeExampleInsightsRouteModel;
 
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
-    if (!this.model.solutions) return [];
-
-    if (this.sort_mode === 'shortest_diff') {
-      // Sort by (added_lines_count + removed_lines_count), ascending
-      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return a.changedLinesCount - b.changedLinesCount;
-      });
-    } else if (this.sort_mode === 'newest') {
-      // Sort by submittedAt, descending (most recent first)
-      return [...this.model.solutions].sort((a: CommunityCourseStageSolutionModel, b: CommunityCourseStageSolutionModel) => {
-        return new Date(b.submittedAt ?? '').getTime() - new Date(a.submittedAt ?? '').getTime();
-      });
-    }
-
+    // The API handles the sorting order
     return this.model.solutions;
   }
 
