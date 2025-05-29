@@ -188,7 +188,7 @@
     "stylelint": "^16.13.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-prettier": "^5.0.3",
-    "tailwindcss": "^3.4.16",
+    "tailwindcss": "^4.1.8",
     "tracked-built-ins": "^3.3.0",
     "typescript": "^5.7.3",
     "webpack": "^5.97.1",
