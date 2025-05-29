@@ -1,8 +1,8 @@
 <BasicDropdown @horizontalPosition="right" as |dd|>
   <dd.Trigger>
-    <div class="text-gray-400 dark:text-gray-500" data-test-more-dropdown-toggle ...attributes>
-      {{svg-jar "dots-horizontal" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
-    </div>
+    <TertiaryButton @size="extra-small" ...attributes data-test-more-dropdown-toggle>
+      {{svg-jar "dots-horizontal" class=(concat "w-4 transform transition-all " (if dd.isOpen "text-teal-500" "text-gray-500"))}}
+    </TertiaryButton>
   </dd.Trigger>
   <dd.Content>
     <div class="py-2 border dark:border-white/10 rounded shadow bg-white dark:bg-gray-850" data-test-more-dropdown-content>
