@@ -17,6 +17,7 @@ interface Signature {
     isExpanded: boolean;
     metadataForDownvote?: Record<string, unknown>;
     metadataForUpvote?: Record<string, unknown>;
+    onCollapseButtonClick?: (containerElement: HTMLDivElement) => void;
     onExpandButtonClick?: (containerElement: HTMLDivElement) => void;
     onPublishToGithubButtonClick?: () => void;
     solution: CommunityCourseStageSolutionModel;
@@ -33,6 +34,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
 
   get currentUser() {
     return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
+  }
+
+  @action
+  handleCollapseButtonClick() {
+    this.args.onCollapseButtonClick?.(this.containerElement!);
   }
 
   @action

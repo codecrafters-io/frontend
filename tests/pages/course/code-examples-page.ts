@@ -12,6 +12,11 @@ export default createPage({
     changedFileCards: collection('[data-test-community-solution-changed-file-card]', {
       clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
     }),
+
+    content: {
+      scope: '[data-test-community-solution-card-content]',
+    },
+
     clickOnExpandButton: clickable('[data-test-expand-button]'),
     collapseButtons: collection('[data-test-collapse-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
@@ -20,6 +25,14 @@ export default createPage({
       hover: triggerable('mouseenter'),
       isInactive: hasClass('opacity-50'),
       scope: '[data-test-solution-card-downvote-button]',
+    },
+
+    get isCollapsed() {
+      return !this.isExpanded;
+    },
+
+    get isExpanded() {
+      return (this.content as unknown as { isVisible: boolean }).isVisible;
     },
 
     moreDropdown: {

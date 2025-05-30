@@ -73,6 +73,15 @@ export default class CommunitySolutionsListComponent extends Component<Signature
   }
 
   @action
+  handleSolutionCollapseButtonClick(_solution: CommunityCourseStageSolutionModel, _solutionIndex: number, containerElement: HTMLDivElement) {
+    this.expandedSolution = null;
+
+    next(() => {
+      containerElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
+  @action
   handleSolutionExpandButtonClick(solution: CommunityCourseStageSolutionModel, solutionIndex: number, containerElement: HTMLDivElement) {
     if (this.authenticator.isAuthenticated) {
       solution.createView({ position_in_list: solutionIndex + 1 });

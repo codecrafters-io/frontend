@@ -5,6 +5,7 @@
         @isExpanded={{eq this.expandedSolution solution}}
         @metadataForDownvote={{hash position_in_list=(add solutionIndex 1)}}
         @metadataForUpvote={{hash position_in_list=(add solutionIndex 1)}}
+        @onCollapseButtonClick={{fn this.handleSolutionCollapseButtonClick solution solutionIndex}}
         @onExpandButtonClick={{fn this.handleSolutionExpandButtonClick solution solutionIndex}}
         @onPublishToGithubButtonClick={{fn (mut this.configureGithubIntegrationModalIsOpen) true}}
         @solution={{solution}}

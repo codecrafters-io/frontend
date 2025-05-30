@@ -11,6 +11,7 @@ interface Signature {
     diffSource: 'changed-files' | 'highlighted-files';
     metadataForDownvote?: Record<string, unknown>;
     metadataForUpvote?: Record<string, unknown>;
+    onCollapseButtonClick: () => void;
     onDiffSourceChange: (diffSource: 'changed-files' | 'highlighted-files') => void;
     solution: CommunityCourseStageSolutionModel;
   };
