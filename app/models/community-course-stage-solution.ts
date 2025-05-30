@@ -37,13 +37,16 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   // @ts-expect-error empty '' not supported
   @attr('') highlightedFiles: { filename: string; contents: string; highlighted_ranges: { start_line: number; end_line: number }[] }[] | null; // free-form JSON
 
+  @attr('number') declare addedLinesCount: number;
   @attr('number') declare approvedCommentsCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;
   @attr('string') declare githubRepositoryName: string;
   @attr('boolean') declare githubRepositoryIsPrivate: boolean;
+  @attr('number') declare highlightedLinesCount: number;
   @attr('boolean') declare isPinned: boolean;
   @attr('number') declare ratingMean: number | null;
+  @attr('number') declare removedLinesCount: number;
   @attr('number') declare score: number | null;
   @attr('string') declare scoreReason: 'concise' | 'pinned' | null;
   @attr('date') declare submittedAt: Date;
@@ -72,17 +75,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   }
 
   get changedLinesCount() {
-    let added = 0,
-      removed = 0;
-
-    for (const changedFile of this.changedFiles) {
-      const diff = changedFile['diff'];
-      const lines = diff.split('\n');
-      added += lines.filter((line: string) => line.startsWith('+')).length;
-      removed += lines.filter((line: string) => line.startsWith('-')).length;
-    }
-
-    return added + removed;
+    return this.addedLinesCount + this.removedLinesCount;
   }
 
   // We don't render explanations at the moment
