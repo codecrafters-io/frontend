@@ -53,6 +53,7 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
     }
 
     lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
+    lines.push(`* ⚡︎ ${this.args.solution.highlightedLinesCount} lines highlighted`);
 
     return lines.join('\n');
   }
