@@ -2,9 +2,9 @@
   class="flex items-center justify-between flex-wrap gap-x-6 gap-y-2 py-3 group/stage-list-item hover:bg-gray-50 px-1"
   data-test-code-example-insights-index-list-item
   role="button"
-  @route="course.stage.code-examples"
-  @models={{array @stage.course.slug @stage.slug}}
-  target="_blank"
+  @route="course-admin.code-example-insights"
+  @model={{@stage.slug}}
+  @query={{hash language_slug=@language.slug}}
   ...attributes
 >
   <div class="min-w-0">
