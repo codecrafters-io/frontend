@@ -16,6 +16,7 @@ import colorLogoJavascript from '/assets/images/language-logos/javascript-color.
 import colorLogoKotlin from '/assets/images/language-logos/kotlin-color.svg';
 import colorLogoNim from '/assets/images/language-logos/nim-color.svg';
 import colorLogoOcaml from '/assets/images/language-logos/ocaml-color.svg';
+import colorLogoOdin from '/assets/images/language-logos/odin-color.svg';
 import colorLogoPhp from '/assets/images/language-logos/php-color.svg';
 import colorLogoPython from '/assets/images/language-logos/python-color.svg';
 import colorLogoReasonml from '/assets/images/language-logos/reasonml-color.svg';
@@ -40,6 +41,7 @@ import grayLogoJavascript from '/assets/images/language-logos/javascript-gray-50
 import grayLogoKotlin from '/assets/images/language-logos/kotlin-gray-500.svg';
 import grayLogoNim from '/assets/images/language-logos/nim-gray-500.svg';
 import grayLogoOcaml from '/assets/images/language-logos/ocaml-gray-500.svg';
+import grayLogoOdin from '/assets/images/language-logos/odin-gray-500.svg';
 import grayLogoPhp from '/assets/images/language-logos/php-gray-500.svg';
 import grayLogoPython from '/assets/images/language-logos/python-gray-500.svg';
 import grayLogoReasonml from '/assets/images/language-logos/reasonml-gray-500.svg';
@@ -64,6 +66,7 @@ import tealLogoJavascript from '/assets/images/language-logos/javascript-teal-50
 import tealLogoKotlin from '/assets/images/language-logos/kotlin-teal-500.svg';
 import tealLogoNim from '/assets/images/language-logos/nim-teal-500.svg';
 import tealLogoOcaml from '/assets/images/language-logos/ocaml-teal-500.svg';
+import tealLogoOdin from '/assets/images/language-logos/odin-teal-500.svg';
 import tealLogoPhp from '/assets/images/language-logos/php-teal-500.svg';
 import tealLogoPython from '/assets/images/language-logos/python-teal-500.svg';
 import tealLogoReasonml from '/assets/images/language-logos/reasonml-teal-500.svg';
@@ -100,6 +103,7 @@ export default class LanguageModel extends Model {
       kotlin: colorLogoKotlin,
       nim: colorLogoNim,
       ocaml: colorLogoOcaml,
+      odin: colorLogoOdin,
       php: colorLogoPhp,
       python: colorLogoPython,
       reasonml: colorLogoReasonml,
@@ -129,6 +133,7 @@ export default class LanguageModel extends Model {
       kotlin: grayLogoKotlin,
       nim: grayLogoNim,
       ocaml: grayLogoOcaml,
+      odin: grayLogoOdin,
       php: grayLogoPhp,
       python: grayLogoPython,
       reasonml: grayLogoReasonml,
@@ -182,6 +187,7 @@ export default class LanguageModel extends Model {
       kotlin: tealLogoKotlin,
       nim: tealLogoNim,
       ocaml: tealLogoOcaml,
+      odin: tealLogoOdin,
       php: tealLogoPhp,
       python: tealLogoPython,
       reasonml: tealLogoReasonml,
@@ -237,6 +243,7 @@ A quick welcome to CodeCrafters.
       kotlin: 3963,
       nim: 176,
       ocaml: 667,
+      odin: 1,
       php: 2911,
       python: 107035,
       ruby: 4491,
