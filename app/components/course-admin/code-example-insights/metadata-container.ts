@@ -31,6 +31,20 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
     }
   }
 
+  get formattedFlakinessCheckStatus() {
+    if (this.args.solution.flakinessCheckStatus === 'pending') {
+      return '🚧 Flakiness check pending';
+    } else if (this.args.solution.flakinessCheckStatus === 'success') {
+      return '✅ Flakiness check passed';
+    } else if (this.args.solution.flakinessCheckStatus === 'failure') {
+      return '❌ Flakiness check:failed';
+    } else if (this.args.solution.flakinessCheckStatus === 'error') {
+      return '⚠️ Flakiness check error';
+    } else {
+      return `⚠️ Unknown flakiness check status: ${this.args.solution.flakinessCheckStatus}`;
+    }
+  }
+
   get formattedScoreReason() {
     if (this.isScored && this.args.solution.scoreReason) {
       return '⭐' + ' ' + capitalize(this.args.solution.scoreReason);
@@ -52,6 +66,7 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
       lines.push(`* ${evaluation}`);
     }
 
+    lines.push(`* ${this.formattedFlakinessCheckStatus}`);
     lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
     lines.push(`* ⚡︎ ${this.args.solution.highlightedLinesCount} lines highlighted`);
 
