@@ -9,6 +9,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-insights';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import * as Sentry from '@sentry/ember';
 
 export default class CodeExampleInsightsController extends Controller {
   queryParams = ['sort_mode'];
@@ -17,9 +18,37 @@ export default class CodeExampleInsightsController extends Controller {
   @service declare router: RouterService;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
-  @tracked sort_mode: 'shortest_diff' | 'newest' = 'newest';
+  @tracked sort_mode: 'newest' | 'shortest_diff' | 'shortest_highlights' = 'newest';
 
   declare model: CodeExampleInsightsRouteModel;
+
+  get sortModeHumanized(): string {
+    if (this.sort_mode === 'shortest_diff') {
+      return 'Diff size';
+    } else if (this.sort_mode === 'shortest_highlights') {
+      return 'Highlight size';
+    } else if (this.sort_mode === 'newest') {
+      return 'Recency';
+    } else {
+      Sentry.captureException(new Error(`Unknown sort mode: ${this.sort_mode}`));
+
+      return 'Unknown';
+    }
+  }
+
+  get sortModeOrderDescription(): string {
+    if (this.sort_mode === 'shortest_diff') {
+      return 'smallest first';
+    } else if (this.sort_mode === 'shortest_highlights') {
+      return 'smallest first';
+    } else if (this.sort_mode === 'newest') {
+      return 'most recent first';
+    } else {
+      Sentry.captureException(new Error(`Unknown sort mode: ${this.sort_mode}`));
+
+      return 'Unknown';
+    }
+  }
 
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
     // The API handles the sorting order
@@ -48,7 +77,7 @@ export default class CodeExampleInsightsController extends Controller {
   }
 
   @action
-  setSortMode(mode: 'shortest_diff' | 'newest') {
+  setSortMode(mode: 'newest' | 'shortest_diff' | 'shortest_highlights') {
     this.router.transitionTo({ queryParams: { sort_mode: mode } });
   }
 }
