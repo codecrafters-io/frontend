@@ -40,15 +40,8 @@
       <div class="inline-block">
         <BasicDropdown as |dd|>
           <dd.Trigger>
-            <b class="font-semibold underline decoration-dashed">
-              {{if (eq this.sort_mode "shortest_diff") "Diff size" "Recency"}}
-              ↕
-            </b>
-            {{#if (eq this.sort_mode "shortest_diff")}}
-              (smallest first).
-            {{else}}
-              (most recent first).
-            {{/if}}
+            <b class="font-semibold underline decoration-dashed">{{this.sortModeHumanized}} ↕</b>
+            ({{this.sortModeOrderDescription}}).
           </dd.Trigger>
           <dd.Content>
             <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850">
@@ -57,6 +50,12 @@
                 @icon="code"
                 class={{if (eq this.sort_mode "shortest_diff") "font-bold"}}
                 {{on "click" (fn this.setSortMode "shortest_diff")}}
+              />
+              <DropdownLink
+                @text="Highlight size"
+                @icon="document-text"
+                class={{if (eq this.sort_mode "shortest_highlights") "font-bold"}}
+                {{on "click" (fn this.setSortMode "shortest_highlights")}}
               />
               <DropdownLink
                 @text="Recency"
