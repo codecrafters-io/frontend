@@ -32,8 +32,7 @@ export default createPage({
     },
 
     get isExpanded() {
-      // @ts-expect-error content not typed
-      return this.content.isVisible;
+      return (this.content as unknown as { isVisible: boolean }).isVisible;
     },
 
     moreDropdown: {
