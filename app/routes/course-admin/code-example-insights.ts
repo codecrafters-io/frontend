@@ -54,6 +54,9 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
         language_id: selectedLanguage.id,
         include: 'user,evaluations,evaluations.evaluator',
         order: params.sort_mode || 'newest',
+        adapterOptions: {
+          admin: true,
+        },
       })) as unknown as CommunityCourseStageSolutionModel[],
     };
   }

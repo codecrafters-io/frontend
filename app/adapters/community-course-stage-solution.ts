@@ -1,9 +1,19 @@
 import ApplicationAdapter from './application';
 
-export default class CommunityCourseStageSolutionAdapter extends ApplicationAdapter {
-  namespace = 'api/v1';
+interface AdapterOptions {
+  admin?: boolean;
+}
 
-  pathForType() {
-    return 'community-course-stage-solutions/for-admin';
+interface QueryOptions {
+  adapterOptions?: AdapterOptions;
+}
+
+export default class CommunityCourseStageSolutionAdapter extends ApplicationAdapter {
+  urlForQuery(query: QueryOptions) {
+    if (query.adapterOptions?.admin) {
+      return `${this.buildURL()}/community-course-stage-solutions/for-admin`;
+    }
+
+    return this.buildURL('community-course-stage-solution');
   }
 }
