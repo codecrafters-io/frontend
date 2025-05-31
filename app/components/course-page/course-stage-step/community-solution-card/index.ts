@@ -49,7 +49,8 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
       this.loadAsyncResources.perform();
     }
 
-    if (this.authenticator.currentUser?.isStaff && this.args.solution.highlightedFiles && this.args.solution.highlightedFiles.length > 0) {
+    // We still haven't migrated all solutions to have highlighted files, some only have changed files
+    if (this.args.solution.highlightedFiles && this.args.solution.highlightedFiles.length > 0) {
       this.diffSource = 'highlighted-files';
     }
   }
