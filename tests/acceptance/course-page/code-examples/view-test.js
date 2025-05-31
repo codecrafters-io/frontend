@@ -182,6 +182,9 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
+    await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
+    await codeExamplesPage.solutionCards[0].moreDropdown.clickOnLink('View full diff');
+
     assert.strictEqual(codeExamplesPage.solutionCards[0].changedFileCards.length, 2, 'shows 2 changed files');
     assert.strictEqual(codeExamplesPage.solutionCards[0].unchangedFiles.length, 2, 'shows 2 unchanged files');
 
