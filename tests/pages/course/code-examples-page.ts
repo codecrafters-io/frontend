@@ -21,6 +21,10 @@ export default createPage({
     collapseButtons: collection('[data-test-collapse-button]'),
     commentCards: collection('[data-test-comment-card]', CommentCard),
 
+    highlightedFileCards: collection('[data-test-community-solution-highlighted-file-card]', {
+      clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
+    }),
+
     downvoteButton: {
       hover: triggerable('mouseenter'),
       isInactive: hasClass('opacity-50'),
