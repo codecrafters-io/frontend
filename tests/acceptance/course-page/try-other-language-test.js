@@ -1,4 +1,4 @@
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -30,24 +30,24 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       user: currentUser,
     });
 
-    let expectedRequestsCount = [
-      'fetch repositories (course page)',
-      'fetch courses (course page)',
-      'fetch languages (catalog)',
-      'fetch courses (course page)',
-      'fetch leaderboard entries (course page)',
-      'fetch courses (course page)',
-      'fetch repositories (course page)',
-      'fetch hints (course page)',
-      'fetch language guides (course page)',
-      'fetch leaderboard entries (course page)',
-    ].length;
+    let expectedRequests = [
+      '/api/v1/repositories',
+      '/api/v1/courses',
+      '/api/v1/languages',
+      '/api/v1/courses',
+      '/api/v1/course-leaderboard-entries',
+      '/api/v1/courses',
+      '/api/v1/repositories',
+      '/api/v1/course-stage-comments',
+      '/api/v1/course-stage-language-guides',
+      '/api/v1/course-leaderboard-entries',
+    ];
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.header.stepName, 'The second stage', 'first stage should be active');
@@ -55,30 +55,31 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
-    expectedRequestsCount += [
-      'fetch courses (course page)',
-      'fetch repositories (course page)',
-      'fetch leaderboard entries (course page)',
-      'fetch languages (course page)',
-      'fetch leaderboard entries (after ember-data upgrade)',
-    ].length;
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/courses',
+      '/api/v1/repositories',
+      '/api/v1/course-language-requests',
+      '/api/v1/languages',
+      '/api/v1/course-leaderboard-entries',
+    ];
 
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after clicking try different language');
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=new');
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
     await animationsSettled();
 
-    //prettier-ignore
-    expectedRequestsCount += [
-      'fetch languages',
-      'fetch requests',
-      'create repository',
-      'fetch leaderboard entries',
-    ].length;
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/languages',
+      '/api/v1/course-language-requests',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries',
+    ];
 
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount, `expected ${expectedRequestsCount} requests`);
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after selecting Go language');
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=2', 'current URL is course page URL with repo query param');
 
@@ -98,16 +99,34 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    console.log('polling should have run');
-
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 7, 'polling should have run');
+
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories/2',
+      '/api/v1/repositories/2',
+      '/api/v1/repositories/2',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries',
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after first poll');
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    assert.strictEqual(apiRequestsCount(this.server), expectedRequestsCount + 9, 'polling should have run again');
+
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories/2',
+      '/api/v1/repositories/2',
+      '/api/v1/repositories/2',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries',
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after second poll');
   });
 
   test('can try other language from repository setup page (regression)', async function (assert) {

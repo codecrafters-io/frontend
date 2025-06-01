@@ -1,4 +1,3 @@
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
 import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -85,14 +84,12 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     expectedRequests = [
       ...expectedRequests,
-      '/api/v1/repositories',
-      '/api/v1/courses',
-      '/api/v1/repositories',
-      '/api/v1/course-leaderboard-entries',
-      '/api/v1/repositories',
+      '/api/v1/repositories', 
+      '/api/v1/courses', 
+      '/api/v1/repositories', 
       '/api/v1/course-leaderboard-entries'
     ];
-
+    
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after language selection');
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
@@ -100,7 +97,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [
       ...expectedRequests,
@@ -148,7 +144,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
-    
+
     expectedRequests = [
       ...expectedRequests,
       '/api/v1/repositories/1',
