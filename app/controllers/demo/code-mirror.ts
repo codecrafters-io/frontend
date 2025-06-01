@@ -29,8 +29,8 @@ const LINE_SEPARATORS = [
 ];
 
 const OPTION_DEFAULTS = {
-  allowMultipleSelections: true,
   allowInlineDiffs: false,
+  allowMultipleSelections: true,
   autocompletion: true,
   bracketMatching: true,
   closeBrackets: true,
@@ -75,8 +75,8 @@ const OPTION_DEFAULTS = {
   selectedThemeIndex: SUPPORTED_THEMES.indexOf('codeCraftersAuto'),
   selectedUnchangedMarginIndex: 2,
   selectedUnchangedMinSizeIndex: 3,
-  syntaxHighlighting: true,
   syntaxHighlightDeletions: true,
+  syntaxHighlighting: true,
   tabSize: true,
   theme: true,
   unchangedMargin: true,
@@ -133,13 +133,21 @@ export default class DemoCodeMirrorController extends Controller {
     'selectedThemeIndex',
     'selectedUnchangedMarginIndex',
     'selectedUnchangedMinSizeIndex',
-    'syntaxHighlighting',
     'syntaxHighlightDeletions',
+    'syntaxHighlighting',
     'tabSize',
     'theme',
     'unchangedMargin',
     'unchangedMinSize',
   ];
+
+  @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
+  @tracked indentUnits = INDENT_UNITS;
+  @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
+  @tracked tabSizes = [1, 2, 4, 6, 8, 10, 12, 16];
+  @tracked themes = [...SUPPORTED_THEMES];
+  @tracked unchangedMargins = [1, 2, 3, 4, 5, 8, 16];
+  @tracked unchangedMinSizes = [1, 2, 3, 4, 5, 8, 16];
 
   @tracked allowInlineDiffs = OPTION_DEFAULTS.allowInlineDiffs;
   @tracked allowMultipleSelections = OPTION_DEFAULTS.allowMultipleSelections;
@@ -147,9 +155,9 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked bracketMatching = OPTION_DEFAULTS.bracketMatching;
   @tracked closeBrackets = OPTION_DEFAULTS.closeBrackets;
   @tracked collapsedRanges = OPTION_DEFAULTS.collapsedRanges;
+  @tracked collapseUnchanged = OPTION_DEFAULTS.collapseUnchanged;
   @tracked crosshairCursor = OPTION_DEFAULTS.crosshairCursor;
   @tracked document = OPTION_DEFAULTS.document;
-  @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
   @tracked drawSelection = OPTION_DEFAULTS.drawSelection;
   @tracked dropCursor = OPTION_DEFAULTS.dropCursor;
   @tracked editable = OPTION_DEFAULTS.editable;
@@ -166,7 +174,6 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked history = OPTION_DEFAULTS.history;
   @tracked indentOnInput = OPTION_DEFAULTS.indentOnInput;
   @tracked indentUnit = OPTION_DEFAULTS.indentUnit;
-  @tracked indentUnits = INDENT_UNITS;
   @tracked indentWithTab = OPTION_DEFAULTS.indentWithTab;
   @tracked language = OPTION_DEFAULTS.language;
   @tracked lineNumbers = OPTION_DEFAULTS.lineNumbers;
@@ -175,11 +182,9 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked lineWrapping = OPTION_DEFAULTS.lineWrapping;
   @tracked maxHeight = OPTION_DEFAULTS.maxHeight;
   @tracked mergeControls = OPTION_DEFAULTS.mergeControls;
-  @tracked collapseUnchanged = OPTION_DEFAULTS.collapseUnchanged;
   @tracked originalDocument = OPTION_DEFAULTS.originalDocument;
   @tracked outline = OPTION_DEFAULTS.outline;
   @tracked placeholder = OPTION_DEFAULTS.placeholder;
-  @tracked placeholderMessage = 'Welcome to CodeCrafters test zone for CodeMirror! Start editing the document here...';
   @tracked preserveHistory = OPTION_DEFAULTS.preserveHistory;
   @tracked readOnly = OPTION_DEFAULTS.readOnly;
   @tracked rectangularSelection = OPTION_DEFAULTS.rectangularSelection;
@@ -194,13 +199,9 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked syntaxHighlightDeletions = OPTION_DEFAULTS.syntaxHighlightDeletions;
   @tracked syntaxHighlighting = OPTION_DEFAULTS.syntaxHighlighting;
   @tracked tabSize = OPTION_DEFAULTS.tabSize;
-  @tracked tabSizes = [1, 2, 4, 6, 8, 10, 12, 16];
   @tracked theme = OPTION_DEFAULTS.theme;
-  @tracked themes = [...SUPPORTED_THEMES];
   @tracked unchangedMargin = OPTION_DEFAULTS.unchangedMargin;
-  @tracked unchangedMargins = [1, 2, 3, 4, 5, 8, 16];
   @tracked unchangedMinSize = OPTION_DEFAULTS.unchangedMinSize;
-  @tracked unchangedMinSizes = [1, 2, 3, 4, 5, 8, 16];
 
   get selectedDocument() {
     return this.documents[this.selectedDocumentIndex] || ExampleDocument.createEmpty();

@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import EXAMPLE_DOCUMENTS, { DiffBasedExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 const OPTION_DEFAULTS = {
-  forceDarkTheme: false,
   collapsedRanges: false,
+  forceDarkTheme: false,
   highlightedRanges: false,
   selectedDocumentIndex: 1,
   useCodeMirror: true,
@@ -14,8 +14,8 @@ const OPTION_DEFAULTS = {
 export default class DemoFileDiffCardController extends Controller {
   @tracked documents: DiffBasedExampleDocument[] = EXAMPLE_DOCUMENTS;
 
-  @tracked forceDarkTheme: boolean = OPTION_DEFAULTS.forceDarkTheme;
   @tracked collapsedRanges: boolean = OPTION_DEFAULTS.collapsedRanges;
+  @tracked forceDarkTheme: boolean = OPTION_DEFAULTS.forceDarkTheme;
   @tracked highlightedRanges: boolean = OPTION_DEFAULTS.highlightedRanges;
   @tracked selectedDocumentIndex: number = OPTION_DEFAULTS.selectedDocumentIndex;
   @tracked useCodeMirror: boolean = OPTION_DEFAULTS.useCodeMirror;
