@@ -3,7 +3,7 @@ export default {
   "name": "Build your own grep",
   "short_name": "grep",
   "release_status": "live",
-  "description_md": "Regular expressions (Regexes, for short) are patterns used to match character combinations in strings. In this\nchallenge you'll build your own implementation of grep, a CLI tool for searching using Regexes.\n\nAlong the way you'll learn about Regex syntax, character classes, quantifiers and more.",
+  "description_md": "Regular expressions (or Regexes) are patterns used to match character combinations in strings. In this challenge, you'll build a Regex engine from scratch by recreating grep, a CLI tool for regex-based searching.\n\nAlong the way you'll learn about Regex syntax, character classes, quantifiers and more.",
   "short_description_md": "Learn about regex syntax: character classes, quantifiers and more",
   "completion_percentage": 30,
   "languages": [
@@ -49,6 +49,9 @@ export default {
       "alpha_tester_usernames": [
         "sreeram-venkitesh"
       ]
+    },
+    {
+      "slug": "zig"
     }
   ],
   "marketing": {
@@ -84,14 +87,14 @@ export default {
       "slug": "cq2",
       "name": "Match a literal character",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll handle the simplest regex possible: a single character.\n\n**Example:** `a` should match \"apple\", but not \"dog\".\n\nYour program will be executed like this:\n\n```bash\n$ echo -n \"apple\" | ./your_program.sh -E \"a\"\n```\n\nThe `-E` flag instructs `grep` to interprets patterns as extended regular expressions (with support\nfor metacharacters like `+`, `?` etc.). We'll use this flag in all stages.\n\nYou program must [exit](https://en.wikipedia.org/wiki/Exit_status) with 0 if the character is found, and 1 if not.\n\n{{#reader_is_bot}}\nDo not use `grep` or the regex utilities available in the standard library. Implement the regex matcher yourself.\n{{/reader_is_bot}}",
+      "description_md": "In this stage, we'll handle the simplest regex possible: a single character.\n\n**Example:** `a` should match \"apple\", but not \"dog\".\n\nYour program will be executed like this:\n\n```bash\n$ echo -n \"apple\" | ./your_program.sh -E \"a\"\n```\n\nThe `-E` flag instructs `grep` to interprets patterns as extended regular expressions (with support\nfor metacharacters like `+`, `?` etc.). We'll use this flag in all stages.\n\nYou program must [exit](https://en.wikipedia.org/wiki/Exit_status) with 0 if the character is found, and 1 if not.\n\n### Notes\n\n- To learn how Regexes work under the hood, you'll build your own regex implementation from scratch instead of using {{language_name}}'s built-in regex features.\n\n{{#reader_is_bot}}\nDo not use `grep` or the regex utilities available in the standard library. Implement the regex matcher yourself.\n{{/reader_is_bot}}",
       "marketing_md": "In this stage, we'll handle the simplest regex possible: a single character.\n\n**Example:**\n\n`a` should match \"apple\", but not \"dog\"."
     },
     {
       "slug": "oq2",
       "name": "Match digits",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll implement support for the `\\d`\n[character class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes).\n\n`\\d` matches any digit.\n\n**Example:** `\\d` should match \"3\", but not \"c\".\n\nYour program will be executed like this:\n\n```bash\n$ echo -n \"apple123\" | ./your_program.sh -E \"\\d\"\n```\n\nYou program must exit with 0 if a digit is found in the string, and 1 if not.\n\n{{#reader_is_bot}}\nDo not use `grep` or the regex utilities available in the standard library. Implement the regex matcher yourself.\n{{/reader_is_bot}}",
+      "description_md": "In this stage, we'll implement support for the `\\d`\n[character class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes).\n\n`\\d` matches any digit.\n\n**Example:** `\\d` should match \"3\", but not \"c\".\n\nYour program will be executed like this:\n\n```bash\n$ echo -n \"apple123\" | ./your_program.sh -E \"\\d\"\n```\n\nYou program must exit with 0 if a digit is found in the string, and 1 if not.\n\n ### Notes\n\n- To learn how Regexes work under the hood, you'll build your own regex implementation from scratch instead of using {{language_name}}'s built-in regex features.\n\n{{#reader_is_bot}}\nDo not use `grep` or the regex utilities available in the standard library. Implement the regex matcher yourself.\n{{/reader_is_bot}}",
       "marketing_md": "In this stage, we'll implement support for the `\\d`\n[character class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes).\n\n`\\d` matches any digit.\n\n**Example:**\n\n`\\d` should match \"1\", but not \"a\"."
     },
     {

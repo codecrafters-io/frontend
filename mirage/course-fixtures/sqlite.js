@@ -17,6 +17,9 @@ export default {
       "slug": "csharp"
     },
     {
+      "slug": "elixir"
+    },
+    {
       "slug": "gleam"
     },
     {
