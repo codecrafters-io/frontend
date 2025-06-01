@@ -2,14 +2,10 @@ import { BlockInfo, EditorView, gutter, GutterMarker, type WidgetType } from '@c
 import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { CollapsedRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
-function isCollapseRangesWidget(widget: WidgetType) {
-  return widget instanceof CollapsedRangesWidget;
-}
-
 function renderGutterElement(view: EditorView, widget: WidgetType, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
-  const collapsedLinesCount = 'lines' in widget ? (widget.lines as number) : 1;
+  const collapsedLinesCount = widget instanceof CollapsedRangesWidget ? widget.lines : 1;
   const extraClassNames = [];
 
   if (lineNumber === 1) {
@@ -67,7 +63,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseRangesWidget(widget) ? new CollapseRangesGutterMarker(view, widget, line) : null;
+        return widget instanceof CollapsedRangesWidget ? new CollapseRangesGutterMarker(view, widget, line) : null;
       },
     }),
 
@@ -75,7 +71,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseRangesWidget(widget) ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapsedRangesWidget ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
       },
     }),
   ];
