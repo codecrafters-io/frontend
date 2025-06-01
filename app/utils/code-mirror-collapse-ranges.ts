@@ -68,7 +68,7 @@ function buildCollapsedRangesDecorations(state: EditorState, collapsedRanges: Li
   const builder = new RangeSetBuilder<Decoration>();
 
   for (const { startLine, endLine } of collapsedRanges) {
-    if (startLine <= state.doc.lines && endLine <= state.doc.lines) {
+    if (startLine >= 1 && endLine >= startLine && endLine <= state.doc.lines) {
       builder.add(
         state.doc.line(startLine).from,
         state.doc.line(endLine).to,
