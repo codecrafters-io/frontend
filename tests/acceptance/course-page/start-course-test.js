@@ -1,4 +1,5 @@
 import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -57,20 +58,20 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
-    let baseRequestsCount = [
-      'fetch courses (catalog)',
-      'fetch repositories (catalog)',
-      'fetch languages (catalog)',
-      'fetch leaderboard entries (course overview page)',
-      'refresh course (course overview page)',
-      'fetch courses (course page)',
-      'fetch repositories (course page)',
-      'fetch leaderboard entries (course page)',
-      'fetch languages (request language button)',
-      'fetch course language requests (request language button)',
-    ].length;
+    let expectedRequests = [
+      '/api/v1/repositories',
+      '/api/v1/courses',
+      '/api/v1/languages',
+      '/api/v1/courses',
+      '/api/v1/course-leaderboard-entries',
+      '/api/v1/courses',
+      '/api/v1/repositories',
+      '/api/v1/course-language-requests',
+      '/api/v1/languages',
+      '/api/v1/course-leaderboard-entries'
+    ];
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, `expected ${baseRequestsCount} requests`);
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
 
     await percySnapshot('Start Course - Select Language');
 
@@ -82,10 +83,17 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
-    baseRequestsCount += 2; // For some reason, we're rendering the "Request Other" button again when a language is chosen.
-    baseRequestsCount += 2; // An extra request for leaderboard-entries started happening after ember-data upgrade
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories',
+      '/api/v1/courses',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries'
+    ];
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount, 'create repository request was executed');
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after language selection');
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
@@ -94,7 +102,13 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 4, 'poll request was executed');
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries'
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
@@ -134,10 +148,17 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories/1',
+      '/api/v1/repositories/1',
+      '/api/v1/repositories/1',
+      '/api/v1/repositories',
+      '/api/v1/course-leaderboard-entries',
+    ];
 
-    baseRequestsCount += 1; // 1 refreshed poll
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 8, 'poll request was executed');
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
