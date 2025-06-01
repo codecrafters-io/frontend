@@ -1,0 +1,90 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b flex items-start justify-between mb-8">
+      <div>
+        <TertiaryLinkButton @route="course-admin.code-example-insights-index" @size="small" class="pl-1.5 mb-3">
+          <div class="flex items-center">
+            {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+            <span>
+              Back
+            </span>
+          </div>
+        </TertiaryLinkButton>
+        <h3 class="text-xl font-bold text-gray-800">
+          Code Examples in
+          {{@model.language.name}}
+          for
+          {{@model.courseStage.name}}
+        </h3>
+      </div>
+      <div class="flex items-center gap-3">
+        <CourseStageDropdown
+          @course={{@model.courseStage.course}}
+          @selectedCourseStage={{@model.courseStage}}
+          @shouldHideAllCourseStagesOption={{true}}
+          @onAllCourseStagesDropdownLinkClick={{(noop)}}
+          @onSelectedCourseStageChange={{this.handleCourseStageChange}}
+        />
+        <LanguageDropdown
+          @languages={{@model.courseStage.course.betaOrLiveLanguages}}
+          @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
+          @requestedLanguage={{@model.language}}
+          @selectedLanguage={{@model.language}}
+          @shouldShowAllLanguagesOption={{false}}
+        />
+      </div>
+    </div>
+
+    <div class="prose mb-8">
+      Displaying code examples sorted by
+      <div class="inline-block">
+        <BasicDropdown as |dd|>
+          <dd.Trigger>
+            <b class="font-semibold underline decoration-dashed">{{this.sortModeHumanized}} ↕</b>
+            ({{this.sortModeOrderDescription}}).
+          </dd.Trigger>
+          <dd.Content>
+            <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850">
+              <DropdownLink
+                @text="Diff size"
+                @icon="code"
+                class={{if (eq this.sort_mode "shortest_diff") "font-bold"}}
+                {{on "click" (fn this.setSortMode "shortest_diff")}}
+              />
+              <DropdownLink
+                @text="Highlight size"
+                @icon="document-text"
+                class={{if (eq this.sort_mode "shortest_highlights") "font-bold"}}
+                {{on "click" (fn this.setSortMode "shortest_highlights")}}
+              />
+              <DropdownLink
+                @text="Recency"
+                @icon="clock"
+                class={{if (eq this.sort_mode "newest") "font-bold"}}
+                {{on "click" (fn this.setSortMode "newest")}}
+              />
+            </div>
+          </dd.Content>
+        </BasicDropdown>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-5">
+      {{#each this.sortedSolutions as |solution solutionIndex|}}
+        <div>
+          <CoursePage::CourseStageStep::CommunitySolutionCard
+            @solution={{solution}}
+            @isExpanded={{eq this.expandedSolution solution}}
+            @onExpandButtonClick={{fn this.handleSolutionExpandButtonClick solution}}
+            class="w-full flex-shrink"
+          />
+        </div>
+        <CourseAdmin::CodeExampleInsights::MetadataContainer @solution={{solution}} />
+        {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
+          <div class="col-span-2 bg-gray-200 h-px">
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+  </div>
+</div>

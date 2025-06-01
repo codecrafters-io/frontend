@@ -17,6 +17,7 @@ interface Signature {
     isExpanded: boolean;
     metadataForDownvote?: Record<string, unknown>;
     metadataForUpvote?: Record<string, unknown>;
+    onCollapseButtonClick?: (containerElement: HTMLDivElement) => void;
     onExpandButtonClick?: (containerElement: HTMLDivElement) => void;
     onPublishToGithubButtonClick?: () => void;
     solution: CommunityCourseStageSolutionModel;
@@ -25,6 +26,7 @@ interface Signature {
 
 export default class CommunitySolutionCardComponent extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
+  @tracked diffSource: 'changed-files' | 'highlighted-files' = 'changed-files';
   @tracked fileComparisons: FileComparison[] = [];
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
@@ -35,12 +37,21 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   }
 
   @action
+  handleCollapseButtonClick() {
+    this.args.onCollapseButtonClick?.(this.containerElement!);
+  }
+
+  @action
   handleDidInsert(element: HTMLDivElement) {
     this.containerElement = element;
 
-    // Trigger comments, expand event etc.
     if (this.args.isExpanded) {
       this.loadAsyncResources.perform();
+    }
+
+    // We still haven't migrated all solutions to have highlighted files, some only have changed files
+    if (this.args.solution.highlightedFiles && this.args.solution.highlightedFiles.length > 0) {
+      this.diffSource = 'highlighted-files';
     }
   }
 
@@ -52,6 +63,11 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   }
 
   @action
+  handleDiffSourceChange(diffSource: 'changed-files' | 'highlighted-files') {
+    this.diffSource = diffSource;
+  }
+
+  @action
   handleExpandButtonClick() {
     if (this.args.onExpandButtonClick) {
       this.args.onExpandButtonClick(this.containerElement!);
@@ -59,15 +75,6 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
 
     this.loadAsyncResources.perform();
   }
-
-  loadComments = task(async () => {
-    await this.store.query('community-course-stage-solution-comment', {
-      target_id: this.args.solution.id,
-      include:
-        'user,language,target,current-user-upvotes,current-user-downvotes,current-user-upvotes.user,current-user-downvotes.user,parent-comment',
-      reload: true,
-    });
-  });
 
   loadFileComparisons = task(async () => {
     // Already loaded
@@ -79,7 +86,7 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
   });
 
   loadAsyncResources = task({ keepLatest: true }, async () => {
-    await Promise.all([this.loadComments.perform(), this.loadFileComparisons.perform()]);
+    await Promise.all([this.loadFileComparisons.perform()]);
   });
 }
 

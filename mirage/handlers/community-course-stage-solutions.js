@@ -19,6 +19,23 @@ export default function (server) {
   server.get('/community-course-stage-solutions/:id');
   server.patch('/community-course-stage-solutions/:id');
 
+  server.post('/community-course-stage-solutions/:id/unvote', function (schema, request) {
+    const solutionId = request.params.id;
+    const solution = schema.communityCourseStageSolutions.find(solutionId);
+
+    if (!solution) {
+      return new Response(404, {}, { errors: [{ detail: 'Solution not found' }] });
+    }
+
+    // Destroy any existing upvotes by the current user for this solution
+    solution.currentUserUpvotes.models.forEach((vote) => vote.destroy());
+
+    // Destroy any existing downvotes by the current user for this solution
+    solution.currentUserDownvotes.models.forEach((vote) => vote.destroy());
+
+    return solution.reload();
+  });
+
   server.get('/community-course-stage-solutions/:id/file-comparisons', function (schema, request) {
     const solution = schema.communityCourseStageSolutions.find(request.params.id);
 

@@ -5,6 +5,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import codeExamplePage from 'codecrafters-frontend/tests/pages/course-admin/code-example-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-examples-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
@@ -45,6 +46,6 @@ module('Acceptance | course-admin | code-examples | pin', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-    assert.true(coursePage.codeExamplesTab.solutionCards[0].text.includes("Editor's choice"));
+    assert.true(codeExamplesPage.solutionCards[0].text.includes("Editor's choice"));
   });
 });

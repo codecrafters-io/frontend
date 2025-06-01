@@ -99,6 +99,14 @@
         <Input @type="checkbox" @checked={{this.filename}} disabled={{eq this.language true}} />
         <span class="ml-2 {{if this.language 'text-gray-300'}}">filename</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable highlighting of specified line ranges">
+        <Input @type="checkbox" @checked={{this.highlightedRanges}} />
+        <span class="ml-2">highlightedRanges</span>
+      </label>
+      <label class="{{labelClasses}}" title="Enable collapsing of specified line ranges">
+        <Input @type="checkbox" @checked={{this.collapsedRanges}} />
+        <span class="ml-2">collapsedRanges</span>
+      </label>
     </codemirror-options-left>
     <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Placeholder text to show when document is empty or not passed">
@@ -108,7 +116,7 @@
     </codemirror-options-right>
   </codemirror-options>
 
-  <codemirror-options class="{{groupClasses}} border-dotted">
+  <codemirror-options class="{{groupClasses}} border-dotted flex-nowrap">
     <codemirror-options-left class="flex flex-grow flex-wrap">
       <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
         <Input @type="checkbox" @checked={{this.originalDocument}} />
@@ -119,11 +127,15 @@
         <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">mergeControls</span>
       </label>
       <label class="{{labelClasses}}" title="Enable collapsing unchanged lines in the diff editor">
-        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{not this.originalDocument}} />
-        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">collapseUnchanged</span>
+        <Input @type="checkbox" @checked={{this.collapseUnchanged}} disabled={{or (not this.originalDocument) this.collapsedRanges}} />
+        <span class="ml-2 {{if (or (not this.originalDocument) this.collapsedRanges) 'text-gray-300'}}">collapseUnchanged</span>
+      </label>
+      <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
+        <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
+        <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">allowInlineDiffs</span>
       </label>
     </codemirror-options-left>
-    <codemirror-options-right class="flex flex-wrap">
+    <codemirror-options-right class="flex flex-wrap justify-end h-[20px]">
       <label class="{{labelClasses}}" title="Number of lines to leave visible after/before a change before collapsing unchanged lines">
         {{#let (not (and this.originalDocument this.collapseUnchanged)) as |isDisabled|}}
           <Input @type="checkbox" @checked={{this.unchangedMargin}} disabled={{isDisabled}} />
@@ -272,10 +284,6 @@
       <Input @type="checkbox" @checked={{this.syntaxHighlightDeletions}} disabled={{or (not this.originalDocument) (not this.syntaxHighlighting)}} />
       <span class="ml-2 {{unless (and this.originalDocument this.syntaxHighlighting) 'text-gray-300'}}">syntaxHighlightDeletions</span>
     </label>
-    <label class="{{labelClasses}}" title="Display chunks with only limited inline changes inline in the code">
-      <Input @type="checkbox" @checked={{this.allowInlineDiffs}} disabled={{not this.originalDocument}} />
-      <span class="ml-2 {{unless this.originalDocument 'text-gray-300'}}">allowInlineDiffs</span>
-    </label>
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}}">
@@ -329,6 +337,7 @@
   @allowMultipleSelections={{this.allowMultipleSelections}}
   @autocompletion={{this.autocompletion}}
   @bracketMatching={{this.bracketMatching}}
+  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
   @closeBrackets={{this.closeBrackets}}
   @crosshairCursor={{this.crosshairCursor}}
   @drawSelection={{this.drawSelection}}
@@ -337,6 +346,7 @@
   @foldGutter={{this.foldGutter}}
   @highlightActiveLine={{this.highlightActiveLine}}
   @highlightChanges={{this.highlightChanges}}
+  @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
   @highlightNewlines={{this.highlightNewlines}}
   @highlightSelectionMatches={{this.highlightSelectionMatches}}
   @highlightSpecialChars={{this.highlightSpecialChars}}

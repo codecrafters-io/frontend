@@ -12,11 +12,13 @@
         @language={{@language}}
         @allowMultipleSelections={{true}}
         @bracketMatching={{true}}
+        @collapsedRanges={{@collapsedRanges}}
         @collapseUnchanged={{true}}
         @crosshairCursor={{true}}
         @drawSelection={{true}}
         @rectangularSelection={{true}}
         @readOnly={{true}}
+        @highlightedRanges={{@highlightedRanges}}
         @highlightSelectionMatches={{true}}
         @highlightSpecialChars={{true}}
         @theme={{this.codeMirrorTheme}}
@@ -25,7 +27,6 @@
     {{/let}}
   {{else}}
     <div class="text-sm leading-6">
-      {{! @glint-expect-error: not ts-ified yet }}
       <SyntaxHighlightedDiff
         @code={{or @code ""}}
         @language={{@language}}

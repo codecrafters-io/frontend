@@ -60,6 +60,14 @@ export function signInAsSubscriber(owner, server, user) {
   return signIn(owner, server, user);
 }
 
+export function signInAsVipUser(owner, server, user) {
+  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+  user.update('isVip', true);
+  user.update('vipStatusExpiresAt', new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 30)); // 30 days from now
+
+  return signIn(owner, server, user);
+}
+
 export function signInAsTeamAdmin(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
   const team = server.create('team', { id: 'dummy-team-id', name: 'Dummy Team' });

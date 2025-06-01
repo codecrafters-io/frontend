@@ -49,6 +49,7 @@ import teamSubscriptions from './handlers/team-subscriptions';
 import teams from './handlers/teams';
 import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import trustedCommunitySolutionEvaluations from './handlers/trusted-community-solution-evaluations';
+import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
 import views from './handlers/views';
@@ -73,8 +74,10 @@ export default function (config) {
           courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+          evaluations: hasMany('community-solution-evaluation', { inverse: 'communitySolution' }),
           language: belongsTo('language', { inverse: null }),
           screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
+          trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
           user: belongsTo('user', { inverse: null }),
         }),
         communityCourseStageSolutionComment: Model.extend({
@@ -165,6 +168,7 @@ function routes() {
   teams(this);
   trackLeaderboardEntries(this);
   trustedCommunitySolutionEvaluations(this);
+  communitySolutionsAnalyses(this);
   upvotes(this);
   users(this);
   views(this);

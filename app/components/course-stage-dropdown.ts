@@ -9,6 +9,7 @@ interface Signature {
   Args: {
     course: CourseModel;
     selectedCourseStage: CourseStageModel | null;
+    shouldHideAllCourseStagesOption?: boolean;
     onAllCourseStagesDropdownLinkClick?: () => void;
     onSelectedCourseStageChange: (courseStage: CourseStageModel) => void;
   };
@@ -17,6 +18,10 @@ interface Signature {
 export default class CourseStageDropdownComponent extends Component<Signature> {
   get isAllCourseStagesOptionSelected() {
     return !this.args.selectedCourseStage;
+  }
+
+  get shouldHideAllCourseStagesOption() {
+    return this.args.shouldHideAllCourseStagesOption ?? false;
   }
 
   @action

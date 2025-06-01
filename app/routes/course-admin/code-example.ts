@@ -20,10 +20,13 @@ export default class CodeExampleRoute extends BaseRoute {
     // @ts-ignore
     const course = this.modelFor('course-admin').course;
 
+    const solutionIncludes = [...CommunityCourseStageSolutionModel.defaultIncludedResources, 'trusted-evaluations', 'trusted-evaluations.evaluator'];
+
     const [solution, comparisons, evaluations] = await Promise.all([
       // Solution
       this.store.findRecord('community-course-stage-solution', params.code_example_id, {
-        include: CommunityCourseStageSolutionModel.defaultIncludedResources.join(','),
+        include: solutionIncludes.join(','),
+        reload: true,
       }),
 
       // Comparisons

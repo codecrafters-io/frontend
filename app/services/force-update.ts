@@ -21,7 +21,7 @@ export default class ForceUpdateService extends Service {
       await this.versionTracker.fetchLatestVersionIfNeeded();
     } catch (error) {
       if (config.environment === 'test') {
-        throw error;
+        return; // Ignore errors in tests since this runs async
       }
 
       Sentry.captureException(error);

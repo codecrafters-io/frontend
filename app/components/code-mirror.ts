@@ -39,6 +39,9 @@ import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
+import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
+import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -52,12 +55,17 @@ enum FoldGutterIcon {
   Collapsed = '<svg aria-hidden="true" focusable="false" role="img" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" style="display: inline-block; user-select: none; vertical-align: text-bottom; overflow: visible; cursor: pointer;"><path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06Z"></path></svg>',
 }
 
+export type LineRange = { startLine: number; endLine: number };
+
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback;
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[];
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
+/**
+ * Order of keys in this object matters, do not sort alphabetically
+ */
 const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   allowMultipleSelections: ({ allowMultipleSelections }) => [EditorState.allowMultipleSelections.of(!!allowMultipleSelections)],
   autocompletion: ({ autocompletion: enabled }) => (enabled ? [autocompletion(), keymap.of(completionKeymap)] : []),
@@ -69,6 +77,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
   highlightActiveLine: ({ highlightActiveLine: enabled }) =>
     enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
+  highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? highlightRanges(highlightedRanges) : []),
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
   highlightSpecialChars: ({ highlightSpecialChars: enabled }) => (enabled ? [highlightSpecialChars()] : []),
@@ -122,6 +131,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   originalDocumentOrDiffRelatedOption: ({
     originalDocument,
     mergeControls,
+    collapsedRanges,
     collapseUnchanged,
     highlightChanges,
     syntaxHighlighting,
@@ -135,15 +145,16 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
+            collapseUnchanged: collapseUnchanged && !collapsedRanges ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
           }),
-          collapseUnchanged ? collapseUnchangedGutter() : [],
+          collapseUnchanged && !collapsedRanges ? collapseUnchangedGutter() : [],
         ]
       : [];
   },
+  collapsedRanges: ({ collapsedRanges }) => (collapsedRanges ? [collapseRanges(collapsedRanges), collapseRangesGutter()] : []),
 };
 
 export interface Signature {
@@ -213,6 +224,10 @@ export interface Signature {
        */
       closeBrackets?: boolean;
       /**
+       * Enable collapsing of specified line ranges
+       */
+      collapsedRanges?: LineRange[];
+      /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */
       crosshairCursor?: boolean;
@@ -240,6 +255,10 @@ export interface Signature {
        * Enable inline highlighting of changes in the diff
        */
       highlightChanges?: boolean;
+      /**
+       * Enable highlighting of specified line ranges
+       */
+      highlightedRanges?: LineRange[];
       /**
        * Enable highlighting of new line symbols
        */
@@ -368,6 +387,13 @@ export default class CodeMirrorComponent extends Component<Signature> {
     if (optionName === 'originalDocumentOrDiffRelatedOption') {
       this.#updateRenderedView({
         effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
+      });
+    }
+
+    // When collapsedRanges changes - completely unload the collapsedRanges compartment to avoid any side-effects
+    if (optionName === 'collapsedRanges') {
+      this.#updateRenderedView({
+        effects: this.#resetCompartment('collapsedRanges'),
       });
     }
 

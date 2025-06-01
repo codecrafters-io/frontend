@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
 
 interface Signature {
@@ -23,10 +24,6 @@ interface Signature {
      */
     language: string;
     /**
-     * Enable code folding and fold gutter in CodeMirror
-     */
-    foldGutter?: boolean;
-    /**
      * Enable collapsing of the file card to just the header
      */
     isCollapsible?: boolean;
@@ -38,6 +35,14 @@ interface Signature {
      * Show a tooltip in the header when collapsible & collapsed
      */
     headerTooltipText?: string;
+    /**
+     * Enable collapsing of specified line ranges
+     */
+    collapsedRanges?: LineRange[];
+    /**
+     * Enable highlighting of specified line ranges
+     */
+    highlightedRanges?: LineRange[];
     /**
      * Scroll the component into view after it's collapsed
      */

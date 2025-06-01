@@ -34,6 +34,7 @@ const OPTION_DEFAULTS = {
   autocompletion: true,
   bracketMatching: true,
   closeBrackets: true,
+  collapsedRanges: false,
   collapseUnchanged: true,
   crosshairCursor: true,
   document: true,
@@ -44,6 +45,7 @@ const OPTION_DEFAULTS = {
   foldGutter: true,
   highlightActiveLine: true,
   highlightChanges: false,
+  highlightedRanges: false,
   highlightNewlines: false,
   highlightSelectionMatches: true,
   highlightSpecialChars: true,
@@ -90,6 +92,7 @@ export default class DemoCodeMirrorController extends Controller {
     'autocompletion',
     'bracketMatching',
     'closeBrackets',
+    'collapsedRanges',
     'collapseUnchanged',
     'crosshairCursor',
     'document',
@@ -100,6 +103,7 @@ export default class DemoCodeMirrorController extends Controller {
     'foldGutter',
     'highlightActiveLine',
     'highlightChanges',
+    'highlightedRanges',
     'highlightNewlines',
     'highlightSelectionMatches',
     'highlightSpecialChars',
@@ -142,6 +146,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked autocompletion = OPTION_DEFAULTS.autocompletion;
   @tracked bracketMatching = OPTION_DEFAULTS.bracketMatching;
   @tracked closeBrackets = OPTION_DEFAULTS.closeBrackets;
+  @tracked collapsedRanges = OPTION_DEFAULTS.collapsedRanges;
   @tracked crosshairCursor = OPTION_DEFAULTS.crosshairCursor;
   @tracked document = OPTION_DEFAULTS.document;
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
@@ -152,6 +157,7 @@ export default class DemoCodeMirrorController extends Controller {
   @tracked foldGutter = OPTION_DEFAULTS.foldGutter;
   @tracked highlightActiveLine = OPTION_DEFAULTS.highlightActiveLine;
   @tracked highlightChanges = OPTION_DEFAULTS.highlightChanges;
+  @tracked highlightedRanges = OPTION_DEFAULTS.highlightedRanges;
   @tracked highlightNewlines = OPTION_DEFAULTS.highlightNewlines;
   @tracked highlightSelectionMatches = OPTION_DEFAULTS.highlightSelectionMatches;
   @tracked highlightSpecialChars = OPTION_DEFAULTS.highlightSpecialChars;

@@ -1,6 +1,15 @@
 import Route from '@ember/routing/route';
 
-const QUERY_PARAMS = ['foldGutter', 'headerTooltipText', 'isCollapsed', 'isCollapsible', 'scrollIntoViewOnCollapse', 'selectedDocumentIndex'];
+const QUERY_PARAMS = [
+  'collapsedRanges',
+  'foldGutter',
+  'headerTooltipText',
+  'highlightedRanges',
+  'isCollapsed',
+  'isCollapsible',
+  'scrollIntoViewOnCollapse',
+  'selectedDocumentIndex',
+];
 
 interface QueryParamOptions {
   [key: string]: {

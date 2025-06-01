@@ -20,7 +20,7 @@ export default class CodeExamplesController extends Controller {
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
-  @tracked order: 'recommended' | 'recent' | 'affiliated' = 'recommended';
+  @tracked order: 'recommended' | 'experimental' = 'recommended';
   @tracked isLoading = true;
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
@@ -68,7 +68,7 @@ export default class CodeExamplesController extends Controller {
   handleOrderToggle() {
     // For now we only support toggling between these two
     if (this.order === 'recommended') {
-      this.order = 'recent';
+      this.order = 'experimental';
     } else {
       this.order = 'recommended';
     }

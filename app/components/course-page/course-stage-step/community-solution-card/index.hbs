@@ -6,8 +6,12 @@
   {{did-update this.handleDidUpdateIsExpanded @isExpanded}}
 >
   <CoursePage::CourseStageStep::CommunitySolutionCard::Header
+    @contentIsExpanded={{@isExpanded}}
+    @diffSource={{this.diffSource}}
     @metadataForDownvote={{@metadataForDownvote}}
     @metadataForUpvote={{@metadataForUpvote}}
+    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    @onDiffSourceChange={{this.handleDiffSourceChange}}
     @solution={{@solution}}
     class="mb-3"
   />
@@ -15,9 +19,12 @@
   <div>
     {{#if @isExpanded}}
       <CoursePage::CourseStageStep::CommunitySolutionCard::Content
-        @solution={{@solution}}
+        @diffSource={{this.diffSource}}
         @fileComparisons={{this.fileComparisons}}
+        @metadataForDownvote={{@metadataForDownvote}}
+        @metadataForUpvote={{@metadataForUpvote}}
         @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
+        @solution={{@solution}}
       />
     {{/if}}
 

@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 
-const QUERY_PARAMS = ['forceDarkTheme', 'selectedDocumentIndex', 'useCodeMirror'];
+const QUERY_PARAMS = ['collapsedRanges', 'forceDarkTheme', 'highlightedRanges', 'selectedDocumentIndex', 'useCodeMirror'];
 
 interface QueryParamOptions {
   [key: string]: {

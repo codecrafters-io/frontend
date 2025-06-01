@@ -1,87 +1,72 @@
-{{#if this.shouldShowExplanation}}
-  <div class="pb-8 pt-4">
-    <div
-      class="leading-7 prose dark:prose-invert solution-explanation max-w-none"
-      {{did-insert this.handleDidInsertExplanationHTML}}
-      {{did-update this.handleDidUpdateExplanationHTML @solution.explanationMarkdown}}
-    >
-      {{markdown-to-html @solution.explanationMarkdown}}
-    </div>
-  </div>
-{{/if}}
-
-{{#each this.changedFilesForRender key="filename" as |changedFile index|}}
-  <div
-    class="{{if (not-eq index (sub @solution.changedFiles.length 1)) 'mb-4'}}
-      bg-white dark:bg-gray-850 shadow-sm rounded border border-gray-300 dark:border-white/10"
-    data-test-community-solution-changed-file
-  >
-    <div
-      class="bg-gray-100 dark:bg-gray-800 rounded-t py-2 px-4 border-b border-gray-200 dark:border-white/5 shadow-sm flex items-center justify-between sticky top-10 z-10"
-    >
-      <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{changedFile.filename}}</span>
-      <div>
-        {{#if @solution.isPublishedToPublicGithubRepository}}
-          <a
-            {{! @glint-expect-error call not ts-ified yet }}
-            href={{call (fn @solution.githubUrlForFile changedFile.filename)}}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex gap-x-1 items-center group"
-          >
-            <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
-              View on GitHub
-            </span>
-            {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
-          </a>
-        {{else if this.shouldShowPublishToGithubButton}}
-          <button type="button" {{on "click" this.handlePublishToGithubButtonClick}} class="flex gap-x-1 items-center group">
-            <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
-              Publish to GitHub
-            </span>
-            {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
-          </button>
-        {{/if}}
+<div data-test-community-solution-card-content ...attributes>
+  {{#if this.shouldShowExplanation}}
+    <div class="pb-8 pt-4">
+      <div
+        class="leading-7 prose dark:prose-invert solution-explanation max-w-none"
+        {{did-insert this.handleDidInsertExplanationHTML}}
+        {{did-update this.handleDidUpdateExplanationHTML @solution.explanationMarkdown}}
+      >
+        {{markdown-to-html @solution.explanationMarkdown}}
       </div>
     </div>
+  {{/if}}
 
-    <SyntaxHighlightedDiff
-      @code={{changedFile.diff}}
+  {{#if (eq @diffSource "highlighted-files")}}
+    {{#each @solution.highlightedFiles key="filename" as |highlightedFile index|}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard
+        @highlightedFile={{highlightedFile}}
+        @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+        @solution={{@solution}}
+        class={{if (not-eq index (sub @solution.highlightedFiles.length 1)) "mb-4"}}
+      />
+    {{/each}}
+  {{else}}
+    {{#each @solution.changedFiles key="filename" as |changedFile index|}}
+      <CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard
+        @changedFile={{changedFile}}
+        @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
+        @solution={{@solution}}
+        class={{if (not-eq index (sub @solution.changedFiles.length 1)) "mb-4"}}
+      />
+    {{/each}}
+  {{/if}}
+
+  {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
+    <FileContentsCard
+      @headerTooltipText="This file was added in previous stages."
+      @isCollapsible={{true}}
+      @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
+      @onExpand={{fn this.handleExpandUnchangedFile unchangedFileComparison.path}}
+      @onCollapse={{fn this.handleCollapseUnchangedFile unchangedFileComparison.path}}
+      @filename={{unchangedFileComparison.path}}
+      @code={{unchangedFileComparison.content}}
       @language={{@solution.language.slug}}
-      @comments={{changedFile.comments}}
-      @onCommentView={{this.handleCommentView}}
-      @shouldCollapseUnchangedLines={{true}}
-      class="ph-no-capture text-sm leading-6"
+      data-test-community-solution-unchanged-file
+      {{! scroll-mt-16 accounts for the sticky menu bar}}
+      class="mt-4 text-sm scroll-mt-16"
+    >
+      <:header>
+        <div class="flex items-center justify-between w-full gap-3">
+          <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{unchangedFileComparison.path}}</span>
+
+          <Pill @color="white">
+            Unchanged
+          </Pill>
+
+          {{#unless (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
+            <EmberTooltip @text="This file was added in previous stages." @side="top" />
+          {{/unless}}
+        </div>
+      </:header>
+    </FileContentsCard>
+  {{/each}}
+
+  {{#unless (eq @solution.user this.authenticator.currentUser)}}
+    <CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection
+      @metadataForDownvote={{@metadataForDownvote}}
+      @metadataForUpvote={{@metadataForUpvote}}
+      @solution={{@solution}}
+      class="pt-6 pb-3"
     />
-  </div>
-{{/each}}
-
-{{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
-  <FileContentsCard
-    @headerTooltipText="This file was added in previous stages."
-    @isCollapsible={{true}}
-    @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
-    @onExpand={{fn this.handleExpandUnchangedFile unchangedFileComparison.path}}
-    @onCollapse={{fn this.handleCollapseUnchangedFile unchangedFileComparison.path}}
-    @filename={{unchangedFileComparison.path}}
-    @code={{unchangedFileComparison.content}}
-    @language={{@solution.language.slug}}
-    data-test-community-solution-unchanged-file
-    {{! scroll-mt-16 accounts for the sticky menu bar}}
-    class="mt-4 text-sm scroll-mt-16"
-  >
-    <:header>
-      <div class="flex items-center justify-between w-full gap-3">
-        <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{unchangedFileComparison.path}}</span>
-
-        <Pill @color="white">
-          Unchanged
-        </Pill>
-
-        {{#unless (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
-          <EmberTooltip @text="This file was added in previous stages." @side="top" />
-        {{/unless}}
-      </div>
-    </:header>
-  </FileContentsCard>
-{{/each}}
+  {{/unless}}
+</div>

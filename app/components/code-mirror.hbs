@@ -5,12 +5,14 @@
   {{did-update this.optionDidChange "autocompletion" @autocompletion}}
   {{did-update this.optionDidChange "bracketMatching" @bracketMatching}}
   {{did-update this.optionDidChange "closeBrackets" @closeBrackets}}
+  {{did-update this.optionDidChange "collapsedRanges" @collapsedRanges}}
   {{did-update this.optionDidChange "crosshairCursor" @crosshairCursor}}
   {{did-update this.optionDidChange "drawSelection" @drawSelection}}
   {{did-update this.optionDidChange "dropCursor" @dropCursor}}
   {{did-update this.optionDidChange "editable" @editable}}
   {{did-update this.optionDidChange "foldGutter" @foldGutter}}
   {{did-update this.optionDidChange "highlightActiveLine" @highlightActiveLine}}
+  {{did-update this.optionDidChange "highlightedRanges" @highlightedRanges}}
   {{did-update this.optionDidChange "highlightNewlines" @highlightNewlines}}
   {{did-update this.optionDidChange "highlightSelectionMatches" @highlightSelectionMatches}}
   {{did-update this.optionDidChange "highlightSpecialChars" @highlightSpecialChars}}
@@ -31,6 +33,7 @@
     (array
       @originalDocument
       @mergeControls
+      @collapsedRanges
       @collapseUnchanged
       @highlightChanges
       @syntaxHighlightDeletions

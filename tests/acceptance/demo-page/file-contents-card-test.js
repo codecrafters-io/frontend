@@ -100,13 +100,4 @@ module('Acceptance | demo page | file-contents-card', function (hooks) {
       'correct tooltip message is displayed',
     );
   });
-
-  test("it allows toggling 'foldGutter' option", async function (assert) {
-    await demoPage.demoTabs.fileContentsCard.visit();
-    assert.ok(demoPage.demoTabs.fileContentsCard.component.codeMirror.gutters.foldGutter.isVisible, 'fold gutter is present');
-    await demoPage.demoTabs.fileContentsCard.clickOnComponentOption('foldGutter');
-    assert.notOk(demoPage.demoTabs.fileContentsCard.component.codeMirror.gutters.foldGutter.isVisible, 'fold gutter is not present');
-    await demoPage.demoTabs.fileContentsCard.clickOnComponentOption('foldGutter');
-    assert.ok(demoPage.demoTabs.fileContentsCard.component.codeMirror.gutters.foldGutter.isVisible, 'fold gutter is present again');
-  });
 });

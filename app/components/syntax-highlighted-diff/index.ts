@@ -22,41 +22,27 @@ interface Signature {
 
   Args: {
     code: string;
-    comments: CommunityCourseStageSolutionCommentModel[];
-    language: string;
-    shouldCollapseUnchangedLines: boolean;
+    comments?: CommunityCourseStageSolutionCommentModel[];
     forceDarkTheme?: boolean;
+    language: string;
     onCommentView?: (comment: CommunityCourseStageSolutionCommentModel) => void;
+    shouldCollapseUnchangedLines: boolean;
   };
 }
 
-interface HighlightCodeParams {
-  isDarkMode?: boolean;
-  forceDarkTheme?: boolean;
-  language?: string;
-  codeWithoutDiffMarkers?: string;
-}
+class HighlightCodeParams {
+  theme: 'dark' | 'light';
+  language: string;
+  codeWithoutDiffMarkers: string;
 
-class HighlightCodeParamsCache implements HighlightCodeParams {
-  isDarkMode?: boolean;
-  forceDarkTheme?: boolean;
-  language?: string;
-  codeWithoutDiffMarkers?: string;
-
-  compareWithParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): boolean {
-    return (
-      this.isDarkMode === isDarkMode &&
-      this.forceDarkTheme === forceDarkTheme &&
-      this.language === language &&
-      this.codeWithoutDiffMarkers === codeWithoutDiffMarkers
-    );
+  constructor(args: { theme: 'dark' | 'light'; language: string; codeWithoutDiffMarkers: string }) {
+    this.theme = args.theme;
+    this.language = args.language;
+    this.codeWithoutDiffMarkers = args.codeWithoutDiffMarkers;
   }
 
-  setParams({ isDarkMode, forceDarkTheme, language, codeWithoutDiffMarkers }: HighlightCodeParams): void {
-    this.isDarkMode = isDarkMode;
-    this.forceDarkTheme = forceDarkTheme;
-    this.language = language;
-    this.codeWithoutDiffMarkers = codeWithoutDiffMarkers;
+  equals(other: HighlightCodeParams): boolean {
+    return this.theme === other.theme && this.language === other.language && this.codeWithoutDiffMarkers === other.codeWithoutDiffMarkers;
   }
 }
 
@@ -64,14 +50,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
   @service declare darkMode: DarkModeService;
 
   @tracked asyncHighlightedHTML: string | null = null;
-  @tracked asyncHighlightedCode: string | null = null;
+  @tracked lastHighlightCodeParams: HighlightCodeParams | undefined;
   @tracked lineNumberWithExpandedComments: number | null = null;
-
-  /**
-   * The last parameters used for formatting & rendering the code
-   * @private
-   */
-  #lastHighlightCodeParams: HighlightCodeParamsCache = new HighlightCodeParamsCache();
 
   static highlighterIdForDarkMode = 'syntax-highlighted-diff-dark';
   static highlighterIdForLightMode = 'syntax-highlighted-diff-light';
@@ -139,8 +119,16 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
     }
   }
 
+  get highlightCodeParams() {
+    return new HighlightCodeParams({
+      codeWithoutDiffMarkers: this.codeWithoutDiffMarkers,
+      language: this.args.language,
+      theme: this.darkMode.isEnabled || this.args.forceDarkTheme ? 'dark' : 'light',
+    });
+  }
+
   get highlightedHtml() {
-    if (this.asyncHighlightedCode === this.args.code) {
+    if (this.lastHighlightCodeParams?.equals(this.highlightCodeParams)) {
       return this.asyncHighlightedHTML!;
     } else {
       return this.temporaryHTML;
@@ -186,58 +174,41 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
   highlightCode = task({ keepLatest: true }, async (): Promise<void> => {
     // Read all dependent parameters into local constants
-    const {
-      codeWithoutDiffMarkers,
-      args: { code, language, forceDarkTheme },
-      darkMode: { isEnabled: isDarkMode },
-    } = this;
+    const highlightCodeParams = this.highlightCodeParams;
 
     // Return if nothing changed since last render
-    if (
-      this.#lastHighlightCodeParams.compareWithParams({
-        isDarkMode,
-        forceDarkTheme,
-        language,
-        codeWithoutDiffMarkers,
-      })
-    ) {
+    if (this.lastHighlightCodeParams?.equals(highlightCodeParams)) {
       return;
     }
 
-    // Decide whether to actually use the dark theme
-    const useDarkTheme = !!(isDarkMode || forceDarkTheme);
-
     // Prepare the highlighter promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
-      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
-      useDarkTheme ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
+      highlightCodeParams.theme === 'dark'
+        ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode
+        : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
+      highlightCodeParams.theme === 'dark'
+        ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode
+        : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
     );
 
     // Wait for the highlighter promise to load
     const highlighter = await highlighterPromise;
 
     // Wait for the language to load
-    await highlighter.loadLanguage(language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage);
+    await highlighter.loadLanguage(highlightCodeParams.language as shiki.BundledLanguage | shiki.LanguageInput | shiki.SpecialLanguage);
 
     // Format the code and use it
-    this.asyncHighlightedHTML = highlighter.codeToHtml(codeWithoutDiffMarkers, {
-      lang: language,
-      theme: useDarkTheme
-        ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
-        : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
+    this.asyncHighlightedHTML = highlighter.codeToHtml(highlightCodeParams.codeWithoutDiffMarkers, {
+      lang: highlightCodeParams.language,
+      theme:
+        highlightCodeParams.theme === 'dark'
+          ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
+          : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
       transformers: [transformerNotationDiff()],
     });
 
-    // Remember which code we've last formatted
-    this.asyncHighlightedCode = code;
-
     // Remember all parameters used for this task run
-    this.#lastHighlightCodeParams.setParams({
-      isDarkMode,
-      forceDarkTheme,
-      language,
-      codeWithoutDiffMarkers,
-    });
+    this.lastHighlightCodeParams = highlightCodeParams;
 
     // Ensure we don't run this task too often
     await timeout(DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS);

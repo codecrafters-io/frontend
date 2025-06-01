@@ -1,4 +1,5 @@
 import { tracked } from '@glimmer/tracking';
+import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
 import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
 
 export class ExampleDocument {
@@ -6,22 +7,30 @@ export class ExampleDocument {
   @tracked originalDocument: string;
   @tracked filename: string;
   @tracked language: string;
+  @tracked highlightedRanges: LineRange[];
+  @tracked collapsedRanges: LineRange[];
 
   constructor({
     document = '',
     originalDocument,
     filename,
     language,
+    highlightedRanges = [],
+    collapsedRanges = [],
   }: {
     document?: string;
     originalDocument?: string;
     filename: string;
     language: string;
+    highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
   }) {
     this.document = document;
     this.originalDocument = originalDocument || document;
     this.filename = filename;
     this.language = language;
+    this.highlightedRanges = highlightedRanges;
+    this.collapsedRanges = collapsedRanges;
   }
 
   static createEmpty() {
@@ -32,7 +41,19 @@ export class ExampleDocument {
 export class DiffBasedExampleDocument extends ExampleDocument {
   @tracked diff?: string;
 
-  constructor({ diff, filename, language }: { diff?: string; filename: string; language: string }) {
+  constructor({
+    diff,
+    filename,
+    language,
+    highlightedRanges = [],
+    collapsedRanges = [],
+  }: {
+    diff?: string;
+    filename: string;
+    language: string;
+    highlightedRanges?: LineRange[];
+    collapsedRanges?: LineRange[];
+  }) {
     const { current: document, original: originalDocument } = parseDiffAsDocument(diff);
 
     super({
@@ -40,6 +61,8 @@ export class DiffBasedExampleDocument extends ExampleDocument {
       originalDocument,
       filename,
       language,
+      highlightedRanges,
+      collapsedRanges,
     });
 
     this.diff = diff;
@@ -96,6 +119,18 @@ export default [
     ].join('\n'),
     filename: 'test.txt',
     language: 'text',
+    highlightedRanges: [
+      { startLine: 2, endLine: 4 },
+      { startLine: 7, endLine: 10 },
+      { startLine: 18, endLine: 20 },
+    ],
+    collapsedRanges: [
+      { startLine: 1, endLine: 7 },
+      { startLine: 12, endLine: 15 },
+      { startLine: 25, endLine: 27 },
+      { startLine: 30, endLine: 31 },
+      { startLine: 38, endLine: 39 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -142,6 +177,17 @@ export default [
     ].join('\n'),
     filename: 'test.js',
     language: 'javascript',
+    highlightedRanges: [
+      { startLine: 5, endLine: 5 },
+      { startLine: 8, endLine: 12 },
+      { startLine: 16, endLine: 17 },
+      { startLine: 21, endLine: 22 },
+      { startLine: 26, endLine: 27 },
+    ],
+    collapsedRanges: [
+      { startLine: 7, endLine: 13 },
+      { startLine: 20, endLine: 28 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -156,12 +202,20 @@ export default [
       '+\t\t\t&nbsp;',
       '+\t\t</span>',
       '+\t\tAn example HTML document',
-      '+\t\tWith an invisible  ——≫ ‎ ≪——  characer',
+      '+\t\tWith an invisible  ——≫ ‎ ≪——  character',
       '+\t</body>',
       '+</html>',
     ].join('\n'),
     filename: 'test.html',
     language: 'html',
+    highlightedRanges: [
+      { startLine: 7, endLine: 7 },
+      { startLine: 9, endLine: 9 },
+    ],
+    collapsedRanges: [
+      { startLine: 2, endLine: 4 },
+      { startLine: 6, endLine: 8 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -181,6 +235,10 @@ export default [
     ].join('\n'),
     filename: 'test.py',
     language: 'python',
+    collapsedRanges: [
+      { startLine: 1, endLine: 1 },
+      { startLine: 3, endLine: 9 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -239,6 +297,14 @@ export default [
     ].join('\n'),
     filename: 'test.sql',
     language: 'sql',
+    highlightedRanges: [
+      { startLine: 14, endLine: 20 },
+      { startLine: 35, endLine: 39 },
+    ],
+    collapsedRanges: [
+      { startLine: 15, endLine: 19 },
+      { startLine: 24, endLine: 26 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -268,6 +334,14 @@ export default [
     ].join('\n'),
     filename: 'test.md',
     language: 'markdown',
+    highlightedRanges: [
+      { startLine: 12, endLine: 12 },
+      { startLine: 18, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 1, endLine: 6 },
+      { startLine: 21, endLine: 21 },
+    ],
   }),
 
   new DiffBasedExampleDocument({
@@ -300,5 +374,13 @@ export default [
     ].join('\n'),
     filename: 'Dockerfile',
     language: 'dockerfile',
+    highlightedRanges: [
+      { startLine: 7, endLine: 7 },
+      { startLine: 17, endLine: 18 },
+    ],
+    collapsedRanges: [
+      { startLine: 12, endLine: 15 },
+      { startLine: 22, endLine: 23 },
+    ],
   }),
 ];
