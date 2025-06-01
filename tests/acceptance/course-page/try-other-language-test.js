@@ -71,13 +71,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
     await animationsSettled();
 
-    expectedRequests = [
-      ...expectedRequests,
-      '/api/v1/languages',
-      '/api/v1/course-language-requests',
-      '/api/v1/repositories',
-      '/api/v1/course-leaderboard-entries',
-    ];
+    expectedRequests = [...expectedRequests, '/api/v1/repositories', '/api/v1/courses', '/api/v1/repositories', '/api/v1/course-leaderboard-entries'];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after selecting Go language');
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');

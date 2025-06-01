@@ -67,7 +67,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
       '/api/v1/repositories',
       '/api/v1/course-language-requests',
       '/api/v1/languages',
-      '/api/v1/course-leaderboard-entries'
+      '/api/v1/course-leaderboard-entries',
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
@@ -82,14 +82,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
-    expectedRequests = [
-      ...expectedRequests,
-      '/api/v1/repositories', 
-      '/api/v1/courses', 
-      '/api/v1/repositories', 
-      '/api/v1/course-leaderboard-entries'
-    ];
-    
+    expectedRequests = [...expectedRequests, '/api/v1/repositories', '/api/v1/courses', '/api/v1/repositories', '/api/v1/course-leaderboard-entries'];
+
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after language selection');
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
@@ -98,11 +92,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    expectedRequests = [
-      ...expectedRequests,
-      '/api/v1/repositories',
-      '/api/v1/course-leaderboard-entries'
-    ];
+    expectedRequests = [...expectedRequests, '/api/v1/repositories', '/api/v1/course-leaderboard-entries'];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
