@@ -22,10 +22,7 @@ module('Integration | Component | rive-animation', function (hooks) {
     await settled();
 
     // Wait for canvas to be initialized with non-zero dimensions
-    await waitUntil(
-      () => canvas.width > 0 && canvas.height > 0,
-      { timeout: 5000 }
-    );
+    await waitUntil(() => canvas.width > 0 && canvas.height > 0, { timeout: 5000 });
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
@@ -37,14 +34,16 @@ module('Integration | Component | rive-animation', function (hooks) {
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
         for (let i = 0; i < imageData.length; i += 4) {
           if (imageData[i + 3] !== 0) {
             return true;
           }
         }
+
         return false;
       },
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
 
     // Final check for non-transparent pixels
@@ -76,10 +75,7 @@ module('Integration | Component | rive-animation', function (hooks) {
     await settled();
 
     // Wait for canvas to be initialized with non-zero dimensions
-    await waitUntil(
-      () => canvas.width > 0 && canvas.height > 0,
-      { timeout: 5000 }
-    );
+    await waitUntil(() => canvas.width > 0 && canvas.height > 0, { timeout: 5000 });
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
@@ -91,14 +87,16 @@ module('Integration | Component | rive-animation', function (hooks) {
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
         for (let i = 0; i < imageData.length; i += 4) {
           if (imageData[i + 3] !== 0) {
             return true;
           }
         }
+
         return false;
       },
-      { timeout: 5000 }
+      { timeout: 5000 },
     );
 
     // Final check for non-transparent pixels
