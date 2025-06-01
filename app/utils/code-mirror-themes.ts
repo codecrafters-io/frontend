@@ -46,6 +46,7 @@ const BASE_STYLE = {
     '& .cm-gutterElement': {
       '&.cm-deletedLineGutter': {
         background: 'rgba(255, 0, 0, 0.1)',
+        zIndex: -1,
 
         '&:before': {
           content: '"-"',
