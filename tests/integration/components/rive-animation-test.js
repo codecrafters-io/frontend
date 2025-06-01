@@ -21,43 +21,40 @@ module('Integration | Component | rive-animation', function (hooks) {
     // Wait for the animation to load and render
     await settled();
 
-    // Wait for canvas to be initialized with non-zero dimensions
-    await waitUntil(() => canvas.width > 0 && canvas.height > 0, { timeout: 5000 });
-
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
     assert.ok(canvas.height > 0, 'Canvas has height');
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Wait for the animation to start rendering
+    // Wait for the animation to render at least one frame
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-        for (let i = 0; i < imageData.length; i += 4) {
-          if (imageData[i + 3] !== 0) {
+        // Check if any pixel has non-zero alpha
+        for (let i = 3; i < imageData.length; i += 4) {
+          if (imageData[i] > 0) {
             return true;
           }
         }
-
         return false;
       },
-      { timeout: 5000 },
+      { 
+        timeout: 5000,
+        timeoutMessage: 'Animation failed to render within 5 seconds'
+      }
     );
 
-    // Final check for non-transparent pixels
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-    let hasNonTransparentPixels = false;
-
-    for (let i = 0; i < imageData.length; i += 4) {
-      if (imageData[i + 3] !== 0) {
-        hasNonTransparentPixels = true;
+    // Verify that the animation has rendered
+    const finalImageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let hasVisiblePixels = false;
+    for (let i = 3; i < finalImageData.length; i += 4) {
+      if (finalImageData[i] > 0) {
+        hasVisiblePixels = true;
         break;
       }
     }
-
-    assert.ok(hasNonTransparentPixels, 'Canvas has non-transparent pixels');
+    assert.ok(hasVisiblePixels, 'Animation has rendered visible pixels');
   });
 
   test('it works with different animation files', async function (assert) {
@@ -74,42 +71,39 @@ module('Integration | Component | rive-animation', function (hooks) {
     // Wait for the animation to load and render
     await settled();
 
-    // Wait for canvas to be initialized with non-zero dimensions
-    await waitUntil(() => canvas.width > 0 && canvas.height > 0, { timeout: 5000 });
-
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
     assert.ok(canvas.height > 0, 'Canvas has height');
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Wait for the animation to start rendering
+    // Wait for the animation to render at least one frame
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-        for (let i = 0; i < imageData.length; i += 4) {
-          if (imageData[i + 3] !== 0) {
+        // Check if any pixel has non-zero alpha
+        for (let i = 3; i < imageData.length; i += 4) {
+          if (imageData[i] > 0) {
             return true;
           }
         }
-
         return false;
       },
-      { timeout: 5000 },
+      { 
+        timeout: 5000,
+        timeoutMessage: 'Animation failed to render within 5 seconds'
+      }
     );
 
-    // Final check for non-transparent pixels
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-    let hasNonTransparentPixels = false;
-
-    for (let i = 0; i < imageData.length; i += 4) {
-      if (imageData[i + 3] !== 0) {
-        hasNonTransparentPixels = true;
+    // Verify that the animation has rendered
+    const finalImageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let hasVisiblePixels = false;
+    for (let i = 3; i < finalImageData.length; i += 4) {
+      if (finalImageData[i] > 0) {
+        hasVisiblePixels = true;
         break;
       }
     }
-
-    assert.ok(hasNonTransparentPixels, 'Canvas has non-transparent pixels');
+    assert.ok(hasVisiblePixels, 'Animation has rendered visible pixels');
   });
 });
