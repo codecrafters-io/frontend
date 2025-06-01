@@ -21,21 +21,11 @@ module('Integration | Component | rive-animation', function (hooks) {
     // Wait for the animation to load and render
     await settled();
 
-    // Wait until the canvas has non-transparent pixels
-    await waitUntil(() => {
-      const context = canvas.getContext('2d');
-      if (!context) return false;
-
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-      for (let i = 0; i < imageData.length; i += 4) {
-        if (imageData[i + 3] !== 0) {
-          return true;
-        }
-      }
-
-      return false;
-    });
+    // Wait for canvas to be initialized with non-zero dimensions
+    await waitUntil(
+      () => canvas.width > 0 && canvas.height > 0,
+      { timeout: 5000 }
+    );
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
@@ -43,13 +33,26 @@ module('Integration | Component | rive-animation', function (hooks) {
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Check for non-transparent pixels
+    // Wait for the animation to start rendering
+    await waitUntil(
+      () => {
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+        for (let i = 0; i < imageData.length; i += 4) {
+          if (imageData[i + 3] !== 0) {
+            return true;
+          }
+        }
+        return false;
+      },
+      { timeout: 5000 }
+    );
+
+    // Final check for non-transparent pixels
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
     let hasNonTransparentPixels = false;
 
     for (let i = 0; i < imageData.length; i += 4) {
       if (imageData[i + 3] !== 0) {
-        // Check alpha channel
         hasNonTransparentPixels = true;
         break;
       }
@@ -72,21 +75,11 @@ module('Integration | Component | rive-animation', function (hooks) {
     // Wait for the animation to load and render
     await settled();
 
-    // Wait until the canvas has non-transparent pixels
-    await waitUntil(() => {
-      const context = canvas.getContext('2d');
-      if (!context) return false;
-
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-
-      for (let i = 0; i < imageData.length; i += 4) {
-        if (imageData[i + 3] !== 0) {
-          return true;
-        }
-      }
-
-      return false;
-    });
+    // Wait for canvas to be initialized with non-zero dimensions
+    await waitUntil(
+      () => canvas.width > 0 && canvas.height > 0,
+      { timeout: 5000 }
+    );
 
     // Check that canvas has been initialized
     assert.ok(canvas.width > 0, 'Canvas has width');
@@ -94,13 +87,26 @@ module('Integration | Component | rive-animation', function (hooks) {
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Check for non-transparent pixels
+    // Wait for the animation to start rendering
+    await waitUntil(
+      () => {
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
+        for (let i = 0; i < imageData.length; i += 4) {
+          if (imageData[i + 3] !== 0) {
+            return true;
+          }
+        }
+        return false;
+      },
+      { timeout: 5000 }
+    );
+
+    // Final check for non-transparent pixels
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
     let hasNonTransparentPixels = false;
 
     for (let i = 0; i < imageData.length; i += 4) {
       if (imageData[i + 3] !== 0) {
-        // Check alpha channel
         hasNonTransparentPixels = true;
         break;
       }
