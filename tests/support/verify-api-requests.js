@@ -9,13 +9,10 @@ export default function verifyApiRequests(server, expectedRequests) {
   });
 
   // Debugging
-  console.group('API Requests Verification');
-  console.log('Expected requests:', expectedRequests);
-  console.log(
-    'Actual requests:',
-    filteredRequests.map((r) => new URL(r.url).pathname),
-  );
-  console.groupEnd();
+  // console.group('API Requests Verification');
+  // console.log('Expected requests:', expectedRequests);
+  // console.log('Actual requests:', filteredRequests.map(r => new URL(r.url).pathname));
+  // console.groupEnd();
 
   // Verify number of requests matches
   if (filteredRequests.length !== expectedRequests.length) {

@@ -111,14 +111,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    expectedRequests = [
-      ...expectedRequests,
-      '/api/v1/repositories/2',
-      '/api/v1/repositories/2',
-      '/api/v1/repositories/2',
-      '/api/v1/repositories',
-      '/api/v1/course-leaderboard-entries',
-    ];
+    expectedRequests = [...expectedRequests, '/api/v1/repositories', '/api/v1/course-leaderboard-entries'];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after second poll');
   });
