@@ -42,7 +42,7 @@ export default class FaqListComponent extends Component<Signature> {
     // },
     {
       query: 'Why the Team Plan over the Individual Membership?',
-      answer: 'The Team Plan gives you swappable spots to share among your team. Finished all the courses? Pass your spot to a teammate.',
+      answer: 'The Team Plan gives you swappable spots to share among your team. Finished all challenges? Pass your spot to a teammate.',
     },
     {
       query: 'Is there a free trial?',
