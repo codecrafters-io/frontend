@@ -12,6 +12,10 @@ export default class CodeExampleInsightsIndexController extends Controller {
 
   declare model: ModelType;
 
+  get sortedLanguagesForDropdown() {
+    return this.model.course.betaOrLiveLanguages.sortBy('name');
+  }
+
   @action
   onLanguageChange(language: LanguageModel) {
     this.router.transitionTo({

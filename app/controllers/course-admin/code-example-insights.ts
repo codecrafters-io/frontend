@@ -50,6 +50,10 @@ export default class CodeExampleInsightsController extends Controller {
     }
   }
 
+  get sortedLanguagesForDropdown() {
+    return this.model.courseStage.course.betaOrLiveLanguages.sortBy('name');
+  }
+
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {
     // The API handles the sorting order
     return this.model.solutions;
