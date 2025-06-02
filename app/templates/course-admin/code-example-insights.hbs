@@ -26,7 +26,7 @@
           @onSelectedCourseStageChange={{this.handleCourseStageChange}}
         />
         <LanguageDropdown
-          @languages={{@model.courseStage.course.betaOrLiveLanguages}}
+          @languages={{this.sortedLanguagesForDropdown}}
           @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
           @requestedLanguage={{@model.language}}
           @selectedLanguage={{@model.language}}
