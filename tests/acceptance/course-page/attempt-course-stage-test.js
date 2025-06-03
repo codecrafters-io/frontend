@@ -1,4 +1,4 @@
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -28,27 +28,26 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       user: currentUser,
     });
 
+    let expectedRequests = [
+      '/api/v1/repositories',      // fetch repositories (catalog page)
+      '/api/v1/courses',          // fetch courses (catalog page)
+      '/api/v1/languages',        // fetch languages (catalog page)
+      '/api/v1/courses',          // fetch course details (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+      '/api/v1/courses',          // refresh course (course page)
+      '/api/v1/repositories',     // fetch repositories (course page)
+      '/api/v1/course-stage-comments', // fetch stage comments (course page)
+      '/api/v1/course-stage-language-guides', // fetch language guides (course page)
+      '/api/v1/course-leaderboard-entries' // fetch leaderboard entries (course page)
+    ];
+
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
-    assert.strictEqual(
-      apiRequestsCount(this.server),
-      [
-        'fetch courses (catalog)',
-        'fetch repositories (catalog)',
-        'fetch languages (catalog)',
-        'fetch courses (course page)',
-        'fetch repositories (course page)',
-        'fetch leaderboard entries (course page)',
-        'fetch hints (course page)',
-        'fetch language guide (course page)',
-        'fetch course stage comments (course page)',
-        'fetch leaderboard entries (course page)',
-      ].length,
-    );
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
