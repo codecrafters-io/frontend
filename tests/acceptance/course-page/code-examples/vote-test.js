@@ -14,42 +14,6 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('feedback section is not shown for unscored code examples', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    let otherUserOne = this.server.create('user', {
-      avatarUrl: 'https://github.com/sarupbanskota.png',
-      createdAt: new Date(),
-      githubUsername: 'sarupbanskota',
-      username: 'sarupbanskota',
-    });
-
-    let otherUserTwo = this.server.create('user', {
-      avatarUrl: 'https://github.com/Gufran.png',
-      createdAt: new Date(),
-      githubUsername: 'gufran',
-      username: 'gufran',
-    });
-
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-
-    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
-    otherUserOneSolution.update({ user: otherUserOne });
-    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
-    otherUserTwoSolution.update({ user: otherUserTwo });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
-
-    assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
-  });
-
   test('can upvote code examples', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -215,5 +179,46 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
     assert.false(codeExamplesPage.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on own solution');
+  });
+
+  test('user does not see feedback buttons for unscored code examples', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let otherUserOne = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    let otherUserTwo = this.server.create('user', {
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'gufran',
+      username: 'gufran',
+    });
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    otherUserOneSolution.update({ user: otherUserOne });
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    otherUserTwoSolution.update({ user: otherUserTwo });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+
+    assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on unscored solution');
+    assert.false(codeExamplesPage.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on unscored solution');
+
+    await codeExamplesPage.solutionCards[1].clickOnExpandButton();
+    assert.false(codeExamplesPage.solutionCards[1].upvoteButton.isPresent, 'upvote button should not be present on unscored solution');
+    assert.false(codeExamplesPage.solutionCards[1].downvoteButton.isPresent, 'downvote button should not be present on unscored solution');
   });
 });
