@@ -31,16 +31,16 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     });
 
     let expectedRequests = [
-      '/api/v1/repositories',      // fetch repositories (catalog page)
-      '/api/v1/courses',          // fetch courses (catalog page)
-      '/api/v1/languages',        // fetch languages (catalog page)
-      '/api/v1/courses',          // fetch course details (course overview page)
+      '/api/v1/repositories', // fetch repositories (catalog page)
+      '/api/v1/courses', // fetch courses (catalog page)
+      '/api/v1/languages', // fetch languages (catalog page)
+      '/api/v1/courses', // fetch course details (course overview page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
-      '/api/v1/courses',          // refresh course (course page)
-      '/api/v1/repositories',     // fetch repositories (course page)
+      '/api/v1/courses', // refresh course (course page)
+      '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
       '/api/v1/course-stage-language-guides', // fetch language guides (course page)
-      '/api/v1/course-leaderboard-entries' // fetch leaderboard entries (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
     ];
 
     await catalogPage.visit();
@@ -57,11 +57,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     expectedRequests = [
       ...expectedRequests,
-      '/api/v1/courses',          // refresh course (after try different language)
-      '/api/v1/repositories',     // update repositories (after try different language)
+      '/api/v1/courses', // refresh course (after try different language)
+      '/api/v1/repositories', // update repositories (after try different language)
       '/api/v1/course-language-requests', // fetch language requests (after try different language)
-      '/api/v1/languages',        // fetch languages (after try different language)
-      '/api/v1/course-leaderboard-entries' // update leaderboard (after try different language)
+      '/api/v1/languages', // fetch languages (after try different language)
+      '/api/v1/course-leaderboard-entries', // update leaderboard (after try different language)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after clicking try different language');
@@ -71,11 +71,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Go');
     await animationsSettled();
 
-    expectedRequests = [...expectedRequests, 
-      '/api/v1/repositories',     // create repository (after selecting Go)
-      '/api/v1/courses',          // refresh course (after selecting Go)
-      '/api/v1/repositories',     // update repositories (after selecting Go)
-      '/api/v1/course-leaderboard-entries' // update leaderboard (after selecting Go)
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories', // create repository (after selecting Go)
+      '/api/v1/courses', // refresh course (after selecting Go)
+      '/api/v1/repositories', // update repositories (after selecting Go)
+      '/api/v1/course-leaderboard-entries', // update leaderboard (after selecting Go)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after selecting Go language');
@@ -102,11 +103,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     expectedRequests = [
       ...expectedRequests,
-      '/api/v1/repositories/2',   // poll repository status (course page)
-      '/api/v1/repositories/2',   // poll repository updates (course page)
-      '/api/v1/repositories/2',   // poll repository changes (course page)
-      '/api/v1/repositories',     // update repositories (after status change)
-      '/api/v1/course-leaderboard-entries' // update leaderboard (after status change)
+      '/api/v1/repositories/2', // poll repository status (course page)
+      '/api/v1/repositories/2', // poll repository updates (course page)
+      '/api/v1/repositories/2', // poll repository changes (course page)
+      '/api/v1/repositories', // update repositories (after status change)
+      '/api/v1/course-leaderboard-entries', // update leaderboard (after status change)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after first poll');
@@ -116,9 +117,10 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    expectedRequests = [...expectedRequests, 
-      '/api/v1/repositories',     // poll repositories (course page)
-      '/api/v1/course-leaderboard-entries' // poll leaderboard (course page)
+    expectedRequests = [
+      ...expectedRequests,
+      '/api/v1/repositories', // poll repositories (course page)
+      '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after second poll');

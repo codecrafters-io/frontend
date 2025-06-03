@@ -29,16 +29,16 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     let expectedRequests = [
-      '/api/v1/repositories',      // fetch repositories (catalog page)
-      '/api/v1/courses',          // fetch courses (catalog page)
-      '/api/v1/languages',        // fetch languages (catalog page)
-      '/api/v1/courses',          // fetch course details (course overview page)
+      '/api/v1/repositories', // fetch repositories (catalog page)
+      '/api/v1/courses', // fetch courses (catalog page)
+      '/api/v1/languages', // fetch languages (catalog page)
+      '/api/v1/courses', // fetch course details (course overview page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
-      '/api/v1/courses',          // refresh course (course page)
-      '/api/v1/repositories',     // fetch repositories (course page)
+      '/api/v1/courses', // refresh course (course page)
+      '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
       '/api/v1/course-stage-language-guides', // fetch language guides (course page)
-      '/api/v1/course-leaderboard-entries' // fetch leaderboard entries (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
     ];
 
     await catalogPage.visit();
