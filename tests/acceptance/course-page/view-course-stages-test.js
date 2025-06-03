@@ -27,6 +27,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    assert.strictEqual(currentURL(), '/courses/redis/overview', 'should navigate to overview page first');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
@@ -82,6 +83,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command');
 
@@ -154,6 +156,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.upgradePrompt.isVisible, 'course stage item that is not free should have upgrade prompt');
 
@@ -193,6 +196,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
@@ -229,6 +233,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
   });
@@ -263,6 +268,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(
       coursePage.hasUpgradePrompt,
@@ -303,6 +309,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Docker');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(
       coursePage.upgradePrompt.isVisible,
@@ -369,7 +376,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     let loadingIndicatorWasRendered = false;
 
     await catalogPage.visit();
-    catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Redis');
+    courseOverviewPage.clickOnStartCourse();
 
     await waitUntil(() => {
       if (isSettled()) {
@@ -380,6 +388,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
+    await settled(); // Wait for everything to settle before checking the step name
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
   });
 
@@ -527,6 +536,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(
       coursePage.freeCourseLabel.text,
@@ -539,6 +549,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy otherwise');
 

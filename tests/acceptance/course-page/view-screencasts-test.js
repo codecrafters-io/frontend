@@ -10,6 +10,7 @@ import { setupWindowMock } from 'ember-window-mock/test-support';
 import windowMock from 'ember-window-mock';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
+import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | view-screencasts-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -74,6 +75,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('View Screencasts');
 
     assert.strictEqual(screencastsPage.screencastPreviews.length, 3);
