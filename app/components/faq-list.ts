@@ -17,24 +17,22 @@ export default class FaqListComponent extends Component<Signature> {
   faqs: Faq[] = [
     {
       query: 'How many challenges do you offer?',
-      answer: `We currently offer 10 challenges and support 21 programming languages.
-    
-  
-  <ul>
-  <li>Build Your Own Redis</li>
-  <li>Build Your Own Git</li>
-  <li>Build Your Own SQLite</li>
-  <li>Build Your Own grep</li>
-  <li>Build Your Own BitTorrent</li>
-  <li>Build Your Own HTTP Server</li>
-  <li>Build Your Own DNS Server</li>
-  <li>Build Your Own Shell</li>
-  <li>Build Your Own Interpreter</li>
-  <li>Build Your Own Kafka</li>
-  </ul>
-  
-  If we launch new challenges during your membership, you get access to those too. Visit <a href="https://app.codecrafters.io/catalog" target="_blank" class="underline" rel="noopener noreferrer">our catalog</a> to check each individual challenge in detail.
-   `,
+      answer: `<p>We currently offer 10 challenges and support 21 programming languages.</p>
+
+<ul>
+<li>Build Your Own Redis</li>
+<li>Build Your Own Git</li>
+<li>Build Your Own SQLite</li>
+<li>Build Your Own grep</li>
+<li>Build Your Own BitTorrent</li>
+<li>Build Your Own HTTP Server</li>
+<li>Build Your Own DNS Server</li>
+<li>Build Your Own Shell</li>
+<li>Build Your Own Interpreter</li>
+<li>Build Your Own Kafka</li>
+</ul>
+
+<p>If we launch new challenges during your membership, you get access to those too. Visit <a href="https://app.codecrafters.io/catalog" target="_blank" class="underline" rel="noopener noreferrer">our catalog</a> to check each individual challenge in detail.</p>`,
     },
     {
       query: 'Why the Team Plan over the Individual Membership?',
