@@ -27,7 +27,7 @@ module('Integration | Component | rive-animation', function (hooks) {
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Wait for the animation to render at least one frame
+    let hasVisiblePixels = false;
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -35,6 +35,8 @@ module('Integration | Component | rive-animation', function (hooks) {
         // Check if any pixel has non-zero alpha
         for (let i = 3; i < imageData.length; i += 4) {
           if (imageData[i] > 0) {
+            hasVisiblePixels = true;
+
             return true;
           }
         }
@@ -46,17 +48,6 @@ module('Integration | Component | rive-animation', function (hooks) {
         timeoutMessage: 'Animation failed to render within 5 seconds',
       },
     );
-
-    // Verify that the animation has rendered
-    const finalImageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-    let hasVisiblePixels = false;
-
-    for (let i = 3; i < finalImageData.length; i += 4) {
-      if (finalImageData[i] > 0) {
-        hasVisiblePixels = true;
-        break;
-      }
-    }
 
     assert.ok(hasVisiblePixels, 'Animation has rendered visible pixels');
   });
@@ -81,7 +72,7 @@ module('Integration | Component | rive-animation', function (hooks) {
     const context = canvas.getContext('2d');
     assert.ok(context, 'Canvas has 2D context');
 
-    // Wait for the animation to render at least one frame
+    let hasVisiblePixels = false;
     await waitUntil(
       () => {
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
@@ -89,6 +80,8 @@ module('Integration | Component | rive-animation', function (hooks) {
         // Check if any pixel has non-zero alpha
         for (let i = 3; i < imageData.length; i += 4) {
           if (imageData[i] > 0) {
+            hasVisiblePixels = true;
+
             return true;
           }
         }
@@ -100,17 +93,6 @@ module('Integration | Component | rive-animation', function (hooks) {
         timeoutMessage: 'Animation failed to render within 5 seconds',
       },
     );
-
-    // Verify that the animation has rendered
-    const finalImageData = context.getImageData(0, 0, canvas.width, canvas.height).data;
-    let hasVisiblePixels = false;
-
-    for (let i = 3; i < finalImageData.length; i += 4) {
-      if (finalImageData[i] > 0) {
-        hasVisiblePixels = true;
-        break;
-      }
-    }
 
     assert.ok(hasVisiblePixels, 'Animation has rendered visible pixels');
   });
