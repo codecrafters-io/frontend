@@ -12,7 +12,14 @@ import patrickBurrisImage from '/assets/images/user-avatars/patrick-burris.jpg';
 import cindyWuImage from '/assets/images/user-avatars/cindy-wu.jpg';
 import vladislavTenImage from '/assets/images/user-avatars/vladislav-ten.jpeg';
 
-const testimonials = {
+interface Testimonial {
+  authorName: string;
+  authorDesignation: string;
+  authorAvatarImage: string;
+  text: string;
+}
+
+const testimonials: Record<string, Testimonial> = {
   'charles-guo': {
     authorName: 'Charles Guo',
     authorDesignation: 'Scala Team at Stripe',
@@ -104,3 +111,4 @@ const testimonials = {
 };
 
 export default testimonials;
+export type { Testimonial };
