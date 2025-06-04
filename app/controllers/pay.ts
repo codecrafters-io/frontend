@@ -9,6 +9,8 @@ import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
+import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
 
 export default class PayController extends Controller {
   declare model: ModelType;
@@ -42,6 +44,10 @@ export default class PayController extends Controller {
     } else {
       return null;
     }
+  }
+
+  get testimonialsForCards(): Testimonial[] {
+    return [testimonialsData['beyang-liu']!, testimonialsData['raghav-dua']!];
   }
 
   get user() {

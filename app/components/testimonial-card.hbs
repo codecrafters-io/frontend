@@ -1,0 +1,24 @@
+<div class="bg-white rounded-lg shadow-sm border overflow-hidden flex flex-col">
+  <div class="flex-grow flex items-center justify-center px-6 py-6">
+    <div class="text-gray-600 text-pretty">
+      “{{@testimonial.text}}”
+    </div>
+  </div>
+  <div class="flex items-center justify-between bg-gray-50 gap-x-4 px-6 py-4 border-t border-gray-100">
+    <div class="flex items-center">
+      <img
+        src="{{@testimonial.authorAvatarImage}}"
+        alt="{{@testimonial.authorName}} avatar"
+        class="w-10 h-10 filter drop-shadow-sm ring-1 ring-white rounded-full shadow mr-3"
+      />
+      <div>
+        <div class="font-semibold text-gray-700">{{@testimonial.authorName}}</div>
+        <div class="text-gray-400 text-xs">{{@testimonial.authorDesignation}}</div>
+      </div>
+    </div>
+
+    {{#if @testimonial.authorCompanyLogo}}
+      <img src="{{@testimonial.authorCompanyLogo}}" alt="{{@testimonial.authorCompany}} logo" class="h-5 contrast-0 opacity-40" />
+    {{/if}}
+  </div>
+</div>
