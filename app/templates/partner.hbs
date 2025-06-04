@@ -24,8 +24,7 @@
       <AffiliatePage::AffiliateFeatureCards class="md:basis-1/3 flex flex-col gap-4 [&>*:nth-child(2)]:hidden" />
     </div>
 
-    {{! @glint-expect-error: Not ts-ified yet }}
-    <TestimonialList />
+    <TestimonialList class="mt-12" />
   {{else}}
     <AffiliatePage::JoinAffiliateProgramContainer />
   {{/if}}

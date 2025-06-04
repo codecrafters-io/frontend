@@ -2,7 +2,11 @@ import Component from '@glimmer/component';
 import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
 import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
 
-export default class TestimonialListComponent extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class TestimonialListComponent extends Component<Signature> {
   get testimonialGroups(): Testimonial[][] {
     const testimonialGroup1 = [
       testimonialsData['ananthalakshmi-sankar']!,
