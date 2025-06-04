@@ -49,6 +49,13 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
     return false;
   }
 
+  get shouldShowFeedbackSection() {
+    const isScored = (this.args.solution.score ?? 0) > 0;
+    const isNotOwner = this.currentUser.id !== this.args.solution.user.id;
+
+    return isScored && isNotOwner;
+  }
+
   get shouldShowPublishToGithubButton() {
     return this.isCurrentUserSolution && !this.args.solution.isPublishedToGithub;
   }
