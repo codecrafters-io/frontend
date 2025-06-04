@@ -17,7 +17,6 @@
   {{#if @isOpen}}
     <div class="w-full h-px bg-gray-200 mt-3 mb-4">
     </div>
-    {{! template-lint-disable no-triple-curlies }}
-    <div class="prose dark:prose-invert prose-sm sm:prose-base">{{{@faq.answer}}}</div>
+    <div class="prose dark:prose-invert prose-sm sm:prose-base">{{markdown-to-html @faq.answerMarkdown}}</div>
   {{/if}}
 </div>
