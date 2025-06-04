@@ -11,24 +11,31 @@ import jonathanImage from '/assets/images/user-avatars/jonathan.jpg';
 import patrickBurrisImage from '/assets/images/user-avatars/patrick-burris.jpg';
 import cindyWuImage from '/assets/images/user-avatars/cindy-wu.jpg';
 import vladislavTenImage from '/assets/images/user-avatars/vladislav-ten.jpeg';
+import appleImage from '/assets/images/company-logos/apple-company-logo.svg';
+import bookingImage from '/assets/images/company-logos/bookingcom-company-logo.svg';
+import sourcegraphImage from '/assets/images/company-logos/sourcegraph-company-logo.svg';
+import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 
 interface Testimonial {
   authorName: string;
   authorDesignation: string;
   authorAvatarImage: string;
+  authorCompanyLogo?: string;
   text: string;
 }
 
 const testimonials: Record<string, Testimonial> = {
   'charles-guo': {
     authorName: 'Charles Guo',
+    authorCompanyLogo: stripeImage,
     authorDesignation: 'Scala Team at Stripe',
     authorAvatarImage: charlesGuoImage,
     text: `The Redis challenge was extremely fun. I ended up having to read Redis protocol specification doc pretty carefully in its entirety! The result felt like lightly-guided independent study, if that makes sense. (Which, again, was lots of fun)`,
   },
   'raghav-dua': {
     authorName: 'Raghav Dua',
-    authorDesignation: 'SRE at Coinbase',
+    authorDesignation: 'SRE at Booking.com',
+    authorCompanyLogo: bookingImage,
     authorAvatarImage: raghavDuaImage,
     text: `I spent a full day on your Docker building course and ended up building the whole thing myself. As a SRE (and mostly a user of docker), digging into the internals blew me away.`,
   },
@@ -63,6 +70,7 @@ const testimonials: Record<string, Testimonial> = {
   'ananthalakshmi-sankar': {
     authorName: 'Ananthalakshmi Sankar',
     authorDesignation: 'Automation Engineer at Apple',
+    authorCompanyLogo: appleImage,
     authorAvatarImage: ananthalakshmiSankarImage,
     text: "There are few sites I like as much that have a step by step guide. The real-time feedback is so good, it's creepy!",
   },
@@ -71,6 +79,7 @@ const testimonials: Record<string, Testimonial> = {
     authorName: 'Beyang Liu',
     authorDesignation: 'CTO at SourceGraph',
     authorAvatarImage: beyangLiuImage,
+    authorCompanyLogo: sourcegraphImage,
     text: 'Found out from a colleague. It has you build your own version of things like Git and Docker from scratch. A cool way to build a stronger mental model of how those tools work.',
   },
 

@@ -76,6 +76,12 @@
       <PayPage::MonthlyChallengeBanner class="max-w-[972.53px] mt-12" />
     {{/unless}}
 
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 max-w-5xl mx-auto">
+      {{#each this.testimonialsForCards as |testimonial|}}
+        <TestimonialCard @testimonial={{testimonial}} />
+      {{/each}}
+    </div>
+
     <FaqList class="mt-16" />
 
     <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center text-pretty mt-16">
