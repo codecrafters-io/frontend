@@ -27,3 +27,9 @@ export default class TestimonialListComponent extends Component {
     return [testimonialGroup1, testimonialGroup2, testimonialGroup3];
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    TestimonialList: typeof TestimonialListComponent;
+  }
+}
