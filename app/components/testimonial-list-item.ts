@@ -13,6 +13,6 @@ export default class TestimonialListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliateLinkPage::TestimonialListItem': typeof TestimonialListItemComponent;
+    TestimonialListItem: typeof TestimonialListItemComponent;
   }
 }
