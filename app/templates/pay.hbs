@@ -82,13 +82,24 @@
       {{/each}}
     </div>
 
-    <FaqList class="mt-16" />
+    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-16">
+      CodeCrafters is backed by incredible engineers
+    </h2>
 
-    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center text-pretty mt-16">
+    {{! Should be mt-8, py-8 ensure shadows aren't cut off at the top/bottom }}
+    <PayPage::BackerCardList class="py-8" />
+
+    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-8">
+      Frequently Asked Questions
+    </h2>
+
+    <FaqList class="mt-8" />
+
+    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-16">
       Join over 200k of the world’s best engineers:
     </h2>
 
-    <TestimonialList class="mt-6" />
+    <TestimonialList class="mt-8" />
   </div>
 </div>
 
