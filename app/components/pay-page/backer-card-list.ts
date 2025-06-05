@@ -18,16 +18,9 @@ export default class BackerCardListComponent extends Component<Signature> {
   get backers() {
     return [
       {
-        name: 'Mike Krieger',
-        title: 'Co-founder/CTO, Instagram',
-        imageUrl: mikeKriegerImageUrl,
-        companyLogoUrl: instagramCompanyLogoUrl,
-        companyName: 'Instagram',
-      },
-      {
         name: 'Arash Ferdowsi',
         title: 'Co-founder/CTO, Dropbox',
-        imageUrl: arashFerdowsiImageUrl,
+        imageUrl: mikeKriegerImageUrl,
         companyLogoUrl: dropboxCompanyLogoUrl,
         companyName: 'Dropbox',
       },
@@ -51,6 +44,13 @@ export default class BackerCardListComponent extends Component<Signature> {
         imageUrl: paulCopplestoneImageUrl,
         companyLogoUrl: supabaseCompanyLogoUrl,
         companyName: 'Supabase',
+      },
+      {
+        name: 'Mike Krieger',
+        title: 'Co-founder/CTO, Instagram',
+        imageUrl: arashFerdowsiImageUrl,
+        companyLogoUrl: instagramCompanyLogoUrl,
+        companyName: 'Instagram',
       },
     ];
   }
