@@ -1,0 +1,40 @@
+---
+description:
+globs: app/components/**/*
+alwaysApply: false
+---
+When creating components, follow these rules:
+
+- Use typescript (`.ts`) files
+- Import from `@glimmer/component`
+- Use `interface Signature { ... }` to define the component's signature
+- `class` doesn't have to be in `Args`, ember automatically forwards native args like `class`, `id` etc. to the component
+- Ensure the component is registered w/ Glint using `declare module ...`
+
+
+Example:
+
+```ts
+import Component from '@glimmer/component';
+
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    arg1: string;
+    arg2: string;
+  };
+}
+
+export default class TrackPageCardComponent extends Component<Signature> {
+  get property1() {
+    return 'dummy';
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'TrackPage::Card': typeof TrackPageCardComponent;
+  }
+}
+```
