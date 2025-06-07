@@ -136,6 +136,11 @@ const BASE_STYLE = {
         backgroundSize: '12px 12px',
         cursor: 'pointer',
 
+        '&:hover, &.cm-collapseRangesGutterElementHovered': {
+          backgroundColor: tailwindColors.sky['100'],
+          color: tailwindColors.sky['800'],
+        },
+
         '&.cm-collapseRangesGutterElementFirst': {
           marginTop: '-0.5rem',
           borderTop: 'none',
@@ -145,13 +150,6 @@ const BASE_STYLE = {
         '&.cm-collapseRangesGutterElementLast': {
           borderBottom: 'none',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
-        },
-      },
-
-      '&:hover': {
-        '& .cm-collapseRangesGutterElement': {
-          backgroundColor: tailwindColors.sky['100'],
-          color: tailwindColors.sky['800'],
         },
       },
     },
@@ -215,17 +213,15 @@ const BASE_STYLE = {
       color: tailwindColors.sky['700'],
       borderColor: tailwindColors.sky['100'],
 
-      '&:hover': {
+      '&:before, &:after': {
+        content: 'none',
+      },
+    },
+
+    '&:hover, &.cm-collapsedRangesHovered': {
+      '& .cm-collapsedRangesInner': {
         background: tailwindColors.sky['100'],
         color: tailwindColors.sky['800'],
-      },
-
-      '&:before': {
-        content: 'none',
-      },
-
-      '&:after': {
-        content: 'none',
       },
     },
 
@@ -328,19 +324,17 @@ export const codeCraftersDark = [
             backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
             backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
 
+            '&:hover, &.cm-collapseRangesGutterElementHovered': {
+              backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+              color: tailwindColors.sky['300'],
+            },
+
             '&.cm-collapseRangesGutterElementFirst': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
             },
 
             '&.cm-collapseRangesGutterElementLast': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
-            },
-          },
-
-          '&:hover': {
-            '& .cm-collapseRangesGutterElement': {
-              backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
-              color: tailwindColors.sky['300'],
             },
           },
         },
@@ -364,8 +358,10 @@ export const codeCraftersDark = [
           background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
           color: tailwindColors.sky['400'],
           borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+        },
 
-          '&:hover': {
+        '&:hover, &.cm-collapsedRangesHovered': {
+          '& .cm-collapsedRangesInner': {
             background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
             color: tailwindColors.sky['300'],
           },

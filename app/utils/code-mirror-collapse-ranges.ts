@@ -27,6 +27,8 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
 });
 
 export class CollapsedRangesWidget extends WidgetType {
+  lastRenderedElement?: HTMLElement;
+
   constructor(
     readonly startLine: number,
     readonly endLine: number,
@@ -78,6 +80,8 @@ export class CollapsedRangesWidget extends WidgetType {
       const pos = view.posAtDOM(e.target as HTMLElement);
       view.dispatch({ effects: uncollapseRangesStateEffect.of(pos) });
     });
+
+    this.lastRenderedElement = outer;
 
     return outer;
   }
