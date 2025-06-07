@@ -10,58 +10,21 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    /**
-     * Code to render in CodeMirror
-     */
-    code: string;
-    /**
-     * Filename to render in the header.
-     * Also used to auto-detect language for code formatting
-     */
-    filename: string;
-    /**
-     * Override language auto-detected from `filename` and set it manually
-     */
-    language: string;
-    /**
-     * Enable collapsing of the file card to just the header
-     */
-    isCollapsible?: boolean;
-    /**
-     * Should the card be currently collapsed
-     */
-    isCollapsed?: boolean;
-    /**
-     * Show a tooltip in the header when collapsible & collapsed
-     */
-    headerTooltipText?: string;
-    /**
-     * Enable collapsing of specified line ranges
-     */
-    collapsedRanges?: LineRange[];
-    /**
-     * Enable highlighting of specified line ranges
-     */
-    highlightedRanges?: LineRange[];
-    /**
-     * Scroll the component into view after it's collapsed
-     */
-    scrollIntoViewOnCollapse?: boolean;
-    /**
-     *  Callback to call when Expand button is clicked
-     */
-    onExpand?: () => void;
-    /**
-     *  Callback to call when Collapse button is clicked
-     */
-    onCollapse?: () => void;
+    code: string; // Code to render in CodeMirror
+    collapsedRanges?: LineRange[]; // Enable collapsing of specified line ranges
+    filename: string; // Filename to render in the header. Also used to auto-detect language for code formatting
+    headerTooltipText?: string; // Show a tooltip in the header when collapsible & collapsed
+    highlightedRanges?: LineRange[]; // Enable highlighting of specified line ranges
+    isCollapsed?: boolean; // Should the card be currently collapsed
+    isCollapsible?: boolean; // Enable collapsing of the file card to just the header
+    language: string; // Override language auto-detected from `filename` and set it manually
+    onCollapse?: () => void; //  Callback to call when Collapse button is clicked
+    onExpand?: () => void; //  Callback to call when Expand button is clicked
+    scrollIntoViewOnCollapse?: boolean; // Scroll the component into view after it's collapsed
   };
 
   Blocks: {
-    /**
-     * Allows rendering custom content in the header
-     */
-    header?: [];
+    header?: []; // Allows rendering custom content in the header
   };
 }
 
