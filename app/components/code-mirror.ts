@@ -193,7 +193,7 @@ export interface Signature {
       lineSeparator?: string; // Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
       lineWrapping?: boolean; // Enable visual line wrapping for lines exceeding editor width
       mergeControls?: boolean; // Enable showing accept/reject buttons in the diff editor
-      onDocumentUpdate?: DocumentUpdateCallback; // Function to call when document is edited inside the editor @param newValue string New value of the document
+      onDocumentUpdate?: DocumentUpdateCallback; // Function to call when document is edited inside the editor, receives `newValue` argument with new value of the document
       originalDocument?: string; // Enable unified diff editor by passing the original document
       placeholder?: string; // Placeholder text to show when document is empty or not passed
       preserveHistory?: boolean; // Preserve changes history when parent component passes a new `@document` to the component
