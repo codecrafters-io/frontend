@@ -30,12 +30,21 @@ export class CollapsedRangesWidget extends WidgetType {
   constructor(
     readonly startLine: number,
     readonly endLine: number,
+    readonly totalLines: number,
   ) {
     super();
   }
 
   get estimatedHeight() {
-    return 27;
+    return this.isFirst || this.isLast ? 28 : 44;
+  }
+
+  get isFirst() {
+    return this.startLine === 1;
+  }
+
+  get isLast() {
+    return this.endLine === this.totalLines;
   }
 
   get lines() {
@@ -53,8 +62,18 @@ export class CollapsedRangesWidget extends WidgetType {
   toDOM(view: EditorView) {
     const outer = document.createElement('div');
     outer.className = 'cm-collapsedRanges';
-    outer.textContent = view.state.phrase('Expand $ lines', this.lines);
 
+    if (this.isFirst) {
+      outer.classList.add('cm-collapsedRangesFirst');
+    } else if (this.isLast) {
+      outer.classList.add('cm-collapsedRangesLast');
+    }
+
+    const inner = document.createElement('div');
+    inner.className = 'cm-collapsedRangesInner';
+    inner.textContent = view.state.phrase('Expand $ lines', this.lines);
+
+    outer.appendChild(inner);
     outer.addEventListener('click', (e) => {
       const pos = view.posAtDOM(e.target as HTMLElement);
       view.dispatch({ effects: uncollapseRangesStateEffect.of(pos) });
@@ -73,7 +92,7 @@ function buildCollapsedRangesDecorations(state: EditorState, collapsedRanges: Li
         state.doc.line(startLine).from,
         state.doc.line(endLine).to,
         Decoration.replace({
-          widget: new CollapsedRangesWidget(startLine, endLine),
+          widget: new CollapsedRangesWidget(startLine, endLine, state.doc.lines),
           block: true,
         }),
       );
@@ -89,24 +108,30 @@ function initCollapsedRangesStateField(collapsedRanges: LineRange[] = []) {
 
 const baseTheme = EditorView.baseTheme({
   '& .cm-collapsedRanges': {
-    padding: '5px 5px 5px 10px',
-    background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
-    color: '#444',
-    cursor: 'pointer',
-    '&:before': {
-      content: '"⦚"',
-      marginInlineEnd: '7px',
-    },
-    '&:after': {
-      content: '"⦚"',
-      marginInlineStart: '7px',
+    '& .cm-collapsedRangesInner': {
+      padding: '5px 5px 5px 10px',
+      background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
+      color: '#444',
+      cursor: 'pointer',
+
+      '&:before': {
+        content: '"⦚"',
+        marginInlineEnd: '7px',
+      },
+
+      '&:after': {
+        content: '"⦚"',
+        marginInlineStart: '7px',
+      },
     },
   },
 
   '&dark': {
     '& .cm-collapsedRanges': {
-      color: '#ddd',
-      background: 'linear-gradient(to bottom, transparent 0, #222 30%, #222 70%, transparent 100%)',
+      '& .cm-collapsedRangesInner': {
+        color: '#ddd',
+        background: 'linear-gradient(to bottom, transparent 0, #222 30%, #222 70%, transparent 100%)',
+      },
     },
   },
 });

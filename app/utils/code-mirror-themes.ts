@@ -125,6 +125,7 @@ const BASE_STYLE = {
         left: 0,
         right: 0,
         height: '1.75rem',
+        marginTop: '0.5rem',
         borderTopWidth: '1px',
         borderBottomWidth: '1px',
         borderColor: tailwindColors.sky['100'],
@@ -136,14 +137,13 @@ const BASE_STYLE = {
         cursor: 'pointer',
 
         '&.cm-collapseRangesGutterElementFirst': {
-          borderTop: 'none',
           marginTop: '-0.5rem',
+          borderTop: 'none',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
         },
 
         '&.cm-collapseRangesGutterElementLast': {
           borderBottom: 'none',
-          marginTop: '0.5rem',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
         },
       },
@@ -202,39 +202,51 @@ const BASE_STYLE = {
 
   // Expand collapsed ranges bar
   '.cm-collapsedRanges': {
-    height: '1.75rem', // h7
-    borderTopWidth: '1px',
-    borderBottomWidth: '1px',
-    fontSize: '0.75rem', // text-xs
-    fontFamily: 'Montserrat, sans-serif',
-    lineHeight: '1rem', // text-xs
-    background: tailwindColors.sky['50'],
-    color: tailwindColors.sky['700'],
-    borderColor: tailwindColors.sky['100'],
+    padding: '0.5rem 0',
 
-    '&:hover': {
-      background: tailwindColors.sky['100'],
-      color: tailwindColors.sky['800'],
+    '& .cm-collapsedRangesInner': {
+      height: '1.75rem', // h7
+      borderTopWidth: '1px',
+      borderBottomWidth: '1px',
+      fontSize: '0.75rem', // text-xs
+      fontFamily: 'Montserrat, sans-serif',
+      lineHeight: '1rem', // text-xs
+      background: tailwindColors.sky['50'],
+      color: tailwindColors.sky['700'],
+      borderColor: tailwindColors.sky['100'],
+
+      '&:hover': {
+        background: tailwindColors.sky['100'],
+        color: tailwindColors.sky['800'],
+      },
+
+      '&:before': {
+        content: 'none',
+      },
+
+      '&:after': {
+        content: 'none',
+      },
     },
 
-    '&:before': {
-      content: 'none',
-    },
-
-    '&:after': {
-      content: 'none',
-    },
-
-    '&:first-child': {
-      borderTop: 'none',
+    '&.cm-collapsedRangesFirst': {
+      padding: 0,
       marginTop: '-0.5rem',
       marginBottom: '0.5rem',
+
+      '& .cm-collapsedRangesInner': {
+        borderTop: 'none',
+      },
     },
 
-    '&:last-child': {
-      borderBottom: 'none',
+    '&.cm-collapsedRangesLast': {
+      padding: 0,
       marginTop: '0.5rem',
       marginBottom: '-0.5rem',
+
+      '& .cm-collapsedRangesInner': {
+        borderBottom: 'none',
+      },
     },
   },
 
@@ -348,13 +360,15 @@ export const codeCraftersDark = [
 
       // Expand collapsed ranges bar
       '.cm-collapsedRanges': {
-        background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
-        color: tailwindColors.sky['400'],
-        borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+        '& .cm-collapsedRangesInner': {
+          background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
+          color: tailwindColors.sky['400'],
+          borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
 
-        '&:hover': {
-          background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
-          color: tailwindColors.sky['300'],
+          '&:hover': {
+            background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+            color: tailwindColors.sky['300'],
+          },
         },
       },
     },
