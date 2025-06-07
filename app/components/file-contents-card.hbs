@@ -41,23 +41,23 @@
 
   {{#unless (and @isCollapsible @isCollapsed)}}
     <CodeMirror
-      @document={{@code}}
-      @filename={{@filename}}
-      @language={{@language}}
-      @lineNumbers={{true}}
       @allowMultipleSelections={{true}}
       @bracketMatching={{true}}
       @collapsedRanges={{@collapsedRanges}}
       @crosshairCursor={{true}}
+      @document={{@code}}
       @drawSelection={{true}}
-      @rectangularSelection={{true}}
       @editable={{false}}
-      @readOnly={{true}}
+      @filename={{@filename}}
       @highlightActiveLine={{false}}
       @highlightedRanges={{@highlightedRanges}}
       @highlightSelectionMatches={{true}}
       @highlightSpecialChars={{true}}
       @highlightTrailingWhitespace={{true}}
+      @language={{@language}}
+      @lineNumbers={{true}}
+      @readOnly={{true}}
+      @rectangularSelection={{true}}
       @theme={{this.codeMirrorTheme}}
       class="block text-sm"
     />

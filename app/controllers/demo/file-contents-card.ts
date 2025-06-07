@@ -4,8 +4,8 @@ import { tracked } from '@glimmer/tracking';
 import EXAMPLE_DOCUMENTS, { ExampleDocument } from 'codecrafters-frontend/utils/code-mirror-documents';
 
 const OPTION_DEFAULTS = {
-  headerTooltipText: false,
   collapsedRanges: false,
+  headerTooltipText: false,
   highlightedRanges: false,
   isCollapsed: false,
   isCollapsible: false,
@@ -17,8 +17,9 @@ export default class DemoFileContentsCardController extends Controller {
   queryParams = ['headerTooltipText', 'isCollapsed', 'isCollapsible', 'scrollIntoViewOnCollapse', 'selectedDocumentIndex'];
 
   @tracked documents: ExampleDocument[] = EXAMPLE_DOCUMENTS;
-  @tracked headerTooltipText: boolean = OPTION_DEFAULTS.headerTooltipText;
+
   @tracked collapsedRanges: boolean = OPTION_DEFAULTS.collapsedRanges;
+  @tracked headerTooltipText: boolean = OPTION_DEFAULTS.headerTooltipText;
   @tracked highlightedRanges: boolean = OPTION_DEFAULTS.highlightedRanges;
   @tracked isCollapsed: boolean = OPTION_DEFAULTS.isCollapsed;
   @tracked isCollapsible: boolean = OPTION_DEFAULTS.isCollapsible;

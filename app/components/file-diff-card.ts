@@ -13,18 +13,17 @@ interface Signature {
      */
     code?: string;
     /**
-     * Filename to render in the header.
-     * Also used to auto-detect language for code formatting
+     * Enable collapsing of specified line ranges
+     */
+    collapsedRanges?: LineRange[];
+    /**
+     * Filename to render in the header. Also used to auto-detect language for code formatting
      */
     filename: string;
     /**
      * Always render CodeMirror/SyntaxHighlightedDiff using Dark Theme
      */
     forceDarkTheme?: boolean;
-    /**
-     * Enable collapsing of specified line ranges
-     */
-    collapsedRanges?: LineRange[];
     /**
      * Enable highlighting of specified line ranges
      */

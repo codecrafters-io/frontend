@@ -318,31 +318,19 @@
 {{/let}}
 
 <CodeMirror
-  {{! Document options }}
-  @document={{if this.document this.selectedDocument.document}}
-  @onDocumentUpdate={{fn this.documentDidChange this}}
-  {{! Filename & Language }}
-  @filename={{if this.filename this.selectedDocument.filename}}
-  @language={{if this.language this.selectedDocument.language}}
-  {{! Original document (to show diff) }}
-  @originalDocument={{if this.originalDocument this.selectedDocument.originalDocument}}
-  {{! String & Number options }}
-  @indentUnit={{if this.indentUnit this.selectedIndentUnit.symbol}}
-  @lineSeparator={{if this.lineSeparator this.selectedLineSeparator.symbol}}
-  @placeholder={{if this.placeholder this.placeholderMessage}}
-  @tabSize={{if this.tabSize this.selectedTabSize}}
-  @theme={{if this.theme this.selectedTheme}}
-  {{! Boolean Options }}
   @allowInlineDiffs={{this.allowInlineDiffs}}
   @allowMultipleSelections={{this.allowMultipleSelections}}
   @autocompletion={{this.autocompletion}}
   @bracketMatching={{this.bracketMatching}}
-  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
   @closeBrackets={{this.closeBrackets}}
+  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
+  @collapseUnchanged={{this.collapseUnchanged}}
   @crosshairCursor={{this.crosshairCursor}}
+  @document={{if this.document this.selectedDocument.document}}
   @drawSelection={{this.drawSelection}}
   @dropCursor={{this.dropCursor}}
   @editable={{this.editable}}
+  @filename={{if this.filename this.selectedDocument.filename}}
   @foldGutter={{this.foldGutter}}
   @highlightActiveLine={{this.highlightActiveLine}}
   @highlightChanges={{this.highlightChanges}}
@@ -354,20 +342,26 @@
   @highlightWhitespace={{this.highlightWhitespace}}
   @history={{this.history}}
   @indentOnInput={{this.indentOnInput}}
+  @indentUnit={{if this.indentUnit this.selectedIndentUnit.symbol}}
   @indentWithTab={{this.indentWithTab}}
+  @language={{if this.language this.selectedDocument.language}}
   @lineNumbers={{this.lineNumbers}}
+  @lineSeparator={{if this.lineSeparator this.selectedLineSeparator.symbol}}
   @lineWrapping={{this.lineWrapping}}
   @mergeControls={{this.mergeControls}}
-  @collapseUnchanged={{this.collapseUnchanged}}
+  @onDocumentUpdate={{fn this.documentDidChange this}}
+  @originalDocument={{if this.originalDocument this.selectedDocument.originalDocument}}
+  @placeholder={{if this.placeholder this.placeholderMessage}}
   @preserveHistory={{this.preserveHistory}}
   @readOnly={{this.readOnly}}
   @rectangularSelection={{this.rectangularSelection}}
   @scrollPastEnd={{this.scrollPastEnd}}
-  @syntaxHighlighting={{this.syntaxHighlighting}}
   @syntaxHighlightDeletions={{this.syntaxHighlightDeletions}}
+  @syntaxHighlighting={{this.syntaxHighlighting}}
+  @tabSize={{if this.tabSize this.selectedTabSize}}
+  @theme={{if this.theme this.selectedTheme}}
   @unchangedMargin={{if this.unchangedMargin this.selectedUnchangedMargin}}
   @unchangedMinSize={{if this.unchangedMinSize this.selectedUnchangedMinSize}}
-  {{! Element classes }}
   class="block overflow-auto mt-4
     {{if this.maxHeight 'max-h-96'}}
     {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"

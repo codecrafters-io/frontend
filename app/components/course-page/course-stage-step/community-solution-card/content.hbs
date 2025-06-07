@@ -33,14 +33,14 @@
 
   {{#each this.unchangedFileComparisons key="filename" as |unchangedFileComparison|}}
     <FileContentsCard
-      @headerTooltipText="This file was added in previous stages."
-      @isCollapsible={{true}}
-      @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
-      @onExpand={{fn this.handleExpandUnchangedFile unchangedFileComparison.path}}
-      @onCollapse={{fn this.handleCollapseUnchangedFile unchangedFileComparison.path}}
-      @filename={{unchangedFileComparison.path}}
       @code={{unchangedFileComparison.content}}
+      @filename={{unchangedFileComparison.path}}
+      @headerTooltipText="This file was added in previous stages."
+      @isCollapsed={{not (includes unchangedFileComparison.path this.expandedUnchangedFilePaths)}}
+      @isCollapsible={{true}}
       @language={{@solution.language.slug}}
+      @onCollapse={{fn this.handleCollapseUnchangedFile unchangedFileComparison.path}}
+      @onExpand={{fn this.handleExpandUnchangedFile unchangedFileComparison.path}}
       data-test-community-solution-unchanged-file
       {{! scroll-mt-16 accounts for the sticky menu bar}}
       class="mt-4 text-sm scroll-mt-16"

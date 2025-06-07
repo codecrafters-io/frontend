@@ -33,11 +33,11 @@
     </div>
 
     <FileContentsCard
-      class="mb-4"
-      @filename="{{@model.buildpack.slug}}.Dockerfile"
       @code={{@model.buildpack.dockerfileContents}}
+      @filename="{{@model.buildpack.slug}}.Dockerfile"
       @language="dockerfile"
       data-test-dockerfile-contents-card
+      class="mb-4"
     />
   </div>
 </div>

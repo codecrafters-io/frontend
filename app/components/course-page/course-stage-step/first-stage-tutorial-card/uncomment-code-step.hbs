@@ -8,7 +8,7 @@
 
   <div class="flex flex-col gap-4">
     {{#each this.solution.changedFiles as |changedFile|}}
-      <FileDiffCard @filename={{changedFile.filename}} @code={{changedFile.diff}} @language={{this.solution.language.slug}} />
+      <FileDiffCard @code={{changedFile.diff}} @filename={{changedFile.filename}} @language={{this.solution.language.slug}} />
     {{/each}}
   </div>
 {{else if (not @repository.language)}}

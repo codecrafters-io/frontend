@@ -15,46 +15,45 @@ interface Signature {
      */
     code: string;
     /**
-     * Filename to render in the header.
-     * Also used to auto-detect language for code formatting
+     * Enable collapsing of specified line ranges
+     */
+    collapsedRanges?: LineRange[];
+    /**
+     * Filename to render in the header. Also used to auto-detect language for code formatting
      */
     filename: string;
-    /**
-     * Override language auto-detected from `filename` and set it manually
-     */
-    language: string;
-    /**
-     * Enable collapsing of the file card to just the header
-     */
-    isCollapsible?: boolean;
-    /**
-     * Should the card be currently collapsed
-     */
-    isCollapsed?: boolean;
     /**
      * Show a tooltip in the header when collapsible & collapsed
      */
     headerTooltipText?: string;
     /**
-     * Enable collapsing of specified line ranges
-     */
-    collapsedRanges?: LineRange[];
-    /**
      * Enable highlighting of specified line ranges
      */
     highlightedRanges?: LineRange[];
     /**
-     * Scroll the component into view after it's collapsed
+     * Should the card be currently collapsed
      */
-    scrollIntoViewOnCollapse?: boolean;
+    isCollapsed?: boolean;
+    /**
+     * Enable collapsing of the file card to just the header
+     */
+    isCollapsible?: boolean;
+    /**
+     * Override language auto-detected from `filename` and set it manually
+     */
+    language: string;
+    /**
+     *  Callback to call when Collapse button is clicked
+     */
+    onCollapse?: () => void;
     /**
      *  Callback to call when Expand button is clicked
      */
     onExpand?: () => void;
     /**
-     *  Callback to call when Collapse button is clicked
+     * Scroll the component into view after it's collapsed
      */
-    onCollapse?: () => void;
+    scrollIntoViewOnCollapse?: boolean;
   };
 
   Blocks: {

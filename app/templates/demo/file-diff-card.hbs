@@ -45,13 +45,13 @@
 {{/let}}
 
 <FileDiffCard
-  @useCodeMirror={{this.useCodeMirror}}
   @code={{this.selectedDocument.diff}}
-  @filename={{this.selectedDocument.filename}}
-  @language={{this.selectedDocument.language}}
-  @forceDarkTheme={{this.forceDarkTheme}}
   @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
+  @filename={{this.selectedDocument.filename}}
+  @forceDarkTheme={{this.forceDarkTheme}}
   @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
+  @language={{this.selectedDocument.language}}
+  @useCodeMirror={{this.useCodeMirror}}
   class="mt-4 {{if this.forceDarkTheme 'dark'}}"
 />
 

@@ -34,8 +34,8 @@
           {{! Extra if condition convinces typescript that solution isn't null }}
           {{#if this.solution}}
             <FileDiffCard
-              @filename={{changedFile.filename}}
               @code={{changedFile.diff}}
+              @filename={{changedFile.filename}}
               @language={{this.solution.language.slug}}
               data-test-file-diff-card
             />

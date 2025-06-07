@@ -12,19 +12,19 @@
 
         {{#let (diff-to-document changedFile.diff) as |document|}}
           <CodeMirror
-            @document={{document.current}}
-            @originalDocument={{document.original}}
-            @language={{@submission.repository.language.slug}}
-            @filename={{changedFile.filename}}
-            @collapseUnchanged={{true}}
             @allowMultipleSelections={{true}}
             @bracketMatching={{true}}
+            @collapseUnchanged={{true}}
             @crosshairCursor={{true}}
+            @document={{document.current}}
             @drawSelection={{true}}
-            @rectangularSelection={{true}}
-            @readOnly={{true}}
+            @filename={{changedFile.filename}}
             @highlightSelectionMatches={{true}}
             @highlightSpecialChars={{true}}
+            @language={{@submission.repository.language.slug}}
+            @originalDocument={{document.original}}
+            @readOnly={{true}}
+            @rectangularSelection={{true}}
             @theme={{this.codeMirrorTheme}}
             class="block text-sm"
           />
