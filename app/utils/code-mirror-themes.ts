@@ -120,7 +120,7 @@ const BASE_STYLE = {
   // Collapse ranges gutter
   '.cm-collapseRangesGutter': {
     '& .cm-gutterElement': {
-      '& .cm-collapseRangesGutterElement': {
+      '& .cm-collapseRangesGutterMarker': {
         position: 'absolute',
         left: 0,
         right: 0,
@@ -136,18 +136,18 @@ const BASE_STYLE = {
         backgroundSize: '12px 12px',
         cursor: 'pointer',
 
-        '&:hover, &.cm-collapseRangesGutterElementHovered': {
+        '&:hover, &.cm-collapseRangesGutterMarkerHovered': {
           backgroundColor: tailwindColors.sky['100'],
           color: tailwindColors.sky['800'],
         },
 
-        '&.cm-collapseRangesGutterElementFirst': {
+        '&.cm-collapseRangesGutterMarkerFirst': {
           marginTop: '-0.5rem',
           borderTop: 'none',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
         },
 
-        '&.cm-collapseRangesGutterElementLast': {
+        '&.cm-collapseRangesGutterMarkerLast': {
           borderBottom: 'none',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
         },
@@ -319,21 +319,21 @@ export const codeCraftersDark = [
       // Collapse ranges gutter
       '.cm-collapseRangesGutter': {
         '& .cm-gutterElement': {
-          '& .cm-collapseRangesGutterElement': {
+          '& .cm-collapseRangesGutterMarker': {
             borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
             backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
             backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
 
-            '&:hover, &.cm-collapseRangesGutterElementHovered': {
+            '&:hover, &.cm-collapseRangesGutterMarkerHovered': {
               backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
               color: tailwindColors.sky['300'],
             },
 
-            '&.cm-collapseRangesGutterElementFirst': {
+            '&.cm-collapseRangesGutterMarkerFirst': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
             },
 
-            '&.cm-collapseRangesGutterElementLast': {
+            '&.cm-collapseRangesGutterMarkerLast': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
             },
           },

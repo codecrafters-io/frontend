@@ -2,18 +2,18 @@ import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
 import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { CollapsedRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
-function renderGutterElement(view: EditorView, widget: CollapsedRangesWidget, line: BlockInfo) {
+function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
   const collapsedLinesCount = widget instanceof CollapsedRangesWidget ? widget.lines : 1;
 
   const el = document.createElement('div');
-  el.className = 'cm-collapseRangesGutterElement';
+  el.className = 'cm-collapseRangesGutterMarker';
 
   if (lineNumber === 1) {
-    el.classList.add('cm-collapseRangesGutterElementFirst');
+    el.classList.add('cm-collapseRangesGutterMarkerFirst');
   } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
-    el.classList.add('cm-collapseRangesGutterElementLast');
+    el.classList.add('cm-collapseRangesGutterMarkerLast');
   }
 
   el.addEventListener('click', function () {
@@ -29,11 +29,11 @@ function renderGutterElement(view: EditorView, widget: CollapsedRangesWidget, li
   });
 
   widget.lastRenderedElement?.addEventListener('mouseenter', function () {
-    el.classList.add('cm-collapseRangesGutterElementHovered');
+    el.classList.add('cm-collapseRangesGutterMarkerHovered');
   });
 
   widget.lastRenderedElement?.addEventListener('mouseleave', function () {
-    el.classList.remove('cm-collapseRangesGutterElementHovered');
+    el.classList.remove('cm-collapseRangesGutterMarkerHovered');
   });
 
   return el;
@@ -52,7 +52,7 @@ export class CollapseRangesGutterMarker extends GutterMarker {
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    return renderGutterMarker(view, this.widget, this.line);
   }
 }
 
@@ -69,7 +69,7 @@ export class CollapseRangesGutterMarkerRS extends GutterMarkerRS {
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    return renderGutterMarker(view, this.widget, this.line);
   }
 }
 
