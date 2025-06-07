@@ -6,21 +6,21 @@
   {{#if @useCodeMirror}}
     {{#let (diff-to-document @code) as |document|}}
       <CodeMirror
-        @document={{document.current}}
-        @originalDocument={{document.original}}
-        @filename={{@filename}}
-        @language={{@language}}
         @allowMultipleSelections={{true}}
         @bracketMatching={{true}}
         @collapsedRanges={{@collapsedRanges}}
         @collapseUnchanged={{true}}
         @crosshairCursor={{true}}
+        @document={{document.current}}
         @drawSelection={{true}}
-        @rectangularSelection={{true}}
-        @readOnly={{true}}
+        @filename={{@filename}}
         @highlightedRanges={{@highlightedRanges}}
         @highlightSelectionMatches={{true}}
         @highlightSpecialChars={{true}}
+        @language={{@language}}
+        @originalDocument={{document.original}}
+        @readOnly={{true}}
+        @rectangularSelection={{true}}
         @theme={{this.codeMirrorTheme}}
         class="block text-sm"
       />
