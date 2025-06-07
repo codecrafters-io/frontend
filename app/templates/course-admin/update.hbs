@@ -74,12 +74,12 @@
     </div>
 
     <FileDiffCard
-      class="mb-4"
-      @filename="course-definition.yml"
       @code={{@model.update.definitionFileContentsDiff}}
+      @filename="course-definition.yml"
       @language="yaml"
       @useCodeMirror={{true}}
       data-test-file-contents-diff
+      class="mb-4"
     />
   </div>
 </div>

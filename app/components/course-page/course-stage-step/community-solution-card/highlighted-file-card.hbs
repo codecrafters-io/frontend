@@ -33,23 +33,23 @@
   </div>
 
   <CodeMirror
-    @document={{@highlightedFile.contents}}
-    @filename={{@highlightedFile.filename}}
-    @language={{@solution.language.slug}}
-    @lineNumbers={{true}}
     @allowMultipleSelections={{true}}
     @bracketMatching={{true}}
     @collapsedRanges={{this.collapsedRangesForCodeMirror}}
     @crosshairCursor={{true}}
+    @document={{@highlightedFile.contents}}
     @drawSelection={{true}}
-    @rectangularSelection={{true}}
     @editable={{false}}
-    @readOnly={{true}}
+    @filename={{@highlightedFile.filename}}
     @highlightActiveLine={{false}}
     @highlightedRanges={{this.highlightedRangesForCodeMirror}}
     @highlightSelectionMatches={{true}}
     @highlightSpecialChars={{true}}
     @highlightTrailingWhitespace={{false}}
+    @language={{@solution.language.slug}}
+    @lineNumbers={{true}}
+    @readOnly={{true}}
+    @rectangularSelection={{true}}
     @theme={{this.codeMirrorTheme}}
   />
 </div>
