@@ -162,50 +162,183 @@ export interface Signature {
   Args: {
     Named: {
       [key: string]: Argument;
-      allowInlineDiffs?: boolean; // Display chunks with only limited inline changes inline in the code
-      allowMultipleSelections?: boolean; // Allow multiple selections by using CTRL/CMD key
-      autocompletion?: boolean; // Enable auto-completion
-      bracketMatching?: boolean; // Enable highlighting of matching brackets
-      closeBrackets?: boolean; // Automatically close brackets when typing
-      collapsedRanges?: LineRange[]; // Enable collapsing of specified line ranges
-      collapseUnchanged?: boolean; // Enable collapsing unchanged lines in the diff editor
-      crosshairCursor?: boolean; // Use a crosshair cursor over the editor when ALT key is pressed
-      document?: string; // Document for the editor to render & edit
-      drawSelection?: boolean; // Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies
-      dropCursor?: boolean; // Draw a blinking edit cursor to indicate where pasting will occur when a file is dragged over the editor
-      editable?: boolean; // Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`
-      filename?: string; // Pass a filename to automatically detect language based on file name and extension
-      foldGutter?: boolean; // Enable code folding & the fold gutter
-      highlightActiveLine?: boolean; // Enable highlighting of active line
-      highlightChanges?: boolean; // Enable inline highlighting of changes in the diff
-      highlightedRanges?: LineRange[]; // Enable highlighting of specified line ranges
-      highlightNewlines?: boolean; // Enable highlighting of new line symbols
-      highlightSelectionMatches?: boolean; // Enable highlighting of current selection matches in the document
-      highlightSpecialChars?: boolean; // Enable highlighting of invisible characters, such as `U+200E`
-      highlightTrailingWhitespace?: boolean; // Enable highlighting of trailing whitespace
-      highlightWhitespace?: boolean; // Enable highlighting of whitespace
-      history?: boolean; // Enable changes history and undo/redo keymap
-      indentOnInput?: boolean; // Enable automatic indentation (in languages that support/require it)
-      indentUnit?: string; // Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)
-      indentWithTab?: boolean; // Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed
-      language?: string; // Explicitly pass a language to the editor
-      lineNumbers?: boolean; // Enable the line numbers gutter
-      lineSeparator?: string; // Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
-      lineWrapping?: boolean; // Enable visual line wrapping for lines exceeding editor width
-      mergeControls?: boolean; // Enable showing accept/reject buttons in the diff editor
-      onDocumentUpdate?: DocumentUpdateCallback; // Function to call when document is edited inside the editor, receives `newValue` argument with new value of the document
-      originalDocument?: string; // Enable unified diff editor by passing the original document
-      placeholder?: string; // Placeholder text to show when document is empty or not passed
-      preserveHistory?: boolean; // Preserve changes history when parent component passes a new `@document` to the component
-      readOnly?: boolean; // Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with `editable`
-      rectangularSelection?: boolean; // Allow drawing rectangular selections by using ALT key
-      scrollPastEnd?: boolean; // Allow scrolling past the end of the document
-      syntaxHighlightDeletions?: boolean; // Enable syntax highlighting in the deleted chunks of the diff
-      syntaxHighlighting?: boolean; // Enable syntax highlighting (using a theme enables syntax highlighting automatically)
-      tabSize?: number; // Number of spaces to use for representing the TAB character visually
-      theme?: Extension; // Theme to use for the editor
-      unchangedMargin?: number; // Number of lines to leave visible after/before a change before collapsing unchanged lines
-      unchangedMinSize?: number; // Minimum number of collapsible lines required to be present for collapsing unchanged lines
+      /**
+       * Display chunks with only limited inline changes inline in the code
+       */
+      allowInlineDiffs?: boolean;
+      /**
+       * Allow multiple selections by using CTRL/CMD key
+       */
+      allowMultipleSelections?: boolean;
+      /**
+       * Enable auto-completion
+       */
+      autocompletion?: boolean;
+      /**
+       * Enable highlighting of matching brackets
+       */
+      bracketMatching?: boolean;
+      /**
+       * Automatically close brackets when typing
+       */
+      closeBrackets?: boolean;
+      /**
+       * Enable collapsing of specified line ranges
+       */
+      collapsedRanges?: LineRange[];
+      /**
+       * Enable collapsing unchanged lines in the diff editor
+       */
+      collapseUnchanged?: boolean;
+      /**
+       * Use a crosshair cursor over the editor when ALT key is pressed
+       */
+      crosshairCursor?: boolean;
+      /**
+       * Document for the editor to render & edit
+       */
+      document?: string;
+      /**
+       * Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies
+       */
+      drawSelection?: boolean;
+      /**
+       * Draw a blinking edit cursor to indicate where pasting will occur when a file is dragged over the editor
+       */
+      dropCursor?: boolean;
+      /**
+       * Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`
+       */
+      editable?: boolean;
+      /**
+       * Pass a filename to automatically detect language based on file name and extension
+       */
+      filename?: string;
+      /**
+       * Enable code folding & the fold gutter
+       */
+      foldGutter?: boolean;
+      /**
+       * Enable highlighting of active line
+       */
+      highlightActiveLine?: boolean;
+      /**
+       * Enable inline highlighting of changes in the diff
+       */
+      highlightChanges?: boolean;
+      /**
+       * Enable highlighting of specified line ranges
+       */
+      highlightedRanges?: LineRange[];
+      /**
+       * Enable highlighting of new line symbols
+       */
+      highlightNewlines?: boolean;
+      /**
+       * Enable highlighting of current selection matches in the document
+       */
+      highlightSelectionMatches?: boolean;
+      /**
+       * Enable highlighting of invisible characters, such as `U+200E`
+       */
+      highlightSpecialChars?: boolean;
+      /**
+       * Enable highlighting of trailing whitespace
+       */
+      highlightTrailingWhitespace?: boolean;
+      /**
+       * Enable highlighting of whitespace
+       */
+      highlightWhitespace?: boolean;
+      /**
+       * Enable changes history and undo/redo keymap
+       */
+      history?: boolean;
+      /**
+       * Enable automatic indentation (in languages that support/require it)
+       */
+      indentOnInput?: boolean;
+      /**
+       * Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)
+       */
+      indentUnit?: string;
+      /**
+       * Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed
+       */
+      indentWithTab?: boolean;
+      /**
+       * Explicitly pass a language to the editor
+       */
+      language?: string;
+      /**
+       * Enable the line numbers gutter
+       */
+      lineNumbers?: boolean;
+      /**
+       * Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
+       */
+      lineSeparator?: string;
+      /**
+       * Enable visual line wrapping for lines exceeding editor width
+       */
+      lineWrapping?: boolean;
+      /**
+       * Enable showing accept/reject buttons in the diff editor
+       */
+      mergeControls?: boolean;
+      /**
+       * Function to call when document is edited inside the editor
+       * @param {string} newValue New document contents
+       */
+      onDocumentUpdate?: DocumentUpdateCallback;
+      /**
+       * Enable unified diff editor by passing the original document
+       */
+      originalDocument?: string;
+      /**
+       * Placeholder text to show when document is empty or not passed
+       */
+      placeholder?: string;
+      /**
+       * Preserve changes history when parent component passes a new `@document` to the component
+       */
+      preserveHistory?: boolean;
+      /**
+       * Make the document in the editor read-only, disable commands and other mutating extensions, do not confuse with `editable`
+       */
+      readOnly?: boolean;
+      /**
+       * Allow drawing rectangular selections by using ALT key
+       */
+      rectangularSelection?: boolean;
+      /**
+       * Allow scrolling past the end of the document
+       */
+      scrollPastEnd?: boolean;
+      /**
+       * Enable syntax highlighting in the deleted chunks of the diff
+       */
+      syntaxHighlightDeletions?: boolean;
+      /**
+       * Enable syntax highlighting (using a theme enables syntax highlighting automatically)
+       */
+      syntaxHighlighting?: boolean;
+      /**
+       * Number of spaces to use for representing the TAB character visually
+       */
+      tabSize?: number;
+      /**
+       * Theme to use for the editor
+       */
+      theme?: Extension;
+      /**
+       * Number of lines to leave visible after/before a change before collapsing unchanged lines
+       */
+      unchangedMargin?: number;
+      /**
+       * Minimum number of collapsible lines required to be present for collapsing unchanged lines
+       */
+      unchangedMinSize?: number;
     };
   };
   Blocks: { default?: [] };
