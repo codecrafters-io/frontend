@@ -374,6 +374,13 @@ export default class CodeMirrorComponent extends Component<Signature> {
         },
       }),
     );
+
+    this.#updateRenderedView({
+      effects: this.#resetCompartment('collapsedRanges'),
+    });
+    this.#updateRenderedView({
+      effects: await this.#updateCompartment('collapsedRanges'),
+    });
   }
 
   @action
