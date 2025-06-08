@@ -141,11 +141,5 @@ const baseTheme = EditorView.baseTheme({
 });
 
 export function collapseRanges(collapsedRanges: LineRange[] = []) {
-  return [
-    EditorState.phrases.of({
-      'Expand $ lines': 'Expand $ lines',
-    }),
-    baseTheme,
-    initCollapsedRangesStateField(collapsedRanges),
-  ];
+  return [baseTheme, initCollapsedRangesStateField(collapsedRanges)];
 }
