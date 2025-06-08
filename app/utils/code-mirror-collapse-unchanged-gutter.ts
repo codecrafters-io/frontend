@@ -48,7 +48,7 @@ export class CollapseUnchangedGutterMarker extends GutterMarker implements Event
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   destroy() {
-    this.widget.attachedGutterMarkers.removeAt(this.widget.attachedGutterMarkers.indexOf(this));
+    this.widget.attachedGutterMarkers.splice(this.widget.attachedGutterMarkers.indexOf(this), 1);
     this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
     this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
   }
@@ -85,7 +85,7 @@ export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS implements E
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   destroy() {
-    this.widget.attachedGutterMarkers.removeAt(this.widget.attachedGutterMarkers.indexOf(this));
+    this.widget.attachedGutterMarkers.splice(this.widget.attachedGutterMarkers.indexOf(this), 1);
     this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
     this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
   }
