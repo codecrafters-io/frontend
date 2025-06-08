@@ -29,8 +29,8 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
 });
 
 export class CollapsedRangesWidget extends WidgetType {
-  attachedGutterMarkers: CollapseRangesGutterMarkers[] = [];
-  lastRenderedElement?: HTMLElement;
+  #attachedGutterMarkers: CollapseRangesGutterMarkers[] = [];
+  #lastRenderedElement?: HTMLElement;
 
   constructor(
     readonly startLine: number,
@@ -57,19 +57,19 @@ export class CollapsedRangesWidget extends WidgetType {
   }
 
   set isHovered(isHovered: boolean) {
-    this.lastRenderedElement?.classList.toggle('cm-collapseRangesHovered', isHovered);
+    this.#lastRenderedElement?.classList.toggle('cm-collapseRangesHovered', isHovered);
   }
 
   attachGutterMarker(marker: CollapseRangesGutterMarkers) {
-    this.attachedGutterMarkers.push(marker);
-    this.lastRenderedElement?.addEventListener('mouseenter', marker);
-    this.lastRenderedElement?.addEventListener('mouseleave', marker);
+    this.#attachedGutterMarkers.push(marker);
+    this.#lastRenderedElement?.addEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.addEventListener('mouseleave', marker);
   }
 
   detachGutterMarker(marker: CollapseRangesGutterMarkers) {
-    this.attachedGutterMarkers.splice(this.attachedGutterMarkers.indexOf(marker), 1);
-    this.lastRenderedElement?.removeEventListener('mouseenter', marker);
-    this.lastRenderedElement?.removeEventListener('mouseleave', marker);
+    this.#attachedGutterMarkers.splice(this.#attachedGutterMarkers.indexOf(marker), 1);
+    this.#lastRenderedElement?.removeEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.removeEventListener('mouseleave', marker);
   }
 
   eq(other: CollapsedRangesWidget) {
@@ -100,12 +100,12 @@ export class CollapsedRangesWidget extends WidgetType {
       view.dispatch({ effects: uncollapseRangesStateEffect.of(pos) });
     });
 
-    for (const marker of this.attachedGutterMarkers) {
+    for (const marker of this.#attachedGutterMarkers) {
       outer.addEventListener('mouseenter', marker);
       outer.addEventListener('mouseleave', marker);
     }
 
-    this.lastRenderedElement = outer;
+    this.#lastRenderedElement = outer;
 
     return outer;
   }

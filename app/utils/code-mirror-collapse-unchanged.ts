@@ -11,8 +11,8 @@ export const uncollapseUnchanged = StateEffect.define<number>({
 const setChunks = StateEffect.define<readonly Chunk[]>();
 
 export class CollapseWidget extends WidgetType {
-  attachedGutterMarkers: CollapseUnchangedGutterMarkers[] = [];
-  lastRenderedElement?: HTMLElement;
+  #attachedGutterMarkers: CollapseUnchangedGutterMarkers[] = [];
+  #lastRenderedElement?: HTMLElement;
 
   constructor(
     readonly collapseFrom: number,
@@ -39,19 +39,19 @@ export class CollapseWidget extends WidgetType {
   }
 
   set isHovered(isHovered: boolean) {
-    this.lastRenderedElement?.classList.toggle('cm-collapseUnchangedHovered', isHovered);
+    this.#lastRenderedElement?.classList.toggle('cm-collapseUnchangedHovered', isHovered);
   }
 
   attachGutterMarker(marker: CollapseUnchangedGutterMarkers) {
-    this.attachedGutterMarkers.push(marker);
-    this.lastRenderedElement?.addEventListener('mouseenter', marker);
-    this.lastRenderedElement?.addEventListener('mouseleave', marker);
+    this.#attachedGutterMarkers.push(marker);
+    this.#lastRenderedElement?.addEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.addEventListener('mouseleave', marker);
   }
 
   detachGutterMarker(marker: CollapseUnchangedGutterMarkers) {
-    this.attachedGutterMarkers.splice(this.attachedGutterMarkers.indexOf(marker), 1);
-    this.lastRenderedElement?.removeEventListener('mouseenter', marker);
-    this.lastRenderedElement?.removeEventListener('mouseleave', marker);
+    this.#attachedGutterMarkers.splice(this.#attachedGutterMarkers.indexOf(marker), 1);
+    this.#lastRenderedElement?.removeEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.removeEventListener('mouseleave', marker);
   }
 
   eq(other: CollapseWidget) {
@@ -84,12 +84,12 @@ export class CollapseWidget extends WidgetType {
       // if (sibling) sibling().dispatch({ effects: uncollapseUnchanged.of(mapPos(pos, view.state.field(ChunkField), side == 'a')) });
     });
 
-    for (const marker of this.attachedGutterMarkers) {
+    for (const marker of this.#attachedGutterMarkers) {
       outer.addEventListener('mouseenter', marker);
       outer.addEventListener('mouseleave', marker);
     }
 
-    this.lastRenderedElement = outer;
+    this.#lastRenderedElement = outer;
 
     return outer;
   }

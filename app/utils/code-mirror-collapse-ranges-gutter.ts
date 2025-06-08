@@ -31,7 +31,7 @@ function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, lin
 }
 
 export class CollapseRangesGutterMarker extends GutterMarker implements EventListenerObject {
-  lastRenderedElement?: HTMLElement;
+  #lastRenderedElement?: HTMLElement;
 
   constructor(
     readonly view: EditorView,
@@ -49,21 +49,21 @@ export class CollapseRangesGutterMarker extends GutterMarker implements EventLis
 
   handleEvent(e: MouseEvent) {
     if (e.type === 'mouseenter') {
-      this.lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+      this.#lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
     } else if (e.type === 'mouseleave') {
-      this.lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+      this.#lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
     }
   }
 
   toDOM(view: EditorView) {
-    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
 
-    return this.lastRenderedElement;
+    return this.#lastRenderedElement;
   }
 }
 
 export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
-  lastRenderedElement?: HTMLElement;
+  #lastRenderedElement?: HTMLElement;
 
   constructor(
     readonly view: EditorView,
@@ -81,16 +81,16 @@ export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements Even
 
   handleEvent(e: MouseEvent) {
     if (e.type === 'mouseenter') {
-      this.lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+      this.#lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
     } else if (e.type === 'mouseleave') {
-      this.lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+      this.#lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
     }
   }
 
   toDOM(view: EditorView) {
-    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
 
-    return this.lastRenderedElement;
+    return this.#lastRenderedElement;
   }
 }
 
