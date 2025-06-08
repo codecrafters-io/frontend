@@ -49,7 +49,12 @@ export class CollapseWidget extends WidgetType {
   }
 
   detachGutterMarker(marker: CollapseUnchangedGutterMarkers) {
-    this.#attachedGutterMarkers.splice(this.#attachedGutterMarkers.indexOf(marker), 1);
+    const markerIndex = this.#attachedGutterMarkers.indexOf(marker);
+
+    if (markerIndex !== -1) {
+      this.#attachedGutterMarkers.splice(markerIndex, 1);
+    }
+
     this.#lastRenderedElement?.removeEventListener('mouseenter', marker);
     this.#lastRenderedElement?.removeEventListener('mouseleave', marker);
   }
