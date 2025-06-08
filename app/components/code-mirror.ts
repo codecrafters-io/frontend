@@ -37,11 +37,12 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
-import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
+import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
+import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -132,7 +133,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
     originalDocument,
     mergeControls,
     collapsedRanges,
-    collapseUnchanged,
+    collapseUnchanged: collapseUnchangedEnabled,
     highlightChanges,
     syntaxHighlighting,
     syntaxHighlightDeletions,
@@ -145,12 +146,13 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged && !collapsedRanges ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
           }),
-          collapseUnchanged && !collapsedRanges ? collapseUnchangedGutter() : [],
+          collapseUnchangedEnabled && !collapsedRanges
+            ? [collapseUnchanged({ margin: unchangedMargin, minSize: unchangedMinSize, original: originalDocument }), collapseUnchangedGutter()]
+            : [],
         ]
       : [];
   },

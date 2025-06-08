@@ -80,11 +80,12 @@ const BASE_STYLE = {
   // Collapse unchanged lines gutter
   '.cm-collapseUnchangedGutter': {
     '& .cm-gutterElement': {
-      '& .cm-collapseUnchangedGutterElement': {
+      '& .cm-collapseUnchangedGutterMarker': {
         position: 'absolute',
         left: 0,
         right: 0,
         height: '1.75rem',
+        marginTop: '0.5rem',
         borderTopWidth: '1px',
         borderBottomWidth: '1px',
         borderColor: tailwindColors.sky['100'],
@@ -95,23 +96,20 @@ const BASE_STYLE = {
         backgroundSize: '12px 12px',
         cursor: 'pointer',
 
-        '&.cm-collapseUnchangedGutterElementFirst': {
-          borderTop: 'none',
+        '&:hover, &.cm-collapseUnchangedGutterMarkerHovered': {
+          backgroundColor: tailwindColors.sky['100'],
+          color: tailwindColors.sky['800'],
+        },
+
+        '&.cm-collapseUnchangedGutterMarkerFirst': {
           marginTop: '-0.5rem',
+          borderTop: 'none',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-top.svg")',
         },
 
-        '&.cm-collapseUnchangedGutterElementLast': {
+        '&.cm-collapseUnchangedGutterMarkerLast': {
           borderBottom: 'none',
-          marginTop: '0.5rem',
           backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom.svg")',
-        },
-      },
-
-      '&:hover': {
-        '& .cm-collapseUnchangedGutterElement': {
-          backgroundColor: tailwindColors.sky['100'],
-          color: tailwindColors.sky['800'],
         },
       },
     },
@@ -161,40 +159,50 @@ const BASE_STYLE = {
   },
 
   // Expand unchanged lines bar
-  '.cm-collapsedLines': {
-    height: '1.75rem', // h7
-    borderTopWidth: '1px',
-    borderBottomWidth: '1px',
-    fontSize: '0.75rem', // text-xs
-    fontFamily: 'Montserrat, sans-serif',
-    lineHeight: '1rem', // text-xs
-    background: tailwindColors.sky['50'],
-    color: tailwindColors.sky['700'],
-    borderColor: tailwindColors.sky['100'],
+  '.cm-cc-collapsedLines': {
+    padding: '0.5rem 0',
 
-    '&:hover': {
-      background: tailwindColors.sky['100'],
-      color: tailwindColors.sky['800'],
+    '& .cm-cc-collapsedLinesInner': {
+      height: '1.75rem', // h7
+      borderTopWidth: '1px',
+      borderBottomWidth: '1px',
+      fontSize: '0.75rem', // text-xs
+      fontFamily: 'Montserrat, sans-serif',
+      lineHeight: '1rem', // text-xs
+      background: tailwindColors.sky['50'],
+      color: tailwindColors.sky['700'],
+      borderColor: tailwindColors.sky['100'],
+
+      '&:before, &:after': {
+        content: 'none',
+      },
     },
 
-    '&:before': {
-      content: 'none',
+    '&:hover, &.cm-collapseUnchangedHovered': {
+      '& .cm-cc-collapsedLinesInner': {
+        background: tailwindColors.sky['100'],
+        color: tailwindColors.sky['800'],
+      },
     },
 
-    '&:after': {
-      content: 'none',
-    },
-
-    '&:first-child': {
-      borderTop: 'none',
+    '&.cm-cc-collapsedLinesFirst': {
+      padding: 0,
       marginTop: '-0.5rem',
       marginBottom: '0.5rem',
+
+      '& .cm-cc-collapsedLinesInner': {
+        borderTop: 'none',
+      },
     },
 
-    '&:last-child': {
-      borderBottom: 'none',
+    '&.cm-cc-collapsedLinesLast': {
+      padding: 0,
       marginTop: '0.5rem',
       marginBottom: '-0.5rem',
+
+      '& .cm-cc-collapsedLinesInner': {
+        borderBottom: 'none',
+      },
     },
   },
 
@@ -293,24 +301,22 @@ export const codeCraftersDark = [
       // Collapse unchanged lines gutter
       '.cm-collapseUnchangedGutter': {
         '& .cm-gutterElement': {
-          '& .cm-collapseUnchangedGutterElement': {
+          '& .cm-collapseUnchangedGutterMarker': {
             borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
             backgroundColor: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
             backgroundImage: 'url("/assets/images/codemirror/expand-diff-middle-dark.svg")',
 
-            '&.cm-collapseUnchangedGutterElementFirst': {
+            '&:hover, &.cm-collapseUnchangedGutterMarkerHovered': {
+              backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+              color: tailwindColors.sky['300'],
+            },
+
+            '&.cm-collapseUnchangedGutterMarkerFirst': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-top-dark.svg")',
             },
 
-            '&.cm-collapseUnchangedGutterElementLast': {
+            '&.cm-collapseUnchangedGutterMarkerLast': {
               backgroundImage: 'url("/assets/images/codemirror/expand-diff-bottom-dark.svg")',
-            },
-          },
-
-          '&:hover': {
-            '& .cm-collapseUnchangedGutterElement': {
-              backgroundColor: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
-              color: tailwindColors.sky['300'],
             },
           },
         },
@@ -341,14 +347,18 @@ export const codeCraftersDark = [
       },
 
       // Expand unchanged lines bar
-      '.cm-collapsedLines': {
-        background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
-        color: tailwindColors.sky['400'],
-        borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+      '.cm-cc-collapsedLines': {
+        '& .cm-cc-collapsedLinesInner': {
+          background: blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800']),
+          color: tailwindColors.sky['400'],
+          borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
+        },
 
-        '&:hover': {
-          background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
-          color: tailwindColors.sky['300'],
+        '&:hover, &.cm-collapseUnchangedHovered': {
+          '& .cm-cc-collapsedLinesInner': {
+            background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
+            color: tailwindColors.sky['300'],
+          },
         },
       },
 

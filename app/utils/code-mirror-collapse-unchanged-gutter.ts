@@ -1,63 +1,107 @@
-import { BlockInfo, EditorView, gutter, GutterMarker, type WidgetType } from '@codemirror/view';
-import { uncollapseUnchanged } from '@codemirror/merge';
+import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
 import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { CollapseWidget, uncollapseUnchanged } from './code-mirror-collapse-unchanged';
 
-function isCollapseUnchangedWidget(widget: WidgetType) {
-  return 'type' in widget && widget.type === 'collapsed-unchanged-code';
-}
-
-function renderGutterElement(view: EditorView, widget: WidgetType, line: BlockInfo) {
+function renderGutterMarker(view: EditorView, widget: CollapseWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
-  const collapsedLinesCount = 'lines' in widget ? (widget.lines as number) : 1;
-  const extraClassNames = [];
-
-  if (lineNumber === 1) {
-    extraClassNames.push('cm-collapseUnchangedGutterElementFirst');
-  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
-    extraClassNames.push('cm-collapseUnchangedGutterElementLast');
-  }
+  const collapsedLinesCount = widget instanceof CollapseWidget ? widget.lines : 1;
 
   const el = document.createElement('div');
-  el.className = ['cm-collapseUnchangedGutterElement', ...extraClassNames].join(' ');
-  el.addEventListener('click', function dispatchUncollapseUnchanged() {
+  el.className = 'cm-collapseUnchangedGutterMarker';
+
+  if (lineNumber === 1) {
+    el.classList.add('cm-collapseUnchangedGutterMarkerFirst');
+  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
+    el.classList.add('cm-collapseUnchangedGutterMarkerLast');
+  }
+
+  el.addEventListener('click', function () {
     view.dispatch({ effects: uncollapseUnchanged.of(line.from) });
+  });
+
+  el.addEventListener('mouseenter', function () {
+    widget.lastRenderedElement?.classList.add('cm-collapseUnchangedHovered');
+  });
+
+  el.addEventListener('mouseleave', function () {
+    widget.lastRenderedElement?.classList.remove('cm-collapseUnchangedHovered');
   });
 
   return el;
 }
 
-export class CollapseUnchangedGutterMarker extends GutterMarker {
-  line: BlockInfo;
-  view: EditorView;
-  widget: WidgetType;
+export class CollapseUnchangedGutterMarker extends GutterMarker implements EventListenerObject {
+  lastRenderedElement?: HTMLElement;
 
-  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+  constructor(
+    readonly view: EditorView,
+    readonly widget: CollapseWidget,
+    readonly line: BlockInfo,
+  ) {
     super();
-    this.line = line;
-    this.view = view;
-    this.widget = widget;
+
+    this.widget.attachedGutterMarkers.push(this);
+    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+  }
+
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.attachedGutterMarkers.removeAt(this.widget.attachedGutterMarkers.indexOf(this));
+    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.lastRenderedElement?.classList.add('cm-collapseUnchangedGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.lastRenderedElement?.classList.remove('cm-collapseUnchangedGutterMarkerHovered');
+    }
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    return this.lastRenderedElement;
   }
 }
 
-export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS {
-  line: BlockInfo;
-  view: EditorView;
-  widget: WidgetType;
+export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
+  lastRenderedElement?: HTMLElement;
 
-  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+  constructor(
+    readonly view: EditorView,
+    readonly widget: CollapseWidget,
+    readonly line: BlockInfo,
+  ) {
     super();
-    this.line = line;
-    this.view = view;
-    this.widget = widget;
+
+    this.widget.attachedGutterMarkers.push(this);
+    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+  }
+
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.attachedGutterMarkers.removeAt(this.widget.attachedGutterMarkers.indexOf(this));
+    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.lastRenderedElement?.classList.add('cm-collapseUnchangedGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.lastRenderedElement?.classList.remove('cm-collapseUnchangedGutterMarkerHovered');
+    }
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    return this.lastRenderedElement;
   }
 }
 
@@ -67,7 +111,7 @@ export function collapseUnchangedGutter() {
       class: 'cm-collapseUnchangedGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarker(view, widget, line) : null;
+        return widget instanceof CollapseWidget ? new CollapseUnchangedGutterMarker(view, widget, line) : null;
       },
     }),
 
@@ -75,7 +119,7 @@ export function collapseUnchangedGutter() {
       class: 'cm-collapseUnchangedGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseUnchangedWidget(widget) ? new CollapseUnchangedGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapseWidget ? new CollapseUnchangedGutterMarkerRS(view, widget, line) : null;
       },
     }),
   ];

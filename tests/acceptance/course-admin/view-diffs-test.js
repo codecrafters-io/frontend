@@ -102,7 +102,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[2].text,
-      'Expand 7 unchanged lines',
+      'Expand 9 unchanged lines',
       'The third placeholder should show correct number of lines',
     );
 
@@ -114,7 +114,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
       'The first placeholder should be expanded after clicking',
     );
 
-    await submissionsPage.diffTab.changedFiles[0].codeMirror.gutters.collapseUnchangedGutter.collapseUnchangedBarSiblings[0].click();
+    await submissionsPage.diffTab.changedFiles[0].codeMirror.gutters.collapseUnchangedGutter.collapseUnchangedGutterMarkers[0].click();
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders.length,

@@ -32,7 +32,7 @@ export default create({
         collapseUnchangedGutter: {
           scope: '> .cm-gutter.cm-collapseUnchangedGutter',
           elements: collection('> .cm-gutterElement'),
-          collapseUnchangedBarSiblings: collection('.cm-collapseUnchangedGutterElement'),
+          collapseUnchangedGutterMarkers: collection('.cm-collapseUnchangedGutterMarker'),
         },
       },
 
@@ -42,7 +42,7 @@ export default create({
         focus: focusable(),
         blur: blurrable(),
 
-        collapsedLinesPlaceholders: collection('> .cm-collapsedLines', {
+        collapsedLinesPlaceholders: collection('> .cm-cc-collapsedLines', {
           text: text(),
           click: clickable(),
         }),
