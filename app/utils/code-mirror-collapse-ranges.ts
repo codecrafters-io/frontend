@@ -1,6 +1,7 @@
 import { Decoration, EditorView, WidgetType, type DecorationSet } from '@codemirror/view';
 import { EditorState, RangeSetBuilder, StateEffect, StateField } from '@codemirror/state';
 import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
+import type { CollapseRangesGutterMarker, CollapseRangesGutterMarkerRS } from './code-mirror-collapse-ranges-gutter';
 
 export const uncollapseRangesStateEffect = StateEffect.define<number>({
   map: (value, change) => change.mapPos(value),
@@ -27,6 +28,7 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
 });
 
 export class CollapsedRangesWidget extends WidgetType {
+  attachedGutterMarkers: (CollapseRangesGutterMarker | CollapseRangesGutterMarkerRS)[] = [];
   lastRenderedElement?: HTMLElement;
 
   constructor(
@@ -80,6 +82,11 @@ export class CollapsedRangesWidget extends WidgetType {
       const pos = view.posAtDOM(e.target as HTMLElement);
       view.dispatch({ effects: uncollapseRangesStateEffect.of(pos) });
     });
+
+    for (const marker of this.attachedGutterMarkers) {
+      outer.addEventListener('mouseenter', marker);
+      outer.addEventListener('mouseleave', marker);
+    }
 
     this.lastRenderedElement = outer;
 
