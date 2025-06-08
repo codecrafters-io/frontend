@@ -28,18 +28,11 @@ function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, lin
     widget.lastRenderedElement?.classList.remove('cm-collapsedRangesHovered');
   });
 
-  widget.lastRenderedElement?.addEventListener('mouseenter', function () {
-    el.classList.add('cm-collapseRangesGutterMarkerHovered');
-  });
-
-  widget.lastRenderedElement?.addEventListener('mouseleave', function () {
-    el.classList.remove('cm-collapseRangesGutterMarkerHovered');
-  });
-
   return el;
 }
 
-export class CollapseRangesGutterMarker extends GutterMarker {
+export class CollapseRangesGutterMarker extends GutterMarker implements EventListenerObject {
+  lastRenderedElement?: HTMLElement;
   line: BlockInfo;
   view: EditorView;
   widget: CollapsedRangesWidget;
@@ -51,12 +44,32 @@ export class CollapseRangesGutterMarker extends GutterMarker {
     this.widget = widget;
   }
 
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+    }
+  }
+
   toDOM(view: EditorView) {
-    return renderGutterMarker(view, this.widget, this.line);
+    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+
+    return this.lastRenderedElement;
   }
 }
 
-export class CollapseRangesGutterMarkerRS extends GutterMarkerRS {
+export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
+  lastRenderedElement?: HTMLElement;
   line: BlockInfo;
   view: EditorView;
   widget: CollapsedRangesWidget;
@@ -68,8 +81,27 @@ export class CollapseRangesGutterMarkerRS extends GutterMarkerRS {
     this.widget = widget;
   }
 
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+    }
+  }
+
   toDOM(view: EditorView) {
-    return renderGutterMarker(view, this.widget, this.line);
+    this.lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
+    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+
+    return this.lastRenderedElement;
   }
 }
 
