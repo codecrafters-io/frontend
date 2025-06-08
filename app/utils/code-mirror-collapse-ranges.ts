@@ -1,7 +1,8 @@
-import { Decoration, EditorView, WidgetType, type DecorationSet } from '@codemirror/view';
+import { Decoration, EditorView, GutterMarker, WidgetType, type DecorationSet } from '@codemirror/view';
 import { EditorState, RangeSetBuilder, StateEffect, StateField } from '@codemirror/state';
 import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
-import type { CollapseRangesGutterMarker, CollapseRangesGutterMarkerRS } from './code-mirror-collapse-ranges-gutter';
+
+type CollapseRangesGutterMarkers = GutterMarker & EventListenerObject;
 
 export const uncollapseRangesStateEffect = StateEffect.define<number>({
   map: (value, change) => change.mapPos(value),
@@ -28,7 +29,7 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
 });
 
 export class CollapsedRangesWidget extends WidgetType {
-  attachedGutterMarkers: (CollapseRangesGutterMarker | CollapseRangesGutterMarkerRS)[] = [];
+  attachedGutterMarkers: CollapseRangesGutterMarkers[] = [];
   lastRenderedElement?: HTMLElement;
 
   constructor(
@@ -53,6 +54,22 @@ export class CollapsedRangesWidget extends WidgetType {
 
   get lines() {
     return this.endLine - this.startLine + 1;
+  }
+
+  set isHovered(isHovered: boolean) {
+    this.lastRenderedElement?.classList.toggle('cm-collapseRangesHovered', isHovered);
+  }
+
+  attachGutterMarker(marker: CollapseRangesGutterMarkers) {
+    this.attachedGutterMarkers.push(marker);
+    this.lastRenderedElement?.addEventListener('mouseenter', marker);
+    this.lastRenderedElement?.addEventListener('mouseleave', marker);
+  }
+
+  detachGutterMarker(marker: CollapseRangesGutterMarkers) {
+    this.attachedGutterMarkers.splice(this.attachedGutterMarkers.indexOf(marker), 1);
+    this.lastRenderedElement?.removeEventListener('mouseenter', marker);
+    this.lastRenderedElement?.removeEventListener('mouseleave', marker);
   }
 
   eq(other: CollapsedRangesWidget) {

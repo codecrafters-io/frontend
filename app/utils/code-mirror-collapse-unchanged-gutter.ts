@@ -20,11 +20,11 @@ function renderGutterMarker(view: EditorView, widget: CollapseWidget, line: Bloc
   });
 
   el.addEventListener('mouseenter', function () {
-    widget.lastRenderedElement?.classList.add('cm-collapseUnchangedHovered');
+    widget.isHovered = true;
   });
 
   el.addEventListener('mouseleave', function () {
-    widget.lastRenderedElement?.classList.remove('cm-collapseUnchangedHovered');
+    widget.isHovered = false;
   });
 
   return el;
@@ -39,17 +39,12 @@ export class CollapseUnchangedGutterMarker extends GutterMarker implements Event
     readonly line: BlockInfo,
   ) {
     super();
-
-    this.widget.attachedGutterMarkers.push(this);
-    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
-    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+    widget.attachGutterMarker(this);
   }
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   destroy() {
-    this.widget.attachedGutterMarkers.splice(this.widget.attachedGutterMarkers.indexOf(this), 1);
-    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
-    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+    this.widget.detachGutterMarker(this);
   }
 
   handleEvent(e: MouseEvent) {
@@ -76,17 +71,12 @@ export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS implements E
     readonly line: BlockInfo,
   ) {
     super();
-
-    this.widget.attachedGutterMarkers.push(this);
-    this.widget.lastRenderedElement?.addEventListener('mouseenter', this);
-    this.widget.lastRenderedElement?.addEventListener('mouseleave', this);
+    widget.attachGutterMarker(this);
   }
 
   // eslint-disable-next-line ember/classic-decorator-hooks
   destroy() {
-    this.widget.attachedGutterMarkers.splice(this.widget.attachedGutterMarkers.indexOf(this), 1);
-    this.widget.lastRenderedElement?.removeEventListener('mouseenter', this);
-    this.widget.lastRenderedElement?.removeEventListener('mouseleave', this);
+    this.widget.detachGutterMarker(this);
   }
 
   handleEvent(e: MouseEvent) {
