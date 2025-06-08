@@ -5,14 +5,13 @@ import { CollapsedRangesWidget, uncollapseRangesStateEffect } from 'codecrafters
 function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
-  const collapsedLinesCount = widget instanceof CollapsedRangesWidget ? widget.lines : 1;
 
   const el = document.createElement('div');
   el.className = 'cm-collapseRangesGutterMarker';
 
   if (lineNumber === 1) {
     el.classList.add('cm-collapseRangesGutterMarkerFirst');
-  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
+  } else if (lineNumber + widget.lines - 1 >= totalLines) {
     el.classList.add('cm-collapseRangesGutterMarkerLast');
   }
 

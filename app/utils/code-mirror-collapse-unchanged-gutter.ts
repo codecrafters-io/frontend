@@ -5,14 +5,13 @@ import { CollapseWidget, uncollapseUnchanged } from './code-mirror-collapse-unch
 function renderGutterMarker(view: EditorView, widget: CollapseWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
-  const collapsedLinesCount = widget instanceof CollapseWidget ? widget.lines : 1;
 
   const el = document.createElement('div');
   el.className = 'cm-collapseUnchangedGutterMarker';
 
   if (lineNumber === 1) {
     el.classList.add('cm-collapseUnchangedGutterMarkerFirst');
-  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
+  } else if (lineNumber + widget.lines - 1 >= totalLines) {
     el.classList.add('cm-collapseUnchangedGutterMarkerLast');
   }
 
