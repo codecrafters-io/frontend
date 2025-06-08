@@ -21,11 +21,11 @@ function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, lin
   });
 
   el.addEventListener('mouseenter', function () {
-    widget.lastRenderedElement?.classList.add('cm-collapsedRangesHovered');
+    widget.lastRenderedElement?.classList.add('cm-collapseRangesHovered');
   });
 
   el.addEventListener('mouseleave', function () {
-    widget.lastRenderedElement?.classList.remove('cm-collapsedRangesHovered');
+    widget.lastRenderedElement?.classList.remove('cm-collapseRangesHovered');
   });
 
   return el;

@@ -218,7 +218,7 @@ const BASE_STYLE = {
       },
     },
 
-    '&:hover, &.cm-collapsedRangesHovered': {
+    '&:hover, &.cm-collapseRangesHovered': {
       '& .cm-collapsedRangesInner': {
         background: tailwindColors.sky['100'],
         color: tailwindColors.sky['800'],
@@ -360,7 +360,7 @@ export const codeCraftersDark = [
           borderColor: blendColors(tailwindColors.white, 0.075, blendColors(tailwindColors.sky['900'], 0.4, tailwindColors.slate['800'])),
         },
 
-        '&:hover, &.cm-collapsedRangesHovered': {
+        '&:hover, &.cm-collapseRangesHovered': {
           '& .cm-collapsedRangesInner': {
             background: blendColors(tailwindColors.sky['800'], 0.4, tailwindColors.slate['800']),
             color: tailwindColors.sky['300'],
