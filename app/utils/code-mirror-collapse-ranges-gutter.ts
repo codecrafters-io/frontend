@@ -1,8 +1,8 @@
 import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
 import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
-import { CollapsedRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
+import { CollapseRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
-function renderGutterMarker(view: EditorView, widget: CollapsedRangesWidget, line: BlockInfo) {
+function renderGutterMarker(view: EditorView, widget: CollapseRangesWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
 
@@ -35,7 +35,7 @@ export class CollapseRangesGutterMarker extends GutterMarker implements EventLis
 
   constructor(
     readonly view: EditorView,
-    readonly widget: CollapsedRangesWidget,
+    readonly widget: CollapseRangesWidget,
     readonly line: BlockInfo,
   ) {
     super();
@@ -67,7 +67,7 @@ export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements Even
 
   constructor(
     readonly view: EditorView,
-    readonly widget: CollapsedRangesWidget,
+    readonly widget: CollapseRangesWidget,
     readonly line: BlockInfo,
   ) {
     super();
@@ -100,7 +100,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return widget instanceof CollapsedRangesWidget ? new CollapseRangesGutterMarker(view, widget, line) : null;
+        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarker(view, widget, line) : null;
       },
     }),
 
@@ -108,7 +108,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return widget instanceof CollapsedRangesWidget ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
       },
     }),
   ];

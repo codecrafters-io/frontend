@@ -28,7 +28,7 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
   provide: (f) => EditorView.decorations.from(f),
 });
 
-export class CollapsedRangesWidget extends WidgetType {
+export class CollapseRangesWidget extends WidgetType {
   #attachedGutterMarkers: CollapseRangesGutterMarkers[] = [];
   #lastRenderedElement?: HTMLElement;
 
@@ -72,7 +72,7 @@ export class CollapsedRangesWidget extends WidgetType {
     this.#lastRenderedElement?.removeEventListener('mouseleave', marker);
   }
 
-  eq(other: CollapsedRangesWidget) {
+  eq(other: CollapseRangesWidget) {
     return this.startLine == other.startLine && this.endLine == other.endLine;
   }
 
@@ -120,7 +120,7 @@ function buildCollapsedRangesDecorations(state: EditorState, collapsedRanges: Li
         state.doc.line(startLine).from,
         state.doc.line(endLine).to,
         Decoration.replace({
-          widget: new CollapsedRangesWidget(startLine, endLine, state.doc.lines),
+          widget: new CollapseRangesWidget(startLine, endLine, state.doc.lines),
           block: true,
         }),
       );
