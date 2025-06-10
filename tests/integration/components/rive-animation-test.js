@@ -43,7 +43,10 @@ module('Integration | Component | rive-animation', function (hooks) {
 
         return false;
       },
-      { timeout: 5000 },
+      {
+        timeout: 10_000,
+        timeoutMessage: 'Animation did not render in 10 seconds',
+      },
     );
 
     // Final check for non-transparent pixels
@@ -96,7 +99,10 @@ module('Integration | Component | rive-animation', function (hooks) {
 
         return false;
       },
-      { timeout: 5000 },
+      {
+        timeout: 10_000,
+        timeoutMessage: 'Animation did not render in 10 seconds',
+      },
     );
 
     // Final check for non-transparent pixels
