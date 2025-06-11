@@ -50,16 +50,16 @@
 
 <FileContentsCard
   @code={{this.selectedDocument.document}}
+  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
   @filename={{this.selectedDocument.filename}}
-  @language={{this.selectedDocument.language}}
+  @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
+  @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
   @isCollapsed={{this.isCollapsed}}
   @isCollapsible={{this.isCollapsible}}
-  @scrollIntoViewOnCollapse={{this.scrollIntoViewOnCollapse}}
-  @headerTooltipText={{if this.headerTooltipText "Example tooltip message"}}
-  @collapsedRanges={{if this.collapsedRanges this.selectedDocument.collapsedRanges}}
-  @highlightedRanges={{if this.highlightedRanges this.selectedDocument.highlightedRanges}}
-  @onExpand={{fn (mut this.isCollapsed) false}}
+  @language={{this.selectedDocument.language}}
   @onCollapse={{fn (mut this.isCollapsed) true}}
+  @onExpand={{fn (mut this.isCollapsed) false}}
+  @scrollIntoViewOnCollapse={{this.scrollIntoViewOnCollapse}}
   class="mt-4"
 />
 

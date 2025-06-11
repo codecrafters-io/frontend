@@ -1,6 +1,8 @@
-import { Decoration, EditorView, WidgetType, type DecorationSet } from '@codemirror/view';
+import { Decoration, EditorView, GutterMarker, WidgetType, type DecorationSet } from '@codemirror/view';
 import { EditorState, RangeSetBuilder, StateEffect, StateField } from '@codemirror/state';
 import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
+
+type CollapseRangesGutterMarkers = GutterMarker & EventListenerObject;
 
 export const uncollapseRangesStateEffect = StateEffect.define<number>({
   map: (value, change) => change.mapPos(value),
@@ -26,23 +28,56 @@ const CollapsedRangesStateField = StateField.define<DecorationSet>({
   provide: (f) => EditorView.decorations.from(f),
 });
 
-export class CollapsedRangesWidget extends WidgetType {
+export class CollapseRangesWidget extends WidgetType {
+  #attachedGutterMarkers: CollapseRangesGutterMarkers[] = [];
+  #lastRenderedElement?: HTMLElement;
+
   constructor(
     readonly startLine: number,
     readonly endLine: number,
+    readonly totalLines: number,
   ) {
     super();
   }
 
   get estimatedHeight() {
-    return 27;
+    return this.isFirst || this.isLast ? 28 : 44;
+  }
+
+  get isFirst() {
+    return this.startLine === 1;
+  }
+
+  get isLast() {
+    return this.endLine === this.totalLines;
   }
 
   get lines() {
     return this.endLine - this.startLine + 1;
   }
 
-  eq(other: CollapsedRangesWidget) {
+  set isHovered(isHovered: boolean) {
+    this.#lastRenderedElement?.classList.toggle('cm-collapseRangesHovered', isHovered);
+  }
+
+  attachGutterMarker(marker: CollapseRangesGutterMarkers) {
+    this.#attachedGutterMarkers.push(marker);
+    this.#lastRenderedElement?.addEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.addEventListener('mouseleave', marker);
+  }
+
+  detachGutterMarker(marker: CollapseRangesGutterMarkers) {
+    const markerIndex = this.#attachedGutterMarkers.indexOf(marker);
+
+    if (markerIndex !== -1) {
+      this.#attachedGutterMarkers.splice(markerIndex, 1);
+    }
+
+    this.#lastRenderedElement?.removeEventListener('mouseenter', marker);
+    this.#lastRenderedElement?.removeEventListener('mouseleave', marker);
+  }
+
+  eq(other: CollapseRangesWidget) {
     return this.startLine == other.startLine && this.endLine == other.endLine;
   }
 
@@ -53,12 +88,29 @@ export class CollapsedRangesWidget extends WidgetType {
   toDOM(view: EditorView) {
     const outer = document.createElement('div');
     outer.className = 'cm-collapsedRanges';
-    outer.textContent = view.state.phrase('Expand $ lines', this.lines);
 
+    if (this.isFirst) {
+      outer.classList.add('cm-collapsedRangesFirst');
+    } else if (this.isLast) {
+      outer.classList.add('cm-collapsedRangesLast');
+    }
+
+    const inner = document.createElement('div');
+    inner.className = 'cm-collapsedRangesInner';
+    inner.textContent = view.state.phrase('Expand $ lines', this.lines);
+
+    outer.appendChild(inner);
     outer.addEventListener('click', (e) => {
       const pos = view.posAtDOM(e.target as HTMLElement);
       view.dispatch({ effects: uncollapseRangesStateEffect.of(pos) });
     });
+
+    for (const marker of this.#attachedGutterMarkers) {
+      outer.addEventListener('mouseenter', marker);
+      outer.addEventListener('mouseleave', marker);
+    }
+
+    this.#lastRenderedElement = outer;
 
     return outer;
   }
@@ -68,12 +120,12 @@ function buildCollapsedRangesDecorations(state: EditorState, collapsedRanges: Li
   const builder = new RangeSetBuilder<Decoration>();
 
   for (const { startLine, endLine } of collapsedRanges) {
-    if (startLine <= state.doc.lines && endLine <= state.doc.lines) {
+    if (startLine >= 1 && endLine >= startLine && endLine <= state.doc.lines) {
       builder.add(
         state.doc.line(startLine).from,
         state.doc.line(endLine).to,
         Decoration.replace({
-          widget: new CollapsedRangesWidget(startLine, endLine),
+          widget: new CollapseRangesWidget(startLine, endLine, state.doc.lines),
           block: true,
         }),
       );
@@ -89,36 +141,34 @@ function initCollapsedRangesStateField(collapsedRanges: LineRange[] = []) {
 
 const baseTheme = EditorView.baseTheme({
   '& .cm-collapsedRanges': {
-    padding: '5px 5px 5px 10px',
-    background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
-    color: '#444',
-    cursor: 'pointer',
-    '&:before': {
-      content: '"⦚"',
-      marginInlineEnd: '7px',
-    },
-    '&:after': {
-      content: '"⦚"',
-      marginInlineStart: '7px',
+    '& .cm-collapsedRangesInner': {
+      padding: '5px 5px 5px 10px',
+      background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
+      color: '#444',
+      cursor: 'pointer',
+
+      '&:before': {
+        content: '"⦚"',
+        marginInlineEnd: '7px',
+      },
+
+      '&:after': {
+        content: '"⦚"',
+        marginInlineStart: '7px',
+      },
     },
   },
 
   '&dark': {
     '& .cm-collapsedRanges': {
-      color: '#ddd',
-      background: 'linear-gradient(to bottom, transparent 0, #222 30%, #222 70%, transparent 100%)',
+      '& .cm-collapsedRangesInner': {
+        color: '#ddd',
+        background: 'linear-gradient(to bottom, transparent 0, #222 30%, #222 70%, transparent 100%)',
+      },
     },
   },
 });
 
 export function collapseRanges(collapsedRanges: LineRange[] = []) {
-  return collapsedRanges
-    ? [
-        EditorState.phrases.of({
-          'Expand $ lines': 'Expand $ lines',
-        }),
-        baseTheme,
-        initCollapsedRangesStateField(collapsedRanges),
-      ]
-    : [];
+  return [baseTheme, initCollapsedRangesStateField(collapsedRanges)];
 }

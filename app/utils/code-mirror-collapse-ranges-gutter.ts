@@ -1,63 +1,96 @@
-import { BlockInfo, EditorView, gutter, GutterMarker, type WidgetType } from '@codemirror/view';
+import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
 import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
-import { CollapsedRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
+import { CollapseRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
-function isCollapseRangesWidget(widget: WidgetType) {
-  return widget instanceof CollapsedRangesWidget;
-}
-
-function renderGutterElement(view: EditorView, widget: WidgetType, line: BlockInfo) {
+function renderGutterMarker(view: EditorView, widget: CollapseRangesWidget, line: BlockInfo) {
   const totalLines = view.state.doc.lines;
   const lineNumber = view.state.doc.lineAt(line.from).number;
-  const collapsedLinesCount = 'lines' in widget ? (widget.lines as number) : 1;
-  const extraClassNames = [];
-
-  if (lineNumber === 1) {
-    extraClassNames.push('cm-collapseRangesGutterElementFirst');
-  } else if (lineNumber + collapsedLinesCount - 1 >= totalLines) {
-    extraClassNames.push('cm-collapseRangesGutterElementLast');
-  }
 
   const el = document.createElement('div');
-  el.className = ['cm-collapseRangesGutterElement', ...extraClassNames].join(' ');
-  el.addEventListener('click', function dispatchUncollapseRangesStateEffect() {
+  el.className = 'cm-collapseRangesGutterMarker';
+
+  if (lineNumber === 1) {
+    el.classList.add('cm-collapseRangesGutterMarkerFirst');
+  } else if (lineNumber + widget.lines - 1 >= totalLines) {
+    el.classList.add('cm-collapseRangesGutterMarkerLast');
+  }
+
+  el.addEventListener('click', function () {
     view.dispatch({ effects: uncollapseRangesStateEffect.of(line.from) });
+  });
+
+  el.addEventListener('mouseenter', function () {
+    widget.isHovered = true;
+  });
+
+  el.addEventListener('mouseleave', function () {
+    widget.isHovered = false;
   });
 
   return el;
 }
 
-export class CollapseRangesGutterMarker extends GutterMarker {
-  line: BlockInfo;
-  view: EditorView;
-  widget: WidgetType;
+export class CollapseRangesGutterMarker extends GutterMarker implements EventListenerObject {
+  #lastRenderedElement?: HTMLElement;
 
-  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+  constructor(
+    readonly view: EditorView,
+    readonly widget: CollapseRangesWidget,
+    readonly line: BlockInfo,
+  ) {
     super();
-    this.line = line;
-    this.view = view;
-    this.widget = widget;
+    widget.attachGutterMarker(this);
+  }
+
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.detachGutterMarker(this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.#lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.#lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+    }
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    return this.#lastRenderedElement;
   }
 }
 
-export class CollapseRangesGutterMarkerRS extends GutterMarkerRS {
-  line: BlockInfo;
-  view: EditorView;
-  widget: WidgetType;
+export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
+  #lastRenderedElement?: HTMLElement;
 
-  constructor(view: EditorView, widget: WidgetType, line: BlockInfo) {
+  constructor(
+    readonly view: EditorView,
+    readonly widget: CollapseRangesWidget,
+    readonly line: BlockInfo,
+  ) {
     super();
-    this.line = line;
-    this.view = view;
-    this.widget = widget;
+    widget.attachGutterMarker(this);
+  }
+
+  // eslint-disable-next-line ember/classic-decorator-hooks
+  destroy() {
+    this.widget.detachGutterMarker(this);
+  }
+
+  handleEvent(e: MouseEvent) {
+    if (e.type === 'mouseenter') {
+      this.#lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
+    } else if (e.type === 'mouseleave') {
+      this.#lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
+    }
   }
 
   toDOM(view: EditorView) {
-    return renderGutterElement(view, this.widget, this.line);
+    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
+
+    return this.#lastRenderedElement;
   }
 }
 
@@ -67,7 +100,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseRangesWidget(widget) ? new CollapseRangesGutterMarker(view, widget, line) : null;
+        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarker(view, widget, line) : null;
       },
     }),
 
@@ -75,7 +108,7 @@ export function collapseRangesGutter() {
       class: 'cm-collapseRangesGutter',
 
       widgetMarker(view, widget, line) {
-        return isCollapseRangesWidget(widget) ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
       },
     }),
   ];

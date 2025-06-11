@@ -37,11 +37,12 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
-import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
+import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
+import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -132,7 +133,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
     originalDocument,
     mergeControls,
     collapsedRanges,
-    collapseUnchanged,
+    collapseUnchanged: collapseUnchangedEnabled,
     highlightChanges,
     syntaxHighlighting,
     syntaxHighlightDeletions,
@@ -145,12 +146,13 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
           unifiedMergeView({
             original: originalDocument,
             mergeControls: !!mergeControls,
-            collapseUnchanged: collapseUnchanged && !collapsedRanges ? { margin: unchangedMargin, minSize: unchangedMinSize } : undefined,
             highlightChanges: !!highlightChanges,
             syntaxHighlightDeletions: !!syntaxHighlighting && !!syntaxHighlightDeletions,
             allowInlineDiffs: !!allowInlineDiffs,
           }),
-          collapseUnchanged && !collapsedRanges ? collapseUnchangedGutter() : [],
+          collapseUnchangedEnabled && !collapsedRanges
+            ? [collapseUnchanged({ margin: unchangedMargin, minSize: unchangedMinSize, original: originalDocument }), collapseUnchangedGutter()]
+            : [],
         ]
       : [];
   },
@@ -162,47 +164,6 @@ export interface Signature {
   Args: {
     Named: {
       [key: string]: Argument;
-      /**
-       * Document for the editor to render & edit
-       */
-      document?: string;
-      /**
-       * Function to call when document is edited inside the editor
-       * @param newValue string New value of the document
-       */
-      onDocumentUpdate?: DocumentUpdateCallback;
-      /**
-       * Pass a filename to automatically detect language based on file name and extension
-       */
-      filename?: string;
-      /**
-       * Explicitly pass a language to the editor
-       */
-      language?: string;
-      /**
-       * Enable unified diff editor by passing the original document
-       */
-      originalDocument?: string;
-      /**
-       * Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)
-       */
-      indentUnit?: string;
-      /**
-       * Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
-       */
-      lineSeparator?: string;
-      /**
-       * Placeholder text to show when document is empty or not passed
-       */
-      placeholder?: string;
-      /**
-       * Number of spaces to use for representing the TAB character visually
-       */
-      tabSize?: number;
-      /**
-       * Theme to use for the editor
-       */
-      theme?: Extension;
       /**
        * Display chunks with only limited inline changes inline in the code
        */
@@ -228,9 +189,17 @@ export interface Signature {
        */
       collapsedRanges?: LineRange[];
       /**
+       * Enable collapsing unchanged lines in the diff editor
+       */
+      collapseUnchanged?: boolean;
+      /**
        * Use a crosshair cursor over the editor when ALT key is pressed
        */
       crosshairCursor?: boolean;
+      /**
+       * Document for the editor to render & edit
+       */
+      document?: string;
       /**
        * Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies
        */
@@ -243,6 +212,10 @@ export interface Signature {
        * Present the editor as an editable & focusable control, sets the DOM `contenteditable` attribute, do not confuse with `readOnly`
        */
       editable?: boolean;
+      /**
+       * Pass a filename to automatically detect language based on file name and extension
+       */
+      filename?: string;
       /**
        * Enable code folding & the fold gutter
        */
@@ -288,13 +261,25 @@ export interface Signature {
        */
       indentOnInput?: boolean;
       /**
+       * Symbols to use for indentation with `indentOnInput` and `indentWithTab` (does NOT reformat document upon loading)
+       */
+      indentUnit?: string;
+      /**
        * Enable indentation of lines or selection using TAB and Shift+TAB keys, otherwise editor loses focus when TAB is pressed
        */
       indentWithTab?: boolean;
       /**
+       * Explicitly pass a language to the editor
+       */
+      language?: string;
+      /**
        * Enable the line numbers gutter
        */
       lineNumbers?: boolean;
+      /**
+       * Line ending separator to use when Enter is pressed in editor (does NOT reformat document upon loading)
+       */
+      lineSeparator?: string;
       /**
        * Enable visual line wrapping for lines exceeding editor width
        */
@@ -304,9 +289,18 @@ export interface Signature {
        */
       mergeControls?: boolean;
       /**
-       * Enable collapsing unchanged lines in the diff editor
+       * Function to call when document is edited inside the editor
+       * @param {string} newValue New document contents
        */
-      collapseUnchanged?: boolean;
+      onDocumentUpdate?: DocumentUpdateCallback;
+      /**
+       * Enable unified diff editor by passing the original document
+       */
+      originalDocument?: string;
+      /**
+       * Placeholder text to show when document is empty or not passed
+       */
+      placeholder?: string;
       /**
        * Preserve changes history when parent component passes a new `@document` to the component
        */
@@ -324,13 +318,21 @@ export interface Signature {
        */
       scrollPastEnd?: boolean;
       /**
+       * Enable syntax highlighting in the deleted chunks of the diff
+       */
+      syntaxHighlightDeletions?: boolean;
+      /**
        * Enable syntax highlighting (using a theme enables syntax highlighting automatically)
        */
       syntaxHighlighting?: boolean;
       /**
-       * Enable syntax highlighting in the deleted chunks of the diff
+       * Number of spaces to use for representing the TAB character visually
        */
-      syntaxHighlightDeletions?: boolean;
+      tabSize?: number;
+      /**
+       * Theme to use for the editor
+       */
+      theme?: Extension;
       /**
        * Number of lines to leave visible after/before a change before collapsing unchanged lines
        */
@@ -374,6 +376,13 @@ export default class CodeMirrorComponent extends Component<Signature> {
         },
       }),
     );
+
+    this.#updateRenderedView({
+      effects: this.#resetCompartment('collapsedRanges'),
+    });
+    this.#updateRenderedView({
+      effects: await this.#updateCompartment('collapsedRanges'),
+    });
   }
 
   @action
