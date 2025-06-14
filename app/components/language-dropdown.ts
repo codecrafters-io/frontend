@@ -1,10 +1,7 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import LanguageModel from 'codecrafters-frontend/models/language';
-
-interface DDActions {
-  close: () => void;
-}
+import type { Dropdown } from 'ember-basic-dropdown/components/basic-dropdown';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,7 +12,7 @@ interface Signature {
     selectedLanguage: LanguageModel | null;
     shouldShowAllLanguagesOption?: boolean;
     onAllLanguagesDropdownLinkClick?: () => void;
-    onDidInsertDropdown?: (dropdown: DDActions) => void;
+    onDidInsertDropdown?: (dropdown: Dropdown | null) => void;
     onRequestedLanguageChange: (language: LanguageModel) => void;
   };
 }
