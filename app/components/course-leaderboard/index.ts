@@ -11,6 +11,7 @@ import { tracked } from '@glimmer/tracking';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type LeaderboardTeamStorageService from 'codecrafters-frontend/services/leaderboard-team-storage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
@@ -43,13 +44,15 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
+  @service declare leaderboardTeamStorage: LeaderboardTeamStorageService;
   @service declare router: RouterService;
   @service declare store: Store;
   @service declare visibility: VisibilityService;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    this.team = this.currentUserTeams[0] ?? null;
+    const savedTeamId = this.leaderboardTeamStorage.selectedTeamId;
+    this.team = this.currentUserTeams.find((team) => team.id === savedTeamId) ?? null;
   }
 
   get currentUserIsTeamMember() {
@@ -189,6 +192,8 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.stopLeaderboardPoller();
 
     this.team = team;
+    this.leaderboardTeamStorage.setSelectedTeamId(team?.id ?? null);
+
     // this.entriesFromAPI = [];
     this.isReloadingEntries = true;
 

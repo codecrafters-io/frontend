@@ -7,7 +7,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { currentURL, settled } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
@@ -272,7 +272,10 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
+    await coursePage.leaderboard.teamDropdown.toggle();
+    await coursePage.leaderboard.teamDropdown.clickOnLink('Dummy Team');
+    await animationsSettled();
+    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present in the dummy team');
 
     await percySnapshot('Leaderboard for teams - Team has no submissions');
 
@@ -284,6 +287,66 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'leaderboard entries should be visible if filtering by world');
 
     await percySnapshot('Leaderboard for teams - Viewing World');
+  });
+
+  test('team dropdown selection persists across page refresh', async function (assert) {
+    testScenario(this.server);
+    signInAsTeamMember(this.owner, this.server);
+
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let otherUser = this.server.create('user', {
+      id: 'other-user',
+      avatarUrl: 'https://github.com/Gufran.png',
+      createdAt: new Date(),
+      githubUsername: 'Gufran',
+      username: 'Gufran',
+    });
+
+    this.server.create('course-leaderboard-entry', {
+      status: 'idle',
+      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      language: python,
+      user: otherUser,
+      lastAttemptAt: new Date(),
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    // Open dropdown and switch to "Everyone" view
+    await coursePage.leaderboard.teamDropdown.toggle();
+    await coursePage.leaderboard.teamDropdown.clickOnLink('Everyone');
+
+    // Verify we're now seeing world leaderboard
+    assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'leaderboard entries should be visible if filtering by world');
+
+    // Refresh the page
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    // Verify the selection persisted
+    assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'leaderboard entries should still be visible after refresh');
+    await coursePage.leaderboard.teamDropdown.toggle();
+    assert.ok(coursePage.leaderboard.teamDropdown.hasLink('Everyone'), 'should still be on Everyone view');
+
+    // Switch to "Dummy Team" view
+    await coursePage.leaderboard.teamDropdown.clickOnLink('Dummy Team');
+    await animationsSettled();
+    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'leaderboard entries should be empty if filtering by team');
+
+    // Refresh the page
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    // Verify the selection persisted
+    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'leaderboard entries should still be empty after refresh');
+    await coursePage.leaderboard.teamDropdown.toggle();
+    assert.ok(coursePage.leaderboard.teamDropdown.hasLink('Dummy Team'), 'should still be on Dummy Team view');
   });
 
   test('private leaderboard feature suggestion is shown to non-team members with a prompt', async function (assert) {
@@ -342,6 +405,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.leaderboard.teamDropdown.toggle();
+    await coursePage.leaderboard.teamDropdown.clickOnLink('Dummy Team');
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
 
