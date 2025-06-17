@@ -7,6 +7,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type Store from '@ember-data/store';
+import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 
 export interface ModelType {
@@ -17,6 +18,7 @@ export default class CourseOverviewRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare metaData: MetaDataService;
+  @service declare router: RouterService;
 
   previousMetaImageUrl: string | undefined;
 
@@ -25,6 +27,12 @@ export default class CourseOverviewRoute extends BaseRoute {
   }
 
   afterModel(model: ModelType) {
+    if (!model.course) {
+      this.router.transitionTo('not-found');
+
+      return;
+    }
+
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
   }
@@ -53,6 +61,10 @@ export default class CourseOverviewRoute extends BaseRoute {
       });
 
       const course = courses.findBy('slug', params.course_slug);
+
+      if (!course) {
+        return { course: undefined as unknown as CourseModel };
+      }
 
       if (this.authenticator.isAuthenticated) {
         await this.store.query('repository', {
