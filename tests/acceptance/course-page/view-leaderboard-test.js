@@ -272,10 +272,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.leaderboard.teamDropdown.toggle();
-    await coursePage.leaderboard.teamDropdown.clickOnLink('Dummy Team');
-    await animationsSettled();
-    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present in the dummy team');
+    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
 
     await percySnapshot('Leaderboard for teams - Team has no submissions');
 
