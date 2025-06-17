@@ -1,18 +1,18 @@
 import Service, { inject as service } from '@ember/service';
 import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
-const GLOBAL_LEADERBOARD_TEAM_ID = 'FAKE_GLOBAL_LEADERBOARD_TEAM_ID';
+const GLOBAL_LEADERBOARD_ID = 'GLOBAL_LEADERBOARD_ID';
 
 export default class LeaderboardTeamStorageService extends Service {
   static STORAGE_KEY = 'leaderboard-team-selection-v1';
 
   @service declare localStorage: LocalStorageService;
 
-  get hasSavedTeam(): boolean {
-    return this.savedTeamId !== null;
+  get hasSelectedGlobalLeaderboard(): boolean {
+    return this.selectedTeamId === GLOBAL_LEADERBOARD_ID;
   }
 
-  get savedTeamId(): string | null {
+  get selectedTeamId(): string | null {
     return this.localStorage.getItem(LeaderboardTeamStorageService.STORAGE_KEY);
   }
 
@@ -20,7 +20,7 @@ export default class LeaderboardTeamStorageService extends Service {
     this.localStorage.removeItem(LeaderboardTeamStorageService.STORAGE_KEY);
   }
 
-  setSavedTeamId(teamId: string | null): void {
-    this.localStorage.setItem(LeaderboardTeamStorageService.STORAGE_KEY, teamId || GLOBAL_LEADERBOARD_TEAM_ID);
+  setSelectedTeamId(teamId: string | null): void {
+    this.localStorage.setItem(LeaderboardTeamStorageService.STORAGE_KEY, teamId || GLOBAL_LEADERBOARD_ID);
   }
 }

@@ -52,11 +52,12 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
 
-    if (this.leaderboardTeamStorage.hasSavedTeam) {
-      const savedTeamId = this.leaderboardTeamStorage.savedTeamId;
-      this.team = this.currentUserTeams.find((team) => team.id === savedTeamId) ?? null;
+    if (this.leaderboardTeamStorage.hasSelectedGlobalLeaderboard) {
+      this.team = null;
     } else {
-      this.team = this.currentUserTeams[0] ?? null;
+      const defaultTeam = this.currentUserTeams[0] ?? null;
+      const selectedTeamId = this.leaderboardTeamStorage.selectedTeamId;
+      this.team = this.currentUserTeams.find((team) => team.id === selectedTeamId) ?? defaultTeam;
     }
   }
 
@@ -197,7 +198,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.stopLeaderboardPoller();
 
     this.team = team;
-    this.leaderboardTeamStorage.setSavedTeamId(team?.id ?? null);
+    this.leaderboardTeamStorage.setSelectedTeamId(team?.id ?? null);
 
     // this.entriesFromAPI = [];
     this.isReloadingEntries = true;
