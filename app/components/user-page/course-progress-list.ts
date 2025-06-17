@@ -16,7 +16,10 @@ export default class CourseProgressListComponent extends Component<Signature> {
     const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(
       groupBy(
         this.args.user.courseParticipations.filter(
-          (participation) => !participation.course.releaseStatusIsDeprecated && !participation.course.visibilityIsPrivate,
+          (participation) => 
+            !participation.course.releaseStatusIsDeprecated && 
+            !participation.course.visibilityIsPrivate &&
+            !participation.course.releaseStatusIsAlpha
         ),
         'course',
       ),
