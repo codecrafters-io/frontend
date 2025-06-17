@@ -138,4 +138,11 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Multiple Backreferences'));
     assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 3].text.includes('Nested Backreferences'));
   });
+
+  test('redirects to not found if course slug is invalid', async function (assert) {
+    testScenario(this.server);
+
+    await courseOverviewPage.visit({ course_slug: 'invalid-course' });
+    assert.strictEqual(currentURL(), '/404');
+  });
 });
