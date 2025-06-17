@@ -51,8 +51,13 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    const savedTeamId = this.leaderboardTeamStorage.selectedTeamId;
-    this.team = this.currentUserTeams.find((team) => team.id === savedTeamId) ?? null;
+
+    if (this.leaderboardTeamStorage.hasSavedTeam) {
+      const savedTeamId = this.leaderboardTeamStorage.savedTeamId;
+      this.team = this.currentUserTeams.find((team) => team.id === savedTeamId) ?? null;
+    } else {
+      this.team = this.currentUserTeams[0] ?? null;
+    }
   }
 
   get currentUserIsTeamMember() {
@@ -192,7 +197,7 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
     this.stopLeaderboardPoller();
 
     this.team = team;
-    this.leaderboardTeamStorage.setSelectedTeamId(team?.id ?? null);
+    this.leaderboardTeamStorage.setSavedTeamId(team?.id ?? null);
 
     // this.entriesFromAPI = [];
     this.isReloadingEntries = true;

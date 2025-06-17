@@ -316,6 +316,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
+    assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
+
     // Open dropdown and switch to "Everyone" view
     await coursePage.leaderboard.teamDropdown.toggle();
     await coursePage.leaderboard.teamDropdown.clickOnLink('Everyone');
@@ -405,9 +407,6 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.leaderboard.teamDropdown.toggle();
-    await coursePage.leaderboard.teamDropdown.clickOnLink('Dummy Team');
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
 
