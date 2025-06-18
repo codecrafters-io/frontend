@@ -23,6 +23,10 @@ export default class BaseStagesCompletedCardComponent extends Component<Signatur
 
   @tracked configureExtensionsModalIsOpen = false;
 
+  get totalExtensionStagesCount() {
+    return this.args.repository.course.sortedExtensionStages.length;
+  }
+
   @action
   handleConfigureExtensionsButtonClick() {
     this.configureExtensionsModalIsOpen = true;
