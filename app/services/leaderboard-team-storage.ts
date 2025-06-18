@@ -8,19 +8,15 @@ export default class LeaderboardTeamStorageService extends Service {
 
   @service declare localStorage: LocalStorageService;
 
-  get hasSelectedGlobalLeaderboard(): boolean {
-    return this.selectedTeamId === GLOBAL_LEADERBOARD_ID;
-  }
-
-  get selectedTeamId(): string | null {
+  get lastSelectedTeamId(): string | null {
     return this.localStorage.getItem(LeaderboardTeamStorageService.STORAGE_KEY);
   }
 
-  clear(): void {
-    this.localStorage.removeItem(LeaderboardTeamStorageService.STORAGE_KEY);
+  get lastSelectionWasGlobalLeaderboard(): boolean {
+    return this.lastSelectedTeamId === GLOBAL_LEADERBOARD_ID;
   }
 
-  setSelectedTeamId(teamId: string | null): void {
+  setlastSelectedTeamId(teamId: string | null): void {
     this.localStorage.setItem(LeaderboardTeamStorageService.STORAGE_KEY, teamId || GLOBAL_LEADERBOARD_ID);
   }
 }
