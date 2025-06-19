@@ -2,18 +2,23 @@
   <:header>
     <div class="flex items-center mb-6 border-b dark:border-white/5 pb-2">
       <img src={{this.congratulationsImage}} alt="Congratulations!" class="mr-3 w-10 h-10" />
-      <span class="font-semibold text-lg text-gray-800 dark:text-gray-50">Base Stages Complete!</span>
+      <span class="font-semibold text-lg text-gray-800 dark:text-gray-50">Congratulations &amp; next steps!</span>
     </div>
   </:header>
 
   <:content>
     <div class="prose dark:prose-invert" data-test-instructions-text>
       <p>
-        Nice work! You&apos;ve completed all the base stages for this challenge.
+        Nice work! You&apos;ve successfully completed all the base stages in this challenge.
       </p>
 
       <p>
-        From here on, you can customize the order in which you want to complete the remaining stages.
+        There are
+        {{this.totalExtensionStagesCount}}
+        more stages available in this challenge, categorised as extensions.
+      </p>
+      <p>
+        You can customise the order in which you want to attempt them.
       </p>
     </div>
 
