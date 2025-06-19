@@ -1,5 +1,4 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
-import config from 'codecrafters-frontend/config/environment';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 
@@ -10,7 +9,7 @@ export default class Charge extends Model {
   @attr('number') declare amountRefunded: number;
   @attr('date') declare createdAt: Date;
   @attr('string') declare currency: string;
-  @attr('string') declare invoiceId: string;
+  @attr('string') declare receiptUrl: string;
   @attr('string') declare status: 'succeeded' | 'pending' | 'failed';
 
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
@@ -21,14 +20,6 @@ export default class Charge extends Model {
 
   get displayString() {
     return Charge.buildDisplayString(this.amount, this.currency);
-  }
-
-  get invoiceDownloadUrl() {
-    if (!this.invoiceId) {
-      return null;
-    }
-
-    return `${config.x.backendUrl}/invoices/${this.invoiceId}/download`;
   }
 
   get isFullyRefunded() {
