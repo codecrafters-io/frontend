@@ -15,6 +15,16 @@ import appleImage from '/assets/images/company-logos/apple-company-logo.svg';
 import bookingImage from '/assets/images/company-logos/bookingcom-company-logo.svg';
 import sourcegraphImage from '/assets/images/company-logos/sourcegraph-company-logo.svg';
 import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
+import jakubgradckiImage from '/assets/images/user-avatars/jakub-gradcki.jpeg';
+import hcltechImage from '/assets/images/company-logos/hcltech-company-logo.svg';
+import connormurphyImage from '/assets/images/user-avatars/connor-murphy.jpeg';
+import walmartglobaltechImage from '/assets/images/company-logos/walmart-global-tech-company-logo-2.svg';
+import krishnavImage from '/assets/images/user-avatars/krishna-vaidyanathan.jpeg';
+import googleImage from '/assets/images/company-logos/google-company-logo.svg';
+import joeypereiraImage from '/assets/images/user-avatars/joey-pereira.jpeg';
+import openaiImage from '/assets/images/company-logos/openai-company-logo.svg';
+import albertsalimImage from '/assets/images/user-avatars/albert-salim.jpeg';
+import gitlabImage from '/assets/images/company-logos/gitlab-company-logo.svg';
 
 interface Testimonial {
   authorName: string;
@@ -116,6 +126,41 @@ const testimonials: Record<string, Testimonial> = {
     authorDesignation: 'Software Engineer at Microsoft',
     authorAvatarImage: vladislavTenImage,
     text: 'In a perfect world, job interviews ask for assignments like CodeCrafters instead of Leetcode. The best way to refresh your programming language skills and learn something new about Redis, Git, SQLite internals.',
+  },
+  'jakub-gradcki': {
+    authorName: 'Jakub Grądcki',
+    authorDesignation: 'Senior Architect at HCLTech',
+    authorAvatarImage: jakubgradckiImage,
+    authorCompanyLogo: hcltechImage,
+    text: "I love that I don't have to do the tedious work at the start of the project. I can jump in and start building right away.",
+  },
+  'connor-murphy': {
+    authorName: 'Connor Murphy',
+    authorDesignation: 'Senior SWE at Walmart Global Tech',
+    authorAvatarImage: connormurphyImage,
+    authorCompanyLogo: walmartglobaltechImage,
+    text: "How does a senior dev continue to get better? CodeCrafters helps me practice out of my comfort zone.",
+  },
+  'krishna-vaidyanathan': {
+    authorName: 'Krishna Vaidyanathan',
+    authorDesignation: 'Software Engineer III at Google',
+    authorAvatarImage: krishnavImage,
+    authorCompanyLogo: googleImage,
+    text: "CodeCrafters helps with practical learning which is crucial for SWE interviews.",
+  },
+  'joey-pereira': {
+    authorName: 'Joey Pereira',
+    authorDesignation: 'Software Engineer at OpenAI',
+    authorAvatarImage: joeypereiraImage,
+    authorCompanyLogo: openaiImage,
+    text: "This idea is absolutely stellar. Having a structured project like this feels like a blast.",
+  },
+  'albert-salim': {
+    authorName: 'Albert Salim',
+    authorDesignation: 'Senior Backend Engineer at GitLab',
+    authorAvatarImage: albertsalimImage,
+    authorCompanyLogo: gitlabImage,
+    text: "I'd recommend CodeCrafters to every curious developer who wants to really understand the tools they use every day.",
   },
 };
 

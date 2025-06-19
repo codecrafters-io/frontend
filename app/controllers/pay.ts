@@ -47,7 +47,7 @@ export default class PayController extends Controller {
   }
 
   get testimonialsForCards(): Testimonial[] {
-    return [testimonialsData['beyang-liu']!, testimonialsData['raghav-dua']!];
+    return [testimonialsData['connor-murphy']!, testimonialsData['krishna-vaidyanathan']!];
   }
 
   get user() {
