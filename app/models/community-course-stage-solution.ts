@@ -128,9 +128,9 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
     await adapter.ajax(`${adapter.host}/api/v1/community-solution-exports/${exportModel.id}/mark-as-accessed`, 'POST');
 
+    // Update the local model without triggering a save
     const twentyFourHoursFromNow = new Date(Date.now() + 24 * 60 * 60 * 1000);
     exportModel.set('expiresAt', twentyFourHoursFromNow);
-    await exportModel.save();
   }
 
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
