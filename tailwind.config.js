@@ -4,7 +4,7 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  content: [`./app/**/*.{html,js,ts,hbs}`],
+  content: [`./app/**/*.{html,js,ts,hbs,gts}`],
   safelist: {
     standard: [
       'inline', // Used by SVG stuff
