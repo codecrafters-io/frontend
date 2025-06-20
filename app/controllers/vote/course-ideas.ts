@@ -15,22 +15,27 @@ export default class CourseIdeasController extends Controller {
       {
         title: 'Build your own Redis',
         date: 'Jun 2025',
+        type: 'challenge',
       },
       {
         title: 'Geospatial commands for Redis',
         date: 'Jun 2025',
+        type: 'extension',
       },
       {
         title: 'File search for grep',
         date: 'May 2025',
+        type: 'extension',
       },
       {
         title: 'Pub/Sub for Redis',
         date: 'May 2025',
+        type: 'extension',
       },
       {
         title: 'Streams for Redis',
         date: 'Apr 2025',
+        type: 'extension',
       },
     ];
   }
