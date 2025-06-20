@@ -127,13 +127,15 @@ const testimonials: Record<string, Testimonial> = {
     authorAvatarImage: vladislavTenImage,
     text: 'In a perfect world, job interviews ask for assignments like CodeCrafters instead of Leetcode. The best way to refresh your programming language skills and learn something new about Redis, Git, SQLite internals.',
   },
+
   'jakub-gradcki': {
     authorName: 'Jakub Grądcki',
     authorDesignation: 'Senior Architect at HCLTech',
     authorAvatarImage: jakubgradckiImage,
     authorCompanyLogo: hcltechImage,
-    text: 'I love that I don\'t have to do the tedious work at the start of the project. I can jump in and start building right away.',
+    text: "I love that I don't have to do the tedious work at the start of the project. I can jump in and start building right away.",
   },
+
   'connor-murphy': {
     authorName: 'Connor Murphy',
     authorDesignation: 'Senior SWE at Walmart Global Tech',
@@ -141,13 +143,15 @@ const testimonials: Record<string, Testimonial> = {
     authorCompanyLogo: walmartglobaltechImage,
     text: 'How does a senior dev continue to get better? CodeCrafters helps me practice out of my comfort zone.',
   },
+
   'krishna-vaidyanathan': {
     authorName: 'Krishna Vaidyanathan',
     authorDesignation: 'Software Engineer III at Google',
     authorAvatarImage: krishnavImage,
     authorCompanyLogo: googleImage,
-    text: 'CodeCrafters helps with practical learning which is crucial for SWE interviews.',
+    text: 'CodeCrafters helps with practical learning which is crucial for SWE interviews.', 
   },
+
   'joey-pereira': {
     authorName: 'Joey Pereira',
     authorDesignation: 'Software Engineer at OpenAI',
@@ -155,12 +159,13 @@ const testimonials: Record<string, Testimonial> = {
     authorCompanyLogo: openaiImage,
     text: 'This idea is absolutely stellar. Having a structured project like this feels like a blast.',
   },
+
   'albert-salim': {
     authorName: 'Albert Salim',
     authorDesignation: 'Senior Backend Engineer at GitLab',
     authorAvatarImage: albertsalimImage,
     authorCompanyLogo: gitlabImage,
-    text: 'I\'d recommend CodeCrafters to every curious developer who wants to really understand the tools they use every day.',
+    text: "I'd recommend CodeCrafters to every curious developer who wants to really understand the tools they use every day.",
   },
 };
 
