@@ -1,8 +1,10 @@
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import ViewableMixin from 'codecrafters-frontend/mixins/viewable'; // eslint-disable-line ember/no-mixins
 import VotableMixin from 'codecrafters-frontend/mixins/votable'; // eslint-disable-line ember/no-mixins
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunitySolutionEvaluationModel from './community-solution-evaluation';
+import type CommunitySolutionExportModel from './community-solution-export';
 import type CourseStageCommentModel from './course-stage-comment';
 import type CourseStageModel from './course-stage';
 import type CourseStageScreencastModel from './course-stage-screencast';
@@ -30,6 +32,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
+  @hasMany('community-solution-export', { async: false, inverse: 'communitySolution' }) declare exports: CommunitySolutionExportModel[];
 
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
@@ -79,6 +82,12 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
     return this.addedLinesCount + this.removedLinesCount;
   }
 
+  get currentExport(): CommunitySolutionExportModel | null {
+    const validExports = this.exports.filter((exportModel) => exportModel.communitySolution.commitSha === this.commitSha && !exportModel.isExpired);
+
+    return validExports.find((exportModel) => exportModel.isProvisioned) || validExports.find((exportModel) => exportModel.isProvisioning) || null;
+  }
+
   // We don't render explanations at the moment
   get hasExplanation() {
     return !!this.explanationMarkdown;
@@ -97,8 +106,31 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   }
 
   @action
+  async createOrGetExport(): Promise<CommunitySolutionExportModel> {
+    const exportRecord = this.store.createRecord('community-solution-export', {
+      communitySolution: this,
+    });
+
+    await exportRecord.save();
+
+    return exportRecord;
+  }
+
+  @action
   githubUrlForFile(filename: string) {
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
+  }
+
+  @action
+  async markExportAsAccessed(exportModel: CommunitySolutionExportModel): Promise<void> {
+    // @ts-ignore
+    const adapter: JSONAPIAdapter = this.store.adapterFor('application');
+
+    await adapter.ajax(`${adapter.host}/api/v1/community-solution-exports/${exportModel.id}/mark-as-accessed`, 'POST');
+
+    const twentyFourHoursFromNow = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    exportModel.set('expiresAt', twentyFourHoursFromNow);
+    await exportModel.save();
   }
 
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
