@@ -1,13 +1,46 @@
-<AlertWithIcon class="mb-6">
-  Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
-</AlertWithIcon>
+<div class="flex items-start gap-3">
+  <div class="w-80 flex-shrink-0 sticky top-4">
+    <div class="border rounded-md shadow-sm px-5 py-4 bg-white">
+      <h2 class="font-bold text-gray-700 mb-3">Latest Releases</h2>
 
-<div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
-  {{#if this.authenticator.isAuthenticated}}
+      <div class="relative">
+        {{#each this.dummyReleases as |release releaseIndex|}}
+          <div class="flex items-start gap-2 pb-4 relative">
+            <div class="w-2 h-2 bg-gray-200 rounded-full mt-1 flex-shrink-0"></div>
+            <div>
+              <div class="text-xs text-gray-400 mb-0.25">{{release.date}}</div>
+              <div class="text-sm text-gray-700 hover:underline">{{release.title}}</div>
+            </div>
+
+            {{#if (eq releaseIndex 0)}}
+              <div class="absolute bottom-0 top-1 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+            {{else if (eq releaseIndex (sub this.dummyReleases.length 1))}}
+              <div class="absolute h-1 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+            {{else}}
+              <div class="absolute bottom-0 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+
+      <div class="w-full flex justify-start pl-4">
+        <a href="#" class="text-xs text-gray-400 hover:underline">
+          View more...
+        </a>
+      </div>
+    </div>
+
+    <AlertWithIcon class="mt-3">
+      Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+    </AlertWithIcon>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 mb-8">
+    {{!-- {{#if this.authenticator.isAuthenticated}}
     <VotePage::SubmitCourseIdeaCard />
-  {{/if}}
-
-  {{#each this.orderedCourseIdeas as |courseIdea|}}
-    <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
-  {{/each}}
+  {{/if}} --}}
+    {{#each this.orderedCourseIdeas as |courseIdea|}}
+      <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
+    {{/each}}
+  </div>
 </div>

@@ -10,6 +10,31 @@ export default class CourseIdeasController extends Controller {
     courseIdeas: CourseIdeaModel[];
   };
 
+  get dummyReleases() {
+    return [
+      {
+        title: 'Build your own Redis',
+        date: 'Jun 2025',
+      },
+      {
+        title: 'Geospatial commands for Redis',
+        date: 'Jun 2025',
+      },
+      {
+        title: 'File search for grep',
+        date: 'May 2025',
+      },
+      {
+        title: 'Pub/Sub for Redis',
+        date: 'May 2025',
+      },
+      {
+        title: 'Streams for Redis',
+        date: 'Apr 2025',
+      },
+    ];
+  }
+
   get orderedCourseIdeas() {
     return this.model.courseIdeas.rejectBy('isArchived').sortBy('reverseSortPositionForVotePage').reverse();
   }
