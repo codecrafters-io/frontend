@@ -149,7 +149,7 @@ const testimonials: Record<string, Testimonial> = {
     authorDesignation: 'Software Engineer III at Google',
     authorAvatarImage: krishnavImage,
     authorCompanyLogo: googleImage,
-    text: 'CodeCrafters helps with practical learning which is crucial for SWE interviews.', 
+    text: 'CodeCrafters helps with practical learning which is crucial for SWE interviews.',
   },
 
   'joey-pereira': {
