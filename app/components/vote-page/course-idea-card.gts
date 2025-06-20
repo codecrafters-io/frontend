@@ -150,3 +150,9 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
     </div>
   </template>
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'VotePage::CourseIdeaCard': typeof CourseIdeaCardComponent;
+  }
+}
