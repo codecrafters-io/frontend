@@ -21,8 +21,35 @@
           </span>
           {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
         </a>
-      {{else if this.shouldShowPublishToGithubButton}}
-        <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group" data-test-publish-to-github-button>
+      {{else}}
+        <button
+          type="button"
+          {{on "click" this.handleViewOnGithubClick}}
+          class="flex gap-x-1 items-center group"
+          data-test-view-on-github-button
+          disabled={{this.isCreatingExport}}
+        >
+          {{#if this.isCreatingExport}}
+            <span class="text-[10px] text-gray-700 dark:text-gray-300">
+              Creating export...
+            </span>
+            <div class="w-3.5 h-3.5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+          {{else}}
+            <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
+              View on GitHub
+            </span>
+            {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
+          {{/if}}
+        </button>
+      {{/if}}
+
+      {{#if this.shouldShowPublishToGithubButton}}
+        <button
+          type="button"
+          {{on "click" @onPublishToGithubButtonClick}}
+          class="flex gap-x-1 items-center group ml-2"
+          data-test-publish-to-github-button
+        >
           <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
             Publish to GitHub
           </span>
