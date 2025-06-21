@@ -4,24 +4,17 @@ import { lineCommentsGutter } from 'codecrafters-frontend/utils/code-mirror-line
 import { lineCommentsExpandedPlugin } from 'codecrafters-frontend/utils/code-mirror-line-comments-expanded-plugin';
 
 export class LineData {
-  commentsCount: number;
-  lineNumber: number;
-
-  constructor({ commentsCount, lineNumber }: { commentsCount: number; lineNumber: number }) {
-    this.commentsCount = commentsCount;
-    this.lineNumber = lineNumber;
-  }
+  constructor(
+    readonly lineNumber: number,
+    readonly commentsCount: number,
+  ) {}
 }
 
 export class LineDataCollection {
-  #lineData: LineData[];
-
-  constructor(lineData: LineData[] = []) {
-    this.#lineData = lineData;
-  }
+  constructor(private readonly lineData: LineData[] = []) {}
 
   dataForLine(lineNumber: number) {
-    return this.#lineData.find((c) => c.lineNumber === lineNumber);
+    return this.lineData.find((c) => c.lineNumber === lineNumber);
   }
 }
 
