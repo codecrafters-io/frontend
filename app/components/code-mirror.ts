@@ -413,16 +413,6 @@ export default class CodeMirror extends Component<Signature> {
       effects: await this.#updateCompartment(optionName),
     });
 
-    // When syntaxHighlighting changes - reload the diff compartment to also re-configure syntaxHighlightDeletions
-    if (optionName === 'syntaxHighlighting') {
-      this.#updateRenderedView({
-        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-      this.#updateRenderedView({
-        effects: await this.#updateCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-    }
-
     // When lineSeparator changes - completely reload the document to avoid any side-effects
     if (optionName === 'lineSeparator') {
       this.#updateRenderedView(
