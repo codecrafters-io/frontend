@@ -5,6 +5,10 @@
 </p>
 
 <div class="flex mb-8 border-b dark:border-white/5 overflow-x-auto">
-  <VotePage::TabLink @text="Challenges" @isActive={{eq this.activeTab "challenges"}} @route="vote.course-ideas" />
-  <VotePage::TabLink @text="Challenge Extensions" @isActive={{eq this.activeTab "challenge-extensions"}} @route="vote.course-extension-ideas" />
+  <LinkTo @route="vote.course-ideas">
+    <TabHeader @text="Challenges" @isActive={{eq this.activeTab "challenges"}} />
+  </LinkTo>
+  <LinkTo @route="vote.course-extension-ideas">
+    <TabHeader @text="Challenge Extensions" @isActive={{eq this.activeTab "challenge-extensions"}} />
+  </LinkTo>
 </div>
