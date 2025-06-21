@@ -15,9 +15,9 @@ interface Signature {
 export default class AlertComponent extends Component<Signature> {
   get containerColorClasses(): string {
     return {
-      green: 'bg-green-100 border-green-300 dark:bg-green-900 dark:border-green-900 dark:bg-opacity-40',
-      blue: 'bg-blue-100 border-blue-300 dark:bg-blue-900 dark:border-blue-900 dark:bg-opacity-40',
-      red: 'bg-red-100 border-red-300 dark:bg-red-900 dark:border-red-900 dark:bg-opacity-40',
+      green: 'bg-green-100/20 dark:bg-green-900/20 border-green-500/60 dark:border-green-500/40',
+      blue: 'bg-blue-100/20 dark:bg-blue-900/20 border-blue-500/60 dark:border-blue-500/40',
+      red: 'bg-red-100/20 dark:bg-red-900/20 border-red-500/60 dark:border-red-500/40',
     }[this.args.color];
   }
 }
