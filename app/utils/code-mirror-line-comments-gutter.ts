@@ -3,11 +3,8 @@ import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters
 import { expandedLineNumbersCompartment, expandedLineNumbersFacet, lineDataFacet } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 class CommentsCountGutterMarker extends GutterMarkerRS {
-  line: BlockInfo;
-
-  constructor(line: BlockInfo) {
+  constructor(readonly line: BlockInfo) {
     super();
-    this.line = line;
   }
 
   toDOM(view: EditorView) {
@@ -28,11 +25,8 @@ class CommentsCountGutterMarker extends GutterMarkerRS {
 }
 
 class CommentButtonGutterMarker extends GutterMarkerRS {
-  line: BlockInfo;
-
-  constructor(line: BlockInfo) {
+  constructor(readonly line: BlockInfo) {
     super();
-    this.line = line;
   }
 
   toDOM() {
