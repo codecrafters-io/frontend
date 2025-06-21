@@ -274,7 +274,7 @@ export interface Signature {
        */
       language?: string;
       /**
-       * Enable line comments
+       * Enable line comments (disabled when document is not read-only)
        */
       lineComments?: boolean;
       /**

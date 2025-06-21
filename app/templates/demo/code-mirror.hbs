@@ -179,7 +179,7 @@
         <Input @type="checkbox" @checked={{this.foldGutter}} />
         <span class="ml-2">foldGutter</span>
       </label>
-      <label class="{{labelClasses}}" title="Enable line comments">
+      <label class="{{labelClasses}}" title="Enable line comments (disabled when document is not read-only)">
         <Input @type="checkbox" @checked={{this.lineComments}} disabled={{not this.readOnly}} />
         <span class="ml-2 {{unless this.readOnly 'text-gray-300'}}">lineComments</span>
       </label>
