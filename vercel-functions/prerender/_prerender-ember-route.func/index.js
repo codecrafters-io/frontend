@@ -31,17 +31,14 @@ export default async function prerenderEmberRoute(request, response) {
   // Parse status code
   const statusCode = result._fastbootInfo.response.statusCode;
 
-  // Redirect to 404 page if the status code is not 200
+  // Render a generic page if the status code is not 200
   if (statusCode !== 200) {
     console.warn('FastBoot response statusCode was:', statusCode);
-    response.redirect('/404');
+    response.send(fs.readFileSync('dist/_empty.html', 'utf-8'));
 
     return;
   }
 
-  // Get the HTML content of the FastBoot response
-  const html = await result['html'](); // Weird VSCode syntax highlighting issue if written as result.html()
-
-  // Send the HTML content as result
-  response.send(html);
+  // Get the HTML content of the FastBoot response & send it as result
+  response.send(await result.html());
 }
