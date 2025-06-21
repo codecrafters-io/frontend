@@ -16,7 +16,7 @@ export default class FaqListComponent extends Component<Signature> {
 
   faqs: Faq[] = [
     {
-      query: 'How many challenges do you offer?',
+      query: 'How many exercises are there?',
       answerMarkdown: `We have over 250 stages split across 10 challenges which you can attempt in 22 programming languages. Here's what you'll be building:
 
 

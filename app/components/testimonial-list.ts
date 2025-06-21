@@ -10,13 +10,13 @@ export default class TestimonialListComponent extends Component<Signature> {
   get testimonialGroups(): Testimonial[][] {
     const testimonialGroup1 = [
       testimonialsData['ananthalakshmi-sankar']!,
-      testimonialsData['raghav-dua']!,
+      testimonialsData['jakub-gradcki']!,
       testimonialsData['charles-guo']!,
       testimonialsData['patrick-burris']!,
     ];
     const testimonialGroup2 = [
-      testimonialsData['beyang-liu']!,
-      testimonialsData['kang-ming-tay']!,
+      testimonialsData['joey-pereira']!,
+      testimonialsData['albert-salim']!,
       testimonialsData['djordje-lukic']!,
       testimonialsData['rahul-tarak']!,
       testimonialsData['cindy-wu']!,
