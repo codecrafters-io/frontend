@@ -28,9 +28,9 @@ export default class AlertWithIconComponent extends Component<Signature> {
 
   get iconColorClasses(): string {
     return {
-      success: 'text-green-400',
-      info: 'text-blue-400 dark:text-blue-500',
-      error: 'text-red-400 dark:text-red-500',
+      success: 'text-green-500/80',
+      info: 'text-blue-500/80',
+      error: 'text-red-500/80',
     }[this.type];
   }
 
