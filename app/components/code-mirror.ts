@@ -401,24 +401,10 @@ export default class CodeMirror extends Component<Signature> {
       return;
     }
 
-    // When originalDocument changes - completely unload the diff compartment to avoid any side-effects
-    if (optionName === 'originalDocumentOrDiffRelatedOption') {
+    // These options need to be reset after changing, to avoid any side-effects
+    if (['collapsedRanges', 'lineCommentsOrCommentsRelatedOption', 'originalDocumentOrDiffRelatedOption'].includes(optionName)) {
       this.#updateRenderedView({
-        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-    }
-
-    // When collapsedRanges changes - completely unload the collapsedRanges compartment to avoid any side-effects
-    if (optionName === 'collapsedRanges') {
-      this.#updateRenderedView({
-        effects: this.#resetCompartment('collapsedRanges'),
-      });
-    }
-
-    // // When lineCommentsOrCommentsRelatedOption changes - completely unload the lineCommentsOrCommentsRelatedOption compartment to avoid any side-effects
-    if (optionName === 'lineCommentsOrCommentsRelatedOption') {
-      this.#updateRenderedView({
-        effects: this.#resetCompartment('lineCommentsOrCommentsRelatedOption'),
+        effects: this.#resetCompartment(optionName),
       });
     }
 
