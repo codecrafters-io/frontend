@@ -26,7 +26,7 @@ function generateRandomLineData(linesCount = 0) {
       commentsCount = getRandomInt(1, 10);
     }
 
-    return new LineData({ commentsCount, lineNumber: lineNumber + 1 });
+    return new LineData(lineNumber + 1, commentsCount);
   });
 
   return new LineDataCollection(lineData);

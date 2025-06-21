@@ -3,13 +3,8 @@ import { Line, /* StateEffect, */ StateField } from '@codemirror/state';
 import { lineDataFacet /*, expandedLineNumbersFacet, expandedLineNumbersCompartment */ } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 class LineCommentsWidget extends WidgetType {
-  line: Line;
-  // isExpanded: boolean;
-
-  constructor(line: Line /* , isExpanded: boolean = false */) {
+  constructor(readonly line: Line /* , readonly isExpanded: boolean = false */) {
     super();
-    this.line = line;
-    // this.isExpanded = isExpanded;
   }
 
   toDOM(view: EditorView): HTMLElement {
