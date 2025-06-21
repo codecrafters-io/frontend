@@ -179,6 +179,12 @@
         <Input @type="checkbox" @checked={{this.foldGutter}} />
         <span class="ml-2">foldGutter</span>
       </label>
+      <label class="{{labelClasses}}" title="Enable line comments (disabled when document is not read-only)">
+        <Input @type="checkbox" @checked={{this.lineComments}} disabled={{not this.readOnly}} />
+        <span class="ml-2 {{unless this.readOnly 'text-gray-300'}}">lineComments</span>
+      </label>
+    </codemirror-options-left>
+    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Enable visual line wrapping for lines exceeding editor width">
         <Input @type="checkbox" @checked={{this.lineWrapping}} />
         <span class="ml-2">lineWrapping</span>
@@ -187,8 +193,6 @@
         <Input @type="checkbox" @checked={{this.scrollPastEnd}} />
         <span class="ml-2">scrollPastEnd</span>
       </label>
-    </codemirror-options-left>
-    <codemirror-options-right class="flex flex-wrap">
       <label class="{{labelClasses}}" title="Limit maximum height of the component's element">
         <Input @type="checkbox" @checked={{this.maxHeight}} />
         <span class="ml-2">maxHeight</span>
@@ -345,6 +349,8 @@
   @indentUnit={{if this.indentUnit this.selectedIndentUnit.symbol}}
   @indentWithTab={{this.indentWithTab}}
   @language={{if this.language this.selectedDocument.language}}
+  @lineComments={{this.lineComments}}
+  @lineData={{if this.lineComments this.selectedDocument.lineData}}
   @lineNumbers={{this.lineNumbers}}
   @lineSeparator={{if this.lineSeparator this.selectedLineSeparator.symbol}}
   @lineWrapping={{this.lineWrapping}}

@@ -7,6 +7,10 @@ const BASE_STYLE = {
   // Container for all gutters
   '.cm-gutters': {
     borderRight: 'none',
+
+    '&.cm-gutters-rs': {
+      backgroundColor: '#ffffff20', // '#ff000070', // 'transparent',
+    },
   },
 
   // All gutter elements
@@ -18,7 +22,7 @@ const BASE_STYLE = {
   '.cm-lineNumbers': {
     '& .cm-gutterElement': {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'flex-end',
       padding: '0 0.5rem 0 1rem',
       fontSize: '0.875em',
@@ -30,11 +34,15 @@ const BASE_STYLE = {
   '.cm-foldGutter': {
     '& .cm-gutterElement': {
       display: 'flex',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'center',
       fontSize: '0.875em',
       minWidth: '1.2rem',
       color: '#94a3b8',
+
+      '& svg': {
+        marginTop: '0.3rem',
+      },
     },
   },
 
