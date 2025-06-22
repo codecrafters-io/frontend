@@ -10,19 +10,19 @@ class LineCommentsWidget extends WidgetType {
   toDOM(view: EditorView): HTMLElement {
     // const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
     const commentsCount = view.state.facet(lineDataFacet)[0]?.dataForLine(this.line.number)?.commentsCount || 0;
-    const classNames = ['cm-lineCommentsWidget'];
-
-    // if (expandedLines.includes(this.line.number) || this.isExpanded) {
-    //   classNames.push('cm-lineCommentsWidgetExpanded');
-    // }
 
     const elem = document.createElement('div');
-    elem.className = classNames.join(' ');
+    elem.className = 'cm-lineCommentsWidget';
+
+    // if (expandedLines.includes(this.line.number) || this.isExpanded) {
+    //   elem.classList.add('cm-lineCommentsWidgetExpanded');
+    // }
 
     if (commentsCount) {
       elem.innerText = `💬 COMMENTS FOR LINE #${this.line.number} (COUNT: ${commentsCount})`;
     } else {
       elem.innerText = `💬 ADD COMMENT FOR LINE #${this.line.number}`;
+      elem.classList.add('cm-zeroComments');
     }
 
     return elem;
@@ -74,15 +74,17 @@ const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
   '.cm-line': {
     '& + .cm-lineCommentsWidget': {
       display: 'none',
-      backgroundColor: '#009bff40',
-      paddingLeft: '1rem',
-      marginRight: '-1rem',
+      padding: '1.5rem 1rem',
+      backgroundColor: '#009bff80',
+
+      '&.cm-zeroComments': {
+        backgroundColor: '#00ff9b80',
+      },
     },
 
     '&.cm-lineCommentsExpanded': {
       '& + .cm-lineCommentsWidget': {
         display: 'block',
-        backgroundColor: '#009bff80',
       },
     },
 
@@ -91,6 +93,12 @@ const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
     },
 
     '& .cm-insertedLine + br': {
+      display: 'none',
+    },
+  },
+
+  '.cm-cc-collapsedLines': {
+    '& + .cm-lineCommentsWidget': {
       display: 'none',
     },
   },
