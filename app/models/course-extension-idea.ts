@@ -31,12 +31,12 @@ export default class CourseExtensionIdeaModel extends Model {
     return this.developmentStatus === 'released';
   }
 
-  get isNewlyCreated() {
+  get isNewlyCreated(): boolean {
     // 30 days or less old or less than 20 votes
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 20;
   }
 
-  get reverseSortPositionForVotePage(): string {
+  get reverseSortPositionForRoadmapPage(): string {
     const reverseSortPositionFromDevelopmentStatus = {
       not_started: 3,
       in_progress: 2,

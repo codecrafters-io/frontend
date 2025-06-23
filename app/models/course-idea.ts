@@ -28,7 +28,7 @@ export default class CourseIdeaModel extends Model {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 100;
   }
 
-  get reverseSortPositionForVotePage(): string {
+  get reverseSortPositionForRoadmapPage(): string {
     const reverseSortPositionFromDevelopmentStatus = {
       not_started: 3,
       in_progress: 2,

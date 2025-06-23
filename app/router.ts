@@ -96,7 +96,7 @@ Router.map(function () {
   this.route('user', { path: '/users/:username' }); // TODO: Add dark mode support
 
   // TODO: Add dark mode support
-  this.route('vote', function () {
+  this.route('roadmap', function () {
     this.route('course-ideas', { path: '/challenges' });
     this.route('course-extension-ideas', { path: '/challenge-extensions' });
   });
