@@ -12,7 +12,7 @@ export default class HeaderComponent extends Component<Signature> {
   @service declare router: RouterService;
 
   get activeTab() {
-    if (this.router.currentRouteName === 'vote.course-extension-ideas') {
+    if (this.router.currentRouteName === 'roadmap.course-extension-ideas') {
       return 'challenge-extensions';
     } else {
       return 'challenges';
@@ -22,6 +22,6 @@ export default class HeaderComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VotePage::Header': typeof HeaderComponent;
+    'RoadmapPage::Header': typeof HeaderComponent;
   }
 }

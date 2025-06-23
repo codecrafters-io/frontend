@@ -54,6 +54,6 @@ export default class VoteButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VotePage::IdeaCard::VoteButton': typeof VoteButtonComponent;
+    'RoadmapPage::IdeaCard::VoteButton': typeof VoteButtonComponent;
   }
 }

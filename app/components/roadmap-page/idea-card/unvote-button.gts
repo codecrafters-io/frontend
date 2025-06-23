@@ -21,6 +21,6 @@ export default class UnvoteButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VotePage::IdeaCard::UnvoteButton': typeof UnvoteButtonComponent;
+    'RoadmapPage::IdeaCard::UnvoteButton': typeof UnvoteButtonComponent;
   }
 }
