@@ -21,6 +21,16 @@
       "permanent": true
     },
     {
+      "source": "/roadmap/challenge-ideas",
+      "destination": "/roadmap/challenges",
+      "permanent": true
+    },
+    {
+      "source": "/roadmap/challenge-extension-ideas",
+      "destination": "/roadmap/challenge-extensions",
+      "permanent": true
+    },
+    {
       "source": "/membership",
       "destination": "/settings/billing",
       "permanent": true
