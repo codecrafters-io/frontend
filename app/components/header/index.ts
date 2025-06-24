@@ -50,6 +50,7 @@ export default class HeaderComponent extends Component<Signature> {
     return [
       { text: 'Catalog', route: 'catalog', type: 'route' },
       { text: 'Pricing', route: 'pay', type: 'route' },
+      { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
   }
 
