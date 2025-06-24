@@ -18,7 +18,7 @@ import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 import jakubgradckiImage from '/assets/images/user-avatars/jakub-gradcki.jpeg';
 import hcltechImage from '/assets/images/company-logos/hcltech-company-logo.svg';
 import connormurphyImage from '/assets/images/user-avatars/connor-murphy.jpeg';
-import walmartglobaltechImage from '/assets/images/company-logos/walmart-global-tech-company-logo-2.svg';
+import walmartglobaltechImage from '/assets/images/company-logos/walmartglobaltech-company-logo.svg';
 import krishnavImage from '/assets/images/user-avatars/krishna-vaidyanathan.jpeg';
 import googleImage from '/assets/images/company-logos/google-company-logo.svg';
 import joeypereiraImage from '/assets/images/user-avatars/joey-pereira.jpeg';
