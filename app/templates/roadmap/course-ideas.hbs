@@ -4,10 +4,10 @@
 
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
   {{#if this.authenticator.isAuthenticated}}
-    <VotePage::SubmitCourseIdeaCard />
+    <RoadmapPage::SubmitCourseIdeaCard />
   {{/if}}
 
   {{#each this.orderedCourseIdeas as |courseIdea|}}
-    <VotePage::CourseIdeaCard @courseIdea={{courseIdea}} />
+    <RoadmapPage::CourseIdeaCard @courseIdea={{courseIdea}} />
   {{/each}}
 </div>

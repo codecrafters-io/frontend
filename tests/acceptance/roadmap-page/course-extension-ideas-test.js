@@ -1,4 +1,4 @@
-import votePage from 'codecrafters-frontend/tests/pages/vote-page';
+import roadmapPage from 'codecrafters-frontend/tests/pages/roadmap-page';
 import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -7,7 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
+module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
   setupApplicationTest(hooks);
 
   test('it renders for anonymous user', async function (assert) {
@@ -19,15 +19,15 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     courseExtensionIdea.update('votesCount', 1);
 
-    await votePage.visitCourseExtensionIdeasTab();
+    await roadmapPage.visitCourseExtensionIdeasTab();
     await percySnapshot('Challenge Extension Ideas (anonymous)');
 
-    assert.strictEqual(votePage.selectedCourseName, 'Build your own Redis');
-    assert.strictEqual(votePage.courseExtensionIdeaCards.length, 2);
-    assert.strictEqual(votePage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
+    assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 2);
+    assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
 
-    const releasedIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
-    const notStartedIdeaCard = votePage.findCourseExtensionIdeaCard('Geospatial commands');
+    const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
+    const notStartedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
 
     assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
     assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
@@ -45,7 +45,7 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     createCourseExtensionIdeas(this.server);
 
-    await votePage.visitCourseExtensionIdeasTab();
+    await roadmapPage.visitCourseExtensionIdeasTab();
     await percySnapshot('Challenge Extension Ideas (logged in)');
 
     assert.strictEqual(1, 1);
@@ -57,9 +57,9 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     createCourseExtensionIdeas(this.server);
 
-    await votePage.visitCourseExtensionIdeasTab();
+    await roadmapPage.visitCourseExtensionIdeasTab();
 
-    let courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
+    let courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseExtensionIdeaCard.clickOnVoteButton();
@@ -81,9 +81,9 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
     const geospatialCourseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
     geospatialCourseExtensionIdea.update('developmentStatus', 'in_progress');
 
-    await votePage.visitCourseExtensionIdeasTab();
+    await roadmapPage.visitCourseExtensionIdeasTab();
 
-    let courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Geospatial commands');
+    let courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
     await courseExtensionIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {
@@ -99,7 +99,7 @@ module('Acceptance | vote-page | course-extension-ideas', function (hooks) {
 
     await courseExtensionIdeaCard.clickOnVoteButton();
 
-    courseExtensionIdeaCard = votePage.findCourseExtensionIdeaCard('Persistence');
+    courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     await courseExtensionIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {

@@ -55,7 +55,7 @@
   {{! Footer Controls }}
   <div class="flex items-center justify-between">
     <div class="flex items-center">
-      <VotePage::IdeaCard::VoteButton
+      <RoadmapPage::IdeaCard::VoteButton
         @idea={{@courseExtensionIdea}}
         @userHasVoted={{this.userHasVoted}}
         {{on "click" this.handleVoteButtonClick}}
@@ -72,7 +72,7 @@
           ></path>
         </svg>
       {{else if this.userHasVoted}}
-        <VotePage::IdeaCard::UnvoteButton {{on "click" this.handleUnvoteButtonClick}} />
+        <RoadmapPage::IdeaCard::UnvoteButton {{on "click" this.handleUnvoteButtonClick}} />
       {{/if}}
     </div>
   </div>

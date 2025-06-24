@@ -14,6 +14,6 @@ export default class CoursePillComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VotePage::CoursePill': typeof CoursePillComponent;
+    'RoadmapPage::CoursePill': typeof CoursePillComponent;
   }
 }

@@ -1,4 +1,4 @@
-import votePage from 'codecrafters-frontend/tests/pages/vote-page';
+import roadmapPage from 'codecrafters-frontend/tests/pages/roadmap-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -7,7 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
-module('Acceptance | vote-page | course-ideas', function (hooks) {
+module('Acceptance | roadmap-page | course-ideas', function (hooks) {
   setupApplicationTest(hooks);
 
   test('it renders for anonymous user', async function (assert) {
@@ -18,14 +18,14 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     let courseIdea = this.server.schema.courseIdeas.first();
     courseIdea.update({ votesCount: 1, developmentStatus: 'released' });
 
-    await votePage.visit();
+    await roadmapPage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
-    assert.strictEqual(votePage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
-    assert.ok(votePage.findCourseIdeaCard(courseIdea.name).isGreyedOut, 'should be greyed out if released');
+    assert.strictEqual(roadmapPage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
+    assert.ok(roadmapPage.findCourseIdeaCard(courseIdea.name).isGreyedOut, 'should be greyed out if released');
 
-    const releasedIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
-    const notStartedIdeaCard = votePage.findCourseIdeaCard('Build your own Shell');
+    const releasedIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
+    const notStartedIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Shell');
 
     assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
     assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
@@ -44,7 +44,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     createCourseIdeas(this.server);
 
-    await votePage.visit();
+    await roadmapPage.visit();
     await percySnapshot('Challenge Ideas (logged in)');
 
     assert.strictEqual(1, 1);
@@ -59,9 +59,9 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     createCourseIdeas(this.server);
 
-    await votePage.visit();
+    await roadmapPage.visit();
 
-    let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
+    let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
     assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnVoteButton();
@@ -82,9 +82,9 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
     const sqliteCourseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own SQLite' });
     sqliteCourseIdea.update('developmentStatus', 'released');
 
-    await votePage.visit();
+    await roadmapPage.visit();
 
-    let courseIdeaCard = votePage.findCourseIdeaCard('Build your own Regex Parser');
+    let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
     await courseIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {
@@ -100,7 +100,7 @@ module('Acceptance | vote-page | course-ideas', function (hooks) {
 
     await courseIdeaCard.clickOnVoteButton();
 
-    courseIdeaCard = votePage.findCourseIdeaCard('Build your own SQLite');
+    courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own SQLite');
     await courseIdeaCard.hoverOnDevelopmentStatusLabel();
 
     assertTooltipContent(assert, {

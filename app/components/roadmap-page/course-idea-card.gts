@@ -3,8 +3,8 @@ import Component from '@glimmer/component';
 import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
 import MarkdownToHtml from 'codecrafters-frontend/helpers/markdown-to-html';
 import svgJar from 'ember-svg-jar/helpers/svg-jar';
-import VoteButton from 'codecrafters-frontend/components/vote-page/idea-card/vote-button';
-import UnvoteButton from 'codecrafters-frontend/components/vote-page/idea-card/unvote-button';
+import VoteButton from 'codecrafters-frontend/components/roadmap-page/idea-card/vote-button';
+import UnvoteButton from 'codecrafters-frontend/components/roadmap-page/idea-card/unvote-button';
 import { action } from '@ember/object';
 import { and } from 'ember-truth-helpers';
 import { inject as service } from '@ember/service';
@@ -153,6 +153,6 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VotePage::CourseIdeaCard': typeof CourseIdeaCardComponent;
+    'RoadmapPage::CourseIdeaCard': typeof CourseIdeaCardComponent;
   }
 }

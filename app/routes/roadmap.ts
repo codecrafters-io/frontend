@@ -15,7 +15,7 @@ export type ModelType = {
   courseExtensionIdeas: CourseExtensionIdeaModel[];
 };
 
-export default class VoteRoute extends BaseRoute {
+export default class RoadmapRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
@@ -25,8 +25,8 @@ export default class VoteRoute extends BaseRoute {
   }
 
   afterModel(_model: ModelType, transition: Transition) {
-    if (transition.to?.name === 'vote.index') {
-      this.router.transitionTo('vote.course-ideas');
+    if (transition.to?.name === 'roadmap.index') {
+      this.router.transitionTo('roadmap.course-ideas');
     }
   }
 
