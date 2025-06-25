@@ -43,7 +43,11 @@ export default class CourseExtensionIdeaModel extends Model {
       released: 1,
     }[this.developmentStatus];
 
-    return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
+    // Use vote count for secondary sorting (higher votes = higher priority)
+    // Pad vote count with zeros to ensure proper string sorting
+    const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
+
+    return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
   }
 
   async vote() {
