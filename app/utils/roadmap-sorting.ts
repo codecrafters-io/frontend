@@ -27,18 +27,21 @@ export function getReverseSortPositionForRoadmapPage(
 
     if (developmentStatus === 'in_progress') {
       // In progress: sort by vote count descending
+      // Invert vote count by subtracting from a large number to get descending order
       const paddedVoteCount = votesCount.toString().padStart(10, '0');
 
       return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
     } else if (developmentStatus === 'not_started') {
       // Not started: sort by random but fixed per user per week
-      const rng = seedrandom(userWeekSeed + id);
+      // Add delimiter to prevent seed collision
+      const rng = seedrandom(`${userWeekSeed}-${id}`);
       const randomSeed = Math.floor(rng() * 1000000); // Generate a number between 0-999999
       const paddedRandomSeed = randomSeed.toString().padStart(10, '0');
 
       return `${reverseSortPositionFromDevelopmentStatus}-${paddedRandomSeed}`;
     } else {
       // Released: sort by vote count descending
+      // Invert vote count by subtracting from a large number to get descending order
       const paddedVoteCount = votesCount.toString().padStart(10, '0');
 
       return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
@@ -46,6 +49,7 @@ export function getReverseSortPositionForRoadmapPage(
   }
 
   // For unauthenticated users: sort by vote count descending for all statuses
+  // Invert vote count by subtracting from a large number to get descending order
   const paddedVoteCount = votesCount.toString().padStart(10, '0');
 
   return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
