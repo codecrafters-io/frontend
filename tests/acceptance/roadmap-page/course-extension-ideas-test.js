@@ -29,10 +29,10 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     const notStartedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
 
-    assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
+    assert.strictEqual(releasedIdeaCard.developmentStatusPillText, 'Released', 'released idea has label');
     assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
 
-    assert.notEqual(notStartedIdeaCard.developmentStatusLabelText, 'released', 'not started idea has no label');
+    assert.notEqual(notStartedIdeaCard.developmentStatusPillText, 'Released', 'not started idea has no label');
     assert.false(notStartedIdeaCard.isGreyedOut, 'not started idea is not greyed out');
 
     // TODO: Test that hovering on vote shows tooltip
@@ -84,14 +84,14 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await roadmapPage.visitCourseExtensionIdeasTab();
 
     let courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
-    await courseExtensionIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge extension. Upvote this idea to be notified when it launches.",
     });
 
     await courseExtensionIdeaCard.clickOnVoteButton();
-    await courseExtensionIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge extension. We'll notify you when it launches.",
@@ -100,7 +100,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await courseExtensionIdeaCard.clickOnVoteButton();
 
     courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
-    await courseExtensionIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: 'This challenge extension is now available! Visit the catalog to try it out.',
