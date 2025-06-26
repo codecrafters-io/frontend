@@ -29,10 +29,10 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     const notStartedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
 
-    assert.strictEqual(releasedIdeaCard.developmentStatusPillText, 'released', 'released idea has label');
+    assert.strictEqual(releasedIdeaCard.developmentStatusPillText, 'Released', 'released idea has label');
     assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
 
-    assert.notEqual(notStartedIdeaCard.developmentStatusPillText, 'released', 'not started idea has no label');
+    assert.notEqual(notStartedIdeaCard.developmentStatusPillText, 'Released', 'not started idea has no label');
     assert.false(notStartedIdeaCard.isGreyedOut, 'not started idea is not greyed out');
 
     // TODO: Test that hovering on vote shows tooltip
