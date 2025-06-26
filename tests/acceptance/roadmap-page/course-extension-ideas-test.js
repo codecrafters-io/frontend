@@ -84,14 +84,14 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await roadmapPage.visitCourseExtensionIdeasTab();
 
     let courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
-    await courseExtensionIdeaCard.hoverOndevelopmentStatusPill();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge extension. Upvote this idea to be notified when it launches.",
     });
 
     await courseExtensionIdeaCard.clickOnVoteButton();
-    await courseExtensionIdeaCard.hoverOndevelopmentStatusPill();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge extension. We'll notify you when it launches.",
@@ -100,7 +100,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await courseExtensionIdeaCard.clickOnVoteButton();
 
     courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
-    await courseExtensionIdeaCard.hoverOndevelopmentStatusPill();
+    await courseExtensionIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: 'This challenge extension is now available! Visit the catalog to try it out.',

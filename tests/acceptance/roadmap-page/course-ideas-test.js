@@ -85,14 +85,14 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await roadmapPage.visit();
 
     let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
-    await courseIdeaCard.hoverOndevelopmentStatusPill();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. Upvote this idea to be notified when it launches.",
     });
 
     await courseIdeaCard.clickOnVoteButton();
-    await courseIdeaCard.hoverOndevelopmentStatusPill();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. We'll notify you when it launches.",
@@ -101,7 +101,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await courseIdeaCard.clickOnVoteButton();
 
     courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own SQLite');
-    await courseIdeaCard.hoverOndevelopmentStatusPill();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: 'This challenge is now available! Visit the catalog to try it out.',
