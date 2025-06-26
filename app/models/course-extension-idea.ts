@@ -43,11 +43,50 @@ export default class CourseExtensionIdeaModel extends Model {
       released: 1,
     }[this.developmentStatus];
 
-    // Use vote count for secondary sorting (higher votes = higher priority)
-    // Pad vote count with zeros to ensure proper string sorting
+    if (this.authenticator.isAuthenticated) {
+      // For authenticated users: fixed order per user per week
+      const currentUser = this.authenticator.currentUser;
+      if (currentUser) {
+        const weekSeed = this.getRoughWeekSeed();
+        const userWeekSeed = `${currentUser.username}-${weekSeed}`;
+        
+        if (this.developmentStatus === 'in_progress') {
+          // In progress: sort by vote count descending
+          const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
+          return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
+        } else if (this.developmentStatus === 'not_started') {
+          // Not started: sort by random but fixed per user per week
+          const randomSeed = this.getHashCode(userWeekSeed + this.id);
+          const paddedRandomSeed = Math.abs(randomSeed).toString().padStart(10, '0');
+          return `${reverseSortPositionFromDevelopmentStatus}-${paddedRandomSeed}`;
+        } else {
+          // Released: sort by vote count descending
+          const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
+          return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
+        }
+      }
+    }
+    
+    // For unauthenticated users: sort by vote count descending for all statuses
     const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
-
     return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
+  }
+
+  private getRoughWeekSeed(): number {
+    const now = Date.now();
+    const weekMs = 7 * 24 * 60 * 60 * 1000; // milliseconds per week
+    return now - (now % weekMs);
+  }
+
+  private getHashCode(str: string): number {
+    let hash = 0;
+    if (str.length === 0) return hash;
+    for (let i = 0; i < str.length; i++) {
+      const char = str.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    return hash;
   }
 
   async vote() {
