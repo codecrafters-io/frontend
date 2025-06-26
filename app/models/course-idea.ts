@@ -30,9 +30,8 @@ export default class CourseIdeaModel extends Model {
 
   get reverseSortPositionForRoadmapPage(): string {
     const reverseSortPositionFromDevelopmentStatus = {
-      not_started: 3,
-      in_progress: 2,
-      released: 1,
+      in_progress: 2, // In progress challenges at the top
+      not_started: 1,
     }[this.developmentStatus];
 
     return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
