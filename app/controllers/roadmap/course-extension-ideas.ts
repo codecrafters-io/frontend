@@ -22,7 +22,11 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('reverseSortPositionForRoadmapPage').reverse();
+    return this.model.courseExtensionIdeas
+      .filterBy('course', this.selectedCourse)
+      .rejectBy('developmentStatusIsReleased')
+      .sortBy('reverseSortPositionForRoadmapPage')
+      .reverse();
   }
 
   get orderedCourses() {
