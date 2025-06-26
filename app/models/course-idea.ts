@@ -5,6 +5,7 @@ import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
+import { getReverseSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false, inverse: 'courseIdea' }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
@@ -29,56 +30,13 @@ export default class CourseIdeaModel extends Model {
   }
 
   get reverseSortPositionForRoadmapPage(): string {
-    const reverseSortPositionFromDevelopmentStatus = {
-      not_started: 3,
-      in_progress: 2,
-      released: 1,
-    }[this.developmentStatus];
-
-    if (this.authenticator.isAuthenticated) {
-      // For authenticated users: fixed order per user per week
-      const currentUser = this.authenticator.currentUser;
-      if (currentUser) {
-        const weekSeed = this.getRoughWeekSeed();
-        const userWeekSeed = `${currentUser.username}-${weekSeed}`;
-        
-        if (this.developmentStatus === 'in_progress') {
-          // In progress: sort by vote count descending
-          const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
-          return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
-        } else if (this.developmentStatus === 'not_started') {
-          // Not started: sort by random but fixed per user per week
-          const randomSeed = this.getHashCode(userWeekSeed + this.id);
-          const paddedRandomSeed = Math.abs(randomSeed).toString().padStart(10, '0');
-          return `${reverseSortPositionFromDevelopmentStatus}-${paddedRandomSeed}`;
-        } else {
-          // Released: sort by vote count descending
-          const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
-          return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
-        }
-      }
-    }
-    
-    // For unauthenticated users: sort by vote count descending for all statuses
-    const paddedVoteCount = this.votesCount.toString().padStart(10, '0');
-    return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
-  }
-
-  private getRoughWeekSeed(): number {
-    const now = Date.now();
-    const weekMs = 7 * 24 * 60 * 60 * 1000; // milliseconds per week
-    return now - (now % weekMs);
-  }
-
-  private getHashCode(str: string): number {
-    let hash = 0;
-    if (str.length === 0) return hash;
-    for (let i = 0; i < str.length; i++) {
-      const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash; // Convert to 32-bit integer
-    }
-    return hash;
+    return getReverseSortPositionForRoadmapPage(
+      this.developmentStatus,
+      this.votesCount,
+      this.id,
+      this.authenticator.isAuthenticated,
+      this.authenticator.currentUser?.username,
+    );
   }
 
   async vote(): Promise<CourseIdeaVoteModel> {
