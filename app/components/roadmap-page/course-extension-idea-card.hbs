@@ -6,13 +6,13 @@
 >
   {{! Text }}
   <div class="mb-4">
-    <div class="flex items-start justify-between mb-3">
-      <div class="text-gray-700 dark:text-gray-200 mr-2 mb-0.5 font-bold text-xl tracking-tight" data-test-course-extension-idea-name>
+    <div class="flex items-center gap-2 mb-3">
+      <div class="text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight" data-test-course-extension-idea-name>
         {{@courseExtensionIdea.name}}
       </div>
 
       {{#if @courseExtensionIdea.developmentStatusIsInProgress}}
-        <Pill @color="yellow" class="ml-3 mt-0.5" data-test-development-status-pill>
+        <Pill @color="yellow" data-test-development-status-pill>
           <div class="flex items-center gap-1">
             {{svg-jar "shield-check" class="w-3 fill-current"}}
             In Progress
@@ -25,7 +25,7 @@
           {{/if}}
         </Pill>
       {{else if @courseExtensionIdea.developmentStatusIsReleased}}
-        <LinkTo @route="catalog" class="ml-3 mt-0.5">
+        <LinkTo @route="catalog">
           <Pill @color="green" data-test-development-status-pill>
             <div class="flex items-center gap-1">
               {{svg-jar "check" class="w-3 fill-current"}}
@@ -40,7 +40,7 @@
           {{svg-jar "chevron-up" class="w-7 fill-current text-white"}}
         </div>
       {{else if @courseExtensionIdea.isNewlyCreated}}
-        <Pill @color="green" class="ml-3 mt-0.5" data-test-development-status-pill>
+        <Pill @color="green" data-test-development-status-pill>
           New
           <EmberTooltip @text="This is a recently added idea! Vote to help us decide which ideas to prioritize." />
         </Pill>

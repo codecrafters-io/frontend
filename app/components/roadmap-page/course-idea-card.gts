@@ -83,13 +83,13 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
     >
       {{! Text }}
       <div class='mb-4'>
-        <div class='flex items-start justify-between mb-3'>
-          <div class='text-gray-700 dark:text-gray-200 mr-2 mb-0.5 font-bold text-xl tracking-tight' data-test-course-idea-name>
+        <div class='flex items-center gap-2 mb-3'>
+          <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
             {{@courseIdea.name}}
           </div>
 
           {{#if @courseIdea.developmentStatusIsInProgress}}
-            <Pill @color='yellow' class='ml-3 mt-0.5' data-test-development-status-pill>
+            <Pill @color='yellow' data-test-development-status-pill>
               <div class='flex items-center gap-1'>
                 {{svgJar 'shield-check' class='w-3 fill-current'}}
                 In Progress
@@ -102,7 +102,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
               {{/if}}
             </Pill>
           {{else if @courseIdea.developmentStatusIsReleased}}
-            <LinkTo @route='catalog' class='ml-3 mt-0.5'>
+            <LinkTo @route='catalog'>
               <Pill @color='green' data-test-development-status-pill>
                 <div class='flex items-center gap-1'>
                   {{svgJar 'check' class='w-3 fill-current'}}
@@ -116,7 +116,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
               {{svgJar 'chevron-up' class='w-7 fill-current text-white'}}
             </div>
           {{else if @courseIdea.isNewlyCreated}}
-            <Pill @color='green' class='ml-3 mt-0.5' data-test-development-status-pill>
+            <Pill @color='green' data-test-development-status-pill>
               New
               <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
             </Pill>
