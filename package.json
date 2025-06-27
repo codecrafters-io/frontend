@@ -101,7 +101,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.172.0",
-    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.29.1",
     "@uiw/codemirror-theme-github": "^4.23.6",
     "autoprefixer": "^10.4.21",
