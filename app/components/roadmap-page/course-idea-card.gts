@@ -81,9 +81,8 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
       data-test-course-idea-card
     >
-      {{! Text }}
-      <div class='mb-4'>
-        <div class='flex items-center gap-2 mb-3'>
+      <div class='flex items-start justify-between gap-3 mb-2.5'>
+        <div class='flex items-center gap-2 flex-wrap mt-0.5'>
           <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
             {{@courseIdea.name}}
           </div>
@@ -101,20 +100,14 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
                 <EmberTooltip @text="We're currently building this challenge. Upvote this idea to be notified when it launches." />
               {{/if}}
             </Pill>
-          {{else if @courseIdea.developmentStatusIsReleased}}
-            <LinkTo @route='catalog'>
-              <Pill @color='green' data-test-development-status-pill>
-                <div class='flex items-center gap-1'>
-                  {{svgJar 'check' class='w-3 fill-current'}}
-                  Released
-                </div>
-                <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
-              </Pill>
-            </LinkTo>
           {{else if this.userHasVoted}}
-            <div class='h-7 w-7 bg-teal-500 dark:bg-teal-600 rounded flex items-center justify-center'>
-              {{svgJar 'chevron-up' class='w-7 fill-current text-white'}}
-            </div>
+            <Pill @color='green' data-test-development-status-pill>
+              <div class='flex items-center gap-1'>
+                {{svgJar 'thumb-up' class='w-3 fill-current'}}
+                Voted
+              </div>
+              <EmberTooltip @text="You've voted for this idea! We'll notify you when it launches." />
+            </Pill>
           {{else if @courseIdea.isNewlyCreated}}
             <Pill @color='green' data-test-development-status-pill>
               New
@@ -122,29 +115,11 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
             </Pill>
           {{/if}}
         </div>
-        <div class='prose dark:prose-invert prose-sm'>
-          {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
-        </div>
+
+        <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
       </div>
-
-      {{! Footer Controls }}
-      <div class='flex items-center justify-between'>
-        <div class='flex items-center'>
-          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} class='mr-2' />
-
-          {{#if (and this.userHasVoted this.isVotingOrUnvoting)}}
-            <svg class='animate-spin ml-2 w-3 text-teal-500' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
-              <circle class='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' stroke-width='4'></circle>
-              <path
-                class='opacity-75'
-                fill='currentColor'
-                d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-              ></path>
-            </svg>
-          {{else if this.userHasVoted}}
-            <UnvoteButton {{on 'click' this.handleUnvoteButtonClick}} />
-          {{/if}}
-        </div>
+      <div class='prose dark:prose-invert prose-sm'>
+        {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
       </div>
     </div>
   </template>
