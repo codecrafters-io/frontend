@@ -192,6 +192,7 @@ const BASE_STYLE = {
 
       '& .cm-cc-collapsedLinesInner': {
         borderTop: 'none',
+        paddingTop: '6px',
       },
     },
 
@@ -240,6 +241,7 @@ const BASE_STYLE = {
 
       '& .cm-collapsedRangesInner': {
         borderTop: 'none',
+        paddingTop: '6px',
       },
     },
 
