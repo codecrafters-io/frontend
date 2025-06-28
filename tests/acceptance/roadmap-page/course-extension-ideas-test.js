@@ -6,6 +6,7 @@ import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 
 module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,7 +24,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await percySnapshot('Challenge Extension Ideas (anonymous)');
 
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
-    assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 2);
+    assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 6);
     assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
 
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
@@ -105,5 +106,81 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'This challenge extension is now available! Visit the catalog to try it out.',
     });
+  });
+
+  test('it is sorted algorithmically for logged in user', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    // Set up fake date service for consistent sorting behavior
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    const dateService = this.owner.lookup('service:date');
+    const fixedDate = new Date('2024-06-15T00:00:00.000Z').getTime();
+    dateService.setNow(fixedDate);
+
+    createCourseExtensionIdeas(this.server);
+
+    const persistence = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    persistence.update('votesCount', 100);
+
+    const geospatial = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    geospatial.update('votesCount', 15);
+
+    const resp3 = this.server.schema.courseExtensionIdeas.findBy({ name: 'RESP3 Protocol' });
+    resp3.update('votesCount', 10);
+
+    const pubsub = this.server.schema.courseExtensionIdeas.findBy({ name: 'Pub/Sub' });
+    pubsub.update('votesCount', 5);
+
+    const lists = this.server.schema.courseExtensionIdeas.findBy({ name: 'Lists' });
+    lists.update('votesCount', 12);
+
+    const replication = this.server.schema.courseExtensionIdeas.findBy({ name: 'Replication' });
+    replication.update('votesCount', 13);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');
+
+    const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
+
+    const expectedOrder = ['RESP3 Protocol', 'Lists', 'Geospatial commands', 'Replication', 'Pub/Sub', 'Persistence'];
+    assert.deepEqual(cardOrder, expectedOrder, 'cards should be in expected order');
+  });
+
+  test('it is sorted by votes count for anonymous user', async function (assert) {
+    testScenario(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    const persistence = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    persistence.update('votesCount', 100);
+
+    const geospatial = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    geospatial.update('votesCount', 15);
+
+    const resp3 = this.server.schema.courseExtensionIdeas.findBy({ name: 'RESP3 Protocol' });
+    resp3.update('votesCount', 10);
+
+    const pubsub = this.server.schema.courseExtensionIdeas.findBy({ name: 'Pub/Sub' });
+    pubsub.update('votesCount', 5);
+
+    const lists = this.server.schema.courseExtensionIdeas.findBy({ name: 'Lists' });
+    lists.update('votesCount', 12);
+
+    const replication = this.server.schema.courseExtensionIdeas.findBy({ name: 'Replication' });
+    replication.update('votesCount', 13);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');
+
+    const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
+
+    const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
+    assert.deepEqual(cardOrder, expectedOrder, 'cards should be in expected order');
   });
 });

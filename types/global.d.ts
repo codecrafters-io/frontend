@@ -4,3 +4,8 @@ import '@glint/environment-ember-loose';
 declare module '@glimmer/tracking' {
   export const cached: PropertyDecorator;
 }
+
+declare module 'seedrandom' {
+  function seedrandom(seed?: string): () => number;
+  export = seedrandom;
+}

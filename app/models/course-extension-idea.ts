@@ -4,6 +4,8 @@ import { memberAction } from 'ember-api-actions';
 import type CourseModel from './course';
 import type CourseExtensionIdeaVoteModel from './course-extension-idea-vote';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type DateService from 'codecrafters-frontend/services/date';
+import { getReverseSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseExtensionIdeaModel extends Model {
   @belongsTo('course', { async: false, inverse: 'extensionIdeas' }) declare course: CourseModel;
@@ -18,6 +20,7 @@ export default class CourseExtensionIdeaModel extends Model {
   @attr('number') declare votesCount: number;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare date: DateService;
 
   get developmentStatusIsInProgress() {
     return this.developmentStatus === 'in_progress';
@@ -37,13 +40,14 @@ export default class CourseExtensionIdeaModel extends Model {
   }
 
   get reverseSortPositionForRoadmapPage(): string {
-    const reverseSortPositionFromDevelopmentStatus = {
-      not_started: 3,
-      in_progress: 2,
-      released: 1,
-    }[this.developmentStatus];
-
-    return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
+    return getReverseSortPositionForRoadmapPage(
+      this.developmentStatus,
+      this.votesCount,
+      this.id,
+      this.authenticator.isAuthenticated,
+      this.date.now(),
+      this.authenticator.currentUser?.username,
+    );
   }
 
   async vote() {
