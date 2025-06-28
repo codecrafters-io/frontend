@@ -1,7 +1,7 @@
 import seedrandom from 'seedrandom';
 
-export function getRoughWeekSeed(): number {
-  const now = Date.now();
+export function getRoughWeekSeed(date: number): number {
+  const now = date;
   const weekMs = 7 * 24 * 60 * 60 * 1000; // milliseconds per week
 
   return now - (now % weekMs);
@@ -12,17 +12,18 @@ export function getReverseSortPositionForRoadmapPage(
   votesCount: number,
   id: string,
   isAuthenticated: boolean,
+  date: number,
   currentUserUsername?: string,
 ): string {
   const reverseSortPositionFromDevelopmentStatus = {
-    not_started: 3,
-    in_progress: 2,
+    in_progress: 3,
+    not_started: 2,
     released: 1,
   }[developmentStatus];
 
   if (isAuthenticated && currentUserUsername) {
     // For authenticated users: fixed order per user per week
-    const weekSeed = getRoughWeekSeed();
+    const weekSeed = getRoughWeekSeed(date);
     const userWeekSeed = `${currentUserUsername}-${weekSeed}`;
 
     if (developmentStatus === 'in_progress') {

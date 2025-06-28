@@ -1,5 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
+import DateService from 'codecrafters-frontend/services/date';
 import Model from '@ember-data/model';
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
@@ -23,6 +24,7 @@ export default class CourseIdeaModel extends Model {
   @equal('developmentStatus', 'released') declare developmentStatusIsReleased: boolean;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare date: DateService;
 
   get isNewlyCreated(): boolean {
     // 30 days or less old or less than 100 votes
@@ -35,6 +37,7 @@ export default class CourseIdeaModel extends Model {
       this.votesCount,
       this.id,
       this.authenticator.isAuthenticated,
+      this.date.now(),
       this.authenticator.currentUser?.username,
     );
   }

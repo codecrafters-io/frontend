@@ -4,6 +4,7 @@ import { memberAction } from 'ember-api-actions';
 import type CourseModel from './course';
 import type CourseExtensionIdeaVoteModel from './course-extension-idea-vote';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type DateService from 'codecrafters-frontend/services/date';
 import { getReverseSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseExtensionIdeaModel extends Model {
@@ -19,6 +20,7 @@ export default class CourseExtensionIdeaModel extends Model {
   @attr('number') declare votesCount: number;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare date: DateService;
 
   get developmentStatusIsInProgress() {
     return this.developmentStatus === 'in_progress';
@@ -43,6 +45,7 @@ export default class CourseExtensionIdeaModel extends Model {
       this.votesCount,
       this.id,
       this.authenticator.isAuthenticated,
+      this.date.now(),
       this.authenticator.currentUser?.username,
     );
   }
