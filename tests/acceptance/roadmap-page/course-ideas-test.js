@@ -27,10 +27,10 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     const releasedIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
     const notStartedIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Shell');
 
-    assert.strictEqual(releasedIdeaCard.developmentStatusLabelText, 'released', 'released idea has label');
+    assert.strictEqual(releasedIdeaCard.developmentStatusPillText, 'Released', 'released idea has label');
     assert.true(releasedIdeaCard.isGreyedOut, 'released idea is greyed out');
 
-    assert.notEqual(notStartedIdeaCard.developmentStatusLabelText, 'released', 'not started idea has no label');
+    assert.notEqual(notStartedIdeaCard.developmentStatusPillText, 'Released', 'not started idea has no label');
     assert.false(notStartedIdeaCard.isGreyedOut, 'not started idea is not greyed out');
 
     // TODO: Test that hovering on vote shows tooltip
@@ -85,14 +85,14 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await roadmapPage.visit();
 
     let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
-    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. Upvote this idea to be notified when it launches.",
     });
 
     await courseIdeaCard.clickOnVoteButton();
-    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: "We're currently building this challenge. We'll notify you when it launches.",
@@ -101,7 +101,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await courseIdeaCard.clickOnVoteButton();
 
     courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own SQLite');
-    await courseIdeaCard.hoverOnDevelopmentStatusLabel();
+    await courseIdeaCard.hoverOnDevelopmentStatusPill();
 
     assertTooltipContent(assert, {
       contentString: 'This challenge is now available! Visit the catalog to try it out.',

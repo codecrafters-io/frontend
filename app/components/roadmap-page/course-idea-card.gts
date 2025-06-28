@@ -12,6 +12,7 @@ import { LinkTo } from '@ember/routing';
 // @ts-expect-error not ts-ified yet
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
+import Pill from 'codecrafters-frontend/components/pill';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
@@ -88,39 +89,37 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           </div>
 
           {{#if @courseIdea.developmentStatusIsInProgress}}
-            <div
-              class='text-xs text-white font-semibold bg-yellow-500 dark:bg-yellow-600 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
-              data-test-development-status-label
-            >
-              in progress
-              {{svgJar 'shield-check' class='w-4 ml-1 fill-current'}}
+            <Pill @color='yellow' class='ml-3 mt-0.5' data-test-development-status-pill>
+              <div class='flex items-center gap-1'>
+                {{svgJar 'shield-check' class='w-3 fill-current'}}
+                In Progress
+              </div>
+
               {{#if this.userHasVoted}}
                 <EmberTooltip @text="We're currently building this challenge. We'll notify you when it launches." />
               {{else}}
                 <EmberTooltip @text="We're currently building this challenge. Upvote this idea to be notified when it launches." />
               {{/if}}
-            </div>
+            </Pill>
           {{else if @courseIdea.developmentStatusIsReleased}}
-            <div
-              class='text-xs text-white font-semibold bg-teal-500 dark:bg-teal-600 rounded px-1.5 py-1 ml-3 mt-0.5 flex items-center'
-              data-test-development-status-label
-            >
-              <LinkTo @route='catalog'>released</LinkTo>
-              {{svgJar 'check' class='w-4 ml-1 fill-current'}}
-              <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
-            </div>
+            <LinkTo @route='catalog' class='ml-3 mt-0.5'>
+              <Pill @color='green' data-test-development-status-pill>
+                <div class='flex items-center gap-1'>
+                  {{svgJar 'check' class='w-3 fill-current'}}
+                  Released
+                </div>
+                <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
+              </Pill>
+            </LinkTo>
           {{else if this.userHasVoted}}
             <div class='h-7 w-7 bg-teal-500 dark:bg-teal-600 rounded flex items-center justify-center'>
               {{svgJar 'chevron-up' class='w-7 fill-current text-white'}}
             </div>
           {{else if @courseIdea.isNewlyCreated}}
-            <div
-              class='text-xs text-teal-500 font-semibold border border-teal-500 rounded px-1.5 py-1 ml-3 mt-0.5'
-              data-test-development-status-label
-            >
-              new
+            <Pill @color='green' class='ml-3 mt-0.5' data-test-development-status-pill>
+              New
               <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
-            </div>
+            </Pill>
           {{/if}}
         </div>
         <div class='prose dark:prose-invert prose-sm'>
