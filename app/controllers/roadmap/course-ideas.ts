@@ -17,4 +17,34 @@ export default class CourseIdeasController extends Controller {
       .sortBy('reverseSortPositionForRoadmapPage')
       .reverse();
   }
+
+  get tempLatestReleases(): { title: string; timestampText: string; type: 'extension' | 'challenge' }[] {
+    return [
+      {
+        title: 'Build your own Kafka',
+        timestampText: 'Jun 2025',
+        type: 'challenge',
+      },
+      {
+        title: 'Redis / Lists',
+        timestampText: 'Jun 2025',
+        type: 'extension',
+      },
+      {
+        title: 'Redis / PubSub',
+        timestampText: 'May 2025',
+        type: 'extension',
+      },
+      {
+        title: 'Grep / File Search',
+        timestampText: 'May 2025',
+        type: 'extension',
+      },
+      {
+        title: 'Grep / Backreferences',
+        timestampText: 'May 2025',
+        type: 'extension',
+      },
+    ];
+  }
 }
