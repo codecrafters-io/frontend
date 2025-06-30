@@ -1,7 +1,7 @@
-<div class="flex flex-col lg:flex-row gap-3">
-  <div class="w-full lg:w-96">
-    <div class="lg:sticky lg:top-4 flex flex-col gap-3">
-      <Alert @color="blue" class="p-5">
+<div class="flex flex-col md:flex-row-reverse gap-3">
+  <div class="w-full md:w-60 flex-shrink-0">
+    <div class="md:sticky md:top-4 flex flex-col gap-3">
+      <Alert @color="blue" class="p-5 block md:hidden">
         <div class="prose prose-sm prose-blue prose-compact">
           <h4>
             <div class="flex items-center gap-1">
@@ -16,28 +16,29 @@
           </p>
         </div>
       </Alert>
+
       <div class="bg-white rounded-md border shadow-sm p-5">
         <h4 class="font-semibold text-gray-700 mb-3">
           Latest Releases
         </h4>
         {{#each this.tempLatestReleases as |release releaseIndex|}}
-          <div class="flex items-start gap-2 relative {{unless (eq releaseIndex (sub this.tempLatestReleases.length 1)) 'pb-4'}}">
+          <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.tempLatestReleases.length 1)) 'pb-4'}}">
             <div class="w-2 h-2 bg-gray-200 rounded-full mt-1 flex-shrink-0"></div>
             <div class="w-full">
-              <div class="flex items-center gap-1 mb-0.25">
-                <div class="text-xs text-gray-400">{{release.timestampText}}</div>
+              <div class="flex items-center gap-1 mb-0.5">
+                <div class="text-xxs text-gray-400">{{release.timestampText}}</div>
                 <span class="text-gray-300 text-xs">
                   •
                 </span>
-                <div class="text-xxs text-gray-400 uppercase">
+                <Pill @color="gray" @size="small">
                   {{if (eq release.type "extension") "EXTENSION" "CHALLENGE"}}
-                </div>
+                </Pill>
               </div>
               <a
                 href="https://google.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-sm text-gray-700 hover:underline"
+                class="text-sm text-gray-700 hover:underline leading-snug block"
               >{{release.title}}</a>
             </div>
 
@@ -60,6 +61,22 @@
     </div>
   </div>
   <div class="flex-grow flex flex-col gap-3">
+    <Alert @color="blue" class="p-5 hidden md:block">
+      <div class="prose prose-sm prose-blue prose-compact">
+        <h4>
+          <div class="flex items-center gap-1">
+            {{svg-jar "information-circle" class="w-5 h-5 fill-current text-blue-500/80"}}
+            <span>
+              What are challenges?
+            </span>
+          </div>
+        </h4>
+        <p>
+          Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+        </p>
+      </div>
+    </Alert>
+
     {{#each this.orderedCourseIdeas as |courseIdea|}}
       <RoadmapPage::CourseIdeaCard @courseIdea={{courseIdea}} />
     {{/each}}

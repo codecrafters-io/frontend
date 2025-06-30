@@ -21,7 +21,7 @@ export default class CourseIdeasController extends Controller {
   get tempLatestReleases(): { title: string; timestampText: string; type: 'extension' | 'challenge' }[] {
     return [
       {
-        title: 'Build your own Kafka',
+        title: 'Build your own Interpreter',
         timestampText: 'Jun 2025',
         type: 'challenge',
       },
