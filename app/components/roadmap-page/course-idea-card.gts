@@ -86,7 +86,15 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
               {{@courseIdea.name}}
             </div>
 
-            {{#if @courseIdea.developmentStatusIsInProgress}}
+            {{#if @courseIdea.developmentStatusIsReleased}}
+              <Pill @color='blue' data-test-development-status-pill>
+                <div class='flex items-center gap-1'>
+                  {{svgJar 'check-circle' class='w-3 fill-current'}}
+                  Released
+                </div>
+                <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
+              </Pill>
+            {{else if @courseIdea.developmentStatusIsInProgress}}
               <Pill @color='yellow' data-test-development-status-pill>
                 <div class='flex items-center gap-1'>
                   {{svgJar 'shield-check' class='w-3 fill-current'}}
@@ -123,7 +131,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
 
           <div class='flex items-center gap-1'>
-            <div class='{{if this.userHasVoted "text-teal-600" "text-gray-400 dark:text-gray-600"}} text-xs'>
+            <div class='{{if this.userHasVoted "text-teal-600" "text-gray-400 dark:text-gray-600"}} text-xs' data-test-vote-count>
               {{@courseIdea.votesCount}}
               {{if (eq @courseIdea.votesCount 1) 'vote' 'votes'}}
             </div>

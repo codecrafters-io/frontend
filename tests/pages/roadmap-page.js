@@ -8,7 +8,7 @@ export default createPage({
     hoverOnDevelopmentStatusPill: triggerable('mouseenter', '[data-test-development-status-pill]'),
     isGreyedOut: hasClass('opacity-50'),
     name: text('[data-test-course-extension-idea-name]'),
-    voteButtonText: text('[data-test-vote-button]'),
+    voteButtonText: text('[data-test-vote-count]'),
   }),
 
   courseIdeaCards: collection('[data-test-course-idea-card]', {
@@ -17,7 +17,7 @@ export default createPage({
     hoverOnDevelopmentStatusPill: triggerable('mouseenter', '[data-test-development-status-pill]'),
     isGreyedOut: hasClass('opacity-50'),
     name: text('[data-test-course-idea-name]'),
-    voteButtonText: text('[data-test-vote-button]'),
+    voteButtonText: text('[data-test-vote-count]'),
   }),
 
   findCourseExtensionIdeaCard(name) {

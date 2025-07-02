@@ -11,7 +11,17 @@
           {{@courseExtensionIdea.name}}
         </div>
 
-        {{#if @courseExtensionIdea.developmentStatusIsInProgress}}
+        {{#if @courseExtensionIdea.developmentStatusIsReleased}}
+
+          <Pill @color="blue" data-test-development-status-pill>
+            <div class="flex items-center gap-1">
+              {{svg-jar "check-circle" class="w-3 fill-current"}}
+              Released
+            </div>
+            <EmberTooltip @text="This challenge extension is now available! Visit the catalog to try it out." />
+          </Pill>
+
+        {{else if @courseExtensionIdea.developmentStatusIsInProgress}}
           <Pill @color="yellow" data-test-development-status-pill>
             <div class="flex items-center gap-1">
               {{svg-jar "shield-check" class="w-3 fill-current"}}
@@ -52,7 +62,7 @@
       />
 
       <div class="flex items-center gap-1">
-        <div class="{{if this.userHasVoted 'text-teal-600' 'text-gray-400 dark:text-gray-600'}} text-xs">
+        <div class="{{if this.userHasVoted 'text-teal-600' 'text-gray-400 dark:text-gray-600'}} text-xs" data-test-vote-count>
           {{@courseExtensionIdea.votesCount}}
           {{if (eq @courseExtensionIdea.votesCount 1) "vote" "votes"}}
         </div>
