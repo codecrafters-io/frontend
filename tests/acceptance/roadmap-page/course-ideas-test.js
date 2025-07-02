@@ -21,7 +21,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await roadmapPage.visit();
     await percySnapshot('Challenge Ideas (anonymous)');
 
-    assert.strictEqual(roadmapPage.findCourseIdeaCard(courseIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(roadmapPage.findCourseIdeaCard(courseIdea.name).voteCountText, '1 vote');
     assert.ok(roadmapPage.findCourseIdeaCard(courseIdea.name).isGreyedOut, 'should be greyed out if released');
 
     const releasedIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
@@ -62,13 +62,13 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await roadmapPage.visit();
 
     let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
-    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+    assert.strictEqual(courseIdeaCard.voteCountText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseIdeaCard.voteCountText, '1 vote', 'expected vote button to say 1 vote');
 
     await courseIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+    assert.strictEqual(courseIdeaCard.voteCountText, '0 votes', 'expected vote button to say 0 votes');
   });
 
   test('label has the correct tooltip text', async function (assert) {

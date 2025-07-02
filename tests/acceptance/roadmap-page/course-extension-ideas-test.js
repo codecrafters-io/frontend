@@ -24,7 +24,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
     assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 2);
-    assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteButtonText, '1 vote');
+    assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteCountText, '1 vote');
 
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     const notStartedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
@@ -60,13 +60,13 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await roadmapPage.visitCourseExtensionIdeasTab();
 
     let courseExtensionIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+    assert.strictEqual(courseExtensionIdeaCard.voteCountText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseExtensionIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '1 vote', 'expected vote button to say 1 vote');
+    assert.strictEqual(courseExtensionIdeaCard.voteCountText, '1 vote', 'expected vote button to say 1 vote');
 
     await courseExtensionIdeaCard.clickOnVoteButton();
-    assert.strictEqual(courseExtensionIdeaCard.voteButtonText, '0 votes', 'expected vote button to say 0 votes');
+    assert.strictEqual(courseExtensionIdeaCard.voteCountText, '0 votes', 'expected vote button to say 0 votes');
   });
 
   test('label has the correct tooltip text', async function (assert) {
