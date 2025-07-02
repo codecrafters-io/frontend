@@ -6,6 +6,7 @@ export default function createCourseIdeas(server) {
       createdAt: new Date(),
       descriptionMarkdown: courseIdeaData.description_md,
       developmentStatus: courseIdeaData.development_status,
+      isArchived: courseIdeaData.is_archived || false,
       name: courseIdeaData.name,
       votesCount: 0,
     });
