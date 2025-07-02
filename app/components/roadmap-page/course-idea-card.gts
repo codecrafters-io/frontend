@@ -4,11 +4,9 @@ import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
 import MarkdownToHtml from 'codecrafters-frontend/helpers/markdown-to-html';
 import svgJar from 'ember-svg-jar/helpers/svg-jar';
 import VoteButton from 'codecrafters-frontend/components/roadmap-page/idea-card/vote-button';
-import UnvoteButton from 'codecrafters-frontend/components/roadmap-page/idea-card/unvote-button';
 import { action } from '@ember/object';
-import { and } from 'ember-truth-helpers';
+import { eq } from 'ember-truth-helpers';
 import { inject as service } from '@ember/service';
-import { LinkTo } from '@ember/routing';
 // @ts-expect-error not ts-ified yet
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
@@ -75,75 +73,69 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm flex flex-col justify-between border
+      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm border
         {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
         relative
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
       data-test-course-idea-card
     >
-      {{! Text }}
-      <div class='mb-4'>
-        <div class='flex items-start justify-between mb-3'>
-          <div class='text-gray-700 dark:text-gray-200 mr-2 mb-0.5 font-bold text-xl tracking-tight' data-test-course-idea-name>
-            {{@courseIdea.name}}
-          </div>
+      <div class='flex items-start gap-3'>
+        <div class='flex flex-col gap-1 flex-grow'>
+          <div class='flex items-center gap-2 flex-wrap mt-0.5 mb-2.5'>
+            <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
+              {{@courseIdea.name}}
+            </div>
 
-          {{#if @courseIdea.developmentStatusIsInProgress}}
-            <Pill @color='yellow' class='ml-3 mt-0.5' data-test-development-status-pill>
-              <div class='flex items-center gap-1'>
-                {{svgJar 'shield-check' class='w-3 fill-current'}}
-                In Progress
-              </div>
-
-              {{#if this.userHasVoted}}
-                <EmberTooltip @text="We're currently building this challenge. We'll notify you when it launches." />
-              {{else}}
-                <EmberTooltip @text="We're currently building this challenge. Upvote this idea to be notified when it launches." />
-              {{/if}}
-            </Pill>
-          {{else if @courseIdea.developmentStatusIsReleased}}
-            <LinkTo @route='catalog' class='ml-3 mt-0.5'>
-              <Pill @color='green' data-test-development-status-pill>
+            {{#if @courseIdea.developmentStatusIsReleased}}
+              <Pill @color='blue' data-test-development-status-pill>
                 <div class='flex items-center gap-1'>
-                  {{svgJar 'check' class='w-3 fill-current'}}
+                  {{svgJar 'check-circle' class='w-3 fill-current'}}
                   Released
                 </div>
                 <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
               </Pill>
-            </LinkTo>
-          {{else if this.userHasVoted}}
-            <div class='h-7 w-7 bg-teal-500 dark:bg-teal-600 rounded flex items-center justify-center'>
-              {{svgJar 'chevron-up' class='w-7 fill-current text-white'}}
+            {{else if @courseIdea.developmentStatusIsInProgress}}
+              <Pill @color='yellow' data-test-development-status-pill>
+                <div class='flex items-center gap-1'>
+                  {{svgJar 'shield-check' class='w-3 fill-current'}}
+                  In Progress
+                </div>
+
+                {{#if this.userHasVoted}}
+                  <EmberTooltip @text="We're currently building this challenge. We'll notify you when it launches." />
+                {{else}}
+                  <EmberTooltip @text="We're currently building this challenge. Upvote this idea to be notified when it launches." />
+                {{/if}}
+              </Pill>
+            {{else if this.userHasVoted}}
+              <Pill @color='green' data-test-development-status-pill>
+                <div class='flex items-center gap-1'>
+                  {{svgJar 'thumb-up' class='w-3 fill-current'}}
+                  Voted
+                </div>
+                <EmberTooltip @text="You've voted for this idea! We'll notify you when it launches." />
+              </Pill>
+            {{else if @courseIdea.isNewlyCreated}}
+              <Pill @color='green' data-test-development-status-pill>
+                New
+                <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
+              </Pill>
+            {{/if}}
+          </div>
+          <div class='prose dark:prose-invert prose-sm'>
+            {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
+          </div>
+        </div>
+
+        <div class='flex flex-col gap-2 items-end flex-shrink-0'>
+          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
+
+          <div class='flex items-center gap-1'>
+            <div class='{{if this.userHasVoted "text-teal-600 dark:text-teal-400" "text-gray-400 dark:text-gray-500"}} text-xs' data-test-vote-count>
+              {{@courseIdea.votesCount}}
+              {{if (eq @courseIdea.votesCount 1) 'vote' 'votes'}}
             </div>
-          {{else if @courseIdea.isNewlyCreated}}
-            <Pill @color='green' class='ml-3 mt-0.5' data-test-development-status-pill>
-              New
-              <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
-            </Pill>
-          {{/if}}
-        </div>
-        <div class='prose dark:prose-invert prose-sm'>
-          {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
-        </div>
-      </div>
-
-      {{! Footer Controls }}
-      <div class='flex items-center justify-between'>
-        <div class='flex items-center'>
-          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} class='mr-2' />
-
-          {{#if (and this.userHasVoted this.isVotingOrUnvoting)}}
-            <svg class='animate-spin ml-2 w-3 text-teal-500' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'>
-              <circle class='opacity-25' cx='12' cy='12' r='10' stroke='currentColor' stroke-width='4'></circle>
-              <path
-                class='opacity-75'
-                fill='currentColor'
-                d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
-              ></path>
-            </svg>
-          {{else if this.userHasVoted}}
-            <UnvoteButton {{on 'click' this.handleUnvoteButtonClick}} />
-          {{/if}}
+          </div>
         </div>
       </div>
     </div>
