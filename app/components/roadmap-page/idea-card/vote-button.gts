@@ -26,7 +26,7 @@ export default class VoteButtonComponent extends Component<Signature> {
   <template>
     <button
       type='button'
-      class='px-1.5 py-1 rounded shadow-sm flex items-center border
+      class='px-1.5 py-1 rounded shadow-sm flex items-center border bg-white dark:bg-gray-900
         {{if @userHasVoted "border-teal-500" "border-gray-300 dark:border-gray-700"}}
         transition-all duration-75 group/vote-button'
       data-test-vote-button
@@ -36,7 +36,7 @@ export default class VoteButtonComponent extends Component<Signature> {
         class={{if
           @userHasVoted
           'text-teal-500 group-hover/vote-button:text-teal-600'
-          'text-gray-400 dark:text-gray-600 group-hover/vote-button:text-gray-500'
+          'text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400'
         }}
       >
         {{svgJar 'thumb-up' class='w-5 fill-current'}}
