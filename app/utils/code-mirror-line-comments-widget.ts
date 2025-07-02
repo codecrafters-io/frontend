@@ -102,6 +102,12 @@ const lineCommentsWidgetBaseTheme = EditorView.baseTheme({
       display: 'none',
     },
   },
+
+  '.cm-collapsedRanges': {
+    '& + .cm-lineCommentsWidget': {
+      display: 'none',
+    },
+  },
 });
 
 export function lineCommentsWidget() {
