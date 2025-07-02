@@ -6,7 +6,13 @@ import blendColors from 'codecrafters-frontend/utils/blend-colors';
 const BASE_STYLE = {
   // Container for all gutters
   '.cm-gutters': {
-    borderRight: 'none',
+    '&.cm-gutters-before': {
+      borderRight: 'none',
+    },
+
+    '&.cm-gutters-after': {
+      borderLeft: 'none',
+    },
   },
 
   // All gutter elements

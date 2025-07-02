@@ -21,6 +21,3 @@
 # index.html ends up weirdly formatted
 /app/index.html
 /tests/index.html
-
-# code-mirror-gutter-rs is cloned from @codemirror/view
-/app/utils/code-mirror-gutter-rs.ts
