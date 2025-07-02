@@ -131,7 +131,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
 
           <div class='flex items-center gap-1'>
-            <div class='{{if this.userHasVoted "text-teal-600 dark:text-teal-400" "text-gray-400 dark:text-gray-600"}} text-xs' data-test-vote-count>
+            <div class='{{if this.userHasVoted "text-teal-600 dark:text-teal-400" "text-gray-400 dark:text-gray-500"}} text-xs' data-test-vote-count>
               {{@courseIdea.votesCount}}
               {{if (eq @courseIdea.votesCount 1) 'vote' 'votes'}}
             </div>
