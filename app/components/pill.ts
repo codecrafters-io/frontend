@@ -5,6 +5,7 @@ interface Signature {
 
   Args: {
     color: 'green' | 'yellow' | 'red' | 'blue' | 'gray' | 'dark-gray' | 'white';
+    size?: 'small' | 'regular';
   };
 
   Blocks: {
@@ -23,6 +24,14 @@ export default class PillComponent extends Component<Signature> {
       'dark-gray': 'bg-gray-200 text-gray-700 ring-gray-600/20 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-400/20',
       white: 'bg-white text-gray-600 ring-gray-600/20 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-400/20',
     }[this.args.color];
+  }
+
+  get sizeIsRegular() {
+    return !this.args.size || this.args.size === 'regular';
+  }
+
+  get sizeIsSmall() {
+    return this.args.size === 'small';
   }
 }
 
