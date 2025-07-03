@@ -287,6 +287,13 @@ const BASE_STYLE = {
         background: 'rgba(255, 0, 0, 0.2)',
       },
     },
+
+    // If the first line of the document is both deleted and collapsed — deletedChunk widget
+    // sticks above the first-child collapsedRanges bar and looks weird, we must hide it as
+    // it's supposed to be "collapsed".
+    '&:has(+ .cm-collapsedRangesFirst)': {
+      display: 'none',
+    },
   },
 };
 
