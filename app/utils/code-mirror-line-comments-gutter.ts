@@ -1,8 +1,7 @@
-import { BlockInfo, EditorView } from '@codemirror/view';
-import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
+import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
 import { expandedLineNumbersCompartment, expandedLineNumbersFacet, lineDataFacet } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
-class CommentsCountGutterMarker extends GutterMarkerRS {
+class CommentsCountGutterMarker extends GutterMarker {
   constructor(readonly line: BlockInfo) {
     super();
   }
@@ -24,7 +23,7 @@ class CommentsCountGutterMarker extends GutterMarkerRS {
   }
 }
 
-class CommentButtonGutterMarker extends GutterMarkerRS {
+class CommentButtonGutterMarker extends GutterMarker {
   constructor(readonly line: BlockInfo) {
     super();
   }
@@ -100,8 +99,9 @@ const lineCommentsGutterBaseTheme = EditorView.baseTheme({
 
 export function lineCommentsGutter() {
   return [
-    gutterRS({
+    gutter({
       class: 'cm-lineCommentsGutter',
+      side: 'after',
       lineMarker: lineCommentsGutterLineMarker,
       domEventHandlers: {
         click: lineCommentsGutterClickHandler,
