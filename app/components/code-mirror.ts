@@ -37,7 +37,6 @@ import {
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
-import { highlightActiveLineGutter as highlightActiveLineGutterRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
@@ -76,8 +75,7 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   drawSelection: ({ drawSelection: enabled }) => (enabled ? [drawSelection()] : []),
   dropCursor: ({ dropCursor: enabled }) => (enabled ? [dropCursor()] : []),
   editable: ({ editable }) => [EditorView.editable.of(!!editable)],
-  highlightActiveLine: ({ highlightActiveLine: enabled }) =>
-    enabled ? [highlightActiveLine(), highlightActiveLineGutter(), highlightActiveLineGutterRS()] : [],
+  highlightActiveLine: ({ highlightActiveLine: enabled }) => (enabled ? [highlightActiveLine(), highlightActiveLineGutter()] : []),
   highlightedRanges: ({ highlightedRanges }) => (highlightedRanges ? highlightRanges(highlightedRanges) : []),
   highlightNewlines: ({ highlightNewlines: enabled }) => (enabled ? [highlightNewlines()] : []),
   highlightSelectionMatches: ({ highlightSelectionMatches: enabled }) => (enabled ? [highlightSelectionMatches()] : []),
