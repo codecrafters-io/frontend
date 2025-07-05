@@ -263,5 +263,4 @@ module.exports = {
       width: ['group-hover'],
     },
   },
-  plugins: [require('@tailwindcss/typography')],
 };

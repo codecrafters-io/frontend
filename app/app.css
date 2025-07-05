@@ -1,7 +1,7 @@
 /**
  * This is the main PostCSS/Tailwind entry point CSS file.
  * It is not the same as app/styles/app.css.
- * This file includes Tailwind and its configuration.
+ * This file includes Tailwind with its configuration and plugins.
  */
 
 /* stylelint-disable-next-line import-notation */
@@ -9,3 +9,6 @@
 
 /* stylelint-disable-next-line at-rule-no-unknown */
 @config './tailwind.config.js';
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@plugin '@tailwindcss/typography';
