@@ -8,4 +8,5 @@
 /.node_modules.ember-try/
 
 /app/styles/prism-*.css
+/app/styles/tailwind-compiled.css
 /coverage
