@@ -1,3 +1,5 @@
 /* stylelint-disable */
 @import 'tailwindcss';
 @import '@typeform/embed/build/css/popup.css';
+
+@config './tailwind.config.js';
