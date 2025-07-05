@@ -34,19 +34,6 @@ module.exports = function (defaults) {
 
     'ember-cli-babel': { enableTypeScriptTransform: true },
 
-    postcssOptions: {
-      compile: {
-        plugins: [
-          {
-            module: require('postcss-import'),
-            options: {
-              path: ['node_modules'],
-            },
-          },
-        ],
-      },
-    },
-
     sourcemaps: { enabled: true },
 
     svgJar: {
