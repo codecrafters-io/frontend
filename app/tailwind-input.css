@@ -1,2 +1,4 @@
 /* stylelint-disable */
 @import 'tailwindcss';
+
+@config "../tailwind.config.js";
