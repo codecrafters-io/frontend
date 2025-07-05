@@ -1,16 +1,11 @@
 /**
- * This is the main PostCSS entry point. It is not the same as app/styles/app.css.
- * It includes Tailwind and other compile-time dependencies and their configuration.
+ * This is the main PostCSS/Tailwind entry point CSS file.
+ * It is not the same as app/styles/app.css.
+ * This file includes Tailwind and its configuration.
  */
 
-/* stylelint-disable import-notation */
-/* stylelint-disable at-rule-no-unknown */
-
-/* Import Tailwind */
+/* stylelint-disable-next-line import-notation */
 @import 'tailwindcss';
 
-/* Import Typeform Popup */
-@import '@typeform/embed/build/css/popup.css';
-
-/* Load Tailwind configuration */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @config './tailwind.config.js';
