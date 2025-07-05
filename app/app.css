@@ -3,13 +3,14 @@
  * It includes Tailwind and other compile-time dependencies and their configuration.
  */
 
-/* stylelint-disable */
+/* stylelint-disable import-notation */
+/* stylelint-disable at-rule-no-unknown */
 
 /* Import Tailwind */
 @import 'tailwindcss';
 
-/* Load Tailwind configuration */
-@config './tailwind.config.js';
-
 /* Import Typeform Popup */
 @import '@typeform/embed/build/css/popup.css';
+
+/* Load Tailwind configuration */
+@config './tailwind.config.js';
