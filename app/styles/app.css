@@ -10,8 +10,6 @@
 @import 'pages/course-stage-solution-page.css';
 
 /* purgecss start ignore */
-@import '@typeform/embed/build/css/popup.css';
-@import 'ember-animated/dist/styles/ember-animated.css';
 @import 'prism-light-theme.css';
 @import 'prism-dark-theme.css';
 
