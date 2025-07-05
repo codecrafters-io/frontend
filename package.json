@@ -60,7 +60,6 @@
     "@sentry/webpack-plugin": "^2.22.7",
     "@shikijs/rehype": "^3.7.0",
     "@shikijs/transformers": "^3.7.0",
-    "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/typography": "^0.5.16",
     "@tsconfig/ember": "^3.0.10",
