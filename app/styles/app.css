@@ -1,7 +1,5 @@
 /* stylelint-disable */
-@import 'tailwind-compiled.css';
 @import 'utilities.css';
-
 @import 'modals.css';
 
 /* Custom styles for individual pages */

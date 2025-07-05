@@ -113,6 +113,10 @@ module.exports = function (defaults) {
         module: {
           rules: [
             {
+              test: /\.css$/i,
+              use: ['postcss-loader'],
+            },
+            {
               test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico|lottie\.json)$/,
               type: 'asset/resource',
               generator: {
