@@ -1,5 +1,15 @@
-/* stylelint-disable */
-@import 'tailwindcss';
-@import '@typeform/embed/build/css/popup.css';
+/**
+ * This is the main PostCSS entry point. It is not the same as app/styles/app.css.
+ * It includes Tailwind and other compile-time dependencies and their configuration.
+ */
 
+/* stylelint-disable */
+
+/* Import Tailwind */
+@import 'tailwindcss';
+
+/* Load Tailwind configuration */
 @config './tailwind.config.js';
+
+/* Import Typeform Popup */
+@import '@typeform/embed/build/css/popup.css';
