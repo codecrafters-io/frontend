@@ -2,3 +2,5 @@
 @import 'tailwindcss';
 
 @config "../tailwind.config.js";
+
+@import '@typeform/embed/build/css/popup.css';
