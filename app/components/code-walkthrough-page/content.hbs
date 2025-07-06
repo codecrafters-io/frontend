@@ -12,7 +12,7 @@
         <CodeWalkthrough @model={{@codeWalkthrough}} />
 
         {{#if @codeWalkthrough.conclusionMarkdown}}
-          <div class="leading-7 prose my-8">
+          <div class="leading-7 prose mt-8 mb-8">
             {{markdown-to-html @codeWalkthrough.conclusionMarkdown}}
           </div>
         {{/if}}
