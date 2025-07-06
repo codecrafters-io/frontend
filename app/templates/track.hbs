@@ -1,13 +1,13 @@
 {{page-title @model.language.name}}
 
-<div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
   <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}} />
 </div>
 
 <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
 
 <div class="bg-white dark:bg-gray-850">
-  <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+  <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
     <div class="flex items-start">
       <div class="grow">
         {{#if @model.language.primerConceptGroup}}
