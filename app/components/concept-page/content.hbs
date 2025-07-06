@@ -1,7 +1,7 @@
 <div class="bg-white">
   {{! Mobile !}}
   {{#unless this.hasCompletedConcept}}
-    <div class="block md:hidden px-3 border-b border-gray-200 shrink-0 sticky top-0 backdrop-blur-sm bg-white/80 z-20 w-full">
+    <div class="block md:hidden px-3 border-b border-gray-200 shrink-0 sticky top-0 backdrop-blur-xs bg-white/80 z-20 w-full">
       {{#if (gt this.currentProgressPercentage 0)}}
         <div class="py-5">
           <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} />

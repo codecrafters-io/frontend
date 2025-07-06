@@ -2,7 +2,7 @@
   {{yield to="content"}}
 
   {{#if @isBlurred}}
-    <div class="absolute inset-0 z-10 backdrop-blur-sm flex items-start justify-center {{@overlayClass}}">
+    <div class="absolute inset-0 z-10 backdrop-blur-xs flex items-start justify-center {{@overlayClass}}">
       {{yield to="overlay"}}
     </div>
   {{/if}}
