@@ -4,7 +4,7 @@
     <Input
       @value={{this.searchQuery}}
       placeholder={{if (gt this.requestedLanguages.length 0) "Change requested languages..." "Request languages..."}}
-      class="py-2 text-gray-700 placeholder-gray-400 text-xs outline-none w-full"
+      class="py-2 text-gray-700 placeholder-gray-400 text-xs outline-hidden w-full"
       {{did-insert this.handleInputDidInsert}}
     />
 
