@@ -1,6 +1,6 @@
 <div
   class="border rounded-lg flex flex-col hover:border-gray-300
-    {{if @isSelected 'border-gray-300'}}
+    {{if @isSelected 'border-gray-300' 'border-gray-200'}}
     group
     {{if @isDisabled 'cursor-not-allowed opacity-50'}}"
   role="button"
@@ -16,7 +16,7 @@
     {{/if}}
   </div>
   <div
-    class="text-center text-gray-700 text-xs sm:text-sm bg-gray-50 border-t py-3 rounded-b-lg group-hover:bg-gray-100
+    class="text-center text-gray-700 text-xs sm:text-sm bg-gray-50 border-t border-gray-200 py-3 rounded-b-lg group-hover:bg-gray-100
       {{if @isSelected 'bg-gray-100'}}"
   >
     {{@name}}

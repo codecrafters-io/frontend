@@ -1,6 +1,6 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b mb-6" />
+    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b border-gray-200 mb-6" />
 
     {{#if (lt this.participationAnalysis.participationsCount 100)}}
       <AlertWithIcon @type="error">
@@ -14,7 +14,7 @@
       <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.attemptRateStatistic}} />
     </div>
 
-    <div class="border-b pb-1 flex items-center gap-2 mt-6">
+    <div class="border-b border-gray-200 pb-1 flex items-center gap-2 mt-6">
       <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Data Points Summary</h1>
 
       <div>

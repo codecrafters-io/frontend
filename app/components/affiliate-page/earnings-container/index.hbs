@@ -2,7 +2,7 @@
   {{#if (gt this.totalEarningsAmountInDollars 0)}}
     <table class="max-w-xs">
       <tbody>
-        <tr class="border-b">
+        <tr class="border-b border-gray-200">
           <td class="text-gray-700 font-semibold whitespace-nowrap py-2 text-sm">Total Earnings</td>
           <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
@@ -47,7 +47,7 @@
       <table class="max-w-xs">
         <tbody>
           {{#each this.sortedPayouts as |payout|}}
-            <tr class="border-b" data-test-payout-history-item>
+            <tr class="border-b border-gray-200" data-test-payout-history-item>
               <td class="py-2">
                 <div class="flex items-center gap-1.5">
                   <span class="text-gray-500 whitespace-nowrap text-sm">
