@@ -7,37 +7,35 @@
   data-test-step-list-item
 >
   {{#if (eq @step.status "complete")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500 dark:bg-teal-500/40">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500 dark:bg-teal-500/40">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white dark:text-teal-400"}}
     </div>
   {{else if (eq @step.status "locked")}}
-    <div
-      class="rounded w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-white/5"
-    >
+    <div class="rounded w-6 h-6 border flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-white/5">
       {{svg-jar (if (eq @step.type "CourseStageStep") "hashtag" "document-text") class="w-4 h-4 fill-current text-gray-500"}}
     </div>
   {{else if (eq @step.type "IntroductionStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
       {{svg-jar "arrow-right" class="w-4 h-4 fill-current text-teal-500"}}
     </div>
   {{else if (eq @step.type "CourseStageStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
       {{svg-jar "dots-horizontal" class="w-4 h-4 fill-current text-teal-500"}}
     </div>
   {{else if (eq @step.type "SetupStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-white dark:bg-gray-850 border-teal-500 shadow-sm">
       {{svg-jar "dots-horizontal" class="w-4 h-4 fill-current text-teal-500"}}
     </div>
   {{else if (eq @step.type "CourseCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
     </div>
   {{else if (eq @step.type "BaseStagesCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
     </div>
   {{else if (eq @step.type "ExtensionCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center flex-shrink-0 bg-teal-500 border-teal-500">
+    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
     </div>
   {{/if}}

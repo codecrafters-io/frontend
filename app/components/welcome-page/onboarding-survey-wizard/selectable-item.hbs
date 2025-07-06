@@ -4,12 +4,12 @@
       {{#animated-if @isSelected rules=this.rules duration=100}}
         {{! wrapping div is required for animations to work }}
         <div class="flex">
-          {{svg-jar "check-circle" class="w-4 h-4 mr-1.5 text-teal-500 flex-shrink-0"}}
+          {{svg-jar "check-circle" class="w-4 h-4 mr-1.5 text-teal-500 shrink-0"}}
         </div>
       {{else}}
         {{! wrapping div is required for animations to work }}
         <div class="flex">
-          {{svg-jar "check" class="w-4 h-4 mr-1.5 text-gray-400 flex-shrink-0"}}
+          {{svg-jar "check" class="w-4 h-4 mr-1.5 text-gray-400 shrink-0"}}
         </div>
       {{/animated-if}}
     </AnimatedContainer>

@@ -1,5 +1,5 @@
 <div
-  class="rounded-md shadow-sm overflow-hidden border border-gray-800 relative flex-shrink overflow-y-auto px-6 sm:px-16 py-16 min-h-0 w-full max-w-screen-lg from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
+  class="rounded-md shadow-sm overflow-hidden border border-gray-800 relative shrink overflow-y-auto px-6 sm:px-16 py-16 min-h-0 w-full max-w-screen-lg from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
   {{on-click-outside @onClose}}
   ...attributes
   data-test-badge-earned-modal
@@ -48,7 +48,7 @@
         <div class="flex items-center w-full mt-12">
           <div class="bg-gradient-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
-          <div class="inline-block px-4 flex-shrink-0">
+          <div class="inline-block px-4 shrink-0">
             <span class="text-gray-100 text-sm">Earned: {{date-format this.lastAwardedAt format="PPP"}}</span>
           </div>
           <div class="bg-gradient-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
@@ -56,7 +56,7 @@
         </div>
         {{#unless this.currentUser.hasEarnedThreeInADayBadge}}
           <div class="flex items-center justify-center mt-8">
-            {{svg-jar "gold-badge-icon" class="w-10 h-10 mr-3 flex-shrink-0"}}
+            {{svg-jar "gold-badge-icon" class="w-10 h-10 mr-3 shrink-0"}}
 
             <div class="text-gray-100 text-sm">
               You&apos;re 1 step closer to your next badge.

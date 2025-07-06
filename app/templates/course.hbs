@@ -31,7 +31,7 @@
       @activeRepository={{@model.activeRepository}}
       @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
       {{! pb-12 accounts for the test results bar at the bottom !}}
-      class="group relative pb-12 w-full max-w-[18em] flex-shrink-0 h-screen hidden lg:flex"
+      class="group relative pb-12 w-full max-w-[18em] shrink-0 h-screen hidden lg:flex"
     />
   {{/if}}
 
@@ -47,7 +47,7 @@
         @repositories={{@model.repositories}}
         @activeRepository={{@model.activeRepository}}
         @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
-        class="group relative w-full max-w-[18em] flex-shrink-0 h-screen lg:hidden"
+        class="group relative w-full max-w-[18em] shrink-0 h-screen lg:hidden"
       />
     </CoursePage::Sidebar::MobileBackdrop>
   {{/if}}
@@ -79,13 +79,13 @@
       class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900"
     />
     <div class="flex flex-grow bg-white dark:bg-gray-850">
-      <div class="flex-grow flex-shrink min-w-0">
+      <div class="flex-grow shrink min-w-0">
         {{outlet}}
       </div>
 
       <div
         class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}}
-          pt-6 flex-shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-900 hidden md:block group"
+          pt-6 shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-900 hidden md:block group"
       >
         <div class="sticky top-14">
           {{#if this.leaderboardIsExpanded}}
