@@ -362,9 +362,7 @@
   @theme={{if this.theme this.selectedTheme}}
   @unchangedMargin={{if this.unchangedMargin this.selectedUnchangedMargin}}
   @unchangedMinSize={{if this.unchangedMinSize this.selectedUnchangedMinSize}}
-  class="block overflow-auto mt-4
-    {{if this.maxHeight 'max-h-96'}}
-    {{if this.outline 'outline outline-dotted outline-gray-200 dark:outline-gray-700'}}"
+  class="block overflow-auto mt-4 {{if this.maxHeight 'max-h-96'}} {{if this.outline 'outline-dotted outline-gray-200 dark:outline-gray-700'}}"
 />
 
 <div class="my-2 text-right">
