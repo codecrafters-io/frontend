@@ -33,13 +33,13 @@
           </span>
         {{/if}}
 
-        <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 mx-1.5 rounded-full"></div>
+        <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 ml-1.5 mr-1.5 rounded-full"></div>
         <div class="text-xs text-gray-400 dark:text-gray-500">
           {{date-from-now @comment.createdAt}}
         </div>
 
         {{#if @comment.language}}
-          <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 mx-1.5 rounded-full"></div>
+          <div class="bg-gray-300 dark:bg-white/5 w-1 h-1 ml-1.5 mr-1.5 rounded-full"></div>
 
           <Pill @color="gray">
             {{@comment.language.name}}

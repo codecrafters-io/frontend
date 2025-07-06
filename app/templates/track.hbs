@@ -40,7 +40,7 @@
         <TrackLeaderboard class="mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
-        <div class="mx-4">
+        <div class="ml-4 mr-4">
           {{#each this.testimonials as |testimonial|}}
             <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
           {{/each}}
