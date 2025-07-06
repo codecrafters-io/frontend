@@ -1,5 +1,5 @@
 <form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}} data-test-paypal-payout-form ...attributes>
-  <div class="h-px bg-gray-100 my-6"></div>
+  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
 
   <AffiliatePage::CreatePayoutModal::FormSection @title="PayPal email" @description="Your PayPal email address.">
     <Input
@@ -11,7 +11,7 @@
     />
   </AffiliatePage::CreatePayoutModal::FormSection>
 
-  <div class="h-px bg-gray-100 my-6"></div>
+  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
 
   <AffiliatePage::CreatePayoutModal::FormSection @title="Amount" @description="The amount to withdraw in USD.">
     {{! @glint-expect-error: @value doesn't accept number? }}
@@ -27,7 +27,7 @@
     />
   </AffiliatePage::CreatePayoutModal::FormSection>
 
-  <div class="h-px bg-gray-100 my-6"></div>
+  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
 
   <div class="flex justify-end">
     <PrimaryButtonWithSpinner
