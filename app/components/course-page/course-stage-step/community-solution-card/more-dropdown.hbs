@@ -5,7 +5,7 @@
     </TertiaryButton>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border border-gray-200 dark:border-white/10 rounded shadow bg-white dark:bg-gray-850" data-test-more-dropdown-content>
+    <div class="py-2 border border-gray-200 dark:border-white/10 rounded shadow-sm bg-white dark:bg-gray-850" data-test-more-dropdown-content>
       {{#if (gt @solution.highlightedFiles.length 0)}}
         {{#if (eq @diffSource "highlighted-files")}}
           <DropdownLink @text="View full diff" @icon="switch-horizontal" {{on "click" (fn this.handleViewFullDiffLinkClick dd.actions)}} />
