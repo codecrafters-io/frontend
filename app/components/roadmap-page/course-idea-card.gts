@@ -73,7 +73,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm border
+      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-xs border
         {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
         relative
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'

@@ -1,6 +1,6 @@
 <BasicDropdown @horizontalPosition="right" as |dd|>
   <dd.Trigger>
-    <div class="bg-white border border-gray-200 rounded shadow-sm p-1">
+    <div class="bg-white border border-gray-200 rounded shadow-xs p-1">
       <div class="text-gray-500 flex items-center outline-none" data-test-leaderboard-team-dropdown-trigger>
         {{svg-jar (if @team "user-group" "globe") class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
         {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
