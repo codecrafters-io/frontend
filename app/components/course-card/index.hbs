@@ -19,7 +19,7 @@
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
       <div class="text-lg font-semibold text-gray-800 dark:text-gray-200 mr-2" data-test-course-name>
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-100 rounded">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+          <span class="inline-block bg-gray-100 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}
           <span>{{@course.name}}</span>
         {{/if}}
@@ -30,10 +30,10 @@
       {{#if this.isSkeleton}}
         <div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded"></div>
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded-sm"></div>
           </div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded"></div>
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded-sm"></div>
           </div>
         </div>
       {{else}}
@@ -46,14 +46,14 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       {{#if this.isSkeleton}}
-        <div class="bg-gray-100 dark:bg-gray-800 rounded h-4 w-24"></div>
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-sm h-4 w-24"></div>
       {{else}}
         {{#if this.lastUsedRepository}}
           <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
         {{else}}
           {{#if @course.releaseStatusIsAlpha}}
             <div
-              class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded px-1 py-0.25 mr-3"
+              class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded-sm px-1 py-0.25 mr-3"
               data-test-course-alpha-label
             >
               ALPHA

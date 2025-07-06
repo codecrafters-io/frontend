@@ -62,7 +62,7 @@
 
           {{! template-lint-disable require-input-label }}
           <select
-            class="p-2 border border-gray-200 rounded mb-3 block bg-white dark:bg-gray-850 dark:text-gray-200 dark:border-white/10"
+            class="p-2 border border-gray-200 rounded-sm mb-3 block bg-white dark:bg-gray-850 dark:text-gray-200 dark:border-white/10"
             {{on "change" this.handleRepositoryOptionSelected}}
           >
             {{#each this.accessibleRepositoryGroups as |repositoryGroup|}}

@@ -1,7 +1,9 @@
 {{! template-lint-disable no-invalid-interactive }}
 {{#if this.isEditing}}
   <div
-    class="border rounded relative {{if this.isEditing 'border-gray-300' 'border-gray-200 hover:bg-gray-50 hover:border-gray-300'}} overflow-hidden"
+    class="border rounded-sm relative
+      {{if this.isEditing 'border-gray-300' 'border-gray-200 hover:bg-gray-50 hover:border-gray-300'}}
+      overflow-hidden"
     data-test-editable-block
     ...attributes
   >

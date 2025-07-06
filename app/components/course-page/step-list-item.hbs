@@ -3,7 +3,7 @@
   @models={{@step.routeParams.models}}
   class="flex items-start gap-x-2 py-1.5
     {{if @isCurrent 'bg-gray-300/50 dark:bg-gray-800' 'hover:bg-gray-300/50 dark:hover:bg-gray-800'}}
-    px-3 rounded"
+    px-3 rounded-sm"
   data-test-step-list-item
 >
   {{#if (eq @step.status "complete")}}
@@ -11,7 +11,7 @@
       {{svg-jar "check" class="w-4 h-4 fill-current text-white dark:text-teal-400"}}
     </div>
   {{else if (eq @step.status "locked")}}
-    <div class="rounded w-6 h-6 border flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-white/5">
+    <div class="rounded-sm w-6 h-6 border flex items-center justify-center shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-white/5">
       {{svg-jar (if (eq @step.type "CourseStageStep") "hashtag" "document-text") class="w-4 h-4 fill-current text-gray-500"}}
     </div>
   {{else if (eq @step.type "IntroductionStep")}}
