@@ -1,7 +1,7 @@
 /**
- * This is the main PostCSS/Tailwind entry point CSS file.
- * It is not the same as app/styles/app.css.
- * This file includes Tailwind with its configuration and plugins.
+ * This is the main PostCSS/Tailwind entry point. This file
+ * includes Tailwind with its configuration and plugins.
+ * It is imported in app.js and processed with PostCSS.
  */
 
 /* stylelint-disable-next-line import-notation */
