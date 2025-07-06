@@ -22,7 +22,7 @@
     <CoursePage::CurrentStepCompleteModal
       {{! Ensure this is visible on insert in case confetti is fired }}
       {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-      class="mt-8 ml-3 mr-3 md:mx-6"
+      class="mt-8 ml-3 mr-3 md:ml-6 md:mr-6"
       @onClose={{this.handleModalDismissed}}
       @activeStep={{this.coursePageState.activeStep}}
     />
