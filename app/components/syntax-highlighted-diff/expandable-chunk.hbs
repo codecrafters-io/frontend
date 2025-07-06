@@ -60,7 +60,7 @@
         {{#if line.commentsAreExpanded}}
           {{#each line.comments key="id" as |comment|}}
             <CoursePage::CommentTimelineItem @author={{comment.user}}>
-              <div class="shadow-sm rounded border border-gray-300 dark:border-white/10 w-full">
+              <div class="shadow-xs rounded border border-gray-300 dark:border-white/10 w-full">
                 <CommentCard @comment={{comment}} />
               </div>
             </CoursePage::CommentTimelineItem>

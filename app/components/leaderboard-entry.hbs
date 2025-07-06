@@ -14,7 +14,7 @@
         {{#if @user}}
           <AvatarImage
             @user={{@user}}
-            class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded shadow-sm group-hover/leaderboard-entry:shadow transition-shadow dark:opacity-90"
+            class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded shadow-xs group-hover/leaderboard-entry:shadow transition-shadow dark:opacity-90"
           />
         {{/if}}
       {{/if}}
@@ -58,7 +58,7 @@
             {{if
               (eq @status 'evaluating')
               'bg-yellow-50 dark:bg-yellow-900/80 border-yellow-500 dark:border-yellow-700 animate-pulse'
-              'bg-teal-50 dark:bg-teal-900/40 border-teal-500 dark:border-teal-700 group-hover/leaderboard-entry:shadow-sm'
+              'bg-teal-50 dark:bg-teal-900/40 border-teal-500 dark:border-teal-700 group-hover/leaderboard-entry:shadow-xs'
             }}"
           data-test-progress-bar-container
         >
