@@ -121,12 +121,7 @@
     <div class="bg-gray-50 dark:bg-gray-800 py-2 px-4 border-t border-gray-200 dark:border-white/5 {{if this.shouldShowReplyForm '' 'rounded-b'}}">
       {{#each this.sortedChildComments as |childComment|}}
         <div class="flex items-start">
-          <a
-            href={{childComment.user.codecraftersProfileUrl}}
-            class="mt-0.5 flex items-center flex-shrink-0"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={{childComment.user.codecraftersProfileUrl}} class="mt-0.5 flex items-center shrink-0" target="_blank" rel="noopener noreferrer">
             <AvatarImage
               @user={{childComment.user}}
               class="w-6 h-6 mr-3 filter drop-shadow-sm ring-1 ring-white dark:ring-white/5 rounded-full shadow"

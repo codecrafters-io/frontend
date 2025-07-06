@@ -55,19 +55,19 @@
                   </span>
 
                   {{#if payout.statusIsProcessing}}
-                    <div class="inline-flex flex-shrink-0">
+                    <div class="inline-flex shrink-0">
                       <span
                         class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
                       >Processing</span>
                       <EmberTooltip @text="Payouts can take upto 10 days to process." />
                     </div>
                   {{else if payout.statusIsCompleted}}
-                    <div class="inline-flex flex-shrink-0 items-center">
+                    <div class="inline-flex shrink-0 items-center">
                       {{svg-jar "check-circle" class="w-5 h-5 text-teal-500"}}
                       <EmberTooltip @text="This payout has been processed." />
                     </div>
                   {{else if payout.statusIsFailed}}
-                    <div class="inline-flex flex-shrink-0">
+                    <div class="inline-flex shrink-0">
                       <span
                         class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
                       >Failed</span>

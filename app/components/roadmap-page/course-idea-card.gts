@@ -127,7 +127,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           </div>
         </div>
 
-        <div class='flex flex-col gap-2 items-end flex-shrink-0'>
+        <div class='flex flex-col gap-2 items-end shrink-0'>
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
 
           <div class='flex items-center gap-1'>

@@ -5,7 +5,7 @@
         Master
         {{@language.name}}.
       </h1>
-      <div class="flex md:hidden h-12 w-12 flex-shrink-0">
+      <div class="flex md:hidden h-12 w-12 shrink-0">
         {{#if (eq @language.name "Gleam")}}
           <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
         {{else}}
@@ -22,12 +22,12 @@
       {{#if (gt @language.trackLearnersCount 3000)}}
         {{! Extra if condition helps glint know that @language.trackLearnersCount is defined }}
         {{#if @language.trackLearnersCount}}
-          <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="flex-shrink-0" />
+          <TrackPage::Header::Statistic @description="{{format-number @language.trackLearnersCount}} learners" @icon="users" class="shrink-0" />
           <div class="w-px h-4 bg-gray-200 dark:bg-white/5"></div>
         {{/if}}
       {{/if}}
 
-      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="flex-shrink-0" />
+      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="shrink-0" />
     </div>
 
     {{#if (has-block "cta")}}
@@ -57,7 +57,7 @@
       {{/if}}
     {{/if}}
   </div>
-  <div class="ml-4 hidden md:flex h-36 w-36 flex-shrink-0">
+  <div class="ml-4 hidden md:flex h-36 w-36 shrink-0">
     {{#if (eq @language.name "Gleam")}}
       <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
     {{else}}

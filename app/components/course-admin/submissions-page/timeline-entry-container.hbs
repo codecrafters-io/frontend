@@ -13,7 +13,7 @@
           using
           {{@submission.repository.language.name}}
         </div>
-        <div class="mt-1 ml-1.5 flex-shrink-0">
+        <div class="mt-1 ml-1.5 shrink-0">
           {{#if @submission.statusIsSuccess}}
             <div class="w-3 h-3 rounded-full bg-green-600 flex items-center justify-center">
               {{svg-jar "check" class="w-2 fill-current text-white"}}
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col items-end justify-between flex-shrink-0">
+  <div class="flex flex-col items-end justify-between shrink-0">
     <div class="text-xs text-gray-400 ml-2 pt-2 percy-time">
       {{this.formattedTimestamp}}
     </div>

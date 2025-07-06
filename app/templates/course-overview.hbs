@@ -9,7 +9,7 @@
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full" />
     </div>
 
-    <div class="hidden lg:block sticky top-2 w-80 flex-shrink-0 pt-2 ml-2">
+    <div class="hidden lg:block sticky top-2 w-80 shrink-0 pt-2 ml-2">
       {{#if this.model.course.releaseStatusIsAlpha}}
         <CourseOverviewPage::SidebarAlphaNotice @course={{this.model.course}} class="w-full px-4" />
       {{else}}
@@ -35,7 +35,7 @@
     </div>
 
     {{! Placeholder for sidebar }}
-    <div class="hidden lg:block w-80 flex-shrink-0 ml-2">
+    <div class="hidden lg:block w-80 shrink-0 ml-2">
     </div>
   </div>
 </div>
