@@ -25,7 +25,7 @@
   </div>
 
   {{#if this.selectedBadge}}
-    <ModalBackdrop class="backdrop-blur z-20">
+    <ModalBackdrop class="backdrop-blur-sm z-20">
       {{! @glint-expect-error: mut not typesafe yet }}
       <BadgesPage::BadgeEarnedModal @badge={{this.selectedBadge}} @onClose={{fn (mut this.selectedBadge) null}} />
     </ModalBackdrop>
