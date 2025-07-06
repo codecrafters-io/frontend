@@ -1,5 +1,5 @@
 <div
-  class="rounded-md shadow-xs overflow-hidden border border-gray-800 relative shrink overflow-y-auto px-6 sm:px-16 py-16 min-h-0 w-full max-w-(--breakpoint-lg) from-[#181818] to-[#0A0A0A] bg-gradient-to-br"
+  class="rounded-md shadow-xs overflow-hidden border border-gray-800 relative shrink overflow-y-auto px-6 sm:px-16 py-16 min-h-0 w-full max-w-(--breakpoint-lg) from-[#181818] to-[#0A0A0A] bg-linear-to-br"
   {{on-click-outside @onClose}}
   ...attributes
   data-test-badge-earned-modal
@@ -46,12 +46,12 @@
           {{markdown-to-html @badge.descriptionMarkdown}}
         </div>
         <div class="flex items-center w-full mt-12">
-          <div class="bg-gradient-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
+          <div class="bg-linear-to-r from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
           <div class="inline-block px-4 shrink-0">
             <span class="text-gray-100 text-sm">Earned: {{date-format this.lastAwardedAt format="PPP"}}</span>
           </div>
-          <div class="bg-gradient-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
+          <div class="bg-linear-to-l from-[#BFBEC3] to-[#433F46] h-px w-full opacity-50">
           </div>
         </div>
         {{#unless this.currentUser.hasEarnedThreeInADayBadge}}
