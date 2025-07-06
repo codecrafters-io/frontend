@@ -32,33 +32,39 @@ export default class TestRunnerCardComponent extends Component<Signature> {
         error_or_not_run: 'bg-white dark:bg-gray-850/10',
       }[this.testsStatus];
     } else {
-      return {
-        passed: 'bg-gradient-to-b from-white to-teal-50 hover:from-teal-50 hover:to-teal-100',
-        failed:
-          'bg-gradient-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
-        evaluating: 'bg-gradient-to-b from-white to-yellow-50 dark:from-yellow-900/10 dark:to-yellow-900/20 hover:from-yellow-50 hover:to-yellow-100',
-        error_or_not_run:
-          'bg-gradient-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
-      }[this.testsStatus];
+      return (
+        {
+          passed: 'bg-linear-to-b from-white to-teal-50 hover:from-teal-50 hover:to-teal-100',
+          failed:
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
+          evaluating: 'bg-linear-to-b from-white to-yellow-50 dark:from-yellow-900/10 dark:to-yellow-900/20 hover:from-yellow-50 hover:to-yellow-100',
+          error_or_not_run:
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-900/10 dark:to-gray-900/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-800/40 dark:hover:to-gray-800/50',
+        }[this.testsStatus] || ''
+      );
     }
   }
 
   get borderColorClasses() {
-    return {
-      passed: 'border-teal-500 dark:border-teal-700/60',
-      failed: 'border-gray-300 dark:border-gray-700/60',
-      evaluating: 'border-yellow-500 dark:border-yellow-700/60',
-      error_or_not_run: 'border-gray-300 dark:border-gray-700/60',
-    }[this.testsStatus];
+    return (
+      {
+        passed: 'border-teal-500 dark:border-teal-700/60',
+        failed: 'border-gray-300 dark:border-gray-700/60',
+        evaluating: 'border-yellow-500 dark:border-yellow-700/60',
+        error_or_not_run: 'border-gray-300 dark:border-gray-700/60',
+      }[this.testsStatus] || ''
+    );
   }
 
   get headerTextColorClasses() {
-    return {
-      passed: 'text-teal-500 dark:text-teal-600',
-      failed: 'text-gray-400 dark:text-gray-500',
-      evaluating: 'text-yellow-500 dark:text-yellow-600',
-      error_or_not_run: 'text-gray-400 dark:text-gray-500',
-    }[this.testsStatus];
+    return (
+      {
+        passed: 'text-teal-500 dark:text-teal-600',
+        failed: 'text-gray-400 dark:text-gray-500',
+        evaluating: 'text-yellow-500 dark:text-yellow-600',
+        error_or_not_run: 'text-gray-400 dark:text-gray-500',
+      }[this.testsStatus] || ''
+    );
   }
 
   get isCollapsed() {
@@ -70,7 +76,7 @@ export default class TestRunnerCardComponent extends Component<Signature> {
   }
 
   get testsStatus() {
-    return this.coursePageState.currentStepAsCourseStageStep.testsStatus;
+    return this.coursePageState.currentStepAsCourseStageStep.testsStatus || 'unknown';
   }
 
   @action
