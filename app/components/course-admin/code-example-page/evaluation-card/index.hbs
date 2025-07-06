@@ -1,5 +1,5 @@
 <div
-  class="border rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  class="border border-gray-200 rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
