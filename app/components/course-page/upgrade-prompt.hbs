@@ -1,5 +1,5 @@
 <div
-  class="py-6 px-5 rounded bg-teal-50 dark:bg-teal-950 border border-teal-600 dark:border-teal-800 @container"
+  class="py-6 px-5 rounded-sm bg-teal-50 dark:bg-teal-950 border border-teal-600 dark:border-teal-800 @container"
   {{did-insert this.handleDidInsert}}
   data-test-upgrade-prompt
   ...attributes
@@ -41,11 +41,11 @@
       {{#each this.sortedFeatureList as |feature|}}
         <div class="flex gap-1 items-stretch">
           <div class="flex border border-transparent">
-            {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded bg-teal-500 dark:bg-teal-600 text-white grow-0 shrink-0 shadow-sm"}}
+            {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded-sm bg-teal-500 dark:bg-teal-600 text-white grow-0 shrink-0 shadow-sm"}}
           </div>
 
           <div
-            class="rounded shadow-xs bg-white dark:bg-gray-850 border border-gray-300 dark:border-gray-700 px-2 text-gray-800 dark:text-gray-200 flex items-center w-fit grow-0 shrink-0"
+            class="rounded-sm shadow-xs bg-white dark:bg-gray-850 border border-gray-300 dark:border-gray-700 px-2 text-gray-800 dark:text-gray-200 flex items-center w-fit grow-0 shrink-0"
           >
             {{feature.name}}
           </div>

@@ -6,14 +6,14 @@
   <div class="flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
     <Input
       @value={{this.newTeamName}}
-      class="rounded p-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 shadow-sm text-lg"
+      class="rounded-sm p-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 shadow-sm text-lg"
       id="team_name_input"
       placeholder="(example: Microsoft)"
     />
 
     <button
       type="button"
-      class="flex justify-center bg-teal-500 hover:bg-teal-600 self-stretch px-5 py-2 text-white rounded shadow-xs font-bold flex items-center text-lg transition-colors duration-75
+      class="flex justify-center bg-teal-500 hover:bg-teal-600 self-stretch px-5 py-2 text-white rounded-sm shadow-xs font-bold flex items-center text-lg transition-colors duration-75
         {{if this.createTeamButtonIsDisabled 'opacity-50 cursor-not-allowed'}}"
       disabled={{this.createTeamButtonIsDisabled}}
       {{on "click" this.handleCreateTeamButtonClick}}

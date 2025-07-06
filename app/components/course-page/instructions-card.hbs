@@ -6,7 +6,7 @@
 >
   <div
     class="bg-white dark:bg-gray-850 border border-gray-300 dark:border-white/10 relative
-      {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}"
+      {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded-sm'}}"
   >
     <div class="p-4 pt-3 sm:p-6 sm:pt-5 {{if (has-block 'footer') 'pb-4'}}">
       {{#if (has-block "header")}}
@@ -22,7 +22,7 @@
       {{#if this.isCollapsed}}
         <div
           role="button"
-          class="absolute rounded inset-0 vertical-mask dark:vertical-mask-gray-850 p-4 flex items-end justify-center group z-10"
+          class="absolute rounded-sm inset-0 vertical-mask dark:vertical-mask-gray-850 p-4 flex items-end justify-center group z-10"
           data-test-expand-button
           {{on "click" this.handleExpandButtonClick}}
         >

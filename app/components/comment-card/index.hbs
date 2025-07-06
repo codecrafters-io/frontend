@@ -1,4 +1,4 @@
-<div data-test-comment-card class="w-full {{if @comment.parentComment 'min-w-0' 'bg-white dark:bg-gray-850 rounded'}}" ...attributes>
+<div data-test-comment-card class="w-full {{if @comment.parentComment 'min-w-0' 'bg-white dark:bg-gray-850 rounded-sm'}}" ...attributes>
   {{#if this.isEditing}}
     <CommentForm
       @comment={{@comment}}
@@ -28,7 +28,7 @@
         <UserLabel @user={{@comment.user}} @context={{@comment.contextForUserLabel}} class="ml-1" />
 
         {{#if (eq @comment.user.username "codecrafters-bot")}}
-          <span class="bg-gray-400 dark:bg-gray-500 text-white ml-1 px-1 py-0.5 rounded font-semibold text-xs">
+          <span class="bg-gray-400 dark:bg-gray-500 text-white ml-1 px-1 py-0.5 rounded-sm font-semibold text-xs">
             bot
           </span>
         {{/if}}
@@ -62,7 +62,7 @@
             </dd.Trigger>
             <dd.Content>
               <div
-                class="py-2 border border-gray-200 rounded shadow-sm text-sm text-gray-600 min-w-[150px] max-w-xl bg-white dark:bg-gray-850"
+                class="py-2 border border-gray-200 rounded-sm shadow-sm text-sm text-gray-600 min-w-[150px] max-w-xl bg-white dark:bg-gray-850"
                 data-test-more-dropdown-content
               >
                 <div class="px-3 py-1 hover:bg-gray-50 dark:hover:bg-gray-800 flex items-center justify-between group">

@@ -7,7 +7,7 @@
     </div>
 
     {{! template-lint-disable require-input-label }}
-    <select class="p-2 border border-gray-200 rounded mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
+    <select class="p-2 border border-gray-200 rounded-sm mb-3 block" {{on "change" this.handleConceptQuestionSlugSelected}}>
       <option disabled selected={{not @model.conceptQuestionSlug}} data-test-concept-question-block-editor-dropdown-option>Select a question...</option>
       {{#each this.enabledQuestions as |question|}}
         <option

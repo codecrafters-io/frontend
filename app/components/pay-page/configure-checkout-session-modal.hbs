@@ -12,7 +12,7 @@
   <div
     class="flex items-center justify-between gap-8 border
       {{if this.extraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}}
-      rounded p-4 mb-6"
+      rounded-sm p-4 mb-6"
     {{on "click" (fn (mut this.extraInvoiceDetailsRequested) (not this.extraInvoiceDetailsRequested))}}
     role="button"
     data-test-extra-invoice-details-toggle
