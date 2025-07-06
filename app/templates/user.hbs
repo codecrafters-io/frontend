@@ -9,7 +9,7 @@
     {{! @glint-expect-error not ts-ified yet }}
     <UserPage::SidebarContainer class="md:-my-24 w-48 shrink-0" @user={{this.model}} />
 
-    <div class="flex-grow md:ml-8 mt-8">
+    <div class="grow md:ml-8 mt-8">
       {{#if this.shouldShowProfileCustomizationNotice}}
         <AlertWithIcon class="mb-8" data-test-profile-customization-notice>
           You can

@@ -52,7 +52,7 @@
     </CoursePage::Sidebar::MobileBackdrop>
   {{/if}}
 
-  <div class="flex flex-col max-h-screen overflow-y-auto flex-grow relative" id="course-page-scrollable-area">
+  <div class="flex flex-col max-h-screen overflow-y-auto grow relative" id="course-page-scrollable-area">
     {{! For collapse/expand on desktop }}
     <CoursePage::ExpandSidebarButton
       class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
@@ -78,8 +78,8 @@
       @nextStep={{this.coursePageState.nextStep}}
       class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900"
     />
-    <div class="flex flex-grow bg-white dark:bg-gray-850">
-      <div class="flex-grow shrink min-w-0">
+    <div class="flex grow bg-white dark:bg-gray-850">
+      <div class="grow shrink min-w-0">
         {{outlet}}
       </div>
 

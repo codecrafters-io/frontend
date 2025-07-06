@@ -6,7 +6,7 @@
   as |groupClasses labelClasses|
 }}
   <component-options class="{{groupClasses}} border-dotted flex-nowrap -mt-8">
-    <component-options-left class="flex flex-grow flex-wrap">
+    <component-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="File for the component to render (select a preset)">
         <span class="mr-2">File:</span>
         <select class="dark:bg-gray-700" {{on "change" this.selectedDocumentIndexDidChange}}>
@@ -29,7 +29,7 @@
   </component-options>
 
   <component-options class="{{groupClasses}} flex-nowrap">
-    <component-options-left class="flex flex-grow flex-wrap">
+    <component-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="Enable collapsing of the file card to just the header">
         <Input @type="checkbox" @checked={{this.isCollapsible}} />
         <span class="ml-2">isCollapsible</span>
