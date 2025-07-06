@@ -19,7 +19,7 @@
 
   <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6">
     <div class="flex flex-col-reverse items-stretch md:flex-row">
-      <div class="md:pr-8 pt-6 md:pt-10 pb-[75vh] min-w-0 flex-grow">
+      <div class="md:pr-8 pt-6 md:pt-10 pb-[75vh] min-w-0 grow">
         <Concept @concept={{@concept}} @latestConceptEngagement={{@latestConceptEngagement}} />
 
         {{#if (and this.hasCompletedConcept this.authenticator.isAnonymous)}}

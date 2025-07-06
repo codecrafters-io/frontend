@@ -34,7 +34,7 @@
   </div>
 
   {{#if (eq @autofixRequest.status "in_progress")}}
-    <div class="bg-gray-800 border border-gray-700 rounded overflow-y-auto relative flex-grow">
+    <div class="bg-gray-800 border border-gray-700 rounded overflow-y-auto relative grow">
       <div
         class="p-3"
         {{did-insert this.handleMarkdownStreamElementInserted}}
@@ -48,13 +48,13 @@
     </div>
   {{else}}
     {{#if this.shouldShowFullLog}}
-      <div class="bg-gray-800 border border-gray-700 rounded flex-grow overflow-y-auto">
+      <div class="bg-gray-800 border border-gray-700 rounded grow overflow-y-auto">
         <div class="p-3">
           <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
         </div>
       </div>
     {{else if (eq @autofixRequest.status "success")}}
-      <div class="flex-grow overflow-y-auto">
+      <div class="grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @autofixRequest.explanationMarkdown}}>
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
@@ -95,7 +95,7 @@
         </BlurredOverlay>
       </div>
     {{else if (eq @autofixRequest.status "failure")}}
-      <div class="flex-grow overflow-y-auto">
+      <div class="grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
             We failed to generate hints for your submission. You can click on "Show Full Log" to see what we tried.
@@ -103,7 +103,7 @@
         </div>
       </div>
     {{else if (eq @autofixRequest.status "error")}}
-      <div class="flex-grow overflow-y-auto">
+      <div class="grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
             We encountered an internal error while generating hints for your submission. Our engineers have been notified of this!
@@ -111,7 +111,7 @@
         </div>
       </div>
     {{else if (eq @autofixRequest.status "cancelled")}}
-      <div class="flex-grow overflow-y-auto">
+      <div class="grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert">
           <p>
             This hint generation request was cancelled.

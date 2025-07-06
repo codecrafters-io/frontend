@@ -6,7 +6,7 @@
   as |groupClasses labelClasses|
 }}
   <codemirror-options class="{{groupClasses}} border-dotted -mt-8">
-    <codemirror-options-left class="flex flex-grow flex-wrap">
+    <codemirror-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="Show an outline around the component's element">
         <Input @type="checkbox" @checked={{this.outline}} />
         <span class="ml-2">outline</span>
@@ -74,7 +74,7 @@
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
-    <codemirror-options-left class="flex flex-grow flex-wrap">
+    <codemirror-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="Document for the editor to render & edit (select a preset)">
         <Input @type="checkbox" @checked={{this.document}} />
         <span class="mx-2">document:</span>
@@ -117,7 +117,7 @@
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted flex-nowrap">
-    <codemirror-options-left class="flex flex-grow flex-wrap">
+    <codemirror-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="Enable unified diff editor by passing the original document">
         <Input @type="checkbox" @checked={{this.originalDocument}} />
         <span class="ml-2">originalDocument</span>
@@ -170,7 +170,7 @@
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}} border-dotted">
-    <codemirror-options-left class="flex flex-grow flex-wrap">
+    <codemirror-options-left class="flex grow flex-wrap">
       <label class="{{labelClasses}}" title="Enable the line numbers gutter">
         <Input @type="checkbox" @checked={{this.lineNumbers}} />
         <span class="ml-2">lineNumbers</span>
@@ -287,7 +287,7 @@
   </codemirror-options>
 
   <codemirror-options class="{{groupClasses}}">
-    <codemirror-options-left class="flex flex-grow flex-wrap">
+    <codemirror-options-left class="flex grow flex-wrap">
       <label
         class="{{labelClasses}}"
         title="Use a custom method for selection drawing instead of the browser's built-in, allows multiple selections and other goodies"

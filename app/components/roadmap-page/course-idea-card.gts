@@ -80,7 +80,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
       data-test-course-idea-card
     >
       <div class='flex items-start gap-3'>
-        <div class='flex flex-col gap-1 flex-grow'>
+        <div class='flex flex-col gap-1 grow'>
           <div class='flex items-center gap-2 flex-wrap mt-0.5 mb-2.5'>
             <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
               {{@courseIdea.name}}
