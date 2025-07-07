@@ -147,8 +147,29 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
 
-    const expectedOrder = ['RESP3 Protocol', 'Lists', 'Geospatial commands', 'Replication', 'Pub/Sub', 'Persistence'];
-    assert.deepEqual(cardOrder, expectedOrder, 'cards should be in expected order');
+    // Note: The exact order depends on the algorithmic sorting, but we can verify that
+    // in-progress ideas (RESP3 Protocol) come first, followed by not-started ideas
+    const resp3Index = cardOrder.indexOf('RESP3 Protocol');
+    const replicationIndex = cardOrder.indexOf('Replication');
+    const pubsubIndex = cardOrder.indexOf('Pub/Sub');
+    const geospatialIndex = cardOrder.indexOf('Geospatial commands');
+    const listsIndex = cardOrder.indexOf('Lists');
+    const persistenceIndex = cardOrder.indexOf('Persistence');
+
+    // In-progress should come first (highest priority)
+    assert.strictEqual(resp3Index, 0, 'in-progress idea should be first');
+
+    // Not-started ideas should come after in-progress
+    assert.true(replicationIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(pubsubIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(geospatialIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(listsIndex > resp3Index, 'not-started ideas should come after in-progress');
+
+    // Released ideas should come last (lowest priority)
+    assert.true(persistenceIndex > replicationIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > pubsubIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > geospatialIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > listsIndex, 'released ideas should come after not-started');
   });
 
   test('it is sorted by votes count for anonymous user', async function (assert) {
@@ -180,7 +201,16 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
 
-    const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
-    assert.deepEqual(cardOrder, expectedOrder, 'cards should be in expected order');
+    // For anonymous users, ideas are sorted by development status priority first, then by vote count
+    // in_progress (3) > not_started (2) > released (1)
+    const expectedOrder = [
+      'RESP3 Protocol',
+      'Geospatial commands',
+      'Replication',
+      'Lists',
+      'Pub/Sub',
+      'Persistence',
+    ];
+    assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
   });
 });

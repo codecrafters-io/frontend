@@ -5,7 +5,7 @@ import type CourseModel from './course';
 import type CourseExtensionIdeaVoteModel from './course-extension-idea-vote';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type DateService from 'codecrafters-frontend/services/date';
-import { getReverseSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
+import { getSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseExtensionIdeaModel extends Model {
   @belongsTo('course', { async: false, inverse: 'extensionIdeas' }) declare course: CourseModel;
@@ -22,7 +22,7 @@ export default class CourseExtensionIdeaModel extends Model {
   @service declare authenticator: AuthenticatorService;
   @service declare date: DateService;
 
-  private _cachedReverseSortPosition: string | null = null;
+  private _cachedSortPosition: string | null = null;
 
   get developmentStatusIsInProgress() {
     return this.developmentStatus === 'in_progress';
@@ -41,19 +41,18 @@ export default class CourseExtensionIdeaModel extends Model {
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 20;
   }
 
-  get reverseSortPositionForRoadmapPage(): string {
-    if (this._cachedReverseSortPosition === null) {
-      this._cachedReverseSortPosition = getReverseSortPositionForRoadmapPage(
+  get sortPositionForRoadmapPage(): string {
+    if (this._cachedSortPosition === null) {
+      this._cachedSortPosition = getSortPositionForRoadmapPage(
         this.developmentStatus,
         this.votesCount,
         this.id,
-        this.authenticator.isAuthenticated,
         this.date.now(),
-        this.authenticator.currentUser?.username,
+        this.authenticator.currentUserId,
       );
     }
 
-    return this._cachedReverseSortPosition;
+    return this._cachedSortPosition;
   }
 
   async vote() {

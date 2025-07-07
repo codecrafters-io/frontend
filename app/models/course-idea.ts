@@ -6,7 +6,7 @@ import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
-import { getReverseSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
+import { getSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false, inverse: 'courseIdea' }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
@@ -26,26 +26,25 @@ export default class CourseIdeaModel extends Model {
   @service declare authenticator: AuthenticatorService;
   @service declare date: DateService;
 
-  private _cachedReverseSortPosition: string | null = null;
+  private _cachedSortPosition: string | null = null;
 
   get isNewlyCreated(): boolean {
     // 30 days or less old or less than 100 votes
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 100;
   }
 
-  get reverseSortPositionForRoadmapPage(): string {
-    if (this._cachedReverseSortPosition === null) {
-      this._cachedReverseSortPosition = getReverseSortPositionForRoadmapPage(
+  get sortPositionForRoadmapPage(): string {
+    if (this._cachedSortPosition === null) {
+      this._cachedSortPosition = getSortPositionForRoadmapPage(
         this.developmentStatus,
         this.votesCount,
         this.id,
-        this.authenticator.isAuthenticated,
         this.date.now(),
-        this.authenticator.currentUser?.username,
+        this.authenticator.currentUserId,
       );
     }
 
-    return this._cachedReverseSortPosition;
+    return this._cachedSortPosition;
   }
 
   async vote(): Promise<CourseIdeaVoteModel> {
