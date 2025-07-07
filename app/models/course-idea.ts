@@ -26,20 +26,25 @@ export default class CourseIdeaModel extends Model {
   @service declare authenticator: AuthenticatorService;
   @service declare date: DateService;
 
+  private _cachedReverseSortPosition: string | null = null;
+
   get isNewlyCreated(): boolean {
     // 30 days or less old or less than 100 votes
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 100;
   }
 
   get reverseSortPositionForRoadmapPage(): string {
-    return getReverseSortPositionForRoadmapPage(
-      this.developmentStatus,
-      this.votesCount,
-      this.id,
-      this.authenticator.isAuthenticated,
-      this.date.now(),
-      this.authenticator.currentUser?.username,
-    );
+    if (this._cachedReverseSortPosition === null) {
+      this._cachedReverseSortPosition = getReverseSortPositionForRoadmapPage(
+        this.developmentStatus,
+        this.votesCount,
+        this.id,
+        this.authenticator.isAuthenticated,
+        this.date.now(),
+        this.authenticator.currentUser?.username,
+      );
+    }
+    return this._cachedReverseSortPosition;
   }
 
   async vote(): Promise<CourseIdeaVoteModel> {

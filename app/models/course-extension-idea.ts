@@ -22,6 +22,8 @@ export default class CourseExtensionIdeaModel extends Model {
   @service declare authenticator: AuthenticatorService;
   @service declare date: DateService;
 
+  private _cachedReverseSortPosition: string | null = null;
+
   get developmentStatusIsInProgress() {
     return this.developmentStatus === 'in_progress';
   }
@@ -40,14 +42,17 @@ export default class CourseExtensionIdeaModel extends Model {
   }
 
   get reverseSortPositionForRoadmapPage(): string {
-    return getReverseSortPositionForRoadmapPage(
-      this.developmentStatus,
-      this.votesCount,
-      this.id,
-      this.authenticator.isAuthenticated,
-      this.date.now(),
-      this.authenticator.currentUser?.username,
-    );
+    if (this._cachedReverseSortPosition === null) {
+      this._cachedReverseSortPosition = getReverseSortPositionForRoadmapPage(
+        this.developmentStatus,
+        this.votesCount,
+        this.id,
+        this.authenticator.isAuthenticated,
+        this.date.now(),
+        this.authenticator.currentUser?.username,
+      );
+    }
+    return this._cachedReverseSortPosition;
   }
 
   async vote() {
