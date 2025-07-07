@@ -142,6 +142,8 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     await roadmapPage.visitCourseExtensionIdeasTab();
 
+    await percySnapshot('Course Extension Ideas (logged in) - sorted algorithmically');
+
     const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
     assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');
 
@@ -195,6 +197,8 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     replication.update('votesCount', 13);
 
     await roadmapPage.visitCourseExtensionIdeasTab();
+
+    await percySnapshot('Course Extension Ideas (anonymous) - sorted by votes count');
 
     const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
     assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');

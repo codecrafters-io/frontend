@@ -140,6 +140,8 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
 
     await roadmapPage.visit();
 
+    await percySnapshot('Course Ideas (logged in) - sorted algorithmically');
+
     const courseIdeaCards = roadmapPage.courseIdeaCards;
     assert.strictEqual(courseIdeaCards.length, 5, 'should have 5 course idea cards (SQLite is archived)');
 
@@ -187,6 +189,8 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     react.update('votesCount', 12);
 
     await roadmapPage.visit();
+
+    await percySnapshot('Course Ideas (anonymous) - sorted by votes count');
 
     const courseIdeaCards = roadmapPage.courseIdeaCards;
     assert.strictEqual(courseIdeaCards.length, 5, 'should have 5 course idea cards (SQLite is archived)');
