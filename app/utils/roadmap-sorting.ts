@@ -14,11 +14,12 @@ export function getSortPositionForRoadmapPage(
   date: number,
   currentUserId?: string | null,
 ): string {
-  const statusPriority = {
-    in_progress: 1,
-    not_started: 2,
-    released: 3,
-  }[developmentStatus] ?? 4; // Default to lowest priority if status is unknown
+  const statusPriority =
+    {
+      in_progress: 1,
+      not_started: 2,
+      released: 3,
+    }[developmentStatus] ?? 4; // Default to lowest priority if status is unknown
 
   const sortKeys: string[] = [statusPriority.toString()];
 

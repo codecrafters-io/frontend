@@ -203,14 +203,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     // For anonymous users, ideas are sorted by development status priority first, then by vote count
     // in_progress (3) > not_started (2) > released (1)
-    const expectedOrder = [
-      'RESP3 Protocol',
-      'Geospatial commands',
-      'Replication',
-      'Lists',
-      'Pub/Sub',
-      'Persistence',
-    ];
+    const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
   });
 });
