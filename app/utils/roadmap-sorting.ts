@@ -29,6 +29,7 @@ export function getReverseSortPositionForRoadmapPage(
     if (developmentStatus === 'in_progress') {
       // In progress: sort by vote count descending
       const paddedVoteCount = votesCount.toString().padStart(10, '0');
+
       return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
     } else if (developmentStatus === 'not_started') {
       // Not started: sort by random but fixed per user per week
@@ -40,11 +41,13 @@ export function getReverseSortPositionForRoadmapPage(
     } else {
       // Released: sort by vote count descending
       const paddedVoteCount = votesCount.toString().padStart(10, '0');
+
       return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
     }
   }
 
   // For unauthenticated users: sort by vote count descending for all statuses
   const paddedVoteCount = votesCount.toString().padStart(10, '0');
+
   return `${reverseSortPositionFromDevelopmentStatus}-${paddedVoteCount}`;
 }

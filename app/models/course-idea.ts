@@ -44,6 +44,7 @@ export default class CourseIdeaModel extends Model {
         this.authenticator.currentUser?.username,
       );
     }
+
     return this._cachedReverseSortPosition;
   }
 

@@ -27,7 +27,6 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 6);
     assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteCountText, '1 vote');
 
-
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
     const notStartedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Geospatial commands');
 
