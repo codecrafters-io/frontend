@@ -1,0 +1,41 @@
+<div class="bg-white rounded-md border shadow-sm p-5">
+  <h4 class="font-semibold text-gray-700 mb-3">
+    Latest Releases
+  </h4>
+  {{#each this.releases as |release releaseIndex|}}
+    <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.releases.length 1)) 'pb-4'}}">
+      <div class="w-2 h-2 bg-gray-200 rounded-full mt-1 flex-shrink-0"></div>
+      <div class="w-full">
+        <div class="flex items-center gap-1 mb-1">
+          <div class="text-xs text-gray-400">{{release.timestampText}}</div>
+          <span class="text-gray-300 text-xs">
+            •
+          </span>
+          <Pill @color="gray" @size="small">
+            {{if (eq release.type "extension") "EXTENSION" "CHALLENGE"}}
+          </Pill>
+        </div>
+        <a
+          href="{{or release.announcementUrl 'https://forum.codecrafters.io/c/announcements'}}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-gray-700 hover:underline leading-snug block"
+        >{{release.title}}</a>
+      </div>
+
+      {{#if (eq releaseIndex 0)}}
+        <div class="absolute bottom-0 top-1 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+      {{else if (eq releaseIndex (sub this.releases.length 1))}}
+        <div class="absolute h-1 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+      {{else}}
+        <div class="absolute bottom-0 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200"></div>
+      {{/if}}
+    </div>
+  {{/each}}
+
+  <div class="w-full flex justify-start pl-4 mt-3">
+    <a href="#" class="text-xs text-gray-400 hover:underline">
+      View more...
+    </a>
+  </div>
+</div> 
