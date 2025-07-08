@@ -27,6 +27,7 @@ export default class CourseExtensionIdeasController extends Controller {
 
   get orderedCourses() {
     return this.model.courseExtensionIdeas
+      .rejectBy('developmentStatusIsReleased')
       .mapBy('course')
       .uniq()
       .rejectBy('releaseStatusIsDeprecated')
