@@ -11,6 +11,6 @@ export default class CourseIdeasController extends Controller {
   };
 
   get orderedCourseIdeas() {
-    return this.model.courseIdeas.rejectBy('isArchived').sortBy('reverseSortPositionForRoadmapPage').reverse();
+    return this.model.courseIdeas.rejectBy('isArchived').sortBy('sortPositionForRoadmapPage');
   }
 }

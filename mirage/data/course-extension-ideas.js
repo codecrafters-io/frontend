@@ -30,4 +30,36 @@ export default [
     development_status: 'not_started',
     description_md: 'This is the first extension idea for the dummy course',
   },
+  {
+    slug: 'redis-resp3-protocol',
+    course_slug: 'redis',
+    name: 'RESP3 Protocol',
+    development_status: 'in_progress',
+    description_md:
+      "In this challenge extension you'll add support for the [RESP3 protocol](https://redis.io/docs/reference/protocol-spec/) to your Redis implementation. Along the way you'll learn about how Redis clients 'upgrade' to RESP3 using the HELLO command, newer data types that RESP3 offers and more.",
+  },
+  {
+    slug: 'redis-pubsub',
+    course_slug: 'redis',
+    name: 'Pub/Sub',
+    development_status: 'not_started',
+    description_md:
+      "In this challenge extension you'll add support for [Pub/Sub](https://redis.io/docs/interact/pubsub/) to your Redis implementation. Along the way you'll learn about the PUBLISH command, the SUBSCRIBE command and more.",
+  },
+  {
+    slug: 'redis-lists',
+    course_slug: 'redis',
+    name: 'Lists',
+    development_status: 'not_started',
+    description_md:
+      "In this challenge extension you'll add support for the [List](https://redis.io/docs/data-types/lists/) data type to your Redis implementation. Along the way you'll learn about commands like LPUSH, RPOP and more.",
+  },
+  {
+    slug: 'redis-replication',
+    course_slug: 'redis',
+    name: 'Replication',
+    development_status: 'not_started',
+    description_md:
+      "In this challenge extension you'll add support for [Replication](https://redis.io/docs/management/replication/) to your Redis implementation. Along the way you'll learn about how Redis's leader-follower replication works, the WAIT command, the PSYNC command and more.",
+  },
 ];

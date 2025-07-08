@@ -6,6 +6,7 @@ import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
 
 module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
   setupApplicationTest(hooks);
@@ -23,7 +24,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await percySnapshot('Challenge Extension Ideas (anonymous)');
 
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
-    assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 2);
+    assert.strictEqual(roadmapPage.courseExtensionIdeaCards.length, 6);
     assert.strictEqual(roadmapPage.findCourseExtensionIdeaCard(courseExtensionIdea.name).voteCountText, '1 vote');
 
     const releasedIdeaCard = roadmapPage.findCourseExtensionIdeaCard('Persistence');
@@ -105,5 +106,108 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'This challenge extension is now available! Visit the catalog to try it out.',
     });
+  });
+
+  test('it is sorted algorithmically for logged in user', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    // Set up fake date service for consistent sorting behavior
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    const dateService = this.owner.lookup('service:date');
+    const fixedDate = new Date('2024-06-15T00:00:00.000Z').getTime();
+    dateService.setNow(fixedDate);
+
+    createCourseExtensionIdeas(this.server);
+
+    const persistence = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    persistence.update('votesCount', 100);
+
+    const geospatial = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    geospatial.update('votesCount', 15);
+
+    const resp3 = this.server.schema.courseExtensionIdeas.findBy({ name: 'RESP3 Protocol' });
+    resp3.update('votesCount', 10);
+
+    const pubsub = this.server.schema.courseExtensionIdeas.findBy({ name: 'Pub/Sub' });
+    pubsub.update('votesCount', 5);
+
+    const lists = this.server.schema.courseExtensionIdeas.findBy({ name: 'Lists' });
+    lists.update('votesCount', 12);
+
+    const replication = this.server.schema.courseExtensionIdeas.findBy({ name: 'Replication' });
+    replication.update('votesCount', 13);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    await percySnapshot('Course Extension Ideas (logged in) - sorted algorithmically');
+
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');
+
+    const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
+
+    // Note: The exact order depends on the algorithmic sorting, but we can verify that
+    // in-progress ideas (RESP3 Protocol) come first, followed by not-started ideas
+    const resp3Index = cardOrder.indexOf('RESP3 Protocol');
+    const replicationIndex = cardOrder.indexOf('Replication');
+    const pubsubIndex = cardOrder.indexOf('Pub/Sub');
+    const geospatialIndex = cardOrder.indexOf('Geospatial commands');
+    const listsIndex = cardOrder.indexOf('Lists');
+    const persistenceIndex = cardOrder.indexOf('Persistence');
+
+    // In-progress should come first (highest priority)
+    assert.strictEqual(resp3Index, 0, 'in-progress idea should be first');
+
+    // Not-started ideas should come after in-progress
+    assert.true(replicationIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(pubsubIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(geospatialIndex > resp3Index, 'not-started ideas should come after in-progress');
+    assert.true(listsIndex > resp3Index, 'not-started ideas should come after in-progress');
+
+    // Released ideas should come last (lowest priority)
+    assert.true(persistenceIndex > replicationIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > pubsubIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > geospatialIndex, 'released ideas should come after not-started');
+    assert.true(persistenceIndex > listsIndex, 'released ideas should come after not-started');
+  });
+
+  test('it is sorted by votes count for anonymous user', async function (assert) {
+    testScenario(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    const persistence = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    persistence.update('votesCount', 100);
+
+    const geospatial = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    geospatial.update('votesCount', 15);
+
+    const resp3 = this.server.schema.courseExtensionIdeas.findBy({ name: 'RESP3 Protocol' });
+    resp3.update('votesCount', 10);
+
+    const pubsub = this.server.schema.courseExtensionIdeas.findBy({ name: 'Pub/Sub' });
+    pubsub.update('votesCount', 5);
+
+    const lists = this.server.schema.courseExtensionIdeas.findBy({ name: 'Lists' });
+    lists.update('votesCount', 12);
+
+    const replication = this.server.schema.courseExtensionIdeas.findBy({ name: 'Replication' });
+    replication.update('votesCount', 13);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    await percySnapshot('Course Extension Ideas (anonymous) - sorted by votes count');
+
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.strictEqual(courseExtensionIdeaCards.length, 6, 'should have 6 course extension idea cards');
+
+    const cardOrder = courseExtensionIdeaCards.map((card) => card.name);
+
+    // For anonymous users, ideas are sorted by development status priority first, then by vote count
+    // in_progress (3) > not_started (2) > released (1)
+    const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
+    assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
   });
 });
