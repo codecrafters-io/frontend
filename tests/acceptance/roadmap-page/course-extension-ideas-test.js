@@ -210,4 +210,31 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
   });
+
+  test('challenge dropdown functionality', async function (assert) {
+    testScenario(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    // Initially should show the default selected course
+    assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
+
+    // Open the dropdown
+    await roadmapPage.challengeDropdown.toggle();
+
+    // Click on a different challenge
+    await roadmapPage.challengeDropdown.clickOnChallenge('Build your own SQLite');
+
+    // Should now show the new selected challenge
+    assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own SQLite');
+
+    // The course extension ideas should be filtered to show only SQLite-related ideas
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.true(courseExtensionIdeaCards.length > 0, 'should show course extension ideas for the selected challenge');
+
+    // Should show the specific SQLite course extension idea
+    const insertRowsCard = roadmapPage.findCourseExtensionIdeaCard('Insert rows');
+    assert.ok(insertRowsCard, 'should show the "Insert rows" course extension idea for SQLite');
+  });
 });

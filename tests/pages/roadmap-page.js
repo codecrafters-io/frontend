@@ -1,4 +1,4 @@
-import { clickable, collection, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
+import { clickable, collection, text, triggerable, visitable, hasClass, clickOnText } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
@@ -28,7 +28,13 @@ export default createPage({
     return this.courseIdeaCards.toArray().find((card) => card.name === name);
   },
 
-  selectedCourseName: text('[data-test-course-pill].bg-white'),
+  selectedCourseName: text('[data-test-challenge-dropdown-trigger] [data-test-current-challenge-name]'),
+
+  challengeDropdown: {
+    scope: '[data-test-challenge-dropdown]',
+    toggle: clickable('[data-test-challenge-dropdown-trigger]'),
+    clickOnChallenge: clickOnText('[data-test-challenge-link]'),
+  },
 
   visit: visitable('/roadmap'), // Should redirect to /roadmap/challenges
   visitCourseExtensionIdeasTab: visitable('/roadmap/challenge-extensions'),
