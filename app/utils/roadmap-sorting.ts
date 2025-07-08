@@ -15,12 +15,12 @@ export function getSortPositionForRoadmapPage(
 ): string {
   const statusSortKey =
     {
-      in_progress: 1,
-      not_started: 2,
-      released: 3,
-    }[developmentStatus] ?? 4; // Default to lowest priority if status is unknown
+      in_progress: '1',
+      not_started: '2',
+      released: '3',
+    }[developmentStatus] ?? '4'; // Default to lowest priority if status is unknown
 
-  const sortKeys: string[] = [statusSortKey.toString()];
+  const sortKeys: string[] = [statusSortKey];
 
   // Special case: logged-in user and not_started
   if (currentUserId && developmentStatus === 'not_started') {
