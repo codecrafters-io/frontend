@@ -1,0 +1,20 @@
+<div
+  class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer"
+  role="button"
+  data-test-challenge-link
+  {{on "click" @onClick}}
+>
+  <div class="flex items-center mr-8">
+    {{#if @isSelected}}
+      {{svg-jar "check-circle" class="w-4 fill-current text-teal-500 mr-2"}}
+    {{else if (and @isRequested (not @isSelected))}}
+      {{svg-jar "exclamation" class="w-4 fill-current text-yellow-500 mr-2"}}
+    {{else}}
+      <CourseLogo @course={{@challenge}} class="w-4 h-4 block group-hover:hidden mr-2" />
+      <CourseLogo @course={{@challenge}} class="w-4 h-4 hidden group-hover:block mr-2" />
+    {{/if}}
+    <span class="{{if (or @isRequested @isSelected) 'font-semibold'}} text-gray-800 dark:text-gray-200">
+      {{@challenge.name}}
+    </span>
+  </div>
+</div>
