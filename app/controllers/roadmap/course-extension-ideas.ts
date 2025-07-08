@@ -27,14 +27,9 @@ export default class CourseExtensionIdeasController extends Controller {
 
   get orderedCourses() {
     return this.model.courseExtensionIdeas
+      .rejectBy('developmentStatusIsReleased')
       .mapBy('course')
       .uniq()
-      .filter((course) => {
-        // Check if this course has any extension ideas with status "not_started" or "in_progress"
-        const courseExtensionIdeas = this.model.courseExtensionIdeas.filterBy('course', course);
-
-        return courseExtensionIdeas.some((idea) => idea.developmentStatusIsNotStarted || idea.developmentStatusIsInProgress);
-      })
       .rejectBy('releaseStatusIsDeprecated')
       .rejectBy('releaseStatusIsAlpha')
       .rejectBy('visibilityIsPrivate')
