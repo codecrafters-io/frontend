@@ -10,7 +10,7 @@ export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false, inverse: 'courseIdea' }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
 
   @attr('date') declare createdAt: Date;
-  @attr('date') declare releaseDate: Date | null;
+  @attr('date') declare releasedAt: Date | null;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare developmentStatus: string;
   @attr('boolean') declare isArchived: boolean;

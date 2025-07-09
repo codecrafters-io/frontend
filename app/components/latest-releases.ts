@@ -25,38 +25,27 @@ export default class LatestReleasesComponent extends Component<Signature> {
 
     const releases: Release[] = [];
 
-    // Add course extension ideas
     courseExtensionIdeas.forEach((idea: CourseExtensionIdeaModel) => {
-      // Use releaseDate if available, otherwise fall back to createdAt
-      const dateToUse = idea.releaseDate || idea.createdAt;
-      
       releases.push({
-        timestampText: this.formatTimestamp(dateToUse),
+        timestampText: this.formatTimestamp(idea.releasedAt!),
         type: 'extension',
         title: idea.name,
-        releaseDate: dateToUse,
+        releaseDate: idea.releasedAt!,
         announcementUrl: idea.announcementUrl || undefined,
       });
     });
 
-    // Add course ideas
     courseIdeas.forEach((idea: CourseIdeaModel) => {
-      // Use releaseDate if available, otherwise fall back to createdAt
-      const dateToUse = idea.releaseDate || idea.createdAt;
-      
       releases.push({
-        timestampText: this.formatTimestamp(dateToUse),
+        timestampText: this.formatTimestamp(idea.releasedAt!),
         type: 'challenge',
         title: idea.name,
-        releaseDate: dateToUse,
+        releaseDate: idea.releasedAt!,
         announcementUrl: idea.announcementUrl || undefined,
       });
     });
 
-    // Sort by release date (newest first) and take the latest 5
-    return releases
-      .sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime())
-      .slice(0, 5);
+    return releases.sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime()).slice(0, 5);
   }
 
   private formatTimestamp(date: Date): string {
@@ -70,6 +59,6 @@ export default class LatestReleasesComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'LatestReleases': typeof LatestReleasesComponent;
+    LatestReleases: typeof LatestReleasesComponent;
   }
-} 
+}
