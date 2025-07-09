@@ -26,23 +26,27 @@ export default class LatestReleasesComponent extends Component<Signature> {
     const releases: Release[] = [];
 
     courseExtensionIdeas.forEach((idea: CourseExtensionIdeaModel) => {
-      releases.push({
-        timestampText: this.formatTimestamp(idea.releasedAt!),
-        type: 'extension',
-        title: idea.name,
-        releaseDate: idea.releasedAt!,
-        announcementUrl: idea.announcementUrl || undefined,
-      });
+      if (idea.releasedAt) {
+        releases.push({
+          timestampText: this.formatTimestamp(idea.releasedAt),
+          type: 'extension',
+          title: idea.name,
+          releaseDate: idea.releasedAt,
+          announcementUrl: idea.announcementUrl!,
+        });
+      }
     });
 
     courseIdeas.forEach((idea: CourseIdeaModel) => {
-      releases.push({
-        timestampText: this.formatTimestamp(idea.releasedAt!),
-        type: 'challenge',
-        title: idea.name,
-        releaseDate: idea.releasedAt!,
-        announcementUrl: idea.announcementUrl || undefined,
-      });
+      if (idea.releasedAt) {
+        releases.push({
+          timestampText: this.formatTimestamp(idea.releasedAt),
+          type: 'challenge',
+          title: idea.name,
+          releaseDate: idea.releasedAt,
+          announcementUrl: idea.announcementUrl!,
+        });
+      }
     });
 
     return releases.sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime()).slice(0, 5);
