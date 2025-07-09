@@ -99,6 +99,7 @@
     "@types/qunit": "^2.19.10",
     "@types/rails__actioncable": "^6.1.11",
     "@types/rsvp": "^4.0.9",
+    "@types/seedrandom": "^3.0.8",
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.172.0",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
@@ -217,6 +218,7 @@
     "node-html-parser": "^7.0.1",
     "player.js": "^0.1.0",
     "posthog-js": "^1.234.6",
+    "seedrandom": "^3.0.5",
     "showdown": "^2.1.0",
     "three": "^0.172.0",
     "web-vitals": "^4.2.4"
