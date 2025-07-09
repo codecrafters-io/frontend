@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
+import { settled } from '@ember/test-helpers';
 
 module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
   setupApplicationTest(hooks);
@@ -209,5 +210,27 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     // in_progress (3) > not_started (2) > released (1)
     const expectedOrder = ['RESP3 Protocol', 'Geospatial commands', 'Replication', 'Lists', 'Pub/Sub', 'Persistence'];
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
+  });
+
+  test('challenge dropdown functionality', async function (assert) {
+    testScenario(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+
+    assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
+
+    await roadmapPage.courseDropdown.toggle();
+    await settled();
+
+    await roadmapPage.courseDropdown.clickOnCourse('Build your own SQLite');
+
+    assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own SQLite');
+
+    const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
+    assert.true(courseExtensionIdeaCards.length > 0, 'should show course extension ideas for the selected challenge');
+
+    const insertRowsCard = roadmapPage.findCourseExtensionIdeaCard('Insert rows');
+    assert.ok(insertRowsCard, 'should show the "Insert rows" course extension idea for SQLite');
   });
 });

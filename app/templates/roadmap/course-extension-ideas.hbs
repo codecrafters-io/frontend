@@ -2,15 +2,13 @@
   Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
 </AlertWithIcon>
 
-<div class="flex items-center flex-wrap mb-6">
-  {{#each this.orderedCourses as |course|}}
-    <RoadmapPage::CoursePill
-      @course={{course}}
-      @isSelected={{eq this.selectedCourse course}}
-      class="mr-2 mb-3 flex-shrink-0"
-      {{on "click" (fn (mut this.selectedCourseSlug) course.slug)}}
-    />
-  {{/each}}
+<div class="flex items-center mb-6">
+  <CourseDropdown
+    @courses={{this.orderedCourses}}
+    @selectedCourse={{this.selectedCourse}}
+    @requestedCourse={{this.selectedCourse}}
+    @onRequestedCourseChange={{this.handleCourseChange}}
+  />
 </div>
 
 <div class="grid grid-cols-1 gap-3 mb-8">
