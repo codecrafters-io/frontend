@@ -1,22 +1,26 @@
 <div data-test-challenge-dropdown ...attributes>
-  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" @registerAPI={{@onDidInsertDropdown}} as |dd|>
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-left" @registerAPI={{@onDidInsertDropdown}} as |dd|>
     <dd.Trigger>
       <button
         type="button"
-        class="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-white/10
+        class="inline-flex items-center justify-center w-full rounded-md border border-gray-300 dark:border-white/10
           {{if dd.isOpen 'bg-gray-50 dark:bg-gray-800' 'bg-white dark:bg-gray-900'}}
           shadow-sm px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-none"
         data-test-challenge-dropdown-trigger
       >
+        {{#if @selectedChallenge}}
+          <CourseLogo @course={{@selectedChallenge}} class="w-6 h-6 mr-2" />
+        {{/if}}
+
         <span class="mr-1" data-test-current-challenge-name>
           {{@selectedChallenge.name}}
         </span>
 
-        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" "text-gray-400 dark:text-gray-600"))}}
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1 w-56" data-test-challenge-dropdown-content>
+      <div class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1" data-test-challenge-dropdown-content>
         {{#each @challenges as |challenge|}}
           <ChallengeDropdownLink
             @challenge={{challenge}}
