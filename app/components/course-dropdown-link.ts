@@ -5,7 +5,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    challenge: CourseModel;
+    course: CourseModel;
     onClick: () => void;
     isSelected: boolean;
     isEnabled: boolean;
@@ -13,10 +13,10 @@ interface Signature {
   };
 }
 
-export default class ChallengeDropdownLinkComponent extends Component<Signature> {}
+export default class CourseDropdownLinkComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ChallengeDropdownLink: typeof ChallengeDropdownLinkComponent;
+    CourseDropdownLink: typeof CourseDropdownLinkComponent;
   }
 }

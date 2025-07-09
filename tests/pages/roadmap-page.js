@@ -28,12 +28,12 @@ export default createPage({
     return this.courseIdeaCards.toArray().find((card) => card.name === name);
   },
 
-  selectedCourseName: text('[data-test-challenge-dropdown-trigger] [data-test-current-challenge-name]'),
+  selectedCourseName: text('[data-test-course-dropdown-trigger] [data-test-current-course-name]'),
 
-  challengeDropdown: {
-    scope: '[data-test-challenge-dropdown]',
-    toggle: clickable('[data-test-challenge-dropdown-trigger]'),
-    clickOnChallenge: clickOnText('[data-test-challenge-link]'),
+  courseDropdown: {
+    scope: '[data-test-course-dropdown]',
+    toggle: clickable('[data-test-course-dropdown-trigger]'),
+    clickOnCourse: clickOnText('[data-test-course-link]', { resetScope: true }),
   },
 
   visit: visitable('/roadmap'), // Should redirect to /roadmap/challenges

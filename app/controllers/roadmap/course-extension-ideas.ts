@@ -43,7 +43,7 @@ export default class CourseExtensionIdeasController extends Controller {
   }
 
   @action
-  handleChallengeChange(challenge: CourseModel) {
-    this.selectedCourseSlug = challenge.slug;
+  handleCourseChange(course: CourseModel) {
+    this.selectedCourseSlug = course.slug;
   }
 }

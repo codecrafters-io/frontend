@@ -7,6 +7,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeDateService from 'codecrafters-frontend/tests/support/fake-date-service';
+import { settled } from '@ember/test-helpers';
 
 module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
   setupApplicationTest(hooks);
@@ -217,23 +218,18 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     await roadmapPage.visitCourseExtensionIdeasTab();
 
-    // Initially should show the default selected course
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
 
-    // Open the dropdown
-    await roadmapPage.challengeDropdown.toggle();
+    await roadmapPage.courseDropdown.toggle();
+    await settled();
 
-    // Click on a different challenge
-    await roadmapPage.challengeDropdown.clickOnChallenge('Build your own SQLite');
+    await roadmapPage.courseDropdown.clickOnCourse('Build your own SQLite');
 
-    // Should now show the new selected challenge
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own SQLite');
 
-    // The course extension ideas should be filtered to show only SQLite-related ideas
     const courseExtensionIdeaCards = roadmapPage.courseExtensionIdeaCards;
     assert.true(courseExtensionIdeaCards.length > 0, 'should show course extension ideas for the selected challenge');
 
-    // Should show the specific SQLite course extension idea
     const insertRowsCard = roadmapPage.findCourseExtensionIdeaCard('Insert rows');
     assert.ok(insertRowsCard, 'should show the "Insert rows" course extension idea for SQLite');
   });
