@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
+import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 
@@ -10,6 +11,7 @@ export default class CourseIdeasController extends Controller {
 
   declare model: {
     courseIdeas: CourseIdeaModel[];
+    courseExtensionIdeas: CourseExtensionIdeaModel[];
   };
 
   get orderedCourseIdeas() {
@@ -17,7 +19,7 @@ export default class CourseIdeasController extends Controller {
   }
 
   get releasedCourseExtensionIdeas() {
-    return this.store.peekAll('course-extension-idea').filterBy('developmentStatusIsReleased');
+    return this.model.courseExtensionIdeas.filterBy('developmentStatusIsReleased');
   }
 
   get releasedCourseIdeas() {
