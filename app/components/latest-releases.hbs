@@ -1,17 +1,17 @@
-<div class="bg-white dark:bg-gray-850 rounded-md border shadow-sm dark:border-white/10 p-5">
-  <h4 class="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+<div class="bg-white dark:bg-gray-850 rounded-md border shadow-sm dark:border-white/10 p-5" data-test-latest-releases>
+  <h4 class="font-semibold text-gray-700 dark:text-gray-200 mb-3" data-test-latest-releases-title>
     Latest Releases
   </h4>
   {{#each this.releases as |release releaseIndex|}}
-    <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.releases.length 1)) 'pb-4'}}">
+    <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.releases.length 1)) 'pb-4'}}" data-test-latest-release-item>
       <div class="w-2 h-2 bg-gray-200 dark:bg-gray-600 rounded-full mt-1 flex-shrink-0"></div>
       <div class="w-full">
         <div class="flex items-center gap-1 mb-1">
-          <div class="text-xs text-gray-400 dark:text-gray-500">{{release.timestampText}}</div>
+          <div class="text-xs text-gray-400 dark:text-gray-500" data-test-latest-release-timestamp>{{release.timestampText}}</div>
           <span class="text-gray-300 dark:text-gray-600 text-xs">
             •
           </span>
-          <Pill @color="gray" @size="small">
+          <Pill @color="gray" @size="small" data-test-latest-release-type>
             {{if (eq release.type "extension") "EXTENSION" "CHALLENGE"}}
           </Pill>
         </div>
@@ -20,6 +20,7 @@
           target="_blank"
           rel="noopener noreferrer"
           class="text-sm text-gray-700 dark:text-gray-200 hover:underline leading-snug block"
+          data-test-latest-release-title
         >{{release.title}}</a>
       </div>
 
@@ -39,6 +40,7 @@
       target="_blank"
       rel="noopener noreferrer"
       class="text-xs text-gray-400 dark:text-gray-500 hover:underline"
+      data-test-latest-releases-view-more-link
     >
       View more...
     </a>

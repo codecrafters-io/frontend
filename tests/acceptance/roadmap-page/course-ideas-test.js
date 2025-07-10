@@ -1,5 +1,6 @@
 import roadmapPage from 'codecrafters-frontend/tests/pages/roadmap-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
+import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
@@ -207,5 +208,82 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       'Build your own Regex Parser',
     ];
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
+  });
+
+  // Latest Releases Tests
+  test('latest releases component renders correctly', async function (assert) {
+    testScenario(this.server);
+
+    createCourseIdeas(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    const courseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own Regex Parser' });
+    courseIdea.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-15'),
+      announcementUrl: 'https://example.com/regex-parser-released',
+    });
+
+    const courseIdea2 = this.server.schema.courseIdeas.findBy({ name: 'Build your own HTTP Server' });
+    courseIdea2.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-14'),
+      announcementUrl: 'https://example.com/http-server-released',
+    });
+
+    const courseIdea3 = this.server.schema.courseIdeas.findBy({ name: 'Build your own Shell' });
+    courseIdea3.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-13'),
+      announcementUrl: 'https://example.com/shell-released',
+    });
+
+    const courseIdea4 = this.server.schema.courseIdeas.findBy({ name: 'Build your own BitTorrent client' });
+    courseIdea4.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-12'),
+      announcementUrl: 'https://example.com/bittorrent-released',
+    });
+
+    const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
+    courseIdea5.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-11'),
+      announcementUrl: 'https://example.com/react-released',
+    });
+
+    const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    courseExtensionIdea.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-10'),
+      announcementUrl: 'https://example.com/redis-persistence-released',
+    });
+
+    const courseIdeaInProgress = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
+    courseIdeaInProgress.update({ developmentStatus: 'in_progress' });
+
+    const courseExtensionIdeaNotStarted = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    courseExtensionIdeaNotStarted.update({ developmentStatus: 'not_started' });
+
+    await roadmapPage.visit();
+    await percySnapshot('Latest Releases');
+
+    assert.strictEqual(roadmapPage.latestReleases.title, 'Latest Releases', 'should show correct title');
+    assert.strictEqual(roadmapPage.latestReleases.viewMoreLink, 'View more...', 'should show view more link');
+
+    const releaseItems = roadmapPage.latestReleases.releaseItems;
+    assert.strictEqual(releaseItems.length, 5, 'should show only 5 release items (limit)');
+
+    const timestamps = releaseItems.map((item) => item.timestamp);
+    const expectedTimestamps = ['Jan 15, 2024', 'Jan 14, 2024', 'Jan 13, 2024', 'Jan 12, 2024', 'Jan 10, 2024'];
+    assert.deepEqual(timestamps, expectedTimestamps, 'items should be sorted by release date');
+
+    assert.strictEqual(releaseItems[0].title, 'Build your own Regex Parser', 'first item should be most recent');
+    assert.strictEqual(releaseItems[0].type, 'CHALLENGE', 'first item should be challenge type');
+    assert.strictEqual(releaseItems[0].timestamp, 'Jan 15, 2024', 'first item should have correct timestamp');
+
+    assert.strictEqual(releaseItems[4].title, 'Persistence', 'last item should be oldest of the 5 shown');
+    assert.strictEqual(releaseItems[4].type, 'EXTENSION', 'last item should be extension type');
+    assert.strictEqual(releaseItems[4].timestamp, 'Jan 10, 2024', 'last item should have correct timestamp');
   });
 });
