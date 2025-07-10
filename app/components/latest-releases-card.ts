@@ -17,7 +17,7 @@ interface Release {
   type: 'extension' | 'challenge';
 }
 
-export default class LatestReleasesComponent extends Component<Signature> {
+export default class LatestReleasesCardComponent extends Component<Signature> {
   get releases(): Release[] {
     const releases: Release[] = [];
 
