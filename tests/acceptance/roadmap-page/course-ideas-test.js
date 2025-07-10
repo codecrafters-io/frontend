@@ -259,9 +259,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/redis-persistence-released',
     });
 
-    const courseIdeaInProgress = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
-    courseIdeaInProgress.update({ developmentStatus: 'in_progress' });
-
     const courseExtensionIdeaNotStarted = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
     courseExtensionIdeaNotStarted.update({ developmentStatus: 'not_started' });
 
