@@ -49,6 +49,6 @@ export default class LatestReleasesComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LatestReleases: typeof LatestReleasesComponent;
+    LatestReleasesCard: typeof LatestReleasesCardComponent;
   }
 }
