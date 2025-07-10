@@ -1,41 +1,14 @@
 <div class="flex flex-col md:flex-row-reverse gap-3">
   <div class="w-full md:w-60 flex-shrink-0">
     <div class="md:sticky md:top-4 flex flex-col gap-3">
-      <Alert @color="blue" class="p-5 block md:hidden">
-        <div class="prose prose-sm prose-blue prose-compact">
-          <h4>
-            <div class="flex items-center gap-1">
-              {{svg-jar "information-circle" class="w-5 h-5 fill-current text-blue-500/80"}}
-              <span>
-                What are challenge extensions?
-              </span>
-            </div>
-          </h4>
-          <p>
-            Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
-          </p>
-        </div>
-      </Alert>
 
-      <LatestReleases />
+      <LatestReleases @courseExtensionIdeas={{this.releasedCourseExtensionIdeas}} @courseIdeas={{this.releasedCourseIdeas}} />
     </div>
   </div>
   <div class="flex-grow flex flex-col gap-3">
-    <Alert @color="blue" class="p-5 hidden md:block">
-      <div class="prose prose-sm prose-blue prose-compact">
-        <h4>
-          <div class="flex items-center gap-1">
-            {{svg-jar "information-circle" class="w-5 h-5 fill-current text-blue-500/80"}}
-            <span>
-              What are challenge extensions?
-            </span>
-          </div>
-        </h4>
-        <p>
-          Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
-        </p>
-      </div>
-    </Alert>
+    <RoadmapInfoAlert @heading="What are challenge extensions?" class="hidden md:block">
+      Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
+    </RoadmapInfoAlert>
     <div class="flex items-center mb-6">
       <CourseDropdown
         @courses={{this.orderedCourses}}

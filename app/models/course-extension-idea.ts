@@ -12,13 +12,13 @@ export default class CourseExtensionIdeaModel extends Model {
 
   @hasMany('course-extension-idea-vote', { async: false, inverse: 'courseExtensionIdea' }) declare currentUserVotes: CourseExtensionIdeaVoteModel[];
 
+  @attr('string') declare announcementUrl: string | null;
   @attr('date') declare createdAt: Date;
-  @attr('date') declare releasedAt: Date | null;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare developmentStatus: string;
   @attr('string') declare name: string;
+  @attr('date') declare releasedAt: Date | null;
   @attr('string') declare slug: string;
-  @attr('string') declare announcementUrl: string | null;
   @attr('number') declare votesCount: number;
 
   @service declare authenticator: AuthenticatorService;

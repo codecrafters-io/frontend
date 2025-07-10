@@ -210,7 +210,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
   });
 
-  // Latest Releases Tests
   test('latest releases component renders correctly', async function (assert) {
     testScenario(this.server);
 
@@ -227,35 +226,35 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     const courseIdea2 = this.server.schema.courseIdeas.findBy({ name: 'Build your own HTTP Server' });
     courseIdea2.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-14'),
+      releasedAt: new Date('2024-02-14'),
       announcementUrl: 'https://example.com/http-server-released',
     });
 
     const courseIdea3 = this.server.schema.courseIdeas.findBy({ name: 'Build your own Shell' });
     courseIdea3.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-13'),
+      releasedAt: new Date('2024-03-13'),
       announcementUrl: 'https://example.com/shell-released',
     });
 
     const courseIdea4 = this.server.schema.courseIdeas.findBy({ name: 'Build your own BitTorrent client' });
     courseIdea4.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-12'),
+      releasedAt: new Date('2024-04-12'),
       announcementUrl: 'https://example.com/bittorrent-released',
     });
 
     const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
     courseIdea5.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-09'),
+      releasedAt: new Date('2024-05-09'),
       announcementUrl: 'https://example.com/react-released',
     });
 
     const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
     courseExtensionIdea.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-10'),
+      releasedAt: new Date('2024-06-10'),
       announcementUrl: 'https://example.com/redis-persistence-released',
     });
 
@@ -272,15 +271,15 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     assert.strictEqual(releaseItems.length, 5, 'should show only 5 release items (limit)');
 
     const timestamps = releaseItems.map((item) => item.timestamp);
-    const expectedTimestamps = ['Jan 15, 2024', 'Jan 14, 2024', 'Jan 13, 2024', 'Jan 12, 2024', 'Jan 10, 2024'];
+    const expectedTimestamps = ['Jun 2024', 'May 2024', 'Apr 2024', 'Mar 2024', 'Feb 2024'];
     assert.deepEqual(timestamps, expectedTimestamps, 'items should be sorted by release date');
 
-    assert.strictEqual(releaseItems[0].title, 'Build your own Regex Parser', 'first item should be most recent');
-    assert.strictEqual(releaseItems[0].type, 'CHALLENGE', 'first item should be challenge type');
-    assert.strictEqual(releaseItems[0].timestamp, 'Jan 15, 2024', 'first item should have correct timestamp');
+    assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'first item should be most recent');
+    assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'first item should be extension type');
+    assert.strictEqual(releaseItems[0].timestamp, 'Jun 2024', 'first item should have correct timestamp');
 
-    assert.strictEqual(releaseItems[4].title, 'Persistence', 'last item should be oldest of the 5 shown');
-    assert.strictEqual(releaseItems[4].type, 'EXTENSION', 'last item should be extension type');
-    assert.strictEqual(releaseItems[4].timestamp, 'Jan 10, 2024', 'last item should have correct timestamp');
+    assert.strictEqual(releaseItems[4].title, 'Build your own HTTP Server', 'last item should be oldest of the 5 shown');
+    assert.strictEqual(releaseItems[4].type, 'CHALLENGE', 'last item should be challenge type');
+    assert.strictEqual(releaseItems[4].timestamp, 'Feb 2024', 'last item should have correct timestamp');
   });
 });

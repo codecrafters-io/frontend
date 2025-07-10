@@ -38,6 +38,14 @@ export default class CourseExtensionIdeasController extends Controller {
       .sortBy('sortPositionForTrack');
   }
 
+  get releasedCourseExtensionIdeas() {
+    return this.model.courseExtensionIdeas.filterBy('developmentStatusIsReleased');
+  }
+
+  get releasedCourseIdeas() {
+    return this.store.peekAll('course-idea').filterBy('developmentStatusIsReleased');
+  }
+
   get selectedCourse() {
     return this.store.peekAll('course').findBy('slug', this.selectedCourseSlug);
   }

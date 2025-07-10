@@ -259,7 +259,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     const releaseItems = roadmapPage.latestReleases.releaseItems;
     assert.strictEqual(releaseItems.length, 1, 'should show 1 release item');
-    assert.strictEqual(releaseItems[0].title, 'Persistence', 'should show the released extension');
+    assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'should show the released extension');
     assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'should show correct type');
   });
 });
