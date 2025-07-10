@@ -248,7 +248,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
     courseIdea5.update({
       developmentStatus: 'released',
-      releasedAt: new Date('2024-01-11'),
+      releasedAt: new Date('2024-01-09'),
       announcementUrl: 'https://example.com/react-released',
     });
 

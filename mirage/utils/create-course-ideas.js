@@ -9,6 +9,8 @@ export default function createCourseIdeas(server) {
       isArchived: courseIdeaData.is_archived || false,
       name: courseIdeaData.name,
       votesCount: 0,
+      releasedAt: null,
+      announcementUrl: null,
     });
   }
 }

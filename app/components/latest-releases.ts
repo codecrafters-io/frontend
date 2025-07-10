@@ -32,7 +32,7 @@ export default class LatestReleasesComponent extends Component<Signature> {
           type: 'extension',
           title: idea.name,
           releaseDate: idea.releasedAt,
-          announcementUrl: idea.announcementUrl!,
+          announcementUrl: idea.announcementUrl || undefined,
         });
       }
     });
@@ -44,7 +44,7 @@ export default class LatestReleasesComponent extends Component<Signature> {
           type: 'challenge',
           title: idea.name,
           releaseDate: idea.releasedAt,
-          announcementUrl: idea.announcementUrl!,
+          announcementUrl: idea.announcementUrl || undefined,
         });
       }
     });

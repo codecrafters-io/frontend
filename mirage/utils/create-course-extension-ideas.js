@@ -10,6 +10,8 @@ export default function createCourseExtensionIdeas(server) {
       name: courseExtensionIdeaData.name,
       slug: courseExtensionIdeaData.slug,
       votesCount: 0,
+      releasedAt: null,
+      announcementUrl: null,
     });
   }
 }
