@@ -218,44 +218,50 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
 
     const courseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own Regex Parser' });
     courseIdea.update({
+      announcementUrl: 'https://example.com/regex-parser-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-01-15'),
-      announcementUrl: 'https://example.com/regex-parser-released',
+      shortName: 'Grep',
     });
 
     const courseIdea2 = this.server.schema.courseIdeas.findBy({ name: 'Build your own HTTP Server' });
     courseIdea2.update({
+      announcementUrl: 'https://example.com/http-server-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-02-14'),
-      announcementUrl: 'https://example.com/http-server-released',
+      shortName: 'HTTP Server',
     });
 
     const courseIdea3 = this.server.schema.courseIdeas.findBy({ name: 'Build your own Shell' });
     courseIdea3.update({
+      announcementUrl: 'https://example.com/shell-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-03-13'),
-      announcementUrl: 'https://example.com/shell-released',
+      shortName: 'Shell',
     });
 
     const courseIdea4 = this.server.schema.courseIdeas.findBy({ name: 'Build your own BitTorrent client' });
     courseIdea4.update({
+      announcementUrl: 'https://example.com/bittorrent-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-04-12'),
-      announcementUrl: 'https://example.com/bittorrent-released',
+      shortName: 'BitTorrent',
     });
 
     const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
     courseIdea5.update({
+      announcementUrl: 'https://example.com/react-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-05-09'),
-      announcementUrl: 'https://example.com/react-released',
+      shortName: 'React',
     });
 
     const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
     courseExtensionIdea.update({
+      announcementUrl: 'https://example.com/redis-persistence-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-06-10'),
-      announcementUrl: 'https://example.com/redis-persistence-released',
+      shortName: 'Redis',
     });
 
     const courseExtensionIdeaNotStarted = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
