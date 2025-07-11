@@ -12,38 +12,38 @@ interface Signature {
 
 interface Release {
   announcementUrl?: string;
-  releaseDate: Date;
+  releasedAt: Date;
   title: string;
-  type: 'extension' | 'challenge';
+  type: 'challenge' | 'extension';
 }
 
 export default class LatestReleasesCardComponent extends Component<Signature> {
   get releases(): Release[] {
     const releases: Release[] = [];
 
-    this.args.courseExtensionIdeas.forEach((idea: CourseExtensionIdeaModel) => {
-      if (idea.releasedAt) {
+    (this.args.courseExtensionIdeas ?? [])
+      .filter((idea: CourseExtensionIdeaModel) => idea.developmentStatusIsReleased && idea.releasedAt)
+      .forEach((idea: CourseExtensionIdeaModel) => {
         releases.push({
-          type: 'extension',
+          announcementUrl: idea.announcementUrl!,
+          releasedAt: idea.releasedAt!,
           title: `${idea.course.shortName} / ${idea.name}`,
-          releaseDate: idea.releasedAt,
-          announcementUrl: idea.announcementUrl || undefined,
+          type: 'extension',
         });
-      }
-    });
+      });
 
-    this.args.courseIdeas.forEach((idea: CourseIdeaModel) => {
-      if (idea.releasedAt) {
+    (this.args.courseIdeas ?? [])
+      .filter((idea: CourseIdeaModel) => idea.developmentStatusIsReleased && idea.releasedAt)
+      .forEach((idea: CourseIdeaModel) => {
         releases.push({
-          type: 'challenge',
+          announcementUrl: idea.announcementUrl!,
+          releasedAt: idea.releasedAt!,
           title: idea.name,
-          releaseDate: idea.releasedAt,
-          announcementUrl: idea.announcementUrl || undefined,
+          type: 'challenge',
         });
-      }
-    });
+      });
 
-    return releases.sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime()).slice(0, 5);
+    return releases.sort((a, b) => b.releasedAt.getTime() - a.releasedAt.getTime()).slice(0, 5);
   }
 }
 

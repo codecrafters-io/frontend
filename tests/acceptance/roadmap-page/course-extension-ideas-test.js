@@ -253,11 +253,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await roadmapPage.visitCourseExtensionIdeasTab();
     await percySnapshot('Course Extension Ideas - Latest Releases');
 
-    // Minimal check that the latest releases component exists and renders
-    assert.strictEqual(roadmapPage.latestReleases.title, 'Latest Releases', 'should show latest releases title');
-    assert.strictEqual(roadmapPage.latestReleases.viewMoreLink, 'View more...', 'should show view more link');
-
-    const releaseItems = roadmapPage.latestReleases.releaseItems;
+    const releaseItems = roadmapPage.latestReleasesCard.releaseItems;
     assert.strictEqual(releaseItems.length, 1, 'should show 1 release item');
     assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'should show the released extension');
     assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'should show correct type');

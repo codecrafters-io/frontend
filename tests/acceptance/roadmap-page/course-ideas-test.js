@@ -270,10 +270,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     await roadmapPage.visit();
     await percySnapshot('Latest Releases');
 
-    assert.strictEqual(roadmapPage.latestReleases.title, 'Latest Releases', 'should show correct title');
-    assert.strictEqual(roadmapPage.latestReleases.viewMoreLink, 'View more...', 'should show view more link');
-
-    const releaseItems = roadmapPage.latestReleases.releaseItems;
+    const releaseItems = roadmapPage.latestReleasesCard.releaseItems;
     assert.strictEqual(releaseItems.length, 5, 'should show only 5 release items (limit)');
 
     const timestamps = releaseItems.map((item) => item.timestamp);

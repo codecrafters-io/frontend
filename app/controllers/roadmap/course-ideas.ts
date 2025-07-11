@@ -14,15 +14,15 @@ export default class CourseIdeasController extends Controller {
     courseExtensionIdeas: CourseExtensionIdeaModel[];
   };
 
+  get courseExtensionIdeas() {
+    return this.model.courseExtensionIdeas;
+  }
+
+  get courseIdeas() {
+    return this.model.courseIdeas;
+  }
+
   get orderedCourseIdeas() {
     return this.model.courseIdeas.rejectBy('isArchived').sortBy('sortPositionForRoadmapPage');
-  }
-
-  get releasedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filterBy('developmentStatusIsReleased');
-  }
-
-  get releasedCourseIdeas() {
-    return this.model.courseIdeas.filterBy('developmentStatusIsReleased');
   }
 }

@@ -4,7 +4,6 @@ interface Signature {
   Element: HTMLDivElement;
   Args: {
     heading: string;
-    class?: string;
   };
   Blocks: {
     default: [];
