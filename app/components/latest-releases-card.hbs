@@ -1,0 +1,50 @@
+<div class="bg-white dark:bg-gray-850 rounded-md border shadow-sm dark:border-white/10 p-5" data-test-latest-releases-card>
+  <h4 class="font-semibold text-gray-700 dark:text-gray-200 mb-3">
+    Latest Releases
+  </h4>
+  {{#each this.releases as |release releaseIndex|}}
+    <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.releases.length 1)) 'pb-4'}}" data-test-latest-release-item>
+      <div class="w-2 h-2 bg-gray-200 dark:bg-gray-600 rounded-full mt-1 flex-shrink-0"></div>
+      <div class="w-full">
+        <div class="flex items-center gap-1 mb-1">
+          <div class="text-xxs text-gray-400 dark:text-gray-500" data-test-latest-release-timestamp>{{date-format
+              release.releasedAt
+              format="MMM yyyy"
+            }}</div>
+          <span class="text-gray-300 dark:text-gray-600 text-xs">
+            •
+          </span>
+          <Pill @color="gray" @size="small" data-test-latest-release-type>
+            {{if (eq release.type "extension") "EXTENSION" "CHALLENGE"}}
+          </Pill>
+        </div>
+        <a
+          href="{{or release.announcementUrl 'https://forum.codecrafters.io/c/announcements'}}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm text-gray-700 dark:text-gray-200 hover:underline leading-snug block"
+          data-test-latest-release-title
+        >{{release.title}}</a>
+      </div>
+
+      {{#if (eq releaseIndex 0)}}
+        <div class="absolute bottom-0 top-1 left-[calc(0.25em-0.5px)] w-px bg-gray-200 dark:bg-gray-600"></div>
+      {{else if (eq releaseIndex (sub this.releases.length 1))}}
+        <div class="absolute h-1 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200 dark:bg-gray-600"></div>
+      {{else}}
+        <div class="absolute bottom-0 top-0 left-[calc(0.25em-0.5px)] w-px bg-gray-200 dark:bg-gray-600"></div>
+      {{/if}}
+    </div>
+  {{/each}}
+
+  <div class="w-full flex justify-start pl-4 mt-3">
+    <a
+      href="https://forum.codecrafters.io/c/announcements"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-xs text-gray-400 dark:text-gray-500 hover:underline"
+    >
+      View more...
+    </a>
+  </div>
+</div>

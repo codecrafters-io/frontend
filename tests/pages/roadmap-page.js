@@ -20,6 +20,15 @@ export default createPage({
     voteCountText: text('[data-test-vote-count]'),
   }),
 
+  latestReleasesCard: {
+    releaseItems: collection('[data-test-latest-release-item]', {
+      timestamp: text('[data-test-latest-release-timestamp]'),
+      title: text('[data-test-latest-release-title]'),
+      type: text('[data-test-latest-release-type]'),
+    }),
+    scope: '[data-test-latest-releases-card]',
+  },
+
   findCourseExtensionIdeaCard(name) {
     return this.courseExtensionIdeaCards.toArray().find((card) => card.name === name);
   },

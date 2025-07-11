@@ -3,12 +3,14 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
+import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
 export default class CourseExtensionIdeasController extends Controller {
   declare model: {
+    courseIdeas: CourseIdeaModel[];
     courseExtensionIdeas: CourseExtensionIdeaModel[];
   };
 
@@ -22,6 +24,14 @@ export default class CourseExtensionIdeasController extends Controller {
 
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
+
+  get courseExtensionIdeas() {
+    return this.model.courseExtensionIdeas;
+  }
+
+  get courseIdeas() {
+    return this.model.courseIdeas;
+  }
 
   get orderedCourseExtensionIdeas() {
     return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('sortPositionForRoadmapPage');
