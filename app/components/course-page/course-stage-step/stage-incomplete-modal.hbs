@@ -14,16 +14,16 @@
       @route={{this.coursePageState.activeStep.routeParams.route}}
       @models={{this.coursePageState.activeStep.routeParams.models}}
       data-test-instructions-button
-      class="flex-shrink-0"
+      class="shrink-0"
     >
       <div class="flex items-center">
-        {{svg-jar "arrow-left" class="w-4 mr-1 fill-current flex-shrink-0"}}
+        {{svg-jar "arrow-left" class="w-4 mr-1 fill-current shrink-0"}}
         <span>No, back to instructions</span>
       </div>
     </PrimaryLinkButton>
 
     <div
-      class="text-gray-500 hover:text-gray-800 dark:text-gray-300 text-sm pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 flex-shrink-0"
+      class="text-gray-500 hover:text-gray-800 dark:text-gray-300 text-sm pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 shrink-0"
       role="button"
       {{on "click" @onClose}}
       data-test-show-code-button

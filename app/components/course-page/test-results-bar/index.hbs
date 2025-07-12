@@ -7,7 +7,7 @@
   {{#if this.isExpanded}}
     {{! template-lint-disable no-pointer-down-event-binding }}
     <div
-      class="absolute bg-gray-700 hover:bg-gray-500 cursor-ns-resize h-1 rounded top-1 w-12 z-10"
+      class="absolute bg-gray-700 hover:bg-gray-500 cursor-ns-resize h-1 rounded-sm top-1 w-12 z-10"
       role="button"
       {{on "mousedown" this.startResize}}
       {{on "touchstart" this.startResize}}
@@ -18,7 +18,7 @@
   {{/if}}
 
   <div
-    class="relative w-full max-w-screen-lg xl:max-w-screen-xl flex flex-col flex-grow overflow-auto {{unless this.isExpanded 'h-0'}}"
+    class="relative w-full max-w-(--breakpoint-lg) xl:max-w-(--breakpoint-xl) flex flex-col grow overflow-auto {{unless this.isExpanded 'h-0'}}"
     data-test-contents
   >
     {{#if this.isExpanded}}
@@ -27,7 +27,7 @@
         @activeTabSlug={{this.activeTabSlug}}
         @onActiveTabSlugChange={{fn (mut this.activeTabSlug)}}
         @availableTabSlugs={{this.availableTabSlugs}}
-        class="my-3 px-6"
+        class="mt-3 mb-3 px-6"
       />
 
       {{#if (eq this.activeTabSlug "logs")}}
@@ -35,14 +35,14 @@
           @activeStep={{@activeStep}}
           @currentStep={{@currentStep}}
           @repository={{@repository}}
-          class="flex-grow border-b border-gray-800 overflow-y-auto px-6"
+          class="grow border-b border-gray-800 overflow-y-auto px-6"
         />
       {{else if (eq this.activeTabSlug "autofix")}}
         <CoursePage::TestResultsBar::AutofixSection
           @activeStep={{@activeStep}}
           @currentStep={{@currentStep}}
           @repository={{@repository}}
-          class="flex-grow border-b border-gray-800 overflow-y-auto px-6"
+          class="grow border-b border-gray-800 overflow-y-auto px-6"
         />
       {{/if}}
 

@@ -1,5 +1,5 @@
 <div
-  class="rounded border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}} scroll-mt-20"
+  class="rounded-sm border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}} scroll-mt-20"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
@@ -12,7 +12,7 @@
     @isExpanded={{this.isExpanded}}
     @onCollapseButtonClick={{this.handleCollapseButtonClick}}
     @textColorClasses={{this.headerTextColorClasses}}
-    class={{if this.isExpanded "border-b dark:border-white/5" ""}}
+    class={{if this.isExpanded "border-b border-gray-200 dark:border-white/5" ""}}
   />
 
   {{#if this.isExpanded}}

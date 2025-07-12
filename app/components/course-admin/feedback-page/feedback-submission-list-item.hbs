@@ -1,7 +1,7 @@
 <div class="flex items-start py-4 hover:bg-gray-50 px-0.5" data-test-feedback-list-item>
-  <div class="w-40 pr-3 flex-shrink-0 pt-1">
+  <div class="w-40 pr-3 shrink-0 pt-1">
     <LinkTo @route="course-admin.submissions" @query={{hash usernames=@feedbackSubmission.user.username}} class="flex items-center w-32 group">
-      <AvatarImage @user={{@feedbackSubmission.user}} class="w-5 h-5 mr-1.5 filter drop-shadow-sm ring-1 ring-gray-300 rounded-full" />
+      <AvatarImage @user={{@feedbackSubmission.user}} class="w-5 h-5 mr-1.5 filter drop-shadow-xs ring-1 ring-gray-300 rounded-full" />
       <span class="text-gray-500 text-xs truncate group-hover:underline group-hover:text-gray-600">
         {{@feedbackSubmission.user.username}}
       </span>
@@ -24,11 +24,11 @@
     </div>
   </div>
 
-  <div class="text-2xl px-3 flex-shrink-0">
+  <div class="text-2xl px-3 shrink-0">
     {{@feedbackSubmission.selectedAnswer}}
   </div>
 
-  <div class="flex-grow px-3">
+  <div class="grow px-3">
     <div class="prose dark:prose-invert prose-sm">
       {{#if @feedbackSubmission.explanation}}
         {{markdown-to-html @feedbackSubmission.explanation}}
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="flex-shrink-0 pl-3">
+  <div class="shrink-0 pl-3">
     {{#if @feedbackSubmission.isAcknowledgedByStaff}}
       <TertiaryButton @size="extra-small" {{on "click" this.handleUnacknowledgeButtonClick}}>
         Unacknowledge

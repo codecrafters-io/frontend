@@ -1,5 +1,5 @@
 <div
-  class="bg-white dark:bg-gray-850 rounded-md shadow-sm border border-gray-200 dark:border-white/5 relative w-full group"
+  class="bg-white dark:bg-gray-850 rounded-md shadow-xs border border-gray-200 dark:border-white/5 relative w-full group"
   data-test-track-page-card
   ...attributes
 >
@@ -27,7 +27,7 @@
           {{yield to="afterTitle"}}
         {{/if}}
       </div>
-      <div class="pl-4 flex-shrink-0">
+      <div class="pl-4 shrink-0">
         {{#if @isComplete}}
           {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
         {{else if (and @logoImageUrl @logoImageAltText)}}

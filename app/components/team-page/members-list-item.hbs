@@ -1,11 +1,12 @@
 <div
-  class="flex items-center justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2 {{if @membership.isAdmin 'cursor-not-allowed'}}"
+  class="flex items-center justify-between group p-2 pr-3 hover:bg-gray-50 border border-gray-200 rounded-sm mb-2
+    {{if @membership.isAdmin 'cursor-not-allowed'}}"
   data-test-members-list-item-container
 >
   <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center hover:underline" target="_blank" rel="noopener noreferrer">
     <AvatarImage
       @user={{@membership.user}}
-      class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+      class="w-8 h-8 border border-gray-300 rounded-sm shadow-xs group-hover:shadow-sm mr-2 transition-shadow rounded-md"
     />
 
     <div>
@@ -26,7 +27,7 @@
     </div>
   </a>
   <div class="flex items-center">
-    <div class="flex items-center mx-2">
+    <div class="flex items-center ml-2 mr-2">
       {{#each this.sortedCourses as |course|}}
         <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user started the {{course.name}} challenge." />
       {{/each}}

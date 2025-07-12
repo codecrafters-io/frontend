@@ -34,19 +34,6 @@ module.exports = function (defaults) {
 
     'ember-cli-babel': { enableTypeScriptTransform: true },
 
-    postcssOptions: {
-      compile: {
-        plugins: [
-          {
-            module: require('postcss-import'),
-            options: {
-              path: ['node_modules'],
-            },
-          },
-        ],
-      },
-    },
-
     sourcemaps: { enabled: true },
 
     svgJar: {
@@ -125,6 +112,10 @@ module.exports = function (defaults) {
         devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
         module: {
           rules: [
+            {
+              test: /\.css$/i,
+              use: ['postcss-loader'],
+            },
             {
               test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico|lottie\.json)$/,
               type: 'asset/resource',

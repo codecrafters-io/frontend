@@ -1,9 +1,9 @@
 <div class="flex justify-center items-center" ...attributes>
-  <div class="flex flex-col items-center max-w-xs bg-white px-4 py-12 border rounded-lg shadow-lg">
+  <div class="flex flex-col items-center max-w-xs bg-white px-4 py-12 border border-gray-200 rounded-lg shadow-lg">
     <div class="flex items-center justify-center">
       <AvatarImage
         @user={{@referralLink.user}}
-        class="w-16 h-16 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow"
+        class="w-16 h-16 border border-gray-300 rounded-sm shadow-xs group-hover:shadow-sm mr-2 transition-shadow"
       />
 
       {{svg-jar "plus" class="w-10 h-10 text-gray-600 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
@@ -19,7 +19,7 @@
     </div>
 
     {{#if this.currentUserAlreadyAcceptedReferralOffer}}
-      <div class="py-6 px-5 mt-6 rounded bg-teal-50 border border-teal-600 prose" data-test-accepted-referral-notice>
+      <div class="py-6 px-5 mt-6 rounded-sm bg-teal-50 border border-teal-600 prose" data-test-accepted-referral-notice>
         <p>
           🎉 Offer Accepted!
         </p>

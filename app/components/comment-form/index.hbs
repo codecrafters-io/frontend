@@ -24,7 +24,7 @@
         <Textarea
           {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
           @value={{this.comment.bodyMarkdown}}
-          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded w-full p-2 text-sm bg-gray-100 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-600"
+          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded-sm w-full p-2 text-sm bg-gray-100 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-teal-600"
           placeholder={{this.placeholderText}}
           rows="5"
           required="true"
@@ -33,7 +33,7 @@
         />
       {{else if (eq this.activeTab "preview")}}
         {{! template-lint-disable no-inline-styles }}
-        <div class="px-2 py-2 border-b-2 dark:border-white/5 mb-2" style="min-height: 135px;">
+        <div class="px-2 py-2 border-b-2 border-gray-200 dark:border-white/5 mb-2" style="min-height: 135px;">
           <div
             class="leading-relaxed prose-sm prose dark:prose-invert max-w-none break-words comment-body"
             {{did-insert this.handleDidInsertBodyHTML}}
