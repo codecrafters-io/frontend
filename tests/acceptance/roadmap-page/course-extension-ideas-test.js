@@ -254,8 +254,12 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     await percySnapshot('Course Extension Ideas - Latest Releases');
 
     const releaseItems = roadmapPage.latestReleasesCard.releaseItems;
-    assert.strictEqual(releaseItems.length, 1, 'should show 1 release item');
+    assert.strictEqual(releaseItems.length, 3, 'should show 3 release items');
     assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'should show the released extension');
     assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'should show correct type');
+    assert.strictEqual(releaseItems[1].title, 'Build your own Regex Parser', 'should show the released challenge');
+    assert.strictEqual(releaseItems[1].type, 'CHALLENGE', 'should show correct type');
+    assert.strictEqual(releaseItems[2].title, 'Build your own SQLite', 'should show the released challenge');
+    assert.strictEqual(releaseItems[2].type, 'CHALLENGE', 'should show correct type');
   });
 });

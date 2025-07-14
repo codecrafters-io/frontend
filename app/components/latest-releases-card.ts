@@ -21,8 +21,8 @@ export default class LatestReleasesCardComponent extends Component<Signature> {
   get releases(): Release[] {
     const releases: Release[] = [];
 
-    (this.args.courseExtensionIdeas ?? [])
-      .filter((idea: CourseExtensionIdeaModel) => idea.developmentStatusIsReleased && idea.releasedAt)
+    this.args.courseExtensionIdeas
+      .filter((idea: CourseExtensionIdeaModel) => idea.developmentStatusIsReleased)
       .forEach((idea: CourseExtensionIdeaModel) => {
         releases.push({
           announcementUrl: idea.announcementUrl!,
@@ -32,8 +32,8 @@ export default class LatestReleasesCardComponent extends Component<Signature> {
         });
       });
 
-    (this.args.courseIdeas ?? [])
-      .filter((idea: CourseIdeaModel) => idea.developmentStatusIsReleased && idea.releasedAt)
+    this.args.courseIdeas
+      .filter((idea: CourseIdeaModel) => idea.developmentStatusIsReleased)
       .forEach((idea: CourseIdeaModel) => {
         releases.push({
           announcementUrl: idea.announcementUrl!,

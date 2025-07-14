@@ -25,14 +25,6 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  get courseExtensionIdeas() {
-    return this.model.courseExtensionIdeas;
-  }
-
-  get courseIdeas() {
-    return this.model.courseIdeas;
-  }
-
   get orderedCourseExtensionIdeas() {
     return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('sortPositionForRoadmapPage');
   }
