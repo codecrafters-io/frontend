@@ -1,5 +1,6 @@
 import roadmapPage from 'codecrafters-frontend/tests/pages/roadmap-page';
 import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
+import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
@@ -221,6 +222,7 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
     assert.strictEqual(roadmapPage.selectedCourseName, 'Build your own Redis');
 
     await roadmapPage.courseDropdown.toggle();
+
     await settled();
 
     await roadmapPage.courseDropdown.clickOnCourse('Build your own SQLite');
@@ -232,5 +234,36 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
 
     const insertRowsCard = roadmapPage.findCourseExtensionIdeaCard('Insert rows');
     assert.ok(insertRowsCard, 'should show the "Insert rows" course extension idea for SQLite');
+  });
+
+  test('latest releases component is present', async function (assert) {
+    testScenario(this.server);
+
+    createCourseExtensionIdeas(this.server);
+    createCourseIdeas(this.server);
+
+    // Create a released item to test the component
+    const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    courseExtensionIdea.update({
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-10'),
+      announcementUrl: 'https://forum.codecrafters.io/t/redis-persistence-released',
+    });
+
+    // Update the associated course's shortName for the component to display correctly
+    const redisCourse = courseExtensionIdea.course;
+    redisCourse.update({ shortName: 'Redis' });
+
+    await roadmapPage.visitCourseExtensionIdeasTab();
+    await percySnapshot('Course Extension Ideas - Latest Releases');
+
+    const releaseItems = roadmapPage.latestReleasesCard.releaseItems;
+    assert.strictEqual(releaseItems.length, 3, 'should show 3 release items');
+    assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'should show the released extension');
+    assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'should show correct type');
+    assert.strictEqual(releaseItems[1].title, 'Build your own Regex Parser', 'should show the released challenge');
+    assert.strictEqual(releaseItems[1].type, 'CHALLENGE', 'should show correct type');
+    assert.strictEqual(releaseItems[2].title, 'Build your own SQLite', 'should show the released challenge');
+    assert.strictEqual(releaseItems[2].type, 'CHALLENGE', 'should show correct type');
   });
 });

@@ -1,5 +1,6 @@
 import roadmapPage from 'codecrafters-frontend/tests/pages/roadmap-page';
 import createCourseIdeas from 'codecrafters-frontend/mirage/utils/create-course-ideas';
+import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
@@ -207,5 +208,76 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       'Build your own Regex Parser',
     ];
     assert.deepEqual(cardOrder, expectedOrder, 'cards should be sorted by development status priority then vote count');
+  });
+
+  test('latest releases component renders correctly', async function (assert) {
+    testScenario(this.server);
+
+    createCourseIdeas(this.server);
+    createCourseExtensionIdeas(this.server);
+
+    const courseIdea = this.server.schema.courseIdeas.findBy({ name: 'Build your own Regex Parser' });
+    courseIdea.update({
+      announcementUrl: 'https://example.com/regex-parser-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-01-15'),
+    });
+
+    const courseIdea2 = this.server.schema.courseIdeas.findBy({ name: 'Build your own HTTP Server' });
+    courseIdea2.update({
+      announcementUrl: 'https://example.com/http-server-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-02-14'),
+    });
+
+    const courseIdea3 = this.server.schema.courseIdeas.findBy({ name: 'Build your own Shell' });
+    courseIdea3.update({
+      announcementUrl: 'https://example.com/shell-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-03-13'),
+    });
+
+    const courseIdea4 = this.server.schema.courseIdeas.findBy({ name: 'Build your own BitTorrent client' });
+    courseIdea4.update({
+      announcementUrl: 'https://example.com/bittorrent-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-04-12'),
+    });
+
+    const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
+    courseIdea5.update({
+      announcementUrl: 'https://example.com/react-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-05-09'),
+    });
+
+    const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });
+    courseExtensionIdea.update({
+      announcementUrl: 'https://example.com/redis-persistence-released',
+      developmentStatus: 'released',
+      releasedAt: new Date('2024-06-10'),
+      shortName: 'Redis',
+    });
+
+    const courseExtensionIdeaNotStarted = this.server.schema.courseExtensionIdeas.findBy({ name: 'Geospatial commands' });
+    courseExtensionIdeaNotStarted.update({ developmentStatus: 'not_started' });
+
+    await roadmapPage.visit();
+    await percySnapshot('Latest Releases');
+
+    const releaseItems = roadmapPage.latestReleasesCard.releaseItems;
+    assert.strictEqual(releaseItems.length, 5, 'should show only 5 release items (limit)');
+
+    const timestamps = releaseItems.map((item) => item.timestamp);
+    const expectedTimestamps = ['Jun 2024', 'May 2024', 'Apr 2024', 'Mar 2024', 'Feb 2024'];
+    assert.deepEqual(timestamps, expectedTimestamps, 'items should be sorted by release date');
+
+    assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'first item should be most recent');
+    assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'first item should be extension type');
+    assert.strictEqual(releaseItems[0].timestamp, 'Jun 2024', 'first item should have correct timestamp');
+
+    assert.strictEqual(releaseItems[4].title, 'Build your own HTTP Server', 'last item should be oldest of the 5 shown');
+    assert.strictEqual(releaseItems[4].type, 'CHALLENGE', 'last item should be challenge type');
+    assert.strictEqual(releaseItems[4].timestamp, 'Feb 2024', 'last item should have correct timestamp');
   });
 });

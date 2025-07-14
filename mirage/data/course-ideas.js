@@ -3,6 +3,8 @@ export default [
     slug: 'regex',
     name: 'Build your own Regex Parser',
     development_status: 'released',
+    released_at: '2025-01-01',
+    announcement_url: 'https://example.io/regex',
     description_md:
       "[Regular expressions](https://en.wikipedia.org/wiki/Regular_expression) are patterns used to match character combinations in strings. In this challenge you'll build your own version of `grep`, a CLI tool for searching using Regexes. \n\nAlong the way you'll learn about basic Regex syntax, [character classes](https://www.regular-expressions.info/refcharclass.html), [quantifiers](https://www.regular-expressions.info/refrepeat.html), [metacharacters](https://www.regular-expressions.info/characters.html) and more.",
   },
@@ -25,6 +27,8 @@ export default [
     name: 'Build your own SQLite',
     is_archived: true,
     development_status: 'released',
+    released_at: '2025-01-01',
+    announcement_url: 'https://example.io/sqlite',
     description_md:
       "[SQLite](https://www.sqlite.org/index.html) is the most used database engine in the world. In this challenge, you'll build your own version of SQLite that is capable of reading a SQLite database file and answering basic SQL queries like `SELECT` and `INSERT`. \n\nAlong the way, you'll learn about the [SQLite file format](https://www.sqlite.org/appfileformat.html), [SQL syntax](https://www.sqlite.org/lang.html) and more.",
   },
