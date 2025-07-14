@@ -221,7 +221,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/regex-parser-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-01-15'),
-      shortName: 'Grep',
     });
 
     const courseIdea2 = this.server.schema.courseIdeas.findBy({ name: 'Build your own HTTP Server' });
@@ -229,7 +228,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/http-server-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-02-14'),
-      shortName: 'HTTP Server',
     });
 
     const courseIdea3 = this.server.schema.courseIdeas.findBy({ name: 'Build your own Shell' });
@@ -237,7 +235,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/shell-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-03-13'),
-      shortName: 'Shell',
     });
 
     const courseIdea4 = this.server.schema.courseIdeas.findBy({ name: 'Build your own BitTorrent client' });
@@ -245,7 +242,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/bittorrent-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-04-12'),
-      shortName: 'BitTorrent',
     });
 
     const courseIdea5 = this.server.schema.courseIdeas.findBy({ name: 'Build your own React' });
@@ -253,7 +249,6 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
       announcementUrl: 'https://example.com/react-released',
       developmentStatus: 'released',
       releasedAt: new Date('2024-05-09'),
-      shortName: 'React',
     });
 
     const courseExtensionIdea = this.server.schema.courseExtensionIdeas.findBy({ name: 'Persistence' });

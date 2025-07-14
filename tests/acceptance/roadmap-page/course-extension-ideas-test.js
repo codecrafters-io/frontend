@@ -250,6 +250,10 @@ module('Acceptance | roadmap-page | course-extension-ideas', function (hooks) {
       announcementUrl: 'https://forum.codecrafters.io/t/redis-persistence-released',
     });
 
+    // Update the associated course's shortName for the component to display correctly
+    const redisCourse = courseExtensionIdea.course;
+    redisCourse.update({ shortName: 'Redis' });
+
     await roadmapPage.visitCourseExtensionIdeasTab();
     await percySnapshot('Course Extension Ideas - Latest Releases');
 
