@@ -24,7 +24,6 @@ export default createPage({
     releaseItems: collection('[data-test-latest-release-item]', {
       timestamp: text('[data-test-latest-release-timestamp]'),
       title: text('[data-test-latest-release-title]'),
-      type: text('[data-test-latest-release-type]'),
     }),
     scope: '[data-test-latest-releases-card]',
   },

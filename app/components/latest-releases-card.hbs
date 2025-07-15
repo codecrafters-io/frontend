@@ -6,18 +6,10 @@
     <div class="flex items-start gap-2 relative {{if (not-eq releaseIndex (sub this.releases.length 1)) 'pb-4'}}" data-test-latest-release-item>
       <div class="w-2 h-2 bg-gray-200 dark:bg-gray-600 rounded-full mt-1 flex-shrink-0"></div>
       <div class="w-full">
-        <div class="flex items-center gap-1 mb-1">
-          <div class="text-xxs text-gray-400 dark:text-gray-500" data-test-latest-release-timestamp>{{date-format
-              release.releasedAt
-              format="MMM yyyy"
-            }}</div>
-          <span class="text-gray-300 dark:text-gray-600 text-xs">
-            •
-          </span>
-          <Pill @color="gray" @size="small" data-test-latest-release-type>
-            {{if (eq release.type "extension") "EXTENSION" "CHALLENGE"}}
-          </Pill>
+        <div class="text-xs text-gray-400 dark:text-gray-500 mb-1" data-test-latest-release-timestamp>
+          {{date-format release.releasedAt format="MMM yyyy"}}
         </div>
+
         <a
           href="{{or release.announcementUrl 'https://forum.codecrafters.io/c/announcements'}}"
           target="_blank"
