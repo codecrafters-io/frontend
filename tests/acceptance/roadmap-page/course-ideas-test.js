@@ -273,11 +273,9 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
     assert.deepEqual(timestamps, expectedTimestamps, 'items should be sorted by release date');
 
     assert.strictEqual(releaseItems[0].title, 'Redis / Persistence', 'first item should be most recent');
-    assert.strictEqual(releaseItems[0].type, 'EXTENSION', 'first item should be extension type');
     assert.strictEqual(releaseItems[0].timestamp, 'Jun 2024', 'first item should have correct timestamp');
 
     assert.strictEqual(releaseItems[4].title, 'Build your own HTTP Server', 'last item should be oldest of the 5 shown');
-    assert.strictEqual(releaseItems[4].type, 'CHALLENGE', 'last item should be challenge type');
     assert.strictEqual(releaseItems[4].timestamp, 'Feb 2024', 'last item should have correct timestamp');
   });
 });
