@@ -7,17 +7,17 @@
   ...attributes
 >
   <:header>
-    <div class="flex items-center justify-between flex-wrap gap-3 border-b dark:border-white/5 pb-2 mb-5 w-full">
+    <div class="flex items-center justify-between flex-wrap gap-3 border-b border-gray-200 dark:border-white/5 pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
-        <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 flex-shrink-0">Your Task</h2>
-        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} class="flex-shrink-0" />
+        <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 shrink-0">Your Task</h2>
+        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} class="shrink-0" />
 
         <FeedbackButton
           @source="stage_instructions_card"
           @sourceMetadata={{hash language_slug=(or @repository.language.slug "unknown") stage_slug=@courseStage.slug}}
           @dropdownPosition="bottom"
           @placeholderText={{"Got any feedback on this stage's instructions? Please let us know!"}}
-          class="flex-shrink-0"
+          class="shrink-0"
           as |dd|
         >
           <TertiaryButton @size="extra-small" class={{if dd.isOpen "opacity-100" "sm:opacity-0 sm:group-hover/your-task-card:opacity-100"}}>
@@ -39,7 +39,7 @@
         {{/if}}
       </div>
 
-      <CourseStageDifficultyLabel @stage={{@courseStage}} class="flex-shrink-0" />
+      <CourseStageDifficultyLabel @stage={{@courseStage}} class="shrink-0" />
     </div>
   </:header>
 

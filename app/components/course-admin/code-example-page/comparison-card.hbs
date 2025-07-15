@@ -1,5 +1,5 @@
 <div
-  class="border rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  class="border border-gray-200 rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
@@ -26,11 +26,11 @@
         {{/if}}
       </div>
 
-      <div class="text-sm text-gray-600 mx-1.5">
+      <div class="text-sm text-gray-600 ml-1.5 mr-1.5">
         against
       </div>
 
-      <AvatarImage @user={{this.secondUser}} class="w-6 h-6 border border-gray-300 shadow-sm mr-1.5 rounded-full" />
+      <AvatarImage @user={{this.secondUser}} class="w-6 h-6 border border-gray-300 shadow-xs mr-1.5 rounded-full" />
       <span class="text-sm text-gray-600">
         {{this.secondUser.username}}
       </span>
@@ -38,7 +38,7 @@
     <div class="flex items-center gap-3">
       {{#if this.isExpanded}}
         <button
-          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+          class="shrink-0 border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded-sm flex items-center"
           type="button"
           {{on "click" this.handleCopyIdToClipboardButtonClick}}
         >
@@ -46,7 +46,7 @@
           Copy ID
         </button>
         <button
-          class="flex-shrink-0 border hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded flex items-center"
+          class="shrink-0 border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded-sm flex items-center"
           type="button"
           {{on "click" this.handleCollapseButtonClick}}
         >
@@ -73,7 +73,7 @@
         </div>
       </div>
 
-      <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{this.solutionForSecondUser}} @isExpanded={{true}} class="w-full flex-shrink" />
+      <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{this.solutionForSecondUser}} @isExpanded={{true}} class="w-full shrink" />
     </div>
 
   {{/if}}

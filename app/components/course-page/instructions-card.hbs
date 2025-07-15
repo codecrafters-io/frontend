@@ -6,13 +6,13 @@
 >
   <div
     class="bg-white dark:bg-gray-850 border border-gray-300 dark:border-white/10 relative
-      {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded'}}"
+      {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded-sm'}}"
   >
     <div class="p-4 pt-3 sm:p-6 sm:pt-5 {{if (has-block 'footer') 'pb-4'}}">
       {{#if (has-block "header")}}
         {{yield to="header"}}
       {{else}}
-        <h2 class="font-semibold border-b dark:border-white/5 pb-2 mb-5 text-lg text-gray-700 dark:text-gray-200">{{@title}}</h2>
+        <h2 class="font-semibold border-b border-gray-200 dark:border-white/5 pb-2 mb-5 text-lg text-gray-700 dark:text-gray-200">{{@title}}</h2>
       {{/if}}
 
       <div class="{{if this.isCollapsed 'h-60 overflow-hidden'}}">
@@ -22,7 +22,7 @@
       {{#if this.isCollapsed}}
         <div
           role="button"
-          class="absolute rounded inset-0 vertical-mask dark:vertical-mask-gray-850 p-4 flex items-end justify-center group z-10"
+          class="absolute rounded-sm inset-0 vertical-mask dark:vertical-mask-gray-850 p-4 flex items-end justify-center group z-10"
           data-test-expand-button
           {{on "click" this.handleExpandButtonClick}}
         >
@@ -47,7 +47,7 @@
 
   {{#if (has-block "footer")}}
     <div class="border border-gray-300 rounded-b relative" data-test-footer>
-      <div class="h-px w-full bg-gray-200 bg-opacity-50 absolute -top-px"></div>
+      <div class="h-px w-full bg-gray-200/50 absolute -top-px"></div>
 
       <div class="px-6 min-h-[40px] flex items-center">
         <div class="w-full">

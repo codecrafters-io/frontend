@@ -1,15 +1,15 @@
 {{page-title this.model.course.name}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-6 md:pt-10 pb-10 px-3 md:px-6">
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-6 md:pt-10 pb-10 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} class="mb-6 md:mb-10" />
 
   <div class="flex items-start flex-row mb-4">
-    <div class="flex-grow">
+    <div class="grow">
       <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full" />
     </div>
 
-    <div class="hidden lg:block sticky top-2 w-80 flex-shrink-0 pt-2 ml-2">
+    <div class="hidden lg:block sticky top-2 w-80 shrink-0 pt-2 ml-2">
       {{#if this.model.course.releaseStatusIsAlpha}}
         <CourseOverviewPage::SidebarAlphaNotice @course={{this.model.course}} class="w-full px-4" />
       {{else}}
@@ -35,7 +35,7 @@
     </div>
 
     {{! Placeholder for sidebar }}
-    <div class="hidden lg:block w-80 flex-shrink-0 ml-2">
+    <div class="hidden lg:block w-80 shrink-0 ml-2">
     </div>
   </div>
 </div>

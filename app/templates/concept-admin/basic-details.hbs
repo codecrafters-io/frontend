@@ -1,6 +1,6 @@
 <div class="bg-white min-h-screen">
-  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 border-b flex items-start justify-between">
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b border-gray-200 flex items-start justify-between">
       <div>
         <h3 class="text-lg font-bold text-gray-800 mb-1">
           Basic Details
@@ -50,7 +50,7 @@
           <Input
             @value={{@model.concept.title}}
             {{on "blur" this.handleValueUpdated}}
-            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
             placeholder="Network Protocols"
             size="40"
             id="concept_title"
@@ -72,7 +72,7 @@
             @value={{@model.concept.slug}}
             size="40"
             {{on "blur" this.handleValueUpdated}}
-            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
             placeholder="network-protocols"
             id="concept_slug"
             required
@@ -92,7 +92,7 @@
           <Textarea
             @value={{@model.concept.descriptionMarkdown}}
             {{on "blur" this.handleValueUpdated}}
-            class="text-sm rounded px-3 py-2 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-sm"
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
             placeholder="Learn about various network protocols and the TCP/IP model."
             rows="3"
             cols="80"

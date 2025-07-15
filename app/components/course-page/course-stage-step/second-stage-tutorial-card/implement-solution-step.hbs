@@ -25,7 +25,7 @@
   <BlurredOverlay
     class="mb-3 group"
     @isBlurred={{this.solutionIsBlurred}}
-    @overlayClass="inset-px rounded cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
+    @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
   >
     <:content>
       <div class="grid gap-3 mt-6 mb-3">
@@ -45,7 +45,7 @@
 
       {{#unless this.solutionIsBlurred}}
         <TertiaryButton
-          class="w-full mb-6 flex justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
+          class="w-full mb-6 flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
           {{on "click" this.handleHideSolutionButtonClick}}
           data-test-hide-solution-button
         >

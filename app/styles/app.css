@@ -1,19 +1,22 @@
-/* stylelint-disable */
-@import 'tailwind-compiled.css';
-@import 'utilities.css';
+/* Overrides for Tailwind & others */
+@import url('overrides.css');
 
-@import 'modals.css';
+/* Useful modules */
+@import url('utilities.css');
+@import url('modals.css');
+
+/* Prism styles */
+@import url('prism-light-theme.css');
+@import url('prism-dark-theme.css');
 
 /* Custom styles for individual pages */
-@import 'pages/affiliate-link-page.css';
-@import 'pages/code-walkthrough-page.css';
-@import 'pages/course-stage-solution-page.css';
+@import url('pages/affiliate-link-page.css');
+@import url('pages/code-walkthrough-page.css');
+@import url('pages/course-stage-solution-page.css');
 
-/* purgecss start ignore */
-@import '@typeform/embed/build/css/popup.css';
-@import 'ember-animated/dist/styles/ember-animated.css';
-@import 'prism-light-theme.css';
-@import 'prism-dark-theme.css';
+body {
+  font-family: Montserrat, sans-serif; /* Required for fonts to work on Percy */
+}
 
 .ember-basic-dropdown-trigger {
   outline: none !important;
@@ -24,34 +27,21 @@
 }
 
 .top-to-bottom-scroll-mask {
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to bottom, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 100%) 20%, rgb(255 255 255 / 0%) 100%);
   mix-blend-mode: lighten;
 }
 
 .bottom-to-top-scroll-mask {
-  background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(to top, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 100%) 20%, rgb(255 255 255 / 0%) 100%);
   mix-blend-mode: lighten;
 }
 
 .copyable-code .border-text-mask {
-  background: linear-gradient(to left, rgba(241, 245, 249, 1) 0%, rgba(241, 245, 249, 1) 20%, rgba(241, 245, 249, 0) 100%);
+  background: linear-gradient(to left, rgb(241 245 249 / 100%) 0%, rgb(241 245 249 / 100%) 20%, rgb(241 245 249 / 0%) 100%);
 }
 
 .top-50-percent {
   top: 50%;
-}
-
-/* Override prism's 1em font-size */
-.prose pre[class*='language-'] {
-  font-size: 0.875em !important;
-}
-
-.prose.prose-sm pre[class*='language-'] {
-  font-size: 1em !important;
-}
-
-.prose pre code {
-  white-space: pre;
 }
 
 .prose code {
@@ -59,30 +49,34 @@
   text-wrap: auto;
 }
 
+.prose pre code {
+  white-space: pre;
+}
+
 .vertical-mask {
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 1) 80%,
-    rgba(255, 255, 255, 1) 100%
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 0%) 30%,
+    rgb(255 255 255 / 100%) 80%,
+    rgb(255 255 255 / 100%) 100%
   );
 }
 
 .dark\:vertical-mask-invert:is(.dark *) {
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 1) 100%);
+  background: linear-gradient(to bottom, rgb(0 0 0 / 0%) 0%, rgb(0 0 0 / 0%) 30%, rgb(0 0 0 / 100%) 80%, rgb(0 0 0 / 100%) 100%);
 }
 
 .dark\:vertical-mask-gray-900:is(.dark *) {
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0) 30%, rgba(15, 23, 42, 1) 80%, rgba(15, 23, 42, 1) 100%);
+  background: linear-gradient(to bottom, rgb(15 23 42 / 0%) 0%, rgb(15 23 42 / 0%) 30%, rgb(15 23 42 / 100%) 80%, rgb(15 23 42 / 100%) 100%);
 }
 
 .dark\:vertical-mask-gray-800:is(.dark *) {
-  background: linear-gradient(to bottom, rgba(30, 41, 59, 0) 0%, rgba(30, 41, 59, 0) 30%, rgba(30, 41, 59, 1) 80%, rgba(30, 41, 59, 1) 100%);
+  background: linear-gradient(to bottom, rgb(30 41 59 / 0%) 0%, rgb(30 41 59 / 0%) 30%, rgb(30 41 59 / 100%) 80%, rgb(30 41 59 / 100%) 100%);
 }
 
 .dark\:vertical-mask-gray-850:is(.dark *) {
-  background: linear-gradient(to bottom, rgba(23, 32, 51, 0) 0%, rgba(23, 32, 51, 0) 30%, rgba(23, 32, 51, 1) 80%, rgba(23, 32, 51, 1) 100%);
+  background: linear-gradient(to bottom, rgb(23 32 51 / 0%) 0%, rgb(23 32 51 / 0%) 30%, rgb(23 32 51 / 100%) 80%, rgb(23 32 51 / 100%) 100%);
 }
 
 .syntax-highlighted-code pre {
@@ -118,7 +112,7 @@
 }
 
 .syntax-highlighted-code pre code .line.highlighted {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgb(255 255 255 / 10%);
 }
 
 .code-walkthrough-prose h1 {
@@ -126,7 +120,7 @@
 }
 
 .diff-highlight .removed-marker {
-  color: rgb(186, 0, 103);
+  color: rgb(186 0 103);
 }
 
 .diff-highlight .inserted-marker {
@@ -134,28 +128,26 @@
 }
 
 .diff-highlight .removed-line {
-  background-color: rgba(255, 0, 0, 0.1);
+  background-color: rgb(255 0 0 / 10%);
   user-select: none;
 }
 
 .dark .diff-highlight .removed-line {
-  background-color: rgba(255, 0, 0, 0.15);
+  background-color: rgb(255 0 0 / 15%);
 }
 
 .diff-highlight .added-line {
-  background-color: rgba(0, 255, 0, 0.15);
+  background-color: rgb(0 255 0 / 15%);
 }
-
-/* purgecss end ignore */
 
 .number-input-with-no-controls::-webkit-outer-spin-button,
 .number-input-with-no-controls::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 .number-input-with-no-controls {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .blurred-overlay {
@@ -177,7 +169,7 @@
   margin-right: -1rem;
 }
 
-@media screen and (min-width: 80em) {
+@media screen and (width >= 80em) {
   .metabase-iframe {
     margin-left: -1.5rem;
     margin-right: -1.5rem;
@@ -186,6 +178,15 @@
 
 .has-prism-highlighting pre[class*='language-'] {
   background-color: #f1f5f9; /* slate-100 */
+}
+
+/* Override prism's 1em font-size */
+.prose pre[class*='language-'] {
+  font-size: 0.875em !important;
+}
+
+.prose.prose-sm pre[class*='language-'] {
+  font-size: 1em !important;
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {

@@ -1,11 +1,11 @@
 <div
-  class="group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm hover:shadow transition-shadow cursor-pointer flex flex-col justify-between border dark:border-white/5 relative"
+  class="group bg-white dark:bg-gray-850 p-5 rounded-md shadow-xs hover:shadow-sm transition-shadow cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative"
   role="button"
   {{on "click" this.navigateToTrack}}
   data-test-track-card
 >
   {{! Logo }}
-  <div class="flex justify-end h-8 transform scale-100 group-hover:scale-105 flex-shrink-0 transition-transform absolute top-5 right-5">
+  <div class="flex justify-end h-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
     <LanguageLogo @language={{@language}} @variant="teal" />
   </div>
 

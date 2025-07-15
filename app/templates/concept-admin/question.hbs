@@ -1,5 +1,5 @@
 <div class="bg-white min-h-screen">
-  <div class="container lg:max-w-screen-lg mx-auto pt-4 pb-10 px-6">
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto pt-4 pb-10 px-6">
     <div class="pt-3 pb-6">
       <div class="flex items-start justify-between">
         <div>
@@ -11,7 +11,7 @@
             {{@model.question.slug}}
           </div>
         </div>
-        <div class="flex flex-col items-end flex-shrink-0">
+        <div class="flex flex-col items-end shrink-0">
           <div class="flex items-center justify-end gap-3">
             <TertiaryButton @size="small" {{on "click" this.handleDiscardChangesButtonClick}} @isDisabled={{not this.unsavedChangesArePresent}}>
               Discard Changes

@@ -1,7 +1,7 @@
 {{page-title (concat "Join " this.model.affiliateLink.usernameForDisplay " on CodeCrafters") replace=true}}
 
 {{! Note: This is very similar to the track page atm so it re-uses a lot of the same components. }}
-<div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
   <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}}>
     <:cta>
       {{! suppress CTA }}
@@ -12,7 +12,7 @@
 <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
 
 <div class="bg-white dark:bg-gray-850">
-  <div class="container mx-auto lg:max-w-screen-lg px-3 md:px-6 py-6 md:py-10">
+  <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
     <div class="lg:hidden flex justify-center items-center pb-6 md:pb-10">
       <AffiliateLinkPage::AcceptReferralContainer
         @affiliateLink={{this.model.affiliateLink}}
@@ -23,11 +23,11 @@
     </div>
 
     <div class="flex items-start">
-      <div class="flex-grow">
+      <div class="grow">
         <TrackPage::CourseCardList @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
-      <div class="hidden lg:block w-80 flex-shrink-0 sticky top-4 ml-2">
+      <div class="hidden lg:block w-80 shrink-0 sticky top-4 ml-2">
         <AffiliateLinkPage::AcceptReferralContainer
           @affiliateLink={{this.model.affiliateLink}}
           @language={{this.model.language}}
@@ -38,7 +38,7 @@
         <TrackLeaderboard class="mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
-        <div class="mx-4">
+        <div class="ml-4 mr-4">
           {{#each this.testimonials as |testimonial|}}
             <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
           {{/each}}

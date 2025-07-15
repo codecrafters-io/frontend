@@ -1,7 +1,7 @@
 {{! @glint-nocheck: not typesafe yet }}
 <a
   href={{@contributorDetails.profileUrl}}
-  class="inline-flex gap-x-2 items-center px-4 py-3 border rounded hover:bg-gray-50 max-w-sm"
+  class="inline-flex gap-x-2 items-center px-4 py-3 border border-gray-200 rounded-sm hover:bg-gray-50 max-w-sm"
   target="_blank"
   rel="noopener noreferrer"
   ...attributes
@@ -9,7 +9,7 @@
   <img
     alt="avatar"
     src={{@contributorDetails.avatarUrl}}
-    class="w-12 h-12 filter drop-shadow-sm ring-1 ring-white rounded-full shadow brightness-110"
+    class="w-12 h-12 filter drop-shadow-xs ring-1 ring-white rounded-full shadow-sm brightness-110"
   />
   <div>
     <div class="text-gray-700 text-xs font-bold mb-0.5">

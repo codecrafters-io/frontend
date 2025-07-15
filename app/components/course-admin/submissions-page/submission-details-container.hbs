@@ -2,7 +2,7 @@
   {{#if @submission}}
     <CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer @submission={{@submission}} />
 
-    <div class="border-b pb-4 mb-4"></div>
+    <div class="border-b border-gray-200 pb-4 mb-4"></div>
     <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
       <div class="mt-6">
         {{#if (eq activeTabSlug "diff")}}

@@ -1,6 +1,6 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6 course-admin-updates-diff-container">
-    <div class="pt-3 pb-6 border-b mb-6">
+    <div class="pt-3 pb-6 border-b border-gray-200 mb-6">
       <TertiaryLinkButton @route="course-admin.updates" @models={{array @model.update.course.slug}} @size="small" class="pl-1.5 mb-3">
         <div class="flex items-center">
           {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
@@ -64,7 +64,7 @@
       </div>
 
       {{#if @model.update.lastErrorMessage}}
-        <div class="border rounded p-4 border-red-300 bg-red-50 mt-6" data-test-error-message>
+        <div class="border rounded-sm p-4 border-red-300 bg-red-50 mt-6" data-test-error-message>
           <div class="text-red-600 font-semibold mb-2">We encountered an error when applying this update:</div>
           <div class="border-l-2 border-red-400 pl-6 py-4">
             <pre class="text-sm text-red-600"><code>{{@model.update.lastErrorMessage}}</code></pre>
