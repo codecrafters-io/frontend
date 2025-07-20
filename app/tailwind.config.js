@@ -5,20 +5,6 @@ const colors = require('tailwindcss/colors');
 
 module.exports = {
   content: [`./app/**/*.{html,js,ts,hbs,gts}`],
-  safelist: {
-    standard: [
-      'inline', // Used by SVG stuff
-      'mx-1', // Used by SVG stuff
-      'w-4', // Used by SVG stuff
-      'whitespace-nowrap', // Used by SVG stuff
-    ],
-    greedy: [/ember-basic-dropdown-/, /prose/],
-    deep: [
-      // Ember's built-in components: <Input /> and <TextArea />
-      /^input$/,
-      /^textarea$/,
-    ],
-  },
   darkMode: ['variant', ['&:is(.dark *)']],
   theme: {
     colors: {
