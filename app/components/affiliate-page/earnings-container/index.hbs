@@ -48,7 +48,7 @@
         <tbody>
           {{#each this.sortedPayouts as |payout|}}
             <tr class="border-b border-gray-200" data-test-payout-history-item>
-              <td class="py-2">
+              <td class="py-2 min-w-1">
                 <div class="flex items-center gap-1.5">
                   <span class="text-gray-500 whitespace-nowrap text-sm">
                     {{date-format (or payout.completedAt payout.initiatedAt) format="PPP"}}
