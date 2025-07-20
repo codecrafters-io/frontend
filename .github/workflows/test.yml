@@ -59,8 +59,6 @@ jobs:
       - run: npx ember --version
       - run: npx percy --version
 
-      - run: npm run tailwind:build
-
       - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml
         env:
           COVERAGE: true
@@ -142,5 +140,4 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
 
-      - run: npm run tailwind:build
       - run: npm run lint

@@ -1,5 +1,5 @@
 <div
-  class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border rounded mb-2"
+  class="flex items-center flex-wrap gap-y-2 justify-between group p-2 pr-3 hover:bg-gray-50 border border-gray-200 rounded-sm mb-2"
   data-test-affiliate-referred-user-item
 >
   <a
@@ -10,7 +10,7 @@
   >
     <AvatarImage
       @user={{@affiliateReferral.customer}}
-      class="w-8 h-8 border border-gray-300 rounded shadow-sm group-hover:shadow mr-2 transition-shadow"
+      class="w-8 h-8 border border-gray-300 rounded-sm shadow-xs group-hover:shadow-sm mr-2 transition-shadow"
     />
 
     <div>
@@ -24,7 +24,7 @@
   </a>
   <div class="flex items-center flex-wrap gap-y-2">
     {{#if (gt @affiliateReferral.totalEarningsAmountInDollars 0)}}
-      <div class="flex flex-shrink-0">
+      <div class="flex shrink-0">
         <span
           class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
         >${{@affiliateReferral.spentAmountInDollars}} spent</span>
@@ -32,14 +32,14 @@
       </div>
     {{/if}}
     {{#if (gt @affiliateReferral.upcomingPaymentAmountInDollars 0)}}
-      <div class="flex flex-shrink-0">
+      <div class="flex shrink-0">
         <span
           class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
         >${{@affiliateReferral.upcomingPaymentAmountInDollars}} pending</span>
         <EmberTooltip @text="This is the value of {{@affiliateReferral.customer.username}}'s upcoming payment." />
       </div>
     {{/if}}
-    <div class="flex flex-shrink-0">
+    <div class="flex shrink-0">
       {{#if @affiliateReferral.statusIsTrialing}}
         <span
           class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"

@@ -1,6 +1,6 @@
 <div class="bg-white min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <div class="py-3 border-b mb-6">
+    <div class="py-3 border-b border-gray-200 mb-6">
       <TertiaryLinkButton
         @route="course.stage.code-examples"
         @models={{array @model.solution.courseStage.identifierForURL}}
@@ -38,7 +38,7 @@
 
     <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@model.solution}} @isExpanded={{true}} class="mb-8" />
 
-    <div class="border-b mb-4 pb-2">
+    <div class="border-b border-gray-200 mb-4 pb-2">
       <h3 class="text-lg font-bold text-gray-800">
         Evaluations ({{@model.evaluations.length}})
       </h3>
@@ -48,7 +48,7 @@
       <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
     {{/each}}
 
-    <div class="border-b mb-4 pb-2">
+    <div class="border-b border-gray-200 mb-4 pb-2">
       <h3 class="text-lg font-bold text-gray-800">
         Comparisons ({{@model.comparisons.length}})
       </h3>

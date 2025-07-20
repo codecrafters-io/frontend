@@ -2,9 +2,6 @@
 /dist/
 /declarations/
 
-# compiled tailwind output
-/app/styles/tailwind-compiled.css
-
 # dependencies
 /node_modules/
 

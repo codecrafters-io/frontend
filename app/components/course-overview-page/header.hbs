@@ -18,7 +18,7 @@
           <CourseOverviewPage::StartCourseButton @course={{@course}} />
         {{/if}}
 
-        <div class="flex items-center flex-wrap gap-2 flex-grow">
+        <div class="flex items-center flex-wrap gap-2 grow">
           {{#each @course.betaOrLiveLanguages as |supportedLanguage|}}
             <div class="flex">
               <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6 dark:opacity-90" />

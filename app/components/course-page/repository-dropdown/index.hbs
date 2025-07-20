@@ -2,13 +2,13 @@
   <BasicDropdown @horizontalPosition="auto-right" @destination="application-container" as |dd|>
     <dd.Trigger>
       <div
-        class="flex items-start gap-2 pl-3 py-3 rounded group/dropdown-trigger text-left w-full
-          {{if dd.isOpen 'bg-gray-300 dark:bg-gray-800 bg-opacity-50' 'hover:bg-gray-300 hover:bg-opacity-50 dark:hover:bg-gray-800'}}"
+        class="flex items-start gap-2 pl-3 py-3 rounded-sm group/dropdown-trigger text-left w-full
+          {{if dd.isOpen 'bg-gray-300/50 dark:bg-gray-800' 'hover:bg-gray-300/50 dark:hover:bg-gray-800'}}"
         data-test-repository-dropdown-trigger
       >
         <CourseLogo @course={{@activeRepository.course}} class="w-6 h-6 mt-0.25" />
 
-        <div class="flex-grow">
+        <div class="grow">
           <h1 class="text-gray-800 dark:text-gray-200 font-semibold tracking-tight w-full">
             {{@activeRepository.course.name}}
           </h1>
@@ -27,7 +27,7 @@
         {{svg-jar
           "chevron-down"
           class=(concat
-            "mt-0.25 flex-shrink-0 text-gray-400 group-hover/dropdown-trigger:text-teal-500 w-6 transition-transform "
+            "mt-0.25 shrink-0 text-gray-400 group-hover/dropdown-trigger:text-teal-500 w-6 transition-transform "
             (if dd.isOpen "text-teal-500 rotate-180" "rotate-0")
           )
         }}
@@ -35,7 +35,7 @@
     </dd.Trigger>
     <dd.Content>
       <div
-        class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border dark:border-white/10 py-2 my-1 max-h-[75vh] overflow-y-auto"
+        class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border border-gray-200 dark:border-white/10 py-2 mt-1 mb-1 max-h-[75vh] overflow-y-auto"
         data-test-repository-dropdown-content
       >
         <CoursePage::RepositoryDropdownAction @icon="login" {{on "click" (fn this.handleBackToCatalogButtonClick dd.actions)}}>

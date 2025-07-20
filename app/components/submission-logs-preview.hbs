@@ -1,5 +1,5 @@
 <div
-  class="bg-gray-800 dark:bg-gray-800 border border-gray-700 p-4 text-white font-mono text-xs leading-relaxed rounded overflow-y-auto"
+  class="bg-gray-800 dark:bg-gray-800 border border-gray-700 p-4 text-white font-mono text-xs leading-relaxed rounded-sm overflow-y-auto"
   {{did-insert this.handleDidInsert}}
   {{did-update this.handleDidUpdateLogs this.evaluation.logsFileContents}}
   {{did-update this.handleDidUpdateEvaluation this.evaluation.id}}
@@ -22,7 +22,7 @@
     {{else}}
       {{#each this.logLines key="@index" as |logLine index|}}
         <div class="flex items-start">
-          <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 flex-shrink-0 select-none">{{add index 1}}</div>
+          <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 shrink-0 select-none">{{add index 1}}</div>
           <div data-test-log-line class="whitespace-pre">{{html-safe logLine}}</div>
         </div>
       {{/each}}

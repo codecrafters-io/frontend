@@ -1,7 +1,7 @@
 <div class="pb-3 flex flex-col" ...attributes data-test-autofix-section>
   {{#if this.lastSubmission}}
     {{#if this.lastAutofixRequest}}
-      <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} class="overflow-y-auto flex-grow" />
+      <CoursePage::TestResultsBar::AutofixSection::AutofixResult @autofixRequest={{this.lastAutofixRequest}} class="overflow-y-auto grow" />
     {{else}}
       <AlertWithIcon class="mb-3">
         <p>
@@ -14,7 +14,7 @@
     {{/if}}
   {{else}}
     {{! TODO: Review copy here }}
-    <div class="py-16 flex items-center justify-center flex-grow">
+    <div class="py-16 flex items-center justify-center grow">
       <div class="text-gray-500 text-sm">
         {{#if (eq @activeStep.type "CourseStageStep")}}
           {{#if (eq @activeStep @currentStep)}}

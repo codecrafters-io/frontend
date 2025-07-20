@@ -1,7 +1,7 @@
 <BasicDropdown @horizontalPosition="right" @destination="application-container" as |dd|>
   <dd.Trigger>
     <div
-      class="flex items-center justify-between py-3 outline-none w-full sm:w-auto
+      class="flex items-center justify-between py-3 outline-hidden w-full sm:w-auto
         {{if dd.isOpen 'text-gray-900 dark:text-gray-100' 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}}"
       data-test-account-dropdown-trigger
     >
@@ -13,7 +13,10 @@
     </div>
   </dd.Trigger>
   <dd.Content>
-    <div class="py-2 border dark:border-white/10 rounded shadow max-w-xl bg-white dark:bg-gray-850" data-test-account-dropdown-content>
+    <div
+      class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm max-w-xl bg-white dark:bg-gray-850"
+      data-test-account-dropdown-content
+    >
       {{#if this.currentUser.hasActiveSubscription}}
         <DropdownLink @text="Manage Membership" @icon="credit-card" {{on "click" (fn this.handleManageSubscriptionClick dd.actions)}} />
       {{else}}
@@ -67,7 +70,7 @@
         <DarkModeToggleWithUpgradePrompt @size="small" />
       </div>
 
-      <div class="h-px my-2 mx-3 bg-gray-200 dark:bg-white/5" />
+      <div class="h-px mt-2 mb-2 ml-3 mr-3 bg-gray-200 dark:bg-white/5" />
 
       <DropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
     </div>

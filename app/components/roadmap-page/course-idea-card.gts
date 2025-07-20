@@ -73,14 +73,14 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm border
+      class='group bg-white dark:bg-gray-850 p-5 rounded-md shadow-xs border
         {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
         relative
         {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
       data-test-course-idea-card
     >
       <div class='flex items-start gap-3'>
-        <div class='flex flex-col gap-1 flex-grow'>
+        <div class='flex flex-col gap-1 grow'>
           <div class='flex items-center gap-2 flex-wrap mt-0.5 mb-2.5'>
             <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
               {{@courseIdea.name}}
@@ -127,7 +127,7 @@ export default class CourseIdeaCardComponent extends Component<Signature> {
           </div>
         </div>
 
-        <div class='flex flex-col gap-2 items-end flex-shrink-0'>
+        <div class='flex flex-col gap-2 items-end shrink-0'>
           <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
 
           <div class='flex items-center gap-1'>

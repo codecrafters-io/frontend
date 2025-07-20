@@ -1,9 +1,9 @@
 {{page-title "Refer"}}
 
-<div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-10 pb-48 px-6">
   {{#if this.currentUser.hasJoinedReferralProgram}}
     <div class="flex justify-between items-baseline">
-      <h1 class="font-semibold text-2xl text-gray-700 mb-5 flex-shrink-0">Referrals</h1>
+      <h1 class="font-semibold text-2xl text-gray-700 mb-5 shrink-0">Referrals</h1>
     </div>
 
     {{#if this.currentUser.isAffiliate}}
@@ -35,7 +35,7 @@
 
     <TestimonialList class="mt-12" />
   {{else}}
-    <div class="container mx-auto lg:max-w-screen-lg pt-10 pb-48 px-6">
+    <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-10 pb-48 px-6">
       <ReferralsPage::JoinReferralProgramContainer />
     </div>
   {{/if}}

@@ -11,7 +11,7 @@
     {{else}}
       <AvatarImage
         @user={{@affiliateLink.user}}
-        class="w-16 h-16 border border-gray-300 shadow-sm group-hover:shadow mr-2 transition-shadow rounded-md"
+        class="w-16 h-16 border border-gray-300 shadow-xs group-hover:shadow-sm mr-2 transition-shadow rounded-md"
       />
     {{/if}}
 
@@ -29,7 +29,7 @@
 
   <div class="flex flex-col items-center">
     {{! Disabled buttons can be translucent, the added background makes them more visible }}
-    <div class="inline-flex bg-white dark:bg-gray-850 rounded">
+    <div class="inline-flex bg-white dark:bg-gray-850 rounded-sm">
       <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{@affiliateLink}} @course={{@course}} />
     </div>
 
