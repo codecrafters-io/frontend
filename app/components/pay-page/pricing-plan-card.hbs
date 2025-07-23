@@ -1,0 +1,66 @@
+<div
+  class="flex flex-col items-start rounded-lg bg-gray-50 shadow-md shadow-gray-300/50
+    {{if @isRecommended 'border border-teal-500' 'border border-gray-100'}}
+    filter relative"
+  ...attributes
+>
+  {{!-- {{#if @isRecommended}}
+    <div class="absolute -top-5 left-0 right-0 flex items-center justify-center">
+      <div class="text-teal-500 font-semibold px-4 border border-teal-500 h-10 inline-flex items-center bg-white rounded-lg">
+        Most popular
+      </div>
+    </div>
+  {{/if}} --}}
+
+  <div class="flex flex-col items-start bg-white rounded-t-lg border-b border-gray-100 px-6 pt-8 pb-8 w-full">
+    <div class="text-lg font-bold text-gray-700 border-b-2 pb-1 border-gray-100 mb-4 uppercase">
+      {{@title}}
+    </div>
+
+    <div class="text-gray-600 text-sm mb-1.5">
+      {{@subtitle}}
+    </div>
+
+    <div class="text-gray-400 text-sm">
+      {{@description}}
+    </div>
+  </div>
+  <div class="p-6 rounded-b-lg relative">
+    {{#each @featureDescriptions as |featureDescription|}}
+      <div class="flex items-center py-1 gap-2">
+        {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
+
+        {{#if featureDescription.link}}
+          <a href={{featureDescription.link}} target="_blank" class="flex items-center gap-1 group" rel="noopener noreferrer">
+            <span class="text-gray-600 text-sm underline decoration-dotted">{{featureDescription.text}}</span>
+            {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300 group-hover:text-gray-400"}}
+          </a>
+        {{else}}
+          <span class="text-gray-600 text-sm">{{featureDescription.text}}</span>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="flex items-end justify-center w-full py-6 grow">
+    <button
+      class="flex items-center justify-center ml-4 mr-4 transition-colors p-3 font-bold rounded-full max-w-lg shadow border-2 border-teal-500 bg-teal-500 text-white hover:bg-teal-600 hover:border-teal-600
+        {{if this.authenticator.isAuthenticated 'px-5 py-3' 'p-2'}}
+        "
+      data-test-start-membership-button
+      type="button"
+      {{on "click" @onStartMembershipButtonClick}}
+    >
+      {{#unless this.authenticator.isAuthenticated}}
+        {{svg-jar "github" class="fill-current w-4 transform transition-all mr-2"}}
+      {{/unless}}
+
+      <span class="text-sm">
+        View membership options&nbsp;→
+      </span>
+
+      {{#unless this.authenticator.isAuthenticated}}
+        <EmberTooltip @text="Login via GitHub to try a free project." />
+      {{/unless}}
+    </button>
+  </div>
+</div>
