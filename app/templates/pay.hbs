@@ -25,14 +25,16 @@
       />
     {{/if}}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)">
       <PayPage::PricingPlanCard
         @title={{"Free"}}
         @isRecommended={{false}}
         @subtitle={{"For trialing"}}
         @description="No credit card required"
         @featureDescriptions={{this.featureDescriptionsForFreePlan}}
-        @onStartMembershipButtonClick={{(noop)}}
+        @ctaText="Continue with free"
+        @onCtaClick={{(noop)}}
+        class="lg:max-w-sm"
       />
 
       <PayPage::PricingPlanCard
@@ -41,16 +43,20 @@
         @subtitle={{"For professionals"}}
         @description="3mo, 1yr and lifetime plans available"
         @featureDescriptions={{this.featureDescriptionsForMembershipPlan}}
-        @onStartMembershipButtonClick={{(noop)}}
+        @ctaText="View plans"
+        @onCtaClick={{(noop)}}
+        class="lg:max-w-sm"
       />
 
       <PayPage::PricingPlanCard
         @title={{"Teams"}}
         @isRecommended={{false}}
         @subtitle={{"For teams of 5+"}}
-        @description="Pay annually with swappable seats"
+        @description="Swappable seats, pay annually"
         @featureDescriptions={{this.featureDescriptionsForTeamsPlan}}
-        @onStartMembershipButtonClick={{(noop)}}
+        @ctaText="Purchase team plan"
+        @onCtaClick={{(noop)}}
+        class="lg:max-w-sm"
       />
     </div>
 

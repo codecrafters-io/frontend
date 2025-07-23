@@ -11,12 +11,17 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    ctaText: string;
     description: string;
     featureDescriptions: FeatureDescription[];
-    onStartMembershipButtonClick: () => void;
     isRecommended?: boolean;
+    onCtaClick: () => void;
     subtitle: string;
     title: string;
+  };
+
+  Blocks: {
+    cta: [];
   };
 }
 
