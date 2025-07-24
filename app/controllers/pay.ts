@@ -22,7 +22,7 @@ export default class PayController extends Controller {
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
   @service declare router: RouterService;
 
-  @tracked configureCheckoutSessionModalIsOpen = false;
+  @tracked chooseMembershipPlanModalIsOpen = true;
   @tracked isCreatingCheckoutSession = false;
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
@@ -82,14 +82,8 @@ export default class PayController extends Controller {
   }
 
   @action
-  handleStartMembershipButtonClick(pricingFrequency: string) {
-    if (this.authenticator.isAuthenticated) {
-      this.configureCheckoutSessionModalIsOpen = true;
-      this.selectedPricingFrequency = pricingFrequency;
-    } else {
-      // The CTA is "Try a free project ->", so doesn't make sense to redirect to /pay again
-      this.authenticator.initiateLoginAndRedirectTo('/catalog');
-    }
+  handleMembershipPlanCTAClick() {
+    this.chooseMembershipPlanModalIsOpen = true;
   }
 
   @action

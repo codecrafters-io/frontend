@@ -44,7 +44,7 @@
         @description="3mo, 1yr and lifetime plans available"
         @featureDescriptions={{this.featureDescriptionsForMembershipPlan}}
         @ctaText="View plans"
-        @onCtaClick={{(noop)}}
+        @onCtaClick={{this.handleMembershipPlanCTAClick}}
         class="lg:max-w-sm"
       />
 
@@ -97,12 +97,11 @@
   </div>
 </div>
 
-{{#if this.configureCheckoutSessionModalIsOpen}}
+{{#if this.chooseMembershipPlanModalIsOpen}}
   <ModalBackdrop>
-    <PayPage::ConfigureCheckoutSessionModal
-      @additionalCheckoutSessionProperties={{this.additionalCheckoutSessionProperties}}
+    <PayPage::ChooseMembershipPlanModal
       {{! @glint-expect-error mut not ts-ified yet }}
-      @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}}
+      @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
     />
   </ModalBackdrop>
 {{/if}}

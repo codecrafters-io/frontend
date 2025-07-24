@@ -1,0 +1,19 @@
+<ModalBody @allowManualClose={{false}} class="w-full">
+  <div class="font-bold text-2xl text-gray-600 text-center text-balance">
+    Invest in the membership that pays for itself many times over.
+  </div>
+
+  <p class="text-gray-700 text-sm text-center text-balance mt-2">
+    CodeCrafters members routinely unlock promotions and 5-figure salary jumps.
+  </p>
+
+  <div class="flex flex-col gap-y-2 mt-6">
+    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{true}} @title="3 month pass" @actualPriceInDollars="120" />
+    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{false}} @title="1 year pass" @actualPriceInDollars="360" />
+    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{false}} @title="Lifetime pass" @actualPriceInDollars="1490" />
+
+    <PrimaryButton>
+      Choose 3 months plan&nbsp;→
+    </PrimaryButton>
+  </div>
+</ModalBody>
