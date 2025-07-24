@@ -8,9 +8,28 @@
   </p>
 
   <div class="flex flex-col gap-y-2 mt-6">
-    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{true}} @title="3 month pass" @actualPriceInDollars="120" />
-    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{false}} @title="1 year pass" @actualPriceInDollars="360" />
-    <PayPage::ChooseMembershipPlanModal::PlanCard @isSelected={{false}} @title="Lifetime pass" @actualPriceInDollars="1490" />
+    <PayPage::ChooseMembershipPlanModal::PlanCard
+      @isSelected={{true}}
+      @title="3 month pass"
+      @actualPriceInDollars={{120}}
+      @discountedPriceInDollars={{undefined}}
+      @validityInMonths={{3}}
+    />
+
+    <PayPage::ChooseMembershipPlanModal::PlanCard
+      @isSelected={{false}}
+      @title="1 year pass"
+      @actualPriceInDollars={{360}}
+      @discountedPriceInDollars={{180}}
+      @validityInMonths={{12}}
+    />
+
+    <PayPage::ChooseMembershipPlanModal::PlanCard
+      @isSelected={{false}}
+      @title="Lifetime pass"
+      @actualPriceInDollars={{1490}}
+      @discountedPriceInDollars={{undefined}}
+    />
 
     <PrimaryButton>
       Choose 3 months plan&nbsp;→
