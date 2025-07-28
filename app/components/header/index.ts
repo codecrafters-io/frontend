@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -10,6 +11,7 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type RouterService from '@ember/routing/router-service';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type { SafeString } from '@ember/template/-private/handlebars';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -25,7 +27,8 @@ export default class HeaderComponent extends Component<Signature> {
   @service declare versionTracker: VersionTrackerService;
 
   @tracked mobileMenuIsExpanded = false;
-  @tracked floatingBarStyle = 'left: 0px; width: 0px; bottom: -8px; opacity: 0;';
+  @tracked floatingBarStyle: SafeString = htmlSafe('left: 0px; width: 0px; opacity: 0;');
+  @tracked floatingBarContainer: HTMLElement | null = null;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
@@ -84,7 +87,7 @@ export default class HeaderComponent extends Component<Signature> {
     const left = linkRect.left - containerRect.left;
     const width = linkRect.width;
 
-    this.floatingBarStyle = `left: ${left}px; width: ${width}px; opacity: 1;`;
+    this.floatingBarStyle = htmlSafe(`left: ${left}px; width: ${width}px; opacity: 1;`);
   }
 
   private findAndPositionActiveLink(containerElement: HTMLElement) {
@@ -114,13 +117,10 @@ export default class HeaderComponent extends Component<Signature> {
   @action
   handleRouteChange() {
     this.mobileMenuIsExpanded = false;
-    setTimeout(() => {
-      const container = document.querySelector('[data-test-header] .relative') as HTMLElement;
 
-      if (container) {
-        this.findAndPositionActiveLink(container);
-      }
-    }, 10);
+    if (this.floatingBarContainer) {
+      this.findAndPositionActiveLink(this.floatingBarContainer);
+    }
   }
 
   @action
@@ -130,6 +130,7 @@ export default class HeaderComponent extends Component<Signature> {
 
   @action
   setupFloatingBar(element: HTMLElement) {
+    this.floatingBarContainer = element;
     this.findAndPositionActiveLink(element);
   }
 
@@ -140,6 +141,7 @@ export default class HeaderComponent extends Component<Signature> {
 
   @action
   updateFloatingBar(element: HTMLElement) {
+    this.floatingBarContainer = element;
     this.findAndPositionActiveLink(element);
   }
 }
