@@ -77,44 +77,17 @@ export default class HeaderComponent extends Component<Signature> {
     return links;
   }
 
-  @action
-  handleDidInsert() {
-    this.router.on('routeWillChange', this.handleRouteChange);
+  private calculateFloatingBarPosition(activeLink: HTMLElement, container: HTMLElement) {
+    const containerRect = container.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+
+    const left = linkRect.left - containerRect.left;
+    const width = linkRect.width;
+
+    this.floatingBarStyle = `left: ${left}px; width: ${width}px; opacity: 1;`;
   }
 
-  @action
-  handleRouteChange() {
-    this.mobileMenuIsExpanded = false;
-    setTimeout(() => {
-      const container = document.querySelector('[data-test-header] .relative') as HTMLElement;
-
-      if (container) {
-        this.updateFloatingBarPosition(container);
-      }
-    }, 10);
-  }
-
-  @action
-  handleWillDestroy() {
-    this.router.off('routeWillChange', this.handleRouteChange);
-  }
-
-  @action
-  setupFloatingBar(element: HTMLElement) {
-    this.updateFloatingBarPosition(element);
-  }
-
-  @action
-  toggleMobileMenu() {
-    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
-  }
-
-  @action
-  updateFloatingBar(element: HTMLElement) {
-    this.updateFloatingBarPosition(element);
-  }
-
-  private updateFloatingBarPosition(containerElement: HTMLElement) {
+  private findAndPositionActiveLink(containerElement: HTMLElement) {
     const currentRoute = this.router.currentRouteName;
 
     if (!currentRoute || currentRoute.includes('loading')) {
@@ -129,18 +102,45 @@ export default class HeaderComponent extends Component<Signature> {
     }
 
     if (activeLink) {
-      this.positionFloatingBar(activeLink, containerElement);
+      this.calculateFloatingBarPosition(activeLink, containerElement);
     }
   }
 
-  private positionFloatingBar(activeLink: HTMLElement, container: HTMLElement) {
-    const containerRect = container.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
+  @action
+  handleDidInsert() {
+    this.router.on('routeWillChange', this.handleRouteChange);
+  }
 
-    const left = linkRect.left - containerRect.left;
-    const width = linkRect.width;
+  @action
+  handleRouteChange() {
+    this.mobileMenuIsExpanded = false;
+    setTimeout(() => {
+      const container = document.querySelector('[data-test-header] .relative') as HTMLElement;
 
-    this.floatingBarStyle = `left: ${left}px; width: ${width}px; opacity: 1;`;
+      if (container) {
+        this.findAndPositionActiveLink(container);
+      }
+    }, 10);
+  }
+
+  @action
+  handleWillDestroy() {
+    this.router.off('routeWillChange', this.handleRouteChange);
+  }
+
+  @action
+  setupFloatingBar(element: HTMLElement) {
+    this.findAndPositionActiveLink(element);
+  }
+
+  @action
+  toggleMobileMenu() {
+    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
+  }
+
+  @action
+  updateFloatingBar(element: HTMLElement) {
+    this.findAndPositionActiveLink(element);
   }
 }
 
