@@ -38,9 +38,18 @@
         <div class="bg-gray-200 dark:bg-white/5 w-px h-5 mr-3"></div>
 
         {{! Top-level links }}
-        {{#each this.links as |link|}}
-          <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
-        {{/each}}
+        <div class="relative" {{did-insert this.setupFloatingBar}} {{did-update this.updateFloatingBar this.router.currentRouteName}}>
+          {{#each this.links as |link|}}
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
+          {{/each}}
+          
+          {{! Floating green bar }}
+          <div
+            class="absolute h-0.5 bg-teal-500 transition-all duration-300 ease-out"
+            style={{html-safe this.floatingBarStyle}}
+            data-test-floating-bar
+          ></div>
+        </div>
       </div>
 
       {{! Account Dropdown on Desktop. Hidden in fastboot since we don't know if the user is authed or not }}

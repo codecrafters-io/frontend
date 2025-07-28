@@ -25,6 +25,7 @@ export default class HeaderComponent extends Component<Signature> {
   @service declare versionTracker: VersionTrackerService;
 
   @tracked mobileMenuIsExpanded = false;
+  @tracked floatingBarStyle = 'left: 0px; width: 0px; bottom: -8px; opacity: 0;';
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
@@ -84,6 +85,12 @@ export default class HeaderComponent extends Component<Signature> {
   @action
   handleRouteChange() {
     this.mobileMenuIsExpanded = false;
+    setTimeout(() => {
+      const container = document.querySelector('[data-test-header] .relative') as HTMLElement;
+      if (container) {
+        this.updateFloatingBarPosition(container);
+      }
+    }, 10);
   }
 
   @action
@@ -92,8 +99,47 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   @action
+  setupFloatingBar(element: HTMLElement) {
+    this.updateFloatingBarPosition(element);
+  }
+
+  @action
   toggleMobileMenu() {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
+  }
+
+  @action
+  updateFloatingBar(element: HTMLElement) {
+    this.updateFloatingBarPosition(element);
+  }
+
+  private updateFloatingBarPosition(containerElement: HTMLElement) {
+    const currentRoute = this.router.currentRouteName;
+    
+    if (!currentRoute || currentRoute.includes('loading')) {
+      return;
+    }
+    
+    let activeLink = containerElement.querySelector(`[data-route="${currentRoute}"]`) as HTMLElement;
+    
+    if (!activeLink && currentRoute.includes('.')) {
+      const parentRoute = currentRoute.split('.')[0];
+      activeLink = containerElement.querySelector(`[data-route="${parentRoute}"]`) as HTMLElement;
+    }
+    
+    if (activeLink) {
+      this.positionFloatingBar(activeLink, containerElement);
+    }
+  }
+
+  private positionFloatingBar(activeLink: HTMLElement, container: HTMLElement) {
+    const containerRect = container.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    
+    const left = linkRect.left - containerRect.left;
+    const width = linkRect.width;
+    
+    this.floatingBarStyle = `left: ${left}px; width: ${width}px; bottom: -18px; opacity: 1;`;
   }
 }
 
