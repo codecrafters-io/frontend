@@ -22,7 +22,7 @@ export default class PayController extends Controller {
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
   @service declare router: RouterService;
 
-  @tracked chooseMembershipPlanModalIsOpen = true;
+  @tracked chooseMembershipPlanModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;

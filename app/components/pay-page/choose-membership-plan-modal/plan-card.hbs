@@ -8,27 +8,75 @@
 >
   <div class="flex items-start gap-2">
     <div
-      class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-1 {{if @isSelected 'border-teal-500' 'border-gray-400'}}"
+      class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5 {{if @isSelected 'border-teal-500' 'border-gray-400'}}"
     >
       {{#if @isSelected}}
         <div class="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>
       {{/if}}
     </div>
     <div>
-      <span class="text-gray-600 font-bold text-sm">
-        {{@title}}
-      </span>
-      <p class="text-gray-400 text-xs mt-1">
-        Access to all tracks, 1-on-1 coaching, and community support.
-      </p>
+      <div class="flex items-center gap-x-1.5">
+        <span class="text-gray-600 font-bold text-sm">
+          {{@title}}
+        </span>
+        {{#if (eq @validityInMonths 12)}}
+          <span class="inline-block bg-teal-500 text-white font-bold rounded px-1.5 py-1 text-xxs uppercase">best value</span>
+        {{/if}}
+      </div>
+      <div class="prose prose-xs prose-compact mt-1 text-gray-500">
+        {{#if (eq @validityInMonths 3)}}
+          <p>
+            Access to all membership benefits for 3 months
+          </p>
+        {{else if (eq @validityInMonths 12)}}
+          <p>
+            Access to all membership benefits for 1 year
+          </p>
+        {{else}}
+          <p>
+            Access to all membership benefits forever
+          </p>
+        {{/if}}
+      </div>
+
+      {{#if @discountedPriceInDollars}}
+        <div class="prose prose-xs prose-compact text-gray-500">
+          <ul class="mt-0">
+            <li>
+              <b class="text-teal-500">50% off</b>
+              — India discount
+            </li>
+            <li>
+              <b class="text-teal-500">40% off</b>
+              — <span class="text-nowrap">coding-game's</span>
+              referral offer, expires in
+              <span class="font-mono">74h:24m:01s</span>
+            </li>
+          </ul>
+        </div>
+      {{/if}}
     </div>
   </div>
   <div class="flex flex-col items-end pl-4 flex-shrink-0">
-    <div class="text-gray-600 font-bold mb-0.5">
-      $199
-    </div>
-    <div class="text-gray-400 text-xxs flex-shrink-0 text-right">
-      Approx. $66/mo
+    {{#if @discountedPriceInDollars}}
+      <div class="flex items-center gap-x-1">
+        <span class="text-gray-400 font-bold line-through text-lg">${{@actualPriceInDollars}}</span>
+
+        <span class="text-teal-500 font-bold">
+          ${{@discountedPriceInDollars}}
+        </span>
+      </div>
+    {{else}}
+      <div class="text-gray-600 font-bold">
+        ${{@actualPriceInDollars}}
+      </div>
+    {{/if}}
+    <div class="text-gray-500 text-xxs flex-shrink-0 text-right mt-0.5">
+      {{#if this.amortizedMonthlyPriceInDollars}}
+        Effectively ${{this.amortizedMonthlyPriceInDollars}}/mo
+      {{else}}
+        Limited spots
+      {{/if}}
     </div>
   </div>
 </div>

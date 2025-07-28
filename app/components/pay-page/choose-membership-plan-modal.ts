@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -12,26 +12,18 @@ interface Signature {
 }
 
 export default class ChooseMembershipPlanModal extends Component<Signature> {
-  @service declare store: Store;
-  @tracked extraInvoiceDetailsRequested = false;
-  @tracked isCreatingCheckoutSession = false;
+  transition = fade;
+  @tracked previewType: 'plan' | 'invoice-details' = 'plan';
 
-  // @action
-  // async handleProceedToCheckoutButtonClick() {
-  //   this.isCreatingCheckoutSession = true;
+  @action
+  handleChangePlanButtonClick() {
+    this.previewType = 'plan';
+  }
 
-  //   const checkoutSession = this.store.createRecord('individual-checkout-session', {
-  //     cancelUrl: `${window.location.origin}/pay`,
-  //     extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
-  //     pricingFrequency: this.args.additionalCheckoutSessionProperties.pricingFrequency,
-  //     promotionalDiscount: this.args.additionalCheckoutSessionProperties.promotionalDiscount,
-  //     regionalDiscount: this.args.additionalCheckoutSessionProperties.regionalDiscount,
-  //     successUrl: `${window.location.origin}/tracks`,
-  //   });
-
-  //   await checkoutSession.save();
-  //   window.location.href = checkoutSession.url;
-  // }
+  @action
+  handleChoosePlanButtonClick() {
+    this.previewType = 'invoice-details';
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
