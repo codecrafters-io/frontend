@@ -42,10 +42,10 @@
           {{#each this.links as |link|}}
             <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
           {{/each}}
-          
+
           {{! Floating green bar }}
           <div
-            class="absolute h-0.5 bg-teal-500 transition-all duration-300 ease-out"
+            class="absolute -bottom-[18px] h-0.5 bg-teal-500 transition-all duration-300 ease-out"
             style={{html-safe this.floatingBarStyle}}
             data-test-floating-bar
           ></div>

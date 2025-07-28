@@ -19,7 +19,7 @@ export default class LinkComponent extends Component<Signature> {
     if (this.args.type !== 'route') {
       return false;
     }
-    
+
     return this.router.currentRouteName === this.args.route;
   }
 }

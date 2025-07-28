@@ -87,6 +87,7 @@ export default class HeaderComponent extends Component<Signature> {
     this.mobileMenuIsExpanded = false;
     setTimeout(() => {
       const container = document.querySelector('[data-test-header] .relative') as HTMLElement;
+
       if (container) {
         this.updateFloatingBarPosition(container);
       }
@@ -115,18 +116,18 @@ export default class HeaderComponent extends Component<Signature> {
 
   private updateFloatingBarPosition(containerElement: HTMLElement) {
     const currentRoute = this.router.currentRouteName;
-    
+
     if (!currentRoute || currentRoute.includes('loading')) {
       return;
     }
-    
+
     let activeLink = containerElement.querySelector(`[data-route="${currentRoute}"]`) as HTMLElement;
-    
+
     if (!activeLink && currentRoute.includes('.')) {
       const parentRoute = currentRoute.split('.')[0];
       activeLink = containerElement.querySelector(`[data-route="${parentRoute}"]`) as HTMLElement;
     }
-    
+
     if (activeLink) {
       this.positionFloatingBar(activeLink, containerElement);
     }
@@ -135,11 +136,11 @@ export default class HeaderComponent extends Component<Signature> {
   private positionFloatingBar(activeLink: HTMLElement, container: HTMLElement) {
     const containerRect = container.getBoundingClientRect();
     const linkRect = activeLink.getBoundingClientRect();
-    
+
     const left = linkRect.left - containerRect.left;
     const width = linkRect.width;
-    
-    this.floatingBarStyle = `left: ${left}px; width: ${width}px; bottom: -18px; opacity: 1;`;
+
+    this.floatingBarStyle = `left: ${left}px; width: ${width}px; opacity: 1;`;
   }
 }
 
