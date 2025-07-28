@@ -9,7 +9,7 @@
   {{did-insert this.loadLanguageGuides}}
 >
   <:header>
-    <div class="flex items-center justify-between border-b dark:border-white/5 pb-2 mb-5 w-full">
+    <div class="flex items-center justify-between border-b border-gray-200 dark:border-white/5 pb-2 mb-5 w-full">
       <div class="flex items-center gap-x-3">
         <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 flex items-center">
           <AnimatedContainer>
@@ -64,7 +64,7 @@
           @selectedLanguage={{this.currentLanguage}}
           @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
           @onDidInsertDropdown={{(noop)}}
-          class="flex-shrink-0"
+          class="shrink-0"
         />
       </div>
     </div>

@@ -1,21 +1,18 @@
 <button
   type="button"
-  class="border border-gray-300 dark:border-white/10 rounded-md px-4 py-5 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-900 hover:to-gray-200 dark:hover:from-gray-800 dark:hover:to-gray-800 hover:border-gray-400 dark:hover:border-white/15 w-full flex items-center text-left group/action-button"
+  class="border border-gray-300 dark:border-white/10 rounded-md px-4 py-5 bg-linear-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-900 hover:to-gray-200 dark:hover:from-gray-800 dark:hover:to-gray-800 hover:border-gray-400 dark:hover:border-white/15 w-full flex items-center text-left group/action-button"
   ...attributes
 >
   {{#if @isProcessing}}
     {{svg-jar
       "spinner"
-      class="w-6 h-6 sm:w-8 sm:h-8 mr-3 text-teal-500 flex-shrink-0 transition-transform duration-100 group-hover/action-button:scale-105"
+      class="w-6 h-6 sm:w-8 sm:h-8 mr-3 text-teal-500 shrink-0 transition-transform duration-100 group-hover/action-button:scale-105"
     }}
   {{else}}
-    {{svg-jar
-      @icon
-      class="w-6 h-6 sm:w-8 sm:h-8 mr-3 text-teal-500 flex-shrink-0 transition-transform duration-100 group-hover/action-button:scale-105"
-    }}
+    {{svg-jar @icon class="w-6 h-6 sm:w-8 sm:h-8 mr-3 text-teal-500 shrink-0 transition-transform duration-100 group-hover/action-button:scale-105"}}
   {{/if}}
 
-  <div class="flex-grow">
+  <div class="grow">
     <div class="font-semibold text-gray-700 dark:text-gray-200 mb-0.5" data-test-action-button-title>
       {{@title}}
     </div>
@@ -28,7 +25,7 @@
   {{svg-jar
     "arrow-right"
     class=(concat
-      "w-4 h-4 sm:w-6 sm:h-6 ml-6 text-teal-500 flex-shrink-0 transition-transform duration-100 group-hover/action-button:translate-x-0.5 "
+      "w-4 h-4 sm:w-6 sm:h-6 ml-6 text-teal-500 shrink-0 transition-transform duration-100 group-hover/action-button:translate-x-0.5 "
       (if @isProcessing "animate-bounce")
     )
   }}

@@ -1,24 +1,28 @@
-<AlertWithIcon class="mb-6">
-  Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
-</AlertWithIcon>
+<div class="flex flex-col md:flex-row-reverse gap-3">
+  <div class="w-full md:w-60 flex-shrink-0">
+    <div class="md:sticky md:top-4 flex flex-col gap-3">
 
-<div class="flex items-center flex-wrap mb-6">
-  {{#each this.orderedCourses as |course|}}
-    <RoadmapPage::CoursePill
-      @course={{course}}
-      @isSelected={{eq this.selectedCourse course}}
-      class="mr-2 mb-3 flex-shrink-0"
-      {{on "click" (fn (mut this.selectedCourseSlug) course.slug)}}
-    />
-  {{/each}}
-</div>
+      <LatestReleasesCard @courseExtensionIdeas={{@model.courseExtensionIdeas}} @courseIdeas={{@model.courseIdeas}} />
+    </div>
+  </div>
+  <div class="flex-grow flex flex-col gap-3">
+    <RoadmapInfoAlert @heading="What are challenge extensions?" class="hidden md:block">
+      Challenge extensions are groups of extra stages that extend challenges. Vote and help us decide which ones to build.
+    </RoadmapInfoAlert>
+    <div class="flex items-center mb-6">
+      <CourseDropdown
+        @courses={{this.orderedCourses}}
+        @selectedCourse={{this.selectedCourse}}
+        @requestedCourse={{this.selectedCourse}}
+        @onRequestedCourseChange={{this.handleCourseChange}}
+      />
+    </div>
+    {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
+      <RoadmapPage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
+    {{/each}}
 
-<div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
-  {{#if this.authenticator.isAuthenticated}}
-    <RoadmapPage::SubmitCourseExtensionIdeaCard @course={{this.selectedCourse}} />
-  {{/if}}
-
-  {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
-    <RoadmapPage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
-  {{/each}}
+    {{#if this.authenticator.isAuthenticated}}
+      <RoadmapPage::SubmitCourseExtensionIdeaCard @course={{this.selectedCourse}} />
+    {{/if}}
+  </div>
 </div>

@@ -1,5 +1,4 @@
 import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
-import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { CollapseWidget, uncollapseUnchanged } from './code-mirror-collapse-unchanged';
 
 function renderGutterMarker(view: EditorView, widget: CollapseWidget, line: BlockInfo) {
@@ -62,38 +61,6 @@ export class CollapseUnchangedGutterMarker extends GutterMarker implements Event
   }
 }
 
-export class CollapseUnchangedGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
-  #lastRenderedElement?: HTMLElement;
-
-  constructor(
-    readonly view: EditorView,
-    readonly widget: CollapseWidget,
-    readonly line: BlockInfo,
-  ) {
-    super();
-    widget.attachGutterMarker(this);
-  }
-
-  // eslint-disable-next-line ember/classic-decorator-hooks
-  destroy() {
-    this.widget.detachGutterMarker(this);
-  }
-
-  handleEvent(e: MouseEvent) {
-    if (e.type === 'mouseenter') {
-      this.#lastRenderedElement?.classList.add('cm-collapseUnchangedGutterMarkerHovered');
-    } else if (e.type === 'mouseleave') {
-      this.#lastRenderedElement?.classList.remove('cm-collapseUnchangedGutterMarkerHovered');
-    }
-  }
-
-  toDOM(view: EditorView) {
-    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
-
-    return this.#lastRenderedElement;
-  }
-}
-
 export function collapseUnchangedGutter() {
   return [
     gutter({
@@ -104,11 +71,12 @@ export function collapseUnchangedGutter() {
       },
     }),
 
-    gutterRS({
+    gutter({
       class: 'cm-collapseUnchangedGutter',
+      side: 'after',
 
       widgetMarker(view, widget, line) {
-        return widget instanceof CollapseWidget ? new CollapseUnchangedGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapseWidget ? new CollapseUnchangedGutterMarker(view, widget, line) : null;
       },
     }),
   ];

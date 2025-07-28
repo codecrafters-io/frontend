@@ -1,13 +1,21 @@
-<AlertWithIcon class="mb-6">
-  Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
-</AlertWithIcon>
+<div class="flex flex-col md:flex-row-reverse gap-3">
+  <div class="w-full md:w-60 flex-shrink-0">
+    <div class="md:sticky md:top-4 flex flex-col gap-3">
 
-<div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
-  {{#if this.authenticator.isAuthenticated}}
-    <RoadmapPage::SubmitCourseIdeaCard />
-  {{/if}}
+      <LatestReleasesCard @courseExtensionIdeas={{@model.courseExtensionIdeas}} @courseIdeas={{@model.courseIdeas}} />
+    </div>
+  </div>
+  <div class="flex-grow flex flex-col gap-3">
+    <RoadmapInfoAlert @heading="What are challenges?" class="hidden md:block">
+      Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+    </RoadmapInfoAlert>
 
-  {{#each this.orderedCourseIdeas as |courseIdea|}}
-    <RoadmapPage::CourseIdeaCard @courseIdea={{courseIdea}} />
-  {{/each}}
+    {{#each this.orderedCourseIdeas as |courseIdea|}}
+      <RoadmapPage::CourseIdeaCard @courseIdea={{courseIdea}} />
+    {{/each}}
+
+    {{#if this.authenticator.isAuthenticated}}
+      <RoadmapPage::SubmitCourseIdeaCard />
+    {{/if}}
+  </div>
 </div>

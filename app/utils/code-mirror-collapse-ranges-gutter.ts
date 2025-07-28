@@ -1,5 +1,4 @@
 import { BlockInfo, EditorView, gutter, GutterMarker } from '@codemirror/view';
-import { gutter as gutterRS, GutterMarker as GutterMarkerRS } from 'codecrafters-frontend/utils/code-mirror-gutter-rs';
 import { CollapseRangesWidget, uncollapseRangesStateEffect } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 
 function renderGutterMarker(view: EditorView, widget: CollapseRangesWidget, line: BlockInfo) {
@@ -62,38 +61,6 @@ export class CollapseRangesGutterMarker extends GutterMarker implements EventLis
   }
 }
 
-export class CollapseRangesGutterMarkerRS extends GutterMarkerRS implements EventListenerObject {
-  #lastRenderedElement?: HTMLElement;
-
-  constructor(
-    readonly view: EditorView,
-    readonly widget: CollapseRangesWidget,
-    readonly line: BlockInfo,
-  ) {
-    super();
-    widget.attachGutterMarker(this);
-  }
-
-  // eslint-disable-next-line ember/classic-decorator-hooks
-  destroy() {
-    this.widget.detachGutterMarker(this);
-  }
-
-  handleEvent(e: MouseEvent) {
-    if (e.type === 'mouseenter') {
-      this.#lastRenderedElement?.classList.add('cm-collapseRangesGutterMarkerHovered');
-    } else if (e.type === 'mouseleave') {
-      this.#lastRenderedElement?.classList.remove('cm-collapseRangesGutterMarkerHovered');
-    }
-  }
-
-  toDOM(view: EditorView) {
-    this.#lastRenderedElement = renderGutterMarker(view, this.widget, this.line);
-
-    return this.#lastRenderedElement;
-  }
-}
-
 export function collapseRangesGutter() {
   return [
     gutter({
@@ -104,11 +71,12 @@ export function collapseRangesGutter() {
       },
     }),
 
-    gutterRS({
+    gutter({
       class: 'cm-collapseRangesGutter',
+      side: 'after',
 
       widgetMarker(view, widget, line) {
-        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarkerRS(view, widget, line) : null;
+        return widget instanceof CollapseRangesWidget ? new CollapseRangesGutterMarker(view, widget, line) : null;
       },
     }),
   ];

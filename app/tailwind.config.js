@@ -3,26 +3,17 @@
 
 const colors = require('tailwindcss/colors');
 
+/* Picked from https://github.com/tailwindlabs/tailwindcss-typography/blob/25051fbfd7c7058708233b1b4c6280f039e5855d/src/styles.js */
+const round = (num) =>
+  num
+    .toFixed(7)
+    .replace(/(\.[0-9]+?)0+$/, '$1')
+    .replace(/\.0$/, '');
+const rem = (px) => `${round(px / 16)}rem`;
+const em = (px, base) => `${round(px / base)}em`;
+
 module.exports = {
   content: [`./app/**/*.{html,js,ts,hbs,gts}`],
-  safelist: {
-    standard: [
-      'inline', // Used by SVG stuff
-      'mx-1', // Used by SVG stuff
-      'w-4', // Used by SVG stuff
-      'whitespace-nowrap', // Used by SVG stuff
-    ],
-    greedy: [/ember-basic-dropdown-/, /prose/],
-    deep: [
-      // Ember's built-in components: <Input /> and <TextArea />
-      /^input$/,
-      /^textarea$/,
-      // There's something wrong with how we're picking styles from ember-animated
-      /ember-animated/,
-      /animated-container/,
-      /animated-orphans/,
-    ],
-  },
   darkMode: ['variant', ['&:is(.dark *)']],
   theme: {
     colors: {
@@ -230,6 +221,212 @@ module.exports = {
             },
           },
         },
+        // Copied from https://github.com/tailwindlabs/tailwindcss-typography/blob/25051fbfd7c7058708233b1b4c6280f039e5855d/src/styles.js#L20, adapted for "xs"
+        xs: {
+          css: [
+            {
+              fontSize: rem(12),
+              lineHeight: round(20 / 12),
+              p: {
+                marginTop: em(12, 12),
+                marginBottom: em(12, 12),
+              },
+              '[class~="lead"]': {
+                fontSize: em(15, 12),
+                lineHeight: round(22 / 15),
+                marginTop: em(12, 15),
+                marginBottom: em(12, 15),
+              },
+              blockquote: {
+                marginTop: em(18, 15),
+                marginBottom: em(18, 15),
+                paddingInlineStart: em(16, 15),
+              },
+              h1: {
+                fontSize: em(22, 12),
+                marginTop: '0',
+                marginBottom: em(18, 22),
+                lineHeight: round(28 / 22),
+              },
+              h2: {
+                fontSize: em(16, 12),
+                marginTop: em(24, 16),
+                marginBottom: em(12, 16),
+                lineHeight: round(22 / 16),
+              },
+              h3: {
+                fontSize: em(14, 12),
+                marginTop: em(20, 14),
+                marginBottom: em(6, 14),
+                lineHeight: round(20 / 14),
+              },
+              h4: {
+                marginTop: em(14, 12),
+                marginBottom: em(6, 12),
+                lineHeight: round(16 / 12),
+              },
+              img: {
+                marginTop: em(18, 12),
+                marginBottom: em(18, 12),
+              },
+              picture: {
+                marginTop: em(18, 12),
+                marginBottom: em(18, 12),
+              },
+              'picture > img': {
+                marginTop: '0',
+                marginBottom: '0',
+              },
+              video: {
+                marginTop: em(18, 12),
+                marginBottom: em(18, 12),
+              },
+              kbd: {
+                fontSize: em(10, 12),
+                borderRadius: rem(4),
+                paddingTop: em(2, 12),
+                paddingInlineEnd: em(4, 12),
+                paddingBottom: em(2, 12),
+                paddingInlineStart: em(4, 12),
+              },
+              code: {
+                fontSize: em(10, 12),
+              },
+              'h2 code': {
+                fontSize: em(13, 16),
+              },
+              'h3 code': {
+                fontSize: em(12, 14),
+              },
+              pre: {
+                fontSize: em(10, 12),
+                lineHeight: round(16 / 10),
+                marginTop: em(14, 10),
+                marginBottom: em(14, 10),
+                borderRadius: rem(3),
+                paddingTop: em(6, 10),
+                paddingInlineEnd: em(8, 10),
+                paddingBottom: em(6, 10),
+                paddingInlineStart: em(8, 10),
+              },
+              ol: {
+                marginTop: em(12, 12),
+                marginBottom: em(12, 12),
+                paddingInlineStart: em(18, 12),
+              },
+              ul: {
+                marginTop: em(12, 12),
+                marginBottom: em(12, 12),
+                paddingInlineStart: em(18, 12),
+              },
+              li: {
+                marginTop: em(3, 12),
+                marginBottom: em(3, 12),
+              },
+              'ol > li': {
+                paddingInlineStart: em(4, 12),
+              },
+              'ul > li': {
+                paddingInlineStart: em(4, 12),
+              },
+              '> ul > li p': {
+                marginTop: em(6, 12),
+                marginBottom: em(6, 12),
+              },
+              '> ul > li > p:first-child': {
+                marginTop: em(12, 12),
+              },
+              '> ul > li > p:last-child': {
+                marginBottom: em(12, 12),
+              },
+              '> ol > li > p:first-child': {
+                marginTop: em(12, 12),
+              },
+              '> ol > li > p:last-child': {
+                marginBottom: em(12, 12),
+              },
+              'ul ul, ul ol, ol ul, ol ol': {
+                marginTop: em(6, 12),
+                marginBottom: em(6, 12),
+              },
+              dl: {
+                marginTop: em(12, 12),
+                marginBottom: em(12, 12),
+              },
+              dt: {
+                marginTop: em(12, 12),
+              },
+              dd: {
+                marginTop: em(3, 12),
+                paddingInlineStart: em(18, 12),
+              },
+              hr: {
+                marginTop: em(30, 12),
+                marginBottom: em(30, 12),
+              },
+              'hr + *': {
+                marginTop: '0',
+              },
+              'h2 + *': {
+                marginTop: '0',
+              },
+              'h3 + *': {
+                marginTop: '0',
+              },
+              'h4 + *': {
+                marginTop: '0',
+              },
+              table: {
+                fontSize: em(10, 12),
+                lineHeight: round(14 / 10),
+              },
+              'thead th': {
+                paddingInlineEnd: em(8, 10),
+                paddingBottom: em(6, 10),
+                paddingInlineStart: em(8, 10),
+              },
+              'thead th:first-child': {
+                paddingInlineStart: '0',
+              },
+              'thead th:last-child': {
+                paddingInlineEnd: '0',
+              },
+              'tbody td, tfoot td': {
+                paddingTop: em(6, 10),
+                paddingInlineEnd: em(8, 10),
+                paddingBottom: em(6, 10),
+                paddingInlineStart: em(8, 10),
+              },
+              'tbody td:first-child, tfoot td:first-child': {
+                paddingInlineStart: '0',
+              },
+              'tbody td:last-child, tfoot td:last-child': {
+                paddingInlineEnd: '0',
+              },
+              figure: {
+                marginTop: em(18, 12),
+                marginBottom: em(18, 12),
+              },
+              'figure > *': {
+                marginTop: '0',
+                marginBottom: '0',
+              },
+              figcaption: {
+                fontSize: em(10, 12),
+                lineHeight: round(13 / 10),
+                marginTop: em(6, 10),
+              },
+            },
+            {
+              '> :first-child': {
+                marginTop: '0',
+              },
+              '> :last-child': {
+                marginBottom: '0',
+              },
+            },
+          ],
+        },
       },
       keyframes: {
         'infinite-slide': {
@@ -267,5 +464,4 @@ module.exports = {
       width: ['group-hover'],
     },
   },
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/container-queries')],
 };

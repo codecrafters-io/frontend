@@ -15,6 +15,7 @@ declare const config: {
     isCI: boolean;
     metaTagImagesBaseURL: string;
     stripePublishableKey: string;
+    vercelAnalyticsId: string;
     version: string;
   };
 };

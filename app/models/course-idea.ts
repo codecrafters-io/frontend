@@ -1,19 +1,23 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
+import DateService from 'codecrafters-frontend/services/date';
 import Model from '@ember-data/model';
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
+import { getSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseIdeaModel extends Model {
   @hasMany('course-idea-vote', { async: false, inverse: 'courseIdea' }) declare currentUserVotes: SyncHasMany<CourseIdeaVoteModel>;
 
+  @attr('string') declare announcementUrl: string | null;
   @attr('date') declare createdAt: Date;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare developmentStatus: string;
   @attr('boolean') declare isArchived: boolean;
   @attr('string') declare name: string;
+  @attr('date') declare releasedAt: Date | null;
   @attr('string') declare slug: string;
   @attr('number') declare votesCount: number;
 
@@ -22,20 +26,27 @@ export default class CourseIdeaModel extends Model {
   @equal('developmentStatus', 'released') declare developmentStatusIsReleased: boolean;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare date: DateService;
+
+  private _cachedSortPosition: string | null = null;
 
   get isNewlyCreated(): boolean {
     // 30 days or less old or less than 100 votes
     return this.createdAt > new Date(Date.now() - 30 * 60 * 60 * 24 * 1000) || this.votesCount < 100;
   }
 
-  get reverseSortPositionForRoadmapPage(): string {
-    const reverseSortPositionFromDevelopmentStatus = {
-      not_started: 3,
-      in_progress: 2,
-      released: 1,
-    }[this.developmentStatus];
+  get sortPositionForRoadmapPage(): string {
+    if (this._cachedSortPosition === null) {
+      this._cachedSortPosition = getSortPositionForRoadmapPage(
+        this.developmentStatus,
+        this.votesCount,
+        this.id,
+        this.date.now(),
+        this.authenticator.currentUserId,
+      );
+    }
 
-    return `${reverseSortPositionFromDevelopmentStatus}-${this.createdAt.toISOString()}`;
+    return this._cachedSortPosition;
   }
 
   async vote(): Promise<CourseIdeaVoteModel> {

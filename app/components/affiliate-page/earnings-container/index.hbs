@@ -2,7 +2,7 @@
   {{#if (gt this.totalEarningsAmountInDollars 0)}}
     <table class="max-w-xs">
       <tbody>
-        <tr class="border-b">
+        <tr class="border-b border-gray-200">
           <td class="text-gray-700 font-semibold whitespace-nowrap py-2 text-sm">Total Earnings</td>
           <td class="font-semibold text-gray-700 py-2 text-right w-full" data-test-total-earnings-amount>${{this.totalEarningsAmountInDollars}}</td>
         </tr>
@@ -47,27 +47,27 @@
       <table class="max-w-xs">
         <tbody>
           {{#each this.sortedPayouts as |payout|}}
-            <tr class="border-b" data-test-payout-history-item>
-              <td class="py-2">
+            <tr class="border-b border-gray-200" data-test-payout-history-item>
+              <td class="py-2 min-w-1">
                 <div class="flex items-center gap-1.5">
                   <span class="text-gray-500 whitespace-nowrap text-sm">
                     {{date-format (or payout.completedAt payout.initiatedAt) format="PPP"}}
                   </span>
 
                   {{#if payout.statusIsProcessing}}
-                    <div class="inline-flex flex-shrink-0">
+                    <div class="inline-flex shrink-0">
                       <span
                         class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
                       >Processing</span>
                       <EmberTooltip @text="Payouts can take upto 10 days to process." />
                     </div>
                   {{else if payout.statusIsCompleted}}
-                    <div class="inline-flex flex-shrink-0 items-center">
+                    <div class="inline-flex shrink-0 items-center">
                       {{svg-jar "check-circle" class="w-5 h-5 text-teal-500"}}
                       <EmberTooltip @text="This payout has been processed." />
                     </div>
                   {{else if payout.statusIsFailed}}
-                    <div class="inline-flex flex-shrink-0">
+                    <div class="inline-flex shrink-0">
                       <span
                         class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
                       >Failed</span>

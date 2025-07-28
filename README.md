@@ -43,8 +43,8 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
   - Alternatively, append `?fastboot=false` query parameter to each request URL
 - Add `FASTBOOT_DISABLED=true` to your local `.env` file to disable FastBoot completely
   - You can override it by passing `FASTBOOT_DISABLED=""` in the command line
-- NPM tasks `start` and `start:ember` run with FastBoot **disabled**
-- NPM tasks `start:fastboot` and `start:ember:fastboot` run with FastBoot **enabled**
+- NPM task `start` runs with FastBoot **disabled**
+- NPM tasks `start:fastboot` runs with FastBoot **enabled**
 
 ## Running tests
 

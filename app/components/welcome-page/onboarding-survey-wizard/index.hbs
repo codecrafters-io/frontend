@@ -1,4 +1,4 @@
-<div class="border p-4 sm:p-8 bg-white max-w-screen-md w-full rounded" data-test-onboarding-survey-wizard>
+<div class="border border-gray-200 p-4 sm:p-8 bg-white max-w-(--breakpoint-md) w-full rounded-sm" data-test-onboarding-survey-wizard>
   <AnimatedContainer>
     {{#animated-if (eq this.currentStep 1) use=this.fade}}
       <WelcomePage::OnboardingSurveyWizard::Step1

@@ -6,7 +6,13 @@ import blendColors from 'codecrafters-frontend/utils/blend-colors';
 const BASE_STYLE = {
   // Container for all gutters
   '.cm-gutters': {
-    borderRight: 'none',
+    '&.cm-gutters-before': {
+      borderRight: 'none',
+    },
+
+    '&.cm-gutters-after': {
+      borderLeft: 'none',
+    },
   },
 
   // All gutter elements
@@ -280,6 +286,13 @@ const BASE_STYLE = {
       '& .cm-deletedText': {
         background: 'rgba(255, 0, 0, 0.2)',
       },
+    },
+
+    // If the first line of the document is both deleted and collapsed — deletedChunk widget
+    // sticks above the first-child collapsedRanges bar and looks weird, we must hide it as
+    // it's supposed to be "collapsed".
+    '&:has(+ .cm-collapsedRangesFirst)': {
+      display: 'none',
     },
   },
 };

@@ -10,18 +10,19 @@ export default class WebVitalsService extends Service {
   @service declare fastboot: FastBootService;
 
   static getConnectionSpeed(): string {
-    // @ts-ignore
-    return 'connection' in navigator && navigator['connection'] && 'effectiveType' in navigator['connection']
-      ? navigator['connection']['effectiveType']
-      : '';
+    if ('connection' in navigator && navigator.connection && typeof navigator.connection === 'object') {
+      if ('effectiveType' in navigator.connection && typeof navigator.connection.effectiveType === 'string') {
+        return navigator.connection.effectiveType;
+      }
+    }
+
+    return '';
   }
 
   reportMetric(metric: Metric): void {
-    // @ts-ignore
     const vercelAnalyticsId = config.x.vercelAnalyticsId;
 
     if (!vercelAnalyticsId) {
-      // console.log(metric);
       return;
     }
 
