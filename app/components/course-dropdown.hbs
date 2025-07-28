@@ -23,7 +23,10 @@
       </button>
     </dd.Trigger>
     <dd.Content>
-      <div class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border border-gray-200 dark:border-white/10 py-2 mt-1 mb-1" data-test-course-dropdown-content>
+      <div
+        class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border border-gray-200 dark:border-white/10 py-2 mt-1 mb-1"
+        data-test-course-dropdown-content
+      >
         {{#each @courses as |course|}}
           <CourseDropdownLink
             @course={{course}}
