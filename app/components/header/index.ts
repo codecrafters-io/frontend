@@ -118,11 +118,11 @@ export default class HeaderComponent extends Component<Signature> {
   handleRouteChange() {
     this.mobileMenuIsExpanded = false;
 
-    if (this.floatingBarContainer) {
-      setTimeout(() => {
-        this.findAndPositionActiveLink(this.floatingBarContainer!);
-      }, 0);
-    }
+    setTimeout(() => {
+      if (this.floatingBarContainer) {
+        this.findAndPositionActiveLink(this.floatingBarContainer);
+      }
+    }, 0);
   }
 
   @action
