@@ -119,7 +119,9 @@ export default class HeaderComponent extends Component<Signature> {
     this.mobileMenuIsExpanded = false;
 
     if (this.floatingBarContainer) {
-      this.findAndPositionActiveLink(this.floatingBarContainer);
+      setTimeout(() => {
+        this.findAndPositionActiveLink(this.floatingBarContainer!);
+      }, 0);
     }
   }
 
@@ -137,12 +139,6 @@ export default class HeaderComponent extends Component<Signature> {
   @action
   toggleMobileMenu() {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
-  }
-
-  @action
-  updateFloatingBar(element: HTMLElement) {
-    this.floatingBarContainer = element;
-    this.findAndPositionActiveLink(element);
   }
 }
 
