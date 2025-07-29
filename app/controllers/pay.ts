@@ -11,6 +11,7 @@ import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotio
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
 import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
+import type { FeatureDescription } from 'codecrafters-frontend/components/pay-page/pricing-plan-card';
 
 export default class PayController extends Controller {
   declare model: ModelType;
@@ -21,7 +22,7 @@ export default class PayController extends Controller {
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
   @service declare router: RouterService;
 
-  @tracked configureCheckoutSessionModalIsOpen = false;
+  @tracked chooseMembershipPlanModalIsOpen = false;
   @tracked isCreatingCheckoutSession = false;
   @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
@@ -46,6 +47,32 @@ export default class PayController extends Controller {
     }
   }
 
+  get featureDescriptionsForFreePlan(): FeatureDescription[] {
+    return [{ text: 'Limited content access' }, { text: 'Basic community features' }];
+  }
+
+  get featureDescriptionsForMembershipPlan(): FeatureDescription[] {
+    return [
+      { text: 'Unrestricted content access' },
+      { text: 'Turbo tests', link: 'https://codecrafters.io/turbo' },
+      { text: 'Code examples', link: 'https://docs.codecrafters.io/code-examples' },
+      { text: 'Anonymous mode', link: 'https://docs.codecrafters.io/membership/anonymous-mode' },
+      { text: 'Dark mode', link: 'https://docs.codecrafters.io/membership/dark-mode' },
+      { text: 'Over $1000 in perks', link: 'https://codecrafters.io/perks' },
+      { text: 'Priority support' },
+    ];
+  }
+
+  get featureDescriptionsForTeamsPlan(): FeatureDescription[] {
+    return [
+      { text: 'All membership features' },
+      { text: 'Unlimited seat re-assigns' },
+      { text: 'Team leaderboard' },
+      { text: 'Team usage analytics' },
+      { text: 'Slack app' },
+    ];
+  }
+
   get testimonialsForCards(): Testimonial[] {
     return [testimonialsData['connor-murphy']!, testimonialsData['krishna-vaidyanathan']!];
   }
@@ -55,14 +82,8 @@ export default class PayController extends Controller {
   }
 
   @action
-  handleStartMembershipButtonClick(pricingFrequency: string) {
-    if (this.authenticator.isAuthenticated) {
-      this.configureCheckoutSessionModalIsOpen = true;
-      this.selectedPricingFrequency = pricingFrequency;
-    } else {
-      // The CTA is "Try a free project ->", so doesn't make sense to redirect to /pay again
-      this.authenticator.initiateLoginAndRedirectTo('/catalog');
-    }
+  handleMembershipPlanCTAClick() {
+    this.chooseMembershipPlanModalIsOpen = true;
   }
 
   @action
