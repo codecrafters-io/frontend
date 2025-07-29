@@ -6,9 +6,15 @@ export default create({
   accountDropdown: AccountDropdown,
   clickOnApplyRegionalDiscountButton: clickable('[data-test-apply-regional-discount-button]'),
   clickOnExtraInvoiceDetailsToggle: clickable('[data-test-extra-invoice-details-toggle]'),
+  clickOnChoosePlanButton: clickable('[data-test-choose-plan-button]'),
   clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
-  clickOnStartPaymentButtonForMonthlyPlan: clickable('[data-test-monthly-pricing-card] [data-test-start-payment-button]'),
-  clickOnStartPaymentButtonForYearlyPlan: clickable('[data-test-yearly-pricing-card] [data-test-start-payment-button]'),
+  regionalDiscountNotice: {
+    scope: '[data-test-modal-regional-discount-notice]',
+  },
+  discountNotice: {
+    scope: '[data-test-discount-notice]',
+  },
+
   header: Header,
 
   referralDiscountNotice: {
@@ -19,13 +25,15 @@ export default create({
     scope: '[data-test-signup-discount-notice]',
   },
 
-  pricingCards: collection('[data-test-pricing-card]', {
-    discountedPriceText: text('[data-test-discounted-price]'),
-
-    startPaymentButton: {
-      hover: triggerable('mouseenter'),
-      scope: '[data-test-start-payment-button]',
+  membershipPlanCards: collection('[data-test-membership-plan-cards] > *', {
+    ctaButton: {
+      scope: '[data-test-pricing-plan-card-cta]',
     },
+  }),
+
+  modalPlanCards: collection('[data-test-modal-plan-card]', {
+    discountedPriceText: text('[data-test-discounted-price]'),
+    click: clickable(),
   }),
 
   visit: visitable('/pay'),

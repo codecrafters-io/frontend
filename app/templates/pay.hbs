@@ -25,7 +25,7 @@
       />
     {{/if}}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)" data-test-membership-plan-cards>
       <PayPage::PricingPlanCard
         @title={{"Free"}}
         @isRecommended={{false}}
@@ -35,6 +35,7 @@
         @ctaText="Continue with free"
         @onCtaClick={{this.handleFreePlanCTAClick}}
         class="lg:max-w-sm"
+        data-test-free-plan-card
       />
 
       <PayPage::PricingPlanCard
@@ -46,6 +47,7 @@
         @ctaText="View plans"
         @onCtaClick={{this.handleMembershipPlanCTAClick}}
         class="lg:max-w-sm"
+        data-test-membership-plan-card
       />
 
       <PayPage::PricingPlanCard
@@ -57,6 +59,7 @@
         @ctaText="Purchase team plan"
         @onCtaClick={{this.handleTeamsPlanCTAClick}}
         class="lg:max-w-sm"
+        data-test-teams-plan-card
       />
     </div>
 

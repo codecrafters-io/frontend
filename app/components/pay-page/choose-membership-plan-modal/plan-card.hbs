@@ -4,6 +4,7 @@
     rounded p-3
     {{if @isSelected 'bg-teal-50' 'bg-white hover:bg-gray-50'}}"
   role="button"
+  data-test-modal-plan-card
   ...attributes
 >
   <div class="flex items-start gap-2">
@@ -43,7 +44,7 @@
         <div class="prose prose-xs prose-compact text-gray-500">
           <ul class="mt-0">
             {{#if (and @regionalDiscount @shouldApplyRegionalDiscount)}}
-              <li>
+              <li data-test-modal-regional-discount-notice>
                 <b class="text-teal-500">{{@regionalDiscount.percentOff}}% off</b>
                 —
                 {{@regionalDiscount.countryName}}
@@ -51,7 +52,7 @@
               </li>
             {{/if}}
             {{#if (and @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup))}}
-              <li>
+              <li data-test-discount-notice>
                 <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
                 —
                 <span class="text-nowrap">{{@activeDiscountForYearlyPlan.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
@@ -59,7 +60,7 @@
                 <span class="font-mono">{{this.timeLeftText}}</span>
               </li>
             {{else if @activeDiscountForYearlyPlan.isFromStage2Completion}}
-              <li>
+              <li data-test-discount-notice>
                 <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
                 — Stage 2 completion discount, expires in
                 <span class="font-mono">{{this.timeLeftText}}</span>
@@ -74,7 +75,7 @@
     {{#if @discountedPriceInDollars}}
       <div class="flex items-center gap-x-1">
         <span class="text-gray-400 font-bold line-through text-lg">${{@actualPriceInDollars}}</span>
-        <span class="text-teal-500 font-bold">
+        <span class="text-teal-500 font-bold" data-test-discounted-price>
           ${{@discountedPriceInDollars}}
         </span>
       </div>

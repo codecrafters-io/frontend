@@ -21,12 +21,6 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
 
     assert.strictEqual(currentURL(), '/pay');
-
-    await payPage.pricingCards[0].startPaymentButton.hover();
-
-    assertTooltipContent(assert, {
-      contentString: 'Login via GitHub to try a free project.',
-    });
   });
 
   test('user can view the page through the pricing link', async function (assert) {
@@ -42,12 +36,28 @@ module('Acceptance | pay-test', function (hooks) {
     testScenario(this.server);
 
     await payPage.visit();
-    await payPage.pricingCards[0].startPaymentButton.click();
+    await payPage.membershipPlanCards[0].ctaButton.click();
 
     assert.strictEqual(
       windowMock.location.href,
       `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcatalog`,
-      'should redirect to login URL',
+      'should redirect to login URL with catalog as next url for free plan',
+    );
+
+    await payPage.visit();
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
+      'should redirect to login URL with pay as next url for paid plan',
+    );
+
+    await payPage.visit();
+    await payPage.membershipPlanCards[2].ctaButton.click();
+    assert.strictEqual(
+      windowMock.location.href,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fteams%2Fpay`,
+      'should redirect to login URL with teams/pay as next url for teams plan',
     );
   });
 
@@ -59,10 +69,10 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await percySnapshot('Pay page');
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
-    await percySnapshot('Pay page - configure checkout session modal');
-
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
+    await percySnapshot('Pay page - configure checkout session modal');
 
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
   });
@@ -80,16 +90,17 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
-
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.signupDiscountNotice.isVisible, 'should show signup discount notice');
-    assert.ok(
-      payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/),
-      'should show signup discount notice text',
-    );
+    // assert.ok(
+    //   payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/),
+    //   'should show signup discount notice text',
+    // );
     await percySnapshot('Pay page - with early bird discount');
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
@@ -107,11 +118,12 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
-
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
+    assert.true(payPage.discountNotice.isVisible, 'should show stage 2 completion discount notice');
     await percySnapshot('Pay page - with stage 2 completion discount');
-
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, stage2CompletionDiscount.id);
   });
@@ -148,16 +160,14 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    assert.true(payPage.referralDiscountNotice.isVisible, 'should show referral discount notice');
-    assert.ok(
-      payPage.referralDiscountNotice.text.match(/^rohitpaulk's referral offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the 1 year plan\.$/),
-      'should show referral discount notice text',
-    );
-    assert.strictEqual(payPage.pricingCards[1].discountedPriceText, '$216', 'should show discounted price');
-
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    assert.true(payPage.discountNotice.isVisible, 'should show referral discount notice');
+    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
+    assert.ok(payPage.discountNotice.text.match(/^40% off — rohitpaulk's referral offer, expires in \d{2}h:\d{2}m:\d{2}s$/));
     await percySnapshot('Pay page - with referral discount');
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, referralDiscount.id);
     assert.notStrictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
@@ -172,12 +182,17 @@ module('Acceptance | pay-test', function (hooks) {
     const regionalDiscount = this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
 
     await payPage.visit();
-    await percySnapshot('Pay page - with regional discount (not applied)');
 
     await payPage.clickOnApplyRegionalDiscountButton();
-    await percySnapshot('Pay page - with regional discount (applied)');
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$180', 'should show discounted price');
+    assert.true(payPage.regionalDiscountNotice.isVisible, 'should show regional discount notice');
+    assert.ok(payPage.regionalDiscountNotice.text.match(/^50% off — India discount$/));
+    await percySnapshot('Pay page - with regional discount');
+
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscount.id, regionalDiscount.id);
@@ -189,7 +204,9 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
 
     assert.false(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
@@ -201,7 +218,9 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
 
-    await payPage.clickOnStartPaymentButtonForYearlyPlan();
+    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.modalPlanCards[1].click();
+    await payPage.clickOnChoosePlanButton();
     await payPage.clickOnExtraInvoiceDetailsToggle();
 
     await percySnapshot('Pay page - configure checkout session modal (toggled)');

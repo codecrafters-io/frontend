@@ -44,7 +44,7 @@
             {{on "click" (fn this.selectPlan "lifetime")}}
           />
 
-          <PrimaryButton @size="large" {{on "click" this.handleChoosePlanButtonClick}}>
+          <PrimaryButton @size="large" {{on "click" this.handleChoosePlanButtonClick}} data-test-choose-plan-button>
             Choose
             {{this.selectedPlanText}}&nbsp;→
           </PrimaryButton>

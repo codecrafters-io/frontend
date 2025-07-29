@@ -2,6 +2,7 @@ import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import window from 'ember-window-mock';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
@@ -81,19 +82,35 @@ export default class PayController extends Controller {
     return this.authenticator.currentUser;
   }
 
+  requireAuthenticationOr(callback: () => void, redirectUrl: string) {
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLoginAndRedirectTo(redirectUrl);
+
+      return;
+    }
+
+    callback();
+  }
+
   @action
   handleFreePlanCTAClick() {
-    this.router.transitionTo('catalog');
+    this.requireAuthenticationOr(() => {
+      this.router.transitionTo('catalog');
+    }, `${window.origin}/catalog`);
   }
 
   @action
   handleMembershipPlanCTAClick() {
-    this.chooseMembershipPlanModalIsOpen = true;
+    this.requireAuthenticationOr(() => {
+      this.chooseMembershipPlanModalIsOpen = true;
+    }, `${window.origin}/pay`);
   }
 
   @action
   handleTeamsPlanCTAClick() {
-    this.router.transitionTo('teams.pay');
+    this.requireAuthenticationOr(() => {
+      this.router.transitionTo('teams.pay');
+    }, `${window.origin}/teams/pay`);
   }
 
   @action
