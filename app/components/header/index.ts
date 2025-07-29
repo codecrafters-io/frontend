@@ -106,6 +106,8 @@ export default class HeaderComponent extends Component<Signature> {
 
     if (activeLink) {
       this.calculateFloatingBarPosition(activeLink, containerElement);
+    } else {
+      this.floatingBarStyle = htmlSafe('left: 0px; width: 0px; opacity: 0;');
     }
   }
 
@@ -139,6 +141,11 @@ export default class HeaderComponent extends Component<Signature> {
   @action
   toggleMobileMenu() {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
+  }
+
+  @action
+  updateFloatingBar(element: HTMLElement) {
+    this.findAndPositionActiveLink(element);
   }
 }
 
