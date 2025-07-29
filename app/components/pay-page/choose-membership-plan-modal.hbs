@@ -27,7 +27,7 @@
             @isSelected={{eq this.selectedPlan "1-year"}}
             @title="1 year pass"
             @actualPriceInDollars={{360}}
-            @discountedPriceInDollars={{108}}
+            @discountedPriceInDollars={{this.discountedYearlyPrice}}
             @validityInMonths={{12}}
             @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
             @regionalDiscount={{@regionalDiscount}}
@@ -57,14 +57,35 @@
     {{else}}
       <div>
         <div class="relative">
-          <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{eq this.selectedPlan "3-month"}}
-            @title="3 month pass"
-            @actualPriceInDollars={{120}}
-            @discountedPriceInDollars={{undefined}}
-            @validityInMonths={{3}}
-            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-          />
+          {{#if (eq this.selectedPlan "3-month")}}
+            <PayPage::ChooseMembershipPlanModal::PlanCard
+              @isSelected={{true}}
+              @title="3 month pass"
+              @actualPriceInDollars={{120}}
+              @discountedPriceInDollars={{undefined}}
+              @validityInMonths={{3}}
+              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            />
+          {{else if (eq this.selectedPlan "1-year")}}
+            <PayPage::ChooseMembershipPlanModal::PlanCard
+              @isSelected={{true}}
+              @title="1 year pass"
+              @actualPriceInDollars={{360}}
+              @discountedPriceInDollars={{this.discountedYearlyPrice}}
+              @validityInMonths={{12}}
+              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+              @regionalDiscount={{@regionalDiscount}}
+              @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
+            />
+          {{else if (eq this.selectedPlan "lifetime")}}
+            <PayPage::ChooseMembershipPlanModal::PlanCard
+              @isSelected={{true}}
+              @title="Lifetime pass"
+              @actualPriceInDollars={{1490}}
+              @discountedPriceInDollars={{undefined}}
+              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            />
+          {{/if}}
 
           <div class="absolute inset-0 bg-white/60 flex items-center justify-center opacity-100 transition-opacity duration-200">
             <TertiaryButton @size="small" {{on "click" this.handleChangePlanButtonClick}}>
