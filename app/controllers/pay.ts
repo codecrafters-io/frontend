@@ -91,4 +91,14 @@ export default class PayController extends Controller {
     this.analyticsEventTracker.track('dismissed_payment_prompt', {});
     this.router.transitionTo('tracks');
   }
+
+  @action
+  handleFreePlanCTAClick() {
+    this.router.transitionTo('catalog');
+  }
+
+  @action
+  handleTeamsPlanCTAClick() {
+    this.router.transitionTo('teams.pay');
+  }
 }

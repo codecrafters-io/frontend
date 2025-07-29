@@ -33,7 +33,7 @@
         @description="No credit card required"
         @featureDescriptions={{this.featureDescriptionsForFreePlan}}
         @ctaText="Continue with free"
-        @onCtaClick={{(noop)}}
+        @onCtaClick={{this.handleFreePlanCTAClick}}
         class="lg:max-w-sm"
       />
 
@@ -55,7 +55,7 @@
         @description="Swappable seats, pay annually"
         @featureDescriptions={{this.featureDescriptionsForTeamsPlan}}
         @ctaText="Purchase team plan"
-        @onCtaClick={{(noop)}}
+        @onCtaClick={{this.handleTeamsPlanCTAClick}}
         class="lg:max-w-sm"
       />
     </div>
