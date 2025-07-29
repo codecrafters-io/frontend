@@ -102,6 +102,9 @@
     <PayPage::ChooseMembershipPlanModal
       {{! @glint-expect-error mut not ts-ified yet }}
       @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
+      @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
+      @regionalDiscount={{@model.regionalDiscount}}
+      @shouldApplyRegionalDiscount={{this.shouldApplyRegionalDiscount}}
     />
   </ModalBackdrop>
 {{/if}}

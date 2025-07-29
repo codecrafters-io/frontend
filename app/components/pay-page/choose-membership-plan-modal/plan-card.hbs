@@ -42,16 +42,21 @@
       {{#if @discountedPriceInDollars}}
         <div class="prose prose-xs prose-compact text-gray-500">
           <ul class="mt-0">
-            <li>
-              <b class="text-teal-500">50% off</b>
-              — India discount
-            </li>
-            <li>
-              <b class="text-teal-500">40% off</b>
-              — <span class="text-nowrap">coding-game's</span>
-              referral offer, expires in
-              <span class="font-mono">74h:24m:01s</span>
-            </li>
+            {{#if (and @regionalDiscount @shouldApplyRegionalDiscount)}}
+              <li>
+                <b class="text-teal-500">{{@regionalDiscount.percentOff}}% off</b>
+                — {{@regionalDiscount.countryName}} discount
+              </li>
+            {{/if}}
+            {{#if (and @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup))}}
+              <li>
+                <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
+                —
+                <span class="text-nowrap">{{@activeDiscountForYearlyPlan.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
+                referral offer, expires in
+                <span class="font-mono">{{this.timeLeftText}}</span>
+              </li>
+            {{/if}}
           </ul>
         </div>
       {{/if}}

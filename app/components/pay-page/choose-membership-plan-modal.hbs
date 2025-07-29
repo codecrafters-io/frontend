@@ -14,30 +14,38 @@
       <div>
         <div class="flex flex-col gap-y-2">
           <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{true}}
+            @isSelected={{eq this.selectedPlan "3-month"}}
             @title="3 month pass"
             @actualPriceInDollars={{120}}
             @discountedPriceInDollars={{undefined}}
             @validityInMonths={{3}}
+            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            {{on "click" (fn this.selectPlan "3-month")}}
           />
 
           <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{false}}
+            @isSelected={{eq this.selectedPlan "1-year"}}
             @title="1 year pass"
             @actualPriceInDollars={{360}}
             @discountedPriceInDollars={{108}}
             @validityInMonths={{12}}
+            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            @regionalDiscount={{@regionalDiscount}}
+            @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
+            {{on "click" (fn this.selectPlan "1-year")}}
           />
 
           <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{false}}
+            @isSelected={{eq this.selectedPlan "lifetime"}}
             @title="Lifetime pass"
             @actualPriceInDollars={{1490}}
             @discountedPriceInDollars={{undefined}}
+            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            {{on "click" (fn this.selectPlan "lifetime")}}
           />
 
           <PrimaryButton @size="large" {{on "click" this.handleChoosePlanButtonClick}}>
-            Choose 3 month pass&nbsp;→
+            Choose {{this.selectedPlanText}}&nbsp;→
           </PrimaryButton>
         </div>
         <div class="flex justify-center mt-4">
@@ -50,11 +58,12 @@
       <div>
         <div class="relative">
           <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{true}}
+            @isSelected={{eq this.selectedPlan "3-month"}}
             @title="3 month pass"
             @actualPriceInDollars={{120}}
             @discountedPriceInDollars={{undefined}}
             @validityInMonths={{3}}
+            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
           />
 
           <div class="absolute inset-0 bg-white/60 flex items-center justify-center opacity-100 transition-opacity duration-200">
