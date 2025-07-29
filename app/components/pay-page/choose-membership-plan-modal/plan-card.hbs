@@ -51,7 +51,9 @@
                 discount
               </li>
             {{/if}}
-            {{#if (and @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup))}}
+            {{#if
+              (and @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup))
+            }}
               <li data-test-discount-notice>
                 <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
                 —
@@ -59,10 +61,16 @@
                 referral offer, expires in
                 <span class="font-mono">{{this.timeLeftText}}</span>
               </li>
-            {{else if @activeDiscountForYearlyPlan.isFromStage2Completion}}
+            {{else if (and @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromStage2Completion)}}
               <li data-test-discount-notice>
                 <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
                 — Stage 2 completion discount, expires in
+                <span class="font-mono">{{this.timeLeftText}}</span>
+              </li>
+            {{else if (and @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromSignup)}}
+              <li data-test-discount-notice>
+                <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
+                — Signup discount, expires in
                 <span class="font-mono">{{this.timeLeftText}}</span>
               </li>
             {{/if}}
