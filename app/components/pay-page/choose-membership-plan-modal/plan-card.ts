@@ -3,17 +3,18 @@ import { service } from '@ember/service';
 import type TimeService from 'codecrafters-frontend/services/time';
 import { formatTimeDurationForCountdown } from 'codecrafters-frontend/utils/time-formatting';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     actualPriceInDollars: number;
-    discountedPriceInDollars?: number;
+    discountedPriceInDollars?: number | null;
     isSelected: boolean;
     validityInMonths?: number; // Not set for lifetime plans
     title: string;
-    activeDiscountForYearlyPlan?: any;
+    activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
     regionalDiscount?: RegionalDiscountModel | null;
     shouldApplyRegionalDiscount?: boolean;
   };
@@ -38,6 +39,7 @@ export default class PlanCard extends Component<Signature> {
     if (!this.args.activeDiscountForYearlyPlan) {
       return '';
     }
+
     return formatTimeDurationForCountdown(this.args.activeDiscountForYearlyPlan.expiresAt, this.time.currentTime);
   }
 }

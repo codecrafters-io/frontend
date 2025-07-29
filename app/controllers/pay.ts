@@ -82,23 +82,23 @@ export default class PayController extends Controller {
   }
 
   @action
+  handleFreePlanCTAClick() {
+    this.router.transitionTo('catalog');
+  }
+
+  @action
   handleMembershipPlanCTAClick() {
     this.chooseMembershipPlanModalIsOpen = true;
+  }
+
+  @action
+  handleTeamsPlanCTAClick() {
+    this.router.transitionTo('teams.pay');
   }
 
   @action
   async handleTryNowPayLaterButtonClicked() {
     this.analyticsEventTracker.track('dismissed_payment_prompt', {});
     this.router.transitionTo('tracks');
-  }
-
-  @action
-  handleFreePlanCTAClick() {
-    this.router.transitionTo('catalog');
-  }
-
-  @action
-  handleTeamsPlanCTAClick() {
-    this.router.transitionTo('teams.pay');
   }
 }

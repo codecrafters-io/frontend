@@ -45,11 +45,12 @@
           />
 
           <PrimaryButton @size="large" {{on "click" this.handleChoosePlanButtonClick}}>
-            Choose {{this.selectedPlanText}}&nbsp;→
+            Choose
+            {{this.selectedPlanText}}&nbsp;→
           </PrimaryButton>
         </div>
         <div class="flex justify-center mt-4">
-          <div class="inline-block text-gray-500 text-sm border-b border-gray-300 cursor-pointer" {{on "click" @onClose}}>
+          <div class="inline-block text-gray-500 text-sm border-b border-gray-300 cursor-pointer" role="button" {{on "click" @onClose}}>
             Back to pricing page
           </div>
         </div>
@@ -136,7 +137,12 @@
             ← Back
           </span>
 
-          <PrimaryButton class="flex! items-center justify-center" @size="large" {{on "click" (fn this.handleProceedToCheckoutButtonClick this.pricingFrequency)}} data-test-proceed-to-checkout-button>
+          <PrimaryButton
+            class="flex! items-center justify-center"
+            @size="large"
+            {{on "click" (fn this.handleProceedToCheckoutButtonClick this.pricingFrequency)}}
+            data-test-proceed-to-checkout-button
+          >
             Proceed to Checkout
 
             {{#if this.isCreatingCheckoutSession}}

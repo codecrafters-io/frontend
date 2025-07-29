@@ -21,12 +21,36 @@ interface Signature {
 
 export default class ChooseMembershipPlanModal extends Component<Signature> {
   @service declare store: Store;
-  
+
   transition = fade;
-  @tracked previewType: 'plan' | 'invoice-details' = 'plan';
-  @tracked selectedPlan: '3-month' | '1-year' | 'lifetime' = '3-month';
+
   @tracked extraInvoiceDetailsRequested = false;
   @tracked isCreatingCheckoutSession = false;
+  @tracked previewType: 'plan' | 'invoice-details' = 'plan';
+  @tracked selectedPlan: '3-month' | '1-year' | 'lifetime' = '3-month';
+
+  get discountedYearlyPrice(): number | null {
+    const basePrice = 360;
+    let discountedPrice = basePrice;
+
+    // Apply promotional discount if available
+    if (this.args.activeDiscountForYearlyPlan) {
+      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
+    }
+
+    // Apply regional discount if available and should be applied
+    if (this.args.regionalDiscount && this.args.shouldApplyRegionalDiscount) {
+      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
+      discountedPrice = discountedPrice - regionalDiscountAmount;
+    }
+
+    // Return null if no discount was applied (price is the same as base)
+    return discountedPrice === basePrice ? null : Math.round(discountedPrice);
+  }
+
+  get pricingFrequency(): 'quarterly' | 'yearly' | 'lifetime' {
+    return this.selectedPlan === '3-month' ? 'quarterly' : this.selectedPlan === '1-year' ? 'yearly' : 'lifetime';
+  }
 
   get selectedPlanText() {
     switch (this.selectedPlan) {
@@ -52,35 +76,6 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   }
 
   @action
-  selectPlan(plan: '3-month' | '1-year' | 'lifetime') {
-    this.selectedPlan = plan;
-  }
-
-  get discountedYearlyPrice(): number | null {
-    const basePrice = 360;
-    let discountedPrice = basePrice;
-
-    // Apply promotional discount if available
-    if (this.args.activeDiscountForYearlyPlan) {
-      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
-    }
-
-    // Apply regional discount if available and should be applied
-    if (this.args.regionalDiscount && this.args.shouldApplyRegionalDiscount) {
-      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
-      discountedPrice = discountedPrice - regionalDiscountAmount;
-    }
-
-    // Return null if no discount was applied (price is the same as base)
-    return discountedPrice === basePrice ? null : Math.round(discountedPrice);
-  }
-
-  get pricingFrequency(): 'quarterly' | 'yearly' | 'lifetime' {
-    return this.selectedPlan === '3-month' ? 'quarterly' : 
-           this.selectedPlan === '1-year' ? 'yearly' : 'lifetime';
-  }
-
-  @action
   async handleProceedToCheckoutButtonClick(pricingFrequency: 'quarterly' | 'yearly' | 'lifetime') {
     this.isCreatingCheckoutSession = true;
 
@@ -95,6 +90,11 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
 
     await checkoutSession.save();
     window.location.href = checkoutSession.url;
+  }
+
+  @action
+  selectPlan(plan: '3-month' | '1-year' | 'lifetime') {
+    this.selectedPlan = plan;
   }
 }
 

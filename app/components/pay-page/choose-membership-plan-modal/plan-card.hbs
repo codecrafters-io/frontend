@@ -45,7 +45,9 @@
             {{#if (and @regionalDiscount @shouldApplyRegionalDiscount)}}
               <li>
                 <b class="text-teal-500">{{@regionalDiscount.percentOff}}% off</b>
-                — {{@regionalDiscount.countryName}} discount
+                —
+                {{@regionalDiscount.countryName}}
+                discount
               </li>
             {{/if}}
             {{#if (and @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup))}}
