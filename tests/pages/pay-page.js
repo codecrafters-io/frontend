@@ -1,29 +1,20 @@
-import { clickable, collection, create, text, triggerable, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, text, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 
 export default create({
   accountDropdown: AccountDropdown,
+
   clickOnApplyRegionalDiscountButton: clickable('[data-test-apply-regional-discount-button]'),
-  clickOnExtraInvoiceDetailsToggle: clickable('[data-test-extra-invoice-details-toggle]'),
   clickOnChoosePlanButton: clickable('[data-test-choose-plan-button]'),
+  clickOnExtraInvoiceDetailsToggle: clickable('[data-test-extra-invoice-details-toggle]'),
   clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
-  regionalDiscountNotice: {
-    scope: '[data-test-modal-regional-discount-notice]',
-  },
+
   discountNotice: {
     scope: '[data-test-discount-notice]',
   },
 
   header: Header,
-
-  referralDiscountNotice: {
-    scope: '[data-test-referral-discount-notice]',
-  },
-
-  signupDiscountNotice: {
-    scope: '[data-test-signup-discount-notice]',
-  },
 
   membershipPlanCards: collection('[data-test-membership-plan-cards] > *', {
     ctaButton: {
@@ -32,9 +23,21 @@ export default create({
   }),
 
   modalPlanCards: collection('[data-test-modal-plan-card]', {
-    discountedPriceText: text('[data-test-discounted-price]'),
     click: clickable(),
+    discountedPriceText: text('[data-test-discounted-price]'),
   }),
+
+  referralDiscountNotice: {
+    scope: '[data-test-referral-discount-notice]',
+  },
+
+  regionalDiscountNotice: {
+    scope: '[data-test-modal-regional-discount-notice]',
+  },
+
+  signupDiscountNotice: {
+    scope: '[data-test-signup-discount-notice]',
+  },
 
   visit: visitable('/pay'),
 });

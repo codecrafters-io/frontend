@@ -82,16 +82,6 @@ export default class PayController extends Controller {
     return this.authenticator.currentUser;
   }
 
-  requireAuthenticationOr(callback: () => void, redirectUrl: string) {
-    if (!this.authenticator.isAuthenticated) {
-      this.authenticator.initiateLoginAndRedirectTo(redirectUrl);
-
-      return;
-    }
-
-    callback();
-  }
-
   @action
   handleFreePlanCTAClick() {
     this.requireAuthenticationOr(() => {
@@ -117,5 +107,15 @@ export default class PayController extends Controller {
   async handleTryNowPayLaterButtonClicked() {
     this.analyticsEventTracker.track('dismissed_payment_prompt', {});
     this.router.transitionTo('tracks');
+  }
+
+  requireAuthenticationOr(callback: () => void, redirectUrl: string) {
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLoginAndRedirectTo(redirectUrl);
+
+      return;
+    }
+
+    callback();
   }
 }

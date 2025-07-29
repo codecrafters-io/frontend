@@ -3,7 +3,6 @@ import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import windowMock from 'ember-window-mock';
-import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL, visit } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
