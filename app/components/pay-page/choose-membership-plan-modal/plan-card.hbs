@@ -56,6 +56,12 @@
                 referral offer, expires in
                 <span class="font-mono">{{this.timeLeftText}}</span>
               </li>
+            {{else if @activeDiscountForYearlyPlan.isFromStage2Completion}}
+              <li>
+                <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
+                — Stage 2 completion discount, expires in
+                <span class="font-mono">{{this.timeLeftText}}</span>
+              </li>
             {{/if}}
           </ul>
         </div>
