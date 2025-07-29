@@ -2,6 +2,9 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
+import { inject as service } from '@ember/service';
+import Store from '@ember-data/store';
+import window from 'ember-window-mock';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 
@@ -17,9 +20,13 @@ interface Signature {
 }
 
 export default class ChooseMembershipPlanModal extends Component<Signature> {
+  @service declare store: Store;
+  
   transition = fade;
   @tracked previewType: 'plan' | 'invoice-details' = 'plan';
   @tracked selectedPlan: '3-month' | '1-year' | 'lifetime' = '3-month';
+  @tracked extraInvoiceDetailsRequested = false;
+  @tracked isCreatingCheckoutSession = false;
 
   get selectedPlanText() {
     switch (this.selectedPlan) {
@@ -66,6 +73,28 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
 
     // Return null if no discount was applied (price is the same as base)
     return discountedPrice === basePrice ? null : Math.round(discountedPrice);
+  }
+
+  get pricingFrequency(): 'quarterly' | 'yearly' | 'lifetime' {
+    return this.selectedPlan === '3-month' ? 'quarterly' : 
+           this.selectedPlan === '1-year' ? 'yearly' : 'lifetime';
+  }
+
+  @action
+  async handleProceedToCheckoutButtonClick(pricingFrequency: 'quarterly' | 'yearly' | 'lifetime') {
+    this.isCreatingCheckoutSession = true;
+
+    const checkoutSession = this.store.createRecord('individual-checkout-session', {
+      cancelUrl: `${window.location.origin}/pay`,
+      extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
+      pricingFrequency,
+      promotionalDiscount: pricingFrequency === 'yearly' ? this.args.activeDiscountForYearlyPlan || null : null,
+      regionalDiscount: this.args.shouldApplyRegionalDiscount ? this.args.regionalDiscount || null : null,
+      successUrl: `${window.location.origin}/settings/billing`,
+    });
+
+    await checkoutSession.save();
+    window.location.href = checkoutSession.url;
   }
 }
 
