@@ -92,11 +92,11 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.membershipPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.true(payPage.signupDiscountNotice.isVisible, 'should show signup discount notice');
-    // assert.ok(
-    //   payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/),
-    //   'should show signup discount notice text',
-    // );
+    assert.true(payPage.discountNotice.isVisible, 'should show signup discount notice');
+    assert.ok(
+      payPage.discountNotice.text.match(/^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/),
+      'should show signup discount notice text',
+    );
     await percySnapshot('Pay page - with early bird discount');
 
     await payPage.clickOnChoosePlanButton();
