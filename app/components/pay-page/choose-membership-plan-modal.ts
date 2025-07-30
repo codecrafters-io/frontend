@@ -7,6 +7,7 @@ import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -20,6 +21,7 @@ interface Signature {
 }
 
 export default class ChooseMembershipPlanModal extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   transition = fade;
@@ -98,6 +100,12 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
 
   @action
   async handleProceedToCheckoutButtonClick(pricingFrequency: 'quarterly' | 'yearly' | 'lifetime') {
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
+
+      return;
+    }
+
     this.isCreatingCheckoutSession = true;
 
     const checkoutSession = this.store.createRecord('individual-checkout-session', {

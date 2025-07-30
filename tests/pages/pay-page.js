@@ -25,14 +25,13 @@ export default create({
   modalPlanCards: collection('[data-test-modal-plan-card]', {
     click: clickable(),
     discountedPriceText: text('[data-test-discounted-price]'),
+    regionalDiscountNotice: {
+      scope: '[data-test-modal-regional-discount-notice]',
+    },
   }),
 
   referralDiscountNotice: {
     scope: '[data-test-referral-discount-notice]',
-  },
-
-  regionalDiscountNotice: {
-    scope: '[data-test-modal-regional-discount-notice]',
   },
 
   signupDiscountNotice: {

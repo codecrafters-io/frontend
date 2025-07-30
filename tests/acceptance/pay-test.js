@@ -157,8 +157,8 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.membershipPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$180', 'should show discounted price');
-    assert.true(payPage.regionalDiscountNotice.isVisible, 'should show regional discount notice');
-    assert.ok(payPage.regionalDiscountNotice.text.match(/^50% off — India discount$/));
+    assert.true(payPage.modalPlanCards[1].regionalDiscountNotice.isVisible, 'should show regional discount notice');
+    assert.ok(payPage.modalPlanCards[1].regionalDiscountNotice.text.match(/^50% off — India discount$/));
     await percySnapshot('Pay page - with regional discount');
 
     await payPage.clickOnChoosePlanButton();
