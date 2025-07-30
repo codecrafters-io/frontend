@@ -93,8 +93,12 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   @action
-  handleDidUpdateCurrentRouteName(element: HTMLElement) {
-    this.updateFloatingBarPosition(element);
+  handleDidUpdateCurrentRouteName() {
+    next(() => {
+      if (this.floatingBarContainer) {
+        this.updateFloatingBarPosition(this.floatingBarContainer);
+      }
+    });
   }
 
   @action
