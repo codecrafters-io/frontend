@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/template';
+import { next } from '@ember/runloop';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -80,32 +81,23 @@ export default class HeaderComponent extends Component<Signature> {
     return links;
   }
 
-  private calculateFloatingBarPosition(activeLink: HTMLElement, container: HTMLElement) {
-    const containerRect = container.getBoundingClientRect();
-    const linkRect = activeLink.getBoundingClientRect();
-
-    const left = linkRect.left - containerRect.left;
-    const width = linkRect.width;
-
-    this.floatingBarStyle = htmlSafe(`left: ${left}px; width: ${width}px; opacity: 1;`);
-  }
-
-  private findAndPositionActiveLink(containerElement: HTMLElement) {
+  private updateFloatingBarPosition(containerElement: HTMLElement) {
     const currentRoute = this.router.currentRouteName;
 
     if (!currentRoute || currentRoute.includes('loading')) {
       return;
     }
 
-    let activeLink = containerElement.querySelector(`[data-route="${currentRoute}"]`) as HTMLElement;
-
-    if (!activeLink && currentRoute.includes('.')) {
-      const parentRoute = currentRoute.split('.')[0];
-      activeLink = containerElement.querySelector(`[data-route="${parentRoute}"]`) as HTMLElement;
-    }
+    const activeLink = containerElement.querySelector(`[data-route-is-active="true"]`) as HTMLElement;
 
     if (activeLink) {
-      this.calculateFloatingBarPosition(activeLink, containerElement);
+      const containerRect = containerElement.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+
+      const left = linkRect.left - containerRect.left;
+      const width = linkRect.width;
+
+      this.floatingBarStyle = htmlSafe(`left: ${left}px; width: ${width}px; opacity: 1;`);
     } else {
       this.floatingBarStyle = htmlSafe('left: 0px; width: 0px; opacity: 0;');
     }
@@ -120,11 +112,11 @@ export default class HeaderComponent extends Component<Signature> {
   handleRouteChange() {
     this.mobileMenuIsExpanded = false;
 
-    setTimeout(() => {
+    next(() => {
       if (this.floatingBarContainer) {
-        this.findAndPositionActiveLink(this.floatingBarContainer);
+        this.updateFloatingBarPosition(this.floatingBarContainer);
       }
-    }, 0);
+    });
   }
 
   @action
@@ -133,9 +125,9 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   @action
-  setupFloatingBar(element: HTMLElement) {
+  handleDidInsertFloatingBarContainer(element: HTMLElement) {
     this.floatingBarContainer = element;
-    this.findAndPositionActiveLink(element);
+    this.updateFloatingBarPosition(element);
   }
 
   @action
@@ -144,8 +136,8 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   @action
-  updateFloatingBar(element: HTMLElement) {
-    this.findAndPositionActiveLink(element);
+  handleDidUpdateCurrentRouteName(element: HTMLElement) {
+    this.updateFloatingBarPosition(element);
   }
 }
 
