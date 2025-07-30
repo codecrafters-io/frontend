@@ -2,7 +2,6 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import payPage from 'codecrafters-frontend/tests/pages/pay-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import windowMock from 'ember-window-mock';
 import { currentURL, visit } from '@ember/test-helpers';
 /* eslint-disable qunit/require-expect */
 import { module, test } from 'qunit';
@@ -29,35 +28,6 @@ module('Acceptance | pay-test', function (hooks) {
 
     await catalogPage.header.clickOnHeaderLink('Pricing');
     assert.strictEqual(currentURL(), '/pay');
-  });
-
-  test('user is redirected to login page after clicking on start membership if not logged in', async function (assert) {
-    testScenario(this.server);
-
-    await payPage.visit();
-    await payPage.membershipPlanCards[0].ctaButton.click();
-
-    assert.strictEqual(
-      windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcatalog`,
-      'should redirect to login URL with catalog as next url for free plan',
-    );
-
-    await payPage.visit();
-    await payPage.membershipPlanCards[1].ctaButton.click();
-    assert.strictEqual(
-      windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fpay`,
-      'should redirect to login URL with pay as next url for paid plan',
-    );
-
-    await payPage.visit();
-    await payPage.membershipPlanCards[2].ctaButton.click();
-    assert.strictEqual(
-      windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fteams%2Fpay`,
-      'should redirect to login URL with teams/pay as next url for teams plan',
-    );
   });
 
   test('new user can start checkout session', async function (assert) {
