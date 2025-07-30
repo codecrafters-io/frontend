@@ -23,20 +23,10 @@ export default class PayController extends Controller {
   @service declare router: RouterService;
 
   @tracked chooseMembershipPlanModalIsOpen = false;
-  @tracked isCreatingCheckoutSession = false;
-  @tracked selectedPricingFrequency = '';
   @tracked shouldApplyRegionalDiscount = false;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.user?.activeDiscountForYearlyPlan || null;
-  }
-
-  get additionalCheckoutSessionProperties() {
-    return {
-      pricingFrequency: this.selectedPricingFrequency,
-      promotionalDiscount: this.selectedPricingFrequency === 'yearly' ? this.activeDiscountForYearlyPlan : null,
-      regionalDiscount: this.shouldApplyRegionalDiscount ? this.model.regionalDiscount : null,
-    };
   }
 
   get discountedYearlyPrice() {
@@ -94,11 +84,5 @@ export default class PayController extends Controller {
   @action
   handleTeamsPlanCTAClick() {
     this.router.transitionTo('teams.pay');
-  }
-
-  @action
-  async handleTryNowPayLaterButtonClicked() {
-    this.analyticsEventTracker.track('dismissed_payment_prompt', {});
-    this.router.transitionTo('tracks');
   }
 }
