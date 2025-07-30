@@ -81,6 +81,43 @@ export default class HeaderComponent extends Component<Signature> {
     return links;
   }
 
+  @action
+  handleDidInsert() {
+    this.router.on('routeWillChange', this.handleRouteChange);
+  }
+
+  @action
+  handleDidInsertFloatingBarContainer(element: HTMLElement) {
+    this.floatingBarContainer = element;
+    this.updateFloatingBarPosition(element);
+  }
+
+  @action
+  handleDidUpdateCurrentRouteName(element: HTMLElement) {
+    this.updateFloatingBarPosition(element);
+  }
+
+  @action
+  handleRouteChange() {
+    this.mobileMenuIsExpanded = false;
+
+    next(() => {
+      if (this.floatingBarContainer) {
+        this.updateFloatingBarPosition(this.floatingBarContainer);
+      }
+    });
+  }
+
+  @action
+  handleWillDestroy() {
+    this.router.off('routeWillChange', this.handleRouteChange);
+  }
+
+  @action
+  toggleMobileMenu() {
+    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
+  }
+
   private updateFloatingBarPosition(containerElement: HTMLElement) {
     const currentRoute = this.router.currentRouteName;
 
@@ -101,43 +138,6 @@ export default class HeaderComponent extends Component<Signature> {
     } else {
       this.floatingBarStyle = htmlSafe('left: 0px; width: 0px; opacity: 0;');
     }
-  }
-
-  @action
-  handleDidInsert() {
-    this.router.on('routeWillChange', this.handleRouteChange);
-  }
-
-  @action
-  handleRouteChange() {
-    this.mobileMenuIsExpanded = false;
-
-    next(() => {
-      if (this.floatingBarContainer) {
-        this.updateFloatingBarPosition(this.floatingBarContainer);
-      }
-    });
-  }
-
-  @action
-  handleWillDestroy() {
-    this.router.off('routeWillChange', this.handleRouteChange);
-  }
-
-  @action
-  handleDidInsertFloatingBarContainer(element: HTMLElement) {
-    this.floatingBarContainer = element;
-    this.updateFloatingBarPosition(element);
-  }
-
-  @action
-  toggleMobileMenu() {
-    this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
-  }
-
-  @action
-  handleDidUpdateCurrentRouteName(element: HTMLElement) {
-    this.updateFloatingBarPosition(element);
   }
 }
 
