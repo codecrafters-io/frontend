@@ -12,10 +12,21 @@
       </span>
       {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
     </a>
-  {{else if this.shouldShowPublishToGithubButton}}
+  {{!-- {{else if this.shouldShowPublishToGithubButton}}
     <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group" data-test-publish-to-github-button>
       <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
         Publish to GitHub
+      </span>
+      {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
+    </button> --}}
+  {{else}}
+    <button type="button" {{on "click" this.onViewOnGithubButtonClickWhenNotPublished}} class="flex gap-x-1 items-center group {{if this.isCreatingExport 'opacity-50 cursor-not-allowed'}}" data-test-view-on-github-button>
+      <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
+        {{#if this.isCreatingExport}}
+          Loading...
+        {{else}}
+          View on GitHub
+        {{/if}}
       </span>
       {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
     </button>

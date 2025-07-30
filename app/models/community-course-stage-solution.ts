@@ -9,6 +9,7 @@ import type CourseStageScreencastModel from './course-stage-screencast';
 import type LanguageModel from './language';
 import type TrustedCommunitySolutionEvaluationModel from './trusted-community-solution-evaluation';
 import type UserModel from './user';
+import type CommunitySolutionExportModel from './community-solution-export';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
@@ -30,6 +31,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
+  @hasMany('community-solution-export', { async: false, inverse: 'communitySolution' }) declare exports: CommunitySolutionExportModel[];
 
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
@@ -103,6 +105,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
   declare unvote: (this: Model, payload: unknown) => Promise<void>;
+  declare createGithubExport: (this: Model, payload: unknown) => Promise<CommunitySolutionExportModel>;
 }
 
 CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
@@ -133,5 +136,15 @@ CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
       this.downvotesCount -= 1;
       record.unloadRecord();
     }
+  },
+});
+
+CommunityCourseStageSolutionModel.prototype.createGithubExport = memberAction({
+  path: 'github-exports',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+    return this.store.peekRecord('community-solution-export', response.data.id);
   },
 });
