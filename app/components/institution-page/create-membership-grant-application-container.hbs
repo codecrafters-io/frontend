@@ -1,0 +1,33 @@
+<div
+  class="flex flex-col items-center gap-y-6 bg-teal-50/25 dark:bg-teal-800/40 border-teal-500 dark:border-teal-600 px-4 py-12 border rounded-md shadow-xl"
+  ...attributes
+>
+  <div class="flex items-center justify-center gap-2">
+    <img alt="avatar" src="https://www.nus.edu.sg/images/default-source/identity-images/NUS_logo_full-vertical.jpg" class="h-20" />
+
+    {{svg-jar "plus" class="w-10 h-10 text-gray-600 dark:text-gray-400 opacity-90 group-hover:opacity-100 transition-all"}}
+
+    <img class="h-14" src={{this.logoImage}} alt="CodeCrafters" />
+  </div>
+
+  <div class="prose dark:prose-invert text-center max-w-sm">
+    <p>
+      Students, alumni and staff at
+      <b class="dark:text-gray-50">NUS</b>
+      get
+      <b class="dark:text-gray-50">1 year</b>
+      of CodeCrafters for free.
+    </p>
+  </div>
+
+  <div class="flex flex-col items-center">
+    {{! Disabled buttons can be translucent, the added background makes them more visible }}
+    <div class="inline-flex bg-white dark:bg-gray-850 rounded-sm">
+      <AffiliateLinkPage::AcceptReferralButton @affiliateLink={{@affiliateLink}} @course={{@course}} />
+    </div>
+
+    <div class="text-gray-500 dark:text-gray-400 text-xs mt-3">
+      No credit card required.
+    </div>
+  </div>
+</div>
