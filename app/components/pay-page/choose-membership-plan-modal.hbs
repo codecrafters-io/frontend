@@ -17,9 +17,11 @@
             @isSelected={{eq this.selectedPlan "3-month"}}
             @title="3 month pass"
             @actualPriceInDollars={{120}}
-            @discountedPriceInDollars={{undefined}}
+            @discountedPriceInDollars={{this.discounted3MonthPrice}}
             @validityInMonths={{3}}
             @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            @regionalDiscount={{@regionalDiscount}}
+            @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
             {{on "click" (fn this.selectPlan "3-month")}}
           />
 
@@ -39,8 +41,10 @@
             @isSelected={{eq this.selectedPlan "lifetime"}}
             @title="Lifetime pass"
             @actualPriceInDollars={{1490}}
-            @discountedPriceInDollars={{undefined}}
+            @discountedPriceInDollars={{this.discountedLifetimePrice}}
             @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            @regionalDiscount={{@regionalDiscount}}
+            @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
             {{on "click" (fn this.selectPlan "lifetime")}}
           />
 
@@ -63,9 +67,11 @@
               @isSelected={{true}}
               @title="3 month pass"
               @actualPriceInDollars={{120}}
-              @discountedPriceInDollars={{undefined}}
+              @discountedPriceInDollars={{this.discounted3MonthPrice}}
               @validityInMonths={{3}}
               @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+              @regionalDiscount={{@regionalDiscount}}
+              @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
             />
           {{else if (eq this.selectedPlan "1-year")}}
             <PayPage::ChooseMembershipPlanModal::PlanCard
@@ -83,8 +89,10 @@
               @isSelected={{true}}
               @title="Lifetime pass"
               @actualPriceInDollars={{1490}}
-              @discountedPriceInDollars={{undefined}}
+              @discountedPriceInDollars={{this.discountedLifetimePrice}}
               @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+              @regionalDiscount={{@regionalDiscount}}
+              @shouldApplyRegionalDiscount={{@shouldApplyRegionalDiscount}}
             />
           {{/if}}
 

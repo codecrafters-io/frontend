@@ -29,22 +29,43 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @tracked previewType: 'plan' | 'invoice-details' = 'plan';
   @tracked selectedPlan: '3-month' | '1-year' | 'lifetime' = '3-month';
 
-  get discountedYearlyPrice(): number | null {
-    const basePrice = 360;
+  get discounted3MonthPrice(): number | null {
+    const basePrice = 120;
     let discountedPrice = basePrice;
 
-    // Apply promotional discount if available
-    if (this.args.activeDiscountForYearlyPlan) {
-      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
-    }
-
-    // Apply regional discount if available and should be applied
     if (this.args.regionalDiscount && this.args.shouldApplyRegionalDiscount) {
       const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
       discountedPrice = discountedPrice - regionalDiscountAmount;
     }
 
-    // Return null if no discount was applied (price is the same as base)
+    return discountedPrice === basePrice ? null : Math.round(discountedPrice);
+  }
+
+  get discountedLifetimePrice(): number | null {
+    const basePrice = 1490;
+    let discountedPrice = basePrice;
+
+    if (this.args.regionalDiscount && this.args.shouldApplyRegionalDiscount) {
+      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
+      discountedPrice = discountedPrice - regionalDiscountAmount;
+    }
+
+    return discountedPrice === basePrice ? null : Math.round(discountedPrice);
+  }
+
+  get discountedYearlyPrice(): number | null {
+    const basePrice = 360;
+    let discountedPrice = basePrice;
+
+    if (this.args.activeDiscountForYearlyPlan) {
+      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
+    }
+
+    if (this.args.regionalDiscount && this.args.shouldApplyRegionalDiscount) {
+      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
+      discountedPrice = discountedPrice - regionalDiscountAmount;
+    }
+
     return discountedPrice === basePrice ? null : Math.round(discountedPrice);
   }
 
