@@ -145,6 +145,7 @@ CommunityCourseStageSolutionModel.prototype.createGithubExport = memberAction({
 
   after(response) {
     this.store.pushPayload(response);
+
     return this.store.peekRecord('community-solution-export', response.data.id);
   },
 });

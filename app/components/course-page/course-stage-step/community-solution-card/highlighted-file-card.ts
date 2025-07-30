@@ -66,7 +66,6 @@ export default class HighlightedFileCardComponent extends Component<Signature> {
     }));
   }
 
-
   get visibleRangesForCodeMirror(): LineRange[] {
     // Add 3 lines above and below the highlighted range
     const ranges = this.args.highlightedFile.highlighted_ranges.map((range) => ({
