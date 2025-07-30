@@ -7,29 +7,11 @@
     class="bg-gray-100 dark:bg-gray-800 rounded-t py-2 px-4 border-b border-gray-200 dark:border-white/5 shadow-xs flex items-center justify-between sticky top-10 z-10"
   >
     <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{@highlightedFile.filename}}</span>
-    <div>
-      {{#if @solution.isPublishedToPublicGithubRepository}}
-        <a
-          {{! @glint-expect-error call not ts-ified yet }}
-          href={{call (fn @solution.githubUrlForFile @highlightedFile.filename)}}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex gap-x-1 items-center group"
-        >
-          <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
-            View on GitHub
-          </span>
-          {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
-        </a>
-      {{else if this.shouldShowPublishToGithubButton}}
-        <button type="button" {{on "click" @onPublishToGithubButtonClick}} class="flex gap-x-1 items-center group" data-test-publish-to-github-button>
-          <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
-            Publish to GitHub
-          </span>
-          {{svg-jar "github" class="w-3.5 h-3.5 text-gray-600 dark:text-gray-400"}}
-        </button>
-      {{/if}}
-    </div>
+    <CoursePage::CourseStageStep::CommunitySolutionCard::GitHubFileActions
+      @filename={{@highlightedFile.filename}}
+      @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
+      @solution={{@solution}}
+    />
   </div>
 
   <CodeMirror

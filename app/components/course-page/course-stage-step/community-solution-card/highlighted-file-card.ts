@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolution from 'codecrafters-frontend/models/community-course-stage-solution';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 import { codeCraftersDark, codeCraftersLight } from 'codecrafters-frontend/utils/code-mirror-themes';
@@ -17,7 +16,6 @@ interface Signature {
 }
 
 export default class HighlightedFileCardComponent extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
   @service declare darkMode: DarkModeService;
 
   get codeMirrorTheme() {
@@ -68,9 +66,6 @@ export default class HighlightedFileCardComponent extends Component<Signature> {
     }));
   }
 
-  get shouldShowPublishToGithubButton(): boolean {
-    return this.args.solution.user.id === this.authenticator.currentUser?.id && !this.args.solution.isPublishedToPublicGithubRepository;
-  }
 
   get visibleRangesForCodeMirror(): LineRange[] {
     // Add 3 lines above and below the highlighted range
