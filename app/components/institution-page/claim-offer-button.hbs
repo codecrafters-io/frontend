@@ -1,3 +1,7 @@
 <PrimaryButtonWithSpinner @size="large" @shouldShowSpinner={{false}} @isDisabled={{false}} data-test-claim-offer-button ...attributes>
+  {{#if this.authenticator.isAnonymous}}
+    {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
+  {{/if}}
+
   Claim offer →
 </PrimaryButtonWithSpinner>
