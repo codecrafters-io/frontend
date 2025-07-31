@@ -20,15 +20,19 @@ interface Signature {
 export default class EnterEmailStepComponent extends Component<Signature> {
   @service declare store: Store;
 
-  @tracked emailAddress = '';
   @tracked formElement: HTMLFormElement | undefined;
+  @tracked input = '';
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
 
-  get emailAddressIsValid(): boolean {
-    return this.args.institution.officialEmailAddressSuffixes.any((suffix) => this.normalizedEmailAddress.endsWith(suffix.toLowerCase()));
+  get inputIsValid(): boolean {
+    return this.args.institution.officialEmailAddressSuffixes.any((suffix) => this.normalizedInput.endsWith(suffix.toLowerCase()));
   }
 
-  get emailAddressValidationExplanation(): string {
+  get inputPlaceholder(): string {
+    return `bill${this.args.institution.officialEmailAddressSuffixes[0]}`;
+  }
+
+  get inputValidationExplanation(): string {
     let explanation = 'Email address ending in ';
 
     this.args.institution.officialEmailAddressSuffixes.forEach((suffix, index) => {
@@ -44,7 +48,7 @@ export default class EnterEmailStepComponent extends Component<Signature> {
     return explanation;
   }
 
-  get emailAddressValidationRegex(): string {
+  get inputValidationRegex(): string {
     const escapedSuffixes = this.args.institution.officialEmailAddressSuffixes.map((suffix) => {
       return suffix.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
     });
@@ -53,7 +57,11 @@ export default class EnterEmailStepComponent extends Component<Signature> {
     return `^ *[^@]+(${escapedSuffixes.join('|')}) *$`;
   }
 
-  get fieldDescriptionHTML(): SafeString {
+  get normalizedInput(): string {
+    return this.input.trim().toLowerCase();
+  }
+
+  get officialEmailAddressDescriptionHTML(): SafeString {
     let html = 'This must end in ';
     const highlightClasses = 'font-medium text-gray-500'; // Separate variable to ensure tailwind picks up these classes
 
@@ -72,10 +80,6 @@ export default class EnterEmailStepComponent extends Component<Signature> {
     return htmlSafe(html);
   }
 
-  get normalizedEmailAddress(): string {
-    return this.emailAddress.trim().toLowerCase();
-  }
-
   @action
   async handleDidInsertFormElement(formElement: HTMLFormElement) {
     this.formElement = formElement;
@@ -85,7 +89,7 @@ export default class EnterEmailStepComponent extends Component<Signature> {
   async handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
 
-    this.emailAddress = this.normalizedEmailAddress; // Reset any formatting differences
+    this.input = this.normalizedInput; // Reset any formatting differences
     this.formElement!.reportValidity();
 
     if (this.formElement!.checkValidity()) {
@@ -94,7 +98,7 @@ export default class EnterEmailStepComponent extends Component<Signature> {
       const application = await this.store
         .createRecord('institution-membership-grant-application', {
           institution: this.args.institution,
-          emailAddress: this.emailAddress,
+          emailAddress: this.input,
         })
         .save();
 
