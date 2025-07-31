@@ -31,12 +31,23 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await percySnapshot('Institution Page');
 
-    assert.notOk(institutionPage.campusProgramApplicationModal.isVisible);
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+
+    assert.notOk(applicationModal.isVisible);
 
     await institutionPage.claimOfferButtons[0].click();
-    assert.ok(institutionPage.campusProgramApplicationModal.isVisible);
+    assert.ok(applicationModal.isVisible);
 
-    // TODO: Test claim offer flow
+    assert.ok(applicationModal.verifyEmailButtonIsDisabled, 'Verify email button should be disabled if email is empty');
+
+    assert.strictEqual(applicationModal.emailAddressInputPlaceholder, 'bill@u.nus.edu');
+    await applicationModal.fillInEmailAddress('bill@nus.edu.sg');
+
+    assert.notOk(applicationModal.verifyEmailButtonIsDisabled, 'Verify email button should be enabled if email is present');
+    await applicationModal.clickOnVerifyEmailButton();
+
+    // await this.pauseTest();
+    // TODO: Test rest of claim offer flow
   });
 
   // TODO: Test unauthenticated user flows:
