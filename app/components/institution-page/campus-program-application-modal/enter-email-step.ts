@@ -25,7 +25,7 @@ export default class EnterEmailStepComponent extends Component<Signature> {
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
 
   get inputIsValid(): boolean {
-    return this.args.institution.officialEmailAddressSuffixes.some((suffix) => this.normalizedInput.endsWith(suffix.toLowerCase()));
+    return new RegExp(this.inputValidationRegex).test(this.normalizedInput);
   }
 
   get inputPlaceholder(): string {
