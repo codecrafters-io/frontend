@@ -3,5 +3,16 @@
     Campus Program Application
   </div>
 
-  <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStep @institution={{@institution}} />
+  <AnimatedContainer>
+    {{#animated-if (eq this.currentStep "enter-email") use=this.transition}}
+      <InstitutionPage::CampusProgramApplicationModal::EnterEmailStep
+        @institution={{@institution}}
+        @onApplicationCreated={{this.handleApplicationCreated}}
+      />
+    {{else}}
+      <div>
+        TODO
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
 </ModalBody>
