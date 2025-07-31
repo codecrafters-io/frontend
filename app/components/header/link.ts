@@ -26,10 +26,8 @@ export default class LinkComponent extends Component<Signature> {
       return true;
     }
 
-    if (currentRoute && currentRoute.includes('.') && this.args.route) {
-      const parentRoute = currentRoute.split('.')[0];
-
-      return parentRoute === this.args.route;
+    if (currentRoute && this.args.route) {
+      return currentRoute === this.args.route || currentRoute.startsWith(this.args.route + '.');
     }
 
     return false;

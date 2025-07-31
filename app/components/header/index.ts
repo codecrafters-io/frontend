@@ -83,7 +83,7 @@ export default class HeaderComponent extends Component<Signature> {
 
   @action
   handleDidInsert() {
-    this.router.on('routeWillChange', this.handleRouteChange);
+    this.router.on('routeWillChange', this.handleRouteWillChange);
   }
 
   @action
@@ -102,19 +102,13 @@ export default class HeaderComponent extends Component<Signature> {
   }
 
   @action
-  handleRouteChange() {
+  handleRouteWillChange() {
     this.mobileMenuIsExpanded = false;
-
-    next(() => {
-      if (this.floatingBarContainer) {
-        this.updateFloatingBarPosition(this.floatingBarContainer);
-      }
-    });
   }
 
   @action
   handleWillDestroy() {
-    this.router.off('routeWillChange', this.handleRouteChange);
+    this.router.off('routeWillChange', this.handleRouteWillChange);
   }
 
   @action
