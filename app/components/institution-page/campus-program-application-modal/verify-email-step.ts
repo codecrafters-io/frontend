@@ -12,9 +12,10 @@ interface Signature {
 export default class VerifyEmailStepComponent extends Component<Signature> {
   get fieldDescriptionHTML(): string {
     let html = 'This must end in ';
+    const highlightClasses = 'font-medium text-gray-500'; // Separate variable to ensure tailwind picks up these classes
 
     this.args.institution.officialEmailAddressSuffixes.forEach((suffix, index) => {
-      html += `@<span class="font-medium text-gray-500">${suffix.slice(1)}</span>`;
+      html += `@<span class="${highlightClasses}">${suffix.slice(1)}</span>`;
 
       if (index < this.args.institution.officialEmailAddressSuffixes.length - 2) {
         html += ', ';
