@@ -1,0 +1,7 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-claim-offer-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
+    Campus Program Application
+  </div>
+
+  <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStep @institution={{@institution}} />
+</ModalBody>
