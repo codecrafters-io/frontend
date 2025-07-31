@@ -21,16 +21,13 @@ export default class LinkComponent extends Component<Signature> {
     }
 
     const currentRoute = this.router.currentRouteName;
+    const targetRoute = this.args.route;
 
-    if (currentRoute === this.args.route) {
-      return true;
+    if (!currentRoute || !targetRoute) {
+      return false;
     }
 
-    if (currentRoute && this.args.route) {
-      return currentRoute === this.args.route || currentRoute.startsWith(this.args.route + '.');
-    }
-
-    return false;
+    return currentRoute === targetRoute || currentRoute.startsWith(targetRoute + '.');
   }
 }
 
