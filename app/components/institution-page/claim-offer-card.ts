@@ -7,6 +7,7 @@ interface Signature {
 
   Args: {
     institution: InstitutionModel;
+    onClaimOfferButtonClick: () => void;
   };
 }
 

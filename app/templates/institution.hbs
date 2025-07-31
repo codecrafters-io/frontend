@@ -16,7 +16,7 @@
     </div>
 
     <div class="flex justify-center items-center mb-20">
-      <InstitutionPage::ClaimOfferCard @institution={{@model.institution}} />
+      <InstitutionPage::ClaimOfferCard @institution={{@model.institution}} @onClaimOfferButtonClick={{this.handleClaimOfferButtonClick}} />
     </div>
 
     <div class="space-y-6 text-center mt-8 mb-8 max-w-[640px] mx-auto">
@@ -38,7 +38,7 @@
     <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
 
     <div class="flex flex-col gap-4 justify-center items-center mt-16">
-      <InstitutionPage::ClaimOfferButton />
+      <InstitutionPage::ClaimOfferButton {{on "click" this.handleClaimOfferButtonClick}} />
       <div class="text-xs text-slate-700 text-center">Get a free 1 year membership</div>
     </div>
 
@@ -62,8 +62,14 @@
     </div>
 
     <div class="flex flex-col gap-4 justify-center items-center mt-16">
-      <InstitutionPage::ClaimOfferButton />
+      <InstitutionPage::ClaimOfferButton {{on "click" this.handleClaimOfferButtonClick}} />
       <div class="text-xs text-slate-700 text-center">Get a free 1 year membership</div>
     </div>
   </div>
 </div>
+
+{{#if this.campusProgramApplicationModalIsOpen}}
+  <ModalBackdrop>
+    <InstitutionPage::CampusProgramApplicationModal @institution={{@model.institution}} @onClose={{this.handleCampusProgramApplicationModalClose}} />
+  </ModalBackdrop>
+{{/if}}

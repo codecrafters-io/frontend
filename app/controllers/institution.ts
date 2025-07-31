@@ -4,12 +4,16 @@ import Controller from '@ember/controller';
 import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
 import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
 import type { InstitutionRouteModel } from 'codecrafters-frontend/routes/institution';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class InstitutionController extends Controller {
   declare model: InstitutionRouteModel;
 
   BYOXBanner = BYOXBanner;
   BYOXBannerMobile = BYOXBannerMobile;
+
+  @tracked campusProgramApplicationModalIsOpen = false;
 
   get testimonialGroups(): Testimonial[][] {
     const testimonialGroup1 = [
@@ -34,5 +38,15 @@ export default class InstitutionController extends Controller {
     ];
 
     return [testimonialGroup1, testimonialGroup2, testimonialGroup3];
+  }
+
+  @action
+  handleCampusProgramApplicationModalClose() {
+    this.campusProgramApplicationModalIsOpen = false;
+  }
+
+  @action
+  handleClaimOfferButtonClick() {
+    this.campusProgramApplicationModalIsOpen = true;
   }
 }
