@@ -26,6 +26,7 @@ import githubAppInstallations from './handlers/github-app-installations';
 import githubRepositorySyncConfigurations from './handlers/github-repository-sync-configurations';
 import individualCheckoutSessions from './handlers/individual-checkout-sessions';
 import individualPaymentMethodUpdateRequests from './handlers/individual-payment-method-update-requests';
+import institutions from './handlers/institutions';
 import languages from './handlers/languages';
 import leaderboardEntries from './handlers/leaderboard-entries';
 import logstreams from './handlers/logstreams';
@@ -145,6 +146,7 @@ function routes() {
   githubRepositorySyncConfigurations(this);
   individualCheckoutSessions(this);
   individualPaymentMethodUpdateRequests(this);
+  institutions(this);
   languages(this);
   leaderboardEntries(this);
   logstreams(this);
