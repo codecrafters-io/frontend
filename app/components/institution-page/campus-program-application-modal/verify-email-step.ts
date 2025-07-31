@@ -1,5 +1,7 @@
 import Component from '@glimmer/component';
 import type InstitutionModel from 'codecrafters-frontend/models/institution';
+import { SafeString } from 'handlebars';
+import { htmlSafe } from '@ember/template';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -10,7 +12,7 @@ interface Signature {
 }
 
 export default class VerifyEmailStepComponent extends Component<Signature> {
-  get fieldDescriptionHTML(): string {
+  get fieldDescriptionHTML(): SafeString {
     let html = 'This must end in ';
     const highlightClasses = 'font-medium text-gray-500'; // Separate variable to ensure tailwind picks up these classes
 
@@ -26,7 +28,7 @@ export default class VerifyEmailStepComponent extends Component<Signature> {
 
     html += '.';
 
-    return html;
+    return htmlSafe(html);
   }
 }
 
