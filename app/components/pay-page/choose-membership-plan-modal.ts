@@ -68,6 +68,11 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   }
 
   @action
+  handleExtraInvoiceDetailsToggle(value: boolean) {
+    this.extraInvoiceDetailsRequested = value;
+  }
+
+  @action
   handlePlanSelect(plan: PricingPlan) {
     this.selectedPlanId = plan.id;
   }

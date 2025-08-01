@@ -1,0 +1,36 @@
+<div class="rounded border border-gray-200 p-4 mt-2 mb-6" ...attributes>
+  <div class="font-bold text-gray-600 text-balance border-b-2 border-gray-200 inline-block mb-3">Invoice details</div>
+
+  <div class="prose dark:prose-invert prose-sm mb-3">
+    <p>
+      If you need to include your employer's details on your invoice, select the option below.
+    </p>
+  </div>
+
+  <div
+    class="flex items-center justify-between gap-8 border
+      {{if @extraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}}
+      rounded-sm p-4 mb-3"
+    {{on "click" (fn @onToggle (not @extraInvoiceDetailsRequested))}}
+    role="button"
+    data-test-extra-invoice-details-toggle
+  >
+    <span class="flex grow flex-col">
+      <span class="text-sm font-semibold leading-6 {{if @extraInvoiceDetailsRequested 'text-teal-600' 'text-gray-900'}}" id="availability-label">I
+        need extra details on my invoice</span>
+      <span class="text-xs text-gray-400" id="availability-description">
+        Choose this option if you need extra details like tax ID, business address etc. on your invoice.
+      </span>
+    </span>
+
+    <Toggle @isOn={{@extraInvoiceDetailsRequested}} />
+  </div>
+
+  <div class="prose dark:prose-invert prose-sm">
+    <p>
+      You can always email us at
+      <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>
+      if you need to change your invoice details later.
+    </p>
+  </div>
+</div>
