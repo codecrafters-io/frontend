@@ -13,6 +13,10 @@ export default class AffiliateReferralModel extends Model {
   @attr('number') declare withdrawableEarningsAmountInCents: number;
   @attr('number') declare withheldEarningsAmountInCents: number;
 
+  get createdAt() {
+    return this.activatedAt;
+  }
+
   get spentAmountInDollars() {
     return this.spentAmountInCents / 100;
   }

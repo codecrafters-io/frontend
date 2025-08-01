@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import BuildpackModel from 'codecrafters-frontend/models/buildpack';
 import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
 import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
@@ -89,11 +90,11 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
-    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
+    return this.stages.filter((item) => !item.primaryExtensionSlug); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+    return this.languageConfigurations.filter((item) => !item.releaseStatusIsAlpha).map((item) => item.language);
   }
 
   get concepts() {
@@ -175,15 +176,15 @@ export default class CourseModel extends Model {
 
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
-    return this.baseStages.sortBy('position');
+    return [...this.baseStages].sort((a, b) => compare(a.position, b.position));
   }
 
   get sortedExtensionStages() {
-    return this.sortedExtensions.mapBy('sortedStages').flat();
+    return this.sortedExtensions.map((item) => item.sortedStages).flat();
   }
 
   get sortedExtensions() {
-    return this.extensions.sortBy('position');
+    return [...this.extensions].sort((a, b) => compare(a.position, b.position));
   }
 
   get testerRepositoryLink() {
