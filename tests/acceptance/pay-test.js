@@ -40,8 +40,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
     await percySnapshot('Pay page - configure checkout session modal');
+    await payPage.clickOnProceedToCheckoutButton();
 
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
   });
@@ -62,9 +62,9 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.true(payPage.discountNotice.isVisible, 'should show signup discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show signup discount notice');
     assert.ok(
-      payPage.discountNotice.text.match(/^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/),
+      payPage.chooseMembershipPlanModal.planCards[1].discountNotice.text.match(/^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/),
       'should show signup discount notice text',
     );
     await percySnapshot('Pay page - with early bird discount');
@@ -90,7 +90,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.true(payPage.discountNotice.isVisible, 'should show stage 2 completion discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show stage 2 completion discount notice');
     await percySnapshot('Pay page - with stage 2 completion discount');
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
@@ -131,9 +131,13 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
-    assert.true(payPage.discountNotice.isVisible, 'should show referral discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show referral discount notice');
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.ok(payPage.discountNotice.text.match(/^40% off — rohitpaulk's referral offer, expires in \d{2}h:\d{2}m:\d{2}s$/));
+    assert.ok(
+      payPage.chooseMembershipPlanModal.planCards[1].discountNotice.text.match(
+        /^40% off — rohitpaulk's referral offer, expires in \d{2}h:\d{2}m:\d{2}s$/,
+      ),
+    );
     await percySnapshot('Pay page - with referral discount');
 
     await payPage.clickOnChoosePlanButton();
