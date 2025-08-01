@@ -1,8 +1,11 @@
 {{#if (eq @type "route")}}
   <LinkTo
     @route={{@route}}
-    class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+    class="text-sm relative hover:text-gray-900 dark:hover:text-gray-100
+      {{if this.isActive 'text-gray-700 dark:text-gray-300' 'text-gray-600 dark:text-gray-400'}}
+      "
     data-test-header-link
+    data-route-is-active={{if this.isActive "true" "false"}}
     ...attributes
   >
     {{@text}}
