@@ -4,15 +4,11 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if (eq this.currentStep "enter-email") use=this.transition}}
-      <InstitutionPage::CampusProgramApplicationModal::EnterEmailStep
-        @institution={{@institution}}
-        @onApplicationCreated={{this.handleApplicationCreated}}
-      />
-    {{else}}
-      <div>
-        TODO
-      </div>
-    {{/animated-if}}
+    {{#animated-if (not this.latestSavedGrantApplication) use=this.transition}}
+      <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer @institution={{@institution}} />
+    {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
+        {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
+        <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer @application={{this.latestSavedGrantApplication}} />
+      {{/if}}{{/animated-if}}
   </AnimatedContainer>
 </ModalBody>

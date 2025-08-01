@@ -6,18 +6,18 @@ import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import type InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     institution: InstitutionModel;
-    onApplicationCreated: (application: InstitutionMembershipGrantApplicationModel) => void;
   };
 }
 
-export default class EnterEmailStepComponent extends Component<Signature> {
+export default class EnterEmailStepContainerComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   @tracked formElement: HTMLFormElement | undefined;
@@ -99,20 +99,19 @@ export default class EnterEmailStepComponent extends Component<Signature> {
 
     this.isCreatingInstitutionMembershipGrantApplication = true;
 
-    const application = await this.store
+    await this.store
       .createRecord('institution-membership-grant-application', {
         institution: this.args.institution,
         normalizedEmailAddress: this.normalizedInput,
         originalEmailAddress: this.input,
+        user: this.authenticator.currentUser!,
       })
       .save();
-
-    this.args.onApplicationCreated(application);
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::CampusProgramApplicationModal::EnterEmailStep': typeof EnterEmailStepComponent;
+    'InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer': typeof EnterEmailStepContainerComponent;
   }
 }

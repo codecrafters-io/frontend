@@ -6,6 +6,7 @@ export default class InstitutionMembershipGrantApplicationModel extends Model {
   @belongsTo('institution', { async: true, inverse: null }) declare institution: InstitutionModel;
   @belongsTo('user', { async: true, inverse: null }) declare user: UserModel;
 
+  @attr('date') declare createdAt: Date;
   @attr('string') declare normalizedEmailAddress: string;
   @attr('string') declare originalEmailAddress: string;
   @attr('string') declare rejectionReason: string | null;
