@@ -60,8 +60,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
-    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
+    assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.discountNotice.isVisible, 'should show signup discount notice');
     assert.ok(
       payPage.discountNotice.text.match(/^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/),
@@ -88,8 +88,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
-    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
+    assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.discountNotice.isVisible, 'should show stage 2 completion discount notice');
     await percySnapshot('Pay page - with stage 2 completion discount');
     await payPage.clickOnChoosePlanButton();
@@ -130,9 +130,9 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
     assert.true(payPage.discountNotice.isVisible, 'should show referral discount notice');
-    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
+    assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.ok(payPage.discountNotice.text.match(/^40% off — rohitpaulk's referral offer, expires in \d{2}h:\d{2}m:\d{2}s$/));
     await percySnapshot('Pay page - with referral discount');
 
@@ -152,13 +152,11 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
 
-    await payPage.clickOnApplyRegionalDiscountButton();
-
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
-    assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$180', 'should show discounted price');
-    assert.true(payPage.modalPlanCards[1].regionalDiscountNotice.isVisible, 'should show regional discount notice');
-    assert.ok(payPage.modalPlanCards[1].regionalDiscountNotice.text.match(/^50% off — India discount$/));
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
+    assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$180', 'should show discounted price');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].regionalDiscountNotice.isVisible, 'should show regional discount notice');
+    assert.ok(payPage.chooseMembershipPlanModal.planCards[1].regionalDiscountNotice.text.match(/^50% off — India discount$/));
     await percySnapshot('Pay page - with regional discount');
 
     await payPage.clickOnChoosePlanButton();
@@ -174,7 +172,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
 
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
 
@@ -188,7 +186,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
 
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.modalPlanCards[1].click();
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnExtraInvoiceDetailsToggle();
 

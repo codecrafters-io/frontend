@@ -5,7 +5,6 @@ import Header from 'codecrafters-frontend/tests/pages/components/header';
 export default create({
   accountDropdown: AccountDropdown,
 
-  clickOnApplyRegionalDiscountButton: clickable('[data-test-apply-regional-discount-button]'),
   clickOnChoosePlanButton: clickable('[data-test-choose-plan-button]'),
   clickOnExtraInvoiceDetailsToggle: clickable('[data-test-extra-invoice-details-toggle]'),
   clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
@@ -16,19 +15,20 @@ export default create({
 
   header: Header,
 
-  pricingPlanCards: collection('[data-test-pricing-plan-cards] > *', {
+  pricingPlanCards: collection('[data-test-pricing-plan-card]', {
     ctaButton: {
       scope: '[data-test-pricing-plan-card-cta]',
     },
   }),
 
-  modalPlanCards: collection('[data-test-modal-plan-card]', {
-    click: clickable(),
-    discountedPriceText: text('[data-test-discounted-price]'),
-    regionalDiscountNotice: {
-      scope: '[data-test-modal-regional-discount-notice]',
-    },
-  }),
+  chooseMembershipPlanModal: {
+    planCards: collection('[data-test-modal-plan-card]', {
+      discountedPriceText: text('[data-test-discounted-price]'),
+      regionalDiscountNotice: {
+        scope: '[data-test-modal-regional-discount-notice]',
+      },
+    }),
+  },
 
   referralDiscountNotice: {
     scope: '[data-test-referral-discount-notice]',
