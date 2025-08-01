@@ -21,7 +21,7 @@
       <PayPage::RegionalDiscountNotice @regionalDiscount={{@model.regionalDiscount}} class="mt-8" />
     {{/if}}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)" data-test-membership-plan-cards>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)" data-test-pricing-plan-cards>
       <PayPage::PricingPlanCard
         @title={{"Free"}}
         @isRecommended={{false}}
@@ -42,7 +42,7 @@
         @ctaText="View plans"
         @onCtaClick={{this.handleMembershipPlanCTAClick}}
         class="lg:max-w-sm"
-        data-test-membership-plan-card
+        data-test-pricing-plan-card
       />
 
       <PayPage::PricingPlanCard

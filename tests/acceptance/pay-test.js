@@ -38,7 +38,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.visit();
     await percySnapshot('Pay page');
 
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
     await percySnapshot('Pay page - configure checkout session modal');
@@ -59,7 +59,7 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.discountNotice.isVisible, 'should show signup discount notice');
@@ -87,7 +87,7 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.discountNotice.isVisible, 'should show stage 2 completion discount notice');
@@ -129,7 +129,7 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.true(payPage.discountNotice.isVisible, 'should show referral discount notice');
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$216', 'should show discounted price');
@@ -154,7 +154,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.clickOnApplyRegionalDiscountButton();
 
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     assert.strictEqual(payPage.modalPlanCards[1].discountedPriceText, '$180', 'should show discounted price');
     assert.true(payPage.modalPlanCards[1].regionalDiscountNotice.isVisible, 'should show regional discount notice');
@@ -173,7 +173,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
 
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnProceedToCheckoutButton();
@@ -187,7 +187,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.visit();
 
-    await payPage.membershipPlanCards[1].ctaButton.click();
+    await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.modalPlanCards[1].click();
     await payPage.clickOnChoosePlanButton();
     await payPage.clickOnExtraInvoiceDetailsToggle();

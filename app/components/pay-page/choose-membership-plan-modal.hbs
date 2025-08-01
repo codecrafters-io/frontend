@@ -10,43 +10,26 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if (eq this.currentStep "plan") use=this.transition duration=200}}
+    {{#animated-if (eq this.currentStep "plan-selection") use=this.transition duration=200}}
       <div>
         <div class="flex flex-col gap-y-2">
-          <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{eq this.selectedPlan "3-month"}}
-            @title="3 month pass"
-            @actualPriceInDollars={{120}}
-            @validityInMonths={{3}}
-            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-            @regionalDiscount={{@regionalDiscount}}
-            {{on "click" (fn this.handlePlanSelection "3-month")}}
-          />
+          {{#each this.pricingPlans as |plan|}}
+            <PayPage::ChooseMembershipPlanModal::PlanCard
+              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+              @isSelected={{eq this.selectedPlanId plan.id}}
+              @onPlanSelect={{this.handlePlanSelect}}
+              @plan={{plan}}
+              @regionalDiscount={{@regionalDiscount}}
+            />
+          {{/each}}
 
-          <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{eq this.selectedPlan "1-year"}}
-            @title="1 year pass"
-            @actualPriceInDollars={{360}}
-            @validityInMonths={{12}}
-            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-            @regionalDiscount={{@regionalDiscount}}
-            {{on "click" (fn this.handlePlanSelection "1-year")}}
-          />
-
-          <PayPage::ChooseMembershipPlanModal::PlanCard
-            @isSelected={{eq this.selectedPlan "lifetime"}}
-            @title="Lifetime pass"
-            @actualPriceInDollars={{1490}}
-            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-            @regionalDiscount={{@regionalDiscount}}
-            {{on "click" (fn this.handlePlanSelection "lifetime")}}
-          />
-
-          <PrimaryButton @size="large" {{on "click" this.handleChoosePlanButtonClick}} data-test-choose-plan-button>
+          <PrimaryButton @size="large" {{on "click" this.handleContinueButtonClick}} data-test-choose-plan-button>
             Choose
-            {{this.selectedPlanText}}&nbsp;→
+            {{this.selectedPlan.title}}
+            →
           </PrimaryButton>
         </div>
+
         <div class="flex justify-center mt-4">
           <div class="inline-block text-gray-500 text-sm border-b border-gray-300 cursor-pointer" role="button" {{on "click" @onClose}}>
             Back to pricing page
@@ -56,40 +39,21 @@
     {{else}}
       <div>
         <div class="relative">
-          {{#if (eq this.selectedPlan "3-month")}}
-            <PayPage::ChooseMembershipPlanModal::PlanCard
-              @isSelected={{true}}
-              @title="3 month pass"
-              @actualPriceInDollars={{120}}
-              @validityInMonths={{3}}
-              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-              @regionalDiscount={{@regionalDiscount}}
-            />
-          {{else if (eq this.selectedPlan "1-year")}}
-            <PayPage::ChooseMembershipPlanModal::PlanCard
-              @isSelected={{true}}
-              @title="1 year pass"
-              @actualPriceInDollars={{360}}
-              @validityInMonths={{12}}
-              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-              @regionalDiscount={{@regionalDiscount}}
-            />
-          {{else if (eq this.selectedPlan "lifetime")}}
-            <PayPage::ChooseMembershipPlanModal::PlanCard
-              @isSelected={{true}}
-              @title="Lifetime pass"
-              @actualPriceInDollars={{1490}}
-              @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-              @regionalDiscount={{@regionalDiscount}}
-            />
-          {{/if}}
+          <PayPage::ChooseMembershipPlanModal::PlanCard
+            @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
+            @isSelected={{true}}
+            @onPlanSelect={{this.handlePlanSelect}}
+            @plan={{this.selectedPlan}}
+            @regionalDiscount={{@regionalDiscount}}
+          />
 
           <div class="absolute inset-0 bg-white/60 flex items-center justify-center opacity-100 transition-opacity duration-200">
-            <TertiaryButton @size="small" {{on "click" this.handleChangePlanButtonClick}}>
+            <TertiaryButton @size="small" {{on "click" this.handleBackButtonClick}}>
               Change plan
             </TertiaryButton>
           </div>
         </div>
+
         <div class="rounded border border-gray-200 p-4 mt-2 mb-6">
           <div class="font-bold text-gray-600 text-balance border-b-2 border-gray-200 inline-block mb-3">Invoice details</div>
 
@@ -129,14 +93,14 @@
         </div>
 
         <div class="flex justify-between items-center">
-          <span class="text-gray-400 text-sm" role="button" {{on "click" this.handleChangePlanButtonClick}}>
+          <span class="text-gray-400 text-sm" role="button" {{on "click" this.handleBackButtonClick}}>
             ← Back
           </span>
 
           <PrimaryButton
             class="flex! items-center justify-center"
             @size="large"
-            {{on "click" (fn this.handleProceedToCheckoutButtonClick this.pricingFrequency)}}
+            {{on "click" this.handleProceedToCheckoutClick}}
             data-test-proceed-to-checkout-button
           >
             Proceed to Checkout

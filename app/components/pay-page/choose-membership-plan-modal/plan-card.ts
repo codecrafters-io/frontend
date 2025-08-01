@@ -1,19 +1,20 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
+import { action } from '@ember/object';
 import type TimeService from 'codecrafters-frontend/services/time';
 import { formatTimeDurationForCountdown } from 'codecrafters-frontend/utils/time-formatting';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type { PricingPlan } from '../choose-membership-plan-modal';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    actualPriceInDollars: number;
-    isSelected: boolean;
-    validityInMonths?: number; // Not set for lifetime plans
-    title: string;
     activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
+    isSelected: boolean;
+    onPlanSelect: (plan: PricingPlan) => void;
+    plan: PricingPlan;
     regionalDiscount?: RegionalDiscountModel | null;
   };
 }
@@ -22,19 +23,19 @@ export default class PlanCard extends Component<Signature> {
   @service declare time: TimeService;
 
   get amortizedMonthlyPriceInDollars(): number | null {
-    if (this.args.validityInMonths) {
-      return Math.round(this.effectivePriceInDollars / this.args.validityInMonths);
+    if (this.args.plan.validityInMonths) {
+      return Math.round(this.effectivePriceInDollars / this.args.plan.validityInMonths);
     }
 
     return null;
   }
 
   get discountedPriceInDollars(): number | null {
-    const basePrice = this.args.actualPriceInDollars;
+    const basePrice = this.args.plan.priceInDollars;
     let discountedPrice = basePrice;
 
     // Apply promotional discount first (yearly plans only)
-    if (this.args.activeDiscountForYearlyPlan && this.args.validityInMonths === 12) {
+    if (this.args.activeDiscountForYearlyPlan && this.args.plan.id === 'yearly') {
       discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
     }
 
@@ -48,7 +49,7 @@ export default class PlanCard extends Component<Signature> {
   }
 
   get effectivePriceInDollars(): number {
-    return this.discountedPriceInDollars || this.args.actualPriceInDollars;
+    return this.discountedPriceInDollars || this.args.plan.priceInDollars;
   }
 
   get timeLeftText(): string {
@@ -57,6 +58,11 @@ export default class PlanCard extends Component<Signature> {
     }
 
     return formatTimeDurationForCountdown(this.args.activeDiscountForYearlyPlan.expiresAt, this.time.currentTime);
+  }
+
+  @action
+  handleClick() {
+    this.args.onPlanSelect(this.args.plan);
   }
 }
 

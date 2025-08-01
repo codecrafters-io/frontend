@@ -10,13 +10,26 @@ import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-di
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
+export interface PricingPlan {
+  id: 'quarterly' | 'yearly' | 'lifetime';
+  title: string;
+  priceInDollars: number;
+  validityInMonths?: number; // undefined for lifetime
+}
+
+export const PRICING_PLANS: PricingPlan[] = [
+  { id: 'quarterly', title: '3 month pass', priceInDollars: 120, validityInMonths: 3 },
+  { id: 'yearly', title: '1 year pass', priceInDollars: 360, validityInMonths: 12 },
+  { id: 'lifetime', title: 'Lifetime pass', priceInDollars: 1490 },
+];
+
 interface Signature {
-  Element: HTMLAnchorElement;
+  Element: HTMLDivElement;
 
   Args: {
+    activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
     onClose: () => void;
     regionalDiscount?: RegionalDiscountModel | null;
-    activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
   };
 }
 
@@ -25,47 +38,42 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @service declare store: Store;
 
   transition = fade;
+  pricingPlans = PRICING_PLANS;
 
   @tracked extraInvoiceDetailsRequested = false;
   @tracked isCreatingCheckoutSession = false;
-  @tracked currentStep: 'plan' | 'invoice-details' = 'plan';
-  @tracked selectedPlan: '3-month' | '1-year' | 'lifetime' = '3-month';
+  @tracked currentStep: 'plan-selection' | 'invoice-details' = 'plan-selection';
+  @tracked selectedPlanId: PricingPlan['id'] = 'quarterly';
 
-  get pricingFrequency(): 'quarterly' | 'yearly' | 'lifetime' {
-    return this.selectedPlan === '3-month' ? 'quarterly' : this.selectedPlan === '1-year' ? 'yearly' : 'lifetime';
-  }
+  get selectedPlan(): PricingPlan {
+    const plan = this.pricingPlans.find((p) => p.id === this.selectedPlanId);
 
-  get selectedPlanText() {
-    switch (this.selectedPlan) {
-      case '3-month':
-        return '3 month pass';
-      case '1-year':
-        return '1 year pass';
-      case 'lifetime':
-        return 'Lifetime pass';
-      default:
-        Sentry.captureException(new Error(`Unknown selectedPlan value: ${this.selectedPlan}`));
-        throw new Error(`Unknown selectedPlan value: ${this.selectedPlan}`);
+    if (!plan) {
+      Sentry.captureException(new Error(`Unknown selectedPlanId: ${this.selectedPlanId}`));
+
+      return this.pricingPlans[0]!;
     }
+
+    return plan;
   }
 
   @action
-  handleChangePlanButtonClick() {
-    this.currentStep = 'plan';
+  handleBackButtonClick() {
+    this.currentStep = 'plan-selection';
   }
 
   @action
-  handleChoosePlanButtonClick() {
+  handleContinueButtonClick() {
     this.currentStep = 'invoice-details';
   }
 
   @action
-  handlePlanSelection(plan: '3-month' | '1-year' | 'lifetime') {
-    this.selectedPlan = plan;
+  handlePlanSelect(plan: PricingPlan) {
+    this.selectedPlanId = plan.id;
   }
 
   @action
-  async handleProceedToCheckoutButtonClick(pricingFrequency: 'quarterly' | 'yearly' | 'lifetime') {
+  async handleProceedToCheckoutClick() {
     if (!this.authenticator.isAuthenticated) {
       this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
 
@@ -77,8 +85,8 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
       cancelUrl: `${window.location.origin}/pay`,
       extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
-      pricingFrequency,
-      promotionalDiscount: pricingFrequency === 'yearly' ? this.args.activeDiscountForYearlyPlan || null : null,
+      pricingFrequency: this.selectedPlanId,
+      promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan || null : null,
       regionalDiscount: this.args.regionalDiscount || null,
       successUrl: `${window.location.origin}/settings/billing`,
     });

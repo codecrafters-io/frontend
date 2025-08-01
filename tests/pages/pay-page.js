@@ -16,7 +16,7 @@ export default create({
 
   header: Header,
 
-  membershipPlanCards: collection('[data-test-membership-plan-cards] > *', {
+  pricingPlanCards: collection('[data-test-pricing-plan-cards] > *', {
     ctaButton: {
       scope: '[data-test-pricing-plan-card-cta]',
     },
