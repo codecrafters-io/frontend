@@ -1,9 +1,9 @@
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
-import type InstitutionModel from 'codecrafters-frontend/models/institution';
-import { action } from '@ember/object';
 import type InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
-import { tracked } from '@glimmer/tracking';
+import type InstitutionModel from 'codecrafters-frontend/models/institution';
+import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,15 +15,17 @@ interface Signature {
 }
 
 export default class CampusProgramApplicationModalComponent extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+
   transition = fade;
 
-  @tracked application: InstitutionMembershipGrantApplicationModel | null = null;
-  @tracked currentStep = 'enter-email'; // enter-email, verify-email, grant-approved
-
-  @action
-  handleApplicationCreated(application: InstitutionMembershipGrantApplicationModel) {
-    this.application = application;
-    this.currentStep = 'verify-email';
+  get latestSavedGrantApplication(): InstitutionMembershipGrantApplicationModel | null {
+    return (
+      this.authenticator
+        .currentUser!.institutionMembershipGrantApplications.filter((application) => application.institution.id === this.args.institution.id)
+        .reject((application) => application.isNew)
+        .sortBy('createdAt').lastObject || null
+    );
   }
 }
 

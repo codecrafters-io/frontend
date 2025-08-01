@@ -1,6 +1,7 @@
 import institutionPage from 'codecrafters-frontend/tests/pages/institution-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { animationsSettled } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -28,14 +29,19 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await institutionPage.claimOfferButtons[0].click();
     assert.ok(applicationModal.isVisible);
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
 
-    assert.ok(applicationModal.verifyEmailButtonIsDisabled, 'Verify email button should be disabled if email is empty');
-    assert.strictEqual(applicationModal.emailAddressInputPlaceholder, 'bill@u.nus.edu');
+    assert.ok(applicationModal.enterEmailStepContainer.verifyEmailButtonIsDisabled, 'Verify email button should be disabled if email is empty');
+    assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputPlaceholder, 'bill@u.nus.edu');
 
-    await applicationModal.fillInEmailAddress('bill@nus.edu.sg');
+    await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill@nus.edu.sg');
 
-    assert.notOk(applicationModal.verifyEmailButtonIsDisabled, 'Verify email button should be enabled if email is present');
-    await applicationModal.clickOnVerifyEmailButton();
+    assert.notOk(applicationModal.enterEmailStepContainer.verifyEmailButtonIsDisabled, 'Verify email button should be enabled if email is present');
+    await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+    await animationsSettled(); // Ensure old step is animated out
+
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
 
     // await this.pauseTest();
     // TODO: Test rest of claim offer flow

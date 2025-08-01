@@ -13,6 +13,7 @@ import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
 import InvoiceModel from 'codecrafters-frontend/models/invoice';
+import InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
 import Model, { attr, hasMany } from '@ember-data/model';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
 import AffiliateEarningsPayoutModel from 'codecrafters-frontend/models/affiliate-earnings-payout';
@@ -59,6 +60,9 @@ export default class UserModel extends Model {
   @hasMany('course-participation', { async: false, inverse: 'user' }) courseParticipations!: CourseParticipationModel[];
   @hasMany('feature-suggestion', { async: false, inverse: 'user' }) featureSuggestions!: FeatureSuggestionModel[];
   @hasMany('github-app-installation', { async: false, inverse: 'user' }) githubAppInstallations!: GitHubAppInstallationModel[];
+  @hasMany('institution-membership-grant-application', { async: false, inverse: 'user' })
+  institutionMembershipGrantApplications!: InstitutionMembershipGrantApplicationModel[];
+
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
   @hasMany('affiliate-earnings-payout', { async: false, inverse: 'user' }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];
