@@ -89,21 +89,25 @@ export default class EnterEmailStepComponent extends Component<Signature> {
   async handleFormSubmit(e: SubmitEvent) {
     e.preventDefault();
 
-    this.input = this.normalizedInput; // Reset any formatting differences
     this.formElement!.reportValidity();
 
-    if (this.formElement!.checkValidity()) {
-      this.isCreatingInstitutionMembershipGrantApplication = true;
+    if (!this.formElement!.checkValidity()) {
+      this.input = this.normalizedInput; // Reset any formatting differences (e.g. spaces)
 
-      const application = await this.store
-        .createRecord('institution-membership-grant-application', {
-          institution: this.args.institution,
-          emailAddress: this.input,
-        })
-        .save();
-
-      this.args.onApplicationCreated(application);
+      return;
     }
+
+    this.isCreatingInstitutionMembershipGrantApplication = true;
+
+    const application = await this.store
+      .createRecord('institution-membership-grant-application', {
+        institution: this.args.institution,
+        normalizedEmailAddress: this.normalizedInput,
+        originalEmailAddress: this.input,
+      })
+      .save();
+
+    this.args.onApplicationCreated(application);
   }
 }
 
