@@ -10,13 +10,11 @@ interface Signature {
 
   Args: {
     actualPriceInDollars: number;
-    discountedPriceInDollars?: number | null;
     isSelected: boolean;
     validityInMonths?: number; // Not set for lifetime plans
     title: string;
     activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
     regionalDiscount?: RegionalDiscountModel | null;
-    shouldApplyRegionalDiscount?: boolean;
   };
 }
 
@@ -31,8 +29,26 @@ export default class PlanCard extends Component<Signature> {
     return null;
   }
 
+  get discountedPriceInDollars(): number | null {
+    const basePrice = this.args.actualPriceInDollars;
+    let discountedPrice = basePrice;
+
+    // Apply promotional discount first (yearly plans only)
+    if (this.args.activeDiscountForYearlyPlan && this.args.validityInMonths === 12) {
+      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
+    }
+
+    // Apply regional discount
+    if (this.args.regionalDiscount) {
+      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
+      discountedPrice = discountedPrice - regionalDiscountAmount;
+    }
+
+    return discountedPrice === basePrice ? null : Math.round(discountedPrice);
+  }
+
   get effectivePriceInDollars(): number {
-    return this.args.discountedPriceInDollars || this.args.actualPriceInDollars;
+    return this.discountedPriceInDollars || this.args.actualPriceInDollars;
   }
 
   get timeLeftText(): string {

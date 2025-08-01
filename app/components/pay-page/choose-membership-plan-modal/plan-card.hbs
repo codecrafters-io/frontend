@@ -40,10 +40,10 @@
         {{/if}}
       </div>
 
-      {{#if @discountedPriceInDollars}}
+      {{#if this.discountedPriceInDollars}}
         <div class="prose prose-xs prose-compact text-gray-500">
           <ul class="mt-0">
-            {{#if (and @regionalDiscount @shouldApplyRegionalDiscount)}}
+            {{#if @regionalDiscount}}
               <li data-test-modal-regional-discount-notice>
                 <b class="text-teal-500">{{@regionalDiscount.percentOff}}% off</b>
                 —
@@ -84,11 +84,11 @@
     </div>
   </div>
   <div class="flex flex-col items-end pl-4 flex-shrink-0">
-    {{#if @discountedPriceInDollars}}
+    {{#if this.discountedPriceInDollars}}
       <div class="flex items-center gap-x-1">
         <span class="text-gray-400 font-bold line-through text-lg">${{@actualPriceInDollars}}</span>
         <span class="text-teal-500 font-bold" data-test-discounted-price>
-          ${{@discountedPriceInDollars}}
+          ${{this.discountedPriceInDollars}}
         </span>
       </div>
     {{else}}

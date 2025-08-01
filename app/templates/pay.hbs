@@ -18,11 +18,7 @@
     {{/if}}
 
     {{#if @model.regionalDiscount}}
-      <PayPage::RegionalDiscountNotice
-        @regionalDiscount={{@model.regionalDiscount}}
-        @shouldApplyRegionalDiscount={{this.shouldApplyRegionalDiscount}}
-        class="mt-8"
-      />
+      <PayPage::RegionalDiscountNotice @regionalDiscount={{@model.regionalDiscount}} class="mt-8" />
     {{/if}}
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)" data-test-membership-plan-cards>
@@ -105,7 +101,6 @@
       @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
       @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
       @regionalDiscount={{@model.regionalDiscount}}
-      @shouldApplyRegionalDiscount={{this.shouldApplyRegionalDiscount}}
     />
   </ModalBackdrop>
 {{/if}}

@@ -23,7 +23,6 @@ export default class PayController extends Controller {
   @service declare router: RouterService;
 
   @tracked chooseMembershipPlanModalIsOpen = false;
-  @tracked shouldApplyRegionalDiscount = false;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.user?.activeDiscountForYearlyPlan || null;
