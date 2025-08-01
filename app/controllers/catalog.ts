@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -19,29 +20,38 @@ export default class CatalogController extends Controller {
   }
 
   get languages() {
-    return this.model.courses
-      .toArray()
-      .flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages.toArray() : []))
-      .uniq();
+    return [...new Set([...this.model.courses].flatMap((course) => (this.shouldDisplayCourse(course) ? [...course.betaOrLiveLanguages] : [])))];
   }
 
   get orderedCourses() {
     if (!this.authenticator.currentUser) {
-      return this.courses.toArray().sort((course1, course2) => {
+      return [...this.courses].sort((course1, course2) => {
         return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
       });
     } else {
-      return this.courses.toArray().sort((course1, course2) => {
-        const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('lastActivityAt');
-        const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
+      return [...this.courses].sort((course1, course2) => {
+        const repositoriesForCourse1 = this.authenticator
+          .currentUser!.repositories.filter((item) => item.course === course1)
+          .filter((item) => item.lastActivityAt);
+        const repositoriesForCourse2 = this.authenticator
+          .currentUser!.repositories.filter((item) => item.course === course2)
+          .filter((item) => item.lastActivityAt);
 
         const lastActivityForCourse1At =
-          // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
+          repositoriesForCourse1.length > 0
+            ? [...repositoriesForCourse1]
+                .sort((a, b) => compare(a.lastActivityAt, b.lastActivityAt))
+                .at(-1)
+                ?.lastActivityAt.getTime()
+            : null;
 
         const lastActivityForCourse2At =
-          // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
+          repositoriesForCourse2.length > 0
+            ? [...repositoriesForCourse2]
+                .sort((a, b) => compare(a.lastActivityAt, b.lastActivityAt))
+                .at(-1)
+                ?.lastActivityAt.getTime()
+            : null;
 
         if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At > lastActivityForCourse2At) {
           return -1;
@@ -60,24 +70,27 @@ export default class CatalogController extends Controller {
 
   get orderedLanguages() {
     if (!this.authenticator.currentUser) {
-      return this.languages.sortBy('sortPositionForTrack');
+      return [...this.languages].sort((a, b) => compare(a.sortPositionForTrack, b.sortPositionForTrack));
     } else {
-      return this.languages.toArray().sort((language1, language2) => {
+      return [...this.languages].sort((language1, language2) => {
         const repositoriesForLanguage1 = this.authenticator
-          .currentUser!.repositories.filterBy('language', language1)
-          .filterBy('firstSubmissionCreated');
+          .currentUser!.repositories.filter((item) => item.language === language1)
+          .filter((item) => item.firstSubmissionCreated);
 
         const repositoriesForLanguage2 = this.authenticator
-          .currentUser!.repositories.filterBy('language', language2)
-          .filterBy('firstSubmissionCreated');
+          .currentUser!.repositories.filter((item) => item.language === language2)
+          .filter((item) => item.firstSubmissionCreated);
 
         if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
-          // @ts-expect-error at(-1) is not defined on Array
-          const lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
-          // @ts-expect-error at(-1) is not defined on Array
-          const lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          const lastSubmissionForLanguage1 = [...repositoriesForLanguage1]
+            .sort((a, b) => compare(a.lastSubmissionAt, b.lastSubmissionAt))
+            .at(-1)?.lastSubmissionAt;
 
-          return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;
+          const lastSubmissionForLanguage2 = [...repositoriesForLanguage2]
+            .sort((a, b) => compare(a.lastSubmissionAt, b.lastSubmissionAt))
+            .at(-1)?.lastSubmissionAt;
+
+          return lastSubmissionForLanguage1 && lastSubmissionForLanguage2 ? (lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1) : 0;
         } else if (repositoriesForLanguage1.length > 0) {
           return -1;
         } else if (repositoriesForLanguage2.length > 0) {
@@ -95,14 +108,15 @@ export default class CatalogController extends Controller {
     }
 
     return this.authenticator.currentUser.featureSuggestions
-      .filterBy('featureIsProductWalkthrough')
-      .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
+      .filter((item) => item.featureIsProductWalkthrough)
+      .filter((item) => !item.isDismissed)[0] as FeatureSuggestionModel | null;
   }
 
   shouldDisplayCourse(course: CourseModel) {
     const userIsStaffOrCourseAuthor =
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-    const userHasRepository = this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
+    const userHasRepository =
+      this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
 
     if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
       return userHasRepository;

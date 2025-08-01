@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import { all as RSVPAll } from 'rsvp';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
@@ -65,12 +66,11 @@ export default class CourseRoute extends BaseRoute {
       }
       // @ts-ignore
     } else if (transition.to.queryParams.track) {
-      const lastPushedRepositoryForTrack = repositories
-        // @ts-ignore
-        .filterBy('language.slug', transition.to.queryParams.track)
-        // @ts-ignore
-        .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt').lastObject;
+      const lastPushedRepositoryForTrack = [
+        ...repositories.filter((item) => item.language?.slug === transition.to?.queryParams['track']).filter((item) => item.firstSubmissionCreated),
+      ]
+        .sort((a, b) => compare(a.lastSubmissionAt, b.lastSubmissionAt))
+        .at(-1);
 
       if (lastPushedRepositoryForTrack) {
         return lastPushedRepositoryForTrack;
@@ -78,10 +78,10 @@ export default class CourseRoute extends BaseRoute {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
     } else {
-      // @ts-ignore
-      const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
-      // @ts-ignore
-      const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
+      const lastPushedRepository = [...repositories.filter((item) => item.firstSubmissionCreated)]
+        .sort((a, b) => compare(a.lastSubmissionAt, b.lastSubmissionAt))
+        .at(-1);
+      const lastCreatedRepository = [...repositories].sort((a, b) => compare(a.createdAt, b.createdAt)).at(-1);
 
       if (lastPushedRepository) {
         return lastPushedRepository;
