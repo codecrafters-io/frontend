@@ -46,21 +46,21 @@ export default class CourseOverviewRoute extends BaseRoute {
   }
 
   async model(params: { course_slug: string }): Promise<ModelType> {
-    if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
+    if (this.store.peekAll('course').find((item) => item.slug === params.course_slug)) {
       // Trigger a refresh anyway
       this.store.findAll('course', {
         include: 'extensions,stages,language-configurations.language',
       });
 
       return {
-        course: this.store.peekAll('course').findBy('slug', params.course_slug),
+        course: this.store.peekAll('course').find((item) => item.slug === params.course_slug),
       };
     } else {
       const courses = await this.store.findAll('course', {
         include: 'extensions,stages,language-configurations.language',
       });
 
-      const course = courses.findBy('slug', params.course_slug);
+      const course = courses.find((item) => item.slug === params.course_slug);
 
       if (!course) {
         return { course: undefined as unknown as CourseModel };

@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboard-entry';
@@ -81,9 +82,9 @@ export default class CourseLeaderboard extends Component<Signature> {
     let entries: CourseLeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
+      entries = entries.concat([...this.entriesFromAPI].filter((entry) => entry.user !== this.authenticator.currentUser));
     } else {
-      entries = entries.concat(this.entriesFromAPI.toArray());
+      entries = entries.concat([...this.entriesFromAPI]);
     }
 
     return entries.concat(this.entriesFromCurrentUser);
@@ -97,13 +98,13 @@ export default class CourseLeaderboard extends Component<Signature> {
       return [];
     }
 
-    const allRepositories = this.args.repositories.toArray();
+    const allRepositories = [...this.args.repositories];
 
     if (this.args.activeRepository) {
       allRepositories.push(this.args.activeRepository);
     }
 
-    return allRepositories.uniq().map((repository) => {
+    return [...new Set(allRepositories)].map((repository) => {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,
@@ -134,11 +135,23 @@ export default class CourseLeaderboard extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithMostStageCompletions = [...entriesForUser]
+        .sort((a, b) => {
+          for (const key of ['completedStagesCount', 'lastSubmissionAt']) {
+            const compareValue = compare(get(a, key), get(b, key));
+
+            if (compareValue) {
+              return compareValue;
+            }
+          }
+
+          return 0;
+        })
+        .at(-1);
 
       result.push(
         new CourseLeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
+          status: entriesForUser.some((item) => item.status === 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
           completedStageSlugs: entryWithMostStageCompletions!.completedStageSlugs,
           currentCourseStage: entryWithMostStageCompletions!.currentCourseStage,
           language: entryWithMostStageCompletions!.language,
@@ -148,7 +161,19 @@ export default class CourseLeaderboard extends Component<Signature> {
       );
     }
 
-    return result.sortBy('completedStagesCount', 'lastAttemptAt').reverse();
+    return [...result]
+      .sort((a, b) => {
+        for (const key of ['completedStagesCount', 'lastAttemptAt']) {
+          const compareValue = compare(get(a, key), get(b, key));
+
+          if (compareValue) {
+            return compareValue;
+          }
+        }
+
+        return 0;
+      })
+      .reverse();
   }
 
   @action
