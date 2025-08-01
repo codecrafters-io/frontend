@@ -12,9 +12,9 @@ export default function createInstitution(server, slug) {
   };
 
   if (knownSlugsToParams[slug]) {
-    server.create('institution', knownSlugsToParams[slug]);
+    return server.create('institution', knownSlugsToParams[slug]);
   } else {
-    server.create('institution', {
+    return server.create('institution', {
       slug,
       shortName: capitalize(slug),
       logoUrl: `https://codecrafters.io/images/app_institution_logos/nus.svg`, // Use a dummy logo since we don't have one
