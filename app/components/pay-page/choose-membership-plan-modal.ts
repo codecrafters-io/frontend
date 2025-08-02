@@ -18,16 +18,16 @@ export interface PricingPlan {
 }
 
 export const PRICING_PLANS: PricingPlan[] = [
-  { id: 'quarterly', title: '3 month pass', priceInDollars: 120, validityInMonths: 3 },
-  { id: 'yearly', title: '1 year pass', priceInDollars: 360, validityInMonths: 12 },
-  { id: 'lifetime', title: 'Lifetime pass', priceInDollars: 1490 },
+  { id: 'quarterly', title: '3 months', priceInDollars: 120, validityInMonths: 3 },
+  { id: 'yearly', title: '1 year', priceInDollars: 360, validityInMonths: 12 },
+  { id: 'lifetime', title: 'Lifetime', priceInDollars: 1490 },
 ];
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
+    activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
     onClose: () => void;
     regionalDiscount?: RegionalDiscountModel | null;
   };
@@ -40,9 +40,9 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   transition = fade;
   pricingPlans = PRICING_PLANS;
 
+  @tracked currentStep: 'plan-selection' | 'invoice-details' = 'plan-selection';
   @tracked extraInvoiceDetailsRequested = false;
   @tracked isCreatingCheckoutSession = false;
-  @tracked currentStep: 'plan-selection' | 'invoice-details' = 'plan-selection';
   @tracked selectedPlanId: PricingPlan['id'] = 'quarterly';
 
   get selectedPlan(): PricingPlan {
@@ -75,23 +75,21 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @action
   handlePlanSelect(plan: PricingPlan) {
     this.selectedPlanId = plan.id;
+
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
+    }
   }
 
   @action
   async handleProceedToCheckoutClick() {
-    if (!this.authenticator.isAuthenticated) {
-      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
-
-      return;
-    }
-
     this.isCreatingCheckoutSession = true;
 
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
       cancelUrl: `${window.location.origin}/pay`,
       extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
       pricingFrequency: this.selectedPlanId,
-      promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan || null : null,
+      promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
       successUrl: `${window.location.origin}/settings/billing`,
     });

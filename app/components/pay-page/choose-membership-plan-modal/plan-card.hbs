@@ -5,7 +5,7 @@
     {{if @isSelected 'bg-teal-50' 'bg-white hover:bg-gray-50'}}"
   role="button"
   {{on "click" this.handleClick}}
-  data-test-modal-plan-card
+  data-test-plan-card
   ...attributes
 >
   <div class="flex items-start gap-2">
@@ -21,6 +21,7 @@
       <div class="flex items-center gap-x-1.5">
         <span class="text-gray-600 font-bold text-sm">
           {{@plan.title}}
+          pass
         </span>
         {{#if (eq @plan.id "yearly")}}
           <span class="inline-block bg-teal-500 text-white font-bold rounded px-1.5 py-1 text-xxs uppercase">best value</span>
@@ -31,8 +32,7 @@
         {{#if @plan.validityInMonths}}
           <p>
             Access to all membership benefits for
-            {{@plan.validityInMonths}}
-            {{if (eq @plan.validityInMonths 1) "month" "months"}}
+            {{@plan.title}}
           </p>
         {{else}}
           <p>
@@ -45,39 +45,29 @@
         <div class="prose prose-xs prose-compact text-gray-500">
           <ul class="mt-0">
             {{#if @regionalDiscount}}
-              <li data-test-modal-regional-discount-notice>
+              <li data-test-regional-discount-notice>
                 <b class="text-teal-500">{{@regionalDiscount.percentOff}}% off</b>
                 —
                 {{@regionalDiscount.countryName}}
                 discount
               </li>
             {{/if}}
-            {{#if (eq @plan.id "yearly")}}
-              {{#if
-                (and
-                  @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromAffiliateReferral (not @activeDiscountForYearlyPlan.isFromSignup)
-                )
-              }}
-                <li data-test-discount-notice>
-                  <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
-                  —
-                  <span class="text-nowrap">{{@activeDiscountForYearlyPlan.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
+            {{#if @promotionalDiscount}}
+              <li data-test-discount-notice>
+                <b class="text-teal-500">{{@promotionalDiscount.percentageOff}}% off</b>
+                —
+                {{#if @promotionalDiscount.isFromAffiliateReferral}}
+                  <span class="text-nowrap">{{@promotionalDiscount.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
                   referral offer, expires in
                   <span class="font-mono">{{this.timeLeftText}}</span>
-                </li>
-              {{else if (and @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromStage2Completion)}}
-                <li data-test-discount-notice>
-                  <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
-                  — Stage 2 completion discount, expires in
+                {{else if @promotionalDiscount.isFromStage2Completion}}
+                  Stage 2 completion discount, expires in
                   <span class="font-mono">{{this.timeLeftText}}</span>
-                </li>
-              {{else if (and @activeDiscountForYearlyPlan @activeDiscountForYearlyPlan.isFromSignup)}}
-                <li data-test-discount-notice>
-                  <b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
-                  — Signup discount, expires in
+                {{else if @promotionalDiscount.isFromSignup}}
+                  Signup discount, expires in
                   <span class="font-mono">{{this.timeLeftText}}</span>
-                </li>
-              {{/if}}
+                {{/if}}
+              </li>
             {{/if}}
           </ul>
         </div>

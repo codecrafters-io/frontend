@@ -11,11 +11,11 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeDiscountForYearlyPlan?: PromotionalDiscountModel | null;
     isSelected: boolean;
-    onPlanSelect: (plan: PricingPlan) => void;
+    onClick: () => void;
     plan: PricingPlan;
-    regionalDiscount?: RegionalDiscountModel | null;
+    promotionalDiscount: PromotionalDiscountModel | null;
+    regionalDiscount: RegionalDiscountModel | null;
   };
 }
 
@@ -34,15 +34,12 @@ export default class PlanCard extends Component<Signature> {
     const basePrice = this.args.plan.priceInDollars;
     let discountedPrice = basePrice;
 
-    // Apply promotional discount first (yearly plans only)
-    if (this.args.activeDiscountForYearlyPlan && this.args.plan.id === 'yearly') {
-      discountedPrice = this.args.activeDiscountForYearlyPlan.computeDiscountedPrice(basePrice);
+    if (this.args.promotionalDiscount) {
+      discountedPrice = this.args.promotionalDiscount.computeDiscountedPrice(discountedPrice);
     }
 
-    // Apply regional discount
     if (this.args.regionalDiscount) {
-      const regionalDiscountAmount = (discountedPrice * this.args.regionalDiscount.percentOff) / 100;
-      discountedPrice = discountedPrice - regionalDiscountAmount;
+      discountedPrice = this.args.regionalDiscount.computeDiscountedPrice(discountedPrice);
     }
 
     return discountedPrice === basePrice ? null : Math.round(discountedPrice);
@@ -53,16 +50,16 @@ export default class PlanCard extends Component<Signature> {
   }
 
   get timeLeftText(): string {
-    if (!this.args.activeDiscountForYearlyPlan) {
+    if (!this.args.promotionalDiscount) {
       return '';
     }
 
-    return formatTimeDurationForCountdown(this.args.activeDiscountForYearlyPlan.expiresAt, this.time.currentTime);
+    return formatTimeDurationForCountdown(this.args.promotionalDiscount.expiresAt, this.time.currentTime);
   }
 
   @action
   handleClick() {
-    this.args.onPlanSelect(this.args.plan);
+    this.args.onClick();
   }
 }
 

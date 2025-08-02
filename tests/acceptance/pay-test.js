@@ -39,9 +39,9 @@ module('Acceptance | pay-test', function (hooks) {
     await percySnapshot('Pay page');
 
     await payPage.pricingPlanCards[1].ctaButton.click();
-    await payPage.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
     await percySnapshot('Pay page - configure checkout session modal');
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
 
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
   });
@@ -69,8 +69,8 @@ module('Acceptance | pay-test', function (hooks) {
     );
     await percySnapshot('Pay page - with early bird discount');
 
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
 
@@ -92,8 +92,8 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show stage 2 completion discount notice');
     await percySnapshot('Pay page - with stage 2 completion discount');
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, stage2CompletionDiscount.id);
   });
 
@@ -140,8 +140,8 @@ module('Acceptance | pay-test', function (hooks) {
     );
     await percySnapshot('Pay page - with referral discount');
 
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, referralDiscount.id);
     assert.notStrictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
@@ -163,8 +163,8 @@ module('Acceptance | pay-test', function (hooks) {
     assert.ok(payPage.chooseMembershipPlanModal.planCards[1].regionalDiscountNotice.text.match(/^50% off — India discount$/));
     await percySnapshot('Pay page - with regional discount');
 
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().regionalDiscount.id, regionalDiscount.id);
   });
@@ -177,8 +177,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
 
     assert.false(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
   });
@@ -191,12 +191,12 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
-    await payPage.clickOnChoosePlanButton();
-    await payPage.clickOnExtraInvoiceDetailsToggle();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnExtraInvoiceDetailsToggle();
 
     await percySnapshot('Pay page - configure checkout session modal (toggled)');
 
-    await payPage.clickOnProceedToCheckoutButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
 
     assert.true(this.server.schema.individualCheckoutSessions.first().extraInvoiceDetailsRequested);
   });
