@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -5,6 +6,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
+import TrackLeaderboardEntry from 'codecrafters-frontend/utils/track-leaderboard-entry';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -24,18 +26,22 @@ export default class TrackPageHeaderComponent extends Component<Signature> {
   @service declare store: Store;
 
   get currentUserHasStartedTrack() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('language', this.args.language)[0];
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.language === this.args.language)[0];
   }
 
   get topParticipants(): UserModel[] {
-    return this.store
-      .peekAll('track-leaderboard-entry')
-      .filterBy('language', this.args.language)
-      .sortBy('completedStagesCount')
+    return [...this.store.peekAll('track-leaderboard-entry').filter((item) => item.language === this.args.language)]
+      .sort((a, b) => compare(a.completedStagesCount, b.completedStagesCount))
       .reverse()
-      .uniqBy('user')
+      .reduce<TrackLeaderboardEntry[]>((unique, item) => {
+        if (!unique.find((i) => item.user === i.user)) {
+          unique.push(item);
+        }
+
+        return unique;
+      }, [])
       .slice(0, 3)
-      .mapBy('user');
+      .map((item) => item.user);
   }
 }
 

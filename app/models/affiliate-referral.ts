@@ -14,6 +14,10 @@ export default class AffiliateReferralModel extends Model {
   @attr('number') declare withdrawableEarningsAmountInCents: number;
   @attr('number') declare withheldEarningsAmountInCents: number;
 
+  get createdAt() {
+    return this.activatedAt;
+  }
+
   get hasStartedTrial() {
     return this.statusIsTrialing || this.statusIsFirstChargeSuccessful || this.statusIsTrialCancelled;
   }

@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -12,11 +13,14 @@ export default class JoinTrackController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get courses(): CourseModel[] {
-    return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').rejectBy('visibilityIsPrivate');
+    return this.model.courses
+      .filter((item) => !item.releaseStatusIsAlpha)
+      .filter((item) => !item.releaseStatusIsDeprecated)
+      .filter((item) => !item.visibilityIsPrivate);
   }
 
   get sortedCourses(): CourseModel[] {
-    return this.courses.sortBy('sortPositionForTrack');
+    return [...this.courses].sort((a, b) => compare(a.sortPositionForTrack, b.sortPositionForTrack));
   }
 
   get testimonials(): CourseModel['testimonials'] {

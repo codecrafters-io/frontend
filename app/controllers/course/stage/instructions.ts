@@ -26,9 +26,11 @@ export default class CourseStageInstructionsController extends Controller {
   };
 
   get badgeAwards() {
-    return this.model.activeRepository.courseStageCompletions.filterBy('courseStage', this.model.courseStage).flatMap((courseStageCompletion) => {
-      return courseStageCompletion.badgeAwards;
-    });
+    return this.model.activeRepository.courseStageCompletions
+      .filter((item) => item.courseStage === this.model.courseStage)
+      .flatMap((courseStageCompletion) => {
+        return courseStageCompletion.badgeAwards;
+      });
   }
 
   get currentCourse() {
@@ -44,7 +46,7 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   get languageGuide() {
-    return this.model.courseStage.languageGuides.findBy('language', this.model.activeRepository.language);
+    return this.model.courseStage.languageGuides.find((item) => item.language === this.model.activeRepository.language);
   }
 
   get prerequisiteInstructionsMarkdown() {
