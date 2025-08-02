@@ -4,8 +4,7 @@ import Mixin from '@ember/object/mixin';
 export default Mixin.create({
   async createView(metadata = {}) {
     const view = this.store.createRecord('view', {
-      resourceId: this.id,
-      resourceType: this.constructor.modelName,
+      resource: this,
       user: this.authenticator.currentUser,
       metadata: metadata,
     });
