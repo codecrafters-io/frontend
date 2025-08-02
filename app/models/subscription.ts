@@ -5,7 +5,6 @@ export default class SubscriptionModel extends Model {
   @attr('date') declare cancelAt: Date;
   @attr('date') declare currentPeriodEnd: Date;
   @attr('date') declare endedAt: Date | null;
-  @attr('string') declare pricingPlanName: string;
   @attr('date') declare startDate: Date;
 
   @belongsTo('user', { async: false, inverse: 'subscriptions' }) declare user: UserModel;

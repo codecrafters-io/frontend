@@ -16,7 +16,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
     const subscription = this.server.schema.subscriptions.first();
-    subscription.update('pricingPlanName', 'Yearly Plan');
     subscription.update('currentPeriodEnd', new Date('2035-07-31T01:00:00Z'));
 
     await billingPage.visit();
