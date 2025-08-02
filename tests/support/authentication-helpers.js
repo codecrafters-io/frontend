@@ -53,7 +53,6 @@ export function signInAsSubscriber(owner, server, user) {
 
   server.create('subscription', {
     user: user,
-    pricingPlanName: 'Monthly',
     currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
