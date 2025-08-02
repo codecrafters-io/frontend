@@ -8,18 +8,18 @@ export default class AffiliateReferralModel extends Model {
   @belongsTo('affiliate-link', { async: false, inverse: 'referrals' }) declare affiliateLink: AffiliateLinkModel;
 
   @attr('date') declare activatedAt: Date;
-  @attr('string') declare status: 'pending_trial' | 'trialing' | 'first_charge_successful' | 'trial_cancelled' | 'inactive';
+  @attr('string') declare status: 'awaiting_first_charge' | 'first_charge_successful' | 'inactive';
   @attr('number') declare spentAmountInCents: number;
   @attr('number') declare upcomingPaymentAmountInCents: number;
   @attr('number') declare withdrawableEarningsAmountInCents: number;
   @attr('number') declare withheldEarningsAmountInCents: number;
 
-  get hasStartedTrial() {
-    return this.statusIsTrialing || this.statusIsFirstChargeSuccessful || this.statusIsTrialCancelled;
-  }
-
   get spentAmountInDollars() {
     return this.spentAmountInCents / 100;
+  }
+
+  get statusIsAwaitingFirstCharge() {
+    return this.status === 'awaiting_first_charge';
   }
 
   get statusIsFirstChargeSuccessful() {
@@ -28,18 +28,6 @@ export default class AffiliateReferralModel extends Model {
 
   get statusIsInactive() {
     return this.status === 'inactive';
-  }
-
-  get statusIsPendingTrial() {
-    return this.status === 'pending_trial';
-  }
-
-  get statusIsTrialCancelled() {
-    return this.status === 'trial_cancelled';
-  }
-
-  get statusIsTrialing() {
-    return this.status === 'trialing';
   }
 
   get totalEarningsAmountInCents() {
