@@ -64,6 +64,12 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
 
   @action
   handleContinueButtonClick() {
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
+
+      return;
+    }
+
     this.currentStep = 'invoice-details';
   }
 
@@ -75,10 +81,6 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @action
   handlePlanSelect(plan: PricingPlan) {
     this.selectedPlanId = plan.id;
-
-    if (!this.authenticator.isAuthenticated) {
-      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
-    }
   }
 
   @action
