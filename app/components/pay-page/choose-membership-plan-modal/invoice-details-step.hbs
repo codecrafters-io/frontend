@@ -2,26 +2,26 @@
   <div class="relative">
     <PayPage::ChooseMembershipPlanModal::PlanCard
       @isSelected={{true}}
-      @onClick={{fn @onPlanSelect @selectedPlan}}
+      @onClick={{(noop)}}
       @plan={{@selectedPlan}}
       @promotionalDiscount={{if (eq @selectedPlan.id "yearly") @activeDiscountForYearlyPlan null}}
-      @regionalDiscount={{or @regionalDiscount null}}
+      @regionalDiscount={{@regionalDiscount}}
     />
 
     <div class="absolute inset-0 bg-white/60 flex items-center justify-center opacity-100 transition-opacity duration-200">
-      <TertiaryButton @size="small" {{on "click" @onBack}}>
+      <TertiaryButton @size="small" {{on "click" @onBackButtonClick}}>
         Change plan
       </TertiaryButton>
     </div>
   </div>
 
-  <PayPage::ChooseMembershipPlanModal::InvoiceDetailsSection
+  <PayPage::ChooseMembershipPlanModal::ExtraInvoiceDetailsToggle
     @extraInvoiceDetailsRequested={{@extraInvoiceDetailsRequested}}
     @onToggle={{@onExtraInvoiceDetailsToggle}}
   />
 
   <div class="flex justify-between items-center">
-    <span class="text-gray-400 text-sm" role="button" {{on "click" @onBack}}>
+    <span class="text-gray-400 text-sm" role="button" {{on "click" @onBackButtonClick}}>
       ← Back
     </span>
 

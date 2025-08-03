@@ -19,10 +19,6 @@ interface Signature {
     subtitle: string;
     title: string;
   };
-
-  Blocks: {
-    cta: [];
-  };
 }
 
 export default class PricingPlanCardComponent extends Component<Signature> {

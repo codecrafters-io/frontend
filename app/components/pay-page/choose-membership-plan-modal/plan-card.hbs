@@ -53,19 +53,19 @@
               </li>
             {{/if}}
             {{#if @promotionalDiscount}}
-              <li data-test-discount-notice>
+              <li data-test-promotional-discount-notice>
                 <b class="text-teal-500">{{@promotionalDiscount.percentageOff}}% off</b>
                 —
                 {{#if @promotionalDiscount.isFromAffiliateReferral}}
                   <span class="text-nowrap">{{@promotionalDiscount.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
                   referral offer, expires in
-                  <span class="font-mono">{{this.timeLeftText}}</span>
+                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
                 {{else if @promotionalDiscount.isFromStage2Completion}}
                   Stage 2 completion discount, expires in
-                  <span class="font-mono">{{this.timeLeftText}}</span>
+                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
                 {{else if @promotionalDiscount.isFromSignup}}
                   Signup discount, expires in
-                  <span class="font-mono">{{this.timeLeftText}}</span>
+                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
                 {{/if}}
               </li>
             {{/if}}

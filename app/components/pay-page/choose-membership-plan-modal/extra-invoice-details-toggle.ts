@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class InvoiceDetailsSection extends Component<Signature> {}
+export default class ExtraInvoiceDetailsToggle extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::ChooseMembershipPlanModal::InvoiceDetailsSection': typeof InvoiceDetailsSection;
+    'PayPage::ChooseMembershipPlanModal::ExtraInvoiceDetailsToggle': typeof ExtraInvoiceDetailsToggle;
   }
 }

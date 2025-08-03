@@ -29,7 +29,7 @@ interface Signature {
   Args: {
     activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
     onClose: () => void;
-    regionalDiscount?: RegionalDiscountModel | null;
+    regionalDiscount: RegionalDiscountModel | null;
   };
 }
 
@@ -93,7 +93,7 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
       pricingFrequency: this.selectedPlanId,
       promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
-      successUrl: `${window.location.origin}/settings/billing`,
+      successUrl: `${window.location.origin}/tracks`,
     });
 
     await checkoutSession.save();

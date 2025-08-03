@@ -4,13 +4,6 @@ import Header from 'codecrafters-frontend/tests/pages/components/header';
 
 export default create({
   accountDropdown: AccountDropdown,
-  header: Header,
-
-  pricingPlanCards: collection('[data-test-pricing-plan-card]', {
-    ctaButton: {
-      scope: '[data-test-pricing-plan-card-cta]',
-    },
-  }),
 
   chooseMembershipPlanModal: {
     scope: '[data-test-choose-membership-plan-modal]',
@@ -19,8 +12,8 @@ export default create({
     clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
     planCards: collection('[data-test-plan-card]', {
       discountedPriceText: text('[data-test-discounted-price]'),
-      discountNotice: {
-        scope: '[data-test-discount-notice]',
+      promotionalDiscountNotice: {
+        scope: '[data-test-promotional-discount-notice]',
       },
       regionalDiscountNotice: {
         scope: '[data-test-regional-discount-notice]',
@@ -28,12 +21,28 @@ export default create({
     }),
   },
 
+  header: Header,
+
+  pageRegionalDiscountNotice: {
+    scope: '[data-test-regional-discount-notice]',
+  },
+
+  pricingPlanCards: collection('[data-test-pricing-plan-card]', {
+    ctaButton: {
+      scope: '[data-test-pricing-plan-card-cta]',
+    },
+  }),
+
   referralDiscountNotice: {
     scope: '[data-test-referral-discount-notice]',
   },
 
   signupDiscountNotice: {
     scope: '[data-test-signup-discount-notice]',
+  },
+
+  stage2CompletionDiscountNotice: {
+    scope: '[data-test-stage-2-completion-discount-notice]',
   },
 
   visit: visitable('/pay'),

@@ -8,13 +8,12 @@ interface Signature {
 
   Args: {
     activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
-    onClose: () => void;
-    onContinue: () => void;
+    onBackToPricingPageLinkClick: () => void;
+    onChoosePlanButtonClick: () => void;
     onPlanSelect: (plan: PricingPlan) => void;
     pricingPlans: PricingPlan[];
-    regionalDiscount?: RegionalDiscountModel | null;
+    regionalDiscount: RegionalDiscountModel | null;
     selectedPlan: PricingPlan;
-    selectedPlanId: PricingPlan['id'];
   };
 }
 

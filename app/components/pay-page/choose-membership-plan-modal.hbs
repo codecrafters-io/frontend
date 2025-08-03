@@ -13,22 +13,20 @@
     {{#animated-if (eq this.currentStep "plan-selection") use=this.transition duration=200}}
       <PayPage::ChooseMembershipPlanModal::PlanSelectionStep
         @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-        @onClose={{@onClose}}
-        @onContinue={{this.handleContinueButtonClick}}
+        @onBackToPricingPageLinkClick={{@onClose}}
+        @onChoosePlanButtonClick={{this.handleContinueButtonClick}}
         @onPlanSelect={{this.handlePlanSelect}}
         @pricingPlans={{this.pricingPlans}}
         @regionalDiscount={{@regionalDiscount}}
         @selectedPlan={{this.selectedPlan}}
-        @selectedPlanId={{this.selectedPlanId}}
       />
     {{else}}
       <PayPage::ChooseMembershipPlanModal::InvoiceDetailsStep
         @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
         @extraInvoiceDetailsRequested={{this.extraInvoiceDetailsRequested}}
         @isCreatingCheckoutSession={{this.isCreatingCheckoutSession}}
-        @onBack={{this.handleBackButtonClick}}
+        @onBackButtonClick={{this.handleBackButtonClick}}
         @onExtraInvoiceDetailsToggle={{this.handleExtraInvoiceDetailsToggle}}
-        @onPlanSelect={{this.handlePlanSelect}}
         @onProceedToCheckout={{this.handleProceedToCheckoutClick}}
         @regionalDiscount={{@regionalDiscount}}
         @selectedPlan={{this.selectedPlan}}

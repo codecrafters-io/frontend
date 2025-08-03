@@ -10,11 +10,10 @@ interface Signature {
     activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
     extraInvoiceDetailsRequested: boolean;
     isCreatingCheckoutSession: boolean;
-    onBack: () => void;
+    onBackButtonClick: () => void;
     onExtraInvoiceDetailsToggle: (value: boolean) => void;
-    onPlanSelect: (plan: PricingPlan) => void;
     onProceedToCheckout: () => void;
-    regionalDiscount?: RegionalDiscountModel | null;
+    regionalDiscount: RegionalDiscountModel | null;
     selectedPlan: PricingPlan;
   };
 }

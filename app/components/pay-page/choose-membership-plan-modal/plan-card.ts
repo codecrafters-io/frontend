@@ -49,7 +49,7 @@ export default class PlanCard extends Component<Signature> {
     return this.discountedPriceInDollars || this.args.plan.priceInDollars;
   }
 
-  get timeLeftText(): string {
+  get promotionalDiscountCountdownTimerText(): string {
     if (!this.args.promotionalDiscount) {
       return '';
     }

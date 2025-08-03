@@ -40,7 +40,7 @@ module('Acceptance | pay-test', function (hooks) {
 
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
-    await percySnapshot('Pay page - configure checkout session modal');
+    await percySnapshot('Pay page - Choose membership plan modal - Invoice details step');
     await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
 
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
@@ -51,23 +51,27 @@ module('Acceptance | pay-test', function (hooks) {
 
     const user = signIn(this.owner, this.server);
 
-    const signupDiscount = this.server.schema.promotionalDiscounts.create({
-      user: user,
+    const signupDiscount = this.server.create('promotional-discount', {
+      userId: user.id,
       type: 'signup',
       percentageOff: 40,
       expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     });
 
     await payPage.visit();
+    assert.true(payPage.signupDiscountNotice.isVisible, 'should show page-level signup discount notice');
+    assert.ok(payPage.signupDiscountNotice.text.match(/^New user offer: Subscribe in \d{2}h:\d{2}m:\d{2}s to get 40% off the annual plan\.$/));
+
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show signup discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.isVisible, 'should show signup discount notice');
     assert.ok(
-      payPage.chooseMembershipPlanModal.planCards[1].discountNotice.text.match(/^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/),
-      'should show signup discount notice text',
+      payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.text.match(
+        /^40% off — Signup discount, expires in \d{2}h:\d{2}m:\d{2}s$/,
+      ),
     );
-    await percySnapshot('Pay page - with early bird discount');
+    await percySnapshot('Pay page - with signup discount');
 
     await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
     await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
@@ -79,18 +83,21 @@ module('Acceptance | pay-test', function (hooks) {
 
     const user = signIn(this.owner, this.server);
 
-    const stage2CompletionDiscount = this.server.schema.promotionalDiscounts.create({
-      user: user,
+    const stage2CompletionDiscount = this.server.create('promotional-discount', {
+      userId: user.id,
       type: 'stage_2_completion',
       percentageOff: 40,
       expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     });
 
     await payPage.visit();
+    assert.true(payPage.stage2CompletionDiscountNotice.isVisible, 'should show page-level stage 2 completion discount notice');
+    assert.ok(payPage.stage2CompletionDiscountNotice.text.match(/stage 2.*40%/i), 'should show stage 2 completion discount details on page');
+
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
-    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show stage 2 completion discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.isVisible, 'should show stage 2 completion discount notice');
     await percySnapshot('Pay page - with stage 2 completion discount');
     await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
     await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
@@ -129,12 +136,15 @@ module('Acceptance | pay-test', function (hooks) {
     });
 
     await payPage.visit();
+    assert.true(payPage.referralDiscountNotice.isVisible, 'should show page-level referral discount notice');
+    assert.ok(payPage.referralDiscountNotice.text.match(/referral.*40%/i), 'should show referral discount details on page');
+
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
-    assert.true(payPage.chooseMembershipPlanModal.planCards[1].discountNotice.isVisible, 'should show referral discount notice');
+    assert.true(payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.isVisible, 'should show referral discount notice');
     assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$216', 'should show discounted price');
     assert.ok(
-      payPage.chooseMembershipPlanModal.planCards[1].discountNotice.text.match(
+      payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.text.match(
         /^40% off — rohitpaulk's referral offer, expires in \d{2}h:\d{2}m:\d{2}s$/,
       ),
     );
@@ -155,6 +165,8 @@ module('Acceptance | pay-test', function (hooks) {
     const regionalDiscount = this.server.create('regional-discount', { percentOff: 50, countryName: 'India', id: 'current-discount-id' });
 
     await payPage.visit();
+    assert.true(payPage.pageRegionalDiscountNotice.isVisible, 'should show page-level regional discount notice');
+    assert.ok(payPage.pageRegionalDiscountNotice.text.match(/India.*50%/), 'should show regional discount details on page');
 
     await payPage.pricingPlanCards[1].ctaButton.click();
     await payPage.chooseMembershipPlanModal.planCards[1].click();
@@ -194,7 +206,7 @@ module('Acceptance | pay-test', function (hooks) {
     await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
     await payPage.chooseMembershipPlanModal.clickOnExtraInvoiceDetailsToggle();
 
-    await percySnapshot('Pay page - configure checkout session modal (toggled)');
+    await percySnapshot('Pay page - Choose membership plan modal - Invoice details step (extra details toggled)');
 
     await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
 
