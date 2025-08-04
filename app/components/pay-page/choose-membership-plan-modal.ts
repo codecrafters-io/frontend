@@ -84,7 +84,7 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   }
 
   @action
-  async handleProceedToCheckoutClick() {
+  async handleProceedToCheckoutButtonClick() {
     this.isCreatingCheckoutSession = true;
 
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
@@ -93,7 +93,7 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
       pricingFrequency: this.selectedPlanId,
       promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
-      successUrl: `${window.location.origin}/tracks`,
+      successUrl: `${window.location.origin}/catalog`,
     });
 
     await checkoutSession.save();

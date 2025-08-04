@@ -4,7 +4,7 @@
     rounded p-3
     {{if @isSelected 'bg-teal-50' 'bg-white hover:bg-gray-50'}}"
   role="button"
-  {{on "click" this.handleClick}}
+  {{on "click" @onClick}}
   data-test-plan-card
   ...attributes
 >
@@ -56,17 +56,13 @@
               <li data-test-promotional-discount-notice>
                 <b class="text-teal-500">{{@promotionalDiscount.percentageOff}}% off</b>
                 —
-                {{#if @promotionalDiscount.isFromAffiliateReferral}}
-                  <span class="text-nowrap">{{@promotionalDiscount.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
-                  referral offer, expires in
-                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
-                {{else if @promotionalDiscount.isFromStage2Completion}}
-                  Stage 2 completion discount, expires in
-                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
-                {{else if @promotionalDiscount.isFromSignup}}
-                  Signup discount, expires in
-                  <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
-                {{/if}}
+                {{#if @promotionalDiscount.isFromAffiliateReferral}}<span
+                    class="text-nowrap"
+                  >{{@promotionalDiscount.affiliateReferral.affiliateLink.usernameForDisplay}}'s</span>
+                  referral offer{{else if @promotionalDiscount.isFromStage2Completion}}Stage 2 completion discount{{else if
+                  @promotionalDiscount.isFromSignup
+                }}Signup discount{{/if}}, expires in
+                <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
               </li>
             {{/if}}
           </ul>

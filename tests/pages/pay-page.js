@@ -12,9 +12,11 @@ export default create({
     clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
     planCards: collection('[data-test-plan-card]', {
       discountedPriceText: text('[data-test-discounted-price]'),
+
       promotionalDiscountNotice: {
         scope: '[data-test-promotional-discount-notice]',
       },
+
       regionalDiscountNotice: {
         scope: '[data-test-regional-discount-notice]',
       },

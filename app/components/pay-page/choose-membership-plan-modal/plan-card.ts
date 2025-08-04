@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
-import { action } from '@ember/object';
 import type TimeService from 'codecrafters-frontend/services/time';
 import { formatTimeDurationForCountdown } from 'codecrafters-frontend/utils/time-formatting';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
@@ -55,11 +54,6 @@ export default class PlanCard extends Component<Signature> {
     }
 
     return formatTimeDurationForCountdown(this.args.promotionalDiscount.expiresAt, this.time.currentTime);
-  }
-
-  @action
-  handleClick() {
-    this.args.onClick();
   }
 }
 
