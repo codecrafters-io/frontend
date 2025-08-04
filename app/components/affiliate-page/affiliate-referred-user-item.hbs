@@ -32,15 +32,6 @@
       </Pill>
     {{/if}}
 
-    {{#if (gt @affiliateReferral.upcomingPaymentAmountInDollars 0)}}
-      <Pill @color="yellow" class="shrink-0">
-        ${{@affiliateReferral.upcomingPaymentAmountInDollars}}
-        pending
-
-        <EmberTooltip @text="This is the value of {{@affiliateReferral.customer.username}}'s upcoming payment." />
-      </Pill>
-    {{/if}}
-
     {{#if @affiliateReferral.statusIsAwaitingFirstCharge}}
       <Pill @color="gray" class="shrink-0">
         Signed up
