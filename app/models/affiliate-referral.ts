@@ -10,7 +10,6 @@ export default class AffiliateReferralModel extends Model {
   @attr('date') declare activatedAt: Date;
   @attr('string') declare status: 'awaiting_first_charge' | 'first_charge_successful' | 'inactive';
   @attr('number') declare spentAmountInCents: number;
-  @attr('number') declare upcomingPaymentAmountInCents: number;
   @attr('number') declare withdrawableEarningsAmountInCents: number;
   @attr('number') declare withheldEarningsAmountInCents: number;
 
@@ -36,9 +35,5 @@ export default class AffiliateReferralModel extends Model {
 
   get totalEarningsAmountInDollars() {
     return this.totalEarningsAmountInCents / 100;
-  }
-
-  get upcomingPaymentAmountInDollars() {
-    return this.upcomingPaymentAmountInCents / 100;
   }
 }
