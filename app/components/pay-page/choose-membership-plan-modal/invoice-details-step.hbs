@@ -1,0 +1,45 @@
+<div>
+  <div class="relative">
+    <PayPage::ChooseMembershipPlanModal::PlanCard
+      @isSelected={{true}}
+      @onClick={{(noop)}}
+      @plan={{@selectedPlan}}
+      @promotionalDiscount={{if (eq @selectedPlan.id "yearly") @activeDiscountForYearlyPlan null}}
+      @regionalDiscount={{@regionalDiscount}}
+    />
+
+    <div class="absolute inset-0 bg-white/60 flex items-center justify-center">
+      <TertiaryButton @size="small" {{on "click" @onBackButtonClick}}>
+        Change plan
+      </TertiaryButton>
+    </div>
+  </div>
+
+  <PayPage::ChooseMembershipPlanModal::ExtraInvoiceDetailsToggle
+    @extraInvoiceDetailsRequested={{@extraInvoiceDetailsRequested}}
+    @onToggle={{@onExtraInvoiceDetailsToggle}}
+  />
+
+  <div class="flex justify-between items-center">
+    <span class="text-gray-400 text-sm" role="button" {{on "click" @onBackButtonClick}}>
+      ← Back
+    </span>
+
+    <PrimaryButton class="flex! items-center justify-center" @size="large" {{on "click" @onProceedToCheckout}} data-test-proceed-to-checkout-button>
+      Proceed to Checkout
+
+      {{#if @isCreatingCheckoutSession}}
+        <svg class="animate-spin ml-2 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        →
+      {{/if}}
+    </PrimaryButton>
+  </div>
+</div>

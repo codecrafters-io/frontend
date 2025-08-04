@@ -6,7 +6,6 @@ interface Signature {
 
   Args: {
     regionalDiscount: RegionalDiscountModel;
-    shouldApplyRegionalDiscount: boolean;
   };
 }
 

@@ -18,51 +18,44 @@
     {{/if}}
 
     {{#if @model.regionalDiscount}}
-      <PayPage::RegionalDiscountNotice
-        @regionalDiscount={{@model.regionalDiscount}}
-        @shouldApplyRegionalDiscount={{this.shouldApplyRegionalDiscount}}
-        class="mt-8"
-      />
+      <PayPage::RegionalDiscountNotice @regionalDiscount={{@model.regionalDiscount}} class="mt-8" />
     {{/if}}
 
-    <div class="flex flex-col lg:flex-row gap-x-8 gap-y-8 items-start mt-12">
-      <PayPage::PricingCard
-        @actualPrice={{120}}
-        @discountedPrice={{null}}
-        @footerText="Single payment of $120."
-        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)">
+      <PayPage::PricingPlanCard
+        @title={{"Free"}}
         @isRecommended={{false}}
-        @pricingFrequency="quarterly"
-        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
-        @shouldShowAmortizedMonthlyPrice={{false}}
-        @title="3 months access"
-        data-test-quarterly-pricing-card
+        @subtitle={{"For trialing"}}
+        @description="No credit card required"
+        @featureDescriptions={{this.featureDescriptionsForFreePlan}}
+        @ctaText="Continue with free"
+        @onCtaClick={{this.handleFreePlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
       />
 
-      <PayPage::PricingCard
-        @actualPrice={{360}}
-        @discountedPrice={{this.discountedYearlyPrice}}
-        @footerText="Single payment of ${{or this.discountedYearlyPrice 360}}."
-        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+      <PayPage::PricingPlanCard
+        @title={{"Membership"}}
         @isRecommended={{true}}
-        @pricingFrequency="yearly"
-        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
-        @shouldShowAmortizedMonthlyPrice={{false}}
-        @title="1 year access"
-        data-test-yearly-pricing-card
+        @subtitle={{"For professionals"}}
+        @description="3mo, 1yr and lifetime plans available"
+        @featureDescriptions={{this.featureDescriptionsForMembershipPlan}}
+        @ctaText="View plans"
+        @onCtaClick={{this.handleMembershipPlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
       />
 
-      <PayPage::PricingCard
-        @actualPrice={{1490}}
-        @discountedPrice={{null}}
-        @footerText="Pay once, access for life."
-        @onStartMembershipButtonClick={{this.handleStartMembershipButtonClick}}
+      <PayPage::PricingPlanCard
+        @title={{"Teams"}}
         @isRecommended={{false}}
-        @pricingFrequency="lifetime"
-        @regionalDiscount={{if this.shouldApplyRegionalDiscount @model.regionalDiscount}}
-        @shouldShowAmortizedMonthlyPrice={{false}}
-        @title="Lifetime access"
-        data-test-lifetime-pricing-card
+        @subtitle={{"For teams of 5+"}}
+        @description="Swappable seats, pay annually"
+        @featureDescriptions={{this.featureDescriptionsForTeamsPlan}}
+        @ctaText="Purchase team plan"
+        @onCtaClick={{this.handleTeamsPlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
       />
     </div>
 
@@ -103,12 +96,13 @@
   </div>
 </div>
 
-{{#if this.configureCheckoutSessionModalIsOpen}}
+{{#if this.chooseMembershipPlanModalIsOpen}}
   <ModalBackdrop>
-    <PayPage::ConfigureCheckoutSessionModal
-      @additionalCheckoutSessionProperties={{this.additionalCheckoutSessionProperties}}
+    <PayPage::ChooseMembershipPlanModal
       {{! @glint-expect-error mut not ts-ified yet }}
-      @onClose={{fn (mut this.configureCheckoutSessionModalIsOpen) false}}
+      @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
+      @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
+      @regionalDiscount={{@model.regionalDiscount}}
     />
   </ModalBackdrop>
 {{/if}}

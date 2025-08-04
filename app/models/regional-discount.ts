@@ -6,6 +6,10 @@ export default class RegionalDiscountModel extends Model {
   @attr('string') declare countryName: string;
 
   declare fetchCurrent: (this: Model, payload: unknown) => Promise<unknown>;
+
+  computeDiscountedPrice(price: number) {
+    return price - (price * this.percentOff) / 100;
+  }
 }
 
 RegionalDiscountModel.prototype.fetchCurrent = collectionAction({
