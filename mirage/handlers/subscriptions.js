@@ -8,18 +8,4 @@ export default function (server) {
   server.post('/sessions/logout', function () {
     return new Response(200, {}, {});
   });
-
-  server.post('/subscriptions/:id/cancel-trial', function (schema, request) {
-    const subscription = schema.subscriptions.find(request.params.id);
-    subscription.update({ endedAt: new Date() });
-
-    return subscription;
-  });
-
-  server.post('/subscriptions/:id/cancel', function (schema, request) {
-    const subscription = schema.subscriptions.find(request.params.id);
-    subscription.update({ cancelAt: subscription.currentPeriodEnd });
-
-    return subscription;
-  });
 }
