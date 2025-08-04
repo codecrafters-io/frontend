@@ -3,7 +3,6 @@ import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class SubscriptionModel extends Model {
   @attr('date') declare cancelAt: Date;
-  @attr('date') declare currentPeriodEnd: Date;
   @attr('date') declare endedAt: Date | null;
   @attr('date') declare startDate: Date;
 

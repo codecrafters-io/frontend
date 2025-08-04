@@ -52,8 +52,8 @@ export function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   server.create('subscription', {
+    cancelAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     user: user,
-    currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
   return signIn(owner, server, user);

@@ -16,7 +16,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
     const subscription = this.server.schema.subscriptions.first();
-    subscription.update('currentPeriodEnd', new Date('2035-07-31T01:00:00Z'));
+    subscription.update('cancelAt', new Date('2035-07-31T01:00:00Z'));
 
     await billingPage.visit();
 
@@ -37,7 +37,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     user.update('isVip', true);
     user.update('vipStatusExpiresAt', new Date('2035-08-31T01:00:00Z'));
     const subscription = this.server.schema.subscriptions.first();
-    subscription.update('currentPeriodEnd', new Date('2035-07-31T01:00:00Z'));
+    subscription.update('cancelAt', new Date('2035-07-31T01:00:00Z'));
 
     await billingPage.visit();
 
