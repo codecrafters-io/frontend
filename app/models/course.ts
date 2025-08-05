@@ -155,7 +155,6 @@ export default class CourseModel extends Model {
 
   get sortPositionForTrack() {
     const orderedSlugs = [
-      'http-server',
       'shell',
       'grep',
       'interpreter',
@@ -165,6 +164,7 @@ export default class CourseModel extends Model {
       'git',
       'sqlite',
       'dns-server',
+      'http-server',
       'gleam-chess-bot',
       'gleam-chess-bot-js',
     ];
