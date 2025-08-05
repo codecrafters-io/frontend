@@ -3,13 +3,11 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsVipUser } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page';
-import { setupMirage } from 'ember-cli-mirage/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
   setupApplicationTest(hooks);
-  setupMirage(hooks);
   setupWindowMock(hooks);
 
   test('membership section shows correct plan for subscriber with active subscription', async function (assert) {
