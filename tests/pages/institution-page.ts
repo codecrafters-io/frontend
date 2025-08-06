@@ -1,5 +1,5 @@
 import createPage from 'codecrafters-frontend/tests/support/create-page';
-import { clickable, collection, fillable, hasClass, property, visitable } from 'ember-cli-page-object';
+import { clickable, collection, fillable, hasClass, property, triggerable, visitable } from 'ember-cli-page-object';
 
 export default createPage({
   campusProgramApplicationModal: {
@@ -18,6 +18,8 @@ export default createPage({
     scope: '[data-test-campus-program-application-modal]',
   },
 
-  claimOfferButtons: collection('[data-test-claim-offer-button]'),
+  claimOfferButtons: collection('[data-test-claim-offer-button]', {
+    hover: triggerable('mouseenter'),
+  }),
   visit: visitable('/institutions/:institution_slug'),
 });
