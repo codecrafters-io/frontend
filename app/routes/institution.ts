@@ -33,6 +33,10 @@ export default class InstitutionRoute extends BaseRoute {
       return; // will redirect to 404 in afterModel
     }
 
+    if (this.authenticator.isAuthenticated) {
+      await this.store.findAll('institution-membership-grant-application', { include: 'institution,user' });
+    }
+
     return {
       institution,
     };

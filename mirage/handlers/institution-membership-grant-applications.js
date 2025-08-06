@@ -5,4 +5,8 @@ export default function (server) {
 
     return schema.institutionMembershipGrantApplications.create(attrs);
   });
+
+  server.get('/institution-membership-grant-applications', function (schema) {
+    return schema.institutionMembershipGrantApplications.all();
+  });
 }

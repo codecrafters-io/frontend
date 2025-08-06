@@ -13,7 +13,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
   setupApplicationTest(hooks);
   setupWindowMock(hooks);
 
-  test('can claim offer', async function (assert) {
+  test('can send verification email', async function (assert) {
     testScenario(this.server);
     createInstitution(this.server, 'nus');
 
@@ -42,8 +42,27 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
     assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
-
-    // await this.pauseTest();
-    // TODO: Test rest of claim offer flow
   });
+
+  test('can view verification step if application is awaiting verification', async function (assert) {
+    testScenario(this.server);
+    const institution = createInstitution(this.server, 'nus');
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('institution-membership-grant-application', {
+      institution: institution,
+      user: user,
+      status: 'awaiting_verification',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.ok(applicationModal.isVisible);
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
+  });
+
+  // TODO: Test rejected application flow
 });
