@@ -18,8 +18,8 @@ export default class ClaimOfferButtonComponent extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 
-  get currentUserCanAccessMembershipBenefits() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.canAccessMembershipBenefits;
+  get currentUserCanAccessMembershipBenefits(): boolean {
+    return !!(this.currentUser && this.currentUser.canAccessMembershipBenefits);
   }
 
   // TODO(CC-1888): Add other conditions, like unauthenticated user, has previous grant etc.
