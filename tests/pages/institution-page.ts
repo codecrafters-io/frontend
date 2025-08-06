@@ -21,5 +21,5 @@ export default createPage({
   claimOfferButtons: collection('[data-test-claim-offer-button]', {
     hover: triggerable('mouseenter'),
   }),
-  visit: visitable('/institutions/:institution_slug'),
+  visit: visitable('/campus/:institution_slug'),
 });
