@@ -22,6 +22,10 @@ export default class AboutSectionComponent extends Component<Signature> {
   }
 
   updateValue = task({ keepLatest: true }, async (): Promise<void> => {
+    if (!this.args.user) {
+      return;
+    }
+
     this.isUpdating = true;
     this.wasUpdatedRecently = false;
 
