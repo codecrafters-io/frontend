@@ -2,24 +2,10 @@ import ApplicationAdapter from './application';
 import type { Snapshot } from '@ember-data/store';
 
 export default class CommunitySolutionExportAdapter extends ApplicationAdapter {
-  // @ts-expect-error - Override with correct typing for nested resource
-  urlForFindRecord(id: string, modelName: string, snapshot: Snapshot) {
-    let solutionId: string | undefined;
+  // @ts-expect-error - Override with correct typing
+  urlForCreateRecord(_modelName: string, snapshot: Snapshot) {
+    const communitySolutionId = snapshot.attr('community_solution_id') || snapshot.belongsTo('communitySolution')?.id;
 
-    // First try to get from adapter options
-    if (snapshot.adapterOptions && 'solutionId' in snapshot.adapterOptions) {
-      solutionId = snapshot.adapterOptions['solutionId'] as string;
-    }
-    // Fallback to relationship if available
-    else {
-      const communitySolution = snapshot.belongsTo('communitySolution');
-      solutionId = communitySolution?.id;
-    }
-
-    if (solutionId) {
-      return `${this.buildURL()}/community-course-stage-solutions/${solutionId}/github-exports/${id}`;
-    }
-
-    return super.urlForFindRecord(id, modelName, snapshot);
+    return `${this.buildURL()}/community-solution-exports?community_solution_id=${communitySolutionId}`;
   }
 }

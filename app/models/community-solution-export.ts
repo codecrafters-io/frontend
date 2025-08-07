@@ -5,11 +5,12 @@ export default class CommunitySolutionExportModel extends Model {
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'exports' })
   declare communitySolution: CommunityCourseStageSolutionModel;
 
+  @attr('string') declare community_solution_id: string;
   @attr('string') declare status: 'provisioning' | 'provisioned';
   @attr('date') declare lastAccessedAt: Date;
   @attr('string') declare humanId: string;
   @attr('boolean') declare expired: boolean;
-  @attr('string') declare repositoryUrl: string | null;
+  @attr('string') declare githubRepositoryUrl: string | null;
 
   get isExpired(): boolean {
     return this.expired;
@@ -20,10 +21,10 @@ export default class CommunitySolutionExportModel extends Model {
   }
 
   githubUrlForFile(filename: string): string | null {
-    if (!this.repositoryUrl) {
+    if (!this.githubRepositoryUrl) {
       return null;
     }
 
-    return `${this.repositoryUrl}/blob/main/${filename}`;
+    return `${this.githubRepositoryUrl}/blob/main/${filename}`;
   }
 }

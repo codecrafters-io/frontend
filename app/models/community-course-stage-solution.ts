@@ -105,7 +105,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
   declare unvote: (this: Model, payload: unknown) => Promise<void>;
-  declare createGithubExport: (this: Model, payload: unknown) => Promise<CommunitySolutionExportModel>;
+  declare createGithubExport: (this: Model) => Promise<CommunitySolutionExportModel>;
 }
 
 CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
@@ -139,13 +139,11 @@ CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
   },
 });
 
-CommunityCourseStageSolutionModel.prototype.createGithubExport = memberAction({
-  path: 'github-exports',
-  type: 'post',
+CommunityCourseStageSolutionModel.prototype.createGithubExport = function () {
+  const record = this.store.createRecord('community-solution-export', {
+    communitySolution: this,
+    community_solution_id: this.id,
+  });
 
-  after(response) {
-    this.store.pushPayload(response);
-
-    return this.store.peekRecord('community-solution-export', response.data.id);
-  },
-});
+  return record.save();
+};

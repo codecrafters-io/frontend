@@ -35,9 +35,14 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
     this.isCreatingExport = true;
 
     this.args.solution
-      .createGithubExport({})
+      .createGithubExport()
       .then((exportRecord) => {
-        this.pollExportStatus(exportRecord.id);
+        this.isCreatingExport = false;
+        const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
+
+        if (githubUrl) {
+          window.open(githubUrl, '_blank');
+        }
       })
       .catch((error) => {
         console.error('Error creating export:', error);
@@ -46,9 +51,15 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
   }
 
   private getLatestUnexpiredExport(): CommunitySolutionExportModel | null {
-    const unexpiredExports = this.args.solution.exports.filterBy('isExpired', false);
+    const exports = this.args.solution.exports;
 
-    if (unexpiredExports.length === 0) {
+    if (!exports?.length) {
+      return null;
+    }
+
+    const unexpiredExports = exports.filterBy('isExpired', false);
+
+    if (!unexpiredExports.length) {
       return null;
     }
 
@@ -59,66 +70,15 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
   onViewOnGithubButtonClickWhenNotPublished() {
     const latestExport = this.getLatestUnexpiredExport();
 
-    if (latestExport) {
-      if (latestExport.status === 'provisioned') {
-        const githubUrl = latestExport.githubUrlForFile(this.args.filename);
+    if (latestExport?.status === 'provisioned') {
+      const githubUrl = latestExport.githubUrlForFile(this.args.filename);
 
-        if (githubUrl) {
-          window.open(githubUrl, '_blank');
-        }
-      } else if (latestExport.status === 'provisioning') {
-        this.isCreatingExport = true;
-        this.pollExportStatus(latestExport.id);
+      if (githubUrl) {
+        window.open(githubUrl, '_blank');
       }
     } else {
       this.createExport();
     }
-  }
-
-  private async pollExportStatus(exportId: string) {
-    const maxAttempts = 20;
-    const pollInterval = 10000;
-    let attempts = 0;
-
-    const poll = async (): Promise<void> => {
-      attempts++;
-
-      try {
-        const exportRecord = await this.store.findRecord('community-solution-export', exportId, {
-          adapterOptions: {
-            solutionId: this.args.solution.id,
-          },
-        });
-
-        if (exportRecord.status === 'provisioned') {
-          this.isCreatingExport = false;
-
-          const latestExport = this.getLatestUnexpiredExport();
-
-          if (latestExport) {
-            const githubUrl = latestExport.githubUrlForFile(this.args.filename);
-
-            if (githubUrl) {
-              window.open(githubUrl, '_blank');
-            }
-          }
-
-          return;
-        }
-
-        if (attempts < maxAttempts) {
-          setTimeout(poll, pollInterval);
-        } else {
-          console.error('Export polling timed out');
-          this.isCreatingExport = false;
-        }
-      } catch (error) {
-        console.error('Error polling export status:', error);
-        this.isCreatingExport = false;
-      }
-    };
-
-    await poll();
   }
 }
 
