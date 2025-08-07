@@ -13,9 +13,6 @@ export default class CommunitySolutionExportModel extends Model {
   @attr('boolean') declare expired: boolean;
   @attr('string') declare githubRepositoryUrl: string | null;
 
-  get isExpired(): boolean {
-    return this.expired;
-  }
 
   get isProvisioned(): boolean {
     return this.status === 'provisioned';

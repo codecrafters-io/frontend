@@ -142,7 +142,6 @@ CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
 CommunityCourseStageSolutionModel.prototype.createGithubExport = function () {
   const record = this.store.createRecord('community-solution-export', {
     communitySolution: this,
-    community_solution_id: this.id,
   });
 
   return record.save();

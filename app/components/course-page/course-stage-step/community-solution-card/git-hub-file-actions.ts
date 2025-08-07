@@ -57,7 +57,7 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
       return null;
     }
 
-    const unexpiredExports = exports.filterBy('isExpired', false);
+    const unexpiredExports = exports.filterBy('expired', false);
 
     if (!unexpiredExports.length) {
       return null;
@@ -67,7 +67,7 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
   }
 
   @action
-  onViewOnGithubButtonClickWhenNotPublished() {
+  handleViewOnGithub() {
     const latestExport = this.getLatestUnexpiredExport();
 
     if (latestExport?.status === 'provisioned') {
