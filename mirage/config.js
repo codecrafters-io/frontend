@@ -10,6 +10,7 @@ import badges from './handlers/badges';
 import communityCourseStageSolutionComments from './handlers/community-course-stage-solution-comments';
 import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
 import communitySolutionEvaluations from './handlers/community-solution-evaluations';
+import communitySolutionExports from './handlers/community-solution-exports';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import concepts from './handlers/concepts';
@@ -75,6 +76,7 @@ export default function (config) {
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           evaluations: hasMany('community-solution-evaluation', { inverse: 'communitySolution' }),
+          exports: hasMany('community-solution-export', { inverse: 'communitySolution' }),
           language: belongsTo('language', { inverse: null }),
           screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
           trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
@@ -87,6 +89,9 @@ export default function (config) {
           currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
+        }),
+        communitySolutionExport: Model.extend({
+          communitySolution: belongsTo('community-course-stage-solution', { inverse: 'exports' }),
         }),
         fakeLogstream: Model.extend({}),
       },
@@ -129,6 +134,7 @@ function routes() {
   communityCourseStageSolutionComments(this);
   communityCourseStageSolutions(this);
   communitySolutionEvaluations(this);
+  communitySolutionExports(this);
   conceptEngagements(this);
   conceptGroups(this);
   conceptQuestions(this);
