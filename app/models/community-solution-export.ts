@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 import type CommunityCourseStageSolutionModel from './community-course-stage-solution';
 
 export default class CommunitySolutionExportModel extends Model {
@@ -27,4 +28,11 @@ export default class CommunitySolutionExportModel extends Model {
 
     return `${this.githubRepositoryUrl}/blob/main/${filename}`;
   }
+
+  declare markAsAccessed: (this: Model, payload?: any) => Promise<void>;
 }
+
+CommunitySolutionExportModel.prototype.markAsAccessed = memberAction({
+  path: 'mark-as-accessed',
+  type: 'post',
+});
