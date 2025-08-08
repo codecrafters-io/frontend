@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -43,7 +44,7 @@ export default class CommentListComponent extends Component<Signature> {
   }
 
   get sortedComments() {
-    return this.visibleComments.sortBy('score').reverse();
+    return [...this.visibleComments].sort((a, b) => compare(a.score, b.score)).reverse();
   }
 
   get topLevelPersistedComments() {

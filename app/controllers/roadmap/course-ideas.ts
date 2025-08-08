@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
@@ -13,6 +14,8 @@ export default class CourseIdeasController extends Controller {
   };
 
   get orderedCourseIdeas() {
-    return this.model.courseIdeas.rejectBy('isArchived').sortBy('sortPositionForRoadmapPage');
+    return [...this.model.courseIdeas.filter((item) => !item.isArchived)].sort((a, b) =>
+      compare(a.sortPositionForRoadmapPage, b.sortPositionForRoadmapPage),
+    );
   }
 }
