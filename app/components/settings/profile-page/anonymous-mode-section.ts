@@ -27,6 +27,10 @@ export default class AnonymousModeSectionComponent extends Component<Signature> 
   }
 
   toggleValue = task({ keepLatest: true }, async (): Promise<void> => {
+    if (!this.args.user) {
+      return;
+    }
+
     this.isSaving = true;
 
     try {
