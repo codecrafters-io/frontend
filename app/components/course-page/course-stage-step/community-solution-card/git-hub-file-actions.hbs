@@ -22,7 +22,7 @@
   {{else}}
     <button
       type="button"
-      {{on "click" this.onViewOnGithubButtonClickWhenNotPublished}}
+      {{on "click" this.handleViewOnGithub}}
       class="flex gap-x-1 items-center group {{if this.isCreatingExport 'opacity-50 cursor-not-allowed'}}"
       data-test-view-on-github-button
     >

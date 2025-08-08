@@ -6,7 +6,6 @@ export default class CommunitySolutionExportModel extends Model {
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'exports' })
   declare communitySolution: CommunityCourseStageSolutionModel;
 
-  @attr('string') declare community_solution_id: string;
   @attr('string') declare status: 'provisioning' | 'provisioned';
   @attr('date') declare lastAccessedAt: Date;
   @attr('string') declare humanId: string;
