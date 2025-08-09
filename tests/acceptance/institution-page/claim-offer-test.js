@@ -20,7 +20,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await institutionPage.visit({ institution_slug: 'nus' });
-    assert.strictEqual(currentURL(), '/institutions/nus');
+    assert.strictEqual(currentURL(), '/campus/nus');
 
     await percySnapshot('Institution Page');
 
