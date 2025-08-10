@@ -2,8 +2,6 @@ import { Factory } from 'miragejs';
 
 export default Factory.extend({
   status: 'provisioned',
-  lastAccessedAt: () => new Date(),
-  humanId: () => `brainy-toad-${Math.floor(Math.random() * 999999)}`,
-  expired: false,
+  expiresAt: () => new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
   githubRepositoryUrl: 'https://github.com/test-user/test-repo',
 });

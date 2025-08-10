@@ -10,7 +10,6 @@ export default class CommunitySolutionExportModel extends Model {
   @attr('date') declare expiresAt: Date;
   @attr('string') declare githubRepositoryUrl: string | null;
 
-
   get isProvisioned(): boolean {
     return this.status === 'provisioned';
   }
@@ -23,7 +22,7 @@ export default class CommunitySolutionExportModel extends Model {
     return `${this.githubRepositoryUrl}/blob/main/${filename}`;
   }
 
-  declare markAsAccessed: (this: Model, payload?: any) => Promise<void>;
+  declare markAsAccessed: (this: Model, payload: unknown) => Promise<void>;
 }
 
 CommunitySolutionExportModel.prototype.markAsAccessed = memberAction({
