@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class AutofixSectionComponent extends Component<Signature> {
+export default class AutofixSection extends Component<Signature> {
   @service declare store: Store;
   @tracked autofixCreationError: string | null = null;
 
@@ -56,6 +56,6 @@ export default class AutofixSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::AutofixSection': typeof AutofixSectionComponent;
+    'CoursePage::TestResultsBar::AutofixSection': typeof AutofixSection;
   }
 }

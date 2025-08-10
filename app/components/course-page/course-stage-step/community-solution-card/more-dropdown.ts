@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class MoreDropdownComponent extends Component<Signature> {
+export default class MoreDropdown extends Component<Signature> {
   @action
   handleCollapseExampleLinkClick(dropdownActions: { close: () => void }) {
     this.args.onCollapseExampleLinkClick();
@@ -35,6 +35,6 @@ export default class MoreDropdownComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::MoreDropdown': typeof MoreDropdownComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::MoreDropdown': typeof MoreDropdown;
   }
 }

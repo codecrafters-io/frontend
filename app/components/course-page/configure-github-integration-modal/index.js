@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 
-export default class ConfigureGithubIntegrationModalComponent extends Component {
+export default class ConfigureGithubIntegrationModal extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
   @service authenticator;
   @service store;

@@ -18,7 +18,7 @@ export interface Signature {
   };
 }
 
-export default class SyntaxHighlightedCodeComponent extends Component<Signature> {
+export default class SyntaxHighlightedCode extends Component<Signature> {
   @tracked asyncHighlightedCode: string | null = null;
   @tracked asyncHighlightedHTML: string | null = null;
 
@@ -90,6 +90,6 @@ export default class SyntaxHighlightedCodeComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    SyntaxHighlightedCode: typeof SyntaxHighlightedCodeComponent;
+    SyntaxHighlightedCode: typeof SyntaxHighlightedCode;
   }
 }

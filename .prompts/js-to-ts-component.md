@@ -6,7 +6,7 @@ For example, if this file was `app/components/test.js` with these contents:
 import Component from "@glimmer/component";
 import { action } from "@ember/object";
 
-export default class TestComponent extends Component {
+export default class Test extends Component {
   @action
   async handleUserClick(user) {
     this.args.onChange(user);
@@ -29,7 +29,7 @@ interface Signature {
   };
 };
 
-export default class TestComponent extends Component<Signature> {
+export default class Test extends Component<Signature> {
   @action
   async handleUserClick(user: UserModel) {
     this.args.onChange(user);
@@ -38,7 +38,7 @@ export default class TestComponent extends Component<Signature> {
 
 declare module "@glint/environment-ember-loose/registry" {
   export default interface Registry {
-    Test: typeof TestComponent;
+    Test: typeof Test;
   }
 }
 ```

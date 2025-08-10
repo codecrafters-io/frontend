@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class ReferralDiscountNoticeComponent extends Component<Signature> {
+export default class ReferralDiscountNotice extends Component<Signature> {
   iconImage = iconImage;
 
   @service declare time: TimeService;
@@ -25,6 +25,6 @@ export default class ReferralDiscountNoticeComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::ReferralDiscountNotice': typeof ReferralDiscountNoticeComponent;
+    'PayPage::ReferralDiscountNotice': typeof ReferralDiscountNotice;
   }
 }

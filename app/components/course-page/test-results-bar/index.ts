@@ -20,7 +20,7 @@ interface Signature {
   };
 }
 
-export default class TestResultsBarComponent extends Component<Signature> {
+export default class TestResultsBar extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
@@ -106,6 +106,6 @@ export default class TestResultsBarComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar': typeof TestResultsBarComponent;
+    'CoursePage::TestResultsBar': typeof TestResultsBar;
   }
 }

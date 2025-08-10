@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class RiveAnimationComponent extends Component<Signature> {
+export default class RiveAnimation extends Component<Signature> {
   resizeObserver: ResizeObserver | null = null;
   @tracked riveInstance: Rive | null = null;
 
@@ -66,6 +66,6 @@ export default class RiveAnimationComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    RiveAnimation: typeof RiveAnimationComponent;
+    RiveAnimation: typeof RiveAnimation;
   }
 }

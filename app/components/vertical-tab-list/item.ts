@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class VerticalTabListItemComponent extends Component<Signature> {
+export default class VerticalTabListItem extends Component<Signature> {
   @service declare router: RouterService;
 
   get isActive() {
@@ -21,6 +21,6 @@ export default class VerticalTabListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'VerticalTabList::Item': typeof VerticalTabListItemComponent;
+    'VerticalTabList::Item': typeof VerticalTabListItem;
   }
 }

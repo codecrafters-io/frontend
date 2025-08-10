@@ -8,7 +8,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class AffiliateLinksContainerComponent extends Component<Signature> {
+export default class AffiliateLinksContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get affiliateLink() {
@@ -22,6 +22,6 @@ export default class AffiliateLinksContainerComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::AffiliateLinksContainer': typeof AffiliateLinksContainerComponent;
+    'AffiliatePage::AffiliateLinksContainer': typeof AffiliateLinksContainer;
   }
 }

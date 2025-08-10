@@ -12,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class PageSectionComponent extends Component<Signature> {}
+export default class PageSection extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    PageSection: typeof PageSectionComponent;
+    PageSection: typeof PageSection;
   }
 }

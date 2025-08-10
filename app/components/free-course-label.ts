@@ -17,7 +17,7 @@ export interface Signature {
   };
 }
 
-export default class FreeCourseLabelComponent extends Component<Signature> {
+export default class FreeCourseLabel extends Component<Signature> {
   @service declare date: DateService;
 
   get labelCopy(): string {
@@ -45,6 +45,6 @@ export default class FreeCourseLabelComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FreeCourseLabel: typeof FreeCourseLabelComponent;
+    FreeCourseLabel: typeof FreeCourseLabel;
   }
 }

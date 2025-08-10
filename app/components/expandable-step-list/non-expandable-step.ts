@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class NonExpandableStepComponent extends Component<Signature> {}
+export default class NonExpandableStep extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ExpandableStepList::NonExpandableStep': typeof NonExpandableStepComponent;
+    'ExpandableStepList::NonExpandableStep': typeof NonExpandableStep;
   }
 }

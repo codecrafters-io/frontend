@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class SimpleLanguageGuideCardComponent extends Component<Signature> {
+export default class SimpleLanguageGuideCard extends Component<Signature> {
   @service declare store: Store;
 
   @action
@@ -23,6 +23,6 @@ export default class SimpleLanguageGuideCardComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SimpleLanguageGuideCard': typeof SimpleLanguageGuideCardComponent;
+    'CoursePage::CourseStageStep::SimpleLanguageGuideCard': typeof SimpleLanguageGuideCard;
   }
 }

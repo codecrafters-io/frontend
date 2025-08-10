@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class CourseOverviewResumeTrackButtonComponent extends Component<Signature> {
+export default class CourseOverviewResumeTrackButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
@@ -43,6 +43,6 @@ export default class CourseOverviewResumeTrackButtonComponent extends Component<
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::ResumeTrackButton': typeof CourseOverviewResumeTrackButtonComponent;
+    'TrackPage::ResumeTrackButton': typeof CourseOverviewResumeTrackButton;
   }
 }

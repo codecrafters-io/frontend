@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class CreateRepositoryCardComponent extends Component<Signature> {
+export default class CreateRepositoryCard extends Component<Signature> {
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
@@ -82,6 +82,6 @@ export default class CreateRepositoryCardComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard': typeof CreateRepositoryCardComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard': typeof CreateRepositoryCard;
   }
 }

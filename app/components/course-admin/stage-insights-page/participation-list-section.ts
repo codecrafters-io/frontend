@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class ParticipationListSectionComponent extends Component<Signature> {
+export default class ParticipationListSection extends Component<Signature> {
   @tracked shouldShowParticipationsWithSingleAttempt = false;
 
   get filteredParticipations() {
@@ -32,6 +32,6 @@ export default class ParticipationListSectionComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::ParticipationListSection': typeof ParticipationListSectionComponent;
+    'CourseAdmin::StageInsightsPage::ParticipationListSection': typeof ParticipationListSection;
   }
 }

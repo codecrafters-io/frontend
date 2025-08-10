@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class AnsiStreamComponent extends Component<Signature> {
+export default class AnsiStream extends Component<Signature> {
   IS_DEBUG = true;
 
   @tracked displayContent: string = this.args.content;
@@ -59,6 +59,6 @@ export default class AnsiStreamComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    AnsiStream: typeof AnsiStreamComponent;
+    AnsiStream: typeof AnsiStream;
   }
 }

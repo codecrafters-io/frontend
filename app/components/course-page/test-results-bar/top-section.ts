@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class TopSectionComponent extends Component<Signature> {
+export default class TopSection extends Component<Signature> {
   get tabs() {
     const allTabs = [
       {
@@ -38,6 +38,6 @@ export default class TopSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::TopSection': typeof TopSectionComponent;
+    'CoursePage::TestResultsBar::TopSection': typeof TopSection;
   }
 }

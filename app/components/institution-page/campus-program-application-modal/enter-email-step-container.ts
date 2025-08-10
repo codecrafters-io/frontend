@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class EnterEmailStepContainerComponent extends Component<Signature> {
+export default class EnterEmailStepContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
@@ -112,6 +112,6 @@ export default class EnterEmailStepContainerComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer': typeof EnterEmailStepContainerComponent;
+    'InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer': typeof EnterEmailStepContainer;
   }
 }

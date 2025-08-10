@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class CurrentStepCompleteModalComponent extends Component<Signature> {
+export default class CurrentStepCompleteModal extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   get currentStep() {
@@ -29,6 +29,6 @@ export default class CurrentStepCompleteModalComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CurrentStepCompleteModal': typeof CurrentStepCompleteModalComponent;
+    'CoursePage::CurrentStepCompleteModal': typeof CurrentStepCompleteModal;
   }
 }

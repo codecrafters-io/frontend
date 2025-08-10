@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class StepSwitcherComponent extends Component<Signature> {
+export default class StepSwitcher extends Component<Signature> {
   get nextStep() {
     return this.args.stepList.nextVisibleStepFor(this.args.currentStep);
   }
@@ -22,6 +22,6 @@ export default class StepSwitcherComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::StepSwitcherContainer': typeof StepSwitcherComponent;
+    'CoursePage::StepSwitcherContainer': typeof StepSwitcher;
   }
 }

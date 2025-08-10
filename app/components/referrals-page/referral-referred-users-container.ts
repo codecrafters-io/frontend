@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class ReferralReferredUsersContainerComponent extends Component<Signature> {
+export default class ReferralReferredUsersContainer extends Component<Signature> {
   get activationsAndFreeUsageGrants() {
     return this.args.referralLink?.activations.map((activation) => {
       const grantForActivation = this.args.freeUsageGrants.find((grant) => grant.referralActivation.id === activation.id);
@@ -26,6 +26,6 @@ export default class ReferralReferredUsersContainerComponent extends Component<S
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ReferralsPage::ReferralReferredUsersContainer': typeof ReferralReferredUsersContainerComponent;
+    'ReferralsPage::ReferralReferredUsersContainer': typeof ReferralReferredUsersContainer;
   }
 }

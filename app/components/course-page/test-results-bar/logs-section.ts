@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class LogsSectionComponent extends Component<Signature> {
+export default class LogsSection extends Component<Signature> {
   get activeCourseStage() {
     if (this.args.activeStep.type === 'CourseStageStep') {
       return this.activeStepAsCourseStageStep.courseStage;
@@ -45,6 +45,6 @@ export default class LogsSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::LogsSection': typeof LogsSectionComponent;
+    'CoursePage::TestResultsBar::LogsSection': typeof LogsSection;
   }
 }

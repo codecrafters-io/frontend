@@ -11,12 +11,12 @@ interface Signature {
   };
 }
 
-export default class CommunitySolutionCardHeaderLabelComponent extends Component<Signature> {
+export default class CommunitySolutionCardHeaderLabel extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::HeaderLabel': typeof CommunitySolutionCardHeaderLabelComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::HeaderLabel': typeof CommunitySolutionCardHeaderLabel;
   }
 }

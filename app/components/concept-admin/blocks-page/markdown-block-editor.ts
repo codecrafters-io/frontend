@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class MarkdownBlockEditorComponent extends Component<Signature> {}
+export default class MarkdownBlockEditor extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::MarkdownBlockEditor': typeof MarkdownBlockEditorComponent;
+    'ConceptAdmin::BlocksPage::MarkdownBlockEditor': typeof MarkdownBlockEditor;
   }
 }

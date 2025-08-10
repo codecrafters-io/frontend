@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class UpgradeModalComponent extends Component<Signature> {
+export default class UpgradeModal extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   @action
@@ -25,6 +25,6 @@ export default class UpgradeModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    UpgradeModal: typeof UpgradeModalComponent;
+    UpgradeModal: typeof UpgradeModal;
   }
 }

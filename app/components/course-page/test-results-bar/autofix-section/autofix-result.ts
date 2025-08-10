@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class AutofixResultComponent extends Component<Signature> {
+export default class AutofixResult extends Component<Signature> {
   @service declare store: Store;
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -63,6 +63,6 @@ export default class AutofixResultComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::AutofixSection::AutofixResult': typeof AutofixResultComponent;
+    'CoursePage::TestResultsBar::AutofixSection::AutofixResult': typeof AutofixResult;
   }
 }

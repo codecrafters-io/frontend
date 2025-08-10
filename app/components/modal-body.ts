@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class ModalBodyComponent extends Component<Signature> {
+export default class ModalBody extends Component<Signature> {
   @action
   handleClickOutside() {
     if (this.args.allowManualClose) {
@@ -34,6 +34,6 @@ export default class ModalBodyComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ModalBody: typeof ModalBodyComponent;
+    ModalBody: typeof ModalBody;
   }
 }

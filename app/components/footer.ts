@@ -11,7 +11,7 @@ interface FooterLinkGroup {
   links: FooterLink[];
 }
 
-export default class FooterComponent extends Component {
+export default class Footer extends Component {
   image = image;
 
   get challengeLinkGroup(): FooterLinkGroup {
@@ -109,6 +109,6 @@ export default class FooterComponent extends Component {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Footer: typeof FooterComponent;
+    Footer: typeof Footer;
   }
 }

@@ -14,7 +14,7 @@ export interface Signature {
   };
 }
 
-export default class DarkModeToggleWithUpgradePromptComponent extends Component<Signature> {
+export default class DarkModeToggleWithUpgradePrompt extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare darkMode: DarkModeService;
 
@@ -47,6 +47,6 @@ export default class DarkModeToggleWithUpgradePromptComponent extends Component<
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DarkModeToggleWithUpgradePrompt: typeof DarkModeToggleWithUpgradePromptComponent;
+    DarkModeToggleWithUpgradePrompt: typeof DarkModeToggleWithUpgradePrompt;
   }
 }

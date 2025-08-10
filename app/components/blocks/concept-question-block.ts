@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class ConceptQuestionBlockComponent extends Component<Signature> {
+export default class ConceptQuestionBlock extends Component<Signature> {
   @tracked isSubmitted = false;
   @tracked continueOrStepBackElement: HTMLDivElement | null = null;
   @service declare store: Store;
@@ -54,6 +54,6 @@ export default class ConceptQuestionBlockComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Blocks::ConceptQuestionBlock': typeof ConceptQuestionBlockComponent;
+    'Blocks::ConceptQuestionBlock': typeof ConceptQuestionBlock;
   }
 }

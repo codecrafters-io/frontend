@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class ClickToContinueBlockEditorComponent extends Component<Signature> {}
+export default class ClickToContinueBlockEditor extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::ClickToContinueBlockEditor': typeof ClickToContinueBlockEditorComponent;
+    'ConceptAdmin::BlocksPage::ClickToContinueBlockEditor': typeof ClickToContinueBlockEditor;
   }
 }

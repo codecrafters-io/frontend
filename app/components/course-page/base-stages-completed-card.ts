@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class BaseStagesCompletedCardComponent extends Component<Signature> {
+export default class BaseStagesCompletedCard extends Component<Signature> {
   congratulationsImage = congratulationsImage;
 
   @service declare coursePageState: CoursePageStateService;
@@ -45,6 +45,6 @@ export default class BaseStagesCompletedCardComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::BaseStagesCompletedCard': typeof BaseStagesCompletedCardComponent;
+    'CoursePage::BaseStagesCompletedCard': typeof BaseStagesCompletedCard;
   }
 }

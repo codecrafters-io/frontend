@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class ParticipationListComponent extends Component<Signature> {
+export default class ParticipationList extends Component<Signature> {
   @tracked visibleParticipationsCount = 10;
 
   get hasMoreParticipations() {
@@ -39,6 +39,6 @@ export default class ParticipationListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::ParticipationList': typeof ParticipationListComponent;
+    'CourseAdmin::StageInsightsPage::ParticipationList': typeof ParticipationList;
   }
 }

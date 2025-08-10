@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class SubmitCodeStepComponent extends Component<Signature> {
+export default class SubmitCodeStep extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
 
@@ -44,6 +44,6 @@ export default class SubmitCodeStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep': typeof SubmitCodeStepComponent;
+    'CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep': typeof SubmitCodeStep;
   }
 }

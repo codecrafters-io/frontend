@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class CourseOverviewStartCourseButtonComponent extends Component<Signature> {
+export default class CourseOverviewStartCourseButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUserHasStartedCourse() {
@@ -27,6 +27,6 @@ export default class CourseOverviewStartCourseButtonComponent extends Component<
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::StartCourseButton': typeof CourseOverviewStartCourseButtonComponent;
+    'CourseOverviewPage::StartCourseButton': typeof CourseOverviewStartCourseButton;
   }
 }

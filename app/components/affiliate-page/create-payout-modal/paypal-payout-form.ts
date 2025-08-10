@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class PaypalPayoutFormComponent extends Component<Signature> {
+export default class PaypalPayoutForm extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @tracked emailAddress: string = '';
@@ -70,6 +70,6 @@ export default class PaypalPayoutFormComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::CreatePayoutModal::PaypalPayoutForm': typeof PaypalPayoutFormComponent;
+    'AffiliatePage::CreatePayoutModal::PaypalPayoutForm': typeof PaypalPayoutForm;
   }
 }

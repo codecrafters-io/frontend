@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class InsertBlockMarkerComponent extends Component<Signature> {
+export default class InsertBlockMarker extends Component<Signature> {
   @action
   handleBlockTypeChosen(blockType: BlockDefinition['type'], closeDropdownFn: () => void) {
     const newBlock = this.newBlockForType(blockType);
@@ -51,6 +51,6 @@ export default class InsertBlockMarkerComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::InsertBlockMarker': typeof InsertBlockMarkerComponent;
+    'ConceptAdmin::BlocksPage::InsertBlockMarker': typeof InsertBlockMarker;
   }
 }

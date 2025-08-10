@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class AlertWithIconComponent extends Component<Signature> {
+export default class AlertWithIcon extends Component<Signature> {
   get color(): 'green' | 'blue' | 'red' {
     return {
       success: 'green',
@@ -49,6 +49,6 @@ export default class AlertWithIconComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    AlertWithIcon: typeof AlertWithIconComponent;
+    AlertWithIcon: typeof AlertWithIcon;
   }
 }

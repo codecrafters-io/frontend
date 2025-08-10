@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class MainSectionComponent extends Component<Signature> {
+export default class MainSection extends Component<Signature> {
   get currentStepAsCourseStageStep(): CourseStageStep {
     return this.args.currentStep as CourseStageStep;
   }
@@ -25,6 +25,6 @@ export default class MainSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::MainSection': typeof MainSectionComponent;
+    'CoursePage::Header::MainSection': typeof MainSection;
   }
 }

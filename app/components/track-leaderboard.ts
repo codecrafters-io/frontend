@@ -20,7 +20,7 @@ interface Signature {
   };
 }
 
-export default class TrackLeaderboardComponent extends Component<Signature> {
+export default class TrackLeaderboard extends Component<Signature> {
   transition = fade;
   @tracked isLoadingEntries = true;
   @tracked entriesFromAPI?: TrackLeaderboardEntryModel[];
@@ -112,6 +112,6 @@ export default class TrackLeaderboardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TrackLeaderboard: typeof TrackLeaderboardComponent;
+    TrackLeaderboard: typeof TrackLeaderboard;
   }
 }

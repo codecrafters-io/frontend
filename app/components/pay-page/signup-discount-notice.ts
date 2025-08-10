@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class SignupDiscountNoticeComponent extends Component<Signature> {
+export default class SignupDiscountNotice extends Component<Signature> {
   iconImage = iconImage;
 
   @service declare time: TimeService;
@@ -24,6 +24,6 @@ export default class SignupDiscountNoticeComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::SignupDiscountNotice': typeof SignupDiscountNoticeComponent;
+    'PayPage::SignupDiscountNotice': typeof SignupDiscountNotice;
   }
 }

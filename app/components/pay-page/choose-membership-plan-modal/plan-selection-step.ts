@@ -17,10 +17,10 @@ interface Signature {
   };
 }
 
-export default class PlanSelectionStepComponent extends Component<Signature> {}
+export default class PlanSelectionStep extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::ChooseMembershipPlanModal::PlanSelectionStep': typeof PlanSelectionStepComponent;
+    'PayPage::ChooseMembershipPlanModal::PlanSelectionStep': typeof PlanSelectionStep;
   }
 }

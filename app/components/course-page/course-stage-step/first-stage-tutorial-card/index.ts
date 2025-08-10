@@ -67,7 +67,7 @@ class SubmitCodeStep extends BaseStep implements StepDefinition {
   }
 }
 
-export default class FirstStageTutorialCardComponent extends Component<Signature> {
+export default class FirstStageTutorialCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
@@ -143,6 +143,6 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard': typeof FirstStageTutorialCardComponent;
+    'CoursePage::CourseStageStep::FirstStageTutorialCard': typeof FirstStageTutorialCard;
   }
 }

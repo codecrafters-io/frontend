@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class PreviousStepsIncompleteOverlayComponent extends Component<Signature> {
+export default class PreviousStepsIncompleteOverlay extends Component<Signature> {
   @tracked modalWasDismissed = false;
   @tracked lastSeenStepId: string | null = null;
 
@@ -50,6 +50,6 @@ export default class PreviousStepsIncompleteOverlayComponent extends Component<S
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::PreviousStepsIncompleteOverlay': typeof PreviousStepsIncompleteOverlayComponent;
+    'CoursePage::PreviousStepsIncompleteOverlay': typeof PreviousStepsIncompleteOverlay;
   }
 }

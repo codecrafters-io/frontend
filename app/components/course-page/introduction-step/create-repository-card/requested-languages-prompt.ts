@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class RequestedLanguagesPromptComponent extends Component<Signature> {
+export default class RequestedLanguagesPrompt extends Component<Signature> {
   get willLetYouKnowText() {
     return `We'll let you know once ${this.args.requestedAndUnsupportedLanguages.mapBy('name').join(' / ')} support is available on this challenge.`;
   }
@@ -17,6 +17,6 @@ export default class RequestedLanguagesPromptComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt': typeof RequestedLanguagesPromptComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt': typeof RequestedLanguagesPrompt;
   }
 }

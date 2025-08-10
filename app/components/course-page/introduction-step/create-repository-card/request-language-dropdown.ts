@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class RequestLanguageDropdownComponent extends Component<Signature> {
+export default class RequestLanguageDropdown extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
 
   @service declare store: Store;
@@ -122,6 +122,6 @@ export default class RequestLanguageDropdownComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageDropdown': typeof RequestLanguageDropdownComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageDropdown': typeof RequestLanguageDropdown;
   }
 }

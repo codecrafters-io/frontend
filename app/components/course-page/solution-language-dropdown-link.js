@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class SolutionLanguageDropdownLinkComponent extends Component {}
+export default class SolutionLanguageDropdownLink extends Component {}

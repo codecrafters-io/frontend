@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class TrackLeaderboardEntryComponent extends Component<Signature> {
+export default class TrackLeaderboardEntry extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
@@ -46,6 +46,6 @@ export default class TrackLeaderboardEntryComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TrackLeaderboardEntry: typeof TrackLeaderboardEntryComponent;
+    TrackLeaderboardEntry: typeof TrackLeaderboardEntry;
   }
 }

@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class CompletedStepNoticeComponent extends Component<Signature> {
+export default class CompletedStepNotice extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
 
@@ -62,6 +62,6 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CompletedStepNotice': typeof CompletedStepNoticeComponent;
+    'CoursePage::CompletedStepNotice': typeof CompletedStepNotice;
   }
 }

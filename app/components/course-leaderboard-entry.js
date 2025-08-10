@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class CourseLeaderboardEntryComponent extends Component {
+export default class CourseLeaderboardEntry extends Component {
   @service authenticator;
 
   get isForCurrentUser() {

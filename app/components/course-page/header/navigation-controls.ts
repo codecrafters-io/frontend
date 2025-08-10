@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class NavigationControlsComponent extends Component<Signature> {
+export default class NavigationControls extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
@@ -42,6 +42,6 @@ export default class NavigationControlsComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::NavigationControls': typeof NavigationControlsComponent;
+    'CoursePage::Header::NavigationControls': typeof NavigationControls;
   }
 }

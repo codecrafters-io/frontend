@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class StepComponent extends Component<Signature> {
+export default class Step extends Component<Signature> {
   @tracked previousIsComplete: boolean | null = null;
 
   @action
@@ -44,6 +44,6 @@ export default class StepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ExpandableStepList::Step': typeof StepComponent;
+    'ExpandableStepList::Step': typeof Step;
   }
 }

@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class SelectLanguageSectionComponent extends Component<Signature> {
+export default class SelectLanguageSection extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
   @service declare store: Store;
   requestedLanguagesPromptTransition = fade;
@@ -60,6 +60,6 @@ export default class SelectLanguageSectionComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection': typeof SelectLanguageSectionComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection': typeof SelectLanguageSection;
   }
 }

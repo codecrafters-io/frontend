@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class TestRunnerCardComponent extends Component<Signature> {
+export default class TestRunnerCard extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   @tracked wasExpandedByUser = false;
@@ -108,6 +108,6 @@ export default class TestRunnerCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestRunnerCard': typeof TestRunnerCardComponent;
+    'CoursePage::CourseStageStep::TestRunnerCard': typeof TestRunnerCard;
   }
 }

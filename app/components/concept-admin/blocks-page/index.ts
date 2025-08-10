@@ -23,7 +23,7 @@ type BlockWithMetadata = {
   addedBlockIndex: number; // Only used for added blocks, relative to anchorBlockIndex. Not using null as a type since we wouldn't get glint checking
 };
 
-export default class BlocksPageComponent extends Component<Signature> {
+export default class BlocksPage extends Component<Signature> {
   @tracked blockChanges: Record<number, { oldBlock: BlockDefinition; newBlock: BlockDefinition }> = {};
   @tracked blockAdditions: Record<number, { anchorBlock: BlockDefinition | null; newBlocks: BlockDefinition[] }> = {};
   @tracked blockDeletions: Record<number, { oldBlock: BlockDefinition }> = {};
@@ -284,6 +284,6 @@ export default class BlocksPageComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage': typeof BlocksPageComponent;
+    'ConceptAdmin::BlocksPage': typeof BlocksPage;
   }
 }

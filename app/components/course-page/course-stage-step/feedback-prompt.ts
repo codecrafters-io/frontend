@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class FeedbackPromptComponent extends Component<Signature> {
+export default class FeedbackPrompt extends Component<Signature> {
   @tracked isEditingClosedSubmission = false;
   @service declare store: Store;
   transition = fade;
@@ -114,6 +114,6 @@ export default class FeedbackPromptComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FeedbackPrompt': typeof FeedbackPromptComponent;
+    'CoursePage::CourseStageStep::FeedbackPrompt': typeof FeedbackPrompt;
   }
 }

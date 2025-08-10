@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class TertiaryButtonWithSpinnerComponent extends Component<Signature> {
+export default class TertiaryButtonWithSpinner extends Component<Signature> {
   get sizeIsExtraSmall(): boolean {
     return this.args.size === 'extra-small';
   }
@@ -35,6 +35,6 @@ export default class TertiaryButtonWithSpinnerComponent extends Component<Signat
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TertiaryButtonWithSpinner: typeof TertiaryButtonWithSpinnerComponent;
+    TertiaryButtonWithSpinner: typeof TertiaryButtonWithSpinner;
   }
 }

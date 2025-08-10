@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class AffiliateLinkStatsContainerComponent extends Component<Signature> {
+export default class AffiliateLinkStatsContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get paidUsersCount() {
@@ -21,6 +21,6 @@ export default class AffiliateLinkStatsContainerComponent extends Component<Sign
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::AffiliateLinkStatsContainer': typeof AffiliateLinkStatsContainerComponent;
+    'AffiliatePage::AffiliateLinkStatsContainer': typeof AffiliateLinkStatsContainer;
   }
 }

@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class VipBadgeComponent extends Component<Signature> {
+export default class VipBadge extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
@@ -25,6 +25,6 @@ export default class VipBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BillingStatusBadge::VipBadge': typeof VipBadgeComponent;
+    'BillingStatusBadge::VipBadge': typeof VipBadge;
   }
 }

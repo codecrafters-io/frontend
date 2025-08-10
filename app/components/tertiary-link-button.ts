@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class TertiaryLinkButtonComponent extends Component<Signature> {
+export default class TertiaryLinkButton extends Component<Signature> {
   get sizeIsSmall(): boolean {
     return this.args.size === 'small';
   }
@@ -27,6 +27,6 @@ export default class TertiaryLinkButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TertiaryLinkButton: typeof TertiaryLinkButtonComponent;
+    TertiaryLinkButton: typeof TertiaryLinkButton;
   }
 }

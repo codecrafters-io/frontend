@@ -14,7 +14,7 @@ export interface Signature {
   };
 }
 
-export default class EvaluationTabComponent extends Component<Signature> {
+export default class EvaluationTab extends Component<Signature> {
   @tracked wasRecentlyCopied = false;
 
   @action
@@ -42,6 +42,6 @@ export default class EvaluationTabComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab': typeof EvaluationTabComponent;
+    'CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab': typeof EvaluationTab;
   }
 }

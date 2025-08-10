@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class CoursePageSidebarComponent extends Component<Signature> {
+export default class CoursePageSidebar extends Component<Signature> {
   @service declare authenticator: unknown;
   @service declare coursePageState: CoursePageStateService;
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
@@ -55,6 +55,6 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Sidebar': typeof CoursePageSidebarComponent;
+    'CoursePage::Sidebar': typeof CoursePageSidebar;
   }
 }

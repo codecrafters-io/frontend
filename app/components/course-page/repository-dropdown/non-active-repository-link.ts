@@ -13,10 +13,10 @@ interface Signature {
   };
 }
 
-export default class NonActiveRepositoryLinkComponent extends Component<Signature> {}
+export default class NonActiveRepositoryLink extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::RepositoryDropdown::NonActiveRepositoryLink': typeof NonActiveRepositoryLinkComponent;
+    'CoursePage::RepositoryDropdown::NonActiveRepositoryLink': typeof NonActiveRepositoryLink;
   }
 }

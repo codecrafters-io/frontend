@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class RefactorCodeStepComponent extends Component<Signature> {
+export default class RefactorCodeStep extends Component<Signature> {
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -57,6 +57,6 @@ export default class RefactorCodeStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestsPassedModal::RefactorCodeStep': typeof RefactorCodeStepComponent;
+    'CoursePage::CourseStageStep::TestsPassedModal::RefactorCodeStep': typeof RefactorCodeStep;
   }
 }

@@ -20,7 +20,7 @@ type Tab = {
   isActive: boolean;
 };
 
-export default class ConceptAdminHeaderComponent extends Component<Signature> {
+export default class ConceptAdminHeader extends Component<Signature> {
   @service declare router: RouterService;
 
   get tabs(): Tab[] {
@@ -55,6 +55,6 @@ export default class ConceptAdminHeaderComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::Header': typeof ConceptAdminHeaderComponent;
+    'ConceptAdmin::Header': typeof ConceptAdminHeader;
   }
 }

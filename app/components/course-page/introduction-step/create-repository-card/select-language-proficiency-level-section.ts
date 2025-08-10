@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class SelectLanguageProficiencyLevelSectionComponent extends Component<Signature> {
+export default class SelectLanguageProficiencyLevelSection extends Component<Signature> {
   transition = fade;
 
   get feedbackAlertMarkdown() {
@@ -47,6 +47,6 @@ export default class SelectLanguageProficiencyLevelSectionComponent extends Comp
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection': typeof SelectLanguageProficiencyLevelSectionComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection': typeof SelectLanguageProficiencyLevelSection;
   }
 }

@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class StageListItemAvatarComponent extends Component<Signature> {}
+export default class StageListItemAvatar extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::StageListItemAvatar': typeof StageListItemAvatarComponent;
+    'CourseOverviewPage::StageListItemAvatar': typeof StageListItemAvatar;
   }
 }

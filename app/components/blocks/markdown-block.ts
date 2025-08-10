@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class MarkdownBlockComponent extends Component<Signature> {
+export default class MarkdownBlock extends Component<Signature> {
   @action
   handleDidInsertHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
@@ -26,6 +26,6 @@ export default class MarkdownBlockComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Blocks::MarkdownBlock': typeof MarkdownBlockComponent;
+    'Blocks::MarkdownBlock': typeof MarkdownBlock;
   }
 }

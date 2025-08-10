@@ -10,7 +10,7 @@ export interface Signature {
   };
 }
 
-export default class PromptTabComponent extends Component<Signature> {
+export default class PromptTab extends Component<Signature> {
   @action
   handleCopyPromptButtonClick() {
     if (this.args.evaluation.promptFileContents) {
@@ -23,6 +23,6 @@ export default class PromptTabComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExamplePage::EvaluationCard::PromptTab': typeof PromptTabComponent;
+    'CourseAdmin::CodeExamplePage::EvaluationCard::PromptTab': typeof PromptTab;
   }
 }

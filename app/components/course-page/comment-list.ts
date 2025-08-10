@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class CommentListComponent extends Component<Signature> {
+export default class CommentList extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
 
   @tracked isLoading = true;
@@ -85,6 +85,6 @@ export default class CommentListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CommentList': typeof CommentListComponent;
+    'CoursePage::CommentList': typeof CommentList;
   }
 }

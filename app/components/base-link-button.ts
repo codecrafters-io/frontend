@@ -19,7 +19,7 @@ export interface BaseLinkButtonSignature {
   };
 }
 
-export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSignature> {
+export default class BaseLinkButton extends Component<BaseLinkButtonSignature> {
   get normalizedModels(): string[] {
     if (this.args.model) {
       return [this.args.model];
@@ -55,6 +55,6 @@ export default class BaseLinkButtonComponent extends Component<BaseLinkButtonSig
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BaseLinkButton: typeof BaseLinkButtonComponent;
+    BaseLinkButton: typeof BaseLinkButton;
   }
 }

@@ -26,7 +26,7 @@ type Tab = {
   isActive: boolean;
 };
 
-export default class TabListComponent extends Component<Signature> {
+export default class TabList extends Component<Signature> {
   @service declare router: RouterService;
 
   get allTabs(): Tab[] {
@@ -180,6 +180,6 @@ export default class TabListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::TabList': typeof TabListComponent;
+    'CoursePage::Header::TabList': typeof TabList;
   }
 }

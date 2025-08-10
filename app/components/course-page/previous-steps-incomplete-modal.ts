@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class PreviousStepsIncompleteModalComponent extends Component<Signature> {}
+export default class PreviousStepsIncompleteModal extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::PreviousStepsIncompleteModal': typeof PreviousStepsIncompleteModalComponent;
+    'CoursePage::PreviousStepsIncompleteModal': typeof PreviousStepsIncompleteModal;
   }
 }

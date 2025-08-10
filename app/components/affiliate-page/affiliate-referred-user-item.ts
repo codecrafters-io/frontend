@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class AffiliateReferredUserItemComponent extends Component<Signature> {}
+export default class AffiliateReferredUserItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::AffiliateReferredUserItem': typeof AffiliateReferredUserItemComponent;
+    'AffiliatePage::AffiliateReferredUserItem': typeof AffiliateReferredUserItem;
   }
 }

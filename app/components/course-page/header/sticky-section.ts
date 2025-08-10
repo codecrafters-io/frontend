@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class StickySectionComponent extends Component<Signature> {
+export default class StickySection extends Component<Signature> {
   @tracked scrollMarkerIsInViewport = true;
 
   get currentStepAsCourseStageStep() {
@@ -37,6 +37,6 @@ export default class StickySectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::StickySection': typeof StickySectionComponent;
+    'CoursePage::Header::StickySection': typeof StickySection;
   }
 }

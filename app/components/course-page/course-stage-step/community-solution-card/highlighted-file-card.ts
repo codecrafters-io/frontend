@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class HighlightedFileCardComponent extends Component<Signature> {
+export default class HighlightedFileCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare darkMode: DarkModeService;
 
@@ -96,6 +96,6 @@ export default class HighlightedFileCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard': typeof HighlightedFileCardComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard': typeof HighlightedFileCard;
   }
 }

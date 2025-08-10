@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class ConceptListItemComponent extends Component<Signature> {
+export default class ConceptListItem extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get isComplete() {
@@ -27,6 +27,6 @@ export default class ConceptListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::PrimerConceptGroupSection::ConceptListItem': typeof ConceptListItemComponent;
+    'TrackPage::PrimerConceptGroupSection::ConceptListItem': typeof ConceptListItem;
   }
 }

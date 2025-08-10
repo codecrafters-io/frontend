@@ -22,7 +22,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class ConceptComponent extends Component<Signature> {
+export default class Concept extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
 
@@ -192,6 +192,6 @@ export default class ConceptComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Concept: typeof ConceptComponent;
+    Concept: typeof Concept;
   }
 }

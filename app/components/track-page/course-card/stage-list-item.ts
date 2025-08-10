@@ -12,12 +12,12 @@ interface Signature {
   };
 }
 
-export default class StageListItemComponent extends Component<Signature> {
+export default class StageListItem extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::CourseCard::StageListItem': typeof StageListItemComponent;
+    'TrackPage::CourseCard::StageListItem': typeof StageListItem;
   }
 }

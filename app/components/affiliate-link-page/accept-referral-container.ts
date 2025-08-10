@@ -15,12 +15,12 @@ interface Signature {
   };
 }
 
-export default class AcceptReferralContainerComponent extends Component<Signature> {
+export default class AcceptReferralContainer extends Component<Signature> {
   logoImage = logoImage;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliateLinkPage::AcceptReferralContainer': typeof AcceptReferralContainerComponent;
+    'AffiliateLinkPage::AcceptReferralContainer': typeof AcceptReferralContainer;
   }
 }

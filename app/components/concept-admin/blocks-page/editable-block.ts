@@ -28,7 +28,7 @@ interface Signature {
   };
 }
 
-export default class EditableBlockComponent extends Component<Signature> {
+export default class EditableBlock extends Component<Signature> {
   @tracked mutableBlock: BlockDefinition | null = null;
 
   get blockOrMutableBlock(): BlockDefinition {
@@ -131,6 +131,6 @@ export default class EditableBlockComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::EditableBlock': typeof EditableBlockComponent;
+    'ConceptAdmin::BlocksPage::EditableBlock': typeof EditableBlock;
   }
 }

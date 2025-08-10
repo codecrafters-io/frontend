@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 
-export default class SubscribtionSettingsContainerComponent extends Component {
+export default class SubscribtionSettingsContainer extends Component {
   @service authenticator;
   @service store;
 

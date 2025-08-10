@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class ReferralLinkStatsContainerComponent extends Component<Signature> {
+export default class ReferralLinkStatsContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get activeFreeUsageGrantsCount() {
@@ -32,6 +32,6 @@ export default class ReferralLinkStatsContainerComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ReferralsPage::ReferralLinkStatsContainer': typeof ReferralLinkStatsContainerComponent;
+    'ReferralsPage::ReferralLinkStatsContainer': typeof ReferralLinkStatsContainer;
   }
 }

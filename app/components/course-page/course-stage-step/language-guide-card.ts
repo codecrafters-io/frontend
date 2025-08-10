@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class LanguageGuideCardComponent extends Component<Signature> {
+export default class LanguageGuideCard extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
@@ -89,6 +89,6 @@ export default class LanguageGuideCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::LanguageGuideCard': typeof LanguageGuideCardComponent;
+    'CoursePage::CourseStageStep::LanguageGuideCard': typeof LanguageGuideCard;
   }
 }

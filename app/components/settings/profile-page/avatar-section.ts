@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class AvatarSectionComponent extends Component<Signature> {}
+export default class AvatarSection extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::ProfilePage::AvatarSection': typeof AvatarSectionComponent;
+    'Settings::ProfilePage::AvatarSection': typeof AvatarSection;
   }
 }

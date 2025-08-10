@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class RunTestsInstructionsComponent extends Component<Signature> {
+export default class RunTestsInstructions extends Component<Signature> {
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -64,6 +64,6 @@ export default class RunTestsInstructionsComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions': typeof RunTestsInstructionsComponent;
+    'CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions': typeof RunTestsInstructions;
   }
 }

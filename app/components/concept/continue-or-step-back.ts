@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class ContinueOrStepBackComponent extends Component<Signature> {
+export default class ContinueOrStepBack extends Component<Signature> {
   @tracked continueButtonElement: HTMLButtonElement | null = null;
 
   @action
@@ -35,6 +35,6 @@ export default class ContinueOrStepBackComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Concept::ContinueOrStepBack': typeof ContinueOrStepBackComponent;
+    'Concept::ContinueOrStepBack': typeof ContinueOrStepBack;
   }
 }

@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class FaqItemComponent extends Component<Signature> {
+export default class FaqItem extends Component<Signature> {
   @action
   toggleItem() {
     this.args.onToggle(this.args.faq);
@@ -21,6 +21,6 @@ export default class FaqItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FaqItem: typeof FaqItemComponent;
+    FaqItem: typeof FaqItem;
   }
 }

@@ -18,7 +18,7 @@ type Label = {
   tooltipText: string;
 };
 
-export default class UserLabelComponent extends Component<UserLabelSignature> {
+export default class UserLabel extends Component<UserLabelSignature> {
   @service declare router: RouterService;
 
   get hasCourseContext(): boolean {

@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class StepProgressIndicatorComponent extends Component<Signature> {
+export default class StepProgressIndicator extends Component<Signature> {
   get textColorClasses() {
     return {
       gray: 'text-gray-600 dark:text-gray-400',
@@ -25,6 +25,6 @@ export default class StepProgressIndicatorComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::StepProgressIndicator': typeof StepProgressIndicatorComponent;
+    'CoursePage::StepProgressIndicator': typeof StepProgressIndicator;
   }
 }

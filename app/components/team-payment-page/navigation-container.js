@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class NavigationContainerComponent extends Component {}
+export default class NavigationContainer extends Component {}

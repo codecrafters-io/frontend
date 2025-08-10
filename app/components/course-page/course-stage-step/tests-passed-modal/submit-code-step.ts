@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class SubmitCodeStepComponent extends Component<Signature> {
+export default class SubmitCodeStep extends Component<Signature> {
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -45,6 +45,6 @@ export default class SubmitCodeStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep': typeof SubmitCodeStepComponent;
+    'CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep': typeof SubmitCodeStep;
   }
 }

@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class AnonymousModeSectionComponent extends Component<Signature> {
+export default class AnonymousModeSection extends Component<Signature> {
   @tracked isSaving = false;
 
   get toggleIsDisabled(): boolean {
@@ -46,6 +46,6 @@ export default class AnonymousModeSectionComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::ProfilePage::AnonymousModeSection': typeof AnonymousModeSectionComponent;
+    'Settings::ProfilePage::AnonymousModeSection': typeof AnonymousModeSection;
   }
 }

@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class DiffContainerComponent extends Component<Signature> {
+export default class DiffContainer extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
   get codeMirrorTheme() {
@@ -21,6 +21,6 @@ export default class DiffContainerComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer': typeof DiffContainerComponent;
+    'CourseAdmin::SubmissionsPage::SubmissionDetails::DiffContainer': typeof DiffContainer;
   }
 }

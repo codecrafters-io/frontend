@@ -7,7 +7,7 @@ import { inject as service } from '@ember/service';
 import { on } from '@ember/modifier';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-export default class SubmitCourseIdeaCardComponent extends Component {
+export default class SubmitCourseIdeaCard extends Component {
   @service declare authenticator: AuthenticatorService;
 
   @action
@@ -37,6 +37,6 @@ export default class SubmitCourseIdeaCardComponent extends Component {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::SubmitCourseIdeaCard': typeof SubmitCourseIdeaCardComponent;
+    'RoadmapPage::SubmitCourseIdeaCard': typeof SubmitCourseIdeaCard;
   }
 }

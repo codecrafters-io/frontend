@@ -24,7 +24,7 @@ interface Signature {
   };
 }
 
-export default class CommunitySolutionCardComponent extends Component<Signature> {
+export default class CommunitySolutionCard extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked diffSource: 'changed-files' | 'highlighted-files' = 'changed-files';
   @tracked fileComparisons: FileComparison[] = [];
@@ -92,6 +92,6 @@ export default class CommunitySolutionCardComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard': typeof CommunitySolutionCardComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard': typeof CommunitySolutionCard;
   }
 }

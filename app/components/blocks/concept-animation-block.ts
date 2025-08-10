@@ -44,7 +44,7 @@ interface Signature {
   };
 }
 
-export default class ConceptAnimationBlockComponent extends Component<Signature> {
+export default class ConceptAnimationBlock extends Component<Signature> {
   @service declare store: Store;
   animation?: AnimationItem;
   @tracked isPlayed = false;
@@ -97,6 +97,6 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Blocks::ConceptAnimationBlock': typeof ConceptAnimationBlockComponent;
+    'Blocks::ConceptAnimationBlock': typeof ConceptAnimationBlock;
   }
 }

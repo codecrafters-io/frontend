@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class LinkComponent extends Component<Signature> {
+export default class Link extends Component<Signature> {
   @service declare router: RouterService;
 
   get isActive(): boolean {
@@ -33,6 +33,6 @@ export default class LinkComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::Link': typeof LinkComponent;
+    'Header::Link': typeof Link;
   }
 }

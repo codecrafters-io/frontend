@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class FeedbackButtonComponent extends Component<Signature> {
+export default class FeedbackButton extends Component<Signature> {
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -94,6 +94,6 @@ export default class FeedbackButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FeedbackButton: typeof FeedbackButtonComponent;
+    FeedbackButton: typeof FeedbackButton;
   }
 }

@@ -9,7 +9,7 @@ import type TeamModel from 'codecrafters-frontend/models/team';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
 
-export default class AccountDropdownComponent extends Component {
+export default class AccountDropdown extends Component {
   @service declare authenticator: AuthenticatorService;
   @service declare darkMode: DarkModeService;
   @service declare featureFlags: FeatureFlagsService;
@@ -106,6 +106,6 @@ export default class AccountDropdownComponent extends Component {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Header::AccountDropdown': typeof AccountDropdownComponent;
+    'Header::AccountDropdown': typeof AccountDropdown;
   }
 }

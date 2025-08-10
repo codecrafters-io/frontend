@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class BlockPreviewComponent extends Component<Signature> {
+export default class BlockPreview extends Component<Signature> {
   get modelAsClickToContinueBlockDefinition(): ClickToContinueBlockDefinition {
     return this.args.model as ClickToContinueBlockDefinition;
   }
@@ -35,6 +35,6 @@ export default class BlockPreviewComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::BlockPreview': typeof BlockPreviewComponent;
+    'ConceptAdmin::BlocksPage::BlockPreview': typeof BlockPreview;
   }
 }

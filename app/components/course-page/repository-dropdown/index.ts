@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class CoursePageRepositoryDropdownComponent extends Component<Signature> {
+export default class CoursePageRepositoryDropdown extends Component<Signature> {
   transition = fade;
 
   @service declare authenticator: AuthenticatorService;
@@ -119,6 +119,6 @@ export default class CoursePageRepositoryDropdownComponent extends Component<Sig
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::RepositoryDropdown': typeof CoursePageRepositoryDropdownComponent;
+    'CoursePage::RepositoryDropdown': typeof CoursePageRepositoryDropdown;
   }
 }

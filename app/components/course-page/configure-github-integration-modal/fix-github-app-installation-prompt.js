@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
 import window from 'ember-window-mock';
 
-export default class FixGithubAppInstallationPromptComponent extends Component {
+export default class FixGithubAppInstallationPrompt extends Component {
   @tracked isRefreshing = false;
   @service store;
 

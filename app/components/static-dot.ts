@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class StaticDotComponent extends Component<Signature> {
+export default class StaticDot extends Component<Signature> {
   get sizeClasses() {
     return {
       regular: 'w-2.5 h-2.5',
@@ -20,6 +20,6 @@ export default class StaticDotComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    StaticDot: typeof StaticDotComponent;
+    StaticDot: typeof StaticDot;
   }
 }

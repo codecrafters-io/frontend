@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-export default class AdminCourseSubmissionsPageComponent extends Component {
+export default class AdminCourseSubmissionsPage extends Component {
   @service router;
 
   @tracked requestedLanguage = this.router.currentRoute.queryParams.languages;

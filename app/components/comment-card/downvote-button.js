@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class DownvoteButtonComponent extends Component {
+export default class DownvoteButton extends Component {
   @service store;
 
   get currentUserHasDownvoted() {

@@ -64,7 +64,7 @@ interface Signature {
   };
 }
 
-export default class FileContentsCardComponent extends Component<Signature> {
+export default class FileContentsCard extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
   @tracked containerElement: HTMLDivElement | null = null;
@@ -100,6 +100,6 @@ export default class FileContentsCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FileContentsCard: typeof FileContentsCardComponent;
+    FileContentsCard: typeof FileContentsCard;
   }
 }

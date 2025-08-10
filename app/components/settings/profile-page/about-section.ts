@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class AboutSectionComponent extends Component<Signature> {
+export default class AboutSection extends Component<Signature> {
   @tracked isUpdating = false;
   @tracked wasUpdatedRecently = false;
 
@@ -44,6 +44,6 @@ export default class AboutSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::ProfilePage::AboutSection': typeof AboutSectionComponent;
+    'Settings::ProfilePage::AboutSection': typeof AboutSection;
   }
 }

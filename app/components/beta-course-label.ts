@@ -12,7 +12,7 @@ export interface Signature {
   };
 }
 
-export default class BetaCourseLabelComponent extends Component<Signature> {
+export default class BetaCourseLabel extends Component<Signature> {
   get tooltipSide(): 'top' | 'bottom' | 'left' | 'right' {
     return this.args.tooltipSide || 'top';
   }
@@ -20,6 +20,6 @@ export default class BetaCourseLabelComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BetaCourseLabel: typeof BetaCourseLabelComponent;
+    BetaCourseLabel: typeof BetaCourseLabel;
   }
 }

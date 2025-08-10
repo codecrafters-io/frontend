@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class YourTaskCardComponent extends Component<Signature> {
+export default class YourTaskCard extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @tracked manualFeedbackFlowIsActive = false;
@@ -59,6 +59,6 @@ export default class YourTaskCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::YourTaskCard': typeof YourTaskCardComponent;
+    'CoursePage::CourseStageStep::YourTaskCard': typeof YourTaskCard;
   }
 }

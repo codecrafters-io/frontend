@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class SubmissionLogsPreviewComponent extends Component<Signature> {
+export default class SubmissionLogsPreview extends Component<Signature> {
   @tracked isLoadingLogs = false;
 
   get evaluation() {
@@ -56,6 +56,6 @@ export default class SubmissionLogsPreviewComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    SubmissionLogsPreview: typeof SubmissionLogsPreviewComponent;
+    SubmissionLogsPreview: typeof SubmissionLogsPreview;
   }
 }

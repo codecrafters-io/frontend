@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class ConceptQuestionBlockEditorComponent extends Component<Signature> {
+export default class ConceptQuestionBlockEditor extends Component<Signature> {
   get disabledQuestions() {
     return this.args.concept.questions
       .filter((question) => {
@@ -49,6 +49,6 @@ export default class ConceptQuestionBlockEditorComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::ConceptQuestionBlockEditor': typeof ConceptQuestionBlockEditorComponent;
+    'ConceptAdmin::BlocksPage::ConceptQuestionBlockEditor': typeof ConceptQuestionBlockEditor;
   }
 }

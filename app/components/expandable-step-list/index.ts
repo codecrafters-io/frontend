@@ -28,7 +28,7 @@ interface Signature {
   };
 }
 
-export default class ExpandableStepListComponent extends Component<Signature> {
+export default class ExpandableStepList extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked expandedStepId: string | null = null;
 
@@ -124,6 +124,6 @@ export default class ExpandableStepListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ExpandableStepList: typeof ExpandableStepListComponent;
+    ExpandableStepList: typeof ExpandableStepList;
   }
 }

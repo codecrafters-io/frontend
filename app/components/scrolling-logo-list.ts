@@ -8,10 +8,10 @@ interface Signature {
   };
 }
 
-export default class ScrollingLogoListComponent extends Component<Signature> {}
+export default class ScrollingLogoList extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ScrollingLogoList: typeof ScrollingLogoListComponent;
+    ScrollingLogoList: typeof ScrollingLogoList;
   }
 }

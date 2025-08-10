@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class TabHeaderComponent extends Component {}
+export default class TabHeader extends Component {}

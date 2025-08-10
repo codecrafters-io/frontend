@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class CourseProgressListComponent extends Component<Signature> {
+export default class CourseProgressList extends Component<Signature> {
   get courseParticipationGroups() {
     const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(
       groupBy(

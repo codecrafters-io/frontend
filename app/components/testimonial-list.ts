@@ -6,7 +6,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class TestimonialListComponent extends Component<Signature> {
+export default class TestimonialList extends Component<Signature> {
   get testimonialGroups(): Testimonial[][] {
     const testimonialGroup1 = [
       testimonialsData['ananthalakshmi-sankar']!,
@@ -34,6 +34,6 @@ export default class TestimonialListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TestimonialList: typeof TestimonialListComponent;
+    TestimonialList: typeof TestimonialList;
   }
 }

@@ -10,10 +10,10 @@ export interface Signature {
   };
 }
 
-export default class CloneRepositoryStepComponent extends Component<Signature> {}
+export default class CloneRepositoryStep extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep': typeof CloneRepositoryStepComponent;
+    'CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep': typeof CloneRepositoryStep;
   }
 }

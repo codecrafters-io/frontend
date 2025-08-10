@@ -39,7 +39,7 @@ interface Signature {
   };
 }
 
-export default class FileDiffCardComponent extends Component<Signature> {
+export default class FileDiffCard extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
   get codeMirrorTheme() {
@@ -49,6 +49,6 @@ export default class FileDiffCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FileDiffCard: typeof FileDiffCardComponent;
+    FileDiffCard: typeof FileDiffCard;
   }
 }

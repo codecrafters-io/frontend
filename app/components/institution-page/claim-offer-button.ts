@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class ClaimOfferButtonComponent extends Component<Signature> {
+export default class ClaimOfferButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
@@ -37,6 +37,6 @@ export default class ClaimOfferButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::ClaimOfferButton': typeof ClaimOfferButtonComponent;
+    'InstitutionPage::ClaimOfferButton': typeof ClaimOfferButton;
   }
 }

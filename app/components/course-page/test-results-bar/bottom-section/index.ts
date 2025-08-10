@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class BottomSectionComponent extends Component<Signature> {
+export default class BottomSection extends Component<Signature> {
   get activeStepAsCourseStageStep() {
     return this.args.activeStep as CourseStageStep;
   }
@@ -25,6 +25,6 @@ export default class BottomSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::BottomSection': typeof BottomSectionComponent;
+    'CoursePage::TestResultsBar::BottomSection': typeof BottomSection;
   }
 }
