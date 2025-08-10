@@ -57,13 +57,13 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
       return null;
     }
 
-    const unexpiredExports = exports.filterBy('expired', false);
+    const unexpiredExports = exports.filter(exportRecord => new Date() < exportRecord.expiresAt);
 
     if (!unexpiredExports.length) {
       return null;
     }
 
-    return unexpiredExports.sortBy('lastAccessedAt').get('lastObject') || null;
+    return unexpiredExports.sortBy('expiresAt').get('lastObject') || null;
   }
 
   @action

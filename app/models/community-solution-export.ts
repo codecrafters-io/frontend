@@ -7,9 +7,7 @@ export default class CommunitySolutionExportModel extends Model {
   declare communitySolution: CommunityCourseStageSolutionModel;
 
   @attr('string') declare status: 'provisioning' | 'provisioned';
-  @attr('date') declare lastAccessedAt: Date;
-  @attr('string') declare humanId: string;
-  @attr('boolean') declare expired: boolean;
+  @attr('date') declare expiresAt: Date;
   @attr('string') declare githubRepositoryUrl: string | null;
 
 
