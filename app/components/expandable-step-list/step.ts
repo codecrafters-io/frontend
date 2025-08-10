@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Step } from '../expandable-step-list';
+import type { StepDefinition } from '../expandable-step-list';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
@@ -11,10 +11,10 @@ interface Signature {
     isExpanded: boolean;
     isFirstIncompleteStep: boolean;
     number: number;
-    nextIncompleteStep: Step | null;
+    nextIncompleteStep: StepDefinition | null;
     onCollapse: () => void;
     onManualComplete: () => void;
-    step: Step;
+    step: StepDefinition;
   };
 
   Blocks: {

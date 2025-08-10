@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import { ClickToContinueBlock } from 'codecrafters-frontend/utils/blocks';
+import { ClickToContinueBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: ClickToContinueBlock;
+    model: ClickToContinueBlockDefinition;
   };
 }
 

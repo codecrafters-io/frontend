@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import Store from '@ember-data/store';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import { action } from '@ember/object';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
@@ -11,7 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: ConceptQuestionBlock;
+    model: ConceptQuestionBlockDefinition;
     onContinueButtonClick: () => void;
     onStepBackButtonClick: () => void;
     isCurrentBlock: boolean;

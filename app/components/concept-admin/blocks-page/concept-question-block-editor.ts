@@ -1,13 +1,13 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: ConceptQuestionBlock;
+    model: ConceptQuestionBlockDefinition;
     concept: ConceptModel;
   };
 }
@@ -35,7 +35,7 @@ export default class ConceptQuestionBlockEditorComponent extends Component<Signa
 
   get usedQuestionSlugs() {
     const questionSlugs = this.args.concept.parsedBlocks
-      .filter((block): block is ConceptQuestionBlock => block.type === 'concept_question')
+      .filter((block): block is ConceptQuestionBlockDefinition => block.type === 'concept_question')
       .map((block) => block.conceptQuestionSlug);
 
     return [...new Set(questionSlugs)];

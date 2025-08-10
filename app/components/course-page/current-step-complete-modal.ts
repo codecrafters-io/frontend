@@ -1,13 +1,13 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import type Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     onClose: () => void;
-    activeStep: Step;
+    activeStep: StepDefinition;
   };
 }
 

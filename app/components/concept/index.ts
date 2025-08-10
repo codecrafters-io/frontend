@@ -5,7 +5,7 @@ import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagem
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import config from 'codecrafters-frontend/config/environment';
 import type { BlockGroup } from 'codecrafters-frontend/models/concept';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
@@ -137,7 +137,7 @@ export default class ConceptComponent extends Component<Signature> {
   }
 
   @action
-  handleQuestionBlockSubmitted(block: ConceptQuestionBlock) {
+  handleQuestionBlockSubmitted(block: ConceptQuestionBlockDefinition) {
     this.submittedQuestionSlugs.add(block.conceptQuestionSlug);
   }
 
@@ -148,7 +148,7 @@ export default class ConceptComponent extends Component<Signature> {
     } else {
       (this.allBlockGroups[this.currentBlockGroupIndex] as BlockGroup).blocks.forEach((block) => {
         if (block.type === 'concept_question') {
-          this.submittedQuestionSlugs.delete((block as ConceptQuestionBlock).conceptQuestionSlug);
+          this.submittedQuestionSlugs.delete((block as ConceptQuestionBlockDefinition).conceptQuestionSlug);
         }
       });
 

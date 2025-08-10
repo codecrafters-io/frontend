@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
-import type Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     onClose: () => void;
-    activeStep: Step;
+    activeStep: StepDefinition;
   };
 }
 

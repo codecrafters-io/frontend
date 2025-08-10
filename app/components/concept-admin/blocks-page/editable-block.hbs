@@ -25,11 +25,14 @@
 
         {{#if this.mutableBlock}}
           {{#if (eq this.mutableBlock.type "markdown")}}
-            <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlock}} />
+            <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlockDefinition}} />
           {{else if (eq this.mutableBlock.type "click_to_continue")}}
-            <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlock}} />
+            <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlockDefinition}} />
           {{else if (eq this.mutableBlock.type "concept_question")}}
-            <ConceptAdmin::BlocksPage::ConceptQuestionBlockEditor @model={{this.mutableBlockAsConceptQuestionBlock}} @concept={{@concept}} />
+            <ConceptAdmin::BlocksPage::ConceptQuestionBlockEditor
+              @model={{this.mutableBlockAsConceptQuestionBlockDefinition}}
+              @concept={{@concept}}
+            />
           {{else}}
             <div class="text-red-500 font-bold py-4">
               Unknown block type:

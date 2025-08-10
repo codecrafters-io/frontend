@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
-import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
-import { ClickToContinueBlock } from 'codecrafters-frontend/utils/blocks';
+import ConceptModel, { type BlockDefinition } from 'codecrafters-frontend/models/concept';
+import { ClickToContinueBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type Transition from '@ember/routing/transition';
@@ -15,7 +15,7 @@ interface Signature {
 
 type BlockWithMetadata = {
   id: string;
-  block: Block;
+  block: BlockDefinition;
   wasAdded: boolean;
   wasChanged: boolean;
   wasDeleted: boolean;
@@ -24,9 +24,9 @@ type BlockWithMetadata = {
 };
 
 export default class BlocksPageComponent extends Component<Signature> {
-  @tracked blockChanges: Record<number, { oldBlock: Block; newBlock: Block }> = {};
-  @tracked blockAdditions: Record<number, { anchorBlock: Block | null; newBlocks: Block[] }> = {};
-  @tracked blockDeletions: Record<number, { oldBlock: Block }> = {};
+  @tracked blockChanges: Record<number, { oldBlock: BlockDefinition; newBlock: BlockDefinition }> = {};
+  @tracked blockAdditions: Record<number, { anchorBlock: BlockDefinition | null; newBlocks: BlockDefinition[] }> = {};
+  @tracked blockDeletions: Record<number, { oldBlock: BlockDefinition }> = {};
   @tracked isSaving = false;
 
   get blocksWithMetadata(): BlockWithMetadata[] {
@@ -92,7 +92,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   get rawBlocksAfterMutations() {
-    const blocks: Block[] = [];
+    const blocks: BlockDefinition[] = [];
 
     if (this.blockAdditions[-1]) {
       blocks.push(...this.blockAdditions[-1]!.newBlocks);
@@ -116,7 +116,7 @@ export default class BlocksPageComponent extends Component<Signature> {
 
     if (blocksAsJSON[blocksAsJSON.length - 1]?.type !== 'click_to_continue') {
       blocksAsJSON.push(
-        new ClickToContinueBlock({
+        new ClickToContinueBlockDefinition({
           type: 'click_to_continue',
           args: {},
         }).toJSON,
@@ -127,7 +127,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   @action
-  handleAddedBlockChanged(anchorBlockIndex: number, addedBlockIndex: number, newBlock: Block) {
+  handleAddedBlockChanged(anchorBlockIndex: number, addedBlockIndex: number, newBlock: BlockDefinition) {
     this.blockAdditions[anchorBlockIndex]!.newBlocks[addedBlockIndex] = newBlock;
     this.blockAdditions = { ...this.blockAdditions }; // Force re-render
   }
@@ -139,7 +139,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   @action
-  handleBlockAdded(anchorBlockIndex: number, insertAtIndex: number, newBlock: Block) {
+  handleBlockAdded(anchorBlockIndex: number, insertAtIndex: number, newBlock: BlockDefinition) {
     if (this.blockAdditions[anchorBlockIndex]) {
       this.blockAdditions[anchorBlockIndex]!.newBlocks.splice(insertAtIndex, 0, newBlock);
     } else {
@@ -162,7 +162,7 @@ export default class BlocksPageComponent extends Component<Signature> {
   }
 
   @action
-  handleBlockChanged(index: number, newBlock: Block) {
+  handleBlockChanged(index: number, newBlock: BlockDefinition) {
     const oldBlock = this.args.concept.parsedBlocks[index]!;
 
     if (newBlock.isEqual(oldBlock)) {

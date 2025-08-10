@@ -1,9 +1,9 @@
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 export default class StepGroup {
-  declare steps: Step[];
+  declare steps: StepDefinition[];
 
-  constructor(steps: Step[]) {
+  constructor(steps: StepDefinition[]) {
     if (steps.length === 0) {
       throw new Error('StepGroup must have at least one step');
     }

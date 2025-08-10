@@ -3,7 +3,7 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -36,7 +36,7 @@ export default class CoursePageSidebarComponent extends Component<Signature> {
   }
 
   get stepList() {
-    return this.coursePageState.stepList as StepList;
+    return this.coursePageState.stepList as StepListDefinition;
   }
 
   configureExtensionsButtonIsDisabled() {

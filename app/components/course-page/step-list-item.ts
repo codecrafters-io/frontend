@@ -1,11 +1,11 @@
 import Component from '@glimmer/component';
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    step: Step;
+    step: StepDefinition;
     isActive: boolean;
     isCurrent: boolean;
   };

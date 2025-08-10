@@ -3,7 +3,7 @@ import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
-export interface Step {
+export interface StepDefinition {
   id: string;
   titleMarkdown: string;
   isComplete: boolean;
@@ -14,15 +14,15 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    onManualStepComplete?: (step: Step) => void;
-    steps: Step[];
+    onManualStepComplete?: (step: StepDefinition) => void;
+    steps: StepDefinition[];
     stepContainerClass?: string;
   };
 
   Blocks: {
     default: [
       {
-        expandedStep: Step | null;
+        expandedStep: StepDefinition | null;
       },
     ];
   };
@@ -42,15 +42,15 @@ export default class ExpandableStepListComponent extends Component<Signature> {
     }
   }
 
-  get expandedStep(): Step | null {
+  get expandedStep(): StepDefinition | null {
     return this.args.steps.find((step) => step.id === this.expandedStepId) ?? null;
   }
 
-  get firstIncompleteStep(): Step | null {
+  get firstIncompleteStep(): StepDefinition | null {
     return this.args.steps.find((step) => !step.isComplete) ?? null;
   }
 
-  get nextIncompleteStep(): Step | null {
+  get nextIncompleteStep(): StepDefinition | null {
     if (!this.expandedStep) {
       return this.firstIncompleteStep;
     }
@@ -69,7 +69,7 @@ export default class ExpandableStepListComponent extends Component<Signature> {
     }
   }
 
-  #expandStepAndScrollContainerIntoView(step: Step) {
+  #expandStepAndScrollContainerIntoView(step: StepDefinition) {
     this.expandedStepId = step.id;
 
     if (this.containerElement) {
@@ -90,14 +90,14 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   }
 
   @action
-  handleStepCollapse(_collapsedStep: Step) {
+  handleStepCollapse(_collapsedStep: StepDefinition) {
     next(() => {
       this.expandNextIncompleteStep();
     });
   }
 
   @action
-  handleStepCompletedManually(step: Step) {
+  handleStepCompletedManually(step: StepDefinition) {
     next(() => {
       this.expandNextIncompleteStep();
 
@@ -108,7 +108,7 @@ export default class ExpandableStepListComponent extends Component<Signature> {
   }
 
   @action
-  handleStepExpand(step: Step) {
+  handleStepExpand(step: StepDefinition) {
     if (this.expandedStepId === step.id) {
       return;
     }

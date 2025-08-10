@@ -3,13 +3,13 @@ import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    currentStep: Step;
+    currentStep: StepDefinition;
   };
 
   Blocks: {

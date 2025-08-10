@@ -5,7 +5,7 @@ import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import Store from '@ember-data/store';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
@@ -30,7 +30,7 @@ class BaseStep {
   }
 }
 
-class NavigateToFileStep extends BaseStep implements Step {
+class NavigateToFileStep extends BaseStep implements StepDefinition {
   id = 'navigate-to-file';
   canBeCompletedManually = true;
 
@@ -49,7 +49,7 @@ class NavigateToFileStep extends BaseStep implements Step {
   }
 }
 
-class UncommentCodeStep extends BaseStep implements Step {
+class UncommentCodeStep extends BaseStep implements StepDefinition {
   id = 'uncomment-code';
   canBeCompletedManually = true;
 
@@ -58,7 +58,7 @@ class UncommentCodeStep extends BaseStep implements Step {
   }
 }
 
-class SubmitCodeStep extends BaseStep implements Step {
+class SubmitCodeStep extends BaseStep implements StepDefinition {
   id = 'submit-code';
   canBeCompletedManually = false;
 
@@ -112,7 +112,7 @@ export default class FirstStageTutorialCardComponent extends Component<Signature
   }
 
   @action
-  handleStepCompletedManually(step: Step) {
+  handleStepCompletedManually(step: StepDefinition) {
     if (step.id === 'navigate-to-file') {
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
 

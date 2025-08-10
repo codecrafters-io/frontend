@@ -1,12 +1,12 @@
 import Component from '@glimmer/component';
-import type { Step } from '../expandable-step-list';
+import type { StepDefinition } from '../expandable-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     number: number;
-    step: Step;
+    step: StepDefinition;
   };
 }
 

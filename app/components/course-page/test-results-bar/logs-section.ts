@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
@@ -7,8 +7,8 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeStep: Step;
-    currentStep: Step;
+    activeStep: StepDefinition;
+    currentStep: StepDefinition;
     repository: RepositoryModel;
   };
 }

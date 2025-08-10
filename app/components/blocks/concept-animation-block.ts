@@ -6,7 +6,7 @@ import type { AnimationItem } from 'lottie-web';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
-import { ConceptAnimationBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptAnimationBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 // @ts-ignore
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';
 // @ts-ignore
@@ -40,7 +40,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: ConceptAnimationBlock;
+    model: ConceptAnimationBlockDefinition;
   };
 }
 

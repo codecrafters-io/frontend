@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -12,7 +12,7 @@ interface Signature {
 
   Args: {
     repository: RepositoryModel;
-    step: Step;
+    step: StepDefinition;
   };
 }
 

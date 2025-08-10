@@ -1,8 +1,8 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
-import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -13,12 +13,12 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeStep: Step;
+    activeStep: StepDefinition;
     course: CourseModel;
-    currentStep: Step;
-    nextStep: Step | null;
+    currentStep: StepDefinition;
+    nextStep: StepDefinition | null;
     onMobileSidebarButtonClick: () => void;
-    stepList: StepList;
+    stepList: StepListDefinition;
   };
 }
 
