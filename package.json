@@ -27,8 +27,8 @@
     "lint:types": "tsc --noEmit",
     "lint:glint": "glint",
     "lint:glint:fix": "glint",
-    "start": "FASTBOOT_DISABLED=true ember serve",
-    "start:fastboot": "FASTBOOT_DISABLED=\"\" ember serve",
+    "start": "FASTBOOT_DISABLED=true npm run start:fastboot",
+    "start:fastboot": "ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
