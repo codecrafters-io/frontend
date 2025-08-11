@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import * as Sentry from '@sentry/ember';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolution from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CommunitySolutionExportModel from 'codecrafters-frontend/models/community-solution-export';
@@ -45,7 +46,7 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
         }
       })
       .catch((error) => {
-        console.error('Error creating export:', error);
+        Sentry.captureException(error);
         this.isCreatingExport = false;
       });
   }
@@ -68,6 +69,14 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
 
   @action
   handleViewOnGithub() {
+    if (this.args.solution.isPublishedToPublicGithubRepository) {
+      const githubUrl = this.args.solution.githubUrlForFile(this.args.filename);
+      if (githubUrl) {
+        window.open(githubUrl, '_blank');
+      }
+      return;
+    }
+    
     const latestExport = this.getLatestUnexpiredExport();
 
     if (latestExport?.status === 'provisioned') {
