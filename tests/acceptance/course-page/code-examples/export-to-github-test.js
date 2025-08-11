@@ -2,6 +2,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-examples-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
@@ -67,6 +68,8 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     });
 
     await navigateToCodeExamples();
+    await percySnapshot('Code Examples - View on GitHub button (unpublished solution)');
+
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
@@ -91,6 +94,8 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     });
 
     await navigateToCodeExamples();
+    await percySnapshot('Code Examples - View on GitHub button (with existing export)');
+
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
@@ -143,6 +148,7 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     });
 
     await navigateToCodeExamples();
+    await percySnapshot('Code Examples - Direct GitHub link (published solution)');
 
     // Published solutions show a direct link, not a button
     assert.dom('[data-test-view-on-github-button]').doesNotExist('should not show view button for published solutions');
