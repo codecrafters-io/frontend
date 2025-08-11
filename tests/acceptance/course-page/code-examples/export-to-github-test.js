@@ -7,37 +7,57 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { settled } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 
 module('Acceptance | course-page | code-examples | export-to-github', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can create new export when none exists', async function (assert) {
-    testScenario(this.server);
-    const currentUser = signIn(this.owner, this.server);
+  async function setupTestScenario(server) {
+    testScenario(server);
+    const currentUser = signIn(this.owner, server);
 
-    // Create a different user who authored the community solution
-    const solutionAuthor = this.server.create('user', {
+    const solutionAuthor = server.create('user', {
       avatarUrl: 'https://github.com/author.png',
       createdAt: new Date(),
       githubUsername: 'author',
       username: 'author',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let python = this.server.schema.languages.findBy({ slug: 'python' });
+    const redis = server.schema.courses.findBy({ slug: 'redis' });
+    const python = server.schema.languages.findBy({ slug: 'python' });
 
-    this.server.create('repository', 'withFirstStageCompleted', {
+    server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
     });
 
-    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python, solutionAuthor);
+    return {
+      currentUser,
+      solutionAuthor,
+      redis,
+      python,
+      solution: createCommunityCourseStageSolution(server, redis, 2, python, solutionAuthor),
+    };
+  }
 
-    // Mock the export creation
+  async function navigateToCodeExamples() {
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
+  }
+
+  test('creates new export when none exists', async function (assert) {
+    const { solution } = await setupTestScenario.call(this, this.server);
+
+    let exportCreateCalled = false;
     this.server.post('/community-solution-exports', function (schema) {
+      exportCreateCalled = true;
+
       return schema.communitySolutionExports.create({
         status: 'provisioned',
         expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
@@ -46,48 +66,19 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       });
     });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
-
-    assert.dom('[data-test-view-on-github-button]').exists('view on github button should be visible');
-
+    await navigateToCodeExamples();
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
 
-    // Should create export and open new window - we can't easily test window.open
-    // but we can verify the button state changed during loading
-    assert.ok(true, 'export creation triggered successfully');
+    assert.ok(exportCreateCalled, 'should create new export');
   });
 
   test('reuses existing unexpired export', async function (assert) {
-    testScenario(this.server);
-    const currentUser = signIn(this.owner, this.server);
+    const { solution } = await setupTestScenario.call(this, this.server);
 
-    // Create a different user who authored the community solution
-    const solutionAuthor = this.server.create('user', {
-      avatarUrl: 'https://github.com/author2.png',
-      createdAt: new Date(),
-      githubUsername: 'author2',
-      username: 'author2',
-    });
-
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let python = this.server.schema.languages.findBy({ slug: 'python' });
-
-    this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python, solutionAuthor);
-
-    // Create existing unexpired export
     this.server.create('community-solution-export', {
       status: 'provisioned',
-      expiresAt: new Date(Date.now() + 12 * 60 * 60 * 1000), // 12 hours from now
+      expiresAt: new Date(Date.now() + 12 * 60 * 60 * 1000),
       githubRepositoryUrl: 'https://github.com/existing-repo/test',
       communitySolution: solution,
     });
@@ -99,44 +90,19 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       return { data: {} };
     });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
-
+    await navigateToCodeExamples();
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
 
-    assert.notOk(exportCreateCalled, 'should not create new export when valid one exists');
+    assert.notOk(exportCreateCalled, 'should reuse existing export');
   });
 
-  test('creates new export when existing one is expired', async function (assert) {
-    testScenario(this.server);
-    const currentUser = signIn(this.owner, this.server);
+  test('creates new export when existing export is expired', async function (assert) {
+    const { solution } = await setupTestScenario.call(this, this.server);
 
-    // Create a different user who authored the community solution
-    const solutionAuthor = this.server.create('user', {
-      avatarUrl: 'https://github.com/author3.png',
-      createdAt: new Date(),
-      githubUsername: 'author3',
-      username: 'author3',
-    });
-
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let python = this.server.schema.languages.findBy({ slug: 'python' });
-
-    this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    const solution = createCommunityCourseStageSolution(this.server, redis, 2, python, solutionAuthor);
-
-    // Create expired export
     this.server.create('community-solution-export', {
       status: 'provisioned',
-      expiresAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hour ago (expired)
+      expiresAt: new Date(Date.now() - 25 * 60 * 60 * 1000),
       githubRepositoryUrl: 'https://github.com/expired-repo/test',
       communitySolution: solution,
     });
@@ -153,14 +119,49 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       });
     });
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
+    await navigateToCodeExamples();
+    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
+
+    assert.ok(exportCreateCalled, 'should create new export when existing is expired');
+  });
+
+  test('shows direct GitHub link when solution is published', async function (assert) {
+    const { solution } = await setupTestScenario.call(this, this.server);
+
+    solution.update({
+      githubRepositoryName: 'author/redis-solution',
+      githubRepositoryIsPrivate: false,
+      commitSha: 'abc123',
+    });
+
+    let exportCreateCalled = false;
+    this.server.post('/community-solution-exports', function () {
+      exportCreateCalled = true;
+
+      return { data: {} };
+    });
+
+    await navigateToCodeExamples();
+
+    // Published solutions show a direct link, not a button
+    assert.dom('[data-test-view-on-github-button]').doesNotExist('should not show view button for published solutions');
+    assert.dom('a[href*="github.com/author/redis-solution"]').exists('should show direct GitHub link');
+    assert.notOk(exportCreateCalled, 'should not create export when solution is published');
+  });
+
+  test('handles export creation failure gracefully', async function (assert) {
+    await setupTestScenario.call(this, this.server);
+
+    this.server.post('/community-solution-exports', function () {
+      return new Response(500, {}, { error: 'Export creation failed' });
+    });
+
+    await navigateToCodeExamples();
 
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
 
-    assert.ok(exportCreateCalled, 'should create new export when existing one is expired');
+    assert.expectNoAssertion('should handle failure without throwing errors');
   });
 });

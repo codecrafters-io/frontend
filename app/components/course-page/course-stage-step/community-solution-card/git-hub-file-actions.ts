@@ -71,12 +71,14 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
   handleViewOnGithub() {
     if (this.args.solution.isPublishedToPublicGithubRepository) {
       const githubUrl = this.args.solution.githubUrlForFile(this.args.filename);
+
       if (githubUrl) {
         window.open(githubUrl, '_blank');
       }
+
       return;
     }
-    
+
     const latestExport = this.getLatestUnexpiredExport();
 
     if (latestExport?.status === 'provisioned') {
