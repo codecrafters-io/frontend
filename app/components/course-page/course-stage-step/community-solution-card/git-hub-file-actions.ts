@@ -74,7 +74,7 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
       const githubUrl = latestExport.githubUrlForFile(this.args.filename);
 
       if (githubUrl) {
-        latestExport.markAsAccessed();
+        latestExport.markAsAccessed({});
         window.open(githubUrl, '_blank');
       }
     } else {

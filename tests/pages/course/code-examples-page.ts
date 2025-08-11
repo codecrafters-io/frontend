@@ -11,6 +11,7 @@ export default createPage({
   solutionCards: collection('[data-test-community-solution-card]', {
     changedFileCards: collection('[data-test-community-solution-changed-file-card]', {
       clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
+      clickOnViewOnGithubButton: clickable('[data-test-view-on-github-button]'),
     }),
 
     content: {
@@ -23,6 +24,7 @@ export default createPage({
 
     highlightedFileCards: collection('[data-test-community-solution-highlighted-file-card]', {
       clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
+      clickOnViewOnGithubButton: clickable('[data-test-view-on-github-button]'),
     }),
 
     downvoteButton: {
