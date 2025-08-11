@@ -168,6 +168,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
-    assert.expectNoAssertion('should handle failure without throwing errors');
+    assert.dom('[data-test-view-on-github-button]').exists('view button should still exist after failure');
   });
 });
