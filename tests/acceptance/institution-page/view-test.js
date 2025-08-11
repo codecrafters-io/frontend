@@ -18,7 +18,7 @@ module('Acceptance | institution-page | view-test', function (hooks) {
     createInstitution(this.server, 'nus');
 
     await institutionPage.visit({ institution_slug: 'nus' });
-    assert.strictEqual(currentURL(), '/institutions/nus');
+    assert.strictEqual(currentURL(), '/campus/nus');
 
     await percySnapshot('Institution Page - Unauthenticated');
   });
@@ -35,7 +35,7 @@ module('Acceptance | institution-page | view-test', function (hooks) {
     });
 
     await institutionPage.visit({ institution_slug: 'nus' });
-    assert.strictEqual(currentURL(), '/institutions/nus');
+    assert.strictEqual(currentURL(), '/campus/nus');
 
     await institutionPage.claimOfferButtons[0].hover();
     assertTooltipContent(assert, { contentString: 'As a CodeCrafters member, you already have full access.' });
