@@ -58,7 +58,7 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
       return null;
     }
 
-    const unexpiredExports = exports.filter((exportRecord) => new Date() < exportRecord.expiresAt);
+    const unexpiredExports = exports.reject((exportRecord) => new Date() >= exportRecord.expiresAt);
 
     if (!unexpiredExports.length) {
       return null;
