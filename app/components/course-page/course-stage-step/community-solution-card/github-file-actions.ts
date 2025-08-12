@@ -24,6 +24,12 @@ export default class GithubFileActionsComponent extends Component<Signature> {
 
   @tracked isCreatingExport = false;
 
+  get isExportInProgress(): boolean {
+    const latestExport = this.getLatestUnexpiredExport();
+
+    return this.isCreatingExport || latestExport?.status === 'provisioning';
+  }
+
   get shouldShowPublishToGithubButton(): boolean {
     return this.args.solution.user.id === this.authenticator.currentUser?.id && !this.args.solution.isPublishedToPublicGithubRepository;
   }
@@ -41,7 +47,7 @@ export default class GithubFileActionsComponent extends Component<Signature> {
       const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
 
       if (exportRecord.status === 'provisioned') {
-        window.open(githubUrl, '_blank');
+        window.open(githubUrl, '_blank', 'noopener,noreferrer');
       }
     } catch (error) {
       Sentry.captureException(error);
@@ -60,7 +66,7 @@ export default class GithubFileActionsComponent extends Component<Signature> {
     if (latestExport?.status === 'provisioned') {
       const githubUrl = latestExport.githubUrlForFile(this.args.filename);
       latestExport.markAsAccessed({});
-      window.open(githubUrl, '_blank');
+      window.open(githubUrl, '_blank', 'noopener,noreferrer');
     } else {
       this.createExport();
     }

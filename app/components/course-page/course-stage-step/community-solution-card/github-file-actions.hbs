@@ -23,11 +23,11 @@
     <button
       type="button"
       {{on "click" this.handleViewOnGithubButtonClick}}
-      class="flex gap-x-1 items-center group {{if this.isCreatingExport 'opacity-50 cursor-not-allowed'}}"
+      class="flex gap-x-1 items-center group {{if this.isExportInProgress 'opacity-50 cursor-not-allowed'}}"
       data-test-view-on-github-button
     >
       <span class="text-[10px] text-gray-700 dark:text-gray-300 group-hover:underline">
-        {{#if this.isCreatingExport}}
+        {{#if this.isExportInProgress}}
           Loading...
         {{else}}
           View on GitHub
