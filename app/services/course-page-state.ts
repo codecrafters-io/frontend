@@ -51,12 +51,11 @@ export default class CoursePageStateService extends Service {
     } else if (this.router.currentRouteName && this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage');
 
-      const routeParams = courseStageRoute!.params as { stage_identifier: string };
-      const stageIdentifier = routeParams.stage_identifier;
+      const routeParams = courseStageRoute!.params as { stage_slug: string };
 
       return (
         this.stepList!.steps.find(
-          (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.identifierForURL === stageIdentifier,
+          (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.slug === routeParams.stage_slug,
         ) || null
       );
     } else {

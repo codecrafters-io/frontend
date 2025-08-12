@@ -70,10 +70,6 @@ export default class CourseStageModel extends Model {
     return this.screencasts.length > 0;
   }
 
-  get identifierForURL() {
-    return this.slug;
-  }
-
   get isBaseStage() {
     return !this.primaryExtensionSlug;
   }

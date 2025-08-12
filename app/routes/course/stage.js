@@ -24,7 +24,7 @@ export default class CourseStageRoute extends BaseRoute {
   async model(params) {
     const courseRouteModel = this.modelFor('course');
 
-    const courseStage = courseRouteModel.course.stages.find((courseStage) => courseStage.identifierForURL === params.stage_identifier);
+    const courseStage = courseRouteModel.course.stages.find((courseStage) => courseStage.slug === params.stage_slug);
 
     return {
       courseStage: courseStage,
