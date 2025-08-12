@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class ToggleComponent extends Component<Signature> {
+export default class Toggle extends Component<Signature> {
   get isOff(): boolean {
     return !this.args.isOn;
   }
@@ -26,6 +26,6 @@ export default class ToggleComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Toggle: typeof ToggleComponent;
+    Toggle: typeof Toggle;
   }
 }

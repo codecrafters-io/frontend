@@ -11,12 +11,12 @@ interface Signature {
   };
 }
 
-export default class ClaimOfferCardComponent extends Component<Signature> {
+export default class ClaimOfferCard extends Component<Signature> {
   codeCraftersLogoImage = codeCraftersLogoImage;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::ClaimOfferCard': typeof ClaimOfferCardComponent;
+    'InstitutionPage::ClaimOfferCard': typeof ClaimOfferCard;
   }
 }

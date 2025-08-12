@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class CourseLeaderboardTeamDropdownComponent extends Component<Signature> {
+export default class CourseLeaderboardTeamDropdown extends Component<Signature> {
   @action
   async handleTeamLinkClick(team: TeamModel | null, dropdownActions: { close: () => void }) {
     dropdownActions.close();
@@ -21,6 +21,6 @@ export default class CourseLeaderboardTeamDropdownComponent extends Component<Si
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CourseLeaderboardTeamDropdown: typeof CourseLeaderboardTeamDropdownComponent;
+    CourseLeaderboardTeamDropdown: typeof CourseLeaderboardTeamDropdown;
   }
 }

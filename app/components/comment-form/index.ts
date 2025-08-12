@@ -27,7 +27,7 @@ interface Signature {
   };
 }
 
-export default class CommentFormComponent extends Component<Signature> {
+export default class CommentForm extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -152,6 +152,6 @@ export default class CommentFormComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CommentForm: typeof CommentFormComponent;
+    CommentForm: typeof CommentForm;
   }
 }

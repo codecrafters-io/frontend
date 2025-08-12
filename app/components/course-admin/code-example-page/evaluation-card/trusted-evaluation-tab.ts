@@ -12,7 +12,7 @@ export interface Signature {
   };
 }
 
-export default class TrustedEvaluationTabComponent extends Component<Signature> {
+export default class TrustedEvaluationTab extends Component<Signature> {
   @service declare store: Store;
 
   get options(): { value: 'none' | 'pass' | 'fail'; isSelected: boolean; text: string }[] {
@@ -61,6 +61,6 @@ export default class TrustedEvaluationTabComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExamplePage::EvaluationCard::TrustedEvaluationTab': typeof TrustedEvaluationTabComponent;
+    'CourseAdmin::CodeExamplePage::EvaluationCard::TrustedEvaluationTab': typeof TrustedEvaluationTab;
   }
 }

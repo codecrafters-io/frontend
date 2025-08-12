@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class AffiliateLinkStatContainerComponent extends Component<Signature> {}
+export default class AffiliateLinkStatContainer extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::AffiliateLinkStatContainer': typeof AffiliateLinkStatContainerComponent;
+    'AffiliatePage::AffiliateLinkStatContainer': typeof AffiliateLinkStatContainer;
   }
 }

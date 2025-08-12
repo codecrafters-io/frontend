@@ -10,12 +10,12 @@ interface Signature {
   };
 }
 
-export default class UpcomingCoursesCardComponent extends Component<Signature> {
+export default class UpcomingCoursesCard extends Component<Signature> {
   image = image;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::UpcomingCoursesCard': typeof UpcomingCoursesCardComponent;
+    'TrackPage::UpcomingCoursesCard': typeof UpcomingCoursesCard;
   }
 }

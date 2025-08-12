@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Step } from '../expandable-step-list';
+import type { StepDefinition } from '../expandable-step-list';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
@@ -11,10 +11,10 @@ interface Signature {
     isExpanded: boolean;
     isFirstIncompleteStep: boolean;
     number: number;
-    nextIncompleteStep: Step | null;
+    nextIncompleteStep: StepDefinition | null;
     onCollapse: () => void;
     onManualComplete: () => void;
-    step: Step;
+    step: StepDefinition;
   };
 
   Blocks: {
@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class StepComponent extends Component<Signature> {
+export default class Step extends Component<Signature> {
   @tracked previousIsComplete: boolean | null = null;
 
   @action
@@ -44,6 +44,6 @@ export default class StepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ExpandableStepList::Step': typeof StepComponent;
+    'ExpandableStepList::Step': typeof Step;
   }
 }

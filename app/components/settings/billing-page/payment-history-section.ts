@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class PaymentHistorySectionComponent extends Component<Signature> {
+export default class PaymentHistorySection extends Component<Signature> {
   @service declare store: Store;
 
   rippleSpinnerImage = rippleSpinnerImage;
@@ -49,6 +49,6 @@ export default class PaymentHistorySectionComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::BillingPage::PaymentHistorySection': typeof PaymentHistorySectionComponent;
+    'Settings::BillingPage::PaymentHistorySection': typeof PaymentHistorySection;
   }
 }

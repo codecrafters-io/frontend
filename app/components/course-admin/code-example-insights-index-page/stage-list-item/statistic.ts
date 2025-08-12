@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class StatisticComponent extends Component<Signature> {
+export default class Statistic extends Component<Signature> {
   get valueColorClasses(): string {
     if (!this.args.statistic) {
       return 'text-gray-500';
@@ -27,6 +27,6 @@ export default class StatisticComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic': typeof StatisticComponent;
+    'CourseAdmin::CodeExampleInsightsIndexPage::StageListItem::Statistic': typeof Statistic;
   }
 }

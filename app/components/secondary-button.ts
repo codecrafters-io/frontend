@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class SecondaryButtonComponent extends Component<Signature> {}
+export default class SecondaryButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    SecondaryButton: typeof SecondaryButtonComponent;
+    SecondaryButton: typeof SecondaryButton;
   }
 }

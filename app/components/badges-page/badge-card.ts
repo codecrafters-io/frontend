@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class BadgeCardComponent extends Component<Signature> {
+export default class BadgeCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
@@ -29,6 +29,6 @@ export default class BadgeCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BadgesPage::BadgeCard': typeof BadgeCardComponent;
+    'BadgesPage::BadgeCard': typeof BadgeCard;
   }
 }

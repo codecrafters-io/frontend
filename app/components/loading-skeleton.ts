@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class LoadingSkeletonComponent extends Component<Signature> {
+export default class LoadingSkeleton extends Component<Signature> {
   get widthStyle(): string {
     if (this.args.width === 'full') {
       return 'width: 100%;';

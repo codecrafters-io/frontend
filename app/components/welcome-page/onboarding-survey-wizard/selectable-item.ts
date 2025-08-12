@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class SelectableItemComponent extends Component<Signature> {
+export default class SelectableItem extends Component<Signature> {
   toRight = toRight;
   toLeft = toLeft;
 
@@ -28,6 +28,6 @@ export default class SelectableItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'WelcomePage::OnboardingSurveyWizard::SelectableItem': typeof SelectableItemComponent;
+    'WelcomePage::OnboardingSurveyWizard::SelectableItem': typeof SelectableItem;
   }
 }

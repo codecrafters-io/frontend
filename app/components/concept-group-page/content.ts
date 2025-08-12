@@ -7,7 +7,7 @@ interface Signature {
   Args: { conceptGroup: ConceptGroupModel };
 }
 
-export default class ContentComponent extends Component<Signature> {
+export default class Content extends Component<Signature> {
   get sortedConcepts() {
     return this.args.conceptGroup.concepts.toArray().sort((a, b) => {
       return this.args.conceptGroup.conceptSlugs.indexOf(a.slug) - this.args.conceptGroup.conceptSlugs.indexOf(b.slug);
@@ -17,6 +17,6 @@ export default class ContentComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptGroupPage::Content': typeof ContentComponent;
+    'ConceptGroupPage::Content': typeof Content;
   }
 }

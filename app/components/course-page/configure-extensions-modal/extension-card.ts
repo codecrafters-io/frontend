@@ -20,7 +20,7 @@ interface Signature {
   };
 }
 
-export default class ExtensionCardComponent extends Component<Signature> {
+export default class ExtensionCard extends Component<Signature> {
   @service declare store: Store;
   @service declare coursePageState: CoursePageStateService;
 
@@ -119,6 +119,6 @@ export default class ExtensionCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::ConfigureExtensionsModal::ExtensionCard': typeof ExtensionCardComponent;
+    'CoursePage::ConfigureExtensionsModal::ExtensionCard': typeof ExtensionCard;
   }
 }

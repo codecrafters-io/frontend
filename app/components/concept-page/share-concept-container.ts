@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class ShareConceptContainerComponent extends Component<Signature> {
+export default class ShareConceptContainer extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   @action
@@ -25,6 +25,6 @@ export default class ShareConceptContainerComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptPage::ShareConceptContainer': typeof ShareConceptContainerComponent;
+    'ConceptPage::ShareConceptContainer': typeof ShareConceptContainer;
   }
 }

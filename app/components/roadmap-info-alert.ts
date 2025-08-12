@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class RoadmapInfoAlertComponent extends Component<Signature> {}
+export default class RoadmapInfoAlert extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    RoadmapInfoAlert: typeof RoadmapInfoAlertComponent;
+    RoadmapInfoAlert: typeof RoadmapInfoAlert;
   }
 }

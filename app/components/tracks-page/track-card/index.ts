@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class TrackCardComponent extends Component<Signature> {
+export default class TrackCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
-export default class CommunitySolutionsLanguageDropdownComponent extends Component {
+export default class CommunitySolutionsLanguageDropdown extends Component {
   get languages() {
     return this.args.courseStage.course.betaOrLiveLanguages.sortBy('name');
   }

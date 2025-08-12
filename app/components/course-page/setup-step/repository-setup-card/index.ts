@@ -11,7 +11,7 @@ export interface Signature {
   };
 }
 
-export default class RepositorySetupCardComponent extends Component<Signature> {
+export default class RepositorySetupCard extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   get isComplete() {
@@ -21,6 +21,6 @@ export default class RepositorySetupCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::SetupStep::RepositorySetupCard': typeof RepositorySetupCardComponent;
+    'CoursePage::SetupStep::RepositorySetupCard': typeof RepositorySetupCard;
   }
 }

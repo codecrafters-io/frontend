@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class ReplyButtonComponent extends Component {}
+export default class ReplyButton extends Component {}

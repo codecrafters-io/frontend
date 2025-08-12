@@ -30,7 +30,7 @@ interface Signature {
   };
 }
 
-export default class CourseLeaderboardComponent extends Component<Signature> {
+export default class CourseLeaderboard extends Component<Signature> {
   transition = fade;
 
   leaderboardPoller: LeaderboardPoller | null = null;
@@ -257,6 +257,6 @@ export default class CourseLeaderboardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CourseLeaderboard: typeof CourseLeaderboardComponent;
+    CourseLeaderboard: typeof CourseLeaderboard;
   }
 }

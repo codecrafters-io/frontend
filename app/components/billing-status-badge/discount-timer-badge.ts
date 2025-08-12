@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class DiscountTimerBadgeComponent extends Component<Signature> {
+export default class DiscountTimerBadge extends Component<Signature> {
   iconImage = iconImage;
 
   @service declare time: TimeService;
@@ -38,6 +38,6 @@ export default class DiscountTimerBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BillingStatusBadge::DiscountTimerBadge': typeof DiscountTimerBadgeComponent;
+    'BillingStatusBadge::DiscountTimerBadge': typeof DiscountTimerBadge;
   }
 }

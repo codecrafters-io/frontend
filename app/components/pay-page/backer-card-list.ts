@@ -14,7 +14,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class BackerCardListComponent extends Component<Signature> {
+export default class BackerCardList extends Component<Signature> {
   get backers() {
     return [
       {
@@ -58,6 +58,6 @@ export default class BackerCardListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::BackerCardList': typeof BackerCardListComponent;
+    'PayPage::BackerCardList': typeof BackerCardList;
   }
 }

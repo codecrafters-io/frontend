@@ -2,12 +2,21 @@ import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagem
 import ConceptQuestion from 'codecrafters-frontend/models/concept-question';
 import Model, { belongsTo } from '@ember-data/model';
 import UserModel from 'codecrafters-frontend/models/user';
-import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import {
+  ClickToContinueBlockDefinition,
+  ConceptAnimationBlockDefinition,
+  ConceptQuestionBlockDefinition,
+  MarkdownBlockDefinition,
+} from 'codecrafters-frontend/utils/block-definitions';
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
 
-export type Block = MarkdownBlock | ConceptAnimationBlock | ClickToContinueBlock | ConceptQuestionBlock;
+export type BlockDefinition =
+  | MarkdownBlockDefinition
+  | ConceptAnimationBlockDefinition
+  | ClickToContinueBlockDefinition
+  | ConceptQuestionBlockDefinition;
 
 export type BlockJSON = {
   type: 'click_to_continue' | 'markdown' | 'concept_animation' | 'concept_question';
@@ -16,7 +25,7 @@ export type BlockJSON = {
 
 export interface BlockGroup {
   index: number;
-  blocks: Block[];
+  blocks: BlockDefinition[];
 }
 
 export default class ConceptModel extends Model {
@@ -71,17 +80,17 @@ export default class ConceptModel extends Model {
     }
   }
 
-  get parsedBlocks(): Block[] {
+  get parsedBlocks(): BlockDefinition[] {
     const blockClassMapping: Record<string, unknown> = {};
 
-    const blockClasses = [ClickToContinueBlock, MarkdownBlock, ConceptAnimationBlock, ConceptQuestionBlock];
+    const blockClasses = [ClickToContinueBlockDefinition, MarkdownBlockDefinition, ConceptAnimationBlockDefinition, ConceptQuestionBlockDefinition];
 
     blockClasses.forEach((blockClass) => {
       blockClassMapping[blockClass.type] = blockClass;
     });
 
     return this.blocks.map((blockJSON) => {
-      const blockClass = blockClassMapping[blockJSON.type] as new (json: BlockJSON) => Block;
+      const blockClass = blockClassMapping[blockJSON.type] as new (json: BlockJSON) => BlockDefinition;
 
       if (!blockClass) {
         throw new Error(`Unknown block type: ${blockJSON.type}`);

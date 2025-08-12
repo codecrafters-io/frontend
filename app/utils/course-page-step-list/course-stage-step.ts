@@ -2,11 +2,11 @@ import { tracked } from '@glimmer/tracking';
 import { isToday, isYesterday } from 'date-fns';
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import type ProgressIndicator from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 
-export default class CourseStageStep extends Step {
+export default class CourseStageStep extends StepDefinition {
   @tracked stageListItem;
   @tracked repository;
 

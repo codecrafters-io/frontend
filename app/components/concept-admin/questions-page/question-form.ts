@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class QuestionFormComponent extends Component<Signature> {
+export default class QuestionForm extends Component<Signature> {
   get options() {
     return this.args.question.options;
   }
@@ -71,6 +71,6 @@ export default class QuestionFormComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::QuestionsPage::QuestionForm': typeof QuestionFormComponent;
+    'ConceptAdmin::QuestionsPage::QuestionForm': typeof QuestionForm;
   }
 }

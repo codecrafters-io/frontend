@@ -17,7 +17,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class OnboardingSurveyWizardComponent extends Component<Signature> {
+export default class OnboardingSurveyWizard extends Component<Signature> {
   fade = fade;
   @tracked currentStep = 1;
   @service declare router: RouterService;
@@ -52,6 +52,6 @@ export default class OnboardingSurveyWizardComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'WelcomePage::OnboardingSurveyWizard': typeof OnboardingSurveyWizardComponent;
+    'WelcomePage::OnboardingSurveyWizard': typeof OnboardingSurveyWizard;
   }
 }

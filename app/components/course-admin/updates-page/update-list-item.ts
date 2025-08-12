@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class UpdateListItemComponent extends Component<Signature> {
+export default class UpdateListItem extends Component<Signature> {
   @service declare router: RouterService;
 
   @action
@@ -23,6 +23,6 @@ export default class UpdateListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::UpdatesPage::UpdateListItem': typeof UpdateListItemComponent;
+    'CourseAdmin::UpdatesPage::UpdateListItem': typeof UpdateListItem;
   }
 }

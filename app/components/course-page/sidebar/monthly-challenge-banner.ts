@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class MonthlyChallengeBannerComponent extends Component<Signature> {
+export default class MonthlyChallengeBanner extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
 
@@ -27,6 +27,6 @@ export default class MonthlyChallengeBannerComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Sidebar::MonthlyChallengeBanner': typeof MonthlyChallengeBannerComponent;
+    'CoursePage::Sidebar::MonthlyChallengeBanner': typeof MonthlyChallengeBanner;
   }
 }

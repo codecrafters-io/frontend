@@ -11,7 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class FaqListComponent extends Component<Signature> {
+export default class FaqList extends Component<Signature> {
   @tracked openItem: Faq | null = null;
 
   faqs: Faq[] = [
@@ -76,6 +76,6 @@ Many companies allow employees to expense CodeCrafters as part of their learning
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FaqList: typeof FaqListComponent;
+    FaqList: typeof FaqList;
   }
 }

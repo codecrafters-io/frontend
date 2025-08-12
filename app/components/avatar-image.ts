@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class AvatarImageComponent extends Component<Signature> {
+export default class AvatarImage extends Component<Signature> {
   @tracked avatarImageFailedToLoad = false;
 
   get imageUrl() {
@@ -30,6 +30,6 @@ export default class AvatarImageComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    AvatarImage: typeof AvatarImageComponent;
+    AvatarImage: typeof AvatarImage;
   }
 }

@@ -13,10 +13,10 @@ interface Signature {
   };
 }
 
-export default class HeaderComponent extends Component<Signature> {}
+export default class Header extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestRunnerCard::Header': typeof HeaderComponent;
+    'CoursePage::CourseStageStep::TestRunnerCard::Header': typeof Header;
   }
 }

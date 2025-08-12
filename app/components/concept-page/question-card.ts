@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class QuestionCardComponent extends Component<Signature> {
+export default class QuestionCard extends Component<Signature> {
   @service declare confetti: ConfettiService;
 
   @tracked hasFiredConfetti = false;
@@ -162,6 +162,6 @@ export default class QuestionCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptPage::QuestionCard': typeof QuestionCardComponent;
+    'ConceptPage::QuestionCard': typeof QuestionCard;
   }
 }

@@ -12,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class ButtonWithSpinnerComponent extends Component<Signature> {}
+export default class ButtonWithSpinner extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ButtonWithSpinner: typeof ButtonWithSpinnerComponent;
+    ButtonWithSpinner: typeof ButtonWithSpinner;
   }
 }

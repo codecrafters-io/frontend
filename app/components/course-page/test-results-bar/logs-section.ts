@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
@@ -7,13 +7,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeStep: Step;
-    currentStep: Step;
+    activeStep: StepDefinition;
+    currentStep: StepDefinition;
     repository: RepositoryModel;
   };
 }
 
-export default class LogsSectionComponent extends Component<Signature> {
+export default class LogsSection extends Component<Signature> {
   get activeCourseStage() {
     if (this.args.activeStep.type === 'CourseStageStep') {
       return this.activeStepAsCourseStageStep.courseStage;
@@ -45,6 +45,6 @@ export default class LogsSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::LogsSection': typeof LogsSectionComponent;
+    'CoursePage::TestResultsBar::LogsSection': typeof LogsSection;
   }
 }

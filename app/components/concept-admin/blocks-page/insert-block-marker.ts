@@ -1,6 +1,10 @@
 import Component from '@glimmer/component';
-import { type Block } from 'codecrafters-frontend/models/concept';
-import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import { type BlockDefinition } from 'codecrafters-frontend/models/concept';
+import {
+  ClickToContinueBlockDefinition,
+  ConceptQuestionBlockDefinition,
+  MarkdownBlockDefinition,
+} from 'codecrafters-frontend/utils/block-definitions';
 import { action } from '@ember/object';
 
 interface Signature {
@@ -8,34 +12,34 @@ interface Signature {
 
   Args: {
     isVisibleWithoutHover: boolean;
-    onBlockAdded: (block: Block) => void;
+    onBlockAdded: (block: BlockDefinition) => void;
   };
 }
 
-export default class InsertBlockMarkerComponent extends Component<Signature> {
+export default class InsertBlockMarker extends Component<Signature> {
   @action
-  handleBlockTypeChosen(blockType: Block['type'], closeDropdownFn: () => void) {
+  handleBlockTypeChosen(blockType: BlockDefinition['type'], closeDropdownFn: () => void) {
     const newBlock = this.newBlockForType(blockType);
 
     this.args.onBlockAdded(newBlock);
     closeDropdownFn();
   }
 
-  newBlockForType(blockType: Block['type']): Block {
+  newBlockForType(blockType: BlockDefinition['type']): BlockDefinition {
     if (blockType === 'markdown') {
-      return new MarkdownBlock({
+      return new MarkdownBlockDefinition({
         type: blockType,
         args: {
           markdown: 'Hello, world!',
         },
       });
     } else if (blockType === 'click_to_continue') {
-      return new ClickToContinueBlock({
+      return new ClickToContinueBlockDefinition({
         type: blockType,
         args: {},
       });
     } else if (blockType === 'concept_question') {
-      return new ConceptQuestionBlock({
+      return new ConceptQuestionBlockDefinition({
         type: blockType,
         args: {},
       });
@@ -47,6 +51,6 @@ export default class InsertBlockMarkerComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::InsertBlockMarker': typeof InsertBlockMarkerComponent;
+    'ConceptAdmin::BlocksPage::InsertBlockMarker': typeof InsertBlockMarker;
   }
 }

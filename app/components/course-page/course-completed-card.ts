@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class CourseCompletedCardComponent extends Component<Signature> {
+export default class CourseCompletedCard extends Component<Signature> {
   congratulationsImage = congratulationsImage;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
@@ -19,6 +19,6 @@ export default class CourseCompletedCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseCompletedCard': typeof CourseCompletedCardComponent;
+    'CoursePage::CourseCompletedCard': typeof CourseCompletedCard;
   }
 }

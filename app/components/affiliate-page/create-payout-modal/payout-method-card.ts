@@ -11,10 +11,10 @@ interface Signature {
   };
 }
 
-export default class PayoutMethodCardComponent extends Component<Signature> {}
+export default class PayoutMethodCard extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::CreatePayoutModal::PayoutMethodCard': typeof PayoutMethodCardComponent;
+    'AffiliatePage::CreatePayoutModal::PayoutMethodCard': typeof PayoutMethodCard;
   }
 }

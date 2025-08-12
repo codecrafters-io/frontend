@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class FakeDataToolbarComponent extends Component<Signature> {
+export default class FakeDataToolbar extends Component<Signature> {
   @service declare store: Store;
   @service declare visibilityService: VisibilityService;
   @service declare actionCableConsumerService: ActionCableConsumerService;
@@ -89,6 +89,6 @@ export default class FakeDataToolbarComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FakeDataToolbar: typeof FakeDataToolbarComponent;
+    FakeDataToolbar: typeof FakeDataToolbar;
   }
 }

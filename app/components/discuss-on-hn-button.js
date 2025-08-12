@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class DiscussOnHnButtonComponent extends Component {}
+export default class DiscussOnHnButton extends Component {}

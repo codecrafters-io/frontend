@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class PrimaryButtonWithSpinnerComponent extends Component<Signature> {
+export default class PrimaryButtonWithSpinner extends Component<Signature> {
   get sizeIsExtraSmall(): boolean {
     return this.args.size === 'extra-small';
   }
@@ -35,6 +35,6 @@ export default class PrimaryButtonWithSpinnerComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    PrimaryButtonWithSpinner: typeof PrimaryButtonWithSpinnerComponent;
+    PrimaryButtonWithSpinner: typeof PrimaryButtonWithSpinner;
   }
 }

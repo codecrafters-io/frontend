@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class LanguageDropdownComponent extends Component<Signature> {
+export default class LanguageDropdown extends Component<Signature> {
   get isAllLanguagesOptionSelected() {
     return !this.args.selectedLanguage;
   }
@@ -40,6 +40,6 @@ export default class LanguageDropdownComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LanguageDropdown: typeof LanguageDropdownComponent;
+    LanguageDropdown: typeof LanguageDropdown;
   }
 }

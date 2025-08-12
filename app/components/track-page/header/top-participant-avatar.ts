@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class TopParticipantAvatarComponent extends Component<Signature> {}
+export default class TopParticipantAvatar extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::Header::TopParticipantAvatar': typeof TopParticipantAvatarComponent;
+    'TrackPage::Header::TopParticipantAvatar': typeof TopParticipantAvatar;
   }
 }

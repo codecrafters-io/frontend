@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class ContestPageLeaderboardEntryComponent extends Component<Signature> {
+export default class ContestPageLeaderboardEntry extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get colorClasses(): string {
@@ -43,6 +43,6 @@ export default class ContestPageLeaderboardEntryComponent extends Component<Sign
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::LeaderboardEntry': typeof ContestPageLeaderboardEntryComponent;
+    'ContestPage::LeaderboardEntry': typeof ContestPageLeaderboardEntry;
   }
 }

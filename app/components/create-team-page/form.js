@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { escapeExpression } from '@ember/-internals/glimmer';
 
-export default class FeaturesListComponent extends Component {
+export default class FeaturesList extends Component {
   @tracked isCreatingTeam = false;
   @tracked newTeamName = '';
   @service router;

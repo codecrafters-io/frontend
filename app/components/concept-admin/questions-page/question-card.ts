@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class QuestionCardComponent extends Component<Signature> {}
+export default class QuestionCard extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::QuestionsPage::QuestionCard': typeof QuestionCardComponent;
+    'ConceptAdmin::QuestionsPage::QuestionCard': typeof QuestionCard;
   }
 }

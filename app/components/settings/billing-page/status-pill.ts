@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class StatusPillComponent extends Component<Signature> {}
+export default class StatusPill extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::BillingPage::StatusPill': typeof StatusPillComponent;
+    'Settings::BillingPage::StatusPill': typeof StatusPill;
   }
 }

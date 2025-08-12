@@ -27,7 +27,7 @@ function groupBy<T>(collection: T[], keyFn: (item: T) => string): Record<string,
   return result;
 }
 
-export default class AdminCourseSubmissionsPageTimelineContainerComponent extends Component<Signature> {
+export default class AdminCourseSubmissionsPageTimelineContainer extends Component<Signature> {
   get groupedSubmissions(): Record<string, SubmissionModel[]> {
     return groupBy(this.args.submissions.toArray().sortBy('createdAt').reverse(), (submission) => {
       return submission.createdAt.toISOString().slice(0, 10);
@@ -37,6 +37,6 @@ export default class AdminCourseSubmissionsPageTimelineContainerComponent extend
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::SubmissionsPage::TimelineContainer': typeof AdminCourseSubmissionsPageTimelineContainerComponent;
+    'CourseAdmin::SubmissionsPage::TimelineContainer': typeof AdminCourseSubmissionsPageTimelineContainer;
   }
 }

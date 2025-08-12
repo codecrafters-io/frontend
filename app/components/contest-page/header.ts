@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class ContestPageHeaderComponent extends Component<Signature> {
+export default class ContestPageHeader extends Component<Signature> {
   @service declare date: DateService;
 
   get contestStatusPillColor(): 'gray' | 'green' {
@@ -48,6 +48,6 @@ export default class ContestPageHeaderComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::Header': typeof ContestPageHeaderComponent;
+    'ContestPage::Header': typeof ContestPageHeader;
   }
 }

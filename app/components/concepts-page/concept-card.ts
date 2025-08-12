@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class ConceptCardComponent extends Component<Signature> {
+export default class ConceptCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get latestConceptEngagement() {
@@ -24,6 +24,6 @@ export default class ConceptCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptsPage::ConceptCard': typeof ConceptCardComponent;
+    'ConceptsPage::ConceptCard': typeof ConceptCard;
   }
 }

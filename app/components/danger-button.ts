@@ -13,10 +13,10 @@ interface Signature {
   };
 }
 
-export default class DangerButtonComponent extends Component<Signature> {}
+export default class DangerButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DangerButton: typeof DangerButtonComponent;
+    DangerButton: typeof DangerButton;
   }
 }

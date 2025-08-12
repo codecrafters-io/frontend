@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class ReferralReferredUserItemComponent extends Component<Signature> {
+export default class ReferralReferredUserItem extends Component<Signature> {
   get fullActivatesAt() {
     // TODO: Temporary, prevents rendering errors
     if (!this.args.grant?.activatesAt) {
@@ -56,6 +56,6 @@ export default class ReferralReferredUserItemComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ReferralsPage::ReferralReferredUserItem': typeof ReferralReferredUserItemComponent;
+    'ReferralsPage::ReferralReferredUserItem': typeof ReferralReferredUserItem;
   }
 }

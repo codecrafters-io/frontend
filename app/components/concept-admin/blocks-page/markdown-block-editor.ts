@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
-import { MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import { MarkdownBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: MarkdownBlock;
+    model: MarkdownBlockDefinition;
   };
 }
 
-export default class MarkdownBlockEditorComponent extends Component<Signature> {}
+export default class MarkdownBlockEditor extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::MarkdownBlockEditor': typeof MarkdownBlockEditorComponent;
+    'ConceptAdmin::BlocksPage::MarkdownBlockEditor': typeof MarkdownBlockEditor;
   }
 }

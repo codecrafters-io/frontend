@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class AdminSectionComponent extends Component<Signature> {}
+export default class AdminSection extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::AdminSection': typeof AdminSectionComponent;
+    'CourseOverviewPage::AdminSection': typeof AdminSection;
   }
 }

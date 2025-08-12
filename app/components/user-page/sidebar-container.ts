@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class SidebarContainerComponent extends Component<Signature> {
+export default class SidebarContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser() {

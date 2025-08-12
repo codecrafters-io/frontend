@@ -1,8 +1,8 @@
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import type ProgressIndicator from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
 import { tracked } from '@glimmer/tracking';
 
-export default class SetupStep extends Step {
+export default class SetupStep extends StepDefinition {
   @tracked repository;
 
   constructor(repository: unknown) {

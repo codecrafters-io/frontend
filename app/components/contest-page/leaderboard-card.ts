@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class ContestPageLeaderboardCardComponent extends Component<Signature> {
+export default class ContestPageLeaderboardCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get orderedSurroundingEntries(): LeaderboardEntryModel[] {
@@ -46,6 +46,6 @@ export default class ContestPageLeaderboardCardComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::LeaderboardCard': typeof ContestPageLeaderboardCardComponent;
+    'ContestPage::LeaderboardCard': typeof ContestPageLeaderboardCard;
   }
 }

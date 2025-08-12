@@ -1,6 +1,6 @@
 import Concept from 'codecrafters-frontend/models/concept';
 import Model, { attr, belongsTo } from '@ember-data/model';
-import { ConceptQuestionBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 
 export type Option = {
   markdown: string;
@@ -14,8 +14,8 @@ export default class ConceptQuestionModel extends Model {
   @attr('string') declare slug: string;
   @attr() declare options: Array<Option>;
 
-  get blockForPreview(): ConceptQuestionBlock {
-    return new ConceptQuestionBlock({
+  get blockForPreview(): ConceptQuestionBlockDefinition {
+    return new ConceptQuestionBlockDefinition({
       type: 'concept_question',
       args: {
         concept_question_slug: this.slug,

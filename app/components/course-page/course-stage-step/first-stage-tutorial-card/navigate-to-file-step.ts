@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class NavigateToFileStepComponent extends Component<Signature> {
+export default class NavigateToFileStep extends Component<Signature> {
   get filename() {
     return this.solution?.changedFiles[0]?.filename;
   }
@@ -24,6 +24,6 @@ export default class NavigateToFileStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep': typeof NavigateToFileStepComponent;
+    'CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep': typeof NavigateToFileStep;
   }
 }

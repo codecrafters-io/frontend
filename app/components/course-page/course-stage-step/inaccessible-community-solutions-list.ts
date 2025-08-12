@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class InaccessibleCommunitySolutionsListComponent extends Component<Signature> {}
+export default class InaccessibleCommunitySolutionsList extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::InaccessibleCommunitySolutionsList': typeof InaccessibleCommunitySolutionsListComponent;
+    'CoursePage::CourseStageStep::InaccessibleCommunitySolutionsList': typeof InaccessibleCommunitySolutionsList;
   }
 }

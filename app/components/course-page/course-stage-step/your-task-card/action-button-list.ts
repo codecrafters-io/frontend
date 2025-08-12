@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class ActionButtonListComponent extends Component<Signature> {
+export default class ActionButtonList extends Component<Signature> {
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
 
@@ -65,6 +65,6 @@ export default class ActionButtonListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::YourTaskCard::ActionButtonList': typeof ActionButtonListComponent;
+    'CoursePage::CourseStageStep::YourTaskCard::ActionButtonList': typeof ActionButtonList;
   }
 }

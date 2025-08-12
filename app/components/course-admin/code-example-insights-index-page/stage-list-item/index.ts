@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class StageListItemComponent extends Component<Signature> {
+export default class StageListItem extends Component<Signature> {
   get analysis() {
     return this.args.stage.communitySolutionsAnalyses.findBy('language', this.args.language);
   }
@@ -19,6 +19,6 @@ export default class StageListItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsightsIndexPage::StageListItem': typeof StageListItemComponent;
+    'CourseAdmin::CodeExampleInsightsIndexPage::StageListItem': typeof StageListItem;
   }
 }

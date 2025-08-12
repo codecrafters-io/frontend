@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 
 interface Signature {
@@ -12,11 +12,11 @@ interface Signature {
     activeRepository: RepositoryModel;
     course: CourseModel;
     onConfigureExtensionsButtonClick: () => void;
-    stepList: StepList;
+    stepList: StepListDefinition;
   };
 }
 
-export default class StepListComponent extends Component<Signature> {
+export default class StepList extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   get activeStep() {
@@ -55,6 +55,6 @@ export default class StepListComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::StepList': typeof StepListComponent;
+    'CoursePage::StepList': typeof StepList;
   }
 }

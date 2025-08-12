@@ -344,7 +344,7 @@ export interface Signature {
   Blocks: { default?: [] };
 }
 
-export default class CodeMirrorComponent extends Component<Signature> {
+export default class CodeMirror extends Component<Signature> {
   renderedView: EditorView | null = null;
 
   compartments: Map<string, Compartment> = new Map(Object.keys(OPTION_HANDLERS).map((optionName) => [optionName, new Compartment()]));
@@ -476,6 +476,6 @@ export default class CodeMirrorComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CodeMirror: typeof CodeMirrorComponent;
+    CodeMirror: typeof CodeMirror;
   }
 }

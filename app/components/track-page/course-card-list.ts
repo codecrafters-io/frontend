@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class TrackPageCourseCardListComponent extends Component<Signature> {
+export default class TrackPageCourseCardList extends Component<Signature> {
   logoImage = logoImage;
   comingSoonImage = comingSoonImage;
 
@@ -41,6 +41,6 @@ export default class TrackPageCourseCardListComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::CourseCardList': typeof TrackPageCourseCardListComponent;
+    'TrackPage::CourseCardList': typeof TrackPageCourseCardList;
   }
 }

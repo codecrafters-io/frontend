@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -12,11 +12,11 @@ interface Signature {
 
   Args: {
     repository: RepositoryModel;
-    step: Step;
+    step: StepDefinition;
   };
 }
 
-export default class CompletedStepNoticeComponent extends Component<Signature> {
+export default class CompletedStepNotice extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
 
@@ -62,6 +62,6 @@ export default class CompletedStepNoticeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CompletedStepNotice': typeof CompletedStepNoticeComponent;
+    'CoursePage::CompletedStepNotice': typeof CompletedStepNotice;
   }
 }

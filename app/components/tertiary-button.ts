@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class TertiaryButtonComponent extends Component<Signature> {}
+export default class TertiaryButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TertiaryButton: typeof TertiaryButtonComponent;
+    TertiaryButton: typeof TertiaryButton;
   }
 }

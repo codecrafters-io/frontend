@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class ConfigureExtensionsModalComponent extends Component<Signature> {
+export default class ConfigureExtensionsModal extends Component<Signature> {
   @service declare store: Store;
   @tracked allCourseExtensionIdeas: CourseExtensionIdeaModel[] = [];
 
@@ -41,6 +41,6 @@ export default class ConfigureExtensionsModalComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::ConfigureExtensionsModal': typeof ConfigureExtensionsModalComponent;
+    'CoursePage::ConfigureExtensionsModal': typeof ConfigureExtensionsModal;
   }
 }

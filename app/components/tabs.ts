@@ -25,7 +25,7 @@ export interface Signature {
   };
 }
 
-export default class TabsComponent extends Component<Signature> {
+export default class Tabs extends Component<Signature> {
   @tracked uncontrolledActiveTabSlug = this.args.tabs[0]!.slug;
 
   get activeTabSlug() {
@@ -44,6 +44,6 @@ export default class TabsComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Tabs: typeof TabsComponent;
+    Tabs: typeof Tabs;
   }
 }

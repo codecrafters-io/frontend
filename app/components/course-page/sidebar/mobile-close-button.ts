@@ -8,10 +8,10 @@ interface Signature {
   };
 }
 
-export default class MobileCloseButtonComponent extends Component<Signature> {}
+export default class MobileCloseButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Sidebar::MobileCloseButton': typeof MobileCloseButtonComponent;
+    'CoursePage::Sidebar::MobileCloseButton': typeof MobileCloseButton;
   }
 }

@@ -12,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class CodeWalkthroughSnippetComponent extends Component<Signature> {}
+export default class CodeWalkthroughSnippet extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CodeWalkthroughSnippet: typeof CodeWalkthroughSnippetComponent;
+    CodeWalkthroughSnippet: typeof CodeWalkthroughSnippet;
   }
 }

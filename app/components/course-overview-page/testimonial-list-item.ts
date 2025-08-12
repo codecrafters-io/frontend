@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class TestimonialListItemComponent extends Component<Signature> {}
+export default class TestimonialListItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::TestimonialListItem': typeof TestimonialListItemComponent;
+    'CourseOverviewPage::TestimonialListItem': typeof TestimonialListItem;
   }
 }

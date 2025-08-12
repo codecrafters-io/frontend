@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class CourseStageDropdownComponent extends Component<Signature> {
+export default class CourseStageDropdown extends Component<Signature> {
   get isAllCourseStagesOptionSelected() {
     return !this.args.selectedCourseStage;
   }
@@ -42,6 +42,6 @@ export default class CourseStageDropdownComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CourseStageDropdown: typeof CourseStageDropdownComponent;
+    CourseStageDropdown: typeof CourseStageDropdown;
   }
 }

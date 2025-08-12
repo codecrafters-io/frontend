@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class TestsPassedOverlayComponent extends Component<Signature> {
+export default class TestsPassedOverlay extends Component<Signature> {
   @tracked lastSeenStepId: string | null = null;
   @tracked modalWasDismissed = false;
 
@@ -44,6 +44,6 @@ export default class TestsPassedOverlayComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestsPassedOverlay': typeof TestsPassedOverlayComponent;
+    'CoursePage::CourseStageStep::TestsPassedOverlay': typeof TestsPassedOverlay;
   }
 }

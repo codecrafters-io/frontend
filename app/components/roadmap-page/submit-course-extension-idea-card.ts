@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class SubmitCourseIdeaExtensionCardComponent extends Component<Signature> {
+export default class SubmitCourseIdeaExtensionCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   @action
@@ -31,6 +31,6 @@ export default class SubmitCourseIdeaExtensionCardComponent extends Component<Si
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::SubmitCourseExtensionIdeaCard': typeof SubmitCourseIdeaExtensionCardComponent;
+    'RoadmapPage::SubmitCourseExtensionIdeaCard': typeof SubmitCourseIdeaExtensionCard;
   }
 }

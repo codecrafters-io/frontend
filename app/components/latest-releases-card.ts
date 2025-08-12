@@ -17,7 +17,7 @@ interface Release {
   type: 'challenge' | 'extension';
 }
 
-export default class LatestReleasesCardComponent extends Component<Signature> {
+export default class LatestReleasesCard extends Component<Signature> {
   get releases(): Release[] {
     const releases: Release[] = [];
 
@@ -49,6 +49,6 @@ export default class LatestReleasesCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LatestReleasesCard: typeof LatestReleasesCardComponent;
+    LatestReleasesCard: typeof LatestReleasesCard;
   }
 }

@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type { ModelType as CourseRouteModelType } from 'codecrafters-frontend/routes/course';
-import type Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 export default class IntroductionController extends Controller {
   declare model: CourseRouteModelType;
@@ -11,7 +11,7 @@ export default class IntroductionController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
 
-  get currentStep(): Step {
-    return this.coursePageState.currentStep as Step;
+  get currentStep(): StepDefinition {
+    return this.coursePageState.currentStep as StepDefinition;
   }
 }

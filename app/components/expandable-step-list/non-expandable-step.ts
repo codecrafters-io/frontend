@@ -1,19 +1,19 @@
 import Component from '@glimmer/component';
-import type { Step } from '../expandable-step-list';
+import type { StepDefinition } from '../expandable-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     number: number;
-    step: Step;
+    step: StepDefinition;
   };
 }
 
-export default class NonExpandableStepComponent extends Component<Signature> {}
+export default class NonExpandableStep extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ExpandableStepList::NonExpandableStep': typeof NonExpandableStepComponent;
+    'ExpandableStepList::NonExpandableStep': typeof NonExpandableStep;
   }
 }

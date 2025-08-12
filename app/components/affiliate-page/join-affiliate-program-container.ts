@@ -13,7 +13,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
-export default class JoinAffiliateProgramContainerComponent extends Component {
+export default class JoinAffiliateProgramContainer extends Component {
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
 
@@ -79,6 +79,6 @@ export default class JoinAffiliateProgramContainerComponent extends Component {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::JoinAffiliateProgramContainer': typeof JoinAffiliateProgramContainerComponent;
+    'AffiliatePage::JoinAffiliateProgramContainer': typeof JoinAffiliateProgramContainer;
   }
 }

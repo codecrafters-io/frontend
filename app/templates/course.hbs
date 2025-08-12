@@ -62,7 +62,7 @@
 
     <CoursePage::Header::MainSection
       @course={{@model.course}}
-      @stepList={{this.coursePageState.stepListAsStepList}}
+      @stepList={{this.coursePageState.stepListAsStepListDefinition}}
       @currentStep={{this.coursePageState.currentStep}}
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
@@ -72,7 +72,7 @@
 
     <CoursePage::Header::StickySection
       @course={{@model.course}}
-      @stepList={{this.coursePageState.stepListAsStepList}}
+      @stepList={{this.coursePageState.stepListAsStepListDefinition}}
       @currentStep={{this.coursePageState.currentStep}}
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}

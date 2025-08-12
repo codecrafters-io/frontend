@@ -3,7 +3,7 @@ import privateLeaderboardImage from '/assets/images/team-features/private-leader
 import slackIntegrationImage from '/assets/images/team-features/slack-integration.png';
 import teamBillingImage from '/assets/images/team-features/team-billing.png';
 
-export default class FeaturesListComponent extends Component {
+export default class FeaturesList extends Component {
   get features() {
     return [
       {

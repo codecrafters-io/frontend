@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class ContentComponent extends Component<Signature> {
+export default class Content extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
   @service declare confetti: ConfettiService;
@@ -51,6 +51,6 @@ export default class ContentComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptPage::Content': typeof ContentComponent;
+    'ConceptPage::Content': typeof Content;
   }
 }

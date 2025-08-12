@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class LanguageLogoComponent extends Component<Signature> {}
+export default class LanguageLogo extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LanguageLogo: typeof LanguageLogoComponent;
+    LanguageLogo: typeof LanguageLogo;
   }
 }

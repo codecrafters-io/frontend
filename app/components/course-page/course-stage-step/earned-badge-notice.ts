@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class EarnedBadgeNoticeComponent extends Component<Signature> {
+export default class EarnedBadgeNotice extends Component<Signature> {
   @tracked selectedBadge: BadgeModel | null = null;
 
   handleBadgeModalClose() {
@@ -27,6 +27,6 @@ export default class EarnedBadgeNoticeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::EarnedBadgeNotice': typeof EarnedBadgeNoticeComponent;
+    'CoursePage::CourseStageStep::EarnedBadgeNotice': typeof EarnedBadgeNotice;
   }
 }

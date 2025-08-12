@@ -16,10 +16,10 @@ interface Signature {
   };
 }
 
-export default class TabLinkComponent extends Component<Signature> {}
+export default class TabLink extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::TabLink': typeof TabLinkComponent;
+    'CoursePage::Header::TabLink': typeof TabLink;
   }
 }

@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class MarkStageAsCompleteButtonComponent extends Component<Signature> {
+export default class MarkStageAsCompleteButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
@@ -53,6 +53,6 @@ export default class MarkStageAsCompleteButtonComponent extends Component<Signat
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::MarkStageAsCompleteButton': typeof MarkStageAsCompleteButtonComponent;
+    'CoursePage::CourseStageStep::MarkStageAsCompleteButton': typeof MarkStageAsCompleteButton;
   }
 }

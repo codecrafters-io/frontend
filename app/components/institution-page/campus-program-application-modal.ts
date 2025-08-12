@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class CampusProgramApplicationModalComponent extends Component<Signature> {
+export default class CampusProgramApplicationModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   transition = fade;
@@ -31,6 +31,6 @@ export default class CampusProgramApplicationModalComponent extends Component<Si
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::CampusProgramApplicationModal': typeof CampusProgramApplicationModalComponent;
+    'InstitutionPage::CampusProgramApplicationModal': typeof CampusProgramApplicationModal;
   }
 }

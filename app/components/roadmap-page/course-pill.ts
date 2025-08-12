@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class CoursePillComponent extends Component<Signature> {}
+export default class CoursePill extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::CoursePill': typeof CoursePillComponent;
+    'RoadmapPage::CoursePill': typeof CoursePill;
   }
 }

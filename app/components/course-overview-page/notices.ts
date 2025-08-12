@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class NoticesComponent extends Component<Signature> {
+export default class Notices extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get formattedCourseIsFreeExpirationDate() {
@@ -26,6 +26,6 @@ export default class NoticesComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::Notices': typeof NoticesComponent;
+    'CourseOverviewPage::Notices': typeof Notices;
   }
 }

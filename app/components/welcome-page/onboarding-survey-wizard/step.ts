@@ -18,7 +18,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class StepComponent extends Component<Signature> {
+export default class Step extends Component<Signature> {
   fade = fade;
 
   @tracked continueButtonWasPressed = false;
@@ -54,6 +54,6 @@ export default class StepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'WelcomePage::OnboardingSurveyWizard::Step': typeof StepComponent;
+    'WelcomePage::OnboardingSurveyWizard::Step': typeof Step;
   }
 }

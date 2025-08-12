@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class BlurredOverlayComponent extends Component<Signature> {}
+export default class BlurredOverlay extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BlurredOverlay: typeof BlurredOverlayComponent;
+    BlurredOverlay: typeof BlurredOverlay;
   }
 }

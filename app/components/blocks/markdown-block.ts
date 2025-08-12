@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import { MarkdownBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import { action } from '@ember/object';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-rust'; // This is the only one we use in concepts at the moment
@@ -8,11 +8,11 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: MarkdownBlock;
+    model: MarkdownBlockDefinition;
   };
 }
 
-export default class MarkdownBlockComponent extends Component<Signature> {
+export default class MarkdownBlock extends Component<Signature> {
   @action
   handleDidInsertHTML(element: HTMLDivElement) {
     Prism.highlightAllUnder(element);
@@ -26,6 +26,6 @@ export default class MarkdownBlockComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Blocks::MarkdownBlock': typeof MarkdownBlockComponent;
+    'Blocks::MarkdownBlock': typeof MarkdownBlock;
   }
 }

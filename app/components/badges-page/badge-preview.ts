@@ -11,7 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class BadgePreviewComponent extends Component<Signature> {
+export default class BadgePreview extends Component<Signature> {
   @action
   didInsertPreviewContainer(element: HTMLDivElement) {
     const width = 300;
@@ -129,6 +129,6 @@ export default class BadgePreviewComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BadgesPage::BadgePreview': typeof BadgePreviewComponent;
+    'BadgesPage::BadgePreview': typeof BadgePreview;
   }
 }

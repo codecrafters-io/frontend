@@ -33,7 +33,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class LogoCloudComponent extends Component<Signature> {
+export default class LogoCloud extends Component<Signature> {
   companiesData: Company[] = [
     { name: 'Meta', image: metaImage },
     { name: 'AWS', image: awsImage },
@@ -64,6 +64,6 @@ export default class LogoCloudComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliateLinkPage::LogoCloud': typeof LogoCloudComponent;
+    'AffiliateLinkPage::LogoCloud': typeof LogoCloud;
   }
 }

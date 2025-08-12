@@ -4,7 +4,7 @@ type Signature = {
   Element: HTMLButtonElement;
 };
 
-export default class UnvoteButtonComponent extends Component<Signature> {
+export default class UnvoteButton extends Component<Signature> {
   <template>
     <button
       type='button'
@@ -21,6 +21,6 @@ export default class UnvoteButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::IdeaCard::UnvoteButton': typeof UnvoteButtonComponent;
+    'RoadmapPage::IdeaCard::UnvoteButton': typeof UnvoteButton;
   }
 }

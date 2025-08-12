@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class PublishToGithubPromptComponent extends Component {}
+export default class PublishToGithubPrompt extends Component {}

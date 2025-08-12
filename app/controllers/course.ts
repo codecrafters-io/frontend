@@ -15,7 +15,7 @@ import type VisibilityService from 'codecrafters-frontend/services/visibility';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { ModelType } from 'codecrafters-frontend/routes/course';
-import type { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
 
 export default class CourseController extends Controller {
@@ -148,7 +148,7 @@ export default class CourseController extends Controller {
   }
 
   @action
-  setOrUpdateCurrentStepValues(_: HTMLDivElement, [step, _id, _status, _type]: [Step, string, string, string]) {
+  setOrUpdateCurrentStepValues(_: HTMLDivElement, [step, _id, _status, _type]: [StepDefinition, string, string, string]) {
     const stepIsCompleteButNotPreviouslyComplete =
       step.status === 'complete' && this.stepStatusPreviouslyWas && this.stepStatusPreviouslyWas !== 'complete';
 

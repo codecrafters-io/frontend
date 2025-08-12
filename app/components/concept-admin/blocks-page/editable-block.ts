@@ -1,19 +1,23 @@
 import Component from '@glimmer/component';
-import ConceptModel, { type Block } from 'codecrafters-frontend/models/concept';
+import ConceptModel, { type BlockDefinition } from 'codecrafters-frontend/models/concept';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { ClickToContinueBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
+import {
+  ClickToContinueBlockDefinition,
+  ConceptQuestionBlockDefinition,
+  MarkdownBlockDefinition,
+} from 'codecrafters-frontend/utils/block-definitions';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    conceptBlock: Block;
+    conceptBlock: BlockDefinition;
     concept: ConceptModel;
     wasAdded: boolean;
     wasChanged: boolean;
     wasDeleted: boolean;
-    onBlockChanged: (newBlock: Block) => void;
+    onBlockChanged: (newBlock: BlockDefinition) => void;
     onBlockDeleted: () => void;
     onBlockChangeDiscarded: () => void;
     onBlockDeletionDiscarded: () => void;
@@ -24,15 +28,15 @@ interface Signature {
   };
 }
 
-export default class EditableBlockComponent extends Component<Signature> {
-  @tracked mutableBlock: Block | null = null;
+export default class EditableBlock extends Component<Signature> {
+  @tracked mutableBlock: BlockDefinition | null = null;
 
-  get blockOrMutableBlock(): Block {
+  get blockOrMutableBlock(): BlockDefinition {
     return this.mutableBlock || this.args.conceptBlock;
   }
 
-  get blockOrMutableBlockAsConceptQuestionBlock() {
-    return this.blockOrMutableBlock as ConceptQuestionBlock;
+  get blockOrMutableBlockAsConceptQuestionBlockDefinition() {
+    return this.blockOrMutableBlock as ConceptQuestionBlockDefinition;
   }
 
   get isEditing() {
@@ -40,17 +44,17 @@ export default class EditableBlockComponent extends Component<Signature> {
   }
 
   // Glint can't infer the type, so we add a getter for each block type
-  get mutableBlockAsClickToContinueBlock() {
-    return this.mutableBlock as ClickToContinueBlock;
+  get mutableBlockAsClickToContinueBlockDefinition() {
+    return this.mutableBlock as ClickToContinueBlockDefinition;
   }
 
-  get mutableBlockAsConceptQuestionBlock() {
-    return this.mutableBlock as ConceptQuestionBlock;
+  get mutableBlockAsConceptQuestionBlockDefinition() {
+    return this.mutableBlock as ConceptQuestionBlockDefinition;
   }
 
   // Glint can't infer the type, so we add a getter for each block type
-  get mutableBlockAsMarkdownBlock() {
-    return this.mutableBlock as MarkdownBlock;
+  get mutableBlockAsMarkdownBlockDefinition() {
+    return this.mutableBlock as MarkdownBlockDefinition;
   }
 
   get mutableBlockHasChanges() {
@@ -127,6 +131,6 @@ export default class EditableBlockComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::EditableBlock': typeof EditableBlockComponent;
+    'ConceptAdmin::BlocksPage::EditableBlock': typeof EditableBlock;
   }
 }

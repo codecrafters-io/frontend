@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class FeedbackPromptOptionComponent extends Component<Signature> {}
+export default class FeedbackPromptOption extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FeedbackPromptOption': typeof FeedbackPromptOptionComponent;
+    'CoursePage::CourseStageStep::FeedbackPromptOption': typeof FeedbackPromptOption;
   }
 }

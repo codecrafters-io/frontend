@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class SelectExpectedActivityFrequencySectionComponent extends Component<Signature> {
+export default class SelectExpectedActivityFrequencySection extends Component<Signature> {
   @action
   async handleSelect(frequency: RepositoryModel['expectedActivityFrequency']) {
     if (this.args.isDisabled) {
@@ -30,6 +30,6 @@ export default class SelectExpectedActivityFrequencySectionComponent extends Com
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection': typeof SelectExpectedActivityFrequencySectionComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection': typeof SelectExpectedActivityFrequencySection;
   }
 }

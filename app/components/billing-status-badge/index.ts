@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class BillingStatusDisplayComponent extends Component<Signature> {
+export default class BillingStatusDisplay extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
@@ -85,6 +85,6 @@ export default class BillingStatusDisplayComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BillingStatusBadge: typeof BillingStatusDisplayComponent;
+    BillingStatusBadge: typeof BillingStatusDisplay;
   }
 }

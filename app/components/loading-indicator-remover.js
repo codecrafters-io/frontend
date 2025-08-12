@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 
-export default class LoadingIndicatorRemoverComponent extends Component {
+export default class LoadingIndicatorRemover extends Component {
   @action
   handleInsert() {
     next(() => {

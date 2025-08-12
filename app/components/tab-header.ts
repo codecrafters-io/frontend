@@ -12,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class TabHeaderComponent extends Component<Signature> {}
+export default class TabHeader extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    TabHeader: typeof TabHeaderComponent;
+    TabHeader: typeof TabHeader;
   }
 }

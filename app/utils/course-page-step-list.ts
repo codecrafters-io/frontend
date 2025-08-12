@@ -11,12 +11,12 @@ import CourseCompletedStep from 'codecrafters-frontend/utils/course-page-step-li
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import IntroductionStep from 'codecrafters-frontend/utils/course-page-step-list/introduction-step';
 import SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
-import Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import StepGroup from 'codecrafters-frontend/utils/course-page-step-list/step-group';
 
-export { Step };
+export { StepDefinition };
 
-export class StepList {
+export class StepListDefinition {
   @tracked declare repository: RepositoryModel;
 
   constructor(repository: RepositoryModel) {
@@ -28,7 +28,7 @@ export class StepList {
   }
 
   get baseStagesStepGroup(): StepGroup {
-    const steps: Step[] = [];
+    const steps: StepDefinition[] = [];
 
     steps.push(new IntroductionStep(this.repository));
     steps.push(new SetupStep(this.repository));
@@ -59,7 +59,7 @@ export class StepList {
 
     if (!this.repository.stageList) {
       this.repository.course.sortedExtensions.forEach((extension) => {
-        const steps: Step[] = [];
+        const steps: StepDefinition[] = [];
 
         extension.sortedStages.forEach((stage) => {
           const fakeStageListItem = { stage } as RepositoryStageListItemModel;
@@ -70,7 +70,7 @@ export class StepList {
         stepGroups.push(new ExtensionStepGroup(extension, steps));
       });
     } else {
-      let stepsInNextGroup: Step[] = [];
+      let stepsInNextGroup: StepDefinition[] = [];
 
       this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
         const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
@@ -115,23 +115,23 @@ export class StepList {
     return stepGroups;
   }
 
-  get steps(): Step[] {
-    return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as Step[]);
+  get steps(): StepDefinition[] {
+    return this.stepGroups.reduce((steps, stepGroup) => steps.concat(stepGroup.steps), [] as StepDefinition[]);
   }
 
   get visibleSteps() {
     return this.steps.filter((step) => !step.isHidden);
   }
 
-  nextVisibleStepFor(step: Step): Step | null {
+  nextVisibleStepFor(step: StepDefinition): StepDefinition | null {
     return this.visibleSteps[this.visibleSteps.indexOf(step) + 1] || null;
   }
 
-  previousVisibleStepFor(step: Step): Step | null {
+  previousVisibleStepFor(step: StepDefinition): StepDefinition | null {
     return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
   }
 
-  visibleStepByType(type: Step['type']): Step | null {
+  visibleStepByType(type: StepDefinition['type']): StepDefinition | null {
     return this.visibleSteps.find((step) => step.type === type) || null;
   }
 }

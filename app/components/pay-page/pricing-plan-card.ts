@@ -21,12 +21,12 @@ interface Signature {
   };
 }
 
-export default class PricingPlanCardComponent extends Component<Signature> {
+export default class PricingPlanCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::PricingPlanCard': typeof PricingPlanCardComponent;
+    'PayPage::PricingPlanCard': typeof PricingPlanCard;
   }
 }

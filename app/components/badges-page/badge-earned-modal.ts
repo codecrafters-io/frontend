@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class BadgeEarnedModalComponent extends Component<Signature> {
+export default class BadgeEarnedModal extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
 
@@ -50,6 +50,6 @@ export default class BadgeEarnedModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BadgesPage::BadgeEarnedModal': typeof BadgeEarnedModalComponent;
+    'BadgesPage::BadgeEarnedModal': typeof BadgeEarnedModal;
   }
 }

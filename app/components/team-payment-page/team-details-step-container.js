@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { debounce } from '@ember/runloop';
 
-export default class TeamDetailsFormComponent extends Component {
+export default class TeamDetailsForm extends Component {
   formElement;
 
   @action

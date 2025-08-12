@@ -5,6 +5,6 @@ export interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class LockedBadgePreviewComponent extends Component<Signature> {
+export default class LockedBadgePreview extends Component<Signature> {
   lockedBadgePreviewImage = lockedBadgePreviewImage;
 }

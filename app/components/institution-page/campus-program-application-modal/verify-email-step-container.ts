@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class VerifyEmailStepContainerComponent extends Component<Signature> {}
+export default class VerifyEmailStepContainer extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer': typeof VerifyEmailStepContainerComponent;
+    'InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer': typeof VerifyEmailStepContainer;
   }
 }

@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class ChangedFileCardComponent extends Component<Signature> {
+export default class ChangedFileCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get shouldShowPublishToGithubButton(): boolean {
@@ -23,6 +23,6 @@ export default class ChangedFileCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard': typeof ChangedFileCardComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::ChangedFileCard': typeof ChangedFileCard;
   }
 }
