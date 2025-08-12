@@ -12,13 +12,20 @@ import communityCourseStageSolutions from './handlers/community-course-stage-sol
 import communitySolutionEvaluations from './handlers/community-solution-evaluations';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
-import concepts from './handlers/concepts';
 import conceptQuestions from './handlers/concept-questions';
+import concepts from './handlers/concepts';
 import contests from './handlers/contests';
+import courseDefinitionUpdates from './handlers/course-definition-updates';
+import courseExtensionActivations from './handlers/course-extension-activations';
+import courseExtensionIdeas from './handlers/course-extension-ideas';
+import courseIdeas from './handlers/course-ideas';
+import courseLanguageRequests from './handlers/course-language-requests';
 import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import courseStageComments from './handlers/course-stage-comments';
 import courseStageCompletions from './handlers/course-stage-completions';
 import courseStageFeedbackSubmissions from './handlers/course-stage-feedback-submissions';
+import courseStageLanguageGuides from './handlers/course-stage-language-guides';
+import courseTesterVersions from './handlers/course-tester-versions';
 import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
@@ -136,10 +143,17 @@ function routes() {
   conceptQuestions(this);
   concepts(this);
   contests(this);
+  courseDefinitionUpdates(this);
+  courseExtensionActivations(this);
+  courseExtensionIdeas(this);
+  courseIdeas(this);
+  courseLanguageRequests(this);
   courseLeaderboardEntries(this);
   courseStageComments(this);
   courseStageCompletions(this);
   courseStageFeedbackSubmissions(this);
+  courseStageLanguageGuides(this);
+  courseTesterVersions(this);
   courses(this);
   downvotes(this);
   fakeSubmissionLogs(this);
@@ -187,62 +201,6 @@ function routes() {
 
   // mirage/handlers/code-walkthroughs.js
   this.get('/code-walkthroughs');
-
-  // mirage/handlers/course-definition-updates.js
-  this.get('/course-definition-updates');
-  this.get('/course-definition-updates/:id');
-
-  this.post('/course-definition-updates/:id/apply', function (schema, request) {
-    const courseDefinitionUpdate = schema.courseDefinitionUpdates.find(request.params.id);
-
-    if (courseDefinitionUpdate.summary.includes('[should_error]')) {
-      courseDefinitionUpdate.update({ lastErrorMessage: 'Expected "slug" to be "redis", got: "docker".\n\nChange slug to "redis" to fix this.' });
-    } else {
-      courseDefinitionUpdate.update({ appliedAt: new Date(), status: 'applied', lastErrorMessage: null });
-    }
-
-    return courseDefinitionUpdate;
-  });
-
-  // mirage/handlers/course-extension-activations.js
-  this.post('/course-extension-activations');
-  this.delete('/course-extension-activations/:id');
-
-  // mirage/handlers/course-extension-ideas.js
-  this.get('/course-extension-ideas');
-  this.post('/course-extension-ideas/:id/unvote', () => {});
-  this.post('/course-extension-idea-votes');
-
-  // mirage/handlers/course-ideas.js
-  this.get('/course-ideas');
-  this.post('/course-ideas/:id/unvote', () => {});
-  this.post('/course-idea-votes');
-
-  // mirage/handlers/course-language-requests.js
-  this.get('/course-language-requests');
-  this.post('/course-language-requests');
-  this.delete('/course-language-requests/:id');
-
-  // mirage/handlers/course-stage-language-guides.js
-  this.get('/course-stage-language-guides');
-
-  // mirage/handlers/course-tester-versions.js
-  this.get('/course-tester-versions');
-  this.get('/course-tester-versions/:id');
-
-  this.post('/course-tester-versions/:id/activate', function (schema, request) {
-    const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
-    courseTesterVersion.update({ isActive: true });
-
-    const otherTesterVersions = schema.courseTesterVersions.where((version) => version.id !== courseTesterVersion.id);
-    otherTesterVersions.update({ isActive: false });
-
-    return courseTesterVersion;
-  });
-
-  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
-    return schema.courseTesterVersions.find(request.params.id);
-  });
 
   // mirage/handlers/feature-suggestions.js
   this.patch('/feature-suggestions/:id');
