@@ -1,19 +1,21 @@
-import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { Model, belongsTo, createServer, hasMany } from 'miragejs';
-import config from 'codecrafters-frontend/config/environment';
 import affiliateEarningsPayouts from './handlers/affiliate-earnings-payouts';
 import affiliateLinks from './handlers/affiliate-links';
 import affiliateReferrals from './handlers/affiliate-referrals';
 import analyticsEvents from './handlers/analytics-events';
 import autofixRequests from './handlers/autofix-requests';
 import badges from './handlers/badges';
+import charges from './handlers/charges';
+import codeWalkthroughs from './handlers/code-walkthroughs';
 import communityCourseStageSolutionComments from './handlers/community-course-stage-solution-comments';
 import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
 import communitySolutionEvaluations from './handlers/community-solution-evaluations';
+import communitySolutionEvaluators from './handlers/community-solution-evaluators';
+import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import conceptQuestions from './handlers/concept-questions';
 import concepts from './handlers/concepts';
+import config from 'codecrafters-frontend/config/environment';
 import contests from './handlers/contests';
 import courseDefinitionUpdates from './handlers/course-definition-updates';
 import courseExtensionActivations from './handlers/course-extension-activations';
@@ -29,12 +31,14 @@ import courseTesterVersions from './handlers/course-tester-versions';
 import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
+import featureSuggestions from './handlers/feature-suggestions';
+import freeUsageGrants from './handlers/free-usage-grants';
 import githubAppInstallations from './handlers/github-app-installations';
 import githubRepositorySyncConfigurations from './handlers/github-repository-sync-configurations';
 import individualCheckoutSessions from './handlers/individual-checkout-sessions';
 import individualPaymentMethodUpdateRequests from './handlers/individual-payment-method-update-requests';
-import institutions from './handlers/institutions';
 import institutionMembershipGrantApplications from './handlers/institution-membership-grant-applications';
+import institutions from './handlers/institutions';
 import languages from './handlers/languages';
 import leaderboardEntries from './handlers/leaderboard-entries';
 import logstreams from './handlers/logstreams';
@@ -58,10 +62,11 @@ import teamSubscriptions from './handlers/team-subscriptions';
 import teams from './handlers/teams';
 import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import trustedCommunitySolutionEvaluations from './handlers/trusted-community-solution-evaluations';
-import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
 import views from './handlers/views';
+import { Model, belongsTo, createServer, hasMany } from 'miragejs';
+import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 
 export default function (config) {
   let finalConfig = {
@@ -135,9 +140,13 @@ function routes() {
   analyticsEvents(this);
   autofixRequests(this);
   badges(this);
+  charges(this);
+  codeWalkthroughs(this);
   communityCourseStageSolutionComments(this);
   communityCourseStageSolutions(this);
   communitySolutionEvaluations(this);
+  communitySolutionEvaluators(this);
+  communitySolutionsAnalyses(this);
   conceptEngagements(this);
   conceptGroups(this);
   conceptQuestions(this);
@@ -157,12 +166,14 @@ function routes() {
   courses(this);
   downvotes(this);
   fakeSubmissionLogs(this);
+  featureSuggestions(this);
+  freeUsageGrants(this);
   githubAppInstallations(this);
   githubRepositorySyncConfigurations(this);
   individualCheckoutSessions(this);
   individualPaymentMethodUpdateRequests(this);
-  institutions(this);
   institutionMembershipGrantApplications(this);
+  institutions(this);
   languages(this);
   leaderboardEntries(this);
   logstreams(this);
@@ -186,30 +197,7 @@ function routes() {
   teams(this);
   trackLeaderboardEntries(this);
   trustedCommunitySolutionEvaluations(this);
-  communitySolutionsAnalyses(this);
   upvotes(this);
   users(this);
   views(this);
-
-  // TODO: Move everything else to separate 'handler' files too
-
-  // mirage/handlers/community-solution-evaluators.js
-  this.get('/community-solution-evaluators');
-
-  // mirage/handlers/charges.js
-  this.get('/charges');
-
-  // mirage/handlers/code-walkthroughs.js
-  this.get('/code-walkthroughs');
-
-  // mirage/handlers/feature-suggestions.js
-  this.patch('/feature-suggestions/:id');
-
-  // mirage/handlers/free-usage-grants.js
-  this.get('/free-usage-grants', function (schema, request) {
-    return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
-  });
-
-  // mirage/handlers/solution-comparisons.js
-  this.get('/solution-comparisons');
 }
