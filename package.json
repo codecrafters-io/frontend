@@ -28,8 +28,9 @@
     "lint:types": "tsc --noEmit",
     "lint:glint": "glint",
     "lint:glint:fix": "glint",
+    "restart:watchman": "command -v watchman >/dev/null 2>&1 && (watchman watch-del . && watchman watch-project .) || echo 'watchman not installed, skipping'",
     "start": "FASTBOOT_DISABLED=true npm run start:fastboot",
-    "start:fastboot": "npm run install:silent && ember serve",
+    "start:fastboot": "npm run install:silent && npm run restart:watchman && ember serve",
     "test": "concurrently \"npm:lint\" \"npm:test:*\" --names \"lint,test:\"",
     "test:ember": "ember test"
   },
