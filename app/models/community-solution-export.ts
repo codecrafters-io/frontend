@@ -14,11 +14,7 @@ export default class CommunitySolutionExportModel extends Model {
     return this.status === 'provisioned';
   }
 
-  githubUrlForFile(filename: string): string | null {
-    if (!this.githubRepositoryUrl) {
-      return null;
-    }
-
+  githubUrlForFile(filename: string): string {
     return `${this.githubRepositoryUrl}/blob/main/${filename}`;
   }
 

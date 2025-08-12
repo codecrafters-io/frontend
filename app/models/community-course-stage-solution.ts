@@ -30,8 +30,8 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   declare trustedEvaluations: TrustedCommunitySolutionEvaluationModel[];
 
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
-  @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
   @hasMany('community-solution-export', { async: false, inverse: 'communitySolution' }) declare exports: CommunitySolutionExportModel[];
+  @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
 
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
@@ -103,9 +103,9 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
     return `https://github.com/${this.githubRepositoryName}/blob/${this.commitSha}/${filename}`;
   }
 
+  declare createExport: (this: Model) => Promise<CommunitySolutionExportModel>;
   declare fetchFileComparisons: (this: Model, payload: unknown) => Promise<FileComparison[]>;
   declare unvote: (this: Model, payload: unknown) => Promise<void>;
-  declare createGithubExport: (this: Model) => Promise<CommunitySolutionExportModel>;
 }
 
 CommunityCourseStageSolutionModel.prototype.fetchFileComparisons = memberAction({
@@ -139,7 +139,7 @@ CommunityCourseStageSolutionModel.prototype.unvote = memberAction({
   },
 });
 
-CommunityCourseStageSolutionModel.prototype.createGithubExport = function () {
+CommunityCourseStageSolutionModel.prototype.createExport = function () {
   const record = this.store.createRecord('community-solution-export', {
     communitySolution: this,
   });

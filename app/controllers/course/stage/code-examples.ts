@@ -99,17 +99,12 @@ export default class CodeExamplesController extends Controller {
 
     this.isLoading = true;
 
-    try {
-      this.solutions = (await this.store.query('community-course-stage-solution', {
-        course_stage_id: this.courseStage.id,
-        language_id: this.currentLanguage.id,
-        include: 'user,language,course-stage,screencasts,current-user-upvotes,current-user-downvotes,exports',
-        order: this.order,
-      })) as unknown as CommunityCourseStageSolutionModel[]; // TODO: Doesn't store.query support model type inference?
-    } catch (error) {
-      console.error('Failed to load community solutions:', error);
-      this.solutions = [];
-    }
+    this.solutions = (await this.store.query('community-course-stage-solution', {
+      course_stage_id: this.courseStage.id,
+      language_id: this.currentLanguage.id,
+      include: 'user,language,course-stage,screencasts,current-user-upvotes,current-user-downvotes,exports',
+      order: this.order,
+    })) as unknown as CommunityCourseStageSolutionModel[]; // TODO: Doesn't store.query support model type inference?
 
     this.isLoading = false;
   }

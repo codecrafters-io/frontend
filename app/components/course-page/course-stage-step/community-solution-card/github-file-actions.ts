@@ -18,7 +18,7 @@ interface Signature {
   };
 }
 
-export default class GitHubFileActionsComponent extends Component<Signature> {
+export default class GithubFileActionsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
@@ -28,66 +28,39 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
     return this.args.solution.user.id === this.authenticator.currentUser?.id && !this.args.solution.isPublishedToPublicGithubRepository;
   }
 
-  private createExport() {
+  private async createExport() {
     if (this.isCreatingExport) {
       return;
     }
 
     this.isCreatingExport = true;
 
-    this.args.solution
-      .createGithubExport()
-      .then((exportRecord) => {
-        this.isCreatingExport = false;
-        const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
+    try {
+      const exportRecord = await this.args.solution.createExport();
+      this.isCreatingExport = false;
+      const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
 
-        if (githubUrl) {
-          window.open(githubUrl, '_blank');
-        }
-      })
-      .catch((error) => {
-        Sentry.captureException(error);
-        this.isCreatingExport = false;
-      });
+      if (exportRecord.status === 'provisioned') {
+        window.open(githubUrl, '_blank');
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      this.isCreatingExport = false;
+    }
   }
 
   private getLatestUnexpiredExport(): CommunitySolutionExportModel | null {
-    const exports = this.args.solution.exports;
-
-    if (!exports?.length) {
-      return null;
-    }
-
-    const unexpiredExports = exports.reject((exportRecord) => new Date() >= exportRecord.expiresAt);
-
-    if (!unexpiredExports.length) {
-      return null;
-    }
-
-    return unexpiredExports.sortBy('expiresAt').get('lastObject') || null;
+    return this.args.solution.exports?.reject((exportRecord) => new Date() >= exportRecord.expiresAt)?.sortBy('expiresAt')?.lastObject || null;
   }
 
   @action
-  handleViewOnGithub() {
-    if (this.args.solution.isPublishedToPublicGithubRepository) {
-      const githubUrl = this.args.solution.githubUrlForFile(this.args.filename);
-
-      if (githubUrl) {
-        window.open(githubUrl, '_blank');
-      }
-
-      return;
-    }
-
+  handleViewOnGithubButtonClick() {
     const latestExport = this.getLatestUnexpiredExport();
 
     if (latestExport?.status === 'provisioned') {
       const githubUrl = latestExport.githubUrlForFile(this.args.filename);
-
-      if (githubUrl) {
-        latestExport.markAsAccessed({});
-        window.open(githubUrl, '_blank');
-      }
+      latestExport.markAsAccessed({});
+      window.open(githubUrl, '_blank');
     } else {
       this.createExport();
     }
@@ -96,6 +69,6 @@ export default class GitHubFileActionsComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::GitHubFileActions': typeof GitHubFileActionsComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::GithubFileActions': typeof GithubFileActionsComponent;
   }
 }

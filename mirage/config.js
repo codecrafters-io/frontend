@@ -90,9 +90,6 @@ export default function (config) {
           currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
           parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
         }),
-        communitySolutionExport: Model.extend({
-          communitySolution: belongsTo('community-course-stage-solution', { inverse: 'exports' }),
-        }),
         fakeLogstream: Model.extend({}),
       },
     },
