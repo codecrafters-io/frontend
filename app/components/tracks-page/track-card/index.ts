@@ -24,16 +24,20 @@ export default class TrackCardComponent extends Component<Signature> {
       return 0;
     }
 
-    return this.authenticator.currentUser.repositories
-      .filterBy('language', this.args.language)
-      .toArray()
-      .flatMap((repository) => repository.completedStages)
-      .uniq().length;
+    return [
+      ...new Set(
+        [...this.authenticator.currentUser.repositories.filter((item) => item.language === this.args.language)].flatMap(
+          (repository) => repository.completedStages,
+        ),
+      ),
+    ].length;
   }
 
   get currentUserHasStartedTrack() {
     if (this.authenticator.currentUser) {
-      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated')[0];
+      return !!this.authenticator.currentUser.repositories
+        .filter((item) => item.language === this.args.language)
+        .filter((item) => item.firstSubmissionCreated)[0];
     } else {
       return false;
     }
@@ -42,10 +46,10 @@ export default class TrackCardComponent extends Component<Signature> {
   get stagesCount() {
     return this.store
       .peekAll('course')
-      .rejectBy('releaseStatusIsAlpha')
-      .rejectBy('releaseStatusIsDeprecated')
+      .filter((item) => !item.releaseStatusIsAlpha)
+      .filter((item) => !item.releaseStatusIsDeprecated)
       .filter((course) => course.betaOrLiveLanguages.includes(this.args.language))
-      .mapBy('stages.length')
+      .map((item) => item.stages.length)
       .reduce((a, b) => a + b, 0);
   }
 

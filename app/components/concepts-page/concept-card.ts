@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import ConceptModel from 'codecrafters-frontend/models/concept';
@@ -15,9 +16,12 @@ export default class ConceptCardComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get latestConceptEngagement() {
-    return this.authenticator.currentUser?.conceptEngagements
-      .filter((engagement) => engagement.concept.slug === this.args.concept.slug)
-      .sortBy('createdAt')
+    return [
+      ...(this.authenticator.currentUser
+        ? this.authenticator.currentUser.conceptEngagements.filter((engagement) => engagement.concept.slug === this.args.concept.slug)
+        : []),
+    ]
+      .sort((a, b) => compare(a.createdAt, b.createdAt))
       .reverse()[0];
   }
 }

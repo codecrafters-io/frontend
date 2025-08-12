@@ -44,7 +44,7 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 - Add `FASTBOOT_DISABLED=true` to your local `.env` file to disable FastBoot completely
   - You can override it by passing `FASTBOOT_DISABLED=""` in the command line
 - NPM task `start` runs with FastBoot **disabled**
-- NPM tasks `start:fastboot` runs with FastBoot **enabled**
+- NPM task `start:fastboot` runs with FastBoot **enabled**
 
 ## Running tests
 

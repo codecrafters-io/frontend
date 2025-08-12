@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -26,22 +27,22 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('sortPositionForRoadmapPage');
+    return [...this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse)].sort((a, b) =>
+      compare(a.sortPositionForRoadmapPage, b.sortPositionForRoadmapPage),
+    );
   }
 
   get orderedCourses() {
-    return this.model.courseExtensionIdeas
-      .rejectBy('developmentStatusIsReleased')
-      .mapBy('course')
-      .uniq()
-      .rejectBy('releaseStatusIsDeprecated')
-      .rejectBy('releaseStatusIsAlpha')
-      .rejectBy('visibilityIsPrivate')
-      .sortBy('sortPositionForTrack');
+    return [
+      ...[...new Set(this.model.courseExtensionIdeas.filter((item) => !item.developmentStatusIsReleased).map((item) => item.course))]
+        .filter((item) => !item.releaseStatusIsDeprecated)
+        .filter((item) => !item.releaseStatusIsAlpha)
+        .filter((item) => !item.visibilityIsPrivate),
+    ].sort((a, b) => compare(a.sortPositionForTrack, b.sortPositionForTrack));
   }
 
   get selectedCourse() {
-    return this.store.peekAll('course').findBy('slug', this.selectedCourseSlug);
+    return this.store.peekAll('course').find((item) => item.slug === this.selectedCourseSlug);
   }
 
   @action
