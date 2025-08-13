@@ -33,16 +33,16 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   }
 
   @action
+  handleEnterEmailSubmit() {
+    this.forceShowEnterEmail = false;
+    this.emailToPrefill = undefined;
+  }
+
+  @action
   handleGoBackToEnterEmail() {
     this.emailToPrefill = this.latestSavedGrantApplication!.originalEmailAddress;
     this.latestSavedGrantApplication!.unloadRecord();
     this.forceShowEnterEmail = true;
-  }
-
-  @action
-  handleEnterEmailSubmit() {
-    this.forceShowEnterEmail = false;
-    this.emailToPrefill = undefined;
   }
 }
 
