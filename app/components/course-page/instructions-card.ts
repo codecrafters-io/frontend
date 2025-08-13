@@ -20,7 +20,7 @@ interface Signature {
   };
 }
 
-export default class InstructionsCardComponent extends Component<Signature> {
+export default class InstructionsCard extends Component<Signature> {
   @tracked isCollapsed = this.args.isCollapsedByDefault ?? false;
 
   @action
@@ -43,6 +43,6 @@ export default class InstructionsCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::InstructionsCard': typeof InstructionsCardComponent;
+    'CoursePage::InstructionsCard': typeof InstructionsCard;
   }
 }

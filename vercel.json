@@ -1,6 +1,6 @@
 {
   "buildCommand": "scripts/build-vercel-output.sh",
-  "installCommand": "npm install --no-fund --no-audit",
+  "installCommand": "npm run install:silent",
   "redirects": [
     { "source": "/_empty.html", "destination": "/404" },
     { "source": "/_empty_notags.html", "destination": "/404" },

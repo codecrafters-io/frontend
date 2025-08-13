@@ -22,12 +22,12 @@ interface Signature {
   };
 }
 
-export default class MultiSectionCardComponent extends Component<Signature> {
+export default class MultiSectionCard extends Component<Signature> {
   transition = fade;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::MultiSectionCard': typeof MultiSectionCardComponent;
+    'CoursePage::MultiSectionCard': typeof MultiSectionCard;
   }
 }

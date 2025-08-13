@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { loadStripe } from '@stripe/stripe-js';
 import { tracked } from '@glimmer/tracking';
 
-export default class PaymentDetailsStepContainerComponent extends Component {
+export default class PaymentDetailsStepContainer extends Component {
   @tracked errorMessage;
   @tracked stripeElementsObject;
   @tracked isConfirmingPaymentDetails = false;

@@ -8,7 +8,7 @@ import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/cou
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import { action } from '@ember/object';
-import type { Step } from 'codecrafters-frontend/components/expandable-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -30,7 +30,7 @@ class BaseStep {
   }
 }
 
-class ImplementSolutionStep extends BaseStep implements Step {
+class ImplementSolutionStep extends BaseStep implements StepDefinition {
   id = 'implement-solution';
   canBeCompletedManually = true;
 
@@ -39,7 +39,7 @@ class ImplementSolutionStep extends BaseStep implements Step {
   }
 }
 
-class RunTestsStep extends BaseStep implements Step {
+class RunTestsStep extends BaseStep implements StepDefinition {
   id = 'run-tests';
   canBeCompletedManually = false;
 
@@ -48,7 +48,7 @@ class RunTestsStep extends BaseStep implements Step {
   }
 }
 
-export default class SecondStageTutorialCardComponent extends Component<Signature> {
+export default class SecondStageTutorialCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
   @service declare featureFlags: FeatureFlagsService;
@@ -91,7 +91,7 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
   }
 
   @action
-  handleStepCompletedManually(step: Step) {
+  handleStepCompletedManually(step: StepDefinition) {
     if (step.id === 'read-instructions') {
       this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
 
@@ -122,6 +122,6 @@ export default class SecondStageTutorialCardComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageTutorialCard': typeof SecondStageTutorialCardComponent;
+    'CoursePage::CourseStageStep::SecondStageTutorialCard': typeof SecondStageTutorialCard;
   }
 }

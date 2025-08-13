@@ -116,7 +116,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
-      status: 'pending_trial',
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {
@@ -124,8 +124,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
-      status: 'trialing',
-      upcomingPaymentAmountInCents: 59000,
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {
@@ -198,7 +197,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
-      status: 'pending_trial',
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {
@@ -206,8 +205,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
-      status: 'trialing',
-      upcomingPaymentAmountInCents: 59000,
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {
@@ -278,7 +276,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 7), // 7 days ago
-      status: 'pending_trial',
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {
@@ -286,8 +284,7 @@ module('Acceptance | affiliate-page | view-affiliate-referrals', function (hooks
       referrer: this.server.schema.users.first(),
       affiliateLink: affiliateLink,
       activatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 3), // 3 days ago
-      status: 'trialing',
-      upcomingPaymentAmountInCents: 59000,
+      status: 'awaiting_first_charge',
     });
 
     this.server.create('affiliate-referral', {

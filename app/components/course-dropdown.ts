@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class CourseDropdownComponent extends Component<Signature> {
+export default class CourseDropdown extends Component<Signature> {
   @action
   handleCourseDropdownLinkClick(course: CourseModel, closeDropdownFn: () => void) {
     closeDropdownFn();
@@ -25,6 +25,6 @@ export default class CourseDropdownComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CourseDropdown: typeof CourseDropdownComponent;
+    CourseDropdown: typeof CourseDropdown;
   }
 }

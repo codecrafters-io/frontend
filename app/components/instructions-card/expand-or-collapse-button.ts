@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class ExpandOrCollapseButtonComponent extends Component<Signature> {}
+export default class ExpandOrCollapseButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstructionsCard::ExpandOrCollapseButton': typeof ExpandOrCollapseButtonComponent;
+    'InstructionsCard::ExpandOrCollapseButton': typeof ExpandOrCollapseButton;
   }
 }

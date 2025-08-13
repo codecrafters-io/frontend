@@ -16,7 +16,7 @@ export type Signature = {
   };
 };
 
-export default class VoteButtonComponent extends Component<Signature> {
+export default class VoteButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get renderedVotesCount() {
@@ -51,6 +51,6 @@ export default class VoteButtonComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::IdeaCard::VoteButton': typeof VoteButtonComponent;
+    'RoadmapPage::IdeaCard::VoteButton': typeof VoteButton;
   }
 }

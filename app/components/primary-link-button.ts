@@ -11,10 +11,10 @@ interface Signature {
   };
 }
 
-export default class PrimaryLinkButtonComponent extends Component<Signature> {}
+export default class PrimaryLinkButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    PrimaryLinkButton: typeof PrimaryLinkButtonComponent;
+    PrimaryLinkButton: typeof PrimaryLinkButton;
   }
 }

@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class MembershipSectionComponent extends Component<Signature> {}
+export default class MembershipSection extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::BillingPage::MembershipSection': typeof MembershipSectionComponent;
+    'Settings::BillingPage::MembershipSection': typeof MembershipSection;
   }
 }

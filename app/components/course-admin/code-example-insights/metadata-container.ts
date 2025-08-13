@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class CodeExampleInsightsMetadataComponent extends Component<Signature> {
+export default class CodeExampleInsightsMetadata extends Component<Signature> {
   get formattedEvaluationResults(): string[] {
     if (this.args.solution.evaluations.length === 0) {
       return [];
@@ -76,6 +76,6 @@ export default class CodeExampleInsightsMetadataComponent extends Component<Sign
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExampleInsights::MetadataContainer': typeof CodeExampleInsightsMetadataComponent;
+    'CourseAdmin::CodeExampleInsights::MetadataContainer': typeof CodeExampleInsightsMetadata;
   }
 }

@@ -23,7 +23,7 @@ interface Signature {
 
 type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
 
-export default class ShareProgressModalComponent extends Component<Signature> {
+export default class ShareProgressModal extends Component<Signature> {
   fade = fade;
 
   socialPlatforms: SocialPlatform[] = ['twitter', 'slack', 'discord', 'linkedin'];
@@ -73,6 +73,6 @@ export default class ShareProgressModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::ShareProgressModal': typeof ShareProgressModalComponent;
+    'CoursePage::ShareProgressModal': typeof ShareProgressModal;
   }
 }

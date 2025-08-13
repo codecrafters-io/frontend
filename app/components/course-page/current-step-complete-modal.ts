@@ -1,17 +1,17 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import type Step from 'codecrafters-frontend/utils/course-page-step-list/step';
+import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     onClose: () => void;
-    activeStep: Step;
+    activeStep: StepDefinition;
   };
 }
 
-export default class CurrentStepCompleteModalComponent extends Component<Signature> {
+export default class CurrentStepCompleteModal extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   get currentStep() {
@@ -29,6 +29,6 @@ export default class CurrentStepCompleteModalComponent extends Component<Signatu
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CurrentStepCompleteModal': typeof CurrentStepCompleteModalComponent;
+    'CoursePage::CurrentStepCompleteModal': typeof CurrentStepCompleteModal;
   }
 }

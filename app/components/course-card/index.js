@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 
-export default class CourseCardComponent extends Component {
+export default class CourseCard extends Component {
   @service authenticator;
   @service router;
 

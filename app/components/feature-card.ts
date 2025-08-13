@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class FeatureCardComponent extends Component<Signature> {}
+export default class FeatureCard extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FeatureCard: typeof FeatureCardComponent;
+    FeatureCard: typeof FeatureCard;
   }
 }

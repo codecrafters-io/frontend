@@ -2,6 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
+import { htmlSafe } from '@ember/template';
+import { next } from '@ember/runloop';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -10,12 +12,13 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type RouterService from '@ember/routing/router-service';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type { SafeString } from '@ember/template/-private/handlebars';
 
 interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class HeaderComponent extends Component<Signature> {
+export default class Header extends Component<Signature> {
   logoImage = logoImage;
 
   @service declare authenticator: AuthenticatorService;
@@ -25,6 +28,8 @@ export default class HeaderComponent extends Component<Signature> {
   @service declare versionTracker: VersionTrackerService;
 
   @tracked mobileMenuIsExpanded = false;
+  @tracked floatingBarStyle: SafeString = htmlSafe('left: 0px; width: 0px; opacity: 0;');
+  @tracked floatingBarContainer: HTMLElement | null = null;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
@@ -78,27 +83,64 @@ export default class HeaderComponent extends Component<Signature> {
 
   @action
   handleDidInsert() {
-    this.router.on('routeWillChange', this.handleRouteChange);
+    this.router.on('routeWillChange', this.handleRouteWillChange);
   }
 
   @action
-  handleRouteChange() {
+  handleDidInsertFloatingBarContainer(element: HTMLElement) {
+    this.floatingBarContainer = element;
+    this.updateFloatingBarPosition(element);
+  }
+
+  @action
+  handleDidUpdateCurrentRouteName() {
+    next(() => {
+      if (this.floatingBarContainer) {
+        this.updateFloatingBarPosition(this.floatingBarContainer);
+      }
+    });
+  }
+
+  @action
+  handleRouteWillChange() {
     this.mobileMenuIsExpanded = false;
   }
 
   @action
   handleWillDestroy() {
-    this.router.off('routeWillChange', this.handleRouteChange);
+    this.router.off('routeWillChange', this.handleRouteWillChange);
   }
 
   @action
   toggleMobileMenu() {
     this.mobileMenuIsExpanded = !this.mobileMenuIsExpanded;
   }
+
+  private updateFloatingBarPosition(containerElement: HTMLElement) {
+    const currentRoute = this.router.currentRouteName;
+
+    if (!currentRoute || currentRoute.includes('loading')) {
+      return;
+    }
+
+    const activeLink = containerElement.querySelector(`[data-route-is-active="true"]`) as HTMLElement;
+
+    if (activeLink) {
+      const containerRect = containerElement.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+
+      const left = linkRect.left - containerRect.left;
+      const width = linkRect.width;
+
+      this.floatingBarStyle = htmlSafe(`left: ${left}px; width: ${width}px; opacity: 1;`);
+    } else {
+      this.floatingBarStyle = htmlSafe('left: 0px; width: 0px; opacity: 0;');
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Header: typeof HeaderComponent;
+    Header: typeof Header;
   }
 }

@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class InstallGitHubAppStepComponent extends Component<Signature> {
+export default class InstallGitHubAppStep extends Component<Signature> {
   @action
   handleInstallGitHubAppButtonClick() {
     // @ts-ignore

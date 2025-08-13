@@ -4,10 +4,10 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class CollapseSidebarButtonComponent extends Component<Signature> {}
+export default class CollapseSidebarButton extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CollapseSidebarButton': typeof CollapseSidebarButtonComponent;
+    'CoursePage::CollapseSidebarButton': typeof CollapseSidebarButton;
   }
 }

@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class ProgressBannerModalComponent extends Component {}
+export default class ProgressBannerModal extends Component {}

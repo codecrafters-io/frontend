@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class RunTestsStepComponent extends Component<Signature> {
+export default class RunTestsStep extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 
   @action
@@ -26,6 +26,6 @@ export default class RunTestsStepComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep': typeof RunTestsStepComponent;
+    'CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep': typeof RunTestsStep;
   }
 }

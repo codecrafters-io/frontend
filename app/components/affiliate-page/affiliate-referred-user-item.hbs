@@ -22,44 +22,35 @@
       </div>
     </div>
   </a>
-  <div class="flex items-center flex-wrap gap-y-2">
+  <div class="flex items-center flex-wrap gap-2">
     {{#if (gt @affiliateReferral.totalEarningsAmountInDollars 0)}}
-      <div class="flex shrink-0">
-        <span
-          class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
-        >${{@affiliateReferral.spentAmountInDollars}} spent</span>
+      <Pill @color="green" class="shrink-0">
+        ${{@affiliateReferral.spentAmountInDollars}}
+        spent
+
         <EmberTooltip @text="This is the amount {{@affiliateReferral.customer.username}} has spent so far." />
-      </div>
+      </Pill>
     {{/if}}
-    {{#if (gt @affiliateReferral.upcomingPaymentAmountInDollars 0)}}
-      <div class="flex shrink-0">
-        <span
-          class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
-        >${{@affiliateReferral.upcomingPaymentAmountInDollars}} pending</span>
-        <EmberTooltip @text="This is the value of {{@affiliateReferral.customer.username}}'s upcoming payment." />
-      </div>
-    {{/if}}
-    <div class="flex shrink-0">
-      {{#if @affiliateReferral.statusIsTrialing}}
-        <span
-          class="inline-flex border border-yellow-300 rounded-full bg-yellow-100 px-2 text-xs font-semibold leading-5 text-yellow-700 mr-2"
-        >Trialing</span>
-        <EmberTooltip @text="This user has started a trial. We haven't received their first payment yet." />
-      {{else if @affiliateReferral.statusIsPendingTrial}}
-        <span class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2">Signed up</span>
-        <EmberTooltip @text="This user has accepted your referral offer but hasn't started a trial yet." />
-      {{else if @affiliateReferral.statusIsFirstChargeSuccessful}}
-        <span
-          class="inline-flex border border-green-300 rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-700 mr-2"
-        >Paid</span>
+
+    {{#if @affiliateReferral.statusIsAwaitingFirstCharge}}
+      <Pill @color="gray" class="shrink-0">
+        Signed up
+
+        <EmberTooltip @text="This user has accepted your referral offer but hasn't made a payment yet." />
+      </Pill>
+    {{else if @affiliateReferral.statusIsFirstChargeSuccessful}}
+      <Pill @color="green" class="shrink-0">
+        Paid
+
         <EmberTooltip @text="This user has made at least one payment that is attributable to you." />
-      {{else}}
-        <span
-          class="inline-flex border border-gray-300 rounded-full bg-gray-100 px-2 text-xs font-semibold leading-5 text-gray-700 mr-2"
-        >Inactive</span>
-        <EmberTooltip @text="This user either cancelled their trial, joined a paid team account or availed a separate discount." />
-      {{/if}}
-    </div>
+      </Pill>
+    {{else}}
+      <Pill @color="gray" class="shrink-0">
+        Inactive
+
+        <EmberTooltip @text="This user either joined a paid team account or availed a separate discount." />
+      </Pill>
+    {{/if}}
 
     <span class="text-gray-400 text-xs hidden lg:block">{{date-from-now @affiliateReferral.activatedAt}}</span>
   </div>

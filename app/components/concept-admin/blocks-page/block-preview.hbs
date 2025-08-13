@@ -1,20 +1,20 @@
 <div ...attributes>
   {{#if (eq @model.type "markdown")}}
-    <Blocks::MarkdownBlock @model={{this.modelAsMarkdownBlock}} />
+    <Blocks::MarkdownBlock @model={{this.modelAsMarkdownBlockDefinition}} />
   {{else if (eq @model.type "concept_animation")}}
-    <Blocks::ConceptAnimationBlock @model={{this.modelAsConceptAnimationBlock}} />
+    <Blocks::ConceptAnimationBlock @model={{this.modelAsConceptAnimationBlockDefinition}} />
   {{else if (eq @model.type "click_to_continue")}}
     <Concept::ContinueOrStepBack
       @onContinueButtonClick={{(noop)}}
       @onStepBackButtonClick={{(noop)}}
-      @continueButtonText={{this.modelAsClickToContinueBlock.buttonTextForDisplay}}
+      @continueButtonText={{this.modelAsClickToContinueBlockDefinition.buttonTextForDisplay}}
       @shouldShowContinueButton={{true}}
       @shouldShowStepBackButton={{false}}
       @shouldHighlightKeyboardShortcuts={{false}}
     />
   {{else if (eq @model.type "concept_question")}}
     <Blocks::ConceptQuestionBlock
-      @model={{this.modelAsConceptQuestionBlock}}
+      @model={{this.modelAsConceptQuestionBlockDefinition}}
       @onContinueButtonClick={{(noop)}}
       @onStepBackButtonClick={{(noop)}}
       @isCurrentBlock={{false}}

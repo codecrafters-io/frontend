@@ -7,7 +7,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class HeaderComponent extends Component<Signature> {
+export default class Header extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
@@ -22,6 +22,6 @@ export default class HeaderComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'RoadmapPage::Header': typeof HeaderComponent;
+    'RoadmapPage::Header': typeof Header;
   }
 }

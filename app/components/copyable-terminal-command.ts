@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class CopyableTerminalCommandComponent extends Component<Signature> {
+export default class CopyableTerminalCommand extends Component<Signature> {
   transition = fade;
 
   @service declare darkMode: DarkModeService;
@@ -56,6 +56,6 @@ export default class CopyableTerminalCommandComponent extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CopyableTerminalCommand: typeof CopyableTerminalCommandComponent;
+    CopyableTerminalCommand: typeof CopyableTerminalCommand;
   }
 }

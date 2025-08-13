@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class PillComponent extends Component<Signature> {
+export default class Pill extends Component<Signature> {
   get colorClasses() {
     return {
       green: 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-950 dark:text-green-400 dark:ring-green-400/20',
@@ -37,6 +37,6 @@ export default class PillComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    Pill: typeof PillComponent;
+    Pill: typeof Pill;
   }
 }

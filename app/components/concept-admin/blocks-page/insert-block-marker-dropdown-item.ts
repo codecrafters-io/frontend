@@ -10,10 +10,10 @@ interface Signature {
   };
 }
 
-export default class InsertBlockMarkerDropdownItemComponent extends Component<Signature> {}
+export default class InsertBlockMarkerDropdownItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem': typeof InsertBlockMarkerDropdownItemComponent;
+    'ConceptAdmin::BlocksPage::InsertBlockMarkerDropdownItem': typeof InsertBlockMarkerDropdownItem;
   }
 }

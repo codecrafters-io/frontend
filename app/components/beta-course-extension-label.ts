@@ -8,10 +8,10 @@ export interface Signature {
   };
 }
 
-export default class BetaCourseExtensionLabelComponent extends Component<Signature> {}
+export default class BetaCourseExtensionLabel extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BetaCourseExtensionLabel: typeof BetaCourseExtensionLabelComponent;
+    BetaCourseExtensionLabel: typeof BetaCourseExtensionLabel;
   }
 }

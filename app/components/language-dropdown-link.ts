@@ -13,10 +13,10 @@ interface Signature {
   };
 }
 
-export default class LanguageDropdownLinkComponent extends Component<Signature> {}
+export default class LanguageDropdownLink extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LanguageDropdownLink: typeof LanguageDropdownLinkComponent;
+    LanguageDropdownLink: typeof LanguageDropdownLink;
   }
 }

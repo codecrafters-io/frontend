@@ -8,10 +8,10 @@ interface Signature {
   };
 }
 
-export default class VerticalTabListComponent extends Component<Signature> {}
+export default class VerticalTabList extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    VerticalTabList: typeof VerticalTabListComponent;
+    VerticalTabList: typeof VerticalTabList;
   }
 }

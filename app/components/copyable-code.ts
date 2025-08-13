@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class CopyableCodeComponent extends Component<Signature> {
+export default class CopyableCode extends Component<Signature> {
   @tracked codeWasCopiedRecently: boolean = false;
 
   @action
@@ -39,6 +39,6 @@ export default class CopyableCodeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CopyableCode: typeof CopyableCodeComponent;
+    CopyableCode: typeof CopyableCode;
   }
 }

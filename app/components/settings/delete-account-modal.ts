@@ -16,7 +16,7 @@ interface Signature {
   };
 }
 
-export default class DeleteAccountModalComponent extends Component<Signature> {
+export default class DeleteAccountModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
@@ -53,6 +53,6 @@ export default class DeleteAccountModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::DeleteAccountModal': typeof DeleteAccountModalComponent;
+    'Settings::DeleteAccountModal': typeof DeleteAccountModal;
   }
 }

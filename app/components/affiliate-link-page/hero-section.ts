@@ -5,12 +5,12 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class HeroSectionComponent extends Component<Signature> {
+export default class HeroSection extends Component<Signature> {
   heroImage = heroImage;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliateLinkPage::HeroSection': typeof HeroSectionComponent;
+    'AffiliateLinkPage::HeroSection': typeof HeroSection;
   }
 }

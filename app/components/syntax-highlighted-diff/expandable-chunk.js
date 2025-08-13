@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
-export default class CollapsibleChunkComponent extends Component {
+export default class CollapsibleChunk extends Component {
   @tracked isCollapsed;
 
   constructor() {

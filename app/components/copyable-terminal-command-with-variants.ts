@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class CopyableTerminalCommandWithVariantsComponent extends Component<Signature> {
+export default class CopyableTerminalCommandWithVariants extends Component<Signature> {
   @tracked selectedVariantIndex: number;
 
   constructor(owner: unknown, args: Signature['Args']) {
@@ -50,6 +50,6 @@ export default class CopyableTerminalCommandWithVariantsComponent extends Compon
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    CopyableTerminalCommandWithVariants: typeof CopyableTerminalCommandWithVariantsComponent;
+    CopyableTerminalCommandWithVariants: typeof CopyableTerminalCommandWithVariants;
   }
 }

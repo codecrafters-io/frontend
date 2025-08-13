@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 
-export default class SubscriptionSettingsContainerComponent extends Component {
+export default class SubscriptionSettingsContainer extends Component {
   @tracked isUninstallingSlackIntegration = false;
   @tracked currentOrPreviousSlackIntegration;
 

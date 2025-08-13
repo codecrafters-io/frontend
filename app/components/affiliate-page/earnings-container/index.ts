@@ -11,7 +11,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class EarningsContainerComponent extends Component<Signature> {
+export default class EarningsContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @tracked isCreatingPayout = false;
@@ -114,6 +114,6 @@ export default class EarningsContainerComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::EarningsContainer': typeof EarningsContainerComponent;
+    'AffiliatePage::EarningsContainer': typeof EarningsContainer;
   }
 }

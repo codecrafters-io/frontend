@@ -5,7 +5,7 @@ import config from 'codecrafters-frontend/config/environment';
 import * as Sentry from '@sentry/ember';
 import { inject as service } from '@ember/service';
 
-export default class HelpScoutBeaconComponent extends Component {
+export default class HelpScoutBeacon extends Component {
   @service fastboot;
 
   @tracked beaconInitialized = false;

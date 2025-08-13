@@ -14,10 +14,10 @@ interface Signature {
   };
 }
 
-export default class FormSectionComponent extends Component<Signature> {}
+export default class FormSection extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::FormSection': typeof FormSectionComponent;
+    'Settings::FormSection': typeof FormSection;
   }
 }

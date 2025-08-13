@@ -3,7 +3,7 @@ import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class CourseProgressListItemComponent extends Component {
+export default class CourseProgressListItem extends Component {
   @service router;
 
   get completedAt() {

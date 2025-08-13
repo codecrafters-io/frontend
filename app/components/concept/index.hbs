@@ -51,10 +51,10 @@
 <div class="hidden">
   {{#each this.allBlocks as |block|}}
     {{#if (eq block.type "markdown")}}
-      {{! @glint-expect-error: block isn't typed as MarkdownBlock }}
+      {{! @glint-expect-error: block isn't typed as MarkdownBlockDefinition }}
       <Blocks::MarkdownBlock @model={{block}} />
     {{else if (eq block.type "concept_animation")}}
-      {{! @glint-expect-error: block isn't typed as ConceptAnimationBlock }}
+      {{! @glint-expect-error: block isn't typed as ConceptAnimationBlockDefinition }}
       <Blocks::ConceptAnimationBlock @model={{block}} />
     {{/if}}
   {{/each}}

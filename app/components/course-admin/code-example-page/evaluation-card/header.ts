@@ -11,10 +11,10 @@ export interface Signature {
   };
 }
 
-export default class EvaluationCardHeaderComponent extends Component<Signature> {}
+export default class EvaluationCardHeader extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::CodeExamplePage::EvaluationCard::Header': typeof EvaluationCardHeaderComponent;
+    'CourseAdmin::CodeExamplePage::EvaluationCard::Header': typeof EvaluationCardHeader;
   }
 }

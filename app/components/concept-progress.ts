@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class ConceptProgressComponent extends Component<Signature> {
+export default class ConceptProgress extends Component<Signature> {
   get widthStyle(): string {
     return `width: ${this.args.latestConceptEngagement.currentProgressPercentage}%`;
   }
@@ -22,6 +22,6 @@ export default class ConceptProgressComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ConceptProgress: typeof ConceptProgressComponent;
+    ConceptProgress: typeof ConceptProgress;
   }
 }

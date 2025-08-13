@@ -48,13 +48,37 @@ export function signInAsStaff(owner, server, user) {
   return signIn(owner, server, user);
 }
 
+export function signInAsInstitutionMembershipGrantRecipient(owner, server, user) {
+  user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+
+  const institution = server.schema.institutions.first();
+
+  if (!institution) {
+    throw new Error('signInAsInstitutionMembershipGrantRecipient expects an institution to be present');
+  }
+
+  const institutionMembershipGrant = server.create('institution-membership-grant', {
+    institution: institution,
+    user: user,
+    grantedAt: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // 1 day ago
+    validityInDays: 30,
+  });
+
+  server.create('subscription', {
+    cancelAt: new Date(institutionMembershipGrant.grantedAt.getTime() + 365 * 24 * 60 * 60 * 1000), // 1 year from now
+    user: user,
+    source: institutionMembershipGrant,
+  });
+
+  return signIn(owner, server, user);
+}
+
 export function signInAsSubscriber(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
   server.create('subscription', {
+    cancelAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
     user: user,
-    pricingPlanName: 'Monthly',
-    currentPeriodEnd: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
   });
 
   return signIn(owner, server, user);

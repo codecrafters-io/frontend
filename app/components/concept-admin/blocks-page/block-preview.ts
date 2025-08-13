@@ -1,35 +1,40 @@
 import Component from '@glimmer/component';
-import { ClickToContinueBlock, ConceptAnimationBlock, ConceptQuestionBlock, MarkdownBlock } from 'codecrafters-frontend/utils/blocks';
-import { type Block } from 'codecrafters-frontend/models/concept';
+import {
+  ClickToContinueBlockDefinition,
+  ConceptAnimationBlockDefinition,
+  ConceptQuestionBlockDefinition,
+  MarkdownBlockDefinition,
+} from 'codecrafters-frontend/utils/block-definitions';
+import { type BlockDefinition } from 'codecrafters-frontend/models/concept';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: Block;
+    model: BlockDefinition;
   };
 }
 
-export default class BlockPreviewComponent extends Component<Signature> {
-  get modelAsClickToContinueBlock(): ClickToContinueBlock {
-    return this.args.model as ClickToContinueBlock;
+export default class BlockPreview extends Component<Signature> {
+  get modelAsClickToContinueBlockDefinition(): ClickToContinueBlockDefinition {
+    return this.args.model as ClickToContinueBlockDefinition;
   }
 
-  get modelAsConceptAnimationBlock(): ConceptAnimationBlock {
-    return this.args.model as ConceptAnimationBlock;
+  get modelAsConceptAnimationBlockDefinition(): ConceptAnimationBlockDefinition {
+    return this.args.model as ConceptAnimationBlockDefinition;
   }
 
-  get modelAsConceptQuestionBlock(): ConceptQuestionBlock {
-    return this.args.model as ConceptQuestionBlock;
+  get modelAsConceptQuestionBlockDefinition(): ConceptQuestionBlockDefinition {
+    return this.args.model as ConceptQuestionBlockDefinition;
   }
 
-  get modelAsMarkdownBlock(): MarkdownBlock {
-    return this.args.model as MarkdownBlock;
+  get modelAsMarkdownBlockDefinition(): MarkdownBlockDefinition {
+    return this.args.model as MarkdownBlockDefinition;
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::BlocksPage::BlockPreview': typeof BlockPreviewComponent;
+    'ConceptAdmin::BlocksPage::BlockPreview': typeof BlockPreview;
   }
 }

@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class ContentComponent extends Component<Signature> {}
+export default class Content extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CodeWalkthroughPage::Content': typeof ContentComponent;
+    'CodeWalkthroughPage::Content': typeof Content;
   }
 }

@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class CommunitySolutionsListComponent extends Component<Signature> {
+export default class CommunitySolutionsList extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
 
   @service declare authenticator: AuthenticatorService;
@@ -97,6 +97,6 @@ export default class CommunitySolutionsListComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionsList': typeof CommunitySolutionsListComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionsList': typeof CommunitySolutionsList;
   }
 }

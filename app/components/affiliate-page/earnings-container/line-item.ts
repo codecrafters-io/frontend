@@ -11,10 +11,10 @@ interface Signature {
   };
 }
 
-export default class LineItemComponent extends Component<Signature> {}
+export default class LineItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::EarningsContainer::LineItem': typeof LineItemComponent;
+    'AffiliatePage::EarningsContainer::LineItem': typeof LineItem;
   }
 }

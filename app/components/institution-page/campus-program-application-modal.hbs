@@ -1,0 +1,14 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full" data-test-campus-program-application-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
+    Campus Program Application
+  </div>
+
+  <AnimatedContainer>
+    {{#animated-if (not this.latestSavedGrantApplication) use=this.transition}}
+      <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer @institution={{@institution}} />
+    {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
+        {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
+        <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer @application={{this.latestSavedGrantApplication}} />
+      {{/if}}{{/animated-if}}
+  </AnimatedContainer>
+</ModalBody>

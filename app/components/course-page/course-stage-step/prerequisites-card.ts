@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class PrerequisitesCardComponent extends Component<Signature> {
+export default class PrerequisitesCard extends Component<Signature> {
   get prerequisiteInstructionsMarkdown() {
     return this.args.courseStage.prerequisiteInstructionsMarkdownFor(this.args.repository) as string;
   }
@@ -19,6 +19,6 @@ export default class PrerequisitesCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::PrerequisitesCard': typeof PrerequisitesCardComponent;
+    'CoursePage::CourseStageStep::PrerequisitesCard': typeof PrerequisitesCard;
   }
 }

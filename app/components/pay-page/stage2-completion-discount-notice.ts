@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class Stage2CompletionDiscountNoticeComponent extends Component<Signature> {
+export default class Stage2CompletionDiscountNotice extends Component<Signature> {
   iconImage = iconImage;
 
   @service declare time: TimeService;
@@ -24,6 +24,6 @@ export default class Stage2CompletionDiscountNoticeComponent extends Component<S
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::Stage2CompletionDiscountNotice': typeof Stage2CompletionDiscountNoticeComponent;
+    'PayPage::Stage2CompletionDiscountNotice': typeof Stage2CompletionDiscountNotice;
   }
 }

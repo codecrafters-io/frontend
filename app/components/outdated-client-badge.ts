@@ -4,7 +4,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class OutdatedClientBadgeComponent extends Component<Signature> {
+export default class OutdatedClientBadge extends Component<Signature> {
   handleClick() {
     window.location.reload();
   }
@@ -12,6 +12,6 @@ export default class OutdatedClientBadgeComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    OutdatedClientBadge: typeof OutdatedClientBadgeComponent;
+    OutdatedClientBadge: typeof OutdatedClientBadge;
   }
 }

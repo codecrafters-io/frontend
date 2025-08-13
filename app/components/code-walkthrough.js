@@ -70,7 +70,7 @@ class ReferencedCodeSection {
   }
 }
 
-export default class CodeWalkthroughComponent extends Component {
+export default class CodeWalkthrough extends Component {
   get sections() {
     return this.args.model.sections.map((section) => {
       if (section.type === 'prose') {

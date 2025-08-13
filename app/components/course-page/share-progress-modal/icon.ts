@@ -20,7 +20,7 @@ interface Signature {
 
 type SocialPlatform = 'twitter' | 'slack' | 'discord' | 'linkedin';
 
-export default class CoursePageShareProgressModalIconComponent extends Component<Signature> {
+export default class CoursePageShareProgressModalIcon extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
   get isSelected(): boolean {
@@ -43,6 +43,6 @@ export default class CoursePageShareProgressModalIconComponent extends Component
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::ShareProgressModal::Icon': typeof CoursePageShareProgressModalIconComponent;
+    'CoursePage::ShareProgressModal::Icon': typeof CoursePageShareProgressModalIcon;
   }
 }

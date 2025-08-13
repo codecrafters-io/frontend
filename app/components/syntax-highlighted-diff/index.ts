@@ -46,7 +46,7 @@ class HighlightCodeParams {
   }
 }
 
-export default class SyntaxHighlightedDiffComponent extends Component<Signature> {
+export default class SyntaxHighlightedDiff extends Component<Signature> {
   @service declare darkMode: DarkModeService;
 
   @tracked asyncHighlightedHTML: string | null = null;
@@ -82,8 +82,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
     return groupDiffLinesIntoChunks(
       lines,
-      SyntaxHighlightedDiffComponent.LINES_AROUND_CHANGED_CHUNK,
-      SyntaxHighlightedDiffComponent.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING,
+      SyntaxHighlightedDiff.LINES_AROUND_CHANGED_CHUNK,
+      SyntaxHighlightedDiff.MIN_LINES_BETWEEN_CHUNKS_BEFORE_COLLAPSING,
       this.args.shouldCollapseUnchangedLines,
     );
   }
@@ -183,12 +183,10 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
     // Prepare the highlighter promise
     const highlighterPromise = getOrCreateCachedHighlighterPromise(
+      highlightCodeParams.theme === 'dark' ? SyntaxHighlightedDiff.highlighterIdForDarkMode : SyntaxHighlightedDiff.highlighterIdForLightMode,
       highlightCodeParams.theme === 'dark'
-        ? SyntaxHighlightedDiffComponent.highlighterIdForDarkMode
-        : SyntaxHighlightedDiffComponent.highlighterIdForLightMode,
-      highlightCodeParams.theme === 'dark'
-        ? SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode
-        : SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode,
+        ? SyntaxHighlightedDiff.highlighterOptionsForDarkMode
+        : SyntaxHighlightedDiff.highlighterOptionsForLightMode,
     );
 
     // Wait for the highlighter promise to load
@@ -202,8 +200,8 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
       lang: highlightCodeParams.language,
       theme:
         highlightCodeParams.theme === 'dark'
-          ? (SyntaxHighlightedDiffComponent.highlighterOptionsForDarkMode.themes[0] as string)
-          : (SyntaxHighlightedDiffComponent.highlighterOptionsForLightMode.themes[0] as string),
+          ? (SyntaxHighlightedDiff.highlighterOptionsForDarkMode.themes[0] as string)
+          : (SyntaxHighlightedDiff.highlighterOptionsForLightMode.themes[0] as string),
       transformers: [transformerNotationDiff()],
     });
 
@@ -226,6 +224,6 @@ export default class SyntaxHighlightedDiffComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    SyntaxHighlightedDiff: typeof SyntaxHighlightedDiffComponent;
+    SyntaxHighlightedDiff: typeof SyntaxHighlightedDiff;
   }
 }

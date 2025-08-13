@@ -1,32 +1,45 @@
-import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
-import { Model, belongsTo, createServer, hasMany } from 'miragejs';
-import config from 'codecrafters-frontend/config/environment';
 import affiliateEarningsPayouts from './handlers/affiliate-earnings-payouts';
 import affiliateLinks from './handlers/affiliate-links';
 import affiliateReferrals from './handlers/affiliate-referrals';
 import analyticsEvents from './handlers/analytics-events';
 import autofixRequests from './handlers/autofix-requests';
 import badges from './handlers/badges';
+import charges from './handlers/charges';
+import codeWalkthroughs from './handlers/code-walkthroughs';
 import communityCourseStageSolutionComments from './handlers/community-course-stage-solution-comments';
 import communityCourseStageSolutions from './handlers/community-course-stage-solutions';
 import communitySolutionEvaluations from './handlers/community-solution-evaluations';
 import communitySolutionExports from './handlers/community-solution-exports';
+import communitySolutionEvaluators from './handlers/community-solution-evaluators';
+import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
-import concepts from './handlers/concepts';
 import conceptQuestions from './handlers/concept-questions';
+import concepts from './handlers/concepts';
+import config from 'codecrafters-frontend/config/environment';
 import contests from './handlers/contests';
+import courseDefinitionUpdates from './handlers/course-definition-updates';
+import courseExtensionActivations from './handlers/course-extension-activations';
+import courseExtensionIdeas from './handlers/course-extension-ideas';
+import courseIdeas from './handlers/course-ideas';
+import courseLanguageRequests from './handlers/course-language-requests';
 import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import courseStageComments from './handlers/course-stage-comments';
 import courseStageCompletions from './handlers/course-stage-completions';
 import courseStageFeedbackSubmissions from './handlers/course-stage-feedback-submissions';
+import courseStageLanguageGuides from './handlers/course-stage-language-guides';
+import courseTesterVersions from './handlers/course-tester-versions';
 import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
+import featureSuggestions from './handlers/feature-suggestions';
+import freeUsageGrants from './handlers/free-usage-grants';
 import githubAppInstallations from './handlers/github-app-installations';
 import githubRepositorySyncConfigurations from './handlers/github-repository-sync-configurations';
 import individualCheckoutSessions from './handlers/individual-checkout-sessions';
 import individualPaymentMethodUpdateRequests from './handlers/individual-payment-method-update-requests';
+import institutionMembershipGrantApplications from './handlers/institution-membership-grant-applications';
+import institutions from './handlers/institutions';
 import languages from './handlers/languages';
 import leaderboardEntries from './handlers/leaderboard-entries';
 import logstreams from './handlers/logstreams';
@@ -50,10 +63,11 @@ import teamSubscriptions from './handlers/team-subscriptions';
 import teams from './handlers/teams';
 import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import trustedCommunitySolutionEvaluations from './handlers/trusted-community-solution-evaluations';
-import communitySolutionsAnalyses from './handlers/community-solutions-analyses';
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
 import views from './handlers/views';
+import { Model, belongsTo, createServer, hasMany } from 'miragejs';
+import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 
 export default function (config) {
   let finalConfig = {
@@ -128,26 +142,41 @@ function routes() {
   analyticsEvents(this);
   autofixRequests(this);
   badges(this);
+  charges(this);
+  codeWalkthroughs(this);
   communityCourseStageSolutionComments(this);
   communityCourseStageSolutions(this);
   communitySolutionEvaluations(this);
   communitySolutionExports(this);
+  communitySolutionEvaluators(this);
+  communitySolutionsAnalyses(this);
   conceptEngagements(this);
   conceptGroups(this);
   conceptQuestions(this);
   concepts(this);
   contests(this);
+  courseDefinitionUpdates(this);
+  courseExtensionActivations(this);
+  courseExtensionIdeas(this);
+  courseIdeas(this);
+  courseLanguageRequests(this);
   courseLeaderboardEntries(this);
   courseStageComments(this);
   courseStageCompletions(this);
   courseStageFeedbackSubmissions(this);
+  courseStageLanguageGuides(this);
+  courseTesterVersions(this);
   courses(this);
   downvotes(this);
   fakeSubmissionLogs(this);
+  featureSuggestions(this);
+  freeUsageGrants(this);
   githubAppInstallations(this);
   githubRepositorySyncConfigurations(this);
   individualCheckoutSessions(this);
   individualPaymentMethodUpdateRequests(this);
+  institutionMembershipGrantApplications(this);
+  institutions(this);
   languages(this);
   leaderboardEntries(this);
   logstreams(this);
@@ -171,86 +200,7 @@ function routes() {
   teams(this);
   trackLeaderboardEntries(this);
   trustedCommunitySolutionEvaluations(this);
-  communitySolutionsAnalyses(this);
   upvotes(this);
   users(this);
   views(this);
-
-  // TODO: Move everything else to separate 'handler' files too
-
-  // mirage/handlers/community-solution-evaluators.js
-  this.get('/community-solution-evaluators');
-
-  // mirage/handlers/charges.js
-  this.get('/charges');
-
-  // mirage/handlers/code-walkthroughs.js
-  this.get('/code-walkthroughs');
-
-  // mirage/handlers/course-definition-updates.js
-  this.get('/course-definition-updates');
-  this.get('/course-definition-updates/:id');
-
-  this.post('/course-definition-updates/:id/apply', function (schema, request) {
-    const courseDefinitionUpdate = schema.courseDefinitionUpdates.find(request.params.id);
-
-    if (courseDefinitionUpdate.summary.includes('[should_error]')) {
-      courseDefinitionUpdate.update({ lastErrorMessage: 'Expected "slug" to be "redis", got: "docker".\n\nChange slug to "redis" to fix this.' });
-    } else {
-      courseDefinitionUpdate.update({ appliedAt: new Date(), status: 'applied', lastErrorMessage: null });
-    }
-
-    return courseDefinitionUpdate;
-  });
-
-  // mirage/handlers/course-extension-activations.js
-  this.post('/course-extension-activations');
-  this.delete('/course-extension-activations/:id');
-
-  // mirage/handlers/course-extension-ideas.js
-  this.get('/course-extension-ideas');
-  this.post('/course-extension-ideas/:id/unvote', () => {});
-  this.post('/course-extension-idea-votes');
-
-  // mirage/handlers/course-ideas.js
-  this.get('/course-ideas');
-  this.post('/course-ideas/:id/unvote', () => {});
-  this.post('/course-idea-votes');
-
-  // mirage/handlers/course-language-requests.js
-  this.get('/course-language-requests');
-  this.post('/course-language-requests');
-  this.delete('/course-language-requests/:id');
-
-  // mirage/handlers/course-stage-language-guides.js
-  this.get('/course-stage-language-guides');
-
-  // mirage/handlers/course-tester-versions.js
-  this.get('/course-tester-versions');
-  this.get('/course-tester-versions/:id');
-
-  this.post('/course-tester-versions/:id/activate', function (schema, request) {
-    const courseTesterVersion = schema.courseTesterVersions.find(request.params.id);
-    courseTesterVersion.update({ isActive: true });
-
-    const otherTesterVersions = schema.courseTesterVersions.where((version) => version.id !== courseTesterVersion.id);
-    otherTesterVersions.update({ isActive: false });
-
-    return courseTesterVersion;
-  });
-
-  this.post('/course-tester-versions/:id/deprovision', function (schema, request) {
-    return schema.courseTesterVersions.find(request.params.id);
-  });
-
-  // mirage/handlers/feature-suggestions.js
-  this.patch('/feature-suggestions/:id');
-
-  // mirage/handlers/free-usage-grants.js
-  this.get('/free-usage-grants', function (schema, request) {
-    return schema.freeUsageGrants.where({ userId: request.queryParams.user_id });
-  });
-
-  // mirage/handlers/solution-comparisons.js
-  this.get('/solution-comparisons');
 }

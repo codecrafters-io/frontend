@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class ModalBackdropComponent extends Component<Signature> {
+export default class ModalBackdrop extends Component<Signature> {
   get containerElement() {
     return document.getElementById('modal-backdrop-container') as HTMLDivElement;
   }
@@ -27,6 +27,6 @@ export default class ModalBackdropComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    ModalBackdrop: typeof ModalBackdropComponent;
+    ModalBackdrop: typeof ModalBackdrop;
   }
 }

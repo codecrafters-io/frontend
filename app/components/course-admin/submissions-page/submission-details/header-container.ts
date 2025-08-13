@@ -13,7 +13,7 @@ export interface Signature {
   };
 }
 
-export default class HeaderContainerComponent extends Component<Signature> {
+export default class HeaderContainer extends Component<Signature> {
   @tracked isUpdatingBuildpack = false;
   @tracked isUpdatingTesterVersion = false;
   @tracked isForking = false;
@@ -124,6 +124,6 @@ export default class HeaderContainerComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer': typeof HeaderContainerComponent;
+    'CourseAdmin::SubmissionsPage::SubmissionDetails::HeaderContainer': typeof HeaderContainer;
   }
 }

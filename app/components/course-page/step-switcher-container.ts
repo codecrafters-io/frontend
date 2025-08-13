@@ -1,16 +1,16 @@
 import Component from '@glimmer/component';
-import { Step, StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition, StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    currentStep: Step;
-    stepList: StepList;
+    currentStep: StepDefinition;
+    stepList: StepListDefinition;
   };
 }
 
-export default class StepSwitcherComponent extends Component<Signature> {
+export default class StepSwitcher extends Component<Signature> {
   get nextStep() {
     return this.args.stepList.nextVisibleStepFor(this.args.currentStep);
   }
@@ -22,6 +22,6 @@ export default class StepSwitcherComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::StepSwitcherContainer': typeof StepSwitcherComponent;
+    'CoursePage::StepSwitcherContainer': typeof StepSwitcher;
   }
 }

@@ -11,10 +11,10 @@ interface Signature {
   };
 }
 
-export default class ProgressBarComponent extends Component<Signature> {}
+export default class ProgressBar extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::CourseCard::ProgressBar': typeof ProgressBarComponent;
+    'TrackPage::CourseCard::ProgressBar': typeof ProgressBar;
   }
 }

@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class StatisticCardComponent extends Component<Signature> {
+export default class StatisticCard extends Component<Signature> {
   get valueColorClasses(): string {
     return {
       green: 'text-teal-500',
@@ -22,6 +22,6 @@ export default class StatisticCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::StageInsightsPage::StatisticCard': typeof StatisticCardComponent;
+    'CourseAdmin::StageInsightsPage::StatisticCard': typeof StatisticCard;
   }
 }

@@ -1,7 +1,7 @@
-import SyntaxHighlightedDiffComponent from '../components/syntax-highlighted-diff';
+import SyntaxHighlightedDiff from '../components/syntax-highlighted-diff';
 
 export function initialize() {
-  SyntaxHighlightedDiffComponent.preloadHighlighter();
+  SyntaxHighlightedDiff.preloadHighlighter();
 }
 
 export default {

@@ -21,7 +21,7 @@ interface Signature {
   };
 }
 
-export default class LeaderboardEntryComponent extends Component<Signature> {
+export default class LeaderboardEntry extends Component<Signature> {
   get isSkeleton(): boolean {
     return !this.args.user;
   }
@@ -42,6 +42,6 @@ export default class LeaderboardEntryComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    LeaderboardEntry: typeof LeaderboardEntryComponent;
+    LeaderboardEntry: typeof LeaderboardEntry;
   }
 }

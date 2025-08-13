@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class MoreDropdownComponent extends Component {
+export default class MoreDropdown extends Component {
   @service authenticator;
 
   get shouldShowDeleteButton() {

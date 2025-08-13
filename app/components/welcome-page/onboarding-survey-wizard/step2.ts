@@ -12,7 +12,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class Step2Component extends Component<Signature> {
+export default class Step2 extends Component<Signature> {
   options = [
     'YouTube',
     'Instagram',
@@ -49,6 +49,6 @@ export default class Step2Component extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'WelcomePage::OnboardingSurveyWizard::Step2': typeof Step2Component;
+    'WelcomePage::OnboardingSurveyWizard::Step2': typeof Step2;
   }
 }

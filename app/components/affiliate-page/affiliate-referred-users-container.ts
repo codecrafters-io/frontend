@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class AffiliateReferredUsersContainerComponent extends Component<Signature> {
+export default class AffiliateReferredUsersContainer extends Component<Signature> {
   @tracked unpaidReferralsAreVisible = false;
 
   get affiliateLink() {
@@ -28,6 +28,6 @@ export default class AffiliateReferredUsersContainerComponent extends Component<
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::AffiliateReferredUsersContainer': typeof AffiliateReferredUsersContainerComponent;
+    'AffiliatePage::AffiliateReferredUsersContainer': typeof AffiliateReferredUsersContainer;
   }
 }

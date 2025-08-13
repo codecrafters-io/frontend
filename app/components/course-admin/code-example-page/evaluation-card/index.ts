@@ -3,7 +3,7 @@ import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import type { Signature as TabsComponentSignature } from 'codecrafters-frontend/components/tabs';
+import type { Signature as TabsSignature } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
@@ -32,7 +32,7 @@ export default class EvaluationCard extends Component<Signature> {
     return !this.isExpanded;
   }
 
-  get tabs(): TabsComponentSignature['Args']['tabs'] {
+  get tabs(): TabsSignature['Args']['tabs'] {
     const allTabs = [
       {
         slug: 'trusted-evaluation',

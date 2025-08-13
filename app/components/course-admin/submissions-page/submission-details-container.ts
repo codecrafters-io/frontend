@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class SubmissionDetailsContainerComponent extends Component<Signature> {
+export default class SubmissionDetailsContainer extends Component<Signature> {
   get tabs() {
     return [
       {
@@ -33,6 +33,6 @@ export default class SubmissionDetailsContainerComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::SubmissionsPage::SubmissionDetailsContainer': typeof SubmissionDetailsContainerComponent;
+    'CourseAdmin::SubmissionsPage::SubmissionDetailsContainer': typeof SubmissionDetailsContainer;
   }
 }

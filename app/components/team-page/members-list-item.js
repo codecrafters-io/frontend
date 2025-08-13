@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import window from 'ember-window-mock';
 import Component from '@glimmer/component';
 
-export default class TeamPageMembersListItemComponent extends Component {
+export default class TeamPageMembersListItem extends Component {
   @service authenticator;
   @service router;
   @service store;

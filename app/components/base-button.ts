@@ -13,7 +13,7 @@ export interface BaseButtonSignature {
   };
 }
 
-export default class BaseButtonComponent extends Component<BaseButtonSignature> {
+export default class BaseButton extends Component<BaseButtonSignature> {
   get sizeIsExtraSmall(): boolean {
     return this.args.size === 'extra-small';
   }
@@ -33,6 +33,6 @@ export default class BaseButtonComponent extends Component<BaseButtonSignature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    BaseButton: typeof BaseButtonComponent;
+    BaseButton: typeof BaseButton;
   }
 }

@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class ExternalContributorCardComponent extends Component {}
+export default class ExternalContributorCard extends Component {}

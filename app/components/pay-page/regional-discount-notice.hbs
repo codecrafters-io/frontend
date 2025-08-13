@@ -4,16 +4,9 @@
   <div class="py-1">
     <div class="text-green-700 text-sm leading-relaxed">
       Looks like you're from
-      <b>{{@regionalDiscount.countryName}}</b>. If you need it, you can opt-in for a PPP (Purchasing Power Parity) discount.
-    </div>
-
-    <div class="mt-3 flex items-center">
-      {{! template-lint-disable require-input-label }}
-      <Input @type="checkbox" @checked={{@shouldApplyRegionalDiscount}} data-test-apply-regional-discount-button />
-      <span class="text-green-700 text-sm ml-2">
-        I'd like to apply a
-        {{@regionalDiscount.percentOff}}% discount.
-      </span>
+      <b>{{@regionalDiscount.countryName}}</b>. We've applied a PPP (Purchasing Power Parity) discount of
+      <b>{{@regionalDiscount.percentOff}}%</b>
+      for you.
     </div>
   </div>
 </div>

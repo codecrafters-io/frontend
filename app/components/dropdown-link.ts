@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class DropdownLinkComponent extends Component<Signature> {}
+export default class DropdownLink extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DropdownLink: typeof DropdownLinkComponent;
+    DropdownLink: typeof DropdownLink;
   }
 }

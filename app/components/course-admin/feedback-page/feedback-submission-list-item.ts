@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class FeedbackSubmissionListItemComponent extends Component<Signature> {
+export default class FeedbackSubmissionListItem extends Component<Signature> {
   @action
   async handleAcknowledgeButtonClick() {
     this.args.feedbackSubmission.isAcknowledgedByStaff = true;
@@ -26,6 +26,6 @@ export default class FeedbackSubmissionListItemComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::FeedbackPage::FeedbackSubmissionListItem': typeof FeedbackSubmissionListItemComponent;
+    'CourseAdmin::FeedbackPage::FeedbackSubmissionListItem': typeof FeedbackSubmissionListItem;
   }
 }

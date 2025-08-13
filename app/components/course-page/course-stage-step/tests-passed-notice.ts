@@ -4,10 +4,10 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class TestsPassedNoticeComponent extends Component<Signature> {}
+export default class TestsPassedNotice extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestsPassedNotice': typeof TestsPassedNoticeComponent;
+    'CoursePage::CourseStageStep::TestsPassedNotice': typeof TestsPassedNotice;
   }
 }

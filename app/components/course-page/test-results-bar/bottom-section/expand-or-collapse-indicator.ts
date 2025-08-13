@@ -8,10 +8,10 @@ interface Signature {
   };
 }
 
-export default class ExpandOrCollapseIndicatorComponent extends Component<Signature> {}
+export default class ExpandOrCollapseIndicator extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::BottomSection::ExpandOrCollapseIndicator': typeof ExpandOrCollapseIndicatorComponent;
+    'CoursePage::TestResultsBar::BottomSection::ExpandOrCollapseIndicator': typeof ExpandOrCollapseIndicator;
   }
 }

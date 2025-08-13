@@ -12,10 +12,10 @@ interface Signature {
   };
 }
 
-export default class MetadataItemComponent extends Component<Signature> {}
+export default class MetadataItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CodeWalkthroughPage::MetadataItem': typeof MetadataItemComponent;
+    'CodeWalkthroughPage::MetadataItem': typeof MetadataItem;
   }
 }

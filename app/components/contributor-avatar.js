@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class ContributorAvatarComponent extends Component {}
+export default class ContributorAvatar extends Component {}

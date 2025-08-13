@@ -9,10 +9,10 @@ interface Signature {
   };
 }
 
-export default class ContestPageHowItWorksCardComponent extends Component<Signature> {}
+export default class ContestPageHowItWorksCard extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::HowItWorksCard': typeof ContestPageHowItWorksCardComponent;
+    'ContestPage::HowItWorksCard': typeof ContestPageHowItWorksCard;
   }
 }

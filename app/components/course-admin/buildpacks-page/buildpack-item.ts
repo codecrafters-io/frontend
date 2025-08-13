@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class BuildpackItemComponent extends Component<Signature> {
+export default class BuildpackItem extends Component<Signature> {
   @service declare router: RouterService;
 
   get wasUpdatedInLastHour() {
@@ -24,6 +24,6 @@ export default class BuildpackItemComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::BuildpacksPage::BuildpackItem': typeof BuildpackItemComponent;
+    'CourseAdmin::BuildpacksPage::BuildpackItem': typeof BuildpackItem;
   }
 }

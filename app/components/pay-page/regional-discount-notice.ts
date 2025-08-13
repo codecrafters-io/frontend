@@ -6,14 +6,13 @@ interface Signature {
 
   Args: {
     regionalDiscount: RegionalDiscountModel;
-    shouldApplyRegionalDiscount: boolean;
   };
 }
 
-export default class RegionalDiscountNoticeComponent extends Component<Signature> {}
+export default class RegionalDiscountNotice extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'PayPage::RegionalDiscountNotice': typeof RegionalDiscountNoticeComponent;
+    'PayPage::RegionalDiscountNotice': typeof RegionalDiscountNotice;
   }
 }

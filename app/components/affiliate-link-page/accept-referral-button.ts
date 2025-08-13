@@ -20,7 +20,7 @@ interface Signature {
   };
 }
 
-export default class AcceptReferralButtonComponent extends Component<Signature> {
+export default class AcceptReferralButton extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare router: RouterService;
@@ -91,6 +91,6 @@ export default class AcceptReferralButtonComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliateLinkPage::AcceptReferralButton': typeof AcceptReferralButtonComponent;
+    'AffiliateLinkPage::AcceptReferralButton': typeof AcceptReferralButton;
   }
 }

@@ -1,0 +1,29 @@
+<div>
+  <div class="flex flex-col gap-y-2">
+    {{#each @pricingPlans as |plan|}}
+      <PayPage::ChooseMembershipPlanModal::PlanCard
+        @isSelected={{eq @selectedPlan.id plan.id}}
+        @onClick={{fn @onPlanSelect plan}}
+        @plan={{plan}}
+        @promotionalDiscount={{if (eq plan.id "yearly") @activeDiscountForYearlyPlan null}}
+        @regionalDiscount={{@regionalDiscount}}
+      />
+    {{/each}}
+
+    <PrimaryButton @size="large" {{on "click" @onChoosePlanButtonClick}} data-test-choose-plan-button>
+      Choose
+      {{@selectedPlan.title}}
+      pass →
+    </PrimaryButton>
+  </div>
+
+  <div class="flex justify-center mt-4">
+    <div
+      class="inline-block text-gray-500 text-sm border-b border-gray-300 cursor-pointer"
+      role="button"
+      {{on "click" @onBackToPricingPageLinkClick}}
+    >
+      Back to pricing page
+    </div>
+  </div>
+</div>

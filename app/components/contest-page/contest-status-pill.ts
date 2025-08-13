@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class ContestStatusPillComponent extends Component<Signature> {
+export default class ContestStatusPill extends Component<Signature> {
   get contestStatusPillColorClasses(): string {
     return {
       green: 'border-green-500 text-green-500',
@@ -24,6 +24,6 @@ export default class ContestStatusPillComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::ContestStatusPill': typeof ContestStatusPillComponent;
+    'ContestPage::ContestStatusPill': typeof ContestStatusPill;
   }
 }

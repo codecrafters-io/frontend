@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class TimelineEntryContainerComponent extends Component<Signature> {
+export default class TimelineEntryContainer extends Component<Signature> {
   get formattedTimestamp(): string {
     return this.timestamp.toLocaleTimeString('en-US', { timeStyle: 'short' }).toLowerCase();
   }
@@ -21,6 +21,6 @@ export default class TimelineEntryContainerComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseAdmin::SubmissionsPage::TimelineEntryContainer': typeof TimelineEntryContainerComponent;
+    'CourseAdmin::SubmissionsPage::TimelineEntryContainer': typeof TimelineEntryContainer;
   }
 }

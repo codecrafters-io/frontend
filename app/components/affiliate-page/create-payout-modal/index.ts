@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class CreatePayoutModalComponent extends Component<Signature> {
+export default class CreatePayoutModal extends Component<Signature> {
   bankTransferImage = bankTransferImage;
   paypalImage = paypalImage;
 
@@ -44,6 +44,6 @@ export default class CreatePayoutModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'AffiliatePage::CreatePayoutModal': typeof CreatePayoutModalComponent;
+    'AffiliatePage::CreatePayoutModal': typeof CreatePayoutModal;
   }
 }

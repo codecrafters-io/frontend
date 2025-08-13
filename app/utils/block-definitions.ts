@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import type { BlockJSON } from 'codecrafters-frontend/models/concept';
 
-class Block {
+class BlockDefinition {
   @tracked type: BlockJSON['type'];
   @tracked args: Record<string, unknown>;
 
@@ -18,10 +18,10 @@ class Block {
   }
 
   dup(): this {
-    return new (this.constructor as typeof Block)(this.toJSON) as this;
+    return new (this.constructor as typeof BlockDefinition)(this.toJSON) as this;
   }
 
-  isEqual(other: Block): boolean {
+  isEqual(other: BlockDefinition): boolean {
     return JSON.stringify(this.toJSON) === JSON.stringify(other.toJSON);
   }
 
@@ -30,7 +30,7 @@ class Block {
   }
 }
 
-class ClickToContinueBlock extends Block {
+export class ClickToContinueBlockDefinition extends BlockDefinition {
   static type = 'click_to_continue';
   isInteractable = true;
 
@@ -51,7 +51,7 @@ class ClickToContinueBlock extends Block {
   }
 }
 
-class MarkdownBlock extends Block {
+export class MarkdownBlockDefinition extends BlockDefinition {
   static type = 'markdown';
   isInteractable = false;
 
@@ -68,7 +68,7 @@ class MarkdownBlock extends Block {
   }
 }
 
-class ConceptAnimationBlock extends Block {
+export class ConceptAnimationBlockDefinition extends BlockDefinition {
   static type = 'concept_animation';
   isInteractable = false;
 
@@ -81,7 +81,7 @@ class ConceptAnimationBlock extends Block {
   }
 }
 
-class ConceptQuestionBlock extends Block {
+export class ConceptQuestionBlockDefinition extends BlockDefinition {
   static type = 'concept_question';
   isInteractable = true;
 
@@ -98,29 +98,18 @@ class ConceptQuestionBlock extends Block {
   }
 }
 
-function IsClickToContinueBlock(block: Block): block is ClickToContinueBlock {
-  return block.type === ClickToContinueBlock.type;
+export function IsClickToContinueBaseBlock(block: BlockDefinition): block is ClickToContinueBlockDefinition {
+  return block.type === ClickToContinueBlockDefinition.type;
 }
 
-function IsMarkdownBlock(block: Block): block is MarkdownBlock {
-  return block.type === MarkdownBlock.type;
+export function IsMarkdownBaseBlock(block: BlockDefinition): block is MarkdownBlockDefinition {
+  return block.type === MarkdownBlockDefinition.type;
 }
 
-function IsConceptAnimationBlock(block: Block): block is ConceptAnimationBlock {
+export function IsConceptAnimationBaseBlock(block: BlockDefinition): block is ConceptAnimationBlockDefinition {
   return block.type === 'concept_animation';
 }
 
-function IsConceptQuestionBlock(block: Block): block is ConceptQuestionBlock {
+export function IsConceptQuestionBaseBlock(block: BlockDefinition): block is ConceptQuestionBlockDefinition {
   return block.type === 'concept_question';
 }
-
-export {
-  ClickToContinueBlock,
-  MarkdownBlock,
-  ConceptQuestionBlock,
-  ConceptAnimationBlock,
-  IsClickToContinueBlock,
-  IsMarkdownBlock,
-  IsConceptAnimationBlock,
-  IsConceptQuestionBlock,
-};

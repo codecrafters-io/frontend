@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class DeleteRepositoryModalComponent extends Component<Signature> {
+export default class DeleteRepositoryModal extends Component<Signature> {
   @tracked isDeleting: boolean = false;
 
   @service declare router: RouterService;
@@ -41,6 +41,6 @@ export default class DeleteRepositoryModalComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DeleteRepositoryModal: typeof DeleteRepositoryModalComponent;
+    DeleteRepositoryModal: typeof DeleteRepositoryModal;
   }
 }

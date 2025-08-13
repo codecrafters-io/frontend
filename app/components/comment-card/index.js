@@ -24,7 +24,7 @@ import 'prismjs/components/prism-zig';
 
 import 'prismjs/components/prism-diff';
 
-export default class CommentCardComponent extends Component {
+export default class CommentCard extends Component {
   @service authenticator;
   @service store;
   @tracked isEditing = false;

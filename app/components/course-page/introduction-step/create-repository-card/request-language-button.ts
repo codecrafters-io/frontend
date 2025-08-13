@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class RequestLanguageButtonComponent extends Component<Signature> {
+export default class RequestLanguageButton extends Component<Signature> {
   @service declare store: Store;
 
   @action
@@ -26,6 +26,6 @@ export default class RequestLanguageButtonComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageButton': typeof RequestLanguageButtonComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::RequestLanguageButton': typeof RequestLanguageButton;
   }
 }

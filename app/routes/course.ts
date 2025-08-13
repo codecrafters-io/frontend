@@ -8,7 +8,7 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type Transition from '@ember/routing/transition';
-import { StepList } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
@@ -125,7 +125,7 @@ export default class CourseRoute extends BaseRoute {
     });
 
     const activeRepository = this.findOrCreateRepository(course, transition, repositories);
-    this.coursePageState.setStepList(new StepList(activeRepository));
+    this.coursePageState.setStepList(new StepListDefinition(activeRepository));
 
     return {
       course: course,
@@ -137,7 +137,7 @@ export default class CourseRoute extends BaseRoute {
 
   redirect(_model: ModelType, transition: Transition) {
     if (transition.to?.name === 'course.index') {
-      const activeStep = this.coursePageState.stepListAsStepList.activeStep;
+      const activeStep = this.coursePageState.stepListAsStepListDefinition.activeStep;
 
       // @ts-ignore not sure if we need to handle nullity here
       this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);

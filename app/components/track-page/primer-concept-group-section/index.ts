@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class TrackPagePrimerConceptGroupSectionComponent extends Component<Signature> {
+export default class TrackPagePrimerConceptGroupSection extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
@@ -46,6 +46,6 @@ export default class TrackPagePrimerConceptGroupSectionComponent extends Compone
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::PrimerConceptGroupSection': typeof TrackPagePrimerConceptGroupSectionComponent;
+    'TrackPage::PrimerConceptGroupSection': typeof TrackPagePrimerConceptGroupSection;
   }
 }

@@ -6,6 +6,6 @@ interface Signature {
   Element: HTMLAnchorElement;
 }
 
-export default class MonthlyChallengeBannerComponent extends Component<Signature> {
+export default class MonthlyChallengeBanner extends Component<Signature> {
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
 }

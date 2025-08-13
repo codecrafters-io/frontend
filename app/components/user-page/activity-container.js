@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 
-export default class ActivityContainerComponent extends Component {
+export default class ActivityContainer extends Component {
   get profileEventGroups() {
     return groupBy(this.args.user.profileEvents.sortBy('occurredAt').reverse(), (profileEvent) => this.formatDate(profileEvent.occurredAt));
   }

@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class ContestPageNavigationComponent extends Component<Signature> {
+export default class ContestPageNavigation extends Component<Signature> {
   @service declare date: DateService;
 
   get currentContestIndex(): number {
@@ -50,6 +50,6 @@ export default class ContestPageNavigationComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ContestPage::Navigation': typeof ContestPageNavigationComponent;
+    'ContestPage::Navigation': typeof ContestPageNavigation;
   }
 }

@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class TestsPassedModalComponent extends Component<Signature> {
+export default class TestsPassedModal extends Component<Signature> {
   @service declare courseStageCompletion: CourseStageCompletionService;
 
   @tracked action: 'choose_action' | 'refactor_code' | 'mark_stage_as_complete' | 'submit_code' = 'choose_action';
@@ -39,6 +39,6 @@ export default class TestsPassedModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::TestsPassedModal': typeof TestsPassedModalComponent;
+    'CoursePage::CourseStageStep::TestsPassedModal': typeof TestsPassedModal;
   }
 }

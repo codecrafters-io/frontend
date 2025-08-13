@@ -15,7 +15,7 @@ export interface Signature {
   };
 }
 
-export default class QuestionCardOptionComponent extends Component<Signature> {
+export default class QuestionCardOption extends Component<Signature> {
   get isCorrect() {
     return this.args.option.is_correct;
   }
@@ -47,6 +47,6 @@ export default class QuestionCardOptionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptPage::QuestionCardOption': typeof QuestionCardOptionComponent;
+    'ConceptPage::QuestionCardOption': typeof QuestionCardOption;
   }
 }

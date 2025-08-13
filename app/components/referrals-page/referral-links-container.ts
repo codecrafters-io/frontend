@@ -6,7 +6,7 @@ interface Signature {
   Element: HTMLDivElement;
 }
 
-export default class ReferralLinksContainerComponent extends Component<Signature> {
+export default class ReferralLinksContainer extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get currentUser() {
@@ -20,6 +20,6 @@ export default class ReferralLinksContainerComponent extends Component<Signature
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ReferralsPage::ReferralLinksContainer': typeof ReferralLinksContainerComponent;
+    'ReferralsPage::ReferralLinksContainer': typeof ReferralLinksContainer;
   }
 }

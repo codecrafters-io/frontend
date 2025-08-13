@@ -10,12 +10,12 @@ interface Signature {
   };
 }
 
-export default class StageIncompleteModalComponent extends Component<Signature> {
+export default class StageIncompleteModal extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::StageIncompleteModal': typeof StageIncompleteModalComponent;
+    'CoursePage::CourseStageStep::StageIncompleteModal': typeof StageIncompleteModal;
   }
 }

@@ -14,7 +14,7 @@ interface Signature {
   };
 }
 
-export default class DeleteConceptModalComponent extends Component<Signature> {
+export default class DeleteConceptModal extends Component<Signature> {
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -27,6 +27,6 @@ export default class DeleteConceptModalComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'ConceptAdmin::DeleteConceptModal': typeof DeleteConceptModalComponent;
+    'ConceptAdmin::DeleteConceptModal': typeof DeleteConceptModal;
   }
 }

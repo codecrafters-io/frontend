@@ -11,7 +11,7 @@ export interface Signature {
   Blocks: { default: [] };
 }
 
-export default class DarkModeToggleOptionComponent extends Component<Signature> {
+export default class DarkModeToggleOption extends Component<Signature> {
   toRight = toRight;
   toLeft = toLeft;
 
@@ -26,6 +26,6 @@ export default class DarkModeToggleOptionComponent extends Component<Signature> 
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DarkModeToggleOption: typeof DarkModeToggleOptionComponent;
+    DarkModeToggleOption: typeof DarkModeToggleOption;
   }
 }

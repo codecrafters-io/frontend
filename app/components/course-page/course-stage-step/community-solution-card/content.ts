@@ -22,7 +22,7 @@ interface Signature {
   };
 }
 
-export default class CommunitySolutionCardContentComponent extends Component<Signature> {
+export default class CommunitySolutionCardContent extends Component<Signature> {
   @tracked expandedUnchangedFilePaths: string[] = [];
   @service declare authenticator: AuthenticatorService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -98,6 +98,6 @@ export default class CommunitySolutionCardContentComponent extends Component<Sig
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::Content': typeof CommunitySolutionCardContentComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::Content': typeof CommunitySolutionCardContent;
   }
 }

@@ -3,13 +3,13 @@ import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    currentStep: Step;
+    currentStep: StepDefinition;
   };
 
   Blocks: {
@@ -17,7 +17,7 @@ interface Signature {
   };
 }
 
-export default class CurrentStepCompleteOverlayComponent extends Component<Signature> {
+export default class CurrentStepCompleteOverlay extends Component<Signature> {
   @tracked modalWasDismissed = false;
   @tracked lastSeenStepStatus: string | null = null;
 
@@ -49,6 +49,6 @@ export default class CurrentStepCompleteOverlayComponent extends Component<Signa
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CurrentStepCompleteOverlay': typeof CurrentStepCompleteOverlayComponent;
+    'CoursePage::CurrentStepCompleteOverlay': typeof CurrentStepCompleteOverlay;
   }
 }

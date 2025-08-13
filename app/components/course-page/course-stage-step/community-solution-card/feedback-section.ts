@@ -15,7 +15,7 @@ interface Signature {
   };
 }
 
-export default class CommunitySolutionCardFeedbackSectionComponent extends Component<Signature> {
+export default class CommunitySolutionCardFeedbackSection extends Component<Signature> {
   transition = fade;
 
   @tracked lastUserActionValue: 'upvote' | 'downvote' | 'unvote' | null = null;
@@ -82,6 +82,6 @@ export default class CommunitySolutionCardFeedbackSectionComponent extends Compo
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection': typeof CommunitySolutionCardFeedbackSectionComponent;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::FeedbackSection': typeof CommunitySolutionCardFeedbackSection;
   }
 }

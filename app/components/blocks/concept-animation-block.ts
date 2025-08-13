@@ -6,7 +6,7 @@ import type { AnimationItem } from 'lottie-web';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
-import { ConceptAnimationBlock } from 'codecrafters-frontend/utils/blocks';
+import { ConceptAnimationBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 // @ts-ignore
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';
 // @ts-ignore
@@ -40,11 +40,11 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    model: ConceptAnimationBlock;
+    model: ConceptAnimationBlockDefinition;
   };
 }
 
-export default class ConceptAnimationBlockComponent extends Component<Signature> {
+export default class ConceptAnimationBlock extends Component<Signature> {
   @service declare store: Store;
   animation?: AnimationItem;
   @tracked isPlayed = false;
@@ -97,6 +97,6 @@ export default class ConceptAnimationBlockComponent extends Component<Signature>
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Blocks::ConceptAnimationBlock': typeof ConceptAnimationBlockComponent;
+    'Blocks::ConceptAnimationBlock': typeof ConceptAnimationBlock;
   }
 }

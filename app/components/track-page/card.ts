@@ -19,7 +19,7 @@ interface Signature {
   };
 }
 
-export default class TrackPageCardComponent extends Component<Signature> {
+export default class TrackPageCard extends Component<Signature> {
   get titleForDisplay() {
     if (this.args.isNavigatingToOtherPage) {
       return `${this.args.title} →`;
@@ -31,6 +31,6 @@ export default class TrackPageCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'TrackPage::Card': typeof TrackPageCardComponent;
+    'TrackPage::Card': typeof TrackPageCard;
   }
 }

@@ -1,3 +1,3 @@
 import Component from '@glimmer/component';
 
-export default class FeaturesListItemComponent extends Component {}
+export default class FeaturesListItem extends Component {}

@@ -11,7 +11,7 @@ interface Signature {
   };
 }
 
-export default class SelectRemindersPreferenceSectionComponent extends Component<Signature> {
+export default class SelectRemindersPreferenceSection extends Component<Signature> {
   @action
   async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
     if (this.args.isDisabled) {
@@ -28,6 +28,6 @@ export default class SelectRemindersPreferenceSectionComponent extends Component
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection': typeof SelectRemindersPreferenceSectionComponent;
+    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection': typeof SelectRemindersPreferenceSection;
   }
 }

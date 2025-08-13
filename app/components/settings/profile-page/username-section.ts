@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-export default class UsernameSectionComponent extends Component<Signature> {
+export default class UsernameSection extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   @tracked isSyncingUsernameFromGitHub = false;
@@ -36,6 +36,6 @@ export default class UsernameSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'Settings::ProfilePage::UsernameSection': typeof UsernameSectionComponent;
+    'Settings::ProfilePage::UsernameSection': typeof UsernameSection;
   }
 }

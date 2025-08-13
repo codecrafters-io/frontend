@@ -1,7 +1,7 @@
 import type Store from '@ember-data/store';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import { Step } from 'codecrafters-frontend/utils/course-page-step-list';
+import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
@@ -11,13 +11,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    activeStep: Step;
-    currentStep: Step;
+    activeStep: StepDefinition;
+    currentStep: StepDefinition;
     repository: RepositoryModel;
   };
 }
 
-export default class AutofixSectionComponent extends Component<Signature> {
+export default class AutofixSection extends Component<Signature> {
   @service declare store: Store;
   @tracked autofixCreationError: string | null = null;
 
@@ -56,6 +56,6 @@ export default class AutofixSectionComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::AutofixSection': typeof AutofixSectionComponent;
+    'CoursePage::TestResultsBar::AutofixSection': typeof AutofixSection;
   }
 }

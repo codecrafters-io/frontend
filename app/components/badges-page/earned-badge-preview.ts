@@ -10,7 +10,7 @@ interface Signature {
   };
 }
 
-export default class EarnedBadgePreviewComponent extends Component<Signature> {
+export default class EarnedBadgePreview extends Component<Signature> {
   get previewImage() {
     return this.args.badge ? this.args.badge.previewImage : lockedBadgePreviewImage;
   }
@@ -18,6 +18,6 @@ export default class EarnedBadgePreviewComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BadgesPage::EarnedBadgePreview': typeof EarnedBadgePreviewComponent;
+    'BadgesPage::EarnedBadgePreview': typeof EarnedBadgePreview;
   }
 }
