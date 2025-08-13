@@ -25,18 +25,32 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
 
   get inputIsValid(): boolean {
-    return new RegExp(this.inputValidationRegex).test(this.normalizedInput);
+    return this.args.institution.officialEmailAddressSuffixes.some((suffix) => this.normalizedInput.endsWith(suffix));
   }
 
   get inputPlaceholder(): string {
-    return `bill${this.args.institution.officialEmailAddressSuffixes[0]}`;
+    const suffix = this.args.institution.officialEmailAddressSuffixes[0]!;
+
+    if (suffix[0] === '.') {
+      return `bill@*${suffix}`; // e.g. bill@*iitrpr.ac.in
+    } else if (suffix[0] === '@') {
+      return `bill${suffix}`; // e.g. bill@iitrpr.ac.in
+    } else {
+      throw new Error(`Invalid suffix: ${suffix}, must start with @ or .`);
+    }
   }
 
   get inputValidationExplanation(): string {
     let explanation = 'Email address ending in ';
 
     this.args.institution.officialEmailAddressSuffixes.forEach((suffix, index) => {
-      explanation += `${suffix}`;
+      if (suffix[0] === '.') {
+        explanation += `@*${suffix}`; // e.g. @*.iitrpr.ac.in
+      } else if (suffix[0] === '@') {
+        explanation += suffix; // e.g. @iitrpr.ac.in
+      } else {
+        throw new Error(`Invalid suffix: ${suffix}, must start with @ or .`);
+      }
 
       if (index < this.args.institution.officialEmailAddressSuffixes.length - 2) {
         explanation += ', ';
@@ -49,12 +63,8 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   }
 
   get inputValidationRegex(): string {
-    const escapedSuffixes = this.args.institution.officialEmailAddressSuffixes.map((suffix) => {
-      return suffix.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-    });
-
-    // <spaces><something>(<suffix1>|<suffix2>|...)<spaces>
-    return `^ *[^@]+(${escapedSuffixes.join('|')}) *$`;
+    // We have a user-facing explanation for the regex, this dummy regex just ensures that the browser displays the explanation
+    return this.inputIsValid ? '.*' : 'will-never-match-any-string^';
   }
 
   get normalizedInput(): string {
@@ -66,7 +76,13 @@ export default class EnterEmailStepContainer extends Component<Signature> {
     const highlightClasses = 'font-medium text-gray-500'; // Separate variable to ensure tailwind picks up these classes
 
     this.args.institution.officialEmailAddressSuffixes.forEach((suffix, index) => {
-      html += `@<span class="${highlightClasses}">${suffix.slice(1)}</span>`;
+      if (suffix[0] === '@') {
+        html += `@<span class="${highlightClasses}">${suffix.slice(1)}</span>`; // e.g. @iitrpr.ac.in
+      } else if (suffix[0] === '.') {
+        html += `@<span class="${highlightClasses}">*${suffix}</span>`; // e.g. @*.iitrpr.ac.in
+      } else {
+        throw new Error(`Invalid suffix: ${suffix}, must start with @ or .`);
+      }
 
       if (index < this.args.institution.officialEmailAddressSuffixes.length - 2) {
         html += ', ';
