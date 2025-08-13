@@ -12,15 +12,15 @@
   </div>
 
   <div class="flex items-center justify-center gap-2">
-    <span class="text-xs text-gray-500 underline">
+    <button type="button" class="text-xs text-gray-500 underline hover:text-gray-700" {{on "click" this.handleGoBackToEnterEmail}}>
       Change email
-    </span>
+    </button>
     <span class="text-xs text-gray-500">
       •
     </span>
-    <span class="text-xs text-gray-500 underline">
+    <button type="button" class="text-xs text-gray-500 underline hover:text-gray-700" {{on "click" this.handleGoBackToEnterEmail}}>
       Resend email
-    </span>
+    </button>
   </div>
   <div class="text-xs text-gray-500">
     Need help?
