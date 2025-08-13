@@ -29,7 +29,15 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   }
 
   get inputPlaceholder(): string {
-    return `bill${this.args.institution.officialEmailAddressSuffixes[0]}`;
+    const suffix = this.args.institution.officialEmailAddressSuffixes[0]!;
+
+    if (suffix[0] === '.') {
+      return `bill@*${suffix}`; // e.g. bill@*iitrpr.ac.in
+    } else if (suffix[0] === '@') {
+      return `bill${suffix}`; // e.g. bill@iitrpr.ac.in
+    } else {
+      throw new Error(`Invalid suffix: ${suffix}, must start with @ or .`);
+    }
   }
 
   get inputValidationExplanation(): string {
