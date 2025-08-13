@@ -1,8 +1,9 @@
-import { collection, clickable, clickOnText, hasClass, isVisible, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
+
 import createPage from 'codecrafters-frontend/tests/support/create-page';
-import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
-import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
+import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
+import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
 
 export default createPage({
   languageDropdown: LanguageDropdown,
@@ -28,6 +29,8 @@ export default createPage({
     highlightedFileCards: collection('[data-test-community-solution-highlighted-file-card]', {
       clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
       clickOnViewOnGithubButton: clickable('[data-test-view-on-github-button]'),
+      viewOnGithubButtonIsDisabled: hasClass('opacity-50', '[data-test-view-on-github-button]'),
+      viewOnGithubButtonText: text('[data-test-view-on-github-button]'),
     }),
 
     downvoteButton: {

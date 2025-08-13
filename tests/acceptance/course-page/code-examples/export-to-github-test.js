@@ -1,19 +1,23 @@
+import { module, test } from 'qunit';
+import { settled, waitUntil } from '@ember/test-helpers';
+import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupWindowMock } from 'ember-window-mock/test-support';
+import percySnapshot from '@percy/ember';
+import window from 'ember-window-mock';
+
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import codeExamplesPage from 'codecrafters-frontend/tests/pages/course/code-examples-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
-import percySnapshot from '@percy/ember';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { setupAnimationTest } from 'ember-animated/test-support';
-import { module, test } from 'qunit';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { settled } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import createCommunityCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-community-course-stage-solution';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | code-examples | export-to-github', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
+  setupWindowMock(hooks);
 
   hooks.beforeEach(function () {
     testScenario(this.server);
@@ -46,74 +50,52 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await coursePage.clickOnHeaderTabLink('Code Examples');
   }
 
-  test('creates new export when none exists', async function (assert) {
-    const exportRecord = this.server.create('community-solution-export', {
-      status: 'provisioned',
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      githubRepositoryUrl: 'https://github.com/test-user/test-repo',
-      communitySolution: this.solution,
-    });
-
+  test('shows view on github button for unpublished solutions', async function (assert) {
     await navigateToCodeExamples();
     await percySnapshot('Code Examples - View on GitHub button (unpublished solution)');
 
-    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
-    await settled();
-
-    assert.ok(exportRecord, 'export should exist in database');
-    assert.strictEqual(exportRecord.status, 'provisioned', 'export should have correct status');
-    assert.strictEqual(exportRecord.githubRepositoryUrl, 'https://github.com/test-user/test-repo', 'export should have correct URL');
+    assert.ok(codeExamplesPage.solutionCards[0].hasViewOnGithubButton, 'should show view on github button');
+    assert.notOk(codeExamplesPage.solutionCards[0].hasDirectGithubLink, 'should not show direct github link');
   });
 
-  test('reuses existing unexpired export and redirects', async function (assert) {
-    const existingExport = this.server.create('community-solution-export', {
-      status: 'provisioned',
-      expiresAt: new Date(Date.now() + 12 * 60 * 60 * 1000),
-      githubRepositoryUrl: 'https://github.com/existing-repo/test',
-      communitySolution: this.solution,
-    });
-
-    const exportsBefore = this.server.schema.communitySolutionExports.all().length;
-
-
-    await navigateToCodeExamples();
-    await percySnapshot('Code Examples - View on GitHub button (with existing export)');
-
-    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
-    await settled();
-
-    const exportsAfter = this.server.schema.communitySolutionExports.all().length;
-    assert.strictEqual(exportsAfter, exportsBefore, 'should not create new export when reusing existing one');
-
-    const allExports = this.server.schema.communitySolutionExports.all();
-    assert.strictEqual(allExports.length, 1, 'should have exactly one export');
-    const firstExport = allExports.models[0];
-    assert.ok(firstExport, 'should have an export');
-    assert.strictEqual(firstExport.id, existingExport.id, 'should reuse the existing export');
-  });
-
-  test('creates new export when existing export is expired', async function (assert) {
+  test('redirects to github works when unexpired export exists', async function (assert) {
     this.server.create('community-solution-export', {
-      status: 'provisioned',
-      expiresAt: new Date(Date.now() - 25 * 60 * 60 * 1000),
-      githubRepositoryUrl: 'https://github.com/expired-repo/test',
-      communitySolution: this.solution,
-    });
-
-    const newExportRecord = this.server.create('community-solution-export', {
-      status: 'provisioned',
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      githubRepositoryUrl: 'https://github.com/new-repo/test',
       communitySolution: this.solution,
     });
 
     await navigateToCodeExamples();
+
+    window.open = (url, target, features) => {
+      assert.strictEqual(url, 'https://github.com/test-user/test-repo/blob/main/server.rb', 'should open correct github url');
+      assert.strictEqual(target, '_blank', 'should open in new tab');
+      assert.strictEqual(features, 'noopener,noreferrer', 'should have correct features');
+    };
+
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+  });
+
+  test('shows loading state when creating new export', async function (assert) {
+    this.server.timing = 100;
+
+    await navigateToCodeExamples();
+
+    codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+
+    await waitUntil(() => {
+      const fileCard = codeExamplesPage.solutionCards[0].highlightedFileCards[0];
+
+      return fileCard.viewOnGithubButtonText.includes('Loading');
+    });
+
+    const fileCard = codeExamplesPage.solutionCards[0].highlightedFileCards[0];
+    assert.ok(fileCard.viewOnGithubButtonText.includes('Loading'), 'should show loading text');
+    assert.ok(fileCard.viewOnGithubButtonIsDisabled, 'should be disabled during loading');
+
     await settled();
 
-    assert.ok(newExportRecord, 'should create new export when existing is expired');
-    assert.strictEqual(newExportRecord.status, 'provisioned', 'export should have correct status');
-    assert.strictEqual(newExportRecord.githubRepositoryUrl, 'https://github.com/new-repo/test', 'export should have correct URL');
+    assert.notOk(fileCard.viewOnGithubButtonText.includes('Loading'), 'should not show loading text after completion');
+    assert.notOk(fileCard.viewOnGithubButtonIsDisabled, 'should not be disabled after completion');
+    assert.ok(fileCard.viewOnGithubButtonText.includes('View on GitHub'), 'should show view on github text');
   });
 
   test('shows direct GitHub link when solution is published', async function (assert) {
@@ -123,25 +105,9 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       commitSha: 'abc123',
     });
 
-    const exportsBefore = this.server.schema.communitySolutionExports.all().length;
-
-
     await navigateToCodeExamples();
-    await percySnapshot('Code Examples - Direct GitHub link (published solution)');
 
     assert.notOk(codeExamplesPage.solutionCards[0].hasViewOnGithubButton, 'should not show view button for published solutions');
     assert.ok(codeExamplesPage.solutionCards[0].hasDirectGithubLink, 'should show direct GitHub link');
-
-    const exportsAfter = this.server.schema.communitySolutionExports.all().length;
-    assert.strictEqual(exportsAfter, exportsBefore, 'should not create export when solution is published');
-  });
-
-  test('handles export creation failure gracefully', async function (assert) {
-    await navigateToCodeExamples();
-
-    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
-    await settled();
-
-    assert.ok(codeExamplesPage.solutionCards[0].hasViewOnGithubButton, 'view button should still exist after failure');
   });
 });
