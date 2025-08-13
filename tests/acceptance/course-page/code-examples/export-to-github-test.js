@@ -4,7 +4,6 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
 import window from 'ember-window-mock';
-
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';

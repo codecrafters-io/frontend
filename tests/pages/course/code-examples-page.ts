@@ -1,5 +1,4 @@
 import { collection, clickable, clickOnText, hasClass, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
-
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import CommentCard from 'codecrafters-frontend/tests/pages/components/comment-card';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
