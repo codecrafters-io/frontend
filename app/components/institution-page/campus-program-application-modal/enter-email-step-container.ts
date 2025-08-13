@@ -25,7 +25,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
 
   get inputIsValid(): boolean {
-    return new RegExp(this.inputValidationRegex).test(this.normalizedInput);
+    return this.args.institution.officialEmailAddressSuffixes.some((suffix) => this.normalizedInput.endsWith(suffix));
   }
 
   get inputPlaceholder(): string {
@@ -55,12 +55,8 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   }
 
   get inputValidationRegex(): string {
-    const escapedSuffixes = this.args.institution.officialEmailAddressSuffixes.map((suffix) => {
-      return suffix.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-    });
-
-    // <spaces><something>(<suffix1>|<suffix2>|...)<spaces>
-    return `^ *[^@]+(${escapedSuffixes.join('|')}) *$`;
+    // We have a user-facing explanation for the regex, this dummy regex that ensures that the browser displays the explanation
+    return this.inputIsValid ? '.*' : 'will-never-match-any-string^';
   }
 
   get normalizedInput(): string {
