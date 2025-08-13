@@ -90,6 +90,6 @@ export default class HighlightedFileCardComponent extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard': typeof HighlightedFileCard;
+    'CoursePage::CourseStageStep::CommunitySolutionCard::HighlightedFileCard': typeof HighlightedFileCardComponent;
   }
 }
