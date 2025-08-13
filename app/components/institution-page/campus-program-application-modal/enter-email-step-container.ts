@@ -63,7 +63,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   }
 
   get inputValidationRegex(): string {
-    // We have a user-facing explanation for the regex, this dummy regex that ensures that the browser displays the explanation
+    // We have a user-facing explanation for the regex, this dummy regex just ensures that the browser displays the explanation
     return this.inputIsValid ? '.*' : 'will-never-match-any-string^';
   }
 
