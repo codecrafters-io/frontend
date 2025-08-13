@@ -62,8 +62,10 @@ export default class GithubFileActionsComponent extends Component<Signature> {
     } else {
       const exportRecord = await this.createExport();
 
-      const githubUrl = exportRecord?.githubUrlForFile(this.args.filename);
-      window.open(githubUrl, '_blank', 'noopener,noreferrer');
+      if (exportRecord) {
+        const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
+        window.open(githubUrl, '_blank', 'noopener,noreferrer');
+      }
     }
   }
 }
