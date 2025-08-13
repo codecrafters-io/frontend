@@ -79,6 +79,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await institutionPage.visit({ institution_slug: 'nus' });
     await institutionPage.claimOfferButtons[0].click();
+    await settled();
 
     const applicationModal = institutionPage.campusProgramApplicationModal;
     assert.ok(applicationModal.isVisible);
@@ -121,6 +122,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await institutionPage.visit({ institution_slug: 'nus' });
     await institutionPage.claimOfferButtons[0].click();
+    await settled();
 
     const applicationModal = institutionPage.campusProgramApplicationModal;
     assert.ok(applicationModal.isVisible);
