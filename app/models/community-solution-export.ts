@@ -6,9 +6,13 @@ export default class CommunitySolutionExportModel extends Model {
   @belongsTo('community-course-stage-solution', { async: false, inverse: 'exports' })
   declare communitySolution: CommunityCourseStageSolutionModel;
 
-  @attr('string') declare status: 'provisioning' | 'provisioned';
   @attr('date') declare expiresAt: Date;
   @attr('string') declare githubRepositoryUrl: string | null;
+  @attr('string') declare status: 'provisioning' | 'provisioned';
+
+  get isExpired(): boolean {
+    return new Date() >= this.expiresAt;
+  }
 
   get isProvisioned(): boolean {
     return this.status === 'provisioned';

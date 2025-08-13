@@ -15,34 +15,28 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  async function setupTestScenario(server) {
-    testScenario(server);
-    const currentUser = signIn(this.owner, server);
+  hooks.beforeEach(function () {
+    testScenario(this.server);
+    const currentUser = signIn(this.owner, this.server);
 
-    const solutionAuthor = server.create('user', {
+    const solutionAuthor = this.server.create('user', {
       avatarUrl: 'https://github.com/author.png',
       createdAt: new Date(),
       githubUsername: 'author',
       username: 'author',
     });
 
-    const redis = server.schema.courses.findBy({ slug: 'redis' });
-    const python = server.schema.languages.findBy({ slug: 'python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    server.create('repository', 'withFirstStageCompleted', {
+    this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
     });
 
-    return {
-      currentUser,
-      solutionAuthor,
-      redis,
-      python,
-      solution: createCommunityCourseStageSolution(server, redis, 2, python, solutionAuthor),
-    };
-  }
+    this.solution = createCommunityCourseStageSolution(this.server, redis, 2, python, solutionAuthor);
+  });
 
   async function navigateToCodeExamples() {
     await catalogPage.visit();
@@ -53,9 +47,9 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
   }
 
   test('creates new export when none exists', async function (assert) {
-    const { solution } = await setupTestScenario.call(this, this.server);
-
     let exportCreateCalled = false;
+
+    const solution = this.solution;
     this.server.post('/community-solution-exports', function (schema) {
       exportCreateCalled = true;
 
@@ -74,17 +68,21 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await settled();
 
     assert.ok(exportCreateCalled, 'should create new export');
+    const exportRecord = this.server.schema.communitySolutionExports.first();
+    assert.ok(exportRecord, 'export should exist in database');
+    assert.strictEqual(exportRecord.status, 'provisioned', 'export should have correct status');
+    assert.strictEqual(exportRecord.githubRepositoryUrl, 'https://github.com/test-user/test-repo', 'export should have correct URL');
   });
 
-  test('reuses existing unexpired export', async function (assert) {
-    const { solution } = await setupTestScenario.call(this, this.server);
-
-    this.server.create('community-solution-export', {
+  test('reuses existing unexpired export and redirects', async function (assert) {
+    const existingExport = this.server.create('community-solution-export', {
       status: 'provisioned',
       expiresAt: new Date(Date.now() + 12 * 60 * 60 * 1000),
       githubRepositoryUrl: 'https://github.com/existing-repo/test',
-      communitySolution: solution,
+      communitySolution: this.solution,
     });
+
+    const exportsBefore = this.server.schema.communitySolutionExports.all().length;
 
     let exportCreateCalled = false;
     this.server.post('/community-solution-exports', function () {
@@ -99,20 +97,28 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
-    assert.notOk(exportCreateCalled, 'should reuse existing export');
+    const exportsAfter = this.server.schema.communitySolutionExports.all().length;
+    assert.strictEqual(exportsAfter, exportsBefore, 'should not create new export when reusing existing one');
+    assert.notOk(exportCreateCalled, 'should not call create export API');
+
+    const allExports = this.server.schema.communitySolutionExports.all();
+    assert.strictEqual(allExports.length, 1, 'should have exactly one export');
+    const firstExport = allExports.models[0];
+    assert.ok(firstExport, 'should have an export');
+    assert.strictEqual(firstExport.id, existingExport.id, 'should reuse the existing export');
   });
 
   test('creates new export when existing export is expired', async function (assert) {
-    const { solution } = await setupTestScenario.call(this, this.server);
+    let exportCreateCalled = false;
 
     this.server.create('community-solution-export', {
       status: 'provisioned',
       expiresAt: new Date(Date.now() - 25 * 60 * 60 * 1000),
       githubRepositoryUrl: 'https://github.com/expired-repo/test',
-      communitySolution: solution,
+      communitySolution: this.solution,
     });
 
-    let exportCreateCalled = false;
+    const solution = this.solution;
     this.server.post('/community-solution-exports', function (schema) {
       exportCreateCalled = true;
 
@@ -129,36 +135,35 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await settled();
 
     assert.ok(exportCreateCalled, 'should create new export when existing is expired');
+    const exportRecord = this.server.schema.communitySolutionExports.findBy({ githubRepositoryUrl: 'https://github.com/new-repo/test' });
+    assert.ok(exportRecord, 'should create new export when existing is expired');
+    assert.strictEqual(exportRecord.status, 'provisioned', 'export should have correct status');
   });
 
   test('shows direct GitHub link when solution is published', async function (assert) {
-    const { solution } = await setupTestScenario.call(this, this.server);
-
-    solution.update({
+    this.solution.update({
       githubRepositoryName: 'author/redis-solution',
       githubRepositoryIsPrivate: false,
       commitSha: 'abc123',
     });
 
-    let exportCreateCalled = false;
-    this.server.post('/community-solution-exports', function () {
-      exportCreateCalled = true;
+    const exportsBefore = this.server.schema.communitySolutionExports.all().length;
 
+    this.server.post('/community-solution-exports', function () {
       return { data: {} };
     });
 
     await navigateToCodeExamples();
     await percySnapshot('Code Examples - Direct GitHub link (published solution)');
 
-    // Published solutions show a direct link, not a button
-    assert.dom('[data-test-view-on-github-button]').doesNotExist('should not show view button for published solutions');
-    assert.dom('a[href*="github.com/author/redis-solution"]').exists('should show direct GitHub link');
-    assert.notOk(exportCreateCalled, 'should not create export when solution is published');
+    assert.notOk(codeExamplesPage.solutionCards[0].hasViewOnGithubButton, 'should not show view button for published solutions');
+    assert.ok(codeExamplesPage.solutionCards[0].hasDirectGithubLink, 'should show direct GitHub link');
+
+    const exportsAfter = this.server.schema.communitySolutionExports.all().length;
+    assert.strictEqual(exportsAfter, exportsBefore, 'should not create export when solution is published');
   });
 
   test('handles export creation failure gracefully', async function (assert) {
-    await setupTestScenario.call(this, this.server);
-
     this.server.post('/community-solution-exports', function () {
       return new Response(500, {}, { error: 'Export creation failed' });
     });
@@ -168,6 +173,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
-    assert.dom('[data-test-view-on-github-button]').exists('view button should still exist after failure');
+    assert.ok(codeExamplesPage.solutionCards[0].hasViewOnGithubButton, 'view button should still exist after failure');
   });
 });

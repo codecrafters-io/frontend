@@ -24,51 +24,47 @@ export default class GithubFileActionsComponent extends Component<Signature> {
 
   @tracked isCreatingExport = false;
 
-  get isExportInProgress(): boolean {
-    const latestExport = this.getLatestUnexpiredExport();
-
-    return this.isCreatingExport || latestExport?.status === 'provisioning';
-  }
-
   get shouldShowPublishToGithubButton(): boolean {
     return this.args.solution.user.id === this.authenticator.currentUser?.id && !this.args.solution.isPublishedToPublicGithubRepository;
   }
 
-  private async createExport() {
-    if (this.isCreatingExport) {
-      return;
-    }
+  private async createExport(): Promise<CommunitySolutionExportModel | null> {
+    if (this.isCreatingExport) return null;
 
     this.isCreatingExport = true;
 
     try {
       const exportRecord = await this.args.solution.createExport();
       this.isCreatingExport = false;
-      const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
 
-      if (exportRecord.status === 'provisioned') {
-        window.open(githubUrl, '_blank', 'noopener,noreferrer');
-      }
+      return exportRecord;
     } catch (error) {
       Sentry.captureException(error);
       this.isCreatingExport = false;
+
+      return null;
     }
   }
 
-  private getLatestUnexpiredExport(): CommunitySolutionExportModel | null {
-    return this.args.solution.exports?.reject((exportRecord) => new Date() >= exportRecord.expiresAt)?.sortBy('expiresAt')?.lastObject || null;
+  private getLatestProvisionedExport(): CommunitySolutionExportModel | null {
+    return this.args.solution.exports.rejectBy('isExpired').filterBy('isProvisioned').sortBy('expiresAt').lastObject || null;
   }
 
   @action
-  handleViewOnGithubButtonClick() {
-    const latestExport = this.getLatestUnexpiredExport();
+  async handleViewOnGithubButtonClick() {
+    const latestExport = this.getLatestProvisionedExport();
 
-    if (latestExport?.status === 'provisioned') {
+    if (latestExport) {
       const githubUrl = latestExport.githubUrlForFile(this.args.filename);
       latestExport.markAsAccessed({});
       window.open(githubUrl, '_blank', 'noopener,noreferrer');
     } else {
-      this.createExport();
+      const exportRecord = await this.createExport();
+
+      if (exportRecord) {
+        const githubUrl = exportRecord.githubUrlForFile(this.args.filename);
+        window.open(githubUrl, '_blank', 'noopener,noreferrer');
+      }
     }
   }
 }

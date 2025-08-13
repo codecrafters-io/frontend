@@ -1,4 +1,4 @@
-import { collection, clickable, clickOnText, hasClass, triggerable, visitable } from 'ember-cli-page-object';
+import { collection, clickable, clickOnText, hasClass, isVisible, triggerable, visitable } from 'ember-cli-page-object';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import LanguageDropdown from 'codecrafters-frontend/tests/pages/components/language-dropdown';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
@@ -13,6 +13,9 @@ export default createPage({
       clickOnPublishToGithubButton: clickable('[data-test-publish-to-github-button]'),
       clickOnViewOnGithubButton: clickable('[data-test-view-on-github-button]'),
     }),
+
+    hasViewOnGithubButton: isVisible('[data-test-view-on-github-button]'),
+    hasDirectGithubLink: isVisible('a[href*="github.com"]'),
 
     content: {
       scope: '[data-test-community-solution-card-content]',
