@@ -121,7 +121,7 @@ Check the [How to pass this stage](#first-stage-tutorial-card) section for instr
   get routeParams() {
     return {
       route: 'course.stage.instructions',
-      models: [this.courseStage.course.slug, this.courseStage.identifierForURL],
+      models: [this.courseStage.course.slug, this.courseStage.slug],
     };
   }
 
