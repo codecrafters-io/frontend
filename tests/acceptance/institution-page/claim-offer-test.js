@@ -93,7 +93,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
     assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
-    await animationsSettled();
+    await settled();
 
     await percySnapshot('Institution Page - Enter Email Step with prefilled email');
 
@@ -132,7 +132,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
     assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
-    await animationsSettled();
+    await settled();
 
     await percySnapshot('Institution Page - Enter Email Step with prefilled email (from resend)');
 
