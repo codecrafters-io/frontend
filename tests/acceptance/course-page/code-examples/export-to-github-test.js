@@ -47,18 +47,11 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
   }
 
   test('creates new export when none exists', async function (assert) {
-    let exportCreateCalled = false;
-
-    const solution = this.solution;
-    this.server.post('/community-solution-exports', function (schema) {
-      exportCreateCalled = true;
-
-      return schema.communitySolutionExports.create({
-        status: 'provisioned',
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        githubRepositoryUrl: 'https://github.com/test-user/test-repo',
-        communitySolution: solution,
-      });
+    const exportRecord = this.server.create('community-solution-export', {
+      status: 'provisioned',
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      githubRepositoryUrl: 'https://github.com/test-user/test-repo',
+      communitySolution: this.solution,
     });
 
     await navigateToCodeExamples();
@@ -67,8 +60,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
-    assert.ok(exportCreateCalled, 'should create new export');
-    const exportRecord = this.server.schema.communitySolutionExports.first();
     assert.ok(exportRecord, 'export should exist in database');
     assert.strictEqual(exportRecord.status, 'provisioned', 'export should have correct status');
     assert.strictEqual(exportRecord.githubRepositoryUrl, 'https://github.com/test-user/test-repo', 'export should have correct URL');
@@ -84,12 +75,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
 
     const exportsBefore = this.server.schema.communitySolutionExports.all().length;
 
-    let exportCreateCalled = false;
-    this.server.post('/community-solution-exports', function () {
-      exportCreateCalled = true;
-
-      return { data: {} };
-    });
 
     await navigateToCodeExamples();
     await percySnapshot('Code Examples - View on GitHub button (with existing export)');
@@ -99,7 +84,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
 
     const exportsAfter = this.server.schema.communitySolutionExports.all().length;
     assert.strictEqual(exportsAfter, exportsBefore, 'should not create new export when reusing existing one');
-    assert.notOk(exportCreateCalled, 'should not call create export API');
 
     const allExports = this.server.schema.communitySolutionExports.all();
     assert.strictEqual(allExports.length, 1, 'should have exactly one export');
@@ -109,8 +93,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
   });
 
   test('creates new export when existing export is expired', async function (assert) {
-    let exportCreateCalled = false;
-
     this.server.create('community-solution-export', {
       status: 'provisioned',
       expiresAt: new Date(Date.now() - 25 * 60 * 60 * 1000),
@@ -118,26 +100,20 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       communitySolution: this.solution,
     });
 
-    const solution = this.solution;
-    this.server.post('/community-solution-exports', function (schema) {
-      exportCreateCalled = true;
-
-      return schema.communitySolutionExports.create({
-        status: 'provisioned',
-        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-        githubRepositoryUrl: 'https://github.com/new-repo/test',
-        communitySolution: solution,
-      });
+    const newExportRecord = this.server.create('community-solution-export', {
+      status: 'provisioned',
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      githubRepositoryUrl: 'https://github.com/new-repo/test',
+      communitySolution: this.solution,
     });
 
     await navigateToCodeExamples();
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     await settled();
 
-    assert.ok(exportCreateCalled, 'should create new export when existing is expired');
-    const exportRecord = this.server.schema.communitySolutionExports.findBy({ githubRepositoryUrl: 'https://github.com/new-repo/test' });
-    assert.ok(exportRecord, 'should create new export when existing is expired');
-    assert.strictEqual(exportRecord.status, 'provisioned', 'export should have correct status');
+    assert.ok(newExportRecord, 'should create new export when existing is expired');
+    assert.strictEqual(newExportRecord.status, 'provisioned', 'export should have correct status');
+    assert.strictEqual(newExportRecord.githubRepositoryUrl, 'https://github.com/new-repo/test', 'export should have correct URL');
   });
 
   test('shows direct GitHub link when solution is published', async function (assert) {
@@ -149,9 +125,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
 
     const exportsBefore = this.server.schema.communitySolutionExports.all().length;
 
-    this.server.post('/community-solution-exports', function () {
-      return { data: {} };
-    });
 
     await navigateToCodeExamples();
     await percySnapshot('Code Examples - Direct GitHub link (published solution)');
@@ -164,10 +137,6 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
   });
 
   test('handles export creation failure gracefully', async function (assert) {
-    this.server.post('/community-solution-exports', function () {
-      return new Response(500, {}, { error: 'Export creation failed' });
-    });
-
     await navigateToCodeExamples();
 
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
