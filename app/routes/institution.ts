@@ -1,11 +1,11 @@
-import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
-import InstitutionModel from 'codecrafters-frontend/models/institution';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import Store from '@ember-data/store';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
-import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import config from 'codecrafters-frontend/config/environment';
+import type InstitutionModel from 'codecrafters-frontend/models/institution';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type MetaDataService from 'codecrafters-frontend/services/meta-data';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type InstitutionRouteModel = {
   institution: InstitutionModel;
@@ -23,7 +23,7 @@ export default class InstitutionRoute extends BaseRoute {
       return;
     }
 
-    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}institution-${model.institution.slug}.jpg`;
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}institution-${model.institution.slug}.png`;
   }
 
   buildRouteInfoMetadata() {
