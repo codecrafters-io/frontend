@@ -78,7 +78,7 @@ module.exports = function (defaults) {
         }
 
         const institutionsPayload = await institutionsResponse.json();
-        
+
         urls.push(...(institutionsPayload.data || []).map(({ attributes: { slug } }) => `/campus/${slug}`));
 
         // Return the full list of routes
