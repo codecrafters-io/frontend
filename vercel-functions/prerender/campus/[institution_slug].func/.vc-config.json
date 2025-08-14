@@ -1,0 +1,9 @@
+{
+  "handler": "index.js",
+  "runtime": "nodejs22.x",
+  "memory": 3009,
+  "maxDuration": 15,
+  "launcherType": "Nodejs",
+  "shouldAddHelpers": true,
+  "shouldAddSourcemapSupport": true
+}
