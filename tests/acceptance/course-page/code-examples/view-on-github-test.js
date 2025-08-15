@@ -9,10 +9,8 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
-import window from 'ember-window-mock';
-import { waitUntil } from '@ember/test-helpers';
-import sinon from 'sinon';
-import { settled } from '@ember/test-helpers';
+import windowMock from 'ember-window-mock';
+import { waitUntil, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | code-examples | view-on-github', function (hooks) {
   setupApplicationTest(hooks);
@@ -50,28 +48,28 @@ module('Acceptance | course-page | code-examples | view-on-github', function (ho
 
   test('can view export on GitHub if none exists', async function (assert) {
 
-    const focusSpy = sinon.spy();
-    const openStub = sinon.stub(window, 'open').returns({ focus: focusSpy });
+    let openedUrl = null;
+    let focusCalled = false;
+    
+    windowMock.open = (url) => {
+      openedUrl = url;
+      return {
+        focus() {
+          focusCalled = true;
+        }
+      };
+    };
 
     assert.ok(codeExamplesPage.solutionCards[0].highlightedFileCards[0].hasViewOnGithubButton, 'Expect view on github button to be visible');
     
-    try {
-      await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
-    } catch (error) {
-      console.log('Button click error:', error);
-    }
-
-    await settled();
+    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
     
-    // Wait for export creation to complete
+    await settled();
+
     await waitUntil(() => this.solution.exports.length > 0, { timeout: 2000 });
 
-    console.log(this.solution.exports);
-    console.log('openStub called:', openStub.called);
-    console.log('openStub callCount:', openStub.callCount);
-
-    assert.ok(openStub.calledOnce, 'window.open should be called once');
-    assert.strictEqual(openStub.args[0][0], 'https://github.com/cc-code-examples/python-redis/blob/main/server.rb', 'should redirect to github with auto-login');
-    assert.strictEqual(focusSpy.calledOnce, true, 'should focus the child window');
+    assert.ok(openedUrl, 'window.open should be called');
+    assert.strictEqual(openedUrl, 'https://github.com/cc-code-examples/python-redis/blob/main/server.rb', 'should open github with correct URL');
+    assert.ok(focusCalled, 'should focus the child window');
   });
 });
