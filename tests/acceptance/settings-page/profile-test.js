@@ -17,7 +17,9 @@ module('Acceptance | settings-page | profile-test', function (hooks) {
     await profilePage.profileDescription.input.fillIn('Updated profile description');
     await profilePage.profileDescription.input.blur();
 
-    await userPage.visit({ username: 'rohitpaulk' });
+    await profilePage.accountDropdown.toggle();
+    await profilePage.accountDropdown.clickOnLink('Your Profile');
+
     assert.strictEqual(
       userPage.profileDescriptionMarkdown.text,
       'Updated profile description',

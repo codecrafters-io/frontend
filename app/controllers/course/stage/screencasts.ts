@@ -14,7 +14,7 @@ type ModelType = {
   activeRepository: RepositoryModel;
 };
 
-export default class ScreencastsTabComponent extends Controller {
+export default class ScreencastsTabController extends Controller {
   queryParams = ['selectedScreencastId'];
 
   declare model: ModelType;

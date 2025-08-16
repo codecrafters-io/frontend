@@ -1,8 +1,8 @@
-export default function createCourseStageSolution(server, course, stagePosition, language) {
+export default function createCourseStageSolution(server, course, stagePosition, language, user) {
   let stage = course.stages.models.filter((stage) => stage.position === stagePosition)[0];
 
   return server.create('community-course-stage-solution', {
-    user: server.schema.users.first(),
+    user: user || server.schema.users.first(),
     changedFiles: [
       {
         filename: 'README.md',
