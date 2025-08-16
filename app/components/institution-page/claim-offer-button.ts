@@ -29,6 +29,12 @@ export default class ClaimOfferButton extends Component<Signature> {
 
   @action
   handleClick() {
+    if (!this.authenticator.isAuthenticated) {
+      this.authenticator.initiateLogin();
+
+      return;
+    }
+
     if (!this.isDisabled) {
       this.args.onClick();
     }
