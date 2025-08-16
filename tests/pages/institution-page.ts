@@ -13,8 +13,8 @@ export default createPage({
     },
 
     verifyEmailStepContainer: {
-      clickOnChangeEmail: clickable('[data-test-change-email-button]'),
-      clickOnResendEmail: clickable('[data-test-resend-email-button]'),
+      clickOnChangeEmailButton: clickable('[data-test-change-email-button]'),
+      clickOnResendEmailButton: clickable('[data-test-resend-email-button]'),
       emailAddress: text('[data-test-email-address]'),
       scope: '[data-test-verify-email-step-container]',
     },

@@ -13,7 +13,7 @@ interface Signature {
 
 export default class VerifyEmailStepContainer extends Component<Signature> {
   @action
-  handleGoBackToEnterEmail() {
+  handleChangeEmailButtonClick() {
     this.args.onGoBackToEnterEmail();
   }
 }
