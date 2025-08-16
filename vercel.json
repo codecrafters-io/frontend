@@ -37,6 +37,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/campus/:institution_slug", "destination": "/prerender/campus/[institution_slug]" },
     { "source": "/concepts/:concept", "destination": "/prerender/concepts/[concept]" },
     { "source": "/contests/:contest", "destination": "/prerender/contests/[contest]" },
     { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
