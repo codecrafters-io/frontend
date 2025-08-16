@@ -9,7 +9,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
-import windowMock from 'ember-window-mock';
+import window from 'ember-window-mock';
 import { waitUntil, settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | code-examples | view-on-github', function (hooks) {
@@ -28,48 +28,85 @@ module('Acceptance | course-page | code-examples | view-on-github', function (ho
         username: 'sarupbanskota',
       });
 
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let ruby = this.server.schema.languages.findBy({ name: 'Ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
-      language: python,
+      language: ruby,
       user: differentUser,
     });
 
-    this.solution = createCommunityCourseStageSolution(this.server, redis, 2, python, differentUser);
+    this.solution = createCommunityCourseStageSolution(this.server, redis, 2, ruby, differentUser);
 
+    await visitCodeExamplesPage();
+  });
+
+  async function visitCodeExamplesPage() {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await coursePage.clickOnHeaderTabLink('Code Examples');
-  });
+  }
 
   test('can view export on GitHub if none exists', async function (assert) {
-
-    let openedUrl = null;
-    let focusCalled = false;
-    
-    windowMock.open = (url) => {
-      openedUrl = url;
-      return {
-        focus() {
-          focusCalled = true;
-        }
-      };
+    window.open = (urlToOpen) => {
+      assert.strictEqual(urlToOpen, 'https://github.com/cc-code-examples/ruby-redis/blob/main/server.rb', 'should open github with correct URL');
     };
 
     assert.ok(codeExamplesPage.solutionCards[0].highlightedFileCards[0].hasViewOnGithubButton, 'Expect view on github button to be visible');
     
     await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
-    
     await settled();
+  });
 
-    await waitUntil(() => this.solution.exports.length > 0, { timeout: 2000 });
 
-    assert.ok(openedUrl, 'window.open should be called');
-    assert.strictEqual(openedUrl, 'https://github.com/cc-code-examples/python-redis/blob/main/server.rb', 'should open github with correct URL');
-    assert.ok(focusCalled, 'should focus the child window');
+  test('can view export on GitHub if an unexpired export exists', async function (assert) {
+    this.server.create('communitySolutionExport', {
+      communitySolution: this.solution,
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      githubRepositoryUrl: 'https://github.com/cc-code-examples/ruby-redis-1',
+    });
+
+    await visitCodeExamplesPage();
+
+    window.open = (urlToOpen) => {
+      assert.strictEqual(urlToOpen, 'https://github.com/cc-code-examples/ruby-redis-1/blob/main/server.rb', 'should open github with correct (new) URL');
+    };
+
+    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
+  });
+
+  test('can view export on GitHub if an expired export exists', async function (assert) {
+    this.server.create('communitySolutionExport', {
+      communitySolution: this.solution,
+      expiresAt: new Date(Date.now() - 26 * 60 * 60 * 1000),
+      githubRepositoryUrl: 'https://github.com/cc-code-examples/ruby-redis-2',
+    });
+
+    await visitCodeExamplesPage();
+
+    window.open = (urlToOpen) => {
+      assert.strictEqual(urlToOpen, 'https://github.com/cc-code-examples/ruby-redis/blob/main/server.rb', 'should open github with correct (old) URL');
+    };
+
+    assert.ok(codeExamplesPage.solutionCards[0].highlightedFileCards[0].hasViewOnGithubButton, 'Expect view on github button to be visible');
+    
+    await codeExamplesPage.solutionCards[0].highlightedFileCards[0].clickOnViewOnGithubButton();
+    await settled();
+  });
+
+  test('shows anchor link if solution is published', async function (assert) {
+    this.solution.update({
+      githubRepositoryName: 'author/redis-solution',
+      githubRepositoryIsPrivate: false,
+      commitSha: 'abc123',
+    });
+
+    await visitCodeExamplesPage();
+
+    assert.notOk(codeExamplesPage.solutionCards[0].highlightedFileCards[0].hasViewOnGithubButton, 'Expect view on github button to be hidden');
   });
 });
