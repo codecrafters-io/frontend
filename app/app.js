@@ -2,6 +2,7 @@ import Application from '@ember/application';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from 'codecrafters-frontend/config/environment';
+import 'codecrafters-frontend/config/deprecation-workflow';
 import * as Sentry from '@sentry/ember';
 import 'ember-basic-dropdown/styles';
 import 'ember-animated/index';
