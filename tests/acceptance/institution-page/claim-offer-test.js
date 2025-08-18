@@ -8,6 +8,8 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createInstitution from 'codecrafters-frontend/mirage/utils/create-institution';
+import windowMock from 'ember-window-mock';
+import config from 'codecrafters-frontend/config/environment';
 
 module('Acceptance | institution-page | claim-offer-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -138,6 +140,18 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
     assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
     assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill@u.nus.edu');
+   });
+
+  test('claim offer button click redirects to login page if user is not signed in', async function (assert) {
+    testScenario(this.server);
+    createInstitution(this.server, 'nus');
+
+    const expectedRedirectUrl = encodeURIComponent(`${window.origin}/campus/nus`);
+    const nextUrl = config.x.backendUrl + '/login?next=' + expectedRedirectUrl;
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+    assert.strictEqual(windowMock.location.href, nextUrl, 'should redirect to login URL with correct claim offer endpoint');
   });
 
   // TODO: Test rejected application flow

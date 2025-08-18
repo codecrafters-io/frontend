@@ -76,6 +76,17 @@ module.exports = function (defaults) {
 
         urls.push('/collections/rust-primer'); // will update if we get more collections
 
+        // Get institutions from the API
+        const institutionsResponse = await fetch(`${config.x.backendUrl}/api/v1/institutions`);
+
+        if (institutionsResponse.status !== 200) {
+          throw new Error(`Failed to load Institutions from the API, status: ${institutionsResponse.status}`);
+        }
+
+        const institutionsPayload = await institutionsResponse.json();
+
+        urls.push(...(institutionsPayload.data || []).map(({ attributes: { slug } }) => `/campus/${slug}`));
+
         // Return the full list of routes
         return urls;
       },
