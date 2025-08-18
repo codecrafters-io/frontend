@@ -81,7 +81,6 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await institutionPage.visit({ institution_slug: 'nus' });
     await institutionPage.claimOfferButtons[0].click();
-    await animationsSettled();
 
     const applicationModal = institutionPage.campusProgramApplicationModal;
     assert.ok(applicationModal.isVisible);
@@ -94,10 +93,10 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
     assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
-    await animationsSettled();
 
     await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill-new@u.nus.edu');
     await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
     await animationsSettled();
 
     assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
@@ -120,7 +119,6 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await institutionPage.visit({ institution_slug: 'nus' });
     await institutionPage.claimOfferButtons[0].click();
-    await animationsSettled();
 
     const applicationModal = institutionPage.campusProgramApplicationModal;
     assert.ok(applicationModal.isVisible);
@@ -132,15 +130,15 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
     assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
-    await animationsSettled();
 
     await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
     await animationsSettled();
 
     assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
     assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
     assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill@u.nus.edu');
-   });
+  });
 
   test('claim offer button click redirects to login page if user is not signed in', async function (assert) {
     testScenario(this.server);

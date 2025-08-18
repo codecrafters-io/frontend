@@ -14,7 +14,7 @@ interface Signature {
   Args: {
     institution: InstitutionModel;
     onSubmit: () => void;
-    prefilledEmailAddress: string;
+    prefilledEmailAddress?: string;
   };
 }
 
