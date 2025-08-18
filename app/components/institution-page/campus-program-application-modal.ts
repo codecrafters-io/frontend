@@ -18,8 +18,8 @@ interface Signature {
 
 export default class CampusProgramApplicationModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @tracked emailAddressToPrefill: string | undefined = undefined;
-  @tracked forceShowEnterEmail = false;
+  
+  @tracked shouldShowEnterEmail = false;
 
   transition = fade;
 
@@ -34,15 +34,13 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
 
   @action
   handleEnterEmailStepSubmitted() {
-    this.forceShowEnterEmail = false;
-    this.emailAddressToPrefill = undefined;
+    this.shouldShowEnterEmail = false;
   }
 
   @action
-  handleGoBackToEnterEmail() {
-    this.emailAddressToPrefill = this.latestSavedGrantApplication!.originalEmailAddress;
+  handleChangeOrResendEmailButtonClick() {
     this.latestSavedGrantApplication!.unloadRecord();
-    this.forceShowEnterEmail = true;
+    this.shouldShowEnterEmail = true;
   }
 }
 

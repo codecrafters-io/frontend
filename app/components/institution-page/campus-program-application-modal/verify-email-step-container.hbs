@@ -16,7 +16,7 @@
       type="button"
       class="text-xs text-gray-500 underline hover:text-gray-700"
       data-test-change-email-button
-      {{on "click" this.handleChangeEmailButtonClick}}
+      {{on "click" @onChangeOrResendEmailButtonClick}}
     >
       Change email
     </button>
@@ -27,7 +27,7 @@
       type="button"
       class="text-xs text-gray-500 underline hover:text-gray-700"
       data-test-resend-email-button
-      {{on "click" this.handleChangeEmailButtonClick}}
+      {{on "click" @onChangeOrResendEmailButtonClick}}
     >
       Resend email
     </button>

@@ -13,8 +13,8 @@ interface Signature {
 
   Args: {
     institution: InstitutionModel;
-    prefilledEmail?: string;
-    onSubmit?: () => void;
+    onSubmit: () => void;
+    prefilledEmailAddress: string;
   };
 }
 
@@ -28,7 +28,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
-    this.input = args.prefilledEmail || '';
+    this.input = args.prefilledEmailAddress || '';
   }
 
   get inputIsValid(): boolean {

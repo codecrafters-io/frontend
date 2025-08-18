@@ -7,15 +7,11 @@ interface Signature {
 
   Args: {
     application: InstitutionMembershipGrantApplicationModel;
-    onGoBackToEnterEmail: () => void;
+    onChangeOrResendEmailButtonClick: () => void;
   };
 }
 
 export default class VerifyEmailStepContainer extends Component<Signature> {
-  @action
-  handleChangeEmailButtonClick() {
-    this.args.onGoBackToEnterEmail();
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
