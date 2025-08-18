@@ -16,7 +16,7 @@ import { memberAction } from 'ember-api-actions';
 import { type FileComparison, FileComparisonFromJSON } from 'codecrafters-frontend/utils/file-comparison';
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
-  static defaultIncludedResources = ['user', 'language', 'comments', 'comments.user', 'comments.target', 'course-stage'];
+  static defaultIncludedResources = ['course-stage', 'current-user-downvotes', 'current-user-upvotes', 'exports', 'language', 'screencasts', 'user'];
 
   @service declare authenticator: AuthenticatorService; // used by VotableMixin
 

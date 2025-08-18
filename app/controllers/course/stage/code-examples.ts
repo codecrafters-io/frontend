@@ -1,14 +1,14 @@
+import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import Controller from '@ember/controller';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
-import type Store from '@ember-data/store';
-import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
@@ -102,7 +102,7 @@ export default class CodeExamplesController extends Controller {
     this.solutions = (await this.store.query('community-course-stage-solution', {
       course_stage_id: this.courseStage.id,
       language_id: this.currentLanguage.id,
-      include: 'user,language,course-stage,screencasts,current-user-upvotes,current-user-downvotes,exports',
+      include: CommunityCourseStageSolutionModel.defaultIncludedResources.join(','),
       order: this.order,
     })) as unknown as CommunityCourseStageSolutionModel[]; // TODO: Doesn't store.query support model type inference?
 
