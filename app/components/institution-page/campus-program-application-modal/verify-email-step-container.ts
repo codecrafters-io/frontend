@@ -6,6 +6,7 @@ interface Signature {
 
   Args: {
     application: InstitutionMembershipGrantApplicationModel;
+    onChangeOrResendEmailButtonClick: () => void;
   };
 }
 

@@ -13,6 +13,8 @@ interface Signature {
 
   Args: {
     institution: InstitutionModel;
+    onSubmit: () => void;
+    prefilledEmailAddress?: string;
   };
 }
 
@@ -23,6 +25,11 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   @tracked formElement: HTMLFormElement | undefined;
   @tracked input = '';
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
+
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+    this.input = args.prefilledEmailAddress || '';
+  }
 
   get inputIsValid(): boolean {
     return this.args.institution.officialEmailAddressSuffixes.some((suffix) => this.normalizedInput.endsWith(suffix));
@@ -123,6 +130,8 @@ export default class EnterEmailStepContainer extends Component<Signature> {
         user: this.authenticator.currentUser!,
       })
       .save();
+
+    this.args.onSubmit();
   }
 }
 

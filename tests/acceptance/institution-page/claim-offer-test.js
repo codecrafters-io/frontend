@@ -66,6 +66,82 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
   });
 
+  test('can redo the flow from change email button', async function (assert) {
+    testScenario(this.server);
+    const institution = createInstitution(this.server, 'nus');
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('institution-membership-grant-application', {
+      institution: institution,
+      user: user,
+      status: 'awaiting_verification',
+      normalizedEmailAddress: 'bill@u.nus.edu',
+      originalEmailAddress: 'bill@u.nus.edu',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.ok(applicationModal.isVisible);
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
+    assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill@u.nus.edu');
+
+    await applicationModal.verifyEmailStepContainer.clickOnChangeEmailButton();
+    await animationsSettled();
+
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
+    assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
+    assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
+
+    await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill-new@u.nus.edu');
+    await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
+    await animationsSettled();
+
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
+    assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill-new@u.nus.edu');
+  });
+
+  test('can redo the flow from resend email button', async function (assert) {
+    testScenario(this.server);
+    const institution = createInstitution(this.server, 'nus');
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('institution-membership-grant-application', {
+      institution: institution,
+      user: user,
+      status: 'awaiting_verification',
+      normalizedEmailAddress: 'bill@u.nus.edu',
+      originalEmailAddress: 'bill@u.nus.edu',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.ok(applicationModal.isVisible);
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
+
+    await applicationModal.verifyEmailStepContainer.clickOnResendEmailButton();
+    await animationsSettled();
+
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
+    assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
+    assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'bill@u.nus.edu');
+
+    await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
+    await animationsSettled();
+
+    assert.notOk(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should not be visible');
+    assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
+    assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill@u.nus.edu');
+  });
+
   test('claim offer button click redirects to login page if user is not signed in', async function (assert) {
     testScenario(this.server);
     createInstitution(this.server, 'nus');

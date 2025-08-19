@@ -4,7 +4,7 @@
   <div class="prose prose-sm text-center">
     <p>
       We've sent a verification email to
-      <b class="font-semibold">{{@application.normalizedEmailAddress}}</b>.
+      <b class="font-semibold" data-test-email-address>{{@application.normalizedEmailAddress}}</b>.
     </p>
     <p>
       Click on the link in your email to proceed.
@@ -12,15 +12,25 @@
   </div>
 
   <div class="flex items-center justify-center gap-2">
-    <span class="text-xs text-gray-500 underline">
+    <button
+      type="button"
+      class="text-xs text-gray-500 underline hover:text-gray-700"
+      data-test-change-email-button
+      {{on "click" @onChangeOrResendEmailButtonClick}}
+    >
       Change email
-    </span>
+    </button>
     <span class="text-xs text-gray-500">
       •
     </span>
-    <span class="text-xs text-gray-500 underline">
+    <button
+      type="button"
+      class="text-xs text-gray-500 underline hover:text-gray-700"
+      data-test-resend-email-button
+      {{on "click" @onChangeOrResendEmailButtonClick}}
+    >
       Resend email
-    </span>
+    </button>
   </div>
   <div class="text-xs text-gray-500">
     Need help?
