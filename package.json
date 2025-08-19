@@ -172,7 +172,7 @@
     "eslint-plugin-n": "^17.10.3",
     "eslint-plugin-prettier": "^5.5.0",
     "eslint-plugin-qunit": "^8.1.2",
-    "html-entities": "^2.5.2",
+    "html-entities": "^2.6.0",
     "loader.js": "^4.7.0",
     "node-fetch": "^2.6.12",
     "postcss": "^8.5.6",
