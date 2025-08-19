@@ -4,13 +4,13 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if (or (not this.latestSavedGrantApplication) this.shouldShowEnterEmail) use=this.transition}}
+    {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication) use=this.transition}}
       <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer
         @institution={{@institution}}
         @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
         @onSubmit={{this.handleEnterEmailStepSubmitted}}
       />
-    {{else}}{{#if (and (not this.shouldShowEnterEmail) (eq this.latestSavedGrantApplication.status "awaiting_verification"))}}
+    {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
         <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
           {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
           @application={{this.latestSavedGrantApplication}}

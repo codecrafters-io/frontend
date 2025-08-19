@@ -19,7 +19,7 @@ interface Signature {
 export default class CampusProgramApplicationModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
-  @tracked shouldShowEnterEmail = false;
+  @tracked isOverridingSavedGrantApplication = false;
 
   transition = fade;
 
@@ -34,12 +34,12 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
 
   @action
   handleChangeOrResendEmailButtonClick() {
-    this.shouldShowEnterEmail = true;
+    this.isOverridingSavedGrantApplication = true;
   }
 
   @action
   handleEnterEmailStepSubmitted() {
-    this.shouldShowEnterEmail = false;
+    this.isOverridingSavedGrantApplication = false;
   }
 }
 

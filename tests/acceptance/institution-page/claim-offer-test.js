@@ -89,6 +89,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.strictEqual(applicationModal.verifyEmailStepContainer.emailAddress, 'bill@u.nus.edu');
 
     await applicationModal.verifyEmailStepContainer.clickOnChangeEmailButton();
+    await animationsSettled();
 
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
@@ -126,6 +127,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.ok(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should be visible');
 
     await applicationModal.verifyEmailStepContainer.clickOnResendEmailButton();
+    await animationsSettled();
 
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible');
     assert.notOk(applicationModal.verifyEmailStepContainer.isVisible, 'Verify email step should not be visible');
