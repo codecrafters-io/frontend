@@ -1,0 +1,9 @@
+<PrimaryLinkButton @size={{this.linkButtonSize}} @route="settings.billing" data-test-campus-badge ...attributes>
+
+  <span class="flex items-center">
+    Campus
+    {{svg-jar "academic-cap" class="w-4 ml-1 fill-current"}}
+  </span>
+
+  <EmberTooltip @text="You're part of the CodeCrafters Campus Program. Click here to view your membership details." />
+</PrimaryLinkButton>

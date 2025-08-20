@@ -30,12 +30,17 @@ export default class BillingStatusDisplay extends Component<Signature> {
     | 'vip'
     | 'member'
     | 'indirect-member'
+    | 'campus'
     | 'discount-timer'
     | 'discount-timer-excluding-stage-2-completion'
     | 'free-weeks-left'
     | 'upgrade' {
     if (this.currentUser?.isVip) {
       return 'vip';
+    }
+
+    if (this.currentUser?.institutionMembershipGrants.length) {
+      return 'campus';
     }
 
     if (this.currentUser?.hasActiveSubscription) {
