@@ -206,7 +206,7 @@
     "@rive-app/canvas": "^2.27.0",
     "@stripe/stripe-js": "^5.5.0",
     "@typeform/embed": "^5.5.0",
-    "@vimeo/player": "^2.26.0",
+    "@vimeo/player": "^2.29.3",
     "ansi_up": "^6.0.6",
     "array-to-sentence": "^2.0.0",
     "dompurify": "^3.2.4",
