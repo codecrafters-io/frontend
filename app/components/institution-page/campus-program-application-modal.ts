@@ -40,13 +40,13 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   }
 
   @action
-  handleEnterEmailStepSubmitted() {
-    this.isOverridingSavedGrantApplication = false;
+  handleEmailAlreadyInUse() {
+    this.shouldShowEmailAlreadyInUse = true;
   }
 
   @action
-  handleEmailAlreadyInUse() {
-    this.shouldShowEmailAlreadyInUse = true;
+  handleEnterEmailStepSubmitted() {
+    this.isOverridingSavedGrantApplication = false;
   }
 }
 

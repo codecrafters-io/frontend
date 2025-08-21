@@ -4,7 +4,10 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected")) use=this.transition}}
+    {{#animated-if
+      (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected"))
+      use=this.transition
+    }}
       {{#if this.shouldShowEmailAlreadyInUse}}
         <InstitutionPage::CampusProgramApplicationModal::EmailAlreadyInUseStepContainer
           @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
