@@ -5,7 +5,11 @@
 
   <AnimatedContainer>
     {{#animated-if
-      (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected"))
+      (or
+        (not this.latestSavedGrantApplication)
+        this.isOverridingSavedGrantApplication
+        (not (eq this.latestSavedGrantApplication.status "awaiting_verification"))
+      )
       use=this.transition
     }}
       {{#if this.shouldShowEmailAlreadyInUse}}

@@ -154,5 +154,40 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.strictEqual(windowMock.location.href, nextUrl, 'should redirect to login URL with correct claim offer endpoint');
   });
 
-  // TODO: Test rejected application flow
+  test('shows email already in use step if approved application exists', async function (assert) {
+    testScenario(this.server);
+    const institution = createInstitution(this.server, 'nus');
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('institution-membership-grant-application', {
+      institution: institution,
+      user: user,
+      status: 'approved',
+      normalizedEmailAddress: 'bill@u.nus.edu',
+      originalEmailAddress: 'bill@u.nus.edu',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.ok(applicationModal.isVisible);
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible initially');
+
+    await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill@u.nus.edu');
+    await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
+    assert.ok(
+      applicationModal.emailAlreadyInUseStepContainer.isVisible,
+      'Email already in use step should be visible after submitting duplicate email',
+    );
+
+    await applicationModal.emailAlreadyInUseStepContainer.clickOnChangeEmailButton();
+
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible after clicking on change email button');
+    assert.notOk(
+      applicationModal.emailAlreadyInUseStepContainer.isVisible,
+      'Email already in use step should not be visible after clicking on change email button',
+    );
+  });
 });
