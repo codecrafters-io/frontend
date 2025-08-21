@@ -147,6 +147,15 @@ export default class UserModel extends Model {
     return this.lastFreeUsageGrantExpiresAt < new Date();
   }
 
+  get hasActiveInstitutionMembershipGrants() {
+    return this.institutionMembershipGrants.some((grant) => {
+      if (!grant.grantedAt || !grant.validityInDays) return false;
+      const expirationDate = new Date(grant.grantedAt.getTime() + grant.validityInDays * 24 * 60 * 60 * 1000);
+
+      return expirationDate > new Date();
+    });
+  }
+
   get hasActiveSubscription() {
     return !!this.activeSubscription;
   }

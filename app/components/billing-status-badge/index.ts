@@ -39,7 +39,7 @@ export default class BillingStatusDisplay extends Component<Signature> {
       return 'vip';
     }
 
-    if (this.currentUser?.institutionMembershipGrants.length) {
+    if (this.currentUser?.hasActiveInstitutionMembershipGrants) {
       return 'campus';
     }
 
