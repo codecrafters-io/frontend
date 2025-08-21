@@ -63,7 +63,7 @@ module('Acceptance | header-test', function (hooks) {
 
   test('header should show campus badge if user has an institution membership grant', async function (assert) {
     testScenario(this.server);
-    const institution = createInstitution(this.server, 'nus');
+    createInstitution(this.server, 'nus');
     signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
 
     await catalogPage.visit();
@@ -79,7 +79,7 @@ module('Acceptance | header-test', function (hooks) {
 
   test('campus badge redirects to /settings/billing', async function (assert) {
     testScenario(this.server);
-    const institution = createInstitution(this.server, 'nus');
+    createInstitution(this.server, 'nus');
     signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
 
     await catalogPage.visit();
