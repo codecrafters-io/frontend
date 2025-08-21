@@ -62,7 +62,7 @@ export default class UserModel extends Model {
   @hasMany('feature-suggestion', { async: false, inverse: 'user' }) featureSuggestions!: FeatureSuggestionModel[];
   @hasMany('github-app-installation', { async: false, inverse: 'user' }) githubAppInstallations!: GitHubAppInstallationModel[];
 
-  @hasMany('institution-membership-grant-application', { async: false, inverse: null })
+  @hasMany('institution-membership-grant-application', { async: false, inverse: 'user' })
   institutionMembershipGrantApplications!: InstitutionMembershipGrantApplicationModel[];
 
   @hasMany('institution-membership-grant', { async: false, inverse: 'institutionMembershipGrants' })
