@@ -4,12 +4,9 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if
-      (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected"))
-      use=this.transition
-    }}
-      {{#if this.showImmediateRejection}}
-        <InstitutionPage::CampusProgramApplicationModal::RejectedStepContainer
+    {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected")) use=this.transition}}
+      {{#if this.shouldShowEmailAlreadyInUse}}
+        <InstitutionPage::CampusProgramApplicationModal::EmailAlreadyInUseStepContainer
           @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
         />
       {{else}}
@@ -17,7 +14,7 @@
           @institution={{@institution}}
           @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
           @onSubmit={{this.handleEnterEmailStepSubmitted}}
-          @onImmediateRejection={{this.handleImmediateRejection}}
+          @onEmailAlreadyInUse={{this.handleEmailAlreadyInUse}}
         />
       {{/if}}
     {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}

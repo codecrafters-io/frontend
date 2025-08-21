@@ -20,7 +20,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   @service declare authenticator: AuthenticatorService;
 
   @tracked isOverridingSavedGrantApplication = false;
-  @tracked showImmediateRejection = false;
+  @tracked shouldShowEmailAlreadyInUse = false;
 
   transition = fade;
 
@@ -36,7 +36,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   @action
   handleChangeOrResendEmailButtonClick() {
     this.isOverridingSavedGrantApplication = true;
-    this.showImmediateRejection = false;
+    this.shouldShowEmailAlreadyInUse = false;
   }
 
   @action
@@ -45,8 +45,8 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   }
 
   @action
-  handleImmediateRejection() {
-    this.showImmediateRejection = true;
+  handleEmailAlreadyInUse() {
+    this.shouldShowEmailAlreadyInUse = true;
   }
 }
 

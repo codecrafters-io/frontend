@@ -8,10 +8,10 @@ interface Signature {
   };
 }
 
-export default class RejectedStepContainer extends Component<Signature> {}
+export default class EmailAlreadyInUseStepContainer extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'InstitutionPage::CampusProgramApplicationModal::RejectedStepContainer': typeof RejectedStepContainer;
+    'InstitutionPage::CampusProgramApplicationModal::EmailAlreadyInUseStepContainer': typeof EmailAlreadyInUseStepContainer;
   }
 }

@@ -15,7 +15,7 @@ interface Signature {
     institution: InstitutionModel;
     onSubmit: () => void;
     prefilledEmailAddress?: string;
-    onImmediateRejection: () => void;
+    onEmailAlreadyInUse: () => void;
   };
 }
 
@@ -135,7 +135,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
     this.isCreatingInstitutionMembershipGrantApplication = false;
 
     if (application.status === 'rejected') {
-      this.args.onImmediateRejection();
+      this.args.onEmailAlreadyInUse();
     } else {
       this.args.onSubmit();
     }
