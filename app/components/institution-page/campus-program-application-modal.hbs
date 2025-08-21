@@ -4,12 +4,22 @@
   </div>
 
   <AnimatedContainer>
-    {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication) use=this.transition}}
-      <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer
-        @institution={{@institution}}
-        @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
-        @onSubmit={{this.handleEnterEmailStepSubmitted}}
-      />
+    {{#animated-if
+      (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected"))
+      use=this.transition
+    }}
+      {{#if this.showImmediateRejection}}
+        <InstitutionPage::CampusProgramApplicationModal::RejectedStepContainer
+          @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+        />
+      {{else}}
+        <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer
+          @institution={{@institution}}
+          @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
+          @onSubmit={{this.handleEnterEmailStepSubmitted}}
+          @onImmediateRejection={{this.handleImmediateRejection}}
+        />
+      {{/if}}
     {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
         <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
           {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}

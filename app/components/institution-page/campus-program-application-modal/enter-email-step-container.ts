@@ -15,6 +15,7 @@ interface Signature {
     institution: InstitutionModel;
     onSubmit: () => void;
     prefilledEmailAddress?: string;
+    onImmediateRejection: () => void;
   };
 }
 
@@ -122,7 +123,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
 
     this.isCreatingInstitutionMembershipGrantApplication = true;
 
-    await this.store
+    const application = await this.store
       .createRecord('institution-membership-grant-application', {
         institution: this.args.institution,
         normalizedEmailAddress: this.normalizedInput,
@@ -131,7 +132,13 @@ export default class EnterEmailStepContainer extends Component<Signature> {
       })
       .save();
 
-    this.args.onSubmit();
+    this.isCreatingInstitutionMembershipGrantApplication = false;
+
+    if (application.status === 'rejected') {
+      this.args.onImmediateRejection();
+    } else {
+      this.args.onSubmit();
+    }
   }
 }
 
