@@ -3,6 +3,7 @@ import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/bil
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 
 export default {
+  campusBadge: BillingStatusBadge.campusBadge,
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
 
   discountTimerBadge: BillingStatusBadge.discountTimerBadge,

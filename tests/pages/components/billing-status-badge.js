@@ -14,6 +14,11 @@ export default {
     scope: '[data-test-free-weeks-left-button]',
   },
 
+  campusBadge: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-campus-badge]',
+  },
+
   memberBadge: {
     hover: triggerable('mouseenter'),
     scope: '[data-test-member-badge]',
