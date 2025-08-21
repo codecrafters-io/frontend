@@ -104,7 +104,13 @@ export default class UserModel extends Model {
   }
 
   get canAccessMembershipBenefits() {
-    return this.isVip || this.hasActiveSubscription || this.teamHasActiveSubscription || this.teamHasActivePilot;
+    return (
+      this.isVip ||
+      this.hasActiveInstitutionMembershipGrants ||
+      this.hasActiveSubscription ||
+      this.teamHasActiveSubscription ||
+      this.teamHasActivePilot
+    );
   }
 
   get canAccessPaidContent() {
