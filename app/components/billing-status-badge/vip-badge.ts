@@ -5,6 +5,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 
 interface Signature {
   Element: HTMLDivElement;
+
   Args: {
     size: 'small' | 'large';
   };
