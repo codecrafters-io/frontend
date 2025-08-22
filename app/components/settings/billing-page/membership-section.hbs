@@ -1,5 +1,16 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
-  {{#if @user.hasActiveSubscription}}
+  {{#if @user.hasActiveInstitutionMembershipGrants}}
+    <Settings::BillingPage::StatusPill @color="green" class="mb-3">
+      Campus Program
+    </Settings::BillingPage::StatusPill>
+    <div class="prose prose-sm prose-compact dark:prose-invert">
+      <p>
+        Your affiliation with
+          <strong>{{this.institution.shortName}}</strong> grants you access to all CodeCrafters content, valid until
+        <strong>{{date-format @user.activeInstitutionMembershipGrant.expiresAt format="PPPp"}}</strong>.
+      </p>
+    </div>
+  {{else if @user.hasActiveSubscription}}
     <Settings::BillingPage::StatusPill @color="green" class="mb-3">
       Membership active
     </Settings::BillingPage::StatusPill>

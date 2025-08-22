@@ -112,6 +112,7 @@ export default class AuthenticatorService extends Service {
       'affiliate-links.user',
       'feature-suggestions',
       'institution-membership-grants',
+      'institution-membership-grants.institution',
       'promotional-discounts',
       'promotional-discounts.affiliate-referral',
       'promotional-discounts.affiliate-referral.affiliate-link',

@@ -95,6 +95,10 @@ export default class UserModel extends Model {
     return this.activePromotionalDiscountForType('stage_2_completion');
   }
 
+  get activeInstitutionMembershipGrant() {
+    return this.institutionMembershipGrants.sortBy('grantedAt').reverse()[0];
+  }
+
   get activeSubscription() {
     return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
   }

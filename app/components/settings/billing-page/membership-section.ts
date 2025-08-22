@@ -9,7 +9,11 @@ interface Signature {
   };
 }
 
-export default class MembershipSection extends Component<Signature> {}
+export default class MembershipSection extends Component<Signature> {
+  get institution() {
+    return this.args.user.store.peekAll('institution').firstObject;
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
