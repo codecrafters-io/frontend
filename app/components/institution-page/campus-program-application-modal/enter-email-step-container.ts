@@ -133,9 +133,6 @@ export default class EnterEmailStepContainer extends Component<Signature> {
 
     this.isCreatingInstitutionMembershipGrantApplication = false;
 
-    // Sync current user to get the latest application data
-    await this.authenticator.syncCurrentUser();
-
     this.args.onSubmit();
   }
 }

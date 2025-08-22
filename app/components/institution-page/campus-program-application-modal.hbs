@@ -4,30 +4,22 @@
   </div>
 
   <AnimatedContainer>
-    {{#if
-      (and
-        this.latestSavedGrantApplication
-        (eq this.latestSavedGrantApplication.status "awaiting_verification")
-        (not this.isOverridingSavedGrantApplication)
-      )
-    }}
-      <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
-        {{! @glint-expect-error this.latestSavedGrantApplication is guaranteed non-null by the if condition }}
-        @application={{this.latestSavedGrantApplication}}
-        @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
-      />
-    {{else if
-      (and this.latestSavedGrantApplication (eq this.latestSavedGrantApplication.status "rejected") (not this.isOverridingSavedGrantApplication))
-    }}
-      <InstitutionPage::CampusProgramApplicationModal::ApplicationRejectedStepContainer
-        @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
-      />
-    {{else}}
+    {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication) use=this.transition}}
       <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer
         @institution={{@institution}}
         @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
         @onSubmit={{this.handleEnterEmailStepSubmitted}}
       />
-    {{/if}}
+    {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
+        <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
+          {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
+          @application={{this.latestSavedGrantApplication}}
+          @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+        />
+      {{else if (eq this.latestSavedGrantApplication.status "rejected")}}
+        <InstitutionPage::CampusProgramApplicationModal::ApplicationRejectedStepContainer
+          @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+        />
+      {{/if}}{{/animated-if}}
   </AnimatedContainer>
 </ModalBody>
