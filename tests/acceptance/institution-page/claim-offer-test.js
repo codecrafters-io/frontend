@@ -178,16 +178,16 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
 
     assert.ok(
-      applicationModal.emailAlreadyInUseStepContainer.isVisible,
-      'Email already in use step should be visible after submitting duplicate email',
+      applicationModal.applicationRejectedStepContainer.isVisible,
+      'Application rejected step should be visible after submitting duplicate email',
     );
 
-    await applicationModal.emailAlreadyInUseStepContainer.clickOnChangeEmailButton();
+    await applicationModal.applicationRejectedStepContainer.clickOnChangeEmailButton();
 
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible after clicking on change email button');
     assert.notOk(
-      applicationModal.emailAlreadyInUseStepContainer.isVisible,
-      'Email already in use step should not be visible after clicking on change email button',
+      applicationModal.applicationRejectedStepContainer.isVisible,
+      'Application rejected step should not be visible after clicking on change email button',
     );
   });
 });

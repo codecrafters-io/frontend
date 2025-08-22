@@ -12,9 +12,9 @@ export default createPage({
       verifyEmailButtonIsDisabled: hasClass('cursor-not-allowed', '[data-test-verify-email-button]'),
     },
 
-    emailAlreadyInUseStepContainer: {
+    applicationRejectedStepContainer: {
       clickOnChangeEmailButton: clickable('[data-test-change-email-button]'),
-      scope: '[data-test-email-already-in-use-step-container]',
+      scope: '[data-test-application-rejected-step-container]',
     },
 
     verifyEmailStepContainer: {
