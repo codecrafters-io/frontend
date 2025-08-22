@@ -105,10 +105,6 @@ export default function (config) {
           parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
         }),
         fakeLogstream: Model.extend({}),
-        institutionMembershipGrant: Model.extend({
-          institution: belongsTo('institution', { inverse: null }),
-          user: belongsTo('user', { inverse: 'institutionMembershipGrants' }),
-        }),
       },
     },
     serializers: applyEmberDataSerializers(config.serializers),
