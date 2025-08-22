@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import type UserModel from 'codecrafters-frontend/models/user';
+import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/institution-membership-grant';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -10,8 +11,8 @@ interface Signature {
 }
 
 export default class MembershipSection extends Component<Signature> {
-  get institution() {
-    return this.args.user.store.peekAll('institution').firstObject;
+  get isInstitutionMembership(): boolean {
+    return this.args.user.activeSubscription?.source instanceof InstitutionMembershipGrantModel;
   }
 }
 

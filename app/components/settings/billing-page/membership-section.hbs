@@ -1,36 +1,40 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
-  {{#if @user.hasActiveInstitutionMembershipGrants}}
-    <Settings::BillingPage::StatusPill @color="green" class="mb-3">
-      Campus Program
-    </Settings::BillingPage::StatusPill>
-    <div class="prose prose-sm prose-compact dark:prose-invert">
-      <p>
-        Your affiliation with
-          <strong>{{this.institution.shortName}}</strong> grants you access to all CodeCrafters content, valid until
-        <strong>{{date-format @user.activeInstitutionMembershipGrant.expiresAt format="PPPp"}}</strong>.
-      </p>
-    </div>
-  {{else if @user.hasActiveSubscription}}
-    <Settings::BillingPage::StatusPill @color="green" class="mb-3">
-      Membership active
-    </Settings::BillingPage::StatusPill>
-    <div class="prose prose-sm prose-compact dark:prose-invert">
-      {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
-        <p class="line-through">
-          You have access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
-        </p>
+  {{#if @user.hasActiveSubscription}}
+    {{#if this.isInstitutionMembership}}
+      <Settings::BillingPage::StatusPill @color="green" class="mb-3">
+        Campus Program
+      </Settings::BillingPage::StatusPill>
+      <div class="prose prose-sm prose-compact dark:prose-invert">
         <p>
-          🎉 You have VIP access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.vipStatusExpiresAt format="PPPp"}}</strong>.
+          Your affiliation with
+          <strong>{{@user.activeSubscription.source.institution.shortName}}</strong>
+          grants you access to all CodeCrafters content, valid until
+          <strong>{{date-format @user.activeSubscription.source.expiresAt format="PPPp"}}</strong>.
         </p>
-      {{else}}
-        <p>
-          You have access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
-        </p>
-      {{/if}}
-    </div>
+      </div>
+    {{else}}
+
+      <Settings::BillingPage::StatusPill @color="green" class="mb-3">
+        Membership active
+      </Settings::BillingPage::StatusPill>
+      <div class="prose prose-sm prose-compact dark:prose-invert">
+        {{#if (and @user.isVip (gt @user.vipStatusExpiresAt @user.activeSubscription.cancelAt))}}
+          <p class="line-through">
+            You have access to all CodeCrafters content, valid until
+            <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
+          </p>
+          <p>
+            🎉 You have VIP access to all CodeCrafters content, valid until
+            <strong>{{date-format @user.vipStatusExpiresAt format="PPPp"}}</strong>.
+          </p>
+        {{else}}
+          <p>
+            You have access to all CodeCrafters content, valid until
+            <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
+          </p>
+        {{/if}}
+      </div>
+    {{/if}}
   {{else if @user.isVip}}
     <Settings::BillingPage::StatusPill @color="green" class="mb-3">
       VIP Access
