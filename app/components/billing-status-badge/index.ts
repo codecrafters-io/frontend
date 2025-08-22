@@ -5,6 +5,7 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type RouterService from '@ember/routing/router-service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/institution-membership-grant';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -39,11 +40,11 @@ export default class BillingStatusDisplay extends Component<Signature> {
       return 'vip';
     }
 
-    if (this.currentUser?.hasActiveInstitutionMembershipGrants) {
-      return 'campus';
-    }
-
     if (this.currentUser?.hasActiveSubscription) {
+      if (this.currentUser?.activeSubscription?.source instanceof InstitutionMembershipGrantModel) {
+        return 'campus';
+      }
+
       return 'member';
     }
 
