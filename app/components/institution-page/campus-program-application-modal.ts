@@ -19,7 +19,7 @@ interface Signature {
 export default class CampusProgramApplicationModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
-  @tracked isOverridingSavedGrantApplication = false;
+  @tracked isOverridingSavedGrantApplication = true;
 
   transition = fade;
 
