@@ -9,7 +9,7 @@
           Your affiliation with
           <strong>{{@user.activeSubscription.source.institution.shortName}}</strong>
           grants you access to all CodeCrafters content, valid until
-          <strong>{{date-format @user.activeSubscription.source.expiresAt format="PPPp"}}</strong>.
+          <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
         </p>
       </div>
     {{else}}
