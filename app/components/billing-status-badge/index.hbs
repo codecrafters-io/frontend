@@ -1,6 +1,8 @@
 <div ...attributes>
   {{#if (eq this.badgeType "vip")}}
     <BillingStatusBadge::VipBadge @size={{@size}} />
+  {{else if (eq this.badgeType "campus")}}
+    <BillingStatusBadge::CampusBadge @size={{@size}} />
   {{else if (eq this.badgeType "member")}}
     <BillingStatusBadge::MemberBadge @size={{@size}} />
   {{else if (eq this.badgeType "indirect-member")}}

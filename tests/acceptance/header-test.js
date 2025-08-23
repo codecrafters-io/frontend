@@ -5,7 +5,8 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsSubscriber, signInAsInstitutionMembershipGrantRecipient } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import createInstitution from 'codecrafters-frontend/mirage/utils/create-institution';
 
 module('Acceptance | header-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -56,6 +57,33 @@ module('Acceptance | header-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.header.memberBadge.click();
+
+    assert.strictEqual(currentURL(), '/settings/billing', 'expect to be redirected to settings billing page');
+  });
+
+  test('header should show campus badge if user has an institution membership grant', async function (assert) {
+    testScenario(this.server);
+    createInstitution(this.server, 'nus');
+    signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
+
+    await catalogPage.visit();
+
+    assert.true(catalogPage.header.campusBadge.isVisible, 'expect campus badge to be visible');
+
+    await catalogPage.header.campusBadge.hover();
+
+    assertTooltipContent(assert, {
+      contentString: "You're part of the CodeCrafters Campus Program. Click here to view your membership details.",
+    });
+  });
+
+  test('campus badge redirects to /settings/billing', async function (assert) {
+    testScenario(this.server);
+    createInstitution(this.server, 'nus');
+    signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.header.campusBadge.click();
 
     assert.strictEqual(currentURL(), '/settings/billing', 'expect to be redirected to settings billing page');
   });

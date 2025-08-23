@@ -4,7 +4,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class InstitutionMembershipGrantModel extends Model {
   @belongsTo('institution', { async: true, inverse: null }) declare institution: InstitutionModel;
-  @belongsTo('user', { async: true, inverse: null }) declare user: UserModel;
+  @belongsTo('user', { async: true, inverse: 'institutionMembershipGrants' }) declare user: UserModel;
 
   @attr('date') declare grantedAt: Date;
   @attr('number') declare validityInDays: number;

@@ -65,7 +65,9 @@ export default class UserModel extends Model {
   @hasMany('institution-membership-grant-application', { async: false, inverse: 'user' })
   institutionMembershipGrantApplications!: InstitutionMembershipGrantApplicationModel[];
 
-  @hasMany('institution-membership-grant', { async: false, inverse: 'user' }) institutionMembershipGrants!: InstitutionMembershipGrantModel[];
+  @hasMany('institution-membership-grant', { async: false, inverse: 'user' })
+  institutionMembershipGrants!: InstitutionMembershipGrantModel[];
+
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
   @hasMany('affiliate-earnings-payout', { async: false, inverse: 'user' }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];

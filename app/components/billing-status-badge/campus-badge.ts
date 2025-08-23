@@ -8,7 +8,7 @@ interface Signature {
   };
 }
 
-export default class IndirectMemberBadge extends Component<Signature> {
+export default class CampusBadge extends Component<Signature> {
   get linkButtonSize() {
     // arg:small -> PrimaryLinkButton size:extra-small
     // arg:large -> small
@@ -18,6 +18,6 @@ export default class IndirectMemberBadge extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'BillingStatusBadge::IndirectMemberBadge': typeof IndirectMemberBadge;
+    'BillingStatusBadge::CampusBadge': typeof CampusBadge;
   }
 }
