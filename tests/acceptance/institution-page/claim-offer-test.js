@@ -154,5 +154,47 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     assert.strictEqual(windowMock.location.href, nextUrl, 'should redirect to login URL with correct claim offer endpoint');
   });
 
-  // TODO: Test rejected application flow
+  test('shows email already in use step if approved application exists', async function (assert) {
+    testScenario(this.server);
+    const institution = createInstitution(this.server, 'nus');
+    signIn(this.owner, this.server);
+
+    const existingUser = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
+
+    this.server.create('institution-membership-grant-application', {
+      institution: institution,
+      user: existingUser,
+      status: 'approved',
+      normalizedEmailAddress: 'bill@u.nus.edu',
+      originalEmailAddress: 'bill@u.nus.edu',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.ok(applicationModal.isVisible);
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible initially');
+
+    await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill@u.nus.edu');
+    await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+
+    assert.ok(
+      applicationModal.applicationRejectedStepContainer.isVisible,
+      'Application rejected step should be visible after submitting duplicate email',
+    );
+
+    await applicationModal.applicationRejectedStepContainer.clickOnChangeEmailButton();
+
+    assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible after clicking on change email button');
+    assert.notOk(
+      applicationModal.applicationRejectedStepContainer.isVisible,
+      'Application rejected step should not be visible after clicking on change email button',
+    );
+  });
 });

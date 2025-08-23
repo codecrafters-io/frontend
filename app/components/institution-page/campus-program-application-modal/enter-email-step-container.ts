@@ -131,6 +131,8 @@ export default class EnterEmailStepContainer extends Component<Signature> {
       })
       .save();
 
+    this.isCreatingInstitutionMembershipGrantApplication = false;
+
     this.args.onSubmit();
   }
 }
