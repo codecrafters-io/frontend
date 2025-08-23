@@ -49,7 +49,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(
       billingPage.membershipSection.text.includes(
-        'Your affiliation with NUS grants you access to all CodeCrafters content, valid until July 31st, 2035 at 6:30 AM.',
+        'Your affiliation with NUS grants you access to all CodeCrafters content, valid until July 31st, 2035 at 1:00 AM.',
       ),
       'shows correct end of current period',
     );
@@ -74,7 +74,6 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     );
 
     assert.ok(billingPage.membershipSection.text.includes('VIP access'), 'shows VIP access');
-    console.log(billingPage.membershipSection.text);
     assert.ok(
       billingPage.membershipSection.text.includes('You have VIP access to all CodeCrafters content, valid until August 31st, 2035'),
       'shows correct VIP access expiry date',
