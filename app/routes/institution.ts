@@ -40,6 +40,7 @@ export default class InstitutionRoute extends BaseRoute {
 
     if (this.authenticator.isAuthenticated) {
       await this.store.findAll('institution-membership-grant-application', { include: 'institution,user' });
+      await this.store.findAll('email-address');
     }
 
     return {
