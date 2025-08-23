@@ -31,6 +31,7 @@ import courseStageLanguageGuides from './handlers/course-stage-language-guides';
 import courseTesterVersions from './handlers/course-tester-versions';
 import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
+import emailAddresses from './handlers/email-addresses';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
 import featureSuggestions from './handlers/feature-suggestions';
 import freeUsageGrants from './handlers/free-usage-grants';
@@ -168,6 +169,7 @@ function routes() {
   courseTesterVersions(this);
   courses(this);
   downvotes(this);
+  emailAddresses(this);
   fakeSubmissionLogs(this);
   featureSuggestions(this);
   freeUsageGrants(this);

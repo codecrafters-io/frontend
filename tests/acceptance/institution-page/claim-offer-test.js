@@ -197,4 +197,20 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
       'Application rejected step should not be visible after clicking on change email button',
     );
   });
+
+  test('prefills email address if it matches an institutional email address', async function (assert) {
+    testScenario(this.server);
+    createInstitution(this.server, 'nus');
+    signIn(this.owner, this.server);
+
+    this.server.create('email-address', {
+      emailAddress: 'paul@u.nus.edu',
+    });
+
+    await institutionPage.visit({ institution_slug: 'nus' });
+    await institutionPage.claimOfferButtons[0].click();
+
+    const applicationModal = institutionPage.campusProgramApplicationModal;
+    assert.strictEqual(applicationModal.enterEmailStepContainer.emailAddressInputValue, 'paul@u.nus.edu', 'prefills email address');
+  });
 });
