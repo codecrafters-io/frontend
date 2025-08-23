@@ -4,7 +4,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    onChangeOrResendEmailButtonClick: () => void;
+    onChangeEmailButtonClick: () => void;
   };
 }
 

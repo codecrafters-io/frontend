@@ -18,7 +18,7 @@
         />
       {{else if (eq this.latestSavedGrantApplication.status "rejected")}}
         <InstitutionPage::CampusProgramApplicationModal::ApplicationRejectedStepContainer
-          @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+          @onChangeEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
         />
       {{/if}}{{/animated-if}}
   </AnimatedContainer>

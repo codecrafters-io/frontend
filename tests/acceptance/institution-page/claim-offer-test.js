@@ -157,11 +157,18 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
   test('shows email already in use step if approved application exists', async function (assert) {
     testScenario(this.server);
     const institution = createInstitution(this.server, 'nus');
-    const user = signIn(this.owner, this.server);
+    signIn(this.owner, this.server);
+
+    const existingUser = this.server.create('user', {
+      avatarUrl: 'https://github.com/sarupbanskota.png',
+      createdAt: new Date(),
+      githubUsername: 'sarupbanskota',
+      username: 'sarupbanskota',
+    });
 
     this.server.create('institution-membership-grant-application', {
       institution: institution,
-      user: user,
+      user: existingUser,
       status: 'approved',
       normalizedEmailAddress: 'bill@u.nus.edu',
       originalEmailAddress: 'bill@u.nus.edu',

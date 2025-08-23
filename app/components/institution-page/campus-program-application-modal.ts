@@ -28,7 +28,6 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
       this.authenticator
         .currentUser!.institutionMembershipGrantApplications.filter((application) => application.institution.id === this.args.institution.id)
         .reject((application) => application.isNew)
-        .filter((application) => application.status === 'awaiting_verification' || application.status === 'rejected')
         .sortBy('createdAt').lastObject || null
     );
   }

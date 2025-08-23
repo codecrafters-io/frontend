@@ -3,6 +3,11 @@ import { clickable, collection, fillable, hasClass, property, text, triggerable,
 
 export default createPage({
   campusProgramApplicationModal: {
+    applicationRejectedStepContainer: {
+      clickOnChangeEmailButton: clickable('[data-test-change-email-button]'),
+      scope: '[data-test-application-rejected-step-container]',
+    },
+
     enterEmailStepContainer: {
       clickOnVerifyEmailButton: clickable('[data-test-verify-email-button]'),
       emailAddressInputPlaceholder: property('placeholder', '#email_address_input'),
@@ -12,10 +17,7 @@ export default createPage({
       verifyEmailButtonIsDisabled: hasClass('cursor-not-allowed', '[data-test-verify-email-button]'),
     },
 
-    applicationRejectedStepContainer: {
-      clickOnChangeEmailButton: clickable('[data-test-change-email-button]'),
-      scope: '[data-test-application-rejected-step-container]',
-    },
+    scope: '[data-test-campus-program-application-modal]',
 
     verifyEmailStepContainer: {
       clickOnChangeEmailButton: clickable('[data-test-change-email-button]'),
@@ -23,8 +25,6 @@ export default createPage({
       emailAddress: text('[data-test-email-address]'),
       scope: '[data-test-verify-email-step-container]',
     },
-
-    scope: '[data-test-campus-program-application-modal]',
   },
 
   claimOfferButtons: collection('[data-test-claim-offer-button]', {
