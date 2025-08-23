@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLAnchorElement;
+
   Args: {
     size: 'small' | 'large';
   };

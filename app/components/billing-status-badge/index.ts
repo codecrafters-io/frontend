@@ -9,6 +9,7 @@ import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/instit
 
 interface Signature {
   Element: HTMLDivElement;
+
   Args: {
     size: 'small' | 'large';
   };

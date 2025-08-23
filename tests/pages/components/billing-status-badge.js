@@ -1,6 +1,11 @@
 import { hasClass, text, triggerable } from 'ember-cli-page-object';
 
 export default {
+  campusBadge: {
+    hover: triggerable('mouseenter'),
+    scope: '[data-test-campus-badge]',
+  },
+
   discountTimerBadge: {
     scope: '[data-test-discount-timer-badge]',
     hover: triggerable('mouseenter'),
@@ -12,11 +17,6 @@ export default {
   freeWeeksLeftButton: {
     hover: triggerable('mouseenter'),
     scope: '[data-test-free-weeks-left-button]',
-  },
-
-  campusBadge: {
-    hover: triggerable('mouseenter'),
-    scope: '[data-test-campus-badge]',
   },
 
   memberBadge: {

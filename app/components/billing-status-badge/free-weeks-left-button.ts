@@ -5,6 +5,7 @@ import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
+
   Args: {
     size: 'small' | 'large';
   };

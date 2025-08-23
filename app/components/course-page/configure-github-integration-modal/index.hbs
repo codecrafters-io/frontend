@@ -17,11 +17,10 @@
       />
     {{/if}}
 
-    <div class="py-16 flex flex-col items-center justify-center">
-      {{svg-jar "check-circle" class="w-16 h-16 text-teal-500 mb-2"}}
+    <div class="py-8 flex flex-col items-center justify-center">
+      {{svg-jar "check-circle" class="w-20 h-20 text-teal-500 mb-4"}}
 
       <div class="text-gray-600 dark:text-gray-200 text-center mb-6">
-        This repository is configured to publish to
         <a
           href="https://github.com/{{this.githubRepositorySyncConfiguration.githubRepositoryName}}"
           class="inline-flex items-center font-semibold underline"
@@ -37,9 +36,27 @@
         Code pushed to your CodeCrafters Git repository will automatically be synced to GitHub.
       </div>
 
-      <SecondaryButton @size="small" {{on "click" this.handleDisconnectRepositoryButtonClick}} data-test-disconnect-repository-button>
+      <AlertWithIcon @type="info" class="mb-6">
+        <p>
+          Don't push changes to your GitHub repository directly.
+        </p>
+        <p>
+          Push to your CodeCrafters Git repository instead, and we'll sync changes to GitHub.
+        </p>
+        <p class="text-xs">
+          <a href="https://docs.codecrafters.io/features/publish-to-github" target="_blank" rel="noopener noreferrer">Learn more →</a>
+        </p>
+      </AlertWithIcon>
+
+      <AlertWithIcon @type="warning" @icon="exclamation" class="mb-6">
+        <p>
+          Any changes pushed to your GitHub repository directly will be overridden.
+        </p>
+      </AlertWithIcon>
+
+      <TertiaryButton @size="small" {{on "click" this.handleDisconnectRepositoryButtonClick}} data-test-disconnect-repository-button>
         Disconnect Repository
-      </SecondaryButton>
+      </TertiaryButton>
     </div>
   {{else}}
     <div class="prose dark:prose-invert mb-4">
