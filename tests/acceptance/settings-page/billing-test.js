@@ -1,10 +1,16 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsSubscriber, signInAsVipUser } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import {
+  signIn,
+  signInAsInstitutionMembershipGrantRecipient,
+  signInAsSubscriber,
+  signInAsVipUser,
+} from 'codecrafters-frontend/tests/support/authentication-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import percySnapshot from '@percy/ember';
+import createInstitution from 'codecrafters-frontend/mirage/utils/create-institution';
 
 module('Acceptance | settings-page | billing-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,6 +33,28 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     );
 
     await percySnapshot('Billing Page - Active Subscription');
+  });
+
+  test('membership section shows correct plan for subscriber with institution membership', async function (assert) {
+    testScenario(this.server);
+    createInstitution(this.server, 'nus');
+    signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
+    const subscription = this.server.schema.subscriptions.first();
+    subscription.update('cancelAt', new Date('2035-07-31T01:00:00Z'));
+
+    await billingPage.visit();
+
+    assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
+    assert.ok(billingPage.membershipSection.text.includes('Campus Program'), 'shows campus program');
+
+    assert.ok(
+      billingPage.membershipSection.text.includes(
+        'Your affiliation with NUS grants you access to all CodeCrafters content, valid until July 31st, 2035 at 6:30 AM.',
+      ),
+      'shows correct end of current period',
+    );
+
+    await percySnapshot('Billing Page - Institution Membership');
   });
 
   test('membership section shows correct plan for subscriber with VIP access', async function (assert) {
