@@ -49,7 +49,7 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.ok(
       billingPage.membershipSection.text.includes(
-        'Your affiliation with NUS grants you access to all CodeCrafters content, valid until July 31st, 2035 at 1:00 AM.',
+        'Your affiliation with NUS grants you access to all CodeCrafters content, valid until July 31st, 2035',
       ),
       'shows correct end of current period',
     );
