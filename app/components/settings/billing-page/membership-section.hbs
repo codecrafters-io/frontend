@@ -1,6 +1,6 @@
 <Settings::FormSection @title="Membership" @description="Your CodeCrafters membership details" data-test-membership-section>
   {{#if @user.hasActiveSubscription}}
-    {{#if this.isInstitutionMembership}}
+    {{#if this.subscriptionSourceIsInstitutionMembershipGrant}}
       <Settings::BillingPage::StatusPill @color="green" class="mb-3">
         Campus Program
       </Settings::BillingPage::StatusPill>
@@ -13,7 +13,6 @@
         </p>
       </div>
     {{else}}
-
       <Settings::BillingPage::StatusPill @color="green" class="mb-3">
         Membership active
       </Settings::BillingPage::StatusPill>

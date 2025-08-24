@@ -11,7 +11,7 @@ interface Signature {
 }
 
 export default class MembershipSection extends Component<Signature> {
-  get isInstitutionMembership(): boolean {
+  get subscriptionSourceIsInstitutionMembershipGrant(): boolean {
     return this.args.user.activeSubscription?.source instanceof InstitutionMembershipGrantModel;
   }
 }
