@@ -29,7 +29,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   get firstMatchingInstitutionalEmailAddress(): EmailAddressModel | null {
     return (
       this.store.peekAll('email-address').find((emailAddress) => {
-        return this.args.institution.officialEmailAddressSuffixes.some((suffix) => emailAddress.emailAddress.endsWith(suffix));
+        return this.args.institution.officialEmailAddressSuffixes.some((suffix) => emailAddress.value.endsWith(suffix));
       }) || null
     );
   }
@@ -44,7 +44,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
   }
 
   get prefilledEmailAddress(): string | undefined {
-    return this.latestSavedGrantApplication?.normalizedEmailAddress || this.firstMatchingInstitutionalEmailAddress?.emailAddress;
+    return this.latestSavedGrantApplication?.normalizedEmailAddress || this.firstMatchingInstitutionalEmailAddress?.value;
   }
 
   @action
