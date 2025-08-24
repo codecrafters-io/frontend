@@ -7,7 +7,7 @@
     {{#animated-if (or (not this.latestSavedGrantApplication) this.isOverridingSavedGrantApplication) use=this.transition}}
       <InstitutionPage::CampusProgramApplicationModal::EnterEmailStepContainer
         @institution={{@institution}}
-        @prefilledEmailAddress={{this.latestSavedGrantApplication.normalizedEmailAddress}}
+        @prefilledEmailAddress={{this.prefilledEmailAddress}}
         @onSubmit={{this.handleEnterEmailStepSubmitted}}
       />
     {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
