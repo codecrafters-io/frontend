@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -12,12 +13,13 @@ export default class CourseOverviewController extends Controller {
   get activeRepository(): RepositoryModel | null {
     if (this.authenticator.currentUser) {
       return (
-        this.authenticator.currentUser.repositories
-          .filterBy('course', this.model.course)
-          .filterBy('firstSubmissionCreated')
-          .sortBy('lastSubmissionAt')
-          .toArray()
-          .reverse()[0] || null
+        [
+          ...[
+            ...this.authenticator.currentUser.repositories
+              .filter((item) => item.course === this.model.course)
+              .filter((item) => item.firstSubmissionCreated),
+          ].sort((a, b) => compare(a.lastSubmissionAt, b.lastSubmissionAt)),
+        ].reverse()[0] || null
       );
     } else {
       return null;
@@ -30,7 +32,9 @@ export default class CourseOverviewController extends Controller {
 
   get userRepositories() {
     if (this.authenticator.currentUser) {
-      return this.authenticator.currentUser.repositories.filterBy('course', this.model.course).filterBy('firstSubmissionCreated');
+      return this.authenticator.currentUser.repositories
+        .filter((item) => item.course === this.model.course)
+        .filter((item) => item.firstSubmissionCreated);
     } else {
       return [];
     }

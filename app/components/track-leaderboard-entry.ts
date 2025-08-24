@@ -1,3 +1,4 @@
+import { get } from '@ember/object';
 import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
@@ -33,9 +34,9 @@ export default class TrackLeaderboardEntry extends Component<Signature> {
   get progressDenominator() {
     return this.store
       .peekAll('course')
-      .rejectBy('releaseStatusIsAlpha')
+      .filter((item) => !item.releaseStatusIsAlpha)
       .filter((course: CourseModel) => course.betaOrLiveLanguages.includes(this.args.entry!.language as LanguageModel))
-      .mapBy('stages.length')
+      .map((item) => item.stages.length)
       .reduce((a, b) => a + b, 0);
   }
 
