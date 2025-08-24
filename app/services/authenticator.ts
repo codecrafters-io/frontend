@@ -122,6 +122,7 @@ export default class AuthenticatorService extends Service {
       'referral-links.user',
       'subscriptions',
       'subscriptions.source',
+      'subscriptions.source.institution',
       'subscriptions.user',
       'team-memberships',
       'team-memberships.team.memberships.user',
