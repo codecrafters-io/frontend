@@ -28,7 +28,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
 
   get firstMatchingInstitutionalEmailAddress(): EmailAddressModel | null {
     return (
-      this.store.peekAll('email-address').find((emailAddress) => {
+      this.authenticator.currentUser!.emailAddresses.find((emailAddress) => {
         return this.args.institution.officialEmailAddressSuffixes.some((suffix) => emailAddress.value.endsWith(suffix));
       }) || null
     );

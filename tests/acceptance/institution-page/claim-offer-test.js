@@ -201,10 +201,11 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
   test('prefills email address if it matches an institutional email address', async function (assert) {
     testScenario(this.server);
     createInstitution(this.server, 'nus');
-    signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
 
     this.server.create('email-address', {
-      emailAddress: 'paul@u.nus.edu',
+      value: 'paul@u.nus.edu',
+      user: user,
     });
 
     await institutionPage.visit({ institution_slug: 'nus' });
