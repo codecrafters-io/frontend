@@ -9,6 +9,7 @@ import CourseLanguageRequestModel from 'codecrafters-frontend/models/course-lang
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import EmailAddressModel from 'codecrafters-frontend/models/email-address';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-installation';
@@ -56,6 +57,7 @@ export default class UserModel extends Model {
   @hasMany('badge-award', { async: false, inverse: 'user' }) badgeAwards!: BadgeAwardModel[];
   @hasMany('concept-engagement', { async: false, inverse: 'user' }) conceptEngagements!: ConceptEngagementModel[];
   @hasMany('course-language-request', { async: false, inverse: 'user' }) courseLanguageRequests!: CourseLanguageRequestModel[];
+  @hasMany('email-address', { async: false, inverse: 'user' }) emailAddresses!: EmailAddressModel[];
   @hasMany('course-extension-idea-vote', { async: false, inverse: 'user' }) courseExtensionIdeaVotes!: CourseExtensionIdeaVoteModel[];
   @hasMany('course-idea-vote', { async: false, inverse: 'user' }) courseIdeaVotes!: CourseIdeaVoteModel[];
   @hasMany('course-participation', { async: false, inverse: 'user' }) courseParticipations!: CourseParticipationModel[];
