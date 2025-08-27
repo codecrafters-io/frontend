@@ -14,10 +14,6 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
-  get canSeeConceptsIndex(): boolean {
-    return Boolean(this.currentUser && (this.currentUser.isStaff || this.currentUser.isConceptAuthor));
-  }
-
   get currentUser(): User | null {
     return this.authenticator.currentUser;
   }

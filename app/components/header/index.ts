@@ -62,17 +62,8 @@ export default class Header extends Component<Signature> {
   get linksForAuthenticatedUser(): { text: string; route: string; type: 'route' | 'link' }[] {
     const links: { text: string; route: string; type: 'route' | 'link' }[] = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
-      { text: 'Badges', route: 'badges', type: 'route' },
       { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
-
-    if (this.featureFlags.canSeeConceptsIndex) {
-      links.push({ text: 'Concepts', route: 'concepts', type: 'route' });
-    }
-
-    if (config.environment !== 'production') {
-      links.push({ text: 'Demo', route: 'demo', type: 'route' });
-    }
 
     if (this.currentUser && this.currentUser.isAdmin) {
       links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' });
