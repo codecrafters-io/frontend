@@ -1,0 +1,40 @@
+<<<<<<< ours
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10 pb-32 md:pb-32">
+  <LeaderboardPage::Header @selectedLanguage={{@model.language}} class="mb-6" />
+
+  {{! <RoadmapInfoAlert @heading="What are challenges?" class="hidden md:block mb-6">
+    Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+  </RoadmapInfoAlert> }}
+
+  <div class="flex items-start gap-8">
+    <LeaderboardPage::EntriesTable @entries={{@model.leaderboard.entries}} class="flex-grow" />
+  </div>
+</div>
+|||||||
+=======
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
+  <div class="flex justify-between">
+    <div class="py-3">
+      <h3 class="text-2xl font-bold text-gray-800" data-test-leaderboard-title>
+        {{@model.language.name}}
+        Leaderboard
+      </h3>
+      <div class="text-xs text-gray-400" data-test-leaderboard-description>
+        Leaderboard for
+        {{@model.language.name}}
+        users
+      </div>
+    </div>
+
+    <LanguageDropdown
+      @languages={{this.sortedLanguagesForDropdown}}
+      @requestedLanguage={{@model.language}}
+      @selectedLanguage={{@model.language}}
+      @shouldShowAllLanguagesOption={{false}}
+      @onRequestedLanguageChange={{(noop)}}
+      @onDidInsertDropdown={{(noop)}}
+      class="py-3"
+    />
+  </div>
+</div>
+>>>>>>> theirs
