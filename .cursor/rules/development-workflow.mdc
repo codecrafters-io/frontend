@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+When you're asked to make changes, follow these rules:
+
+- Say consistent with the rest of our codebase. Read other files to understand what our patterns are.
+- Don't run tests using `npm test`, those are extremely slow. Just use `npm run lint` instead.
+- Don't run commands like `npm run build` / `npm run start`.
+

@@ -1,7 +1,5 @@
 ---
-description:
-globs: app/components/**/*
-alwaysApply: false
+alwaysApply: true
 ---
 When creating components, follow these rules:
 
