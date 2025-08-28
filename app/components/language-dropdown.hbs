@@ -3,12 +3,19 @@
     <dd.Trigger>
       <button
         type="button"
-        class="inline-flex justify-center w-full rounded-md border border-gray-300 dark:border-white/10
+        class="group inline-flex justify-center items-center w-full gap-x-1 rounded-md border border-gray-300 dark:border-white/10
           {{if dd.isOpen 'bg-gray-50 dark:bg-gray-800' 'bg-white dark:bg-gray-900'}}
-          shadow-xs px-4 py-2 text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-hidden"
+          shadow-xs py-2
+          {{if @selectedLanguage 'pl-2 pr-3' 'px-3'}}
+          text-sm font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 focus:outline-hidden"
         data-test-language-dropdown-trigger
       >
-        <span class="mr-1" data-test-current-language-name>
+        {{#if @selectedLanguage}}
+          <img src={{@selectedLanguage.grayLogoUrl}} alt={{@selectedLanguage.name}} class="w-6 h-6 block group-hover:hidden" />
+          <img src={{@selectedLanguage.tealLogoUrl}} alt={{@selectedLanguage.name}} class="w-6 h-6 hidden group-hover:block" />
+        {{/if}}
+
+        <span data-test-current-language-name>
           {{#if this.isAllLanguagesOptionSelected}}
             All Languages
           {{else}}
