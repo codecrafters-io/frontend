@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -16,7 +17,7 @@ export default class BadgesController extends Controller {
   }
 
   get sortedBadges() {
-    return this.model.badges.sortBy('priority');
+    return [...this.model.badges].sort((a, b) => compare(a.priority, b.priority));
   }
 
   @action

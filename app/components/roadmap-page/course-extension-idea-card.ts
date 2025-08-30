@@ -25,7 +25,7 @@ export default class CourseIdeaCard extends Component<Signature> {
       return false;
     }
 
-    return this.authenticator.currentUser!.courseExtensionIdeaVotes.mapBy('courseExtensionIdea').includes(this.args.courseExtensionIdea);
+    return this.authenticator.currentUser!.courseExtensionIdeaVotes.map((item) => item.courseExtensionIdea).includes(this.args.courseExtensionIdea);
   }
 
   @action
