@@ -13,7 +13,7 @@
   "scripts": {
     "build": "npm run build:versions && npm run build:ember",
     "build:versions": "echo \"npm: $(npm --version)\" && ember --version",
-    "build:ember": "ember build --environment=production",
+    "build:ember": "EXPERIMENTAL_RENDER_MODE_SERIALIZE=true ember build --environment=production",
     "install:silent": "npm install --no-fund --no-audit",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
