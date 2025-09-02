@@ -1,9 +1,10 @@
-import CourseLanguageConfigurationModel from './course-language-configuration';
 import ConceptGroupModel from './concept-group';
+import CourseLanguageConfigurationModel from './course-language-configuration';
+import LeaderboardModel from './leaderboard';
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import colorLogoC from '/assets/images/language-logos/c-color.svg';
-import colorLogoCpp from '/assets/images/language-logos/cpp-color.svg';
 import colorLogoClojure from '/assets/images/language-logos/clojure-color.svg';
+import colorLogoCpp from '/assets/images/language-logos/cpp-color.svg';
 import colorLogoCrystal from '/assets/images/language-logos/crystal-color.svg';
 import colorLogoCsharp from '/assets/images/language-logos/csharp-color.svg';
 import colorLogoDart from '/assets/images/language-logos/dart-color.svg';
@@ -27,8 +28,8 @@ import colorLogoSwift from '/assets/images/language-logos/swift-color.svg';
 import colorLogoTypescript from '/assets/images/language-logos/typescript-color.svg';
 import colorLogoZig from '/assets/images/language-logos/zig-color.svg';
 import grayLogoC from '/assets/images/language-logos/c-gray-500.svg';
-import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
 import grayLogoClojure from '/assets/images/language-logos/clojure-gray-500.svg';
+import grayLogoCpp from '/assets/images/language-logos/cpp-gray-500.svg';
 import grayLogoCrystal from '/assets/images/language-logos/crystal-gray-500.svg';
 import grayLogoCsharp from '/assets/images/language-logos/csharp-gray-500.svg';
 import grayLogoDart from '/assets/images/language-logos/dart-gray-500.svg';
@@ -52,8 +53,8 @@ import grayLogoSwift from '/assets/images/language-logos/swift-gray-500.svg';
 import grayLogoTypescript from '/assets/images/language-logos/typescript-gray-500.svg';
 import grayLogoZig from '/assets/images/language-logos/zig-gray-500.svg';
 import tealLogoC from '/assets/images/language-logos/c-teal-500.svg';
-import tealLogoCpp from '/assets/images/language-logos/cpp-teal-500.svg';
 import tealLogoClojure from '/assets/images/language-logos/clojure-teal-500.svg';
+import tealLogoCpp from '/assets/images/language-logos/cpp-teal-500.svg';
 import tealLogoCrystal from '/assets/images/language-logos/crystal-teal-500.svg';
 import tealLogoCsharp from '/assets/images/language-logos/csharp-teal-500.svg';
 import tealLogoDart from '/assets/images/language-logos/dart-teal-500.svg';
@@ -80,6 +81,7 @@ import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 export default class LanguageModel extends Model {
   @hasMany('course-language-configuration', { async: false, inverse: 'language' }) declare courseConfigurations: CourseLanguageConfigurationModel[];
 
+  @belongsTo('leaderboard', { async: false, inverse: null }) declare leaderboard: LeaderboardModel | null;
   @belongsTo('concept-group', { async: false, inverse: null }) declare primerConceptGroup: ConceptGroupModel | null;
 
   @attr('string') declare name: string;

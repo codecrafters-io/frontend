@@ -1,0 +1,46 @@
+<div ...attributes>
+  {{#if this.hasEntries}}
+    <div>
+      <table class="min-w-full bg-white">
+        <thead>
+          <tr>
+            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
+              Rank
+            </th>
+            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
+              User
+            </th>
+            <th
+              scope="col"
+              class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200 hidden md:table-cell"
+            >
+              Stages Completed
+            </th>
+            <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
+              Score
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.sortedTopEntries as |entry index|}}
+            <LeaderboardPage::EntriesTable::Row @entry={{entry}} @index={{index}} />
+          {{/each}}
+
+          {{#if this.shouldShowSurroundingEntries}}
+            <LeaderboardPage::EntriesTable::FillerRow />
+
+            {{#each this.sortedSurroundingEntries as |entry index|}}
+              <LeaderboardPage::EntriesTable::Row @entry={{entry}} @index={{(add 336501 index)}} />
+            {{/each}}
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <div class="text-center py-12">
+      <div class="text-gray-500 text-sm">
+        No entries found for this leaderboard.
+      </div>
+    </div>
+  {{/if}}
+</div>
