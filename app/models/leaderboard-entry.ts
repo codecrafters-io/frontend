@@ -9,6 +9,7 @@ export default class LeaderboardEntryModel extends Model {
 
   @attr('boolean') declare isBanned: boolean;
   @attr('number') declare score: number;
+  @attr('number') declare scoreUpdatesCount: number;
 
   // @ts-expect-error: empty transform not supported
   @attr('') declare relatedCourseSlugs: string[];

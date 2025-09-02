@@ -16,7 +16,7 @@ export default class LeaderboardPageEntriesTableRow extends Component<Signature>
   @service declare authenticator: AuthenticatorService;
 
   get isCurrentUser(): boolean {
-    return this.args.entry.user == this.authenticator.currentUser;
+    return this.args.entry.user === this.authenticator.currentUser;
   }
 }
 
