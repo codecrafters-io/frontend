@@ -67,6 +67,7 @@
   <AnimatedContainer>
     {{#animated-if (gt this.requestedAndUnsupportedLanguages.length 0) use=this.requestedLanguagesPromptTransition}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::RequestedLanguagesPrompt
+        @course={{@repository.course}}
         @requestedAndUnsupportedLanguages={{this.requestedAndUnsupportedLanguages}}
       />
     {{/animated-if}}
