@@ -39,12 +39,12 @@ Harder stages have higher scores assigned to them.
     return !!(this.authenticator.isAuthenticated && !this.userIsInTopLeaderboardEntries && this.sortedSurroundingEntries.length > 0);
   }
 
-  get sortedTopEntries() {
-    return this.args.topEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
-  }
-
   get sortedSurroundingEntries() {
     return this.args.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  get sortedTopEntries() {
+    return this.args.topEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
   }
 
   get userIsInTopLeaderboardEntries(): boolean {
