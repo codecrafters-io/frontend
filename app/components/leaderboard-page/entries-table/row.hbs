@@ -46,17 +46,17 @@
   </td>
   <td class="px-4 py-2 whitespace-nowrap border border-gray-200">
     <div class="flex items-center justify-end">
-      {{#if (eq @entry.score 142)}}
+      {{!-- {{#if (eq @entry.score 142)}}
         <span class="inline-block align-middle text-teal-500 triangle-up mr-1.5" aria-hidden="true">
           <EmberTooltip @text="Increased from 139 to 142 in the past month" />
         </span>
-      {{/if}}
+      {{/if}} --}}
 
-      {{#if (eq @entry.score 99)}}
+      {{!-- {{#if (eq @entry.score 99)}}
         <span class="inline-block align-middle text-red-500 triangle-down mr-1.5" aria-hidden="true">
           <EmberTooltip @text="Decreased from 199 to 99 in the past month" />
         </span>
-      {{/if}}
+      {{/if}} --}}
 
       <div class="text-xs font-mono">
         <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-700'}}">{{@entry.score}}</span>
