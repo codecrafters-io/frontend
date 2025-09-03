@@ -19,7 +19,15 @@
         </div>
       </div>
       <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 {{unless this.isCurrentUser 'opacity-25 group-hover/table-row:opacity-100'}}">
-        {{#each @entry.relatedCourses as |course|}}
+        {{#if (gt this.hiddenCourses.length 0)}}
+          <div class="text-gray-500">
+            ...
+
+            <EmberTooltip @text={{concat this.hiddenCourses.length " other " (pluralize "challenge" count=this.hiddenCourses.length)}} />
+          </div>
+        {{/if}}
+
+        {{#each this.visibleCourses as |course|}}
           <div class="flex">
             <CourseLogo @course={{course}} class="h-4 w-4 {{unless this.isCurrentUser 'grayscale opacity-50 hover:opacity-100 hover:grayscale-0'}}" />
             <EmberTooltip @text={{course.name}} />
