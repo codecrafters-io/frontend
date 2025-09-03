@@ -9,7 +9,7 @@ interface Signature {
 
   Args: {
     entry: LeaderboardEntryModel;
-    index: number;
+    rankText: number;
   };
 }
 
