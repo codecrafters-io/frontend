@@ -1,12 +1,11 @@
 <tr class="{{if this.isCurrentUser 'bg-teal-50 ring ring-teal-500 relative' 'hover:bg-gray-50'}} group/table-row" data-test-leaderboard-entry-row>
-  <td
-    class="px-4 py-2 whitespace-nowrap text-xs font-medium
-      {{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}
-      text-right border border-gray-200 w-[8%]"
-  >
-    {{@rankText}}
-  </td>
-  <td class="px-4 py-2 whitespace-nowrap border border-gray-200">
+  <LeaderboardPage::EntriesTable::RowCell class="text-right w-[8%]">
+    <span class="text-xs font-medium {{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">
+      {{@rankText}}
+    </span>
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-between gap-x-6">
       <div class="flex items-center gap-1.5">
         <div class="flex-shrink-0 h-6 w-6">
@@ -35,16 +34,18 @@
         {{/each}}
       </div>
     </div>
-  </td>
-  <td class="px-4 py-2 whitespace-nowrap border border-gray-200 hidden md:table-cell">
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell class="hidden md:table-cell">
     <div class="flex items-center justify-end">
       <div class="text-xs font-mono">
         <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-700'}}">{{@entry.scoreUpdatesCount}}</span>
         <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">stages</span>
       </div>
     </div>
-  </td>
-  <td class="px-4 py-2 whitespace-nowrap border border-gray-200">
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-end">
       {{!-- {{#if (eq @entry.score 142)}}
         <span class="inline-block align-middle text-teal-500 triangle-up mr-1.5" aria-hidden="true">
@@ -63,5 +64,5 @@
         <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">pts</span>
       </div>
     </div>
-  </td>
+  </LeaderboardPage::EntriesTable::RowCell>
 </tr>
