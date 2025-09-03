@@ -225,33 +225,33 @@ A quick welcome to CodeCrafters.
   }
 
   // Computed using the scripts/admin/track_learner_counts.rb script in core
-  // Last update on 31-JAN-2025
+  // Last update on 1-SEP-2025
   get trackLearnersCount() {
     return {
-      c: 31629,
-      clojure: 692,
-      cpp: 47758,
-      crystal: 193,
-      csharp: 21533,
-      dart: 501,
-      elixir: 3142,
-      gleam: 4074,
-      go: 106178,
-      haskell: 3028,
-      java: 52340,
-      javascript: 52121,
-      kotlin: 3963,
-      nim: 176,
-      ocaml: 667,
-      odin: 1,
-      php: 2911,
-      python: 107035,
-      ruby: 4491,
-      rust: 120260,
-      scala: 524,
-      swift: 19,
-      typescript: 20228,
-      zig: 7037,
+      c: 48562,
+      clojure: 897,
+      cpp: 74234,
+      crystal: 231,
+      csharp: 31166,
+      dart: 802,
+      elixir: 4436,
+      gleam: 5585,
+      go: 143035,
+      haskell: 3776,
+      java: 79256,
+      javascript: 66316,
+      kotlin: 6107,
+      nim: 181,
+      ocaml: 1040,
+      odin: 256,
+      php: 3862,
+      python: 149148,
+      ruby: 6023,
+      rust: 154831,
+      scala: 770,
+      swift: 18,
+      typescript: 31718,
+      zig: 12524,
     }[this.slug];
   }
 }
