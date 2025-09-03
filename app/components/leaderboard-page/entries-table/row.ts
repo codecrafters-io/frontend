@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-const MAX_VISIBLE_COURSES = 5;
+const MAX_VISIBLE_COURSES = 7;
 
 export default class LeaderboardPageEntriesTableRow extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
@@ -23,11 +23,11 @@ export default class LeaderboardPageEntriesTableRow extends Component<Signature>
   }
 
   get visibleCourses(): CourseModel[] {
-    return this.args.entry.relatedCourses.slice(-(MAX_VISIBLE_COURSES - 1));
+    return this.args.entry.relatedCourses.slice(-MAX_VISIBLE_COURSES);
   }
 
   get hiddenCourses(): CourseModel[] {
-    return this.args.entry.relatedCourses.slice(0, -(MAX_VISIBLE_COURSES - 1));
+    return this.args.entry.relatedCourses.slice(0, -MAX_VISIBLE_COURSES);
   }
 }
 
