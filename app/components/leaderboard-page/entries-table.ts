@@ -3,13 +3,15 @@ import { inject as service } from '@ember/service';
 import type Store from '@ember-data/store';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    topEntries: LeaderboardEntryModel[];
+    language: LanguageModel;
     surroundingEntries: LeaderboardEntryModel[];
+    topEntries: LeaderboardEntryModel[];
   };
 }
 
@@ -19,6 +21,18 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
 
   get hasEntries() {
     return this.args.topEntries.length > 0;
+  }
+
+  get explanationMarkdownForStagesCompleted() {
+    return `There are ${this.args.language.stagesCount} stages available in this track.`;
+  }
+
+  get explanationMarkdownForScore() {
+    return `
+The highest possible score for this track is ${this.args.topEntries[0]!.leaderboard.highestPossibleScore}.
+
+Harder stages have higher scores assigned to them.
+`.trim();
   }
 
   get shouldShowSurroundingEntries(): boolean {

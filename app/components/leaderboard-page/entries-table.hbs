@@ -4,21 +4,21 @@
       <table class="min-w-full bg-white">
         <thead>
           <tr>
-            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
-              Rank
-            </th>
-            <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
-              User
-            </th>
-            <th
-              scope="col"
-              class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200 hidden md:table-cell"
-            >
-              Stages Completed
-            </th>
-            <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider border border-gray-200">
-              Score
-            </th>
+            <LeaderboardPage::EntriesTable::HeaderRowCell @title="Rank" @alignment="left" />
+            <LeaderboardPage::EntriesTable::HeaderRowCell @title="User" @alignment="left" />
+
+            <LeaderboardPage::EntriesTable::HeaderRowCell
+              @title="Stages Completed"
+              @alignment="right"
+              class="hidden md:table-cell"
+              @explanationMarkdown={{this.explanationMarkdownForStagesCompleted}}
+            />
+
+            <LeaderboardPage::EntriesTable::HeaderRowCell
+              @title="Score"
+              @alignment="right"
+              @explanationMarkdown={{this.explanationMarkdownForScore}}
+            />
           </tr>
         </thead>
         <tbody>

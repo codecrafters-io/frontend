@@ -7,8 +7,9 @@
 
   <div class="flex items-start gap-8">
     <LeaderboardPage::EntriesTable
-      @topEntries={{@model.topLeaderboardEntries}}
+      @language={{@model.language}}
       @surroundingEntries={{@model.surroundingLeaderboardEntries}}
+      @topEntries={{@model.topLeaderboardEntries}}
       class="flex-grow"
     />
   </div>
