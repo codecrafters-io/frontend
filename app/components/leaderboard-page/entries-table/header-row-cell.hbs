@@ -1,0 +1,19 @@
+<th scope="col" class="font-normal px-4 py-3 border border-gray-200" ...attributes>
+  <div class="flex items-center gap-1 {{if (eq @alignment 'left') 'justify-start' 'justify-end'}}">
+    <span class="text-xs font-medium text-gray-500 uppercase tracking-wider">
+      {{@title}}
+    </span>
+
+    {{#if @explanationMarkdown}}
+      <span>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+
+        <EmberTooltip>
+          <div class="prose prose-sm prose-compact prose-invert text-white">
+            {{markdown-to-html @explanationMarkdown}}
+          </div>
+        </EmberTooltip>
+      </span>
+    {{/if}}
+  </div>
+</th>

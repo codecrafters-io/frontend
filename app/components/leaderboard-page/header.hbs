@@ -1,0 +1,23 @@
+<div class="flex items-center justify-between gap-x-6 gap-y-4 flex-wrap" ...attributes>
+  <div class="flex-shrink-0">
+    <div class="flex items-center gap-x-2">
+      <h3 class="text-2xl font-bold text-gray-800" data-test-leaderboard-title>
+        {{@selectedLanguage.name}}
+        Leaderboard
+      </h3>
+      <Pill @color="green">
+        ALPHA
+        <EmberTooltip @text="We're still working on this feature, rough edges expected!" @side="top" />
+      </Pill>
+    </div>
+  </div>
+
+  <LanguageDropdown
+    @languages={{this.sortedLanguagesForDropdown}}
+    @requestedLanguage={{@selectedLanguage}}
+    @selectedLanguage={{@selectedLanguage}}
+    @shouldShowAllLanguagesOption={{false}}
+    @onRequestedLanguageChange={{(noop)}}
+    @onDidInsertDropdown={{(noop)}}
+  />
+</div>
