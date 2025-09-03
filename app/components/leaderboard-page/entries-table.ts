@@ -19,20 +19,20 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
-  get hasEntries() {
-    return this.args.topEntries.length > 0;
-  }
-
-  get explanationMarkdownForStagesCompleted() {
-    return `There are ${this.args.language.stagesCount} stages available in this track.`;
-  }
-
   get explanationMarkdownForScore() {
     return `
 The highest possible score for this track is ${this.args.topEntries[0]!.leaderboard.highestPossibleScore}.
 
 Harder stages have higher scores assigned to them.
 `.trim();
+  }
+
+  get explanationMarkdownForStagesCompleted() {
+    return `There are ${this.args.language.stagesCount} stages available in this track.`;
+  }
+
+  get hasEntries() {
+    return this.args.topEntries.length > 0;
   }
 
   get shouldShowSurroundingEntries(): boolean {

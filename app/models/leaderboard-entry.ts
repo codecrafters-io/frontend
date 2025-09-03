@@ -19,6 +19,7 @@ export default class LeaderboardEntryModel extends Model {
 
   get relatedCourses(): CourseModel[] {
     const allCourses = this.store.peekAll('course');
+
     return this.relatedCourseSlugs.map((slug) => allCourses.find((course) => course.slug === slug)).filter(Boolean);
   }
 }

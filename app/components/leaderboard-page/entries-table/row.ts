@@ -9,7 +9,7 @@ interface Signature {
 
   Args: {
     entry: LeaderboardEntryModel;
-    rankText: number;
+    rankText: string;
   };
 }
 
@@ -18,16 +18,16 @@ const MAX_VISIBLE_COURSES = 7;
 export default class LeaderboardPageEntriesTableRow extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
+  get hiddenCourses(): CourseModel[] {
+    return this.args.entry.relatedCourses.slice(0, -MAX_VISIBLE_COURSES);
+  }
+
   get isCurrentUser(): boolean {
     return this.args.entry.user === this.authenticator.currentUser;
   }
 
   get visibleCourses(): CourseModel[] {
     return this.args.entry.relatedCourses.slice(-MAX_VISIBLE_COURSES);
-  }
-
-  get hiddenCourses(): CourseModel[] {
-    return this.args.entry.relatedCourses.slice(0, -MAX_VISIBLE_COURSES);
   }
 }
 

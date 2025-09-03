@@ -16,19 +16,13 @@ export type ModelType = {
 };
 
 export default class LeaderboardRoute extends BaseRoute {
+  allowsAnonymousAccess = true;
+
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   activate(): void {
     scrollToTop();
-  }
-
-  afterModel(_model: ModelType): void {
-    if (!this.authenticator.currentUser?.isStaff) {
-      this.router.transitionTo('not-found');
-
-      return;
-    }
   }
 
   async model(params: { language_slug: string }): Promise<ModelType> {
