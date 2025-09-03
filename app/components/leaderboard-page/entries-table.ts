@@ -21,7 +21,7 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
 
   get explanationMarkdownForScore() {
     return `
-The highest possible score for this track is ${this.args.topEntries[0]!.leaderboard.highestPossibleScore}.
+The highest possible score for this track is ${this.args.language.leaderboard!.highestPossibleScore}.
 
 Harder stages have higher scores assigned to them.
 `.trim();
