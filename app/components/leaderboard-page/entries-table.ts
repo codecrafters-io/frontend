@@ -52,8 +52,8 @@ Harder stages have higher scores assigned to them.
     return !this.userIsInTopLeaderboardEntries && this.surroundingEntries.length > 0;
   }
 
-  get userEntryIndexInSurroundingEntries() {
-    return this.sortedSurroundingEntries.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
+  get sortedSurroundingEntries() {
+    return this.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
   }
 
   get sortedSurroundingEntriesWithRanks() {
@@ -63,12 +63,12 @@ Harder stages have higher scores assigned to them.
     }));
   }
 
-  get sortedSurroundingEntries() {
-    return this.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
-  }
-
   get sortedTopEntries() {
     return this.args.topEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  get userEntryIndexInSurroundingEntries() {
+    return this.sortedSurroundingEntries.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
   }
 
   get userIsInTopLeaderboardEntries(): boolean {

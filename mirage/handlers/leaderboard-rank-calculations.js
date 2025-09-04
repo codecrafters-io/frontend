@@ -7,7 +7,7 @@ export default function (server) {
     return schema.leaderboardRankCalculations.all().filter((calculation) => calculation.leaderboard.id === request.queryParams.leaderboard_id);
   });
 
-  server.post('/leaderboard-rank-calculations', function (schema, request) {
+  server.post('/leaderboard-rank-calculations', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     attrs.calculatedAt = new Date();
     attrs.rank = 37812;
