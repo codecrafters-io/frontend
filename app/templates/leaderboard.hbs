@@ -6,11 +6,6 @@
   </RoadmapInfoAlert> }}
 
   <div class="flex items-start gap-8">
-    <LeaderboardPage::EntriesTable
-      @language={{@model.language}}
-      @surroundingEntries={{@model.surroundingLeaderboardEntries}}
-      @topEntries={{@model.topLeaderboardEntries}}
-      class="flex-grow"
-    />
+    <LeaderboardPage::EntriesTable @language={{@model.language}} @topEntries={{@model.topLeaderboardEntries}} class="flex-grow" />
   </div>
 </div>

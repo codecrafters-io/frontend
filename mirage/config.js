@@ -43,6 +43,7 @@ import institutionMembershipGrantApplications from './handlers/institution-membe
 import institutions from './handlers/institutions';
 import languages from './handlers/languages';
 import leaderboardEntries from './handlers/leaderboard-entries';
+import leaderboardRankCalculations from './handlers/leaderboard-rank-calculations';
 import logstreams from './handlers/logstreams';
 import onboardingSurveys from './handlers/onboarding-surveys';
 import perks from './handlers/perks';
@@ -181,6 +182,7 @@ function routes() {
   institutions(this);
   languages(this);
   leaderboardEntries(this);
+  leaderboardRankCalculations(this);
   logstreams(this);
   onboardingSurveys(this);
   perks(this);

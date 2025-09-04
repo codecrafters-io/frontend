@@ -137,6 +137,7 @@ export default class ContestRoute extends BaseRoute {
         include: 'leaderboard,user',
         leaderboard_id: model.contest.leaderboard.id,
         filter_type: 'around_me',
+        user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
       })) as unknown as LeaderboardEntryModel[];
     }
   }
