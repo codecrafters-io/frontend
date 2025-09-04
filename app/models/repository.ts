@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import CourseExtensionActivation from 'codecrafters-frontend/models/course-extension-activation';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
@@ -70,10 +71,9 @@ export default class RepositoryModel extends Model {
   @attr('number') declare submissionsCount: number;
 
   get activatedCourseExtensions() {
-    return this.extensionActivations
-      .sortBy('activatedAt')
-      .map((activation) => activation.extension)
-      .uniq();
+    return [
+      ...new Set([...this.extensionActivations].sort((a, b) => compare(a.activatedAt, b.activatedAt)).map((activation) => activation.extension)),
+    ];
   }
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
@@ -94,11 +94,11 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStageSlugs() {
-    return this.completedStages.mapBy('slug');
+    return this.completedStages.map((item) => item.slug);
   }
 
   get completedStages() {
-    return this.courseStageCompletions.mapBy('courseStage').uniq();
+    return [...new Set(this.courseStageCompletions.map((item) => item.courseStage))];
   }
 
   get currentStage() {
@@ -143,7 +143,7 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    return this.courseStageCompletions.sortBy('courseStage.position').lastObject?.courseStage;
+    return [...this.courseStageCompletions].sort((a, b) => compare(a.courseStage.position, b.courseStage.position)).at(-1)?.courseStage;
   }
 
   get isRecentlyCreated() {
@@ -211,11 +211,13 @@ export default class RepositoryModel extends Model {
   }
 
   courseStageCompletionFor(courseStage: CourseStageModel) {
-    return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
+    return [...this.courseStageCompletions.filter((item) => item.courseStage === courseStage)].sort((a, b) =>
+      compare(a.completedAt, b.completedAt),
+    )[0];
   }
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+    return this.courseStageFeedbackSubmissions.find((item) => item.courseStage === courseStage);
   }
 
   extensionStagesAreComplete(extension: CourseExtensionModel) {
@@ -223,7 +225,9 @@ export default class RepositoryModel extends Model {
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
+    return (
+      this.courseStageFeedbackSubmissions.filter((item) => item.courseStage === courseStage).filter((item) => item.status === 'closed').length > 0
+    );
   }
 
   async refreshStateFromServer() {

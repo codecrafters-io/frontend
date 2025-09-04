@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import TrackLeaderboardEntry from 'codecrafters-frontend/utils/track-leaderboard-entry';
 import fade from 'ember-animated/transitions/fade';
@@ -39,9 +40,9 @@ export default class TrackLeaderboard extends Component<Signature> {
     let entries: TrackLeaderboardEntryModel[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI!.toArray().filter((entry) => entry.user !== this.currentUser));
+      entries = entries.concat([...this.entriesFromAPI!].filter((entry) => entry.user !== this.currentUser));
     } else {
-      entries = entries.concat(this.entriesFromAPI!.toArray());
+      entries = entries.concat([...this.entriesFromAPI!]);
     }
 
     return entries.concat(this.entriesFromCurrentUser);
@@ -52,14 +53,22 @@ export default class TrackLeaderboard extends Component<Signature> {
       return [];
     }
 
-    const currentUserRepositories = this.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated');
+    const currentUserRepositories = this.currentUser.repositories
+      .filter((item) => item.language === this.args.language)
+      .filter((item) => item.firstSubmissionCreated);
 
     if (currentUserRepositories.length === 0) {
       return [];
     }
 
     const completedStagesCount = currentUserRepositories.reduce((result, repository) => {
-      return result.concat(repository.courseStageCompletions.toArray()).uniqBy('courseStage');
+      return result.concat([...repository.courseStageCompletions]).reduce<CourseStageCompletionModel[]>((unique, item) => {
+        if (!unique.find((i) => item.courseStage === i.courseStage)) {
+          unique.push(item);
+        }
+
+        return unique;
+      }, []);
     }, [] as CourseStageCompletionModel[]).length;
 
     return [
@@ -73,7 +82,7 @@ export default class TrackLeaderboard extends Component<Signature> {
   }
 
   get sortedEntries() {
-    return this.entries.sortBy('completedStagesCount').reverse();
+    return [...this.entries].sort((a, b) => compare(a.completedStagesCount, b.completedStagesCount)).reverse();
   }
 
   @action

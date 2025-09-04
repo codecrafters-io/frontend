@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { inject as service } from '@ember/service';
@@ -101,10 +102,8 @@ export default class ConceptRoute extends BaseRoute {
 
   #peekCachedOrCreateNewConceptEngagement(concept: ConceptModel) {
     const user = this.authenticator.currentUser;
-    const cachedEngagement = this.store
-      .peekAll('concept-engagement')
-      .filter((e) => e.concept.slug === concept.slug && e.user === user)
-      .sortBy('createdAt')
+    const cachedEngagement = [...this.store.peekAll('concept-engagement').filter((e) => e.concept.slug === concept.slug && e.user === user)]
+      .sort((a, b) => compare(a.createdAt, b.createdAt))
       .reverse()[0];
 
     return (

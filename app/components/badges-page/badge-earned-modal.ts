@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -25,12 +26,12 @@ export default class BadgeEarnedModal extends Component<Signature> {
   }
 
   get currentUserBadgeAwards(): BadgeAwardModel[] {
-    return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+    return this.currentUser.badgeAwards.filter((item) => item.badge === this.args.badge);
   }
 
   get lastAwardedAt() {
     if (this.userHasBadgeAward) {
-      return (this.currentUserBadgeAwards.sortBy('awardedAt').reverse()[0] as BadgeAwardModel).awardedAt;
+      return ([...this.currentUserBadgeAwards].sort((a, b) => compare(a.awardedAt, b.awardedAt)).reverse()[0] as BadgeAwardModel).awardedAt;
     } else {
       return null;
     }
