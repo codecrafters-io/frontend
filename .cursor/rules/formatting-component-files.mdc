@@ -4,16 +4,19 @@ alwaysApply: true
 When creating components, follow these rules:
 
 - Use typescript (`.ts`) files
-- Import from `@glimmer/component`
+- Import from `@glimmer/component` like this: `import Component from '@glimmer/component';`
 - Use `interface Signature { ... }` to define the component's signature
 - `class` doesn't have to be in `Args`, ember automatically forwards native args like `class`, `id` etc. to the component
 - Ensure the component is registered w/ Glint using `declare module ...`
-
+- Ensure service registrations using `@service` are grouped together and sorted alphabetically
 
 Example:
 
 ```ts
 import Component from '@glimmer/component';
+import { service } from '@ember/service';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -25,8 +28,20 @@ interface Signature {
 }
 
 export default class TrackPageCard extends Component<Signature> {
+  @service declare router: RouterService;
+  @service declare store: Store;
+
   get property1() {
     return 'dummy';
+  }
+
+  get property2() {
+    return this.store.peekAll('course');
+  }
+
+  @action
+  handleClick() {
+    this.router.transitionTo('course', 'redis');
   }
 }
 
