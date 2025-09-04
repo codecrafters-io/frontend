@@ -105,8 +105,6 @@ Harder stages have higher scores assigned to them.
           })
           .save();
       }
-
-      console.log(this.userRankCalculation!.rank);
     }
   });
 }
