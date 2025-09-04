@@ -19,7 +19,8 @@ export default function (server) {
       const userEntry = leaderboardEntries.filter((leaderboardEntry) => leaderboardEntry.user.id === request.queryParams.user_id).models[0];
 
       if (!userEntry) {
-        return [];
+        // TODO: Check why this.serialize([]) doesn't work!
+        return { data: [] };
       }
 
       const userEntryIndex = leaderboardEntries.models.indexOf(userEntry);
