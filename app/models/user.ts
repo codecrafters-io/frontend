@@ -1,8 +1,8 @@
+import AffiliateEarningsPayoutModel from 'codecrafters-frontend/models/affiliate-earnings-payout';
 import AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import AffiliateReferralModel from 'codecrafters-frontend/models/affiliate-referral';
 import BadgeAwardModel from 'codecrafters-frontend/models/badge-award';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
-import config from 'codecrafters-frontend/config/environment';
 import CourseExtensionIdeaVoteModel from 'codecrafters-frontend/models/course-extension-idea-vote';
 import CourseIdeaVoteModel from 'codecrafters-frontend/models/course-idea-vote';
 import CourseLanguageRequestModel from 'codecrafters-frontend/models/course-language-request';
@@ -16,15 +16,16 @@ import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-
 import InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
 import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/institution-membership-grant';
 import InvoiceModel from 'codecrafters-frontend/models/invoice';
+import LeaderboardRankCalculationModel from './leaderboard-rank-calculation';
 import Model, { attr, hasMany } from '@ember-data/model';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
-import AffiliateEarningsPayoutModel from 'codecrafters-frontend/models/affiliate-earnings-payout';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import SubscriptionModel from 'codecrafters-frontend/models/subscription';
 import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
+import config from 'codecrafters-frontend/config/environment';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 
@@ -70,6 +71,7 @@ export default class UserModel extends Model {
   @hasMany('institution-membership-grant', { async: false, inverse: 'user' })
   institutionMembershipGrants!: InstitutionMembershipGrantModel[];
 
+  @hasMany('leaderboard-rank-calculation', { async: false, inverse: 'user' }) leaderboardRankCalculations!: LeaderboardRankCalculationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'customer' }) referralActivationsAsCustomer!: ReferralActivationModel[];
   @hasMany('referral-activation', { async: false, inverse: 'referrer' }) referralActivationsAsReferrer!: ReferralActivationModel[];
   @hasMany('affiliate-earnings-payout', { async: false, inverse: 'user' }) affiliateEarningsPayouts!: AffiliateEarningsPayoutModel[];

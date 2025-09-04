@@ -31,8 +31,8 @@
           {{else if this.shouldShowSurroundingEntries}}
             <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
 
-            {{#each this.sortedSurroundingEntries as |entry|}}
-              <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{"#~5000"}} />
+            {{#each this.sortedSurroundingEntriesWithRanks as |entryWithRank|}}
+              <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
             {{/each}}
           {{/if}}
         </tbody>
