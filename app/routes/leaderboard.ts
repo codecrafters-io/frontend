@@ -11,7 +11,6 @@ import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard
 export type ModelType = {
   language: LanguageModel;
   leaderboard: LeaderboardModel;
-  surroundingLeaderboardEntries: LeaderboardEntryModel[];
   topLeaderboardEntries: LeaderboardEntryModel[];
 };
 
@@ -37,16 +36,6 @@ export default class LeaderboardRoute extends BaseRoute {
 
     const language = languages.find((language) => language.slug === params.language_slug)!;
 
-    let surroundingLeaderboardEntries: LeaderboardEntryModel[] = [];
-
-    if (this.authenticator.isAuthenticated) {
-      surroundingLeaderboardEntries = (await this.store.query('leaderboard-entry', {
-        include: 'leaderboard,user',
-        leaderboard_id: language.leaderboard!.id,
-        filter_type: 'around_me',
-      })) as unknown as LeaderboardEntryModel[];
-    }
-
     const topLeaderboardEntries = (await this.store.query('leaderboard-entry', {
       include: 'leaderboard,user',
       leaderboard_id: language.leaderboard!.id,
@@ -56,7 +45,6 @@ export default class LeaderboardRoute extends BaseRoute {
     return {
       language: language,
       leaderboard: language.leaderboard!,
-      surroundingLeaderboardEntries: surroundingLeaderboardEntries,
       topLeaderboardEntries: topLeaderboardEntries,
     };
   }

@@ -26,8 +26,10 @@
             <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{concat "#" (add index 1)}} />
           {{/each}}
 
-          {{#if this.shouldShowSurroundingEntries}}
-            <LeaderboardPage::EntriesTable::FillerRow />
+          {{#if this.loadUserSpecificResourcesTask.isRunning}}
+            <LeaderboardPage::EntriesTable::FillerRow @text="... loading ..." />
+          {{else if this.shouldShowSurroundingEntries}}
+            <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
 
             {{#each this.sortedSurroundingEntries as |entry|}}
               <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{"#~5000"}} />

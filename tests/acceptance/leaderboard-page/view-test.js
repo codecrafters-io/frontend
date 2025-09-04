@@ -22,149 +22,59 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
   });
 
   test('can view', async function (assert) {
-    const user9 = signInAsStaff(this.owner, this.server);
+    const currentUser = signInAsStaff(this.owner, this.server);
 
     const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
     const leaderboard = language.leaderboard;
 
-    const user1 = this.server.create('user', {
-      id: 'user-1',
-      avatarUrl: 'https://github.com/Gufran.png',
-      username: 'Gufran',
-    });
+    const sampleUserData = [
+      // Top 10 entries
+      { username: 'Gufran', score: 6750 },
+      { username: 'torvalds', score: 5250 },
+      { username: 'addyosmani', score: 4250 },
+      { username: 'addyosmaniveryverylongusername-with-lots-of-characters', score: 3750 },
+      { username: 'gaearon', score: 3250 },
+      { username: 'yyx990803', score: 2750 },
+      { username: 'getify', score: 2250 },
+      { username: 'rauchg', score: 2200 },
+      { username: 'addyosmani', score: 2125 },
+      { username: 'defunkt', score: 2090 },
 
-    const user2 = this.server.create('user', {
-      id: 'user-2',
-      avatarUrl: 'https://github.com/torvalds.png',
-      username: 'torvalds',
-    });
+      // Current user and surrounding entries
+      { username: 'lukebechtel', score: 240 },
+      { username: 'mzgoddard', score: 225 },
+      { username: 'kentcdodds', score: 225 },
+      { username: currentUser.username, score: 220 },
+      { username: 'dhh', score: 170 },
+      { username: 'ericwbailey', score: 170 },
+      { username: 'jacobparis', score: 160 },
+    ];
 
-    const user3 = this.server.create('user', {
-      id: 'user-3',
-      avatarUrl: 'https://github.com/addyosmani.png',
-      username: 'addyosmaniveryverylongusername-with-lots-of-characters',
-    });
+    for (const sampleUserDatum of sampleUserData) {
+      let user = this.server.schema.users.all().models.find((user) => user.username === sampleUserDatum.username);
 
-    const user4 = this.server.create('user', {
-      id: 'user-4',
-      avatarUrl: 'https://github.com/gaearon.png',
-      username: 'gaearon',
-    });
+      user ||= this.server.create('user', {
+        username: sampleUserDatum.username,
+        avatarUrl: `https://github.com/${sampleUserDatum.username}.png`,
+      });
 
-    const user5 = this.server.create('user', {
-      id: 'user-5',
-      avatarUrl: 'https://github.com/yyx990803.png',
-      username: 'yyx990803',
-    });
-
-    const user6 = this.server.create('user', {
-      id: 'user-6',
-      avatarUrl: 'https://github.com/getify.png',
-      username: 'getify',
-    });
-
-    const user7 = this.server.create('user', {
-      id: 'user-7',
-      avatarUrl: 'https://github.com/rauchg.png',
-      username: 'rauchg',
-    });
-
-    const user8 = this.server.create('user', {
-      id: 'user-8',
-      avatarUrl: 'https://github.com/addyosmani.png',
-      username: 'addyosmani',
-    });
-
-    const user10 = this.server.create('user', {
-      id: 'user-10',
-      avatarUrl: 'https://github.com/defunkt.png',
-      username: 'defunkt',
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user1,
-      score: 96,
-      scoreUpdatesCount: 7,
-      relatedCourseSlugs: ['redis', 'shell', 'sqlite', 'grep'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user2,
-      score: 221,
-      scoreUpdatesCount: 19,
-      relatedCourseSlugs: ['redis', 'sqlite', 'grep'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user3,
-      score: 187,
-      scoreUpdatesCount: 18,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user4,
-      score: 142,
-      scoreUpdatesCount: 17,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user5,
-      score: 110,
-      scoreUpdatesCount: 16,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user6,
-      score: 99,
-      scoreUpdatesCount: 15,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user7,
-      score: 88,
-      scoreUpdatesCount: 14,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user8,
-      score: 77,
-      scoreUpdatesCount: 13,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user9,
-      score: 66,
-      scoreUpdatesCount: 12,
-      relatedCourseSlugs: ['redis', 'git'],
-    });
-
-    this.server.create('leaderboard-entry', {
-      leaderboard,
-      user: user10,
-      score: 55,
-      scoreUpdatesCount: 4,
-      relatedCourseSlugs: ['redis', 'shell'],
-    });
+      this.server.create('leaderboard-entry', {
+        leaderboard,
+        user: user,
+        score: sampleUserDatum.score,
+        scoreUpdatesCount: Math.floor(sampleUserDatum.score / 10),
+        relatedCourseSlugs: ['redis', 'shell', 'sqlite', 'grep'].slice(0, Math.floor(sampleUserDatum.score / 50)),
+      });
+    }
 
     await leaderboardPage.visit({ language_slug: 'rust' });
     assert.strictEqual(currentURL(), '/leaderboards/rust');
 
-    assert.strictEqual(leaderboardPage.entriesTable.entries.length, 10, '10 entries should be shown');
+    assert.strictEqual(leaderboardPage.entriesTable.entries.length, 17, '17 entries should be shown');
     await percySnapshot('Leaderboard Page');
   });
+
+  // Test that one can switch languages
+  // Test that surrounding entries are shown if user is not within top 10
+  // Test that surrounding entries are not shown if user is within top 10
 });
