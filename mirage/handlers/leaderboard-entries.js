@@ -4,16 +4,12 @@ export default function (server) {
       throw new Error('No leaderboard ID provided');
     }
 
-    if (!request.queryParams.filter_type) {
-      throw new Error('No filter type provided');
-    }
-
     const leaderboardEntries = schema.leaderboardEntries
       .all()
       .filter((leaderboardEntry) => leaderboardEntry.leaderboard.id === request.queryParams.leaderboard_id)
       .sort((a, b) => b.score - a.score);
 
-    if (request.queryParams.filter_type === 'top') {
+    if (!request.queryParams.filter_type || request.queryParams.filter_type === 'top') {
       return leaderboardEntries.slice(0, 10);
     } else if (request.queryParams.filter_type === 'around_me') {
       if (!request.queryParams.user_id) {
