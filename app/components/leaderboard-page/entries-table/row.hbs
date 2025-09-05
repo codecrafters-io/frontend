@@ -12,7 +12,13 @@
           <AvatarImage @user={{@entry.user}} class="h-6 w-6 rounded-full border border-gray-300" />
         </div>
         <div class="text-xs font-mono max-w-[12ch] sm:max-w-[16ch] truncate {{if this.isCurrentUser 'text-teal-600' 'text-gray-600'}}">
-          <a href={{@entry.user.codecraftersProfileUrl}} target="_blank" class="hover:underline hover:text-gray-800" rel="noopener noreferrer">
+          <a
+            href={{@entry.user.codecraftersProfileUrl}}
+            target="_blank"
+            class="hover:underline hover:text-gray-800"
+            rel="noopener noreferrer"
+            data-test-username
+          >
             {{@entry.user.username}}
           </a>
         </div>
