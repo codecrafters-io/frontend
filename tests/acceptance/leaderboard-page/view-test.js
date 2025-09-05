@@ -21,7 +21,25 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
     }
   });
 
-  test('can view', async function (assert) {
+  test('can view as anonymous user', async function (assert) {
+    const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
+    const leaderboard = language.leaderboard;
+
+    const sampleUserData = [
+      { username: 'Gufran', score: 6750, leaderboard },
+      { username: 'torvalds', score: 5250, leaderboard },
+    ];
+
+    createLeaderboardEntriesFromSampleData(this.server, sampleUserData);
+
+    await leaderboardPage.visit({ language_slug: 'rust' });
+    assert.strictEqual(currentURL(), '/leaderboards/rust');
+
+    assert.strictEqual(leaderboardPage.entriesTable.entries.length, 2, '2 entries should be shown');
+    await percySnapshot('Leaderboard Page - Anonymous User');
+  });
+
+  test('can view as authenticated user', async function (assert) {
     const currentUser = signInAsStaff(this.owner, this.server);
 
     const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
@@ -51,21 +69,10 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
     ];
 
     for (const sampleUserDatum of sampleUserData) {
-      let user = this.server.schema.users.all().models.find((user) => user.username === sampleUserDatum.username);
-
-      user ||= this.server.create('user', {
-        username: sampleUserDatum.username,
-        avatarUrl: `https://github.com/${sampleUserDatum.username}.png`,
-      });
-
-      this.server.create('leaderboard-entry', {
-        leaderboard,
-        user: user,
-        score: sampleUserDatum.score,
-        scoreUpdatesCount: Math.floor(sampleUserDatum.score / 10),
-        relatedCourseSlugs: ['redis', 'shell', 'sqlite', 'grep'].slice(0, Math.floor(sampleUserDatum.score / 50)),
-      });
+      sampleUserDatum.leaderboard = leaderboard;
     }
+
+    createLeaderboardEntriesFromSampleData(this.server, sampleUserData);
 
     await leaderboardPage.visit({ language_slug: 'rust' });
     assert.strictEqual(currentURL(), '/leaderboards/rust');
@@ -89,23 +96,7 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
       { username: 'python-user-2', score: 700, leaderboard: pythonLanguage.leaderboard },
     ];
 
-    for (const sampleUserDatum of sampleUserData) {
-      let user = this.server.schema.users.all().models.find((user) => user.username === sampleUserDatum.username);
-
-      user ||= this.server.create('user', {
-        username: sampleUserDatum.username,
-        avatarUrl: `https://github.com/${sampleUserDatum.username}.png`,
-      });
-
-      // Create entries for both languages
-      this.server.create('leaderboard-entry', {
-        leaderboard: sampleUserDatum.leaderboard,
-        user: user,
-        score: sampleUserDatum.score,
-        scoreUpdatesCount: Math.floor(sampleUserDatum.score / 10),
-        relatedCourseSlugs: ['redis', 'shell'],
-      });
-    }
+    createLeaderboardEntriesFromSampleData(this.server, sampleUserData);
 
     // Start on Rust leaderboard
     await leaderboardPage.visit({ language_slug: 'rust' });
@@ -126,3 +117,22 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
   // Test that surrounding entries are shown if user is not within top 10
   // Test that surrounding entries are not shown if user is within top 10
 });
+
+function createLeaderboardEntriesFromSampleData(server, sampleUserData) {
+  for (const sampleUserDatum of sampleUserData) {
+    let user = server.schema.users.all().models.find((user) => user.username === sampleUserDatum.username);
+
+    user ||= server.create('user', {
+      username: sampleUserDatum.username,
+      avatarUrl: `https://github.com/${sampleUserDatum.username}.png`,
+    });
+
+    server.create('leaderboard-entry', {
+      leaderboard: sampleUserDatum.leaderboard,
+      user: user,
+      score: sampleUserDatum.score,
+      scoreUpdatesCount: Math.floor(sampleUserDatum.score / 10),
+      relatedCourseSlugs: ['redis', 'shell', 'sqlite', 'grep'].slice(0, Math.floor(sampleUserDatum.score / 50)),
+    });
+  }
+}
