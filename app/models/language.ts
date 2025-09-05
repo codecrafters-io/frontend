@@ -164,9 +164,10 @@ export default class LanguageModel extends Model {
     ].join('');
   }
 
-  get stagesCount() {
+  get liveOrBetaStagesCount() {
     return this.store
       .peekAll('course')
+      .filter((course) => course.releaseStatusIsLive || course.releaseStatusIsBeta)
       .filter((course) => course.betaOrLiveLanguages.includes(this))
       .map((course) => course.stages.length)
       .reduce((a, b) => a + b, 0);

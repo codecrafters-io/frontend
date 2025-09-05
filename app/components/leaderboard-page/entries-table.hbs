@@ -3,23 +3,7 @@
     <div>
       <table class="min-w-full bg-white">
         <thead>
-          <tr>
-            <LeaderboardPage::EntriesTable::HeaderRowCell @title="Rank" @alignment="left" />
-            <LeaderboardPage::EntriesTable::HeaderRowCell @title="User" @alignment="left" />
-
-            <LeaderboardPage::EntriesTable::HeaderRowCell
-              @title="Stages Completed"
-              @alignment="right"
-              class="hidden md:table-cell"
-              @explanationMarkdown={{this.explanationMarkdownForStagesCompleted}}
-            />
-
-            <LeaderboardPage::EntriesTable::HeaderRowCell
-              @title="Score"
-              @alignment="right"
-              @explanationMarkdown={{this.explanationMarkdownForScore}}
-            />
-          </tr>
+          <LeaderboardPage::EntriesTable::HeaderRow @language={{this.language}} />
         </thead>
         <tbody>
           {{#each this.sortedTopEntries as |entry index|}}
