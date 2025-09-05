@@ -7,6 +7,7 @@ import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
+import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   language: LanguageModel;
@@ -15,13 +16,15 @@ export type ModelType = {
 };
 
 export default class LeaderboardRoute extends BaseRoute {
-  allowsAnonymousAccess = true;
-
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
   activate(): void {
     scrollToTop();
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
   }
 
   async model(params: { language_slug: string }): Promise<ModelType> {
