@@ -27,7 +27,7 @@
         {{/if}}
       {{/if}}
 
-      <TrackPage::Header::Statistic @description="{{format-number @language.stagesCount}} exercises" @icon="terminal" class="shrink-0" />
+      <TrackPage::Header::Statistic @description="{{format-number @language.liveOrBetaStagesCount}} exercises" @icon="terminal" class="shrink-0" />
     </div>
 
     {{#if (has-block "cta")}}

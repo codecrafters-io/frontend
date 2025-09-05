@@ -13,6 +13,6 @@ export default class LeaderboardController extends Controller {
     return this.store
       .peekAll('language')
       .sortBy('sortPositionForTrack')
-      .filter((language) => language.stagesCount > 0);
+      .filter((language) => language.liveOrBetaStagesCount > 0);
   }
 }
