@@ -3,7 +3,7 @@
     <div>
       <table class="min-w-full bg-white">
         <thead>
-          <LeaderboardPage::EntriesTable::HeaderRow @language={{this.language}} />
+          <LeaderboardPage::EntriesTable::HeaderRow @language={{@language}} />
         </thead>
         <tbody>
           {{#each this.sortedTopEntries as |entry index|}}
