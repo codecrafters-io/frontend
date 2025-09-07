@@ -166,7 +166,7 @@
     "ember-window-mock": "github:codecrafters-io/ember-window-mock#renovate/ember-source-5.x",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.5",
-    "eslint-plugin-ember": "^12.7.3",
+    "eslint-plugin-ember": "VasylMarchuk/eslint-plugin-ember#ignore-mirage-findby-calls",
     "eslint-plugin-ember-template-lint": "^0.15.0",
     "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-n": "^17.10.3",
