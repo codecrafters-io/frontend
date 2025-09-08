@@ -152,6 +152,15 @@ export default class LanguageModel extends Model {
     return this.slug === 'go';
   }
 
+  get liveOrBetaStagesCount() {
+    return this.store
+      .peekAll('course')
+      .filter((course) => course.releaseStatusIsLive || course.releaseStatusIsBeta)
+      .filter((course) => course.betaOrLiveLanguages.includes(this))
+      .map((course) => course.stages.length)
+      .reduce((a, b) => a + b, 0);
+  }
+
   get sortPositionForTrack() {
     return [
       // Popular tracks, sorted by usage
@@ -162,14 +171,6 @@ export default class LanguageModel extends Model {
       }[this.slug] || 9,
       this.name,
     ].join('');
-  }
-
-  get stagesCount() {
-    return this.store
-      .peekAll('course')
-      .filter((course) => course.betaOrLiveLanguages.includes(this))
-      .map((course) => course.stages.length)
-      .reduce((a, b) => a + b, 0);
   }
 
   get tealLogoUrl() {

@@ -21,7 +21,7 @@ export default class LeaderboardPageHeader extends Component<Signature> {
     return this.store
       .peekAll('language')
       .sortBy('sortPositionForTrack')
-      .filter((language) => language.stagesCount > 0);
+      .filter((language) => language.liveOrBetaStagesCount > 0);
   }
 
   @action

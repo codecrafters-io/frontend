@@ -28,11 +28,11 @@
   {{! Footer }}
   <div class="flex items-center justify-between">
     {{#if this.currentUserHasStartedTrack}}
-      <TracksPage::TrackCard::ProgressBar @completedStagesCount={{this.completedStagesCount}} @stagesCount={{this.stagesCount}} />
+      <TracksPage::TrackCard::ProgressBar @completedStagesCount={{this.completedStagesCount}} @stagesCount={{@language.liveOrBetaStagesCount}} />
     {{else}}
       <div class="flex items-center">
         {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
-        <span class="text-xs text-gray-500">{{this.stagesCount}} stages</span>
+        <span class="text-xs text-gray-500">{{@language.liveOrBetaStagesCount}} stages</span>
       </div>
     {{/if}}
 

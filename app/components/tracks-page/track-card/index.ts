@@ -39,16 +39,6 @@ export default class TrackCard extends Component<Signature> {
     }
   }
 
-  get stagesCount() {
-    return this.store
-      .peekAll('course')
-      .rejectBy('releaseStatusIsAlpha')
-      .rejectBy('releaseStatusIsDeprecated')
-      .filter((course) => course.betaOrLiveLanguages.includes(this.args.language))
-      .mapBy('stages.length')
-      .reduce((a, b) => a + b, 0);
-  }
-
   @action
   async navigateToTrack() {
     await this.router.transitionTo('track', this.args.language.slug);

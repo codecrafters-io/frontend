@@ -32,18 +32,6 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
     }
   }
 
-  get explanationMarkdownForScore() {
-    return `
-The highest possible score for this track is ${this.args.language.leaderboard!.highestPossibleScore}.
-
-Harder stages have higher scores assigned to them.
-`.trim();
-  }
-
-  get explanationMarkdownForStagesCompleted() {
-    return `There are ${this.args.language.stagesCount} stages available in this track.`;
-  }
-
   get hasEntries() {
     return this.args.topEntries.length > 0;
   }
