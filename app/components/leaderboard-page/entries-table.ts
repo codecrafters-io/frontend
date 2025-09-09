@@ -68,31 +68,37 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
   }
 
   loadUserSpecificResourcesTask = task({ keepLatest: true }, async (): Promise<void> => {
-    if (!this.userIsInTopLeaderboardEntries) {
-      this.surroundingEntries = (await this.store.query('leaderboard-entry', {
-        include: 'leaderboard,user',
-        leaderboard_id: this.args.language.leaderboard!.id,
-        user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
-        filter_type: 'around_me',
-      })) as unknown as LeaderboardEntryModel[];
+    if (this.userIsInTopLeaderboardEntries) {
+      return;
+    }
 
-      const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
-        include: 'user',
-        leaderboard_id: this.args.language.leaderboard!.id,
-        user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
-      })) as unknown as LeaderboardRankCalculationModel[];
+    this.surroundingEntries = (await this.store.query('leaderboard-entry', {
+      include: 'leaderboard,user',
+      leaderboard_id: this.args.language.leaderboard!.id,
+      user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
+      filter_type: 'around_me',
+    })) as unknown as LeaderboardEntryModel[];
 
-      this.userRankCalculation = userRankCalculations[0] || null;
+    if (this.surroundingEntries.length === 0) {
+      return;
+    }
 
-      // TODO: Also look at "outdated" user rank calculations?
-      if (!this.userRankCalculation) {
-        this.userRankCalculation = await this.store
-          .createRecord('leaderboard-rank-calculation', {
-            leaderboard: this.args.language.leaderboard!,
-            user: this.authenticator.currentUser!,
-          })
-          .save();
-      }
+    const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
+      include: 'user',
+      leaderboard_id: this.args.language.leaderboard!.id,
+      user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
+    })) as unknown as LeaderboardRankCalculationModel[];
+
+    this.userRankCalculation = userRankCalculations[0] || null;
+
+    // TODO: Also look at "outdated" user rank calculations?
+    if (!this.userRankCalculation) {
+      this.userRankCalculation = await this.store
+        .createRecord('leaderboard-rank-calculation', {
+          leaderboard: this.args.language.leaderboard!,
+          user: this.authenticator.currentUser!,
+        })
+        .save();
     }
   });
 }
