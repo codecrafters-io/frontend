@@ -126,7 +126,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     );
   });
 
-  test('can delete repository after mouse down', async function (assert) {
+  test('can delete repository via mouse down', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
@@ -153,7 +153,6 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.mousedown();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    // assert progressIndicator.width is greater than 0
     await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
@@ -165,7 +164,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
   });
 
-  test('can delete repository after touch start', async function (assert) {
+  test('can delete repository via touch start', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
@@ -192,7 +191,6 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.touchstart();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    // assert progressIndicator.width is greater than 0
     await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, 'progress indicator should have a width');
 

@@ -28,7 +28,7 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
 
   @action
   startProgress(event: Event) {
-    event.preventDefault(); // Prevent menu from popping up, which triggers touchup
+    event.preventDefault(); // Prevent menu from popping up, which triggers touchend
     this.stopProgress();
 
     this.shouldShowProgressBar = true;

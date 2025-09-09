@@ -37,7 +37,6 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    // assert progressIndicator.width is greater than 0
     await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
@@ -76,7 +75,6 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    // assert progressIndicator.width is greater than 0
     await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
