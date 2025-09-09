@@ -152,9 +152,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.mousedown();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
-
     await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
-    assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
     await waitUntil(() => currentURL() === '/courses/dummy/introduction?repo=new&track=python');
     await settled(); // Delete request triggers after redirect
@@ -190,9 +188,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await coursePage.deleteRepositoryModal.deleteRepositoryButton.touchstart();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
-
     await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
-    assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
     await waitUntil(() => currentURL() === '/courses/dummy/introduction?repo=new&track=python');
     await settled(); // Delete request triggers after redirect

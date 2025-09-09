@@ -36,9 +36,7 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
 
     await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
-
     await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
-    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
     await waitUntil(() => currentURL() === '/concepts');
     await settled(); // Delete request triggers after redirect
@@ -74,9 +72,7 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
 
     await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
-
     await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
-    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
     await waitUntil(() => currentURL() === '/concepts');
     await settled(); // Delete request triggers after redirect
