@@ -1,23 +1,27 @@
 <div ...attributes>
-  {{#if this.hasEntries}}
+  {{#if (or this.hasEntries @isLoadingEntries)}}
     <div>
       <table class="min-w-full bg-white">
         <thead>
           <LeaderboardPage::EntriesTable::HeaderRow @language={{@language}} />
         </thead>
         <tbody>
-          {{#each this.sortedTopEntries as |entry index|}}
-            <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{concat "#" (add index 1)}} />
-          {{/each}}
-
-          {{#if this.loadUserSpecificResourcesTask.isRunning}}
-            <LeaderboardPage::EntriesTable::FillerRow @text="... loading ..." />
-          {{else if this.shouldShowSurroundingEntries}}
-            <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
-
-            {{#each this.sortedSurroundingEntriesWithRanks as |entryWithRank|}}
-              <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
+          {{#if @isLoadingEntries}}
+            {{#each (range 1 11) as |rank|}}
+              <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
             {{/each}}
+          {{else}}
+            {{#each this.sortedTopEntries as |entry index|}}
+              <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{concat "#" (add index 1)}} />
+            {{/each}}
+
+            {{#if this.shouldShowSurroundingEntries}}
+              <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
+
+              {{#each this.sortedSurroundingEntriesWithRanks as |entryWithRank|}}
+                <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
+              {{/each}}
+            {{/if}}
           {{/if}}
         </tbody>
       </table>

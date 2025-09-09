@@ -3,16 +3,12 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
-import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   language: LanguageModel;
-  leaderboard: LeaderboardModel;
-  topLeaderboardEntries: LeaderboardEntryModel[];
 };
 
 export default class LeaderboardRoute extends BaseRoute {
@@ -39,16 +35,8 @@ export default class LeaderboardRoute extends BaseRoute {
 
     const language = languages.find((language) => language.slug === params.language_slug)!;
 
-    const topLeaderboardEntries = (await this.store.query('leaderboard-entry', {
-      include: 'leaderboard,user',
-      leaderboard_id: language.leaderboard!.id,
-      filter_type: 'top',
-    })) as unknown as LeaderboardEntryModel[];
-
     return {
       language: language,
-      leaderboard: language.leaderboard!,
-      topLeaderboardEntries: topLeaderboardEntries,
     };
   }
 }
