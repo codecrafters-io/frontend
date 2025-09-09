@@ -58,7 +58,7 @@ export default class LeaderboardController extends Controller {
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];
 
-    if (!this.authenticator.isAuthenticated) {
+    if (!this.authenticator.isAuthenticated || this.userIsInTopLeaderboardEntries) {
       return;
     }
 
