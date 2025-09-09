@@ -7,7 +7,7 @@
         </thead>
         <tbody>
           {{#if @isLoadingEntries}}
-            {{#each (range 1 11) as |rank|}}
+            {{#each (range 1 16) as |rank|}}
               <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
             {{/each}}
           {{else}}
