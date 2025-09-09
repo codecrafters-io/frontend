@@ -1,15 +1,17 @@
 <DangerButton
   class="relative border-0 overflow-hidden"
-  {{on "mouseenter" this.handleMouseEnter}}
-  {{on "mouseleave" this.handleMouseLeave}}
   {{! template-lint-disable no-pointer-down-event-binding }}
   {{on "mousedown" this.startProgress}}
+  {{on "mouseleave" this.stopProgress}}
   {{on "mouseup" this.stopProgress}}
+  {{on "touchstart" this.startProgress}}
+  {{on "touchcancel" this.stopProgress}}
+  {{on "touchend" this.stopProgress}}
   ...attributes
 >
   {{yield}}
 
-  {{#if this.isHovered}}
+  {{#if this.shouldShowProgressBar}}
     <div class="absolute inset-0 bg-red-100 opacity-50" style={{this.progressBarWidthStyle}} data-test-progress-indicator></div>
   {{/if}}
 </DangerButton>
