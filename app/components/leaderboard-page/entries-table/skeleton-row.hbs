@@ -1,0 +1,45 @@
+<tr class="hover:bg-gray-50 group/table-row" data-test-leaderboard-entry-skeleton-row>
+  <LeaderboardPage::EntriesTable::RowCell class="text-right w-[8%]">
+    <span class="text-xs font-medium text-gray-400">
+      {{@rankText}}
+    </span>
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell>
+    <div class="flex items-center justify-between gap-x-6">
+      <div class="flex items-center gap-1.5">
+        <div class="flex-shrink-0 flex h-6 w-6">
+          <LoadingSkeleton @isCircle={{true}} />
+        </div>
+        <div class="text-xs font-mono max-w-[12ch] sm:max-w-[16ch] truncate">
+          <LoadingSkeleton @width={{60}} />
+        </div>
+      </div>
+      <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 opacity-25 group-hover/table-row:opacity-100">
+        {{#each (repeat 6)}}
+          <div class="flex h-4 w-4">
+            <LoadingSkeleton @isCircle={{true}} />
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell class="hidden md:table-cell">
+    <div class="flex items-center justify-end gap-2">
+      <LoadingSkeleton @width={{20}} />
+      <span class="text-gray-400 text-xs font-mono">
+        stages
+      </span>
+    </div>
+  </LeaderboardPage::EntriesTable::RowCell>
+
+  <LeaderboardPage::EntriesTable::RowCell>
+    <div class="flex items-center justify-end gap-2">
+      <LoadingSkeleton @width={{20}} />
+      <span class="text-gray-400 text-xs font-mono">
+        pts
+      </span>
+    </div>
+  </LeaderboardPage::EntriesTable::RowCell>
+</tr>

@@ -9,6 +9,21 @@ export default function (server) {
 
   server.post('/leaderboard-rank-calculations', function (schema) {
     const attrs = this.normalizedRequestAttrs();
+    const leaderboard = schema.leaderboards.find(attrs.leaderboardId);
+    const user = schema.users.find(attrs.userId);
+
+    if (!leaderboard) {
+      throw new Error('Leaderboard not found');
+    }
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (!leaderboard.entries.models.find((entry) => entry.user.id === user.id)) {
+      throw new Error('User does not have a leaderboard entry');
+    }
+
     attrs.calculatedAt = new Date();
     attrs.rank = 37812;
 

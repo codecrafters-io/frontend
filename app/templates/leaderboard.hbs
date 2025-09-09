@@ -1,4 +1,8 @@
-<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10 pb-32 md:pb-32">
+<div
+  class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10 pb-32 md:pb-32"
+  {{did-insert this.loadEntriesTask.perform}}
+  {{did-update this.loadEntriesTask.perform this.leaderboard.id}}
+>
   <LeaderboardPage::Header @selectedLanguage={{@model.language}} class="mb-6" />
 
   {{! <RoadmapInfoAlert @heading="What are challenges?" class="hidden md:block mb-6">
@@ -6,6 +10,13 @@
   </RoadmapInfoAlert> }}
 
   <div class="flex items-start gap-8">
-    <LeaderboardPage::EntriesTable @language={{@model.language}} @topEntries={{@model.topLeaderboardEntries}} class="flex-grow" />
+    <LeaderboardPage::EntriesTable
+      @isLoadingEntries={{this.isLoadingEntries}}
+      @language={{@model.language}}
+      @surroundingEntries={{this.surroundingEntries}}
+      @topEntries={{this.topEntries}}
+      @userRankCalculation={{this.userRankCalculation}}
+      class="flex-grow"
+    />
   </div>
 </div>

@@ -39,7 +39,7 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
     await percySnapshot('Leaderboard Page - Anonymous User');
   });
 
-  test('can view as authenticated user', async function (assert) {
+  test('can view as authenticated user with leaderboard entry', async function (assert) {
     const currentUser = signInAsStaff(this.owner, this.server);
 
     const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
@@ -79,6 +79,38 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
 
     assert.strictEqual(leaderboardPage.entriesTable.entries.length, 17, '17 entries should be shown');
     await percySnapshot('Leaderboard Page');
+  });
+
+  test('can view as authenticated user without leaderboard entry', async function (assert) {
+    signInAsStaff(this.owner, this.server);
+
+    const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
+    const leaderboard = language.leaderboard;
+
+    const sampleUserData = [
+      { username: 'Gufran', score: 6750 },
+      { username: 'torvalds', score: 5250 },
+      { username: 'addyosmani', score: 4250 },
+      { username: 'addyosmaniveryverylongusername-with-lots-of-characters', score: 3750 },
+      { username: 'gaearon', score: 3250 },
+      { username: 'yyx990803', score: 2750 },
+      { username: 'getify', score: 2250 },
+      { username: 'rauchg', score: 2200 },
+      { username: 'addyosmani', score: 2125 },
+      { username: 'defunkt', score: 2090 },
+    ];
+
+    for (const sampleUserDatum of sampleUserData) {
+      sampleUserDatum.leaderboard = leaderboard;
+    }
+
+    createLeaderboardEntriesFromSampleData(this.server, sampleUserData);
+
+    await leaderboardPage.visit({ language_slug: 'rust' });
+    assert.strictEqual(currentURL(), '/leaderboards/rust');
+
+    assert.strictEqual(leaderboardPage.entriesTable.entries.length, 10, '10 entries should be shown');
+    await percySnapshot('Leaderboard Page - No User Entry');
   });
 
   test('can switch languages', async function (assert) {
