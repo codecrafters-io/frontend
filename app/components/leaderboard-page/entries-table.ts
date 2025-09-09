@@ -5,8 +5,6 @@ import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;

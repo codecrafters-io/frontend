@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLTableRowElement;
+
+  Args: {
+    rankText: string;
+  };
 }
 
 export default class LeaderboardPageEntriesTableSkeletonRow extends Component<Signature> {}
