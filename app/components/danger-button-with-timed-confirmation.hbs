@@ -2,11 +2,11 @@
   class="relative border-0 overflow-hidden"
   {{! template-lint-disable no-pointer-down-event-binding }}
   {{on "mousedown" this.startProgress}}
-  {{on "mouseleave" this.stopProgress}}
-  {{on "mouseup" this.stopProgress}}
+  {{on "mouseleave" this.resetProgress}}
+  {{on "mouseup" this.resetProgress}}
   {{on "touchstart" this.startProgress}}
-  {{on "touchcancel" this.stopProgress}}
-  {{on "touchend" this.stopProgress}}
+  {{on "touchcancel" this.resetProgress}}
+  {{on "touchend" this.resetProgress}}
   ...attributes
 >
   {{yield}}

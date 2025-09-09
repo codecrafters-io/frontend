@@ -27,9 +27,16 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
   }
 
   @action
+  resetProgress() {
+    this.shouldShowProgressBar = false;
+    this.progressWidth = 0;
+    clearInterval(this.progressInterval);
+  }
+
+  @action
   startProgress(event: Event) {
     event.preventDefault(); // Prevent menu from popping up, which triggers touchend
-    this.stopProgress();
+    this.resetProgress();
 
     this.shouldShowProgressBar = true;
     const intervalDelay = config.environment === 'test' ? 1 : 30;
@@ -44,13 +51,6 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
         clearInterval(this.progressInterval);
       }
     }, intervalDelay);
-  }
-
-  @action
-  stopProgress() {
-    this.shouldShowProgressBar = false;
-    this.progressWidth = 0;
-    clearInterval(this.progressInterval);
   }
 }
 
