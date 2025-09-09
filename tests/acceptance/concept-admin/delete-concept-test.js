@@ -34,13 +34,13 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
     await basicDetailsPage.deleteMyConceptButton.hover();
     assertTooltipNotRendered(assert, 'tooltip is not rendered on hover');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.leave();
-    assert.notOk(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+    // assert progressIndicator.width is greater than 0
+    await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
+    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.press();
     await waitUntil(() => currentURL() === '/concepts');
     await settled(); // Delete request triggers after redirect
     assert.strictEqual(conceptsPage.conceptCards.length, 0, 'Concept is deleted');
@@ -73,13 +73,13 @@ module('Acceptance | concept-admin | delete-concept-test', function (hooks) {
 
     await percySnapshot('Concept Admin - Delete Concept Modal');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.hover();
+    await basicDetailsPage.deleteConceptModal.deleteConceptButton.mousedown();
     assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should be visible');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.leave();
-    assert.notOk(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+    // assert progressIndicator.width is greater than 0
+    await waitUntil(() => basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, { timeout: 10 });
+    assert.ok(basicDetailsPage.deleteConceptModal.deleteConceptButton.progressIndicator.width > 0, 'progress indicator should have a width');
 
-    await basicDetailsPage.deleteConceptModal.deleteConceptButton.press();
     await waitUntil(() => currentURL() === '/concepts');
     await settled(); // Delete request triggers after redirect
     assert.strictEqual(conceptsPage.conceptCards.length, 0, 'Concept is deleted');
