@@ -10,7 +10,7 @@ export default {
 
   feedbackDropdown: FeedbackDropdown,
 
-  hasLink: function (linkText) {
+  hasLink: function (linkText: string) {
     return !!this.links.toArray().find((link) => link.text === linkText);
   },
 

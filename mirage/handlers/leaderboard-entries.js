@@ -1,3 +1,5 @@
+import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
+
 export default function (server) {
   server.get('/leaderboard-entries', function (schema, request) {
     if (!request.queryParams.leaderboard_id) {
@@ -29,5 +31,9 @@ export default function (server) {
     } else {
       throw new Error(`Invalid filter type: ${request.queryParams.filter_type}`);
     }
+  });
+
+  server.get('/leaderboard-entries/for-current-user', function (schema) {
+    return schema.leaderboardEntries.all().filter((leaderboardEntry) => leaderboardEntry.user.id === CurrentMirageUser.currentUserId);
   });
 }

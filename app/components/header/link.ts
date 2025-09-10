@@ -9,6 +9,7 @@ interface Signature {
     text: string;
     type: 'link' | 'route';
     route: string;
+    routeParams?: string[];
   };
 }
 

@@ -44,7 +44,7 @@
           {{did-update this.handleDidUpdateCurrentRouteName this.router.currentRouteName}}
         >
           {{#each this.links as |link|}}
-            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} class="px-2" />
+            <Header::Link @route={{link.route}} @text={{link.text}} @type={{link.type}} @routeParams={{link.routeParams}} class="px-2" />
           {{/each}}
 
           {{! Floating green bar }}

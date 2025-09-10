@@ -12,9 +12,15 @@ module('Acceptance | header-test', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('header should show sign-in & pricing link if user is unauthenticated', async function (assert) {
+  hooks.beforeEach(function () {
     testScenario(this.server);
 
+    for (const language of this.server.schema.languages.all().models) {
+      language.update({ leaderboard: this.server.create('leaderboard', { highestPossibleScore: 237 }) });
+    }
+  });
+
+  test('header should show sign-in & pricing link if user is unauthenticated', async function (assert) {
     await catalogPage.visit();
 
     assert.true(catalogPage.header.signInButton.isVisible, 'expect sign-in button to be visible');
@@ -24,8 +30,18 @@ module('Acceptance | header-test', function (hooks) {
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
 
+  test('header should show leaderboard link if user is authenticated and has feature flag enabled', async function (assert) {
+    const user = signIn(this.owner, this.server);
+    user.update('featureFlags', { 'should-see-leaderboard': 'true' });
+
+    await catalogPage.visit();
+    assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
+
+    await catalogPage.header.clickOnHeaderLink('Leaderboard');
+    assert.strictEqual(currentURL(), '/leaderboards/rust', 'expect to be redirected to rust leaderboard page by default');
+  });
+
   test('header should show upgrade button if user does not have an active subscription', async function (assert) {
-    testScenario(this.server);
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
@@ -37,7 +53,6 @@ module('Acceptance | header-test', function (hooks) {
   });
 
   test('header should show member badge if user has an active subscription', async function (assert) {
-    testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
@@ -52,7 +67,6 @@ module('Acceptance | header-test', function (hooks) {
   });
 
   test('member badge redirects to /settings/billing', async function (assert) {
-    testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
@@ -62,7 +76,6 @@ module('Acceptance | header-test', function (hooks) {
   });
 
   test('header should show campus badge if user has an institution membership grant', async function (assert) {
-    testScenario(this.server);
     createInstitution(this.server, 'nus');
     signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
 
@@ -78,7 +91,6 @@ module('Acceptance | header-test', function (hooks) {
   });
 
   test('campus badge redirects to /settings/billing', async function (assert) {
-    testScenario(this.server);
     createInstitution(this.server, 'nus');
     signInAsInstitutionMembershipGrantRecipient(this.owner, this.server);
 
