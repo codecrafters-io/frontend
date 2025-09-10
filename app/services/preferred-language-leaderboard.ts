@@ -71,9 +71,9 @@ export default class PreferredLanguageLeaderboardService extends Service {
   async refresh(): Promise<void> {
     await this.authenticator.authenticate();
 
-    const userLeaderboardEntries = (await this.store
-      .createRecord('leaderboard-entry')
-      .fetchForCurrentUser({ include: 'leaderboard,leaderboard.language,user' })) as unknown as LeaderboardEntryModel[];
+    const userLeaderboardEntries = (await this.store.createRecord('leaderboard-entry').fetchForCurrentUser({
+      include: 'leaderboard,leaderboard.language,user',
+    })) as unknown as LeaderboardEntryModel[];
 
     this.preferredLanguageSlugs = userLeaderboardEntries
       .filter((entry) => entry.score > 0)

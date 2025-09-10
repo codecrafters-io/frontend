@@ -1,7 +1,7 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, waitUntil } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -51,10 +51,14 @@ module('Acceptance | header-test', function (hooks) {
       leaderboard: python.leaderboard,
       user: user,
       score: 100,
+      relatedLanguageSlugs: [],
+      relatedCourseSlugs: [],
     });
 
     await catalogPage.visit();
     assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
+
+    await waitUntil(() => catalogPage.header.linkHrefFor('Leaderboard') === '/leaderboards/python');
 
     await catalogPage.header.clickOnHeaderLink('Leaderboard');
     assert.strictEqual(currentURL(), '/leaderboards/python', 'expect to be redirected to python leaderboard page');
