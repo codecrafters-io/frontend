@@ -226,9 +226,26 @@ export default class UserModel extends Model {
 
   declare fetchCurrent: (this: Model, payload: unknown) => Promise<UserModel | null>;
   declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel | null>;
+  declare fetchTopLanguageLeaderboardSlugs: (this: Model, payload: unknown) => Promise<string[]>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
   declare syncUsernameFromGitHub: (this: Model, payload: unknown) => Promise<void>;
 }
+
+UserModel.prototype.fetchCurrent = collectionAction({
+  path: 'current',
+  type: 'get',
+  urlType: 'findRecord',
+
+  after(response) {
+    if (response.data) {
+      this.store.pushPayload(response);
+
+      return this.store.peekRecord('user', response.data.id);
+    } else {
+      return null;
+    }
+  },
+});
 
 UserModel.prototype.fetchNextInvoicePreview = memberAction({
   path: 'next-invoice-preview',
@@ -245,20 +262,9 @@ UserModel.prototype.fetchNextInvoicePreview = memberAction({
   },
 });
 
-UserModel.prototype.fetchCurrent = collectionAction({
-  path: 'current',
+UserModel.prototype.fetchTopLanguageLeaderboardSlugs = memberAction({
+  path: 'top-language-leaderboard-slugs',
   type: 'get',
-  urlType: 'findRecord',
-
-  after(response) {
-    if (response.data) {
-      this.store.pushPayload(response);
-
-      return this.store.peekRecord('user', response.data.id);
-    } else {
-      return null;
-    }
-  },
 });
 
 UserModel.prototype.syncFeatureFlags = memberAction({

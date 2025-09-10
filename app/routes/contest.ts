@@ -111,12 +111,15 @@ export default class ContestRoute extends BaseRoute {
       }
     }
 
-    const topLeaderboardEntries = await this.store.findAll('leaderboard-entry', {
+    // TODO[Vasyl]: This has an issue where it can end up picking _any_ leaderboard entry and not just the top ones. We
+    //              don't happen to render contest leaderboards elsewhere so it isn't a problem for now. As a pattern this is something
+    //              I'd like to figure out though. Maybe we use `query` instead of the adapterOptions strategy? Or maybe more explicit caching?
+    const topLeaderboardEntries = (await this.store.findAll('leaderboard-entry', {
       adapterOptions: {
         leaderboard_id: contest.leaderboard.id,
       },
       include: 'user,leaderboard',
-    });
+    })) as unknown as LeaderboardEntryModel[];
 
     const languages = await this.store.findAll('language');
 

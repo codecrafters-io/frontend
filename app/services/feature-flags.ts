@@ -18,6 +18,10 @@ export default class FeatureFlagsService extends Service {
     return this.authenticator.currentUser;
   }
 
+  get shouldSeeLeaderboard(): boolean {
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('should-see-leaderboard') === 'true';
+  }
+
   getFeatureFlagValue(flagName: string): string | null | undefined {
     const value = this.currentUser?.featureFlags?.[flagName];
 

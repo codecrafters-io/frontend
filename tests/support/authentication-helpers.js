@@ -1,3 +1,5 @@
+import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
+
 export function signIn(owner, server, user) {
   user = user || server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
 
@@ -9,6 +11,8 @@ export function signIn(owner, server, user) {
 
   const sessionTokenStorageService = owner.lookup('service:session-token-storage');
   sessionTokenStorageService.setToken(session.token);
+
+  CurrentMirageUser.currentUserId = user.id;
 
   return user;
 }

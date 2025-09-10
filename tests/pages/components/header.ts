@@ -1,23 +1,28 @@
-import { clickOnText, collection } from 'ember-cli-page-object';
+import { attribute, clickOnText, collection } from 'ember-cli-page-object';
 import BillingStatusBadge from 'codecrafters-frontend/tests/pages/components/billing-status-badge';
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 
 export default {
   campusBadge: BillingStatusBadge.campusBadge,
   clickOnHeaderLink: clickOnText('[data-test-header-link]'),
-
   discountTimerBadge: BillingStatusBadge.discountTimerBadge,
-
   feedbackDropdown: FeedbackDropdown,
 
-  hasLink: function (linkText) {
+  hasLink: function (linkText: string) {
     return !!this.links.toArray().find((link) => link.text === linkText);
   },
 
   freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
-  links: collection('[data-test-header-link]'),
-  memberBadge: BillingStatusBadge.memberBadge,
 
+  links: collection('[data-test-header-link]', {
+    href: attribute('href'),
+  }),
+
+  linkHrefFor: function (linkText: string) {
+    return this.links.toArray().find((link) => link.text === linkText)!.href;
+  },
+
+  memberBadge: BillingStatusBadge.memberBadge,
   scope: '[data-test-header]',
 
   signInButton: {
@@ -25,6 +30,5 @@ export default {
   },
 
   upgradeButton: BillingStatusBadge.upgradeButton,
-
   vipBadge: BillingStatusBadge.vipBadge,
 };
