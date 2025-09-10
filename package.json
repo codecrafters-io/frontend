@@ -103,7 +103,7 @@
     "@types/seedrandom": "^3.0.8",
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.172.0",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
+    "@typescript-eslint/eslint-plugin": "^8.43.0",
     "@typescript-eslint/parser": "^8.29.1",
     "@uiw/codemirror-theme-github": "^4.25.1",
     "autoprefixer": "^10.4.21",
