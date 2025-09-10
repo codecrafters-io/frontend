@@ -4,6 +4,7 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import Mustache from 'mustache';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -19,6 +20,7 @@ interface Signature {
 }
 
 export default class YourTaskCard extends Component<Signature> {
+  @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @tracked manualFeedbackFlowIsActive = false;
 

@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import * as Sentry from '@sentry/ember';
 import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
@@ -19,6 +20,7 @@ interface Signature {
 }
 
 export default class CreateRepositoryCard extends Component<Signature> {
+  @service declare coursePageState: CoursePageStateService;
   @service declare router: RouterService;
   @tracked expandedSectionIndex: number | null = null;
   @tracked repositoryCreationErrorMessage: string | undefined;

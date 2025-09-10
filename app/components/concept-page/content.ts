@@ -4,6 +4,7 @@ import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
 
 interface Signature {
@@ -16,6 +17,7 @@ interface Signature {
 }
 
 export default class Content extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
   @service declare confetti: ConfettiService;
   get currentProgressPercentage() {
     return this.args.latestConceptEngagement.currentProgressPercentage;
