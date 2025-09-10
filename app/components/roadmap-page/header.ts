@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
 
@@ -8,7 +7,6 @@ interface Signature {
 }
 
 export default class Header extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
   get activeTab() {

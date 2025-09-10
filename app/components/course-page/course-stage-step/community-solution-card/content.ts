@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { type FileComparison, IsUnchangedFileComparison, type UnchangedFileComparison } from 'codecrafters-frontend/utils/file-comparison';
 import { tracked } from '@glimmer/tracking';
@@ -25,8 +24,6 @@ interface Signature {
 export default class CommunitySolutionCardContent extends Component<Signature> {
   @tracked expandedUnchangedFilePaths: string[] = [];
   @service declare authenticator: AuthenticatorService;
-  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-
   get changedFilesForRender() {
     if (this.args.diffSource === 'highlighted-files') {
       return this.args.solution.changedFilesFromHighlightedFiles;

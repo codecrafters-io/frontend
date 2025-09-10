@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
@@ -21,8 +20,6 @@ interface Signature {
 
 export default class CreateRepositoryCard extends Component<Signature> {
   @service declare router: RouterService;
-  @service declare coursePageState: CoursePageStateService;
-
   @tracked expandedSectionIndex: number | null = null;
   @tracked repositoryCreationErrorMessage: string | undefined;
 

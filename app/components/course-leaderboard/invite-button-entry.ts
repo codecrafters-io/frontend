@@ -1,6 +1,4 @@
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -11,9 +9,7 @@ export interface Signature {
   };
 }
 
-export default class CourseLeaderboardInviteButtonEntry extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
-}
+export default class CourseLeaderboardInviteButtonEntry extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

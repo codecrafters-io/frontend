@@ -7,7 +7,6 @@ import window from 'ember-window-mock';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolution from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CommunitySolutionExportModel from 'codecrafters-frontend/models/community-solution-export';
-import type Store from '@ember-data/store';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,8 +20,6 @@ interface Signature {
 
 export default class GithubFileActionsComponent extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
-
   @tracked isCreatingExport = false;
 
   get shouldShowPublishToGithubButton(): boolean {

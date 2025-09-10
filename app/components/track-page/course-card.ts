@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import Store from '@ember-data/store';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
@@ -22,8 +21,6 @@ interface Signature {
 export default class CourseCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
-  @service declare store: Store;
-
   get completedStages(): CourseStageModel[] {
     if (this.args.activeRepository) {
       return this.args.activeRepository.completedStages;

@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
-import RouterService from '@ember/routing/router-service';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type UserModel from 'codecrafters-frontend/models/user';
-import { inject as service } from '@ember/service';
 
 interface UserLabelSignature {
   Element: HTMLSpanElement;
@@ -19,8 +17,6 @@ type Label = {
 };
 
 export default class UserLabel extends Component<UserLabelSignature> {
-  @service declare router: RouterService;
-
   get hasCourseContext(): boolean {
     return !!this.args.context;
   }

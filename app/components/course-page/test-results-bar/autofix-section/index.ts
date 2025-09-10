@@ -1,5 +1,3 @@
-import type Store from '@ember-data/store';
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -18,7 +16,6 @@ interface Signature {
 }
 
 export default class AutofixSection extends Component<Signature> {
-  @service declare store: Store;
   @tracked autofixCreationError: string | null = null;
 
   get activeCourseStage() {

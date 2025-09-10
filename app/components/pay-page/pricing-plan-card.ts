@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { service } from '@ember/service';
 
 export interface FeatureDescription {
   text: string;
@@ -21,9 +19,7 @@ interface Signature {
   };
 }
 
-export default class PricingPlanCard extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
-}
+export default class PricingPlanCard extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

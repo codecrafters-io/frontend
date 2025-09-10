@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
-import type RouterService from '@ember/routing/router-service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/institution-membership-grant';
@@ -17,9 +15,6 @@ interface Signature {
 
 export default class BillingStatusDisplay extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare featureFlags: FeatureFlagsService;
-  @service declare router: RouterService;
-
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }

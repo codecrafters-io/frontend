@@ -7,10 +7,7 @@ import { next } from '@ember/runloop';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type ContainerWidthService from 'codecrafters-frontend/services/container-width';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
-import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type { SafeString } from '@ember/template/-private/handlebars';
 
@@ -22,10 +19,7 @@ export default class Header extends Component<Signature> {
   logoImage = logoImage;
 
   @service declare authenticator: AuthenticatorService;
-  @service declare containerWidth: ContainerWidthService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
-  @service declare versionTracker: VersionTrackerService;
 
   @tracked mobileMenuIsExpanded = false;
   @tracked floatingBarStyle: SafeString = htmlSafe('left: 0px; width: 0px; opacity: 0;');

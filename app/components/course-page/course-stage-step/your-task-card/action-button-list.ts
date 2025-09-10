@@ -4,7 +4,6 @@ import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
 
 interface Signature {
@@ -17,7 +16,6 @@ interface Signature {
 }
 
 export default class ActionButtonList extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
 
   transition = fade;

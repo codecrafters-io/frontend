@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
-import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -16,8 +15,6 @@ interface Signature {
 
 export default class CourseIdeaCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
-
   @tracked isVotingOrUnvoting = false;
 
   get userHasVoted() {

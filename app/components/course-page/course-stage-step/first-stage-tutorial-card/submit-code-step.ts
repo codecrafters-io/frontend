@@ -4,7 +4,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+
 interface Signature {
   Element: HTMLDivElement;
 
@@ -17,8 +17,6 @@ interface Signature {
 
 export default class SubmitCodeStep extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
-
   @tracked isCommitModalOpen: boolean = false;
   @tracked isPushModalOpen: boolean = false;
 

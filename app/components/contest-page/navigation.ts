@@ -1,7 +1,5 @@
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
-import DateService from 'codecrafters-frontend/services/date';
-import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,8 +11,6 @@ interface Signature {
 }
 
 export default class ContestPageNavigation extends Component<Signature> {
-  @service declare date: DateService;
-
   get currentContestIndex(): number {
     return this.sortedNavigableContests.indexOf(this.args.contest);
   }

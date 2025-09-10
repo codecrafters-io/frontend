@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
-import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -19,8 +18,6 @@ export default class DeleteRepositoryModal extends Component<Signature> {
   @tracked isDeleting: boolean = false;
 
   @service declare router: RouterService;
-  @service declare store: Store;
-
   @action
   async deleteRepository() {
     if (!this.args.repository) {
