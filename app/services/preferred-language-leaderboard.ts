@@ -77,9 +77,11 @@ export default class PreferredLanguageLeaderboardService extends Service {
 
     this.preferredLanguageSlugs = userLeaderboardEntries
       .filter((entry) => entry.score > 0)
+      // @ts-expect-error: languageId not defined on LeaderboardModel
+      .filter((entry) => entry.leaderboard.languageId !== null)
       .sort((a, b) => b.score - a.score)
-      .map((entry) => entry.leaderboard.language.slug)
-      .slice(0, 3);
+      .slice(0, 3)
+      .map((entry) => entry.leaderboard.language!.slug);
 
     this.localStorage.setItem(PreferredLanguageLeaderboardService.STORAGE_KEY, new StoredData(this.preferredLanguageSlugs, new Date()).toJSON());
   }

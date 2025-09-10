@@ -5,7 +5,7 @@ import type LanguageModel from './language';
 
 export default class LeaderboardModel extends Model {
   @belongsTo('contest', { async: false, inverse: 'leaderboard' }) declare contest: ContestModel;
-  @belongsTo('language', { async: false, inverse: 'leaderboard' }) declare language: LanguageModel;
+  @belongsTo('language', { async: false, inverse: 'leaderboard' }) declare language: LanguageModel | null;
 
   @hasMany('leaderboard-entry', { async: false, inverse: 'leaderboard' }) declare entries: LeaderboardEntryModel[];
 
