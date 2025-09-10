@@ -18,7 +18,7 @@ interface Signature {
 }
 
 export default class DangerButtonWithTimedConfirmation extends Component<Signature> {
-  @tracked isHovered: boolean = false;
+  @tracked shouldShowProgressBar: boolean = false;
   @tracked progressWidth: number = 0;
   @tracked progressInterval: number | undefined = undefined;
 
@@ -27,26 +27,19 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
   }
 
   @action
-  handleMouseEnter() {
-    this.isHovered = true;
-  }
-
-  @action
-  handleMouseLeave() {
-    this.hideProgressBar();
-    this.stopProgress();
-  }
-
-  @action
-  hideProgressBar() {
-    this.isHovered = false;
-  }
-
-  @action
-  startProgress() {
-    const intervalDelay = config.environment === 'test' ? 1 : 30;
+  resetProgress() {
+    this.shouldShowProgressBar = false;
     this.progressWidth = 0;
+    clearInterval(this.progressInterval);
+  }
 
+  @action
+  startProgress(event: Event) {
+    event.preventDefault(); // Prevent menu from popping up, which triggers touchend
+    this.resetProgress();
+
+    this.shouldShowProgressBar = true;
+    const intervalDelay = config.environment === 'test' ? 1 : 30;
     this.progressInterval = setInterval(() => {
       if (this.progressWidth < 100) {
         this.progressWidth += 1;
@@ -58,12 +51,6 @@ export default class DangerButtonWithTimedConfirmation extends Component<Signatu
         clearInterval(this.progressInterval);
       }
     }, intervalDelay);
-  }
-
-  @action
-  stopProgress() {
-    this.progressWidth = 0;
-    clearInterval(this.progressInterval);
   }
 }
 

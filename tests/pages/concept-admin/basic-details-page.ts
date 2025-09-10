@@ -19,12 +19,21 @@ export default create({
 
   deleteConceptModal: {
     deleteConceptButton: {
-      hover: triggerable('mouseenter'),
-      leave: triggerable('mouseleave'),
-      press: triggerable('mousedown'),
+      mouseleave: triggerable('mouseleave'),
+      mousedown: triggerable('mousedown'),
+      touchstart: triggerable('touchstart'),
 
       progressIndicator: {
         scope: '[data-test-progress-indicator]',
+        get width() {
+          const element = document.querySelector(this.scope) as HTMLElement;
+          if (!element) return 0;
+
+          const styleAttr = element.getAttribute('style');
+          const widthMatch = styleAttr?.match(/width:\s*(\d+)%/);
+
+          return widthMatch ? parseInt(widthMatch[1] as string) : 0;
+        },
       },
 
       release: triggerable('mouseup'),

@@ -126,7 +126,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
     );
   });
 
-  test('can delete repository', async function (assert) {
+  test('can delete repository via mouse down', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsStaff(this.owner, this.server);
 
@@ -150,13 +150,46 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
 
     await percySnapshot('Course Stages - Delete Repository Modal');
 
-    await coursePage.deleteRepositoryModal.deleteRepositoryButton.hover();
+    await coursePage.deleteRepositoryModal.deleteRepositoryButton.mousedown();
     assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
+    await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
 
-    await coursePage.deleteRepositoryModal.deleteRepositoryButton.leave();
-    assert.notOk(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should not be visible');
+    await waitUntil(() => currentURL() === '/courses/dummy/introduction?repo=new&track=python');
+    await settled(); // Delete request triggers after redirect
 
-    await coursePage.deleteRepositoryModal.deleteRepositoryButton.press();
+    await coursePage.repositoryDropdown.click();
+    assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'no repositories should be available');
+    assert.notOk(coursePage.repositoryDropdown.content.text.includes('Delete Repository'), 'delete repository action should not be available');
+  });
+
+  test('can delete repository via touch start', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.repositoryDropdown.click();
+    await coursePage.repositoryDropdown.clickOnAction('Delete Repository');
+
+    await percySnapshot('Course Stages - Delete Repository Modal');
+
+    await coursePage.deleteRepositoryModal.deleteRepositoryButton.touchstart();
+    assert.ok(coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.isVisible, 'progress indicator should be visible');
+    await waitUntil(() => coursePage.deleteRepositoryModal.deleteRepositoryButton.progressIndicator.width > 0, { timeout: 10 });
+
     await waitUntil(() => currentURL() === '/courses/dummy/introduction?repo=new&track=python');
     await settled(); // Delete request triggers after redirect
 
