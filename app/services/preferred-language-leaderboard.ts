@@ -18,7 +18,7 @@ class StoredData {
   static fromJSON(json: string): StoredData {
     const { languageSlugs, storedAt } = JSON.parse(json);
 
-    return new StoredData(languageSlugs, storedAt);
+    return new StoredData(languageSlugs, new Date(storedAt));
   }
 
   toJSON(): string {
