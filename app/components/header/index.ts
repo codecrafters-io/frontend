@@ -40,7 +40,7 @@ export default class Header extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 
-  get links(): { text: string; route: string; type: 'route' | 'link' }[] {
+  get links(): { text: string; route: string; type: 'route' | 'link'; routeParams?: string[] }[] {
     if (this.currentUser) {
       return this.linksForAuthenticatedUser;
     } else {
