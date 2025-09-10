@@ -11,7 +11,7 @@ export default function verifyApiRequests(server, expectedRequests) {
       // Triggered on application boot
       pathname !== '/api/v1/users/current' &&
       // Triggered when header is rendered
-      pathname !== '/api/v1/leaderboard-entries/for-current-user'
+      !pathname.match(/^\/api\/v1\/users\/[^/]+\/top-language-leaderboard-slugs$/)
     );
   });
 

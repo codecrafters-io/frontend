@@ -32,8 +32,4 @@ export default function (server) {
       throw new Error(`Invalid filter type: ${request.queryParams.filter_type}`);
     }
   });
-
-  server.get('/leaderboard-entries/for-current-user', function (schema) {
-    return schema.leaderboardEntries.all().filter((leaderboardEntry) => leaderboardEntry.user.id === CurrentMirageUser.currentUserId);
-  });
 }

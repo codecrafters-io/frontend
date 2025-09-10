@@ -70,19 +70,7 @@ export default class PreferredLanguageLeaderboardService extends Service {
 
   async refresh(): Promise<void> {
     await this.authenticator.authenticate();
-
-    const userLeaderboardEntries = (await this.store.createRecord('leaderboard-entry').fetchForCurrentUser({
-      include: 'leaderboard,leaderboard.language,user',
-    })) as unknown as LeaderboardEntryModel[];
-
-    this.preferredLanguageSlugs = userLeaderboardEntries
-      .filter((entry) => entry.score > 0)
-      // @ts-expect-error: languageId not defined on LeaderboardModel
-      .filter((entry) => entry.leaderboard.languageId !== null)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3)
-      .map((entry) => entry.leaderboard.language!.slug);
-
+    this.preferredLanguageSlugs = (await this.authenticator.currentUser!.fetchTopLanguageLeaderboardSlugs({})).slice(0, 3);
     this.localStorage.setItem(PreferredLanguageLeaderboardService.STORAGE_KEY, new StoredData(this.preferredLanguageSlugs, new Date()).toJSON());
   }
 }
