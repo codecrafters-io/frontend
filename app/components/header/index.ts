@@ -32,6 +32,13 @@ export default class Header extends Component<Signature> {
   @tracked floatingBarStyle: SafeString = htmlSafe('left: 0px; width: 0px; opacity: 0;');
   @tracked floatingBarContainer: HTMLElement | null = null;
 
+  constructor(owner: unknown, args: object) {
+    super(owner, args);
+
+    // This can't be in instance-initializers since it depends on the authenticator service
+    this.preferredLanguageLeaderboard.onBoot();
+  }
+
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
   }

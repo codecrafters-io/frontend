@@ -30,7 +30,7 @@ module('Acceptance | header-test', function (hooks) {
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
 
-  test('header should show leaderboard link if user is authenticated and has feature flag enabled', async function (assert) {
+  test('header should show generic leaderboard link if user has feature flag enabled and leaderboard entries', async function (assert) {
     const user = signIn(this.owner, this.server);
     user.update('featureFlags', { 'should-see-leaderboard': 'true' });
 
@@ -38,7 +38,26 @@ module('Acceptance | header-test', function (hooks) {
     assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
 
     await catalogPage.header.clickOnHeaderLink('Leaderboard');
-    assert.strictEqual(currentURL(), '/leaderboards/rust', 'expect to be redirected to rust leaderboard page by default');
+    assert.strictEqual(currentURL(), '/leaderboards/rust', 'expect to be redirected to rust leaderboard page');
+  });
+
+  test('header should show custom leaderboard link if user has feature flag enabled', async function (assert) {
+    const user = signIn(this.owner, this.server);
+    user.update('featureFlags', { 'should-see-leaderboard': 'true' });
+
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+
+    this.server.create('leaderboard-entry', {
+      leaderboard: python.leaderboard,
+      user: user,
+      score: 100,
+    });
+
+    await catalogPage.visit();
+    assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
+
+    await catalogPage.header.clickOnHeaderLink('Leaderboard');
+    assert.strictEqual(currentURL(), '/leaderboards/python', 'expect to be redirected to python leaderboard page');
   });
 
   test('header should show upgrade button if user does not have an active subscription', async function (assert) {

@@ -53,10 +53,12 @@ export default class PreferredLanguageLeaderboardService extends Service {
     const serializedStoredData = this.localStorage.getItem(PreferredLanguageLeaderboardService.STORAGE_KEY);
 
     if (!serializedStoredData) {
+      await this.refresh();
+
       return;
     }
 
-    // Let's use the latest value we have from
+    // Let's use the latest value we have from local storage
     const storedData = StoredData.fromJSON(serializedStoredData);
     this.preferredLanguageSlugs = storedData.languageSlugs;
 
