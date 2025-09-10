@@ -10,7 +10,6 @@ import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type Store from '@ember-data/store';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
@@ -30,8 +29,6 @@ interface Signature {
 export default class CommentForm extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-
   @tracked declare comment: CourseStageCommentModel | CommunityCourseStageSolutionCommentModel;
   @tracked isSaving = false;
   @tracked activeTab: 'write' | 'preview' = 'write';

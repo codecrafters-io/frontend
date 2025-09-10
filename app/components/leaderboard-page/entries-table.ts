@@ -3,7 +3,6 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
-import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
 interface Signature {
@@ -20,8 +19,6 @@ interface Signature {
 
 export default class LeaderboardPageEntriesTable extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
-
   get hasEntries() {
     return this.args.topEntries.length > 0;
   }

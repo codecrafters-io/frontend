@@ -1,5 +1,4 @@
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import type RouterService from '@ember/routing/router-service';
@@ -17,7 +16,6 @@ export interface Signature {
 
 export default class ProductWalkthroughFeatureSuggestion extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
   @tracked currentOrPreviouslyShownFeatureSuggestion: FeatureSuggestionModel | undefined;

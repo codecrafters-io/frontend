@@ -2,11 +2,9 @@ import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analyti
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import Store from '@ember-data/store';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import { action } from '@ember/object';
 import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
 
@@ -51,9 +49,6 @@ class RunTestsStep extends BaseStep implements StepDefinition {
 export default class SecondStageTutorialCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
-  @service declare store: Store;
-
   get implementSolutionStepIsComplete() {
     return (
       this.implementSolutionStepWasMarkedAsComplete ||

@@ -1,7 +1,5 @@
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -12,9 +10,7 @@ interface Signature {
   };
 }
 
-export default class StageListItem extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
-}
+export default class StageListItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

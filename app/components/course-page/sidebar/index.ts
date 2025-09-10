@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
@@ -22,8 +21,6 @@ interface Signature {
 export default class CoursePageSidebar extends Component<Signature> {
   @service declare authenticator: unknown;
   @service declare coursePageState: CoursePageStateService;
-  @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
-
   @tracked configureExtensionsModalIsOpen = false;
 
   get currentStep() {

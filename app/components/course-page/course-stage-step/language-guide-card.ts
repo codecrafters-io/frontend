@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import fade from 'ember-animated/transitions/fade';
 import LanguageModel from 'codecrafters-frontend/models/language';
@@ -20,7 +19,6 @@ interface Signature {
 }
 
 export default class LanguageGuideCard extends Component<Signature> {
-  @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
 
   @tracked requestedLanguage: LanguageModel | null = null;

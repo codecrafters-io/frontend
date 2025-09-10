@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
@@ -23,8 +22,6 @@ export default class CommentList extends Component<Signature> {
 
   @tracked isLoading = true;
   @tracked rejectedCommentsAreExpanded = false;
-
-  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
 

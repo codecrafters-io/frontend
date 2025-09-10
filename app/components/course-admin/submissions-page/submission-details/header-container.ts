@@ -3,7 +3,6 @@ import { action } from '@ember/object';
 import { capitalize } from '@ember/string';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 
@@ -17,8 +16,6 @@ export default class HeaderContainer extends Component<Signature> {
   @tracked isUpdatingBuildpack = false;
   @tracked isUpdatingTesterVersion = false;
   @tracked isForking = false;
-
-  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
 
   get buildpackSlug() {

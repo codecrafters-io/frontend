@@ -1,6 +1,4 @@
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -10,9 +8,7 @@ interface Signature {
   };
 }
 
-export default class StageIncompleteModal extends Component<Signature> {
-  @service declare coursePageState: CoursePageStateService;
-}
+export default class StageIncompleteModal extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

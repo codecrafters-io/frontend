@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Mustache from 'mustache';
@@ -20,7 +19,6 @@ interface Signature {
 }
 
 export default class YourTaskCard extends Component<Signature> {
-  @service declare coursePageState: CoursePageStateService;
   @service declare store: Store;
   @tracked manualFeedbackFlowIsActive = false;
 

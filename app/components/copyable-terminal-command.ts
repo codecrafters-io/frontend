@@ -2,10 +2,8 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
-import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import { service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,9 +19,6 @@ interface Signature {
 
 export default class CopyableTerminalCommand extends Component<Signature> {
   transition = fade;
-
-  @service declare darkMode: DarkModeService;
-
   @tracked wasCopiedRecently: boolean = false;
 
   get codeForHighlighting(): string {

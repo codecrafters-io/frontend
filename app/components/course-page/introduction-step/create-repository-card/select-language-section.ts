@@ -3,9 +3,7 @@ import fade from 'ember-animated/transitions/fade';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -21,7 +19,6 @@ interface Signature {
 
 export default class SelectLanguageSection extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
-  @service declare store: Store;
   requestedLanguagesPromptTransition = fade;
   @tracked shouldShowNonPreferredLanguages = false;
 

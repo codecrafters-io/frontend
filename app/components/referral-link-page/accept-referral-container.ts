@@ -3,7 +3,6 @@ import Component from '@glimmer/component';
 import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
-import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { format } from 'date-fns';
@@ -24,8 +23,6 @@ export default class AcceptReferralContainer extends Component<Signature> {
 
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-  @service declare router: RouterService;
-
   @tracked isAccepted: boolean = this.args.acceptedReferralOfferFreeUsageGrant ? true : false;
   @tracked isCreatingReferralActivation: boolean = false;
   @tracked freeUsageGrantExpiresAt: string = this.args.acceptedReferralOfferFreeUsageGrant

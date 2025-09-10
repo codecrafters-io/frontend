@@ -2,9 +2,7 @@ import Component from '@glimmer/component';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -19,7 +17,6 @@ interface Signature {
 }
 
 export default class ImplementSolutionStep extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
   @tracked solutionIsBlurred = true;
 
   get solution() {

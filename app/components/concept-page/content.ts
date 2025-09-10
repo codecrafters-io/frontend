@@ -1,10 +1,7 @@
-import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
-import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
@@ -19,11 +16,7 @@ interface Signature {
 }
 
 export default class Content extends Component<Signature> {
-  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-  @service declare authenticator: AuthenticatorService;
   @service declare confetti: ConfettiService;
-  @service declare store: Store;
-
   get currentProgressPercentage() {
     return this.args.latestConceptEngagement.currentProgressPercentage;
   }

@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import type RouterService from '@ember/routing/router-service';
-import type Store from '@ember-data/store';
 import type ConceptModel from 'codecrafters-frontend/models/concept';
 
 interface Signature {
@@ -16,8 +15,6 @@ interface Signature {
 
 export default class DeleteConceptModal extends Component<Signature> {
   @service declare router: RouterService;
-  @service declare store: Store;
-
   @action
   async deleteConcept() {
     this.router.transitionTo('concepts');

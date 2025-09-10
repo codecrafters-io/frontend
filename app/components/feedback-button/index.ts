@@ -4,7 +4,6 @@ import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
 import Component from '@glimmer/component';
-import type RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 
 interface Signature {
@@ -23,7 +22,6 @@ interface Signature {
 }
 
 export default class FeedbackButton extends Component<Signature> {
-  @service declare router: RouterService;
   @service declare store: Store;
 
   @tracked feedbackSubmission;

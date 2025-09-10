@@ -4,7 +4,6 @@ import fade from 'ember-animated/transitions/fade';
 import type EmailAddressModel from 'codecrafters-frontend/models/email-address';
 import type InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
 import type InstitutionModel from 'codecrafters-frontend/models/institution';
-import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -20,7 +19,6 @@ interface Signature {
 
 export default class CampusProgramApplicationModal extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
 
   @tracked isOverridingSavedGrantApplication = false;
 

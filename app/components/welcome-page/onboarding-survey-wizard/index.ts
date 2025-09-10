@@ -2,9 +2,7 @@ import Component from '@glimmer/component';
 import config from 'codecrafters-frontend/config/environment';
 import fade from 'ember-animated/transitions/fade';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
-import type RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
-import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
@@ -20,8 +18,6 @@ interface Signature {
 export default class OnboardingSurveyWizard extends Component<Signature> {
   fade = fade;
   @tracked currentStep = 1;
-  @service declare router: RouterService;
-
   @action
   async handleContinueButtonClick() {
     if (this.currentStep === 2) {

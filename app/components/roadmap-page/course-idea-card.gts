@@ -12,7 +12,6 @@ import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';
 import Pill from 'codecrafters-frontend/components/pill';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type Store from '@ember-data/store';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 
 export type Signature = {
@@ -25,8 +24,6 @@ export type Signature = {
 
 export default class CourseIdeaCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
-
   @tracked isVotingOrUnvoting = false;
 
   get userHasVoted() {

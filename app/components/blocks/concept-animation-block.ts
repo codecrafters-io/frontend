@@ -1,6 +1,4 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import Store from '@ember-data/store';
 import lottie from 'lottie-web';
 import type { AnimationItem } from 'lottie-web';
 import { action } from '@ember/object';
@@ -45,7 +43,6 @@ interface Signature {
 }
 
 export default class ConceptAnimationBlock extends Component<Signature> {
-  @service declare store: Store;
   animation?: AnimationItem;
   @tracked isPlayed = false;
   @tracked isLoaded = false;

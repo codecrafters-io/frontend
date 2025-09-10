@@ -1,11 +1,9 @@
-import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type UserModel from 'codecrafters-frontend/models/user';
-import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { type FileComparison } from 'codecrafters-frontend/utils/file-comparison';
 import { task } from 'ember-concurrency';
@@ -28,10 +26,7 @@ export default class CommunitySolutionCard extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked diffSource: 'changed-files' | 'highlighted-files' = 'changed-files';
   @tracked fileComparisons: FileComparison[] = [];
-  @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
-  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
-
   get currentUser() {
     return this.authenticator.currentUser as UserModel; // For now, this is only rendered in contexts where the current user is logged in
   }
