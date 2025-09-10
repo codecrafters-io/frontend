@@ -8,6 +8,7 @@ import type Store from '@ember-data/store';
 import type TeamModel from 'codecrafters-frontend/models/team';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class AccountDropdown extends Component {
   @service declare authenticator: AuthenticatorService;
@@ -18,6 +19,12 @@ export default class AccountDropdown extends Component {
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  @action
+  handleAdminPanelLinkClick(dropdownActions: { close: () => void }) {
+    dropdownActions.close();
+    window.open(`${config.x.backendUrl}/admin`, '_blank');
   }
 
   @action

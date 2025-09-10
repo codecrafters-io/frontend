@@ -1,18 +1,17 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
-import { htmlSafe } from '@ember/template';
-import { next } from '@ember/runloop';
+import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import logoImage from '/assets/images/logo/logomark-color.svg';
-import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ContainerWidthService from 'codecrafters-frontend/services/container-width';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type RouterService from '@ember/routing/router-service';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
-import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type { SafeString } from '@ember/template/-private/handlebars';
+import { action } from '@ember/object';
+import { htmlSafe } from '@ember/template';
+import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -33,10 +32,6 @@ export default class Header extends Component<Signature> {
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.currentUser?.activeDiscountForYearlyPlan || null;
-  }
-
-  get adminPanelLink() {
-    return `${config.x.backendUrl}/admin`;
   }
 
   get currentUser() {
@@ -64,10 +59,6 @@ export default class Header extends Component<Signature> {
       { text: 'Catalog', route: 'catalog', type: 'route' },
       { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
-
-    if (this.currentUser && this.currentUser.isAdmin) {
-      links.push({ text: 'Admin', route: this.adminPanelLink, type: 'link' });
-    }
 
     return links;
   }

@@ -70,6 +70,11 @@
         <DarkModeToggleWithUpgradePrompt @size="small" />
       </div>
 
+      {{#if this.currentUser.isAdmin}}
+        <div class="h-px mt-2 mb-2 ml-3 mr-3 bg-gray-200 dark:bg-white/5" />
+        <DropdownLink @text="Admin Panel" @icon="cog" {{on "click" (fn this.handleAdminPanelLinkClick dd.actions)}} />
+      {{/if}}
+
       <div class="h-px mt-2 mb-2 ml-3 mr-3 bg-gray-200 dark:bg-white/5" />
 
       <DropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
