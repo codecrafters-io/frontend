@@ -111,12 +111,16 @@ export default class ContestRoute extends BaseRoute {
       }
     }
 
-    const topLeaderboardEntries = await this.store.findAll('leaderboard-entry', {
+    // TODO[Vasyl]: This interacts with the usage in preferredLanguageLeaderboard where we create a temporary leaderboard entry
+    //              Figure out a way to use `query` instead of the adapterOptions strategy? Or maybe more explicit caching?
+    let topLeaderboardEntries = (await this.store.findAll('leaderboard-entry', {
       adapterOptions: {
         leaderboard_id: contest.leaderboard.id,
       },
       include: 'user,leaderboard',
-    });
+    })) as unknown as LeaderboardEntryModel[];
+
+    topLeaderboardEntries = topLeaderboardEntries.reject((entry) => entry.isNew);
 
     const languages = await this.store.findAll('language');
 
