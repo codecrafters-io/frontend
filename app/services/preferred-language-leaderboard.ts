@@ -3,7 +3,6 @@ import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type AuthenticatorService from './authenticator';
-import LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type Store from '@ember-data/store';
 
 class StoredData {

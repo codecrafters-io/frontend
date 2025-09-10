@@ -1,5 +1,3 @@
-import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
-
 export default function (server) {
   server.get('/leaderboard-entries', function (schema, request) {
     if (!request.queryParams.leaderboard_id) {
