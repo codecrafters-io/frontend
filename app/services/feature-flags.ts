@@ -19,7 +19,7 @@ export default class FeatureFlagsService extends Service {
   }
 
   get shouldSeeLeaderboard(): boolean {
-    return this.currentUser?.isStaff || this.getFeatureFlagValue('should-see-leaderboard') === 'true';
+    return this.currentUser?.isStaff || this.getFeatureFlagValue('should-see-leaderboard') === 'test';
   }
 
   getFeatureFlagValue(flagName: string): string | null | undefined {
