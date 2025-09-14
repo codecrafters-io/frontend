@@ -70,7 +70,8 @@ export default class CourseRoute extends BaseRoute {
         .filterBy('language.slug', transition.to.queryParams.track)
         // @ts-ignore
         .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt').lastObject;
+        .sortBy('lastSubmissionAt')
+        .at(-1);
 
       if (lastPushedRepositoryForTrack) {
         return lastPushedRepositoryForTrack;
