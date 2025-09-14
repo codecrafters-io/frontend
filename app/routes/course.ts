@@ -68,7 +68,8 @@ export default class CourseRoute extends BaseRoute {
         // @ts-expect-error transition.to.queryParams not typed
         .filterBy('language.slug', transition.to.queryParams.track)
         .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt').lastObject;
+        .sortBy('lastSubmissionAt')
+        .at(-1);
 
       if (lastPushedRepositoryForTrack) {
         return lastPushedRepositoryForTrack;

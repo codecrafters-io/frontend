@@ -86,7 +86,7 @@ export default class CourseStageModel extends Model {
 
   // TODO: Change usages to account for extensions!
   get isLast() {
-    return this === this.course.sortedBaseStages.lastObject;
+    return this === this.course.sortedBaseStages.at(-1);
   }
 
   get isPenultimate() {

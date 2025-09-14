@@ -134,7 +134,7 @@ export default class CourseLeaderboard extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').at(-1);
 
       result.push(
         new CourseLeaderboardEntry({

@@ -38,7 +38,7 @@ export default class AutofixSection extends Component<Signature> {
       return null;
     }
 
-    return this.lastSubmission.autofixRequests.rejectBy('isNew').rejectBy('creatorTypeIsSystem').sortBy('createdAt').lastObject || null;
+    return this.lastSubmission.autofixRequests.rejectBy('isNew').rejectBy('creatorTypeIsSystem').sortBy('createdAt').at(-1) || null;
   }
 
   get lastSubmission() {

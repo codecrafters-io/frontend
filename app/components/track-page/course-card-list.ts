@@ -28,7 +28,8 @@ export default class TrackPageCourseCardList extends Component<Signature> {
             .filterBy('language', this.args.language)
             .filterBy('course', course)
             .filterBy('firstSubmissionCreated')
-            .sortBy('completedStages.length', 'lastSubmissionAt').lastObject
+            .sortBy('completedStages.length', 'lastSubmissionAt')
+            .at(-1)
         : null;
 
       return {
