@@ -32,7 +32,7 @@ module('Acceptance | header-test', function (hooks) {
 
   test('header should show generic leaderboard link if user has feature flag enabled and leaderboard entries', async function (assert) {
     const user = signIn(this.owner, this.server);
-    user.update('featureFlags', { 'should-see-leaderboard': 'true' });
+    user.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
     await catalogPage.visit();
     assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
@@ -43,7 +43,7 @@ module('Acceptance | header-test', function (hooks) {
 
   test('header should show custom leaderboard link if user has feature flag enabled', async function (assert) {
     const user = signIn(this.owner, this.server);
-    user.update('featureFlags', { 'should-see-leaderboard': 'true' });
+    user.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
     const python = this.server.schema.languages.findBy({ name: 'Python' });
 
