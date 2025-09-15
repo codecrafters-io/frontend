@@ -233,6 +233,8 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
 
+    await percySnapshot('Track - Course Ordering');
+
     let cardTitles = trackPage.cards.mapBy('title');
 
     assert.strictEqual(trackPage.cards.length, 7, 'should have 6 courses plus placeholder');
