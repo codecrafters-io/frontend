@@ -36,12 +36,10 @@ export default class CatalogController extends Controller {
         const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
 
         const lastActivityForCourse1At =
-          // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
+          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1)!.lastActivityAt.getTime() : null;
 
         const lastActivityForCourse2At =
-          // @ts-expect-error at(-1) is not defined on Array
-          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1).lastActivityAt.getTime() : null;
+          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1)!.lastActivityAt.getTime() : null;
 
         if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At > lastActivityForCourse2At) {
           return -1;
