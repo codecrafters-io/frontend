@@ -40,17 +40,32 @@ export default class TrackPageCourseCardList extends Component<Signature> {
     return coursesWithProgress.sort((a, b) => {
       const aRepo = a.repositoryWithMostProgress;
       const bRepo = b.repositoryWithMostProgress;
-      const aCompleted = aRepo?.baseStagesAreComplete || false;
-      const bCompleted = bRepo?.baseStagesAreComplete || false;
 
-      if (aCompleted !== bCompleted) return aCompleted ? -1 : 1;
+      // First priority: completed courses come first
+      const aCompleted = aRepo?.allStagesAreComplete || false;
+      const bCompleted = bRepo?.allStagesAreComplete || false;
 
-      if (aRepo && bRepo) {
-        return (aRepo.lastSubmissionAt?.getTime() || 0) - (bRepo.lastSubmissionAt?.getTime() || 0);
+      if (aCompleted !== bCompleted) {
+        return aCompleted ? -1 : 1;
       }
 
-      if (!!aRepo !== !!bRepo) return aRepo ? -1 : 1;
+      // Second priority: courses with repositories come before those without
+      const aHasRepo = !!aRepo;
+      const bHasRepo = !!bRepo;
 
+      if (aHasRepo !== bHasRepo) {
+        return aHasRepo ? -1 : 1;
+      }
+
+      // Third priority: among courses with repositories, sort by most recent submission
+      if (aRepo && bRepo) {
+        const aSubmissionTime = aRepo.lastSubmissionAt?.getTime() || 0;
+        const bSubmissionTime = bRepo.lastSubmissionAt?.getTime() || 0;
+
+        return bSubmissionTime - aSubmissionTime; // Most recent first
+      }
+
+      // Final priority: default track order for courses without repositories
       return a.course.sortPositionForTrack - b.course.sortPositionForTrack;
     });
   }
