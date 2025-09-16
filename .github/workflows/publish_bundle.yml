@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   build_production_bundle:
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-24.04-16
 
     steps:
       - uses: actions/checkout@v3
