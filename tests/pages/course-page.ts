@@ -116,17 +116,6 @@ export default create({
   },
 
   header: Header,
-
-  earnedBadgeNotice: {
-    badgeEarnedModal: {
-      badgeName: text('[data-test-badge-name]'),
-      resetScope: true,
-      scope: '[data-test-badge-earned-modal]',
-    },
-
-    scope: '[data-test-earned-badge-notice]',
-  },
-
   feedbackPrompt: FeedbackPrompt,
   firstStageTutorialCard: FirstStageTutorialCard,
 

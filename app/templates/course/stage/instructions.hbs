@@ -19,10 +19,6 @@
           />
         {{/if}}
 
-        {{#if (gt this.badgeAwards.length 0)}}
-          <CoursePage::CourseStageStep::EarnedBadgeNotice @badgeAwards={{this.badgeAwards}} class="mb-6" />
-        {{/if}}
-
         {{#if @model.courseStage.isFirst}}
           <CoursePage::CourseStageStep::FirstStageTutorialCard
             @repository={{@model.activeRepository}}

@@ -25,12 +25,6 @@ export default class CourseStageInstructionsController extends Controller {
     activeRepository: RepositoryModel;
   };
 
-  get badgeAwards() {
-    return this.model.activeRepository.courseStageCompletions.filterBy('courseStage', this.model.courseStage).flatMap((courseStageCompletion) => {
-      return courseStageCompletion.badgeAwards;
-    });
-  }
-
   get currentCourse() {
     return this.model.courseStage.course;
   }
