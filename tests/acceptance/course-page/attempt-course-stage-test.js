@@ -70,13 +70,15 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
   test('can pass course stage', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
+    const currentUser = signInAsSubscriber(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    // TODO: Remove this once leaderboard isn't behind a feature flag
+    currentUser.update({ featureFlags: { 'should-see-leaderboard': 'test' } });
 
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+    const go = this.server.schema.languages.findBy({ slug: 'go' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: go,
       user: currentUser,
@@ -97,7 +99,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage today.');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
+
+    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
   test('can pass tests using CLI', async function (assert) {

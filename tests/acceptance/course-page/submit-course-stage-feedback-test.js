@@ -14,13 +14,15 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
   test('can submit course stage feedback after passing course stage', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
+    const currentUser = signInAsSubscriber(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    // TODO: Remove this once leaderboard isn't behind a feature flag
+    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+    const go = this.server.schema.languages.findBy({ slug: 'go' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: go,
       user: currentUser,
@@ -43,14 +45,14 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
 
-    assert.contains(coursePage.currentStepCompleteModal.text, 'You completed this stage today.', 'completion text is stage completed');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
-    assert.contains(coursePage.currentStepCompleteModal.text, 'You completed this stage today.', 'completion text is stage completed');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');

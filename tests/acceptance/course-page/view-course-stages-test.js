@@ -44,11 +44,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
   test('can view previous stages after completing them', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    const currentUser = signIn(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    // TODO: Remove this once leaderboard isn't behind a feature flag
+    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
+
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
@@ -91,7 +93,9 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
-    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage 5 days ago.');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
+    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
     await percySnapshot('Course Stages - Completed stage');
 
@@ -99,13 +103,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
-    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage yesterday.');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage today.');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
   test('can navigate directly to stage even if previous stages are not completed', async function (assert) {
