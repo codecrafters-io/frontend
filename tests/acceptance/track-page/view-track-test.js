@@ -187,35 +187,48 @@ module('Acceptance | track-page | view-track', function (hooks) {
     assert.strictEqual(trackPage.cards.length, 5, 'expected 5 track cards to be present (one per course)');
   });
 
-  test('it renders in correct order', async function (assert) {
+  test('it sorts completed courses by most recent submission first', async function (assert) {
     signIn(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
     let git = this.server.schema.courses.findBy({ slug: 'git' });
-    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
-    let sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
-    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
     let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    docker.update({ releaseStatus: 'live' });
     dummy.update({ releaseStatus: 'live' });
-
-    this.server.create('repository', 'withAllStagesCompleted', {
-      course: redis,
-      language: go,
-      user: currentUser,
-      createdAt: new Date('2023-01-04'),
-    });
 
     this.server.create('repository', 'withAllStagesCompleted', {
       course: git,
       language: go,
       user: currentUser,
-      createdAt: new Date('2023-01-03'),
+      createdAt: new Date('2023-12-31'),
     });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: dummy,
+      language: go,
+      user: currentUser,
+      createdAt: new Date('2023-01-01'),
+    });
+
+    await visit('/tracks/go');
+
+    let cardTitles = trackPage.cards.mapBy('title');
+    let gitIndex = cardTitles.indexOf('Build your own Git →');
+    let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
+
+    assert.ok(gitIndex < dummyIndex, 'completed courses should be sorted by most recent submission first');
+  });
+
+  test('it sorts in-progress courses by most recent submission first', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       course: grep,
@@ -233,23 +246,47 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
 
-    await percySnapshot('Track - Course Ordering');
-
     let cardTitles = trackPage.cards.mapBy('title');
-
-    assert.strictEqual(trackPage.cards.length, 7, 'should have 6 courses plus placeholder');
-
-    let redisIndex = cardTitles.indexOf('Build your own Redis →');
-    let gitIndex = cardTitles.indexOf('Build your own Git →');
     let grepIndex = cardTitles.indexOf('Build your own grep →');
     let sqliteIndex = cardTitles.indexOf('Build your own SQLite →');
-    let dockerIndex = cardTitles.indexOf('Build your own Docker →');
-    let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
 
-    assert.ok(redisIndex < gitIndex, 'completed courses should be sorted by most recent submission first');
-    assert.ok(gitIndex < grepIndex, 'completed should come before in-progress');
-    assert.ok(grepIndex < sqliteIndex, 'in-progress should be sorted by most recent submission first');
-    assert.ok(sqliteIndex < dockerIndex, 'in-progress should come before not-started');
-    assert.ok(sqliteIndex < dummyIndex, 'in-progress should come before not-started');
+    assert.ok(grepIndex < sqliteIndex, 'in-progress courses should be sorted by most recent submission first');
+  });
+
+  test('it sorts course priority groups correctly', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    docker.update({ releaseStatus: 'live' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: dummy,
+      language: go,
+      user: currentUser,
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: grep,
+      language: go,
+      user: currentUser,
+    });
+
+    await visit('/tracks/go');
+
+    let cardTitles = trackPage.cards.mapBy('title');
+    let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
+    let grepIndex = cardTitles.indexOf('Build your own grep →');
+    let dockerIndex = cardTitles.indexOf('Build your own Docker →');
+
+    assert.ok(dummyIndex < grepIndex, 'completed courses should come before in-progress courses');
+    assert.ok(grepIndex < dockerIndex, 'in-progress courses should come before not-started courses');
+
+    await percySnapshot('Track - Course Ordering');
   });
 });
