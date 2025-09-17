@@ -8,16 +8,7 @@
       {{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
     </div>
 
-    {{! We don't have much to show for non-stage steps, so let's tack on the notice's short message }}
-    {{#unless (eq this.currentStep.type "CourseStageStep")}}
-      <div class="prose dark:prose-invert mb-5" data-test-completion-message>
-        <p>
-          {{this.currentStep.completionNoticeMessage}}
-        </p>
-      </div>
-    {{/unless}}
-
-    {{#if (eq this.currentStep.type "CourseStageStep")}}
+    {{#if this.shouldShowLanguageLeaderboardRankSection}}
       {{! If condition prevents type errors w/ Repository#language being nullable }}
       {{#if this.currentStepAsCourseStageStep.repository.language}}
         <CoursePage::CurrentStepCompleteModal::LanguageLeaderboardRankSection
@@ -25,6 +16,12 @@
           class="mt-3 mb-3"
         />
       {{/if}}
+    {{else}}
+      <div class="prose dark:prose-invert mb-5" data-test-completion-message>
+        <p>
+          {{this.currentStep.completionNoticeMessage}}
+        </p>
+      </div>
     {{/if}}
 
     <PrimaryLinkButton
