@@ -81,7 +81,7 @@ import tealLogoZig from '/assets/images/language-logos/zig-teal-500.svg';
 export default class LanguageModel extends Model {
   @hasMany('course-language-configuration', { async: false, inverse: 'language' }) declare courseConfigurations: CourseLanguageConfigurationModel[];
 
-  @belongsTo('leaderboard', { async: false, inverse: null }) declare leaderboard: LeaderboardModel | null;
+  @belongsTo('leaderboard', { async: false, inverse: 'language' }) declare leaderboard: LeaderboardModel | null;
   @belongsTo('concept-group', { async: false, inverse: null }) declare primerConceptGroup: ConceptGroupModel | null;
 
   @attr('string') declare name: string;

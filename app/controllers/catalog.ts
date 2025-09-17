@@ -69,20 +69,29 @@ export default class CatalogController extends Controller {
           .currentUser!.repositories.filterBy('language', language2)
           .filterBy('firstSubmissionCreated');
 
-        if (repositoriesForLanguage1.length > 0 && repositoriesForLanguage2.length > 0) {
+        // First priority: languages with repositories come before those without
+        const language1HasRepository = repositoriesForLanguage1.length > 0;
+        const language2HasRepository = repositoriesForLanguage2.length > 0;
+
+        if (language1HasRepository !== language2HasRepository) {
+          return language1HasRepository ? -1 : 1;
+        }
+
+        // Second priority: among languages with repositories, sort by most recent submission first
+        if (language1HasRepository && language2HasRepository) {
           // @ts-expect-error at(-1) is not defined on Array
           const lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
           // @ts-expect-error at(-1) is not defined on Array
           const lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
 
-          return lastSubmissionForLanguage1 > lastSubmissionForLanguage2 ? 1 : -1;
-        } else if (repositoriesForLanguage1.length > 0) {
-          return -1;
-        } else if (repositoriesForLanguage2.length > 0) {
-          return 1;
-        } else {
-          return language1.sortPositionForTrack > language2.sortPositionForTrack ? 1 : -1;
+          const language1SubmissionTime = lastSubmissionForLanguage1?.getTime() || 0;
+          const language2SubmissionTime = lastSubmissionForLanguage2?.getTime() || 0;
+
+          return language2SubmissionTime - language1SubmissionTime;
         }
+
+        // Final priority: default track order for languages without repositories
+        return language1.sortPositionForTrack > language2.sortPositionForTrack ? 1 : -1;
       });
     }
   }
