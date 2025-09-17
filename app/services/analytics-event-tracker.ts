@@ -19,7 +19,7 @@ export default class AnalyticsEventTrackerService extends Service {
     const baseURL = `${window.location.protocol}//${window.location.host}`; // 'https://app.codecrafters.io
 
     const defaultProperties = {
-      // @ts-ignore
+      // @ts-expect-error utmCampaignIdTracker service not typed
       utm_id: this.utmCampaignIdTracker.firstSeenCampaignId,
       url: `${baseURL}${this.router.currentURL}`,
     };

@@ -7,33 +7,33 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { run } from '@ember/runloop';
 import { ConceptAnimationBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayers from '/assets/concept-animations/network-protocols/layers.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayersWithExamples from '/assets/concept-animations/network-protocols/layers-with-examples.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayer1 from '/assets/concept-animations/network-protocols/layer-1.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayer2 from '/assets/concept-animations/network-protocols/layer-2.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayer3 from '/assets/concept-animations/network-protocols/layer-3.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import networkingProtocolsLayer4 from '/assets/concept-animations/network-protocols/layer-4.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewConnectionIdentifiers from '/assets/concept-animations/tcp-overview/connection-identifiers.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewHandshake1 from '/assets/concept-animations/tcp-overview/handshake-1.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewHandshake2 from '/assets/concept-animations/tcp-overview/handshake-2.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewHandshake3 from '/assets/concept-animations/tcp-overview/handshake-3.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewOrderedDelivery from '/assets/concept-animations/tcp-overview/ordered-delivery.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewPacket from '/assets/concept-animations/tcp-overview/packet.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewReliableDelivery from '/assets/concept-animations/tcp-overview/reliable-delivery.lottie.json';
-// @ts-ignore
+// @ts-expect-error JSON import not typed
 import tcpOverviewServerClient from '/assets/concept-animations/tcp-overview/server-client.lottie.json';
 
 interface Signature {

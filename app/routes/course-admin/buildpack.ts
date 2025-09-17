@@ -6,7 +6,7 @@ export default class BuildpackRoute extends BaseRoute {
   @service declare store: Store;
 
   async model(params: { buildpack_id: string }) {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course;
     await this.store.query('buildpack', { course_id: course.id, include: 'language,course' });
 

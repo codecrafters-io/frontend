@@ -67,9 +67,9 @@ CourseIdeaModel.prototype.unvote = memberAction({
   type: 'post',
 
   before() {
-    // @ts-ignore
+    // @ts-expect-error currentUserVotes not properly typed
     for (const record of [...this.currentUserVotes]) {
-      // @ts-ignore
+      // @ts-expect-error votesCount property not typed
       this.votesCount -= 1;
       record.unloadRecord();
     }

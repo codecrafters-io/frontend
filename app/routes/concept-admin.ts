@@ -17,7 +17,7 @@ export default class CourseAdminRoute extends BaseRoute {
   }
 
   async beforeModel(...args: unknown[]) {
-    // @ts-ignore
+    // @ts-expect-error super.beforeModel not typed with spread args
     await super.beforeModel(...args);
 
     await this.authenticator.authenticate();

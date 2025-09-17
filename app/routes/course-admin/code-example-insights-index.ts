@@ -22,7 +22,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
   };
 
   async model(params: { language_slug?: string }): Promise<ModelType> {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
     const languages = course.betaOrLiveLanguages;
     // Default to the first language in the list
