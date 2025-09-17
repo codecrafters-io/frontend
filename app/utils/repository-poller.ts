@@ -6,6 +6,7 @@ export default class RepositoryPoller extends Poller {
 
   static defaultIncludedResources = [
     'language',
+    'language.leaderboard',
     'extension-activations',
     'extension-activations.extension',
     'extension-activations.repository',

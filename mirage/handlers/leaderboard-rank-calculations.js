@@ -1,3 +1,5 @@
+import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
+
 export default function (server) {
   server.get('/leaderboard-rank-calculations', function (schema, request) {
     if (!request.queryParams.leaderboard_id) {
@@ -10,22 +12,25 @@ export default function (server) {
   server.post('/leaderboard-rank-calculations', function (schema) {
     const attrs = this.normalizedRequestAttrs();
     const leaderboard = schema.leaderboards.find(attrs.leaderboardId);
-    const user = schema.users.find(attrs.userId);
+    const user = schema.users.find(CurrentMirageUser.currentUserId);
 
     if (!leaderboard) {
       throw new Error('Leaderboard not found');
     }
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not authenticated');
     }
 
-    if (!leaderboard.entries.models.find((entry) => entry.user.id === user.id)) {
-      throw new Error('User does not have a leaderboard entry');
+    const userEntry = leaderboard.entries.models.find((entry) => entry.user.id === user.id);
+
+    if (userEntry) {
+      attrs.rank = leaderboard.entries.models.sort((a, b) => b.score - a.score).indexOf(userEntry) + 1;
+    } else {
+      attrs.rank = leaderboard.entries.models.length + 1;
     }
 
     attrs.calculatedAt = new Date();
-    attrs.rank = 37812;
 
     return schema.leaderboardRankCalculations.create(attrs);
   });

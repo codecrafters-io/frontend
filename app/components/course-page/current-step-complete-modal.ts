@@ -1,7 +1,8 @@
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { service } from '@ember/service';
+
 interface Signature {
   Element: HTMLDivElement;
 
@@ -16,6 +17,10 @@ export default class CurrentStepCompleteModal extends Component<Signature> {
 
   get currentStep() {
     return this.coursePageState.currentStep;
+  }
+
+  get currentStepAsCourseStageStep() {
+    return this.coursePageState.currentStepAsCourseStageStep;
   }
 
   get nextStep() {
