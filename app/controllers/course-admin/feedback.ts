@@ -23,7 +23,7 @@ export default class CourseAdminFeedbackController extends Controller {
     return submissions.sortBy('createdAt').reverse();
   }
 
-  // @ts-ignore
+  // @ts-expect-error ember-animated not typed
   // eslint-disable-next-line require-yield
   *listTransition({ insertedSprites, keptSprites, removedSprites }) {
     for (const sprite of keptSprites) {

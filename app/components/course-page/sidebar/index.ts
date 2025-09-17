@@ -31,7 +31,7 @@ export default class CoursePageSidebar extends Component<Signature> {
   }
 
   get currentUser() {
-    // @ts-ignore
+    // @ts-expect-error authenticator service not typed
     return this.authenticator.currentUser;
   }
 

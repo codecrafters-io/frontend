@@ -17,7 +17,7 @@ export default class CodeExampleRoute extends BaseRoute {
   @service declare store: Store;
 
   async model(params: { code_example_id: string }): Promise<CodeExampleRouteModel> {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course;
 
     const solutionIncludes = [...CommunityCourseStageSolutionModel.defaultIncludedResources, 'trusted-evaluations', 'trusted-evaluations.evaluator'];

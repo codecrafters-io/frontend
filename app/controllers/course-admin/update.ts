@@ -35,7 +35,7 @@ export default class CourseAdminUpdateController extends Controller {
     if (!this.isApplyingUpdate) {
       this.isApplyingUpdate = true;
 
-      // @ts-ignore
+      // @ts-expect-error update.apply method not typed
       await this.model.update.apply();
 
       this.isApplyingUpdate = false;

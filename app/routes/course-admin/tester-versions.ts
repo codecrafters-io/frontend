@@ -6,7 +6,7 @@ export default class CourseTesterVersionsRoute extends BaseRoute {
   @service declare store: Store;
 
   async model() {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course;
 
     await this.store.query('course-tester-version', {

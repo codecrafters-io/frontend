@@ -93,9 +93,9 @@ export default class AuthenticatorService extends Service {
   }
 
   prefillBeaconEmail() {
-    //@ts-ignore
+    // @ts-expect-error Beacon not typed
     if (window.Beacon && this.currentUser && this.currentUser.primaryEmailAddress) {
-      //@ts-ignore
+      // @ts-expect-error Beacon not typed
       window.Beacon('prefill', {
         email: this.currentUser.primaryEmailAddress,
       });

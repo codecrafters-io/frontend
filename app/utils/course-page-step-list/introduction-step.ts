@@ -34,24 +34,24 @@ export default class IntroductionStep extends StepDefinition {
   get routeParams() {
     return {
       route: 'course.introduction',
-      // @ts-ignore
+      // @ts-expect-error repository.course not typed
       models: [this.repository.course.slug],
     };
   }
 
   get status() {
-    // @ts-ignore
+    // @ts-expect-error repository.isNew not typed
     if (this.repository.isNew) {
       return 'not_started';
     }
 
     // Old users don't have a pre-challenge assessment, let's still show this as completed for them.
-    // @ts-ignore
+    // @ts-expect-error repository.firstSubmissionCreated not typed
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
     }
 
-    // @ts-ignore
+    // @ts-expect-error repository.preChallengeAssessmentSectionList not typed
     if (this.repository.preChallengeAssessmentSectionList.isComplete) {
       return 'complete';
     }

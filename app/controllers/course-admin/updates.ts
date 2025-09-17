@@ -19,7 +19,7 @@ export default class CourseAdminUpdatesController extends Controller {
   @tracked isSyncingWithGitHub = false;
 
   get sortedDefinitionUpdates() {
-    // @ts-ignore
+    // @ts-expect-error definitionUpdates not typed
     return this.model.course.definitionUpdates.sortBy('lastSyncedAt').reverse();
   }
 
