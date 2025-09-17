@@ -38,29 +38,29 @@ export default class TrackPageCourseCardList extends Component<Signature> {
     });
 
     return coursesWithProgress.sort((a, b) => {
-      const aRepo = a.repositoryWithMostProgress;
-      const bRepo = b.repositoryWithMostProgress;
+      const aRepository = a.repositoryWithMostProgress;
+      const bRepository = b.repositoryWithMostProgress;
 
       // First priority: completed courses come first
-      const aCompleted = aRepo?.allStagesAreComplete || false;
-      const bCompleted = bRepo?.allStagesAreComplete || false;
+      const aCompleted = aRepository?.allStagesAreComplete || false;
+      const bCompleted = bRepository?.allStagesAreComplete || false;
 
       if (aCompleted !== bCompleted) {
         return aCompleted ? -1 : 1;
       }
 
       // Second priority: courses with repositories come before those without
-      const aHasRepo = !!aRepo;
-      const bHasRepo = !!bRepo;
+      const aHasRepository = !!aRepository;
+      const bHasRepository = !!bRepository;
 
-      if (aHasRepo !== bHasRepo) {
-        return aHasRepo ? -1 : 1;
+      if (aHasRepository !== bHasRepository) {
+        return aHasRepository ? -1 : 1;
       }
 
       // Third priority: among courses with repositories, sort by most recent submission
-      if (aRepo && bRepo) {
-        const aSubmissionTime = aRepo.lastSubmissionAt?.getTime() || 0;
-        const bSubmissionTime = bRepo.lastSubmissionAt?.getTime() || 0;
+      if (aRepository && bRepository) {
+        const aSubmissionTime = aRepository.lastSubmissionAt?.getTime() || 0;
+        const bSubmissionTime = bRepository.lastSubmissionAt?.getTime() || 0;
 
         return bSubmissionTime - aSubmissionTime; // Most recent first
       }
