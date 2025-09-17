@@ -44,11 +44,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
   test('can view previous stages after completing them', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    const currentUser = signIn(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    // TODO: Remove this once leaderboard isn't behind a feature flag
+    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
+
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,

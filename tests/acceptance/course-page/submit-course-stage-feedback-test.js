@@ -14,13 +14,15 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
   test('can submit course stage feedback after passing course stage', async function (assert) {
     testScenario(this.server);
-    signInAsSubscriber(this.owner, this.server);
+    const currentUser = signInAsSubscriber(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    // TODO: Remove this once leaderboard isn't behind a feature flag
+    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+    const go = this.server.schema.languages.findBy({ slug: 'go' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: go,
       user: currentUser,
