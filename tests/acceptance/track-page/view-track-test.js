@@ -186,4 +186,107 @@ module('Acceptance | track-page | view-track', function (hooks) {
     assert.true(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
     assert.strictEqual(trackPage.cards.length, 5, 'expected 5 track cards to be present (one per course)');
   });
+
+  test('it sorts completed courses by most recent submission first', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let git = this.server.schema.courses.findBy({ slug: 'git' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    dummy.update({ releaseStatus: 'live' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: git,
+      language: go,
+      user: currentUser,
+      createdAt: new Date('2023-12-31'),
+    });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: dummy,
+      language: go,
+      user: currentUser,
+      createdAt: new Date('2023-01-01'),
+    });
+
+    await visit('/tracks/go');
+
+    let cardTitles = trackPage.cards.mapBy('title');
+    let gitIndex = cardTitles.indexOf('Build your own Git →');
+    let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
+
+    assert.ok(gitIndex < dummyIndex, 'completed courses should be sorted by most recent submission first');
+  });
+
+  test('it sorts in-progress courses by most recent submission first', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let sqlite = this.server.schema.courses.findBy({ slug: 'sqlite' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: grep,
+      language: go,
+      user: currentUser,
+      createdAt: new Date('2023-01-02'),
+    });
+
+    this.server.create('repository', 'withSecondStageCompleted', {
+      course: sqlite,
+      language: go,
+      user: currentUser,
+      createdAt: new Date('2023-01-01'),
+    });
+
+    await visit('/tracks/go');
+
+    let cardTitles = trackPage.cards.mapBy('title');
+    let grepIndex = cardTitles.indexOf('Build your own grep →');
+    let sqliteIndex = cardTitles.indexOf('Build your own SQLite →');
+
+    assert.ok(grepIndex < sqliteIndex, 'in-progress courses should be sorted by most recent submission first');
+  });
+
+  test('it sorts course priority groups correctly', async function (assert) {
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let go = this.server.schema.languages.findBy({ slug: 'go' });
+
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+
+    docker.update({ releaseStatus: 'live' });
+
+    this.server.create('repository', 'withAllStagesCompleted', {
+      course: dummy,
+      language: go,
+      user: currentUser,
+    });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: grep,
+      language: go,
+      user: currentUser,
+    });
+
+    await visit('/tracks/go');
+
+    let cardTitles = trackPage.cards.mapBy('title');
+    let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
+    let grepIndex = cardTitles.indexOf('Build your own grep →');
+    let dockerIndex = cardTitles.indexOf('Build your own Docker →');
+
+    assert.ok(dummyIndex < grepIndex, 'completed courses should come before in-progress courses');
+    assert.ok(grepIndex < dockerIndex, 'in-progress courses should come before not-started courses');
+
+    await percySnapshot('Track - Course Ordering');
+  });
 });
