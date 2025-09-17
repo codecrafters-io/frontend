@@ -78,9 +78,9 @@ module('Acceptance | view-tracks', function (hooks) {
 
     await percySnapshot('Tracks Page - Tracks in progress');
 
-    assert.strictEqual(catalogPage.trackCards[0].name, 'Go');
+    assert.strictEqual(catalogPage.trackCards[0].name, 'Python');
     assert.strictEqual(catalogPage.trackCards[0].actionText, 'Resume');
-    assert.strictEqual(catalogPage.trackCards[1].name, 'Python');
+    assert.strictEqual(catalogPage.trackCards[1].name, 'Go');
     assert.strictEqual(catalogPage.trackCards[1].actionText, 'Resume');
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
