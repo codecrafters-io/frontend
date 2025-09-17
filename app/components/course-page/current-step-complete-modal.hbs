@@ -4,15 +4,25 @@
       🎉
     </div>
 
-    <div class="mb-1 font-bold text-2xl text-gray-700 dark:text-gray-100">
+    <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100">
       {{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
     </div>
 
-    <div class="prose dark:prose-invert mb-5" data-test-completion-message>
+    {{!-- <div class="prose dark:prose-invert mb-5" data-test-completion-message>
       <p>
         {{this.currentStep.completionNoticeMessage}}
       </p>
-    </div>
+    </div> --}}
+
+    {{! <AlertWithIcon @icon="presentation-chart-line" @type="success" class="mb-5">
+      Your leaderboard rank is now
+      <b>#1456</b>.
+    </AlertWithIcon> }}
+
+    <RoadmapInfoAlert @heading="Rust leaderboard" class="mb-5">
+      Your leaderboard rank is now
+      <b>#1456</b>.
+    </RoadmapInfoAlert>
 
     <PrimaryLinkButton
       @route={{this.stepForNextOrActiveStepButton.routeParams.route}}

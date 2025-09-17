@@ -1,15 +1,26 @@
-<Alert @color="blue" class="p-5" ...attributes>
-  <div class="prose prose-sm dark:prose-invert prose-blue prose-compact">
-    <h4>
-      <div class="flex items-center gap-1">
-        {{svg-jar "information-circle" class="w-5 h-5 fill-current text-blue-500/80"}}
-        <span>
-          {{@heading}}
-        </span>
+<div
+  class="relative p-5 pb-6 w-full max-w-xs group cursor-pointer bg-teal-100/20 hover:bg-teal-100/30 dark:bg-teal-900/20 border-teal-500/60 dark:border-teal-500/40 border rounded-sm transition-colors duration-100"
+  ...attributes
+>
+  <div class="flex flex-col items-center">
+    {{svg-jar "presentation-chart-line" class="w-8 h-8 fill-current text-teal-500/90 mb-2"}}
+
+    <span class="text-teal-700 text-xs mb-0.5 text-center">
+      Your Rust leaderboard rank is
+    </span>
+
+    <AnimatedContainer>
+      <div class="flex items-center w-full justify-center">
+        {{#animated-if (eq this.rank null) use=this.transition duration=300}}
+          <b class="text-2xl text-teal-600 border-b border-teal-600 group-hover:text-teal-500 border-dashed animate-pulse">
+            # ⋯
+          </b>
+        {{else}}
+          <b class="text-2xl text-teal-600 border-b border-teal-600 group-hover:text-teal-500 border-dashed">
+            #{{format-number this.rank}}
+          </b>
+        {{/animated-if}}
       </div>
-    </h4>
-    <p>
-      {{yield}}
-    </p>
+    </AnimatedContainer>
   </div>
-</Alert>
+</div>
