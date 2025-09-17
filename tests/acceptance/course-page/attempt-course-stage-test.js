@@ -97,7 +97,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await animationsSettled();
 
-    assert.contains(coursePage.currentStepCompleteModal.completionMessage, 'You completed this stage today.');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
+
+    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
   test('can pass tests using CLI', async function (assert) {

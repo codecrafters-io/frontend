@@ -74,11 +74,8 @@ export default create({
     clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
     clickOnViewInstructionsButton: clickable('[data-test-view-instructions-button]'),
     completionMessage: text('[data-test-completion-message]'),
-
-    nextOrActiveStepButton: {
-      scope: '[data-test-next-or-active-step-button]',
-    },
-
+    languageLeaderboardRankSection: { scope: '[data-test-language-leaderboard-rank-section]' },
+    nextOrActiveStepButton: { scope: '[data-test-next-or-active-step-button]' },
     scope: '[data-test-current-step-complete-modal]',
   },
 
