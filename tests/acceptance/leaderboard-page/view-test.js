@@ -15,10 +15,6 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
 
   hooks.beforeEach(function () {
     testScenario(this.server);
-
-    for (const language of this.server.schema.languages.all().models) {
-      language.update({ leaderboard: this.server.create('leaderboard', { highestPossibleScore: 237 }) });
-    }
   });
 
   test('can view as anonymous user', async function (assert) {
