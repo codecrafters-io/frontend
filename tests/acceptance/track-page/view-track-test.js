@@ -207,28 +207,28 @@ module('Acceptance | track-page | view-track', function (hooks) {
       course: redis,
       language: go,
       user: currentUser,
-      createdAt: new Date('2023-01-01'),
+      createdAt: new Date('2023-01-04'),
     });
 
     this.server.create('repository', 'withAllStagesCompleted', {
       course: git,
       language: go,
       user: currentUser,
-      createdAt: new Date('2023-01-02'),
+      createdAt: new Date('2023-01-03'),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       course: grep,
       language: go,
       user: currentUser,
-      createdAt: new Date('2023-01-03'),
+      createdAt: new Date('2023-01-02'),
     });
 
     this.server.create('repository', 'withSecondStageCompleted', {
       course: sqlite,
       language: go,
       user: currentUser,
-      createdAt: new Date('2023-01-04'),
+      createdAt: new Date('2023-01-01'),
     });
 
     await visit('/tracks/go');
@@ -246,9 +246,9 @@ module('Acceptance | track-page | view-track', function (hooks) {
     let dockerIndex = cardTitles.indexOf('Build your own Docker →');
     let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
 
-    assert.ok(redisIndex < gitIndex, 'completed courses should be sorted by submission time');
+    assert.ok(redisIndex < gitIndex, 'completed courses should be sorted by most recent submission first');
     assert.ok(gitIndex < grepIndex, 'completed should come before in-progress');
-    assert.ok(grepIndex < sqliteIndex, 'in-progress should be sorted by submission time');
+    assert.ok(grepIndex < sqliteIndex, 'in-progress should be sorted by most recent submission first');
     assert.ok(sqliteIndex < dockerIndex, 'in-progress should come before not-started');
     assert.ok(sqliteIndex < dummyIndex, 'in-progress should come before not-started');
   });

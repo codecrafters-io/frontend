@@ -57,12 +57,12 @@ export default class TrackPageCourseCardList extends Component<Signature> {
         return aHasRepository ? -1 : 1;
       }
 
-      // Third priority: among courses with repositories, sort by most recent submission
+      // Third priority: among courses with repositories, sort by most recent submission first
       if (aRepository && bRepository) {
         const aSubmissionTime = aRepository.lastSubmissionAt?.getTime() || 0;
         const bSubmissionTime = bRepository.lastSubmissionAt?.getTime() || 0;
 
-        return bSubmissionTime - aSubmissionTime; // Most recent first
+        return bSubmissionTime - aSubmissionTime;
       }
 
       // Final priority: default track order for courses without repositories
