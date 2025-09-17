@@ -91,7 +91,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
-    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible);
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
@@ -101,14 +101,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 

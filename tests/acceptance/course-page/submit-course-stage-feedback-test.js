@@ -43,14 +43,14 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
 
-    assert.contains(coursePage.currentStepCompleteModal.text, 'You completed this stage today.', 'completion text is stage completed');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
-    assert.contains(coursePage.currentStepCompleteModal.text, 'You completed this stage today.', 'completion text is stage completed');
+    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
