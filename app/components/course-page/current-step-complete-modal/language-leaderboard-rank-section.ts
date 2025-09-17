@@ -1,11 +1,13 @@
-import { service } from '@ember/service';
 import Component from '@glimmer/component';
+import fade from 'ember-animated/transitions/fade';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type Store from '@ember-data/store';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,6 +21,7 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
   transition = fade;
 
   @service declare store: Store;
+  @service declare router: RouterService;
 
   @tracked userRankCalculation: LeaderboardRankCalculationModel | null = null;
 
@@ -26,6 +29,11 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
     super(owner, args);
 
     this.loadUserRankCalculationTask.perform();
+  }
+
+  @action
+  handleClick() {
+    window.open(this.router.urlFor('leaderboard', this.args.language.slug), '_blank');
   }
 
   loadUserRankCalculationTask = task({ restartable: true }, async () => {
