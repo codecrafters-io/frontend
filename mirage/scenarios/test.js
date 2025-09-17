@@ -22,6 +22,10 @@ export default function (server, courses = ['redis', 'docker', 'dummy', 'git', '
 
   createLanguages(server);
 
+  server.schema.languages.all().models.forEach((language) => {
+    language.update({ leaderboard: server.schema.leaderboards.create({ language: language, highestPossibleScore: 237 }) });
+  });
+
   const courseToDataMap = {
     docker: dockerCourseData,
     dummy: dummyCourseData,
