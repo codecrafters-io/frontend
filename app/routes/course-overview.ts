@@ -9,9 +9,11 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 export interface ModelType {
   course: CourseModel;
+  completedStages?: CourseStageModel[];
 }
 
 export default class CourseOverviewRoute extends BaseRoute {
@@ -52,8 +54,11 @@ export default class CourseOverviewRoute extends BaseRoute {
         include: 'extensions,stages,language-configurations.language',
       });
 
+      const course = this.store.peekAll('course').findBy('slug', params.course_slug);
+
       return {
-        course: this.store.peekAll('course').findBy('slug', params.course_slug),
+        course,
+        completedStages: this.#peekCompletedStages(course),
       };
     } else {
       const courses = await this.store.findAll('course', {
@@ -73,7 +78,16 @@ export default class CourseOverviewRoute extends BaseRoute {
         });
       }
 
-      return { course };
+      return {
+        course,
+        completedStages: this.#peekCompletedStages(course),
+      };
     }
+  }
+
+  #peekCompletedStages(course: CourseModel) {
+    const completedStageIds = this.store.peekAll('course-stage-completion').map((completion) => completion.courseStage.id);
+
+    return course.stages.filter((stage: CourseStageModel) => completedStageIds.includes(stage.id));
   }
 }
