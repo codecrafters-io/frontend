@@ -46,8 +46,6 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     const currentUser = signIn(this.owner, this.server);
 
-    // TODO: Remove this once leaderboard isn't behind a feature flag
-    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
     const python = this.server.schema.languages.findBy({ name: 'Python' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
