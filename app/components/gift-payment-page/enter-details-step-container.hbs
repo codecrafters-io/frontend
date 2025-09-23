@@ -1,0 +1,51 @@
+<GiftPaymentPage::StepContainer @title="Gift Details" data-test-enter-details-step-container>
+  <form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}}>
+    <GiftPaymentPage::GiftDetailsForm::Section @title="Your Email" @description="We'll send a payment receipt to this email address.">
+      <Input
+        @value={{@giftPaymentFlow.senderEmailAddress}}
+        @type="email"
+        {{on "blur" this.handleInputBlur}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 w-full"
+        id="sender_email_address_input"
+        placeholder="john@example.com"
+        required
+      />
+    </GiftPaymentPage::GiftDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    <GiftPaymentPage::GiftDetailsForm::Section @title="Gift Message" @description="Optional. You can edit this after purchase.">
+      <Textarea
+        @value={{@giftPaymentFlow.giftMessage}}
+        {{on "blur" this.handleInputBlur}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 w-full"
+        id="gift_message_input"
+        placeholder={{this.giftMessageInputPlaceholder}}
+        rows="5"
+      />
+    </GiftPaymentPage::GiftDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+      <div class="text-xs text-gray-500">
+        We'll send you a gift link that you can send to the recipient.
+      </div>
+      <div>
+        <PrimaryButtonWithSpinner
+          @isDisabled={{this.continueButtonIsDisabled}}
+          @shouldShowSpinner={{and @giftPaymentFlow.isSaving true}}
+          type="submit"
+          class="w-full justify-center sm:w-auto"
+          data-test-continue-button
+        >
+          Continue
+        </PrimaryButtonWithSpinner>
+
+        {{#if this.continueButtonIsDisabled}}
+          <EmberTooltip @text="Enter details above to continue" />
+        {{/if}}
+      </div>
+    </div>
+  </form>
+</GiftPaymentPage::StepContainer>

@@ -1,0 +1,26 @@
+<div class="flex items-center" ...attributes>
+  <GiftPaymentPage::NavigationContainerItem
+    @isComplete={{includes 1 @completedSteps}}
+    @isCurrent={{eq @currentStep 1}}
+    @name="Enter Details"
+    {{on "click" (fn @onNavigationItemClick 1)}}
+  />
+
+  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 1) 'bg-teal-500' 'bg-gray-200'}} ml-4 mr-4"></div>
+
+  <GiftPaymentPage::NavigationContainerItem
+    @isComplete={{includes 2 @completedSteps}}
+    @isCurrent={{eq @currentStep 2}}
+    @name="Choose Plan"
+    {{on "click" (fn @onNavigationItemClick 2)}}
+  />
+
+  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 2) 'bg-teal-500' 'bg-gray-200'}} ml-4 mr-4"></div>
+
+  <GiftPaymentPage::NavigationContainerItem
+    @isComplete={{includes 3 @completedSteps}}
+    @isCurrent={{eq @currentStep 3}}
+    @name="Pay"
+    {{on "click" (fn @onNavigationItemClick 3)}}
+  />
+</div>
