@@ -29,14 +29,15 @@
 
     <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
       <div class="text-xs text-gray-500">
-        We'll send you a gift link that you can send to the recipient.
+        You'll receive a gift link that you can send to the recipient.
       </div>
       <div>
         <PrimaryButtonWithSpinner
           @isDisabled={{this.continueButtonIsDisabled}}
           @shouldShowSpinner={{and @giftPaymentFlow.isSaving true}}
+          @size="large"
           type="submit"
-          class="w-full justify-center sm:w-auto"
+          class="w-full sm:w-auto justify-center"
           data-test-continue-button
         >
           Continue

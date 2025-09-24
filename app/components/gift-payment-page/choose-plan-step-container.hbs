@@ -1,0 +1,76 @@
+<GiftPaymentPage::StepContainer @title="Choose Membership Plan" data-test-choose-plan-step-container>
+  <div class="flex flex-col gap-y-3">
+    {{#each this.pricingPlans as |plan|}}
+      <div
+        class="flex items-start justify-between border
+          {{if (eq @giftPaymentFlow.pricingPlanId plan.id) 'border-teal-500' 'border-gray-200 hover:border-gray-300'}}
+          rounded p-4
+          {{if (eq @giftPaymentFlow.pricingPlanId plan.id) 'bg-teal-50' 'bg-white hover:bg-gray-50'}}"
+        role="button"
+        {{on "click" (fn this.handlePlanSelect plan)}}
+        data-test-plan-card
+      >
+        <div class="flex items-start gap-3">
+          <div
+            class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5
+              {{if (eq @giftPaymentFlow.pricingPlanId plan.id) 'border-teal-500' 'border-gray-400'}}"
+          >
+            {{#if (eq @giftPaymentFlow.pricingPlanId plan.id)}}
+              <div class="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>
+            {{/if}}
+          </div>
+
+          <div>
+            <div class="flex items-center gap-x-1.5">
+              <span class="text-gray-600 font-bold text-sm">
+                {{plan.title}}
+                pass
+              </span>
+              {{#if (eq plan.id "yearly")}}
+                <span class="inline-block bg-teal-500 text-white font-bold rounded px-1.5 py-1 text-xxs uppercase">popular</span>
+              {{/if}}
+            </div>
+
+            <div class="prose prose-xs prose-compact mt-1 text-gray-500">
+              {{#if plan.validityInMonths}}
+                <p>
+                  Access to all membership benefits for
+                  {{plan.title}}
+                </p>
+              {{else}}
+                <p>
+                  Access to all membership benefits forever
+                </p>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-end pl-4 flex-shrink-0">
+          <div class="text-gray-600 font-bold">
+            ${{plan.priceInDollars}}
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+
+  <div class="mt-6 flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+    <div class="text-xs text-gray-500">
+      You'll receive a gift link that you can send to the recipient.
+    </div>
+
+    <div>
+      <PrimaryButtonWithSpinner
+        @isDisabled={{false}}
+        @shouldShowSpinner={{and @giftPaymentFlow.isSaving true}}
+        @size="large"
+        {{on "click" this.handleContinueButtonClick}}
+        class="w-full sm:w-auto justify-center"
+        data-test-continue-button
+      >
+        Continue
+      </PrimaryButtonWithSpinner>
+    </div>
+  </div>
+</GiftPaymentPage::StepContainer>

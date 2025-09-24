@@ -9,14 +9,15 @@ export default createPage({
     scope: '[data-test-enter-details-step-container]',
   },
 
-  // paymentDetailsStepContainer: {
-  //   clickOnContinueButton: clickable('[data-test-continue-button]'),
-  //   scope: '[data-test-payment-details-step-container]',
-  // },
+  choosePlanStepContainer: {
+    clickOnContinueButton: clickable('[data-test-continue-button]'),
+    scope: '[data-test-choose-plan-step-container]',
+  },
 
-  // reviewPaymentStepContainer: {
-  //   scope: '[data-test-review-payment-step-container]',
-  // },
+  confirmAndPayStepContainer: {
+    clickOnPayButton: clickable('[data-test-pay-button]'),
+    scope: '[data-test-confirm-and-pay-step-container]',
+  },
 
   visit: visitable('/gifts/buy'),
 });

@@ -14,17 +14,13 @@
         class="mb-20"
       />
 
-      {{#if (eq this.currentStep 1)}}
-        <GiftPaymentPage::EnterDetailsStepContainer
-          @giftPaymentFlow={{this.model}}
-          @isComplete={{this.isStep1Complete}}
-          @onContinueButtonClick={{this.handleContinueButtonClick}}
-        />
-      {{else if (eq this.currentStep 2)}}
-        {{!-- <TeamPaymentPage::PaymentDetailsStepContainer @teamPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} /> --}}
-      {{else if (eq this.currentStep 3)}}
-        {{!-- <TeamPaymentPage::ReviewPaymentStepContainer @teamPaymentFlow={{this.model}} /> --}}
-      {{/if}}
+      {{#animated-if (eq this.currentStep 1) use=this.transition}}
+        <GiftPaymentPage::EnterDetailsStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+      {{else}}{{#if (eq this.currentStep 2)}}
+          <GiftPaymentPage::ChoosePlanStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+        {{else if (eq this.currentStep 3)}}
+          <GiftPaymentPage::ConfirmAndPayStepContainer @giftPaymentFlow={{this.model}} />
+        {{/if}}{{/animated-if}}
     {{/if}}
   </div>
 </div>

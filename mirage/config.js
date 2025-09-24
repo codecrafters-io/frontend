@@ -35,6 +35,7 @@ import emailAddresses from './handlers/email-addresses';
 import fakeSubmissionLogs from './handlers/fake-submission-logs';
 import featureSuggestions from './handlers/feature-suggestions';
 import freeUsageGrants from './handlers/free-usage-grants';
+import giftPaymentFlows from './handlers/gift-payment-flows';
 import githubAppInstallations from './handlers/github-app-installations';
 import githubRepositorySyncConfigurations from './handlers/github-repository-sync-configurations';
 import individualCheckoutSessions from './handlers/individual-checkout-sessions';
@@ -174,6 +175,7 @@ function routes() {
   fakeSubmissionLogs(this);
   featureSuggestions(this);
   freeUsageGrants(this);
+  giftPaymentFlows(this);
   githubAppInstallations(this);
   githubRepositorySyncConfigurations(this);
   individualCheckoutSessions(this);
