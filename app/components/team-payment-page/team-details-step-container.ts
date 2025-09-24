@@ -16,6 +16,10 @@ interface Signature {
 export default class TeamDetailsForm extends Component<Signature> {
   declare formElement: HTMLFormElement;
 
+  get numberOfSeatsAsString(): string {
+    return String(this.args.teamPaymentFlow.numberOfSeats);
+  }
+
   @action
   async handleDecrementSeatsButtonClick(event: Event) {
     event.preventDefault();

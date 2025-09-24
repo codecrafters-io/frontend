@@ -35,6 +35,7 @@
         id="coupon_code"
         placeholder="SECRET_COUPON"
       />
+      {{! @glint-expect-error: @teamPaymentFlow.isSaving type is wrong, doesnt return boolean }}
       {{#if @teamPaymentFlow.isSaving}}
         {{#if @teamPaymentFlow.hasCouponCode}}
           <div class="text-gray-500 font-semibold text-sm mt-2">Validating...</div>
@@ -86,7 +87,7 @@
           @type="number"
           min="5"
           size="5"
-          @value={{@teamPaymentFlow.numberOfSeats}}
+          @value={{this.numberOfSeatsAsString}}
           class="number-input-with-no-controls text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 text-center w-16"
           {{on "change" this.handleValueUpdated}}
         />
@@ -111,6 +112,7 @@
       <div>
         <PrimaryButtonWithSpinner
           @isDisabled={{not @isComplete}}
+          {{! @glint-expect-error: @teamPaymentFlow.isSaving type is wrong, doesnt return boolean }}
           @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
           {{on "click" @onContinueButtonClick}}
           type="submit"
