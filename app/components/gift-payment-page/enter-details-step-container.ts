@@ -52,7 +52,7 @@ Hope you enjoy learning with CodeCrafters.`;
   }
 
   saveGiftPaymentFlowTask = task({ keepLatest: true }, async (): Promise<void> => {
-    this.args.giftPaymentFlow.save();
+    await this.args.giftPaymentFlow.save();
   });
 }
 
