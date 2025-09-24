@@ -5,7 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import type Store from '@ember-data/store';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
-import { fade } from 'ember-animated/transitions/fade';
+import fade from 'ember-animated/transitions/fade';
 
 export default class GiftsBuyController extends Controller {
   transition = fade;
