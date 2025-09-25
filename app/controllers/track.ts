@@ -11,7 +11,7 @@ export default class TrackController extends Controller {
 
   get courses(): CourseModel[] {
     if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
-      return this.model.courses;
+      return this.model.courses.rejectBy('releaseStatusIsDeprecated');
     }
 
     return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').rejectBy('visibilityIsPrivate');
