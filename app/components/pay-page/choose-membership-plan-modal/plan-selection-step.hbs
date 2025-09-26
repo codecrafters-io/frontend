@@ -5,7 +5,7 @@
         @isSelected={{eq @selectedPlan.id plan.id}}
         @onClick={{fn @onPlanSelect plan}}
         @plan={{plan}}
-        @promotionalDiscount={{if (eq plan.id "yearly") @activeDiscountForYearlyPlan null}}
+        @promotionalDiscount={{if (eq plan.validityInMonths 12) @activeDiscountForYearlyPlan null}}
         @regionalDiscount={{@regionalDiscount}}
       />
     {{/each}}

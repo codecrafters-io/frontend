@@ -23,7 +23,7 @@
           {{@plan.title}}
           pass
         </span>
-        {{#if (eq @plan.id "yearly")}}
+        {{#if (eq @plan.validityInMonths 12)}}
           <span class="inline-block bg-teal-500 text-white font-bold rounded px-1.5 py-1 text-xxs uppercase">best value</span>
         {{/if}}
       </div>
