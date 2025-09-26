@@ -5,7 +5,6 @@ import giftPaymentPage from 'codecrafters-frontend/tests/pages/gift-payment-page
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
 import windowMock from 'ember-window-mock';
-import { waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | buy-gift-page | purchase', function (hooks) {
   setupApplicationTest(hooks);
