@@ -74,15 +74,15 @@
     {{/if}}
 
     <PrimaryButtonWithSpinner
-      @isDisabled={{this.isProcessingPayment}}
-      @shouldShowSpinner={{this.isProcessingPayment}}
+      @isDisabled={{this.isProcessingPayButtonClick}}
+      @shouldShowSpinner={{this.isProcessingPayButtonClick}}
       @size="large"
       {{on "click" this.handlePaymentButtonClick}}
       class="w-full sm:w-auto justify-center"
       data-test-pay-button
     >
-      {{#if this.isProcessingPayment}}
-        Loading...
+      {{#if this.isProcessingPayButtonClick}}
+        Saving...
       {{else}}
         Pay ${{this.totalAmount}}
         →

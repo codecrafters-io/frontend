@@ -19,7 +19,7 @@ interface Signature {
 
 export default class ConfirmAndPayStepContainer extends Component<Signature> {
   @tracked errorMessage: string | null = null;
-  @tracked isProcessingPayment = false;
+  @tracked isProcessingPayButtonClick = false;
 
   pricingPlans = PRICING_PLANS;
 
@@ -37,13 +37,13 @@ export default class ConfirmAndPayStepContainer extends Component<Signature> {
   @waitFor
   async handlePaymentButtonClick() {
     this.errorMessage = null;
-    this.isProcessingPayment = true;
+    this.isProcessingPayButtonClick = true;
 
     try {
       await this.processPaymentTask.perform();
     } catch {
       this.errorMessage = 'Payment failed. Please try again.';
-      this.isProcessingPayment = false;
+      this.isProcessingPayButtonClick = false;
     }
   }
 
