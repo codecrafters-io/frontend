@@ -1,0 +1,92 @@
+<GiftPaymentPage::StepContainer @title="Confirm & Pay" data-test-confirm-and-pay-step-container>
+  <Alert @color="blue" class="mb-3">
+    <div>
+      <div class="prose prose-blue prose-xs prose-compact">
+        <h4>
+          Your membership gift details
+        </h4>
+
+        <ul>
+          <li>
+            You are purchasing a
+            <b>{{this.selectedPlan.title}} pass</b>
+            gift (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 2)}}>change</button>)
+          </li>
+          <li>
+            Your payment receipt will be sent to
+            <b>{{@giftPaymentFlow.senderEmailAddress}}</b>
+            (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 1)}}>change</button>)
+          </li>
+        </ul>
+      </div>
+    </div>
+  </Alert>
+
+  <Alert @color="teal" class="mt-3">
+    <div class="prose prose-xs prose-green prose-compact">
+      <h4>
+        Next steps
+      </h4>
+
+      <ul>
+        <li>
+          Once payment is complete, we'll send you a gift link. You can share this link with the recipient at the time of your choosing.
+        </li>
+        <li>
+          If you run into any issues, please reach out to us at
+          <a href="mailto:hello@codecrafters.io">hello@codecrafters.io</a>. We usually respond within 24 hours.
+        </li>
+      </ul>
+    </div>
+  </Alert>
+
+  <div class="bg-gray-50/50 rounded-sm border border-gray-200 p-3 mt-3">
+    <div class="prose prose-xs prose-compact">
+      <h4>
+        Expiry and refunds
+      </h4>
+
+      <ul>
+        <li>
+          If a gift isn't claimed within 12 months, it will expire.
+        </li>
+        <li>
+          You are eligible for a full refund within 30 days of purchase if the gift hasn't been claimed yet.
+        </li>
+        <li>
+          Refunds are not available after 30 days of purchase, or if the gift has been claimed.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+  <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+    {{#if this.errorMessage}}
+      <div class="text-red-600 text-sm font-semibold">
+        {{this.errorMessage}}
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500 text-center">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isProcessingPayment}}
+      @shouldShowSpinner={{this.isProcessingPayment}}
+      @size="large"
+      {{on "click" this.handlePaymentButtonClick}}
+      class="w-full sm:w-auto justify-center"
+      data-test-pay-button
+    >
+      {{#if this.isProcessingPayment}}
+        Loading...
+      {{else}}
+        Pay ${{this.totalAmount}}
+        →
+      {{/if}}
+    </PrimaryButtonWithSpinner>
+  </div>
+</GiftPaymentPage::StepContainer>
