@@ -1,22 +1,11 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
+import type { PricingPlan } from 'codecrafters-frontend/components/pay-page/choose-membership-plan-modal';
+import { PRICING_PLANS } from 'codecrafters-frontend/components/pay-page/choose-membership-plan-modal';
+import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-
-export interface PricingPlan {
-  id: 'quarterly' | 'yearly' | 'lifetime';
-  title: string;
-  priceInDollars: number;
-  validityInMonths?: number;
-}
-
-export const GIFT_PRICING_PLANS: PricingPlan[] = [
-  { id: 'quarterly', title: '3 months', priceInDollars: 120, validityInMonths: 3 },
-  { id: 'yearly', title: '1 year', priceInDollars: 360, validityInMonths: 12 },
-  { id: 'lifetime', title: 'Lifetime', priceInDollars: 1490 },
-];
 
 interface Signature {
   Element: HTMLDivElement;
@@ -30,7 +19,7 @@ interface Signature {
 export default class ChoosePlanStepContainer extends Component<Signature> {
   @tracked isProcessingContinueButtonClick = false;
 
-  pricingPlans = GIFT_PRICING_PLANS;
+  pricingPlans = PRICING_PLANS;
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);

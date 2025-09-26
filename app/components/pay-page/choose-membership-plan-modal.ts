@@ -11,16 +11,17 @@ import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotio
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export interface PricingPlan {
-  id: 'quarterly' | 'yearly' | 'lifetime';
+  id: 'v1-3mo' | 'v1-1yr' | 'v1-lifetime';
+  frequency: 'quarterly' | 'yearly' | 'lifetime'; // TODO: Remove this!
   title: string;
   priceInDollars: number;
   validityInMonths?: number; // undefined for lifetime
 }
 
 export const PRICING_PLANS: PricingPlan[] = [
-  { id: 'quarterly', title: '3 months', priceInDollars: 120, validityInMonths: 3 },
-  { id: 'yearly', title: '1 year', priceInDollars: 360, validityInMonths: 12 },
-  { id: 'lifetime', title: 'Lifetime', priceInDollars: 1490 },
+  { id: 'v1-3mo', frequency: 'quarterly', title: '3 months', priceInDollars: 120, validityInMonths: 3 },
+  { id: 'v1-1yr', frequency: 'yearly', title: '1 year', priceInDollars: 360, validityInMonths: 12 },
+  { id: 'v1-lifetime', frequency: 'lifetime', title: 'Lifetime', priceInDollars: 1490 },
 ];
 
 interface Signature {
@@ -43,7 +44,7 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @tracked currentStep: 'plan-selection' | 'invoice-details' = 'plan-selection';
   @tracked extraInvoiceDetailsRequested = false;
   @tracked isCreatingCheckoutSession = false;
-  @tracked selectedPlanId: PricingPlan['id'] = 'quarterly';
+  @tracked selectedPlanId: PricingPlan['id'] = 'v1-3mo';
 
   get selectedPlan(): PricingPlan {
     const plan = this.pricingPlans.find((p) => p.id === this.selectedPlanId);
@@ -90,8 +91,8 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
       cancelUrl: `${window.location.origin}/pay`,
       extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
-      pricingFrequency: this.selectedPlanId,
-      promotionalDiscount: this.selectedPlanId === 'yearly' ? this.args.activeDiscountForYearlyPlan : null,
+      pricingFrequency: this.selectedPlan.frequency, // TODO: Switch to passing in actual IDs
+      promotionalDiscount: this.selectedPlanId === 'v1-1yr' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
       successUrl: `${window.location.origin}/catalog`,
     });
