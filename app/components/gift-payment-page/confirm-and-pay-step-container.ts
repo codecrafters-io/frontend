@@ -48,12 +48,9 @@ export default class ConfirmAndPayStepContainer extends Component<Signature> {
   }
 
   processPaymentTask = task({ keepLatest: true }, async (): Promise<void> => {
-    const successUrl = `${window.location.origin}/gifts/success`;
-    const cancelUrl = `${window.location.origin}/gifts/buy?f=${this.args.giftPaymentFlow.id}`;
-
     const response = await this.args.giftPaymentFlow.generateCheckoutSession({
-      successUrl,
-      cancelUrl,
+      'success-url': `${window.location.origin}/gifts/success`,
+      'cancel-url': `${window.location.origin}/gifts/buy?f=${this.args.giftPaymentFlow.id}`,
     });
 
     window.location.href = response.link;

@@ -6,7 +6,10 @@ export default class GiftPaymentFlowModel extends Model {
   @attr('string') declare pricingPlanId: string;
   @attr('string') declare senderEmailAddress: string;
 
-  declare generateCheckoutSession: (this: GiftPaymentFlowModel, payload: { successUrl: string; cancelUrl: string }) => Promise<{ link: string }>;
+  declare generateCheckoutSession: (
+    this: GiftPaymentFlowModel,
+    payload: { 'success-url': string; 'cancel-url': string },
+  ) => Promise<{ link: string }>;
 }
 
 GiftPaymentFlowModel.prototype.generateCheckoutSession = memberAction({
