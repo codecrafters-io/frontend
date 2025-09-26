@@ -5,6 +5,8 @@ import { PRICING_PLANS } from 'codecrafters-frontend/components/pay-page/choose-
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import window from 'ember-window-mock';
+import { waitFor } from '@ember/test-waiters';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,7 +19,7 @@ interface Signature {
 
 export default class ConfirmAndPayStepContainer extends Component<Signature> {
   @tracked errorMessage: string | null = null;
-  @tracked isProcessingPayment = false;
+  @tracked isProcessingPayButtonClick = false;
 
   pricingPlans = PRICING_PLANS;
 
@@ -32,27 +34,26 @@ export default class ConfirmAndPayStepContainer extends Component<Signature> {
   }
 
   @action
+  @waitFor
   async handlePaymentButtonClick() {
     this.errorMessage = null;
-    this.isProcessingPayment = true;
+    this.isProcessingPayButtonClick = true;
 
     try {
       await this.processPaymentTask.perform();
     } catch {
       this.errorMessage = 'Payment failed. Please try again.';
-      this.isProcessingPayment = false;
+      this.isProcessingPayButtonClick = false;
     }
   }
 
   processPaymentTask = task({ keepLatest: true }, async (): Promise<void> => {
-    // TODO: Implement actual payment processing
-    // This would typically involve:
-    // 1. Creating a checkout session with Stripe
-    // 2. Redirecting to Stripe Checkout
-    // 3. Handling the success/cancel redirects
+    const response = await this.args.giftPaymentFlow.generateCheckoutSession({
+      'success-url': `${window.location.origin}/gifts/success`,
+      'cancel-url': `${window.location.origin}/gifts/buy?f=${this.args.giftPaymentFlow.id}`,
+    });
 
-    // For now, simulate a delay
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    window.location.href = response.link;
   });
 }
 
