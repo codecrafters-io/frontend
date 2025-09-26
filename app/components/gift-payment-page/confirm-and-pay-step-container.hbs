@@ -10,12 +10,12 @@
           <li>
             You are purchasing a
             <b>{{this.selectedPlan.title}} pass</b>
-            gift (<span class="underline">change</span>)
+            gift (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 2)}}>change</button>)
           </li>
           <li>
             Your payment receipt will be sent to
             <b>{{@giftPaymentFlow.senderEmailAddress}}</b>
-            (<span class="underline">change</span>)
+            (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 1)}}>change</button>)
           </li>
         </ul>
       </div>

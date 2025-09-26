@@ -42,6 +42,12 @@ export default class ChoosePlanStepContainer extends Component<Signature> {
     }
   }
 
+  get selectedPlan(): PricingPlan | null {
+    const plan = this.pricingPlans.find((p) => p.id === this.args.giftPaymentFlow.pricingPlanId);
+
+    return plan || null;
+  }
+
   get validPricingPlanIds(): string[] {
     return this.pricingPlans.map((plan) => plan.id);
   }

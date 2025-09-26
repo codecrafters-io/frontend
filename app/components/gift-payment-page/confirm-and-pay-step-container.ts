@@ -22,6 +22,7 @@ interface Signature {
 
   Args: {
     giftPaymentFlow: GiftPaymentFlowModel;
+    onNavigationItemClick: (step: number) => void;
   };
 }
 
