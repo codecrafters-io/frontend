@@ -5,6 +5,11 @@ alwaysApply: true
 When you're asked to make changes, follow these rules:
 
 - Say consistent with the rest of our codebase. Read other files to understand what our patterns are.
-- Don't run tests using `npm test`, those are extremely slow. Just use `npm run lint` instead.
+- Run `npm run lint` after making changes.
+- Once linting is successful, you can try running tests if there are ones that cover the area you changed.
+  - Use `npx run ember test --module '<module-name>'` to run tests.
+  - If you know the test file, the module name is at the top (`module('...', function (hooks) { ... })`)
+  - If you're unsure about the test file, ask me.
+- Don't run `npm run test`, that's super slow.
 - Don't run commands like `npm run build` / `npm run start`.
 
