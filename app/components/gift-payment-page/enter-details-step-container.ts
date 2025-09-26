@@ -16,7 +16,8 @@ interface Signature {
 export default class EnterDetailsStepContainer extends Component<Signature> {
   formElement: HTMLFormElement | null = null;
 
-  @tracked continueButtonIsDisabled = true;
+  @tracked isProcessingContinueButtonClick = false;
+  @tracked formInputsAreValid = false;
 
   get giftMessageInputPlaceholder() {
     return `Hey Jess!
@@ -27,7 +28,7 @@ Hope you enjoy learning with CodeCrafters.`;
   @action
   async handleDidInsertFormElement(formElement: HTMLFormElement) {
     this.formElement = formElement;
-    this.continueButtonIsDisabled = !this.formElement.checkValidity();
+    this.recomputeFormInputsAreValid();
   }
 
   @action
@@ -35,8 +36,10 @@ Hope you enjoy learning with CodeCrafters.`;
     e.preventDefault();
 
     this.formElement!.reportValidity();
+    this.recomputeFormInputsAreValid();
 
-    if (this.formElement!.checkValidity()) {
+    if (this.formInputsAreValid) {
+      this.isProcessingContinueButtonClick = true;
       await this.saveGiftPaymentFlowTask.perform();
       this.args.onContinueButtonClick();
     }
@@ -44,11 +47,16 @@ Hope you enjoy learning with CodeCrafters.`;
 
   @action
   async handleInputBlur() {
-    if (this.formElement!.checkValidity()) {
+    this.recomputeFormInputsAreValid();
+
+    if (this.formInputsAreValid) {
       this.saveGiftPaymentFlowTask.perform();
     }
+  }
 
-    this.continueButtonIsDisabled = !this.formElement!.checkValidity();
+  @action
+  recomputeFormInputsAreValid() {
+    this.formInputsAreValid = this.formElement!.checkValidity();
   }
 
   saveGiftPaymentFlowTask = task({ keepLatest: true }, async (): Promise<void> => {

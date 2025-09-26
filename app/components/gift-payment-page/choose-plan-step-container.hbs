@@ -62,14 +62,18 @@
 
     <div>
       <PrimaryButtonWithSpinner
-        @isDisabled={{false}}
-        @shouldShowSpinner={{and @giftPaymentFlow.isSaving true}}
+        @isDisabled={{this.isProcessingContinueButtonClick}}
+        @shouldShowSpinner={{this.isProcessingContinueButtonClick}}
         @size="large"
         {{on "click" this.handleContinueButtonClick}}
         class="w-full sm:w-auto justify-center"
         data-test-continue-button
       >
-        Continue
+        {{#if this.isProcessingContinueButtonClick}}
+          Saving...
+        {{else}}
+          Continue
+        {{/if}}
       </PrimaryButtonWithSpinner>
     </div>
   </div>

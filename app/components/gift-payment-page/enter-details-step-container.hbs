@@ -32,20 +32,25 @@
         You'll receive a gift link that you can send to the recipient.
       </div>
       <div>
+        {{! We don't use on "click" here because it's handled by the form submit event }}
         <PrimaryButtonWithSpinner
-          @isDisabled={{this.continueButtonIsDisabled}}
-          @shouldShowSpinner={{and @giftPaymentFlow.isSaving true}}
+          @isDisabled={{or (not this.formInputsAreValid) this.isProcessingContinueButtonClick}}
+          @shouldShowSpinner={{this.isProcessingContinueButtonClick}}
           @size="large"
           type="submit"
           class="w-full sm:w-auto justify-center"
           data-test-continue-button
         >
-          Continue
+          {{#if this.isProcessingContinueButtonClick}}
+            Saving...
+          {{else}}
+            Continue
+          {{/if}}
         </PrimaryButtonWithSpinner>
 
-        {{#if this.continueButtonIsDisabled}}
+        {{#unless this.formInputsAreValid}}
           <EmberTooltip @text="Enter details above to continue" />
-        {{/if}}
+        {{/unless}}
       </div>
     </div>
   </form>
