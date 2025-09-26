@@ -4,6 +4,8 @@ import { setupWindowMock } from 'ember-window-mock/test-support';
 import giftPaymentPage from 'codecrafters-frontend/tests/pages/gift-payment-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
+import windowMock from 'ember-window-mock';
+import { waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | buy-gift-page | purchase', function (hooks) {
   setupApplicationTest(hooks);
@@ -28,5 +30,6 @@ module('Acceptance | buy-gift-page | purchase', function (hooks) {
     await percySnapshot('Gift Payment - Confirm and Pay Step');
 
     await giftPaymentPage.confirmAndPayStepContainer.clickOnPayButton();
+    assert.strictEqual(windowMock.location.href, 'https://checkout.stripe.com/test-checkout-session', 'should redirect to Stripe checkout');
   });
 });
