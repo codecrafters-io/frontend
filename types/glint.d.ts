@@ -19,6 +19,10 @@ declare module '@glint/environment-ember-loose/registry' {
     capitalize: HelperLike<{ Return: string; Args: { Positional: [string] } }>;
     'did-resize': ModifierLike<{ Args: { Positional: [(entry: ResizeObserverEntry) => void] } }>;
     'donut-progress': ModifierLike<{ Args: { Positional: [] } }>;
+    DonutProgress: ComponentLike<{
+      Args: { Named: { total: number; completed: number; size?: number; class?: string } };
+      Element: SVGElement;
+    }>;
     EmberTooltip: ComponentLike<{
       Args: { Named: { text?: string; side?: 'top' | 'bottom' | 'left' | 'right'; delay?: number; duration?: number; popperContainer?: string } };
       Blocks: { default?: [] };
