@@ -5,19 +5,13 @@ interface Signature {
 
   Args: {
     total: number;
-    completed: number;
-    size?: number;
-    class?: string;
+    completed: number | undefined;
   };
 }
 
 export default class DonutProgress extends Component<Signature> {
   get isComplete(): boolean {
     return this.args.total > 0 && (this.args.completed || 0) >= this.args.total;
-  }
-
-  get size(): number {
-    return this.args.size || 24;
   }
 
   get targetOffset(): number {

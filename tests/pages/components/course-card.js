@@ -11,4 +11,5 @@ export default {
   hasDifficultyLabel: isPresent('[data-test-course-difficulty-label]'),
   progressText: text('[data-test-course-progress-text]'),
   progressBarStyle: attribute('style', '[data-test-course-progress-bar]'),
+  hasDonutProgressBar: isPresent('[data-test-course-progress-bar]'),
 };
