@@ -183,6 +183,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
 
     await applicationModal.enterEmailStepContainer.fillInEmailAddress('bill@u.nus.edu');
     await applicationModal.enterEmailStepContainer.clickOnVerifyEmailButton();
+    await animationsSettled();
 
     assert.ok(
       applicationModal.applicationRejectedStepContainer.isVisible,
@@ -190,6 +191,7 @@ module('Acceptance | institution-page | claim-offer-test', function (hooks) {
     );
 
     await applicationModal.applicationRejectedStepContainer.clickOnChangeEmailButton();
+    await animationsSettled();
 
     assert.ok(applicationModal.enterEmailStepContainer.isVisible, 'Enter email step should be visible after clicking on change email button');
     assert.notOk(
