@@ -118,7 +118,7 @@ export default class TabList extends Component<Signature> {
     }
 
     if (this.args.course.visibilityIsPublic) {
-      // @ts-ignore
+      // @ts-expect-error currentStep.courseStage not typed
       if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
         tabs.push({
           icon: 'play',
@@ -132,7 +132,7 @@ export default class TabList extends Component<Signature> {
         });
       }
 
-      // @ts-ignore
+      // @ts-expect-error currentStep.courseStage not typed
       if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.course.hasConcepts) {
         tabs.push({
           icon: 'academic-cap',
@@ -166,7 +166,7 @@ export default class TabList extends Component<Signature> {
     }
 
     if (this.args.currentStep.type === 'CourseStageStep') {
-      // @ts-ignore
+      // @ts-expect-error currentStep.courseStage not typed
       if (this.args.currentStep.courseStage.isFirst) {
         return tab.slug === 'instructions';
       } else {

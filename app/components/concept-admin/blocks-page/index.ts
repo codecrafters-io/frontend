@@ -217,9 +217,9 @@ export default class BlocksPage extends Component<Signature> {
         'new-blocks': this.rawBlocksAfterMutations,
       });
     } catch (e: unknown) {
-      // @ts-ignore
+      // @ts-expect-error error object properties not typed
       if (e.isAdapterError) {
-        // @ts-ignore
+        // @ts-expect-error error object properties not typed
         e.errors.forEach((error) => {
           this.args.concept.errors.add('blocks', error.detail);
         });

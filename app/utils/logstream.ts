@@ -62,7 +62,7 @@ export default class Logstream {
   });
 
   pollTask = task({ keepLatest: true }, async (): Promise<void> => {
-    // @ts-ignore
+    // @ts-expect-error store.adapterFor not typed
     const adapter: JSONAPIAdapter = this.store.adapterFor('application');
 
     const response = await adapter.ajax(`${adapter.host}/api/v1/logstreams/${this.logstreamId}/poll`, 'GET', {

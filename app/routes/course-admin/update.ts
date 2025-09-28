@@ -6,7 +6,7 @@ export default class CourseAdminUpdateRoute extends BaseRoute {
   @service declare store: Store;
 
   async model(params: { update_id: string }) {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course;
     const update = await this.store.findRecord('course-definition-update', params.update_id, { include: 'applier,course' });
 

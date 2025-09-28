@@ -23,7 +23,7 @@ export default class ScreencastsTabController extends Controller {
   @tracked selectedScreencastId: string | undefined;
   @tracked screencastPlayerElement: HTMLDivElement | undefined;
 
-  // @ts-ignore
+  // @ts-expect-error authenticator service not typed
   @service declare authenticator;
 
   @service declare store: Store;

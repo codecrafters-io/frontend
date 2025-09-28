@@ -40,9 +40,8 @@ export default class CourseRoute extends BaseRoute {
   }
 
   findOrCreateRepository(course: CourseModel, transition: Transition, repositories: RepositoryModel[]) {
-    // @ts-ignore
+    // @ts-expect-error transition.to.queryParams not typed
     if (transition.to.queryParams.repo && transition.to.queryParams.repo === 'new') {
-      // @ts-ignore
       const existingNewRepository = this.store.peekAll('repository').find((repository) => repository.isNew);
 
       if (existingNewRepository) {
@@ -53,9 +52,9 @@ export default class CourseRoute extends BaseRoute {
       } else {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
-      // @ts-ignore
+      // @ts-expect-error transition.to.queryParams not typed
     } else if (transition.to.queryParams.repo) {
-      // @ts-ignore
+      // @ts-expect-error transition.to.queryParams not typed
       const selectedRepository = repositories.find((repository) => repository.id === transition.to.queryParams.repo);
 
       if (selectedRepository) {
@@ -63,12 +62,11 @@ export default class CourseRoute extends BaseRoute {
       } else {
         this.router.replaceWith('course', course.slug, { queryParams: { repo: null } });
       }
-      // @ts-ignore
+      // @ts-expect-error transition.to.queryParams not typed
     } else if (transition.to.queryParams.track) {
       const lastPushedRepositoryForTrack = repositories
-        // @ts-ignore
+        // @ts-expect-error transition.to.queryParams not typed
         .filterBy('language.slug', transition.to.queryParams.track)
-        // @ts-ignore
         .filterBy('firstSubmissionCreated')
         .sortBy('lastSubmissionAt').lastObject;
 
@@ -78,9 +76,7 @@ export default class CourseRoute extends BaseRoute {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
     } else {
-      // @ts-ignore
       const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
-      // @ts-ignore
       const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
 
       if (lastPushedRepository) {
@@ -139,7 +135,7 @@ export default class CourseRoute extends BaseRoute {
     if (transition.to?.name === 'course.index') {
       const activeStep = this.coursePageState.stepListAsStepListDefinition.activeStep;
 
-      // @ts-ignore not sure if we need to handle nullity here
+      // @ts-expect-error activeStep might be null
       this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
     }
 

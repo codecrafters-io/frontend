@@ -50,7 +50,7 @@ export default class BaseRoute extends Route {
     const queryParams = transition.to?.queryParams;
 
     if (queryParams && queryParams['r'] && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams['r'])) {
-      // @ts-ignore
+      // @ts-expect-error utmCampaignIdTracker service not typed
       this.utmCampaignIdTracker.setCampaignId(queryParams['r']);
       delete queryParams['r'];
       this.router.replaceWith(transition.to.name, { queryParams });

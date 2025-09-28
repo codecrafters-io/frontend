@@ -14,7 +14,7 @@ export default class StageInsightsIndexRoute extends BaseRoute {
   @service declare store: Store;
 
   async model(params: { stage_slug: string }): Promise<ModelType> {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
     const stage = course.stages.find((stage) => stage.slug === params.stage_slug) as CourseStageModel;
 

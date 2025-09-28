@@ -22,11 +22,9 @@ export default class SetupStep extends StepDefinition {
         dotType: 'blinking',
         text: 'Listening for a git push...',
       };
-      // @ts-ignore
     } else if (this.status === 'locked') {
       return {
         dotType: 'none',
-        // @ts-ignore
         text: `Complete introduction step to proceed`,
       };
     } else {
@@ -40,18 +38,18 @@ export default class SetupStep extends StepDefinition {
   get routeParams() {
     return {
       route: 'course.setup',
-      // @ts-ignore
+      // @ts-expect-error repository.course not typed
       models: [this.repository.course.slug],
     };
   }
 
   get status() {
-    // @ts-ignore
+    // @ts-expect-error repository.firstSubmissionCreated not typed
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
     }
 
-    // @ts-ignore
+    // @ts-expect-error repository properties not typed
     if (this.repository.isNew || !this.repository.preChallengeAssessmentSectionList.isComplete) {
       return 'locked';
     }

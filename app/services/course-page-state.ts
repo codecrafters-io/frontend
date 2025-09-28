@@ -17,7 +17,7 @@ export default class CoursePageStateService extends Service {
   get activeStep(): StepDefinition {
     if (!this.stepList) {
       // This triggers as a global failure in tests for some reason
-      // @ts-ignore
+      // @ts-expect-error returning null instead of StepDefinition
       return null;
     }
 
@@ -85,7 +85,7 @@ export default class CoursePageStateService extends Service {
 
   navigateToActiveStepIfCurrentStepIsInvalid(): void {
     if (!this.currentStepSansFallback) {
-      // @ts-ignore
+      // @ts-expect-error router transitionTo not properly typed with spread arguments
       this.router.transitionTo(this.activeStep.routeParams.route, ...this.activeStep.routeParams.models);
     }
   }

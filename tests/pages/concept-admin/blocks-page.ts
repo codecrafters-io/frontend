@@ -6,10 +6,8 @@ export default create({
   insertBlockMarkers: collection('[data-test-insert-block-marker]', {
     dropdown: {
       async clickOnItem(title: string) {
-        // @ts-ignore
         await Array.from(this.items)
-          // @ts-ignore
-          .find((item) => item.title.trim() === title)
+          .find((item) => item.title.trim() === title)!
           .click();
       },
 

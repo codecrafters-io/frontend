@@ -25,7 +25,7 @@ export default class RouteWillChangeModifier extends Modifier<Signature> {
   @action
   eventHandler(transition: Transition) {
     // Ember's docs don't mention this property?
-    // @ts-ignore
+    // @ts-expect-error transition.isAborted not typed
     if (transition.isAborted) {
       return;
     }

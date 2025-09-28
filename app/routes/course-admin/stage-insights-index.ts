@@ -12,7 +12,7 @@ export default class StageInsightsIndexRoute extends BaseRoute {
   @service declare store: Store;
 
   async model(): Promise<ModelType> {
-    // @ts-ignore
+    // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
 
     (await this.store.query('course-stage-participation-analysis', {
