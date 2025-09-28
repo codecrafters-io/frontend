@@ -31,7 +31,8 @@ jobs:
 
       - name: Run claim offer test 100 times
         run: |
+          set -e
           for i in {1..100}; do
             echo "Run $i/100"
-            npm run test:ember -- --filter="shows email already in use step if approved application exists" --silent
+            npm run test:ember -- --filter="shows email already in use step if approved application exists"
           done
