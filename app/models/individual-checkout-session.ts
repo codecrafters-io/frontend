@@ -5,6 +5,7 @@ import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-di
 export default class IndividualCheckoutSessionModel extends Model {
   @attr('boolean') declare extraInvoiceDetailsRequested: boolean;
   @attr('string') declare pricingFrequency: string;
+  @attr('string') declare pricingPlanId: string;
   @attr('string') declare successUrl: string;
   @attr('string') declare cancelUrl: string;
   @attr('string') declare url: string;
