@@ -47,7 +47,7 @@ export default class NavigationControls extends Component<Signature> {
   handleCloseButtonClick() {
     if (this.args.track) {
       this.router.transitionTo('track', this.args.track);
-    } else if (this.args.activeRepository && this.args.activeRepository.firstSubmissionCreated) {
+    } else if (this.args.activeRepository && this.args.activeRepository.language) {
       this.router.transitionTo('track', this.args.activeRepository.language!.slug);
     } else {
       this.router.transitionTo('catalog');
