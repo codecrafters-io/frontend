@@ -1,10 +1,52 @@
 import Component from '@glimmer/component';
 
-interface DonutProgressArgs {
-  total: number;
-  completed: number;
-  size?: number;
-  class?: string;
+interface Signature {
+  Element: SVGElement;
+
+  Args: {
+    total: number;
+    completed: number;
+    size?: number;
+    class?: string;
+  };
 }
 
-export default class DonutProgress extends Component<{ Args: DonutProgressArgs; Element: SVGElement }> {}
+export default class DonutProgress extends Component<Signature> {
+  get isComplete(): boolean {
+    return this.args.total > 0 && (this.args.completed || 0) >= this.args.total;
+  }
+
+  get progressPercentage(): number {
+    if (this.args.total === 0) {
+      return 0;
+    }
+
+    const actualProgress = (this.args.completed || 0) / this.args.total;
+    // Apply minimum width of 10% for visual appeal, but only if there's actual progress
+    const minProgress = actualProgress > 0 ? Math.max(0.1, actualProgress) : 0;
+
+    return Math.round(100 * minProgress);
+  }
+
+  get size(): number {
+    return this.args.size || 24;
+  }
+
+  get targetOffset(): number {
+    if (this.args.total === 0) {
+      return 62.83; // Full circle (no progress)
+    }
+
+    const actualProgress = (this.args.completed || 0) / this.args.total;
+    // Apply minimum width of 10% for visual appeal, but only if there's actual progress
+    const minProgress = actualProgress > 0 ? Math.max(0.1, actualProgress) : 0;
+
+    return Math.round(62.83 - 62.83 * minProgress);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    DonutProgress: typeof DonutProgress;
+  }
+}

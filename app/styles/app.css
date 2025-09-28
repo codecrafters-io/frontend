@@ -49,6 +49,12 @@ body {
   text-wrap: auto;
 }
 
+/* Donut progress animation */
+.donut-progress-circle {
+  stroke-dashoffset: 62.83;
+  transition: stroke-dashoffset 0.4s ease-out;
+}
+
 .prose pre code {
   white-space: pre;
 }
@@ -238,21 +244,4 @@ body {
 
 .ember-popover[x-placement^='left'] .ember-popover-arrow {
   border-left-color: #3a3c47;
-}
-
-/* Donut progress animation */
-@keyframes donut-progress {
-  from {
-    stroke-dashoffset: 62.83;
-  }
-
-  to {
-    stroke-dashoffset: var(--target-offset);
-  }
-}
-
-.donut-progress-circle {
-  stroke-dasharray: 62.83 62.83;
-  stroke-dashoffset: 62.83;
-  animation: donut-progress 500ms ease-out forwards;
 }

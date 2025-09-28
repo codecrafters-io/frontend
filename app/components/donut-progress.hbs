@@ -1,6 +1,13 @@
-<svg width="{{or @size 24}}" height="{{or @size 24}}" viewBox="0 0 24 24" class="transform -rotate-90 {{@class}}" ...attributes>
+<svg width={{this.size}} height={{this.size}} viewBox="0 0 24 24" class="transform -rotate-90 {{@class}}" ...attributes>
   {{! Base circle (background) }}
-  <circle cx="12" cy="12" r="10" fill="none" stroke-width="2" class="stroke-blue-100 dark:stroke-blue-900" />
+  <circle
+    cx="12"
+    cy="12"
+    r="10"
+    fill="none"
+    stroke-width="2"
+    class="{{if this.isComplete 'stroke-teal-100 dark:stroke-teal-900' 'stroke-blue-100 dark:stroke-blue-900'}}"
+  />
   {{! Progress circle }}
   <circle
     cx="12"
@@ -9,9 +16,7 @@
     fill="none"
     stroke-width="2"
     stroke-linecap="round"
-    class="donut-progress-circle stroke-blue-500"
-    data-progress="{{round (mult 100 (max 0.1 (div (or @completed 0) @total)))}}"
-    data-target-offset="{{round (sub 62.83 (mult 62.83 (max 0.1 (div (or @completed 0) @total))))}}"
-    {{donut-progress}}
+    class="donut-progress-circle {{if this.isComplete 'stroke-teal-500' 'stroke-blue-500'}}"
+    style={{html-safe (concat "stroke-dasharray: 62.83 62.83; stroke-dashoffset: " this.targetOffset)}}
   />
 </svg>
