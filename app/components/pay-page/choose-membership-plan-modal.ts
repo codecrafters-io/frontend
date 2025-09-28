@@ -91,7 +91,6 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
       cancelUrl: `${window.location.origin}/pay`,
       extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
-      pricingFrequency: this.selectedPlan.frequency, // TODO: Remove in favor of pricingPlanId
       pricingPlanId: this.selectedPlanId,
       promotionalDiscount: this.selectedPlanId === 'v1-1yr' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
