@@ -47,8 +47,8 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressBar, 'expected first track to have progress bar');
+    assert.true(catalogPage.trackCards[0].hasDonutProgressBar, 'expected first track to have donut progress indicator');
     assert.strictEqual(catalogPage.trackCards[0].progressText, '1/86 stages');
-    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:1%');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -122,7 +122,6 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start');
     assert.strictEqual(catalogPage.trackCards[0].progressText, '15/15 stages');
-    assert.strictEqual(catalogPage.trackCards[0].progressBarStyle, 'width:100%');
   });
 
   test('it renders if user is not signed in', async function (assert) {

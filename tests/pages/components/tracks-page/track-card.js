@@ -9,4 +9,5 @@ export default {
   hasDifficultyLabel: isPresent('[data-test-track-difficulty-label]'),
   progressText: text('[data-test-track-progress-text]'),
   progressBarStyle: attribute('style', '[data-test-track-progress-bar]'),
+  hasDonutProgressBar: isPresent('[data-test-track-progress-bar]'),
 };

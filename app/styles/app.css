@@ -40,6 +40,22 @@ body {
   background: linear-gradient(to left, rgb(241 245 249 / 100%) 0%, rgb(241 245 249 / 100%) 20%, rgb(241 245 249 / 0%) 100%);
 }
 
+@keyframes donut-progress {
+  from {
+    stroke-dashoffset: 62.83;
+  }
+
+  to {
+    stroke-dashoffset: var(--target-offset);
+  }
+}
+
+.donut-progress-circle {
+  stroke-dasharray: 62.83 62.83;
+  stroke-dashoffset: 62.83;
+  animation: donut-progress 400ms ease-out forwards;
+}
+
 .top-50-percent {
   top: 50%;
 }
@@ -47,12 +63,6 @@ body {
 .prose code {
   overflow-wrap: break-word;
   text-wrap: auto;
-}
-
-/* Donut progress animation */
-.donut-progress-circle {
-  stroke-dashoffset: 62.83;
-  transition: stroke-dashoffset 0.4s ease-out;
 }
 
 .prose pre code {

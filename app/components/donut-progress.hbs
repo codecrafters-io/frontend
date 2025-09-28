@@ -5,7 +5,7 @@
     cy="12"
     r="10"
     fill="none"
-    stroke-width="2"
+    stroke-width="4"
     class="{{if this.isComplete 'stroke-teal-100 dark:stroke-teal-900' 'stroke-blue-100 dark:stroke-blue-900'}}"
   />
   {{! Progress circle }}
@@ -14,9 +14,10 @@
     cy="12"
     r="10"
     fill="none"
-    stroke-width="2"
+    stroke-width="4"
     stroke-linecap="round"
     class="donut-progress-circle {{if this.isComplete 'stroke-teal-500' 'stroke-blue-500'}}"
-    style={{html-safe (concat "stroke-dasharray: 62.83 62.83; stroke-dashoffset: " this.targetOffset)}}
+    data-target-offset={{this.targetOffset}}
+    {{donut-progress}}
   />
 </svg>
