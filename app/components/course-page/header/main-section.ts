@@ -9,13 +9,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    activeRepository: RepositoryModel;
     activeStep: StepDefinition;
     course: CourseModel;
     currentStep: StepDefinition;
     nextStep: StepDefinition | null;
     onMobileSidebarButtonClick: () => void;
     stepList: StepListDefinition;
-    activeRepository: RepositoryModel;
     track: string | undefined;
   };
 }
