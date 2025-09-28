@@ -16,12 +16,11 @@ export default class DonutProgress extends Component<Signature> {
 
   get targetOffset(): number {
     if (this.args.total === 0) {
-      return 62.83; // Full circle (no progress)
+      return 62.83;
     }
 
     const actualProgress = (this.args.completed || 0) / this.args.total;
-    // Apply minimum width of 10% for visual appeal, but only if there's actual progress
-    const minProgress = actualProgress > 0 ? Math.max(0.1, actualProgress) : 0;
+    const minProgress = Math.max(1 / 12, actualProgress);
 
     return Math.round(62.83 - 62.83 * minProgress);
   }

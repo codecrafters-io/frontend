@@ -1,4 +1,4 @@
-<svg viewBox="0 0 24 24" class="w-full h-full transform -rotate-90" ...attributes>
+<svg viewBox="0 0 24 24" class="w-full h-full transform -rotate-90">
   {{! Base circle (background) }}
   <circle
     cx="12"
@@ -19,5 +19,6 @@
     class="donut-progress-circle {{if this.isComplete 'stroke-teal-500' 'stroke-blue-500'}}"
     data-target-offset={{this.targetOffset}}
     {{donut-progress}}
+    ...attributes
   />
 </svg>
