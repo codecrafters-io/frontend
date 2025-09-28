@@ -55,11 +55,7 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Git');
-    await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await coursePage.visit({ course_slug: 'git', course_stage_slug: 'introduction' });
 
     assert.contains(currentURL(), '/courses/git/introduction', 'should be on course page');
 
