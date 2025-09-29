@@ -241,15 +241,12 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await coursePage.header.clickOnCloseCourseButton();
-    await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Dummy →');
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
-
-    await animationsSettled();
   });
 
   test('started and abandoned repo course card redirects correctly', async function (assert) {
