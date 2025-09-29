@@ -241,8 +241,11 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 0, 'non active repositories should be 0');
 
     await coursePage.header.clickOnCloseCourseButton();
+    await finishRender();
     await catalogPage.clickOnTrack('Python');
+    await finishRender();
     await trackPage.clickOnCourseCard('Build your own Dummy →');
+    await finishRender();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
