@@ -14,15 +14,17 @@ export default class DonutProgress extends Component<Signature> {
     return this.args.total > 0 && (this.args.completed || 0) >= this.args.total;
   }
 
-  get targetOffset(): number {
+  get progressPercentage(): number {
     if (this.args.total === 0) {
-      return 62.83;
+      return 0;
     }
 
-    const actualProgress = (this.args.completed || 0) / this.args.total;
-    const minProgress = Math.max(1 / 12, actualProgress);
+    // Apply minimum width of 10%
+    return Math.max(10, 100 * (this.args.completed || 0) / this.args.total);
+  }
 
-    return Math.round(62.83 - 62.83 * minProgress);
+  get targetOffset(): number {
+    return 62.83 * (100 - this.progressPercentage) / 100;
   }
 }
 
