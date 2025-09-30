@@ -40,7 +40,7 @@ body {
   background: linear-gradient(to left, rgb(241 245 249 / 100%) 0%, rgb(241 245 249 / 100%) 20%, rgb(241 245 249 / 0%) 100%);
 }
 
-@keyframes donut-progress {
+@keyframes progress-donut {
   from {
     stroke-dashoffset: 62.83;
   }
@@ -50,10 +50,10 @@ body {
   }
 }
 
-.donut-progress-circle {
+.progress-donut-circle {
   stroke-dasharray: 62.83 62.83;
   stroke-dashoffset: 62.83;
-  animation: donut-progress 400ms ease-out forwards;
+  animation: progress-donut 400ms ease-out forwards;
 }
 
 .top-50-percent {

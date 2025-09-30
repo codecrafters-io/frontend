@@ -6,7 +6,7 @@ interface Signature {
   };
 }
 
-const donutProgress = modifier<Signature>(function donutProgress(element: Element) {
+const progressDonut = modifier<Signature>(function progressDonut(element: Element) {
   const targetOffset = element.getAttribute('data-target-offset');
 
   if (targetOffset && element instanceof SVGElement) {
@@ -14,10 +14,10 @@ const donutProgress = modifier<Signature>(function donutProgress(element: Elemen
   }
 });
 
-export default donutProgress;
+export default progressDonut;
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'donut-progress': typeof donutProgress;
+    'progress-donut': typeof progressDonut;
   }
 }

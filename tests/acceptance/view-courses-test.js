@@ -93,8 +93,7 @@ module('Acceptance | view-courses', function (hooks) {
     assert.strictEqual(catalogPage.courseCards[2].actionText, 'Start');
     assert.strictEqual(catalogPage.courseCards[3].actionText, 'Start');
 
-    assert.true(catalogPage.courseCards[0].hasProgressBar);
-    assert.true(catalogPage.courseCards[0].hasDonutProgressBar);
+    assert.true(catalogPage.courseCards[0].hasProgressDonut);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
     assert.strictEqual(catalogPage.courseCards[0].progressText, '1/55 stages');
   });
@@ -116,8 +115,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
-    assert.true(catalogPage.courseCards[0].hasProgressBar);
-    assert.true(catalogPage.courseCards[0].hasDonutProgressBar);
+    assert.true(catalogPage.courseCards[0].hasProgressDonut);
     assert.strictEqual(catalogPage.courseCards[0].progressText, '0/55 stages');
   });
 

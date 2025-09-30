@@ -1,6 +1,6 @@
 <div class="flex items-center" data-test-track-progress>
   <div class="mr-2 w-6 h-6">
-    <DonutProgress @total={{@stagesCount}} @completed={{@completedStagesCount}} data-test-track-progress-bar />
+    <ProgressDonut @total={{@stagesCount}} @completed={{@completedStagesCount}} data-test-track-progress-donut />
   </div>
 
   <div class="text-xs {{if (eq @stagesCount @completedStagesCount) 'text-teal-500' 'text-blue-500'}} mr-3" data-test-track-progress-text>

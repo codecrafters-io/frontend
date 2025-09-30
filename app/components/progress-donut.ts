@@ -9,7 +9,7 @@ interface Signature {
   };
 }
 
-export default class DonutProgress extends Component<Signature> {
+export default class ProgressDonut extends Component<Signature> {
   get isComplete(): boolean {
     return this.args.total > 0 && (this.args.completed || 0) >= this.args.total;
   }
@@ -20,16 +20,16 @@ export default class DonutProgress extends Component<Signature> {
     }
 
     // Apply minimum width of 10%
-    return Math.max(10, 100 * (this.args.completed || 0) / this.args.total);
+    return Math.max(10, (100 * (this.args.completed || 0)) / this.args.total);
   }
 
   get targetOffset(): number {
-    return 62.83 * (100 - this.progressPercentage) / 100;
+    return (62.83 * (100 - this.progressPercentage)) / 100;
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    DonutProgress: typeof DonutProgress;
+    ProgressDonut: typeof ProgressDonut;
   }
 }
