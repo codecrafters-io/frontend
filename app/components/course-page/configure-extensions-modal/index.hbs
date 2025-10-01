@@ -7,8 +7,8 @@
     Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
   </AlertWithIcon>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-    {{#each @repository.course.sortedExtensions as |extension|}}
+  <div class="grid grid-cols-1 gap-4 mb-6">
+    {{#each this.orderedExtensions as |extension|}}
       <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
     {{/each}}
   </div>
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 mb-8">
+  <div class="grid grid-cols-1 gap-3 mb-8">
     <RoadmapPage::SubmitCourseExtensionIdeaCard @course={{@repository.course}} />
 
     {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}

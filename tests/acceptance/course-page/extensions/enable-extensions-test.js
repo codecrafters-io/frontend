@@ -135,4 +135,80 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });
+
+  test('enabled extensions appear first, followed by disabled extensions sorted by position', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    this.server.create('repository', 'withBaseStagesCompleted', {
+      course,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.adminPanel.clickOnStartCourse();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
+
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards.length, 2, 'has 2 extension cards');
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 1', 'first card is Extension 1');
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 2', 'second card is Extension 2');
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 2', 'first card is Extension 2 (enabled)');
+    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 1', 'second card is Extension 1 (disabled)');
+  });
+
+  test('progress pills show correct status for different extension states', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    let repository = this.server.create('repository', 'withBaseStagesCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    let extensions = course.extensions.models.sortBy('position');
+    let extension1Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[0].slug);
+    let extension2Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[1].slug);
+
+    extension1Stages.forEach((stage) => {
+      this.server.create('submission', 'withStageCompletion', {
+        repository,
+        courseStage: stage,
+        createdAt: repository.createdAt,
+      });
+    });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository,
+      courseStage: extension2Stages.sortBy('positionWithinExtension')[0],
+      createdAt: repository.createdAt,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.adminPanel.clickOnStartCourse();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
+
+    const cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+
+    assert.true(cards[0].hasPill, 'Extension 1 has completed pill');
+    assert.true(cards[1].hasPill, 'Extension 2 has in-progress pill');
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    const disabledExtension1Card = cards.find((card) => card.name === 'Extension 1');
+    assert.false(disabledExtension1Card.hasPill, 'Disabled extension has no pill');
+  });
 });
