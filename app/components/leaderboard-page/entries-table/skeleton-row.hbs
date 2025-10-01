@@ -1,6 +1,6 @@
-<tr class="hover:bg-gray-50 group/table-row" data-test-leaderboard-entry-skeleton-row>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800 group/table-row" data-test-leaderboard-entry-skeleton-row>
   <LeaderboardPage::EntriesTable::RowCell class="text-right w-[8%]">
-    <span class="text-xs font-medium text-gray-400">
+    <span class="text-xs font-medium text-gray-400 dark:text-gray-500">
       {{@rankText}}
     </span>
   </LeaderboardPage::EntriesTable::RowCell>
@@ -28,7 +28,7 @@
   <LeaderboardPage::EntriesTable::RowCell class="hidden md:table-cell">
     <div class="flex items-center justify-end gap-2">
       <LoadingSkeleton @width={{20}} />
-      <span class="text-gray-400 text-xs font-mono">
+      <span class="text-gray-400 dark:text-gray-500 text-xs font-mono">
         stages
       </span>
     </div>
@@ -37,7 +37,7 @@
   <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-end gap-2">
       <LoadingSkeleton @width={{20}} />
-      <span class="text-gray-400 text-xs font-mono">
+      <span class="text-gray-400 dark:text-gray-500 text-xs font-mono">
         pts
       </span>
     </div>
