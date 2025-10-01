@@ -137,37 +137,6 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
   });
 
-  test('enabled extensions appear first, followed by disabled extensions sorted by position', async function (assert) {
-    testScenario(this.server);
-    signInAsStaff(this.owner, this.server);
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
-
-    this.server.create('repository', 'withBaseStagesCompleted', {
-      course,
-      language: python,
-      user: currentUser,
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Dummy');
-    await courseOverviewPage.adminPanel.clickOnStartCourse();
-    await coursePage.sidebar.configureExtensionsToggles[0].click();
-    await percySnapshot('Configure Extensions Modal - Both Enabled');
-
-    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards.length, 2, 'has 2 extension cards');
-    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 1', 'first card is Extension 1');
-    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 2', 'second card is Extension 2');
-
-    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    await percySnapshot('Configure Extensions Modal - One Disabled');
-
-    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 2', 'first card is Extension 2 (enabled)');
-    assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 1', 'second card is Extension 1 (disabled)');
-  });
-
   test('progress pills show correct status for different extension states', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);

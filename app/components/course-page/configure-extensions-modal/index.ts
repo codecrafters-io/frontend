@@ -31,13 +31,6 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       .sortBy('sortPositionForRoadmapPage');
   }
 
-  get orderedExtensions() {
-    const enabledExtensions = this.args.repository.extensionActivations.sortBy('activatedAt').mapBy('extension').uniq();
-    const disabledExtensions = this.args.repository.course.sortedExtensions.filter((ext) => !enabledExtensions.includes(ext));
-
-    return [...enabledExtensions, ...disabledExtensions];
-  }
-
   @action
   async loadAllCourseExtensionIdeas() {
     this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
