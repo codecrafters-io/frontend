@@ -1,7 +1,7 @@
 <div ...attributes>
   {{#if (or this.hasEntries @isLoadingEntries)}}
     <div>
-      <table class="min-w-full bg-white">
+      <table class="min-w-full bg-white dark:bg-gray-850">
         <thead>
           <LeaderboardPage::EntriesTable::HeaderRow @language={{@language}} />
         </thead>
@@ -28,7 +28,7 @@
     </div>
   {{else}}
     <div class="text-center py-12">
-      <div class="text-gray-500 text-sm">
+      <div class="text-gray-500 dark:text-gray-400 text-sm">
         No entries found for this leaderboard.
       </div>
     </div>

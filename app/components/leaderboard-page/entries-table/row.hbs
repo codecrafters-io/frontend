@@ -1,6 +1,14 @@
-<tr class="{{if this.isCurrentUser 'bg-teal-50 ring ring-teal-500 relative' 'hover:bg-gray-50'}} group/table-row" data-test-leaderboard-entry-row>
+<tr
+  class="{{if
+      this.isCurrentUser
+      'bg-teal-50 dark:bg-teal-900/30 ring ring-teal-500 dark:ring-teal-700 relative'
+      'hover:bg-gray-50 dark:hover:bg-gray-800'
+    }}
+    group/table-row"
+  data-test-leaderboard-entry-row
+>
   <LeaderboardPage::EntriesTable::RowCell class="text-right w-[8%]">
-    <span class="text-xs font-medium {{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">
+    <span class="text-xs font-medium {{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}}">
       {{@rankText}}
     </span>
   </LeaderboardPage::EntriesTable::RowCell>
@@ -9,13 +17,16 @@
     <div class="flex items-center justify-between gap-x-6">
       <div class="flex items-center gap-1.5">
         <div class="flex-shrink-0 h-6 w-6">
-          <AvatarImage @user={{@entry.user}} class="h-6 w-6 rounded-full border border-gray-300" />
+          <AvatarImage @user={{@entry.user}} class="h-6 w-6 rounded-full border border-gray-300 dark:border-gray-600" />
         </div>
-        <div class="text-xs font-mono max-w-[12ch] sm:max-w-[16ch] truncate {{if this.isCurrentUser 'text-teal-600' 'text-gray-600'}}">
+        <div
+          class="text-xs font-mono max-w-[12ch] sm:max-w-[16ch] truncate
+            {{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-600 dark:text-gray-400'}}"
+        >
           <a
             href={{@entry.user.codecraftersProfileUrl}}
             target="_blank"
-            class="hover:underline hover:text-gray-800"
+            class="hover:underline hover:text-gray-800 dark:hover:text-gray-200"
             rel="noopener noreferrer"
             data-test-username
           >
@@ -25,7 +36,7 @@
       </div>
       <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 {{unless this.isCurrentUser 'opacity-25 group-hover/table-row:opacity-100'}}">
         {{#if (gt this.hiddenCourses.length 0)}}
-          <div class="text-gray-500">
+          <div class="text-gray-500 dark:text-gray-400">
             ...
 
             <EmberTooltip @text={{concat this.hiddenCourses.length " other " (pluralize "challenge" count=this.hiddenCourses.length)}} />
@@ -45,8 +56,10 @@
   <LeaderboardPage::EntriesTable::RowCell class="hidden md:table-cell">
     <div class="flex items-center justify-end">
       <div class="text-xs font-mono">
-        <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-700'}}">{{@entry.scoreUpdatesCount}}</span>
-        <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">stages</span>
+        <span
+          class="{{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-700 dark:text-gray-200'}}"
+        >{{@entry.scoreUpdatesCount}}</span>
+        <span class="{{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}}">stages</span>
       </div>
     </div>
   </LeaderboardPage::EntriesTable::RowCell>
@@ -66,8 +79,8 @@
       {{/if}} --}}
 
       <div class="text-xs font-mono">
-        <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-700'}}">{{@entry.score}}</span>
-        <span class="{{if this.isCurrentUser 'text-teal-600' 'text-gray-400'}}">pts</span>
+        <span class="{{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-700 dark:text-gray-200'}}">{{@entry.score}}</span>
+        <span class="{{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}}">pts</span>
       </div>
     </div>
   </LeaderboardPage::EntriesTable::RowCell>

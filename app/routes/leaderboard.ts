@@ -5,7 +5,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   language: LanguageModel;
@@ -20,7 +20,7 @@ export default class LeaderboardRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   async model(params: { language_slug: string }): Promise<ModelType> {
