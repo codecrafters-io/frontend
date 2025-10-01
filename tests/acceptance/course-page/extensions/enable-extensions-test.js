@@ -8,6 +8,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | extensions | enable-extensions', function (hooks) {
@@ -154,12 +155,14 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
     await coursePage.sidebar.configureExtensionsToggles[0].click();
+    await percySnapshot('Configure Extensions Modal - Both Enabled');
 
     assert.strictEqual(coursePage.configureExtensionsModal.extensionCards.length, 2, 'has 2 extension cards');
     assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 1', 'first card is Extension 1');
     assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 2', 'second card is Extension 2');
 
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    await percySnapshot('Configure Extensions Modal - One Disabled');
 
     assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[0].name, 'Extension 2', 'first card is Extension 2 (enabled)');
     assert.strictEqual(coursePage.configureExtensionsModal.extensionCards[1].name, 'Extension 1', 'second card is Extension 1 (disabled)');
@@ -201,6 +204,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
     await coursePage.sidebar.configureExtensionsToggles[0].click();
+    await percySnapshot('Configure Extensions Modal - Progress Pills');
 
     const cards = coursePage.configureExtensionsModal.extensionCards.toArray();
 
