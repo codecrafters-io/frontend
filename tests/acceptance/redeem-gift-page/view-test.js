@@ -6,8 +6,22 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 module('Acceptance | redeem-gift-page | view', function (hooks) {
   setupApplicationTest(hooks);
 
-  test('visiting /gifts/redeem/xyz', async function (assert) {
-    await redeemGiftPage.visit({ secret_code: 'xyz' });
-    assert.strictEqual(currentURL(), '/gifts/redeem/xyz');
+  test('redirects to 404 if gift is not found', async function (assert) {
+    await redeemGiftPage.visit({ secret_token: 'invalid' });
+    assert.strictEqual(currentURL(), '/404');
+  });
+
+  test('displays gift details', async function (assert) {
+    this.server.schema.membershipGifts.create({
+      secretToken: 'xyz',
+      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      validityInDays: 365,
+      purchasedAt: new Date(),
+      claimedAt: null,
+    });
+
+    await redeemGiftPage.visit({ secret_token: 'xyz' });
+
+    assert.strictEqual(redeemGiftPage.giftDetailsContainer.giftMessage, 'Happy Birthday! Enjoy your CodeCrafters membership.');
   });
 });

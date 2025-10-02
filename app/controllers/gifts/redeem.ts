@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
+import type { ModelType } from 'codecrafters-frontend/routes/gifts/redeem';
 
 export default class GiftsRedeemController extends Controller {
-  // TODO: Implement controller logic for gift redemption
+  declare model: ModelType;
 }
