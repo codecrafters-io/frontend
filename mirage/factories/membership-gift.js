@@ -7,5 +7,5 @@ export default Factory.extend({
   },
   validityInDays: 365,
   giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
-  secretCode: 'xyz',
+  secretToken: 'xyz',
 });
