@@ -46,6 +46,7 @@ import languages from './handlers/languages';
 import leaderboardEntries from './handlers/leaderboard-entries';
 import leaderboardRankCalculations from './handlers/leaderboard-rank-calculations';
 import logstreams from './handlers/logstreams';
+import membershipGifts from './handlers/membership-gifts';
 import onboardingSurveys from './handlers/onboarding-surveys';
 import perks from './handlers/perks';
 import promotionalDiscounts from './handlers/promotional-discounts';
@@ -186,6 +187,7 @@ function routes() {
   leaderboardEntries(this);
   leaderboardRankCalculations(this);
   logstreams(this);
+  membershipGifts(this);
   onboardingSurveys(this);
   perks(this);
   promotionalDiscounts(this);
