@@ -20,8 +20,22 @@
       </p>
     </div>
 
-    <PrimaryButton data-test-claim-button {{on "click" (noop)}}>
-      Claim Gift
+    <PrimaryButton data-test-redeem-button @isDisabled={{this.redeemButtonIsDisabled}} {{on "click" this.handleRedeemButtonClick}}>
+      {{#if this.currentUserIsAnonymous}}
+        {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
+      {{/if}}
+
+      {{#if this.isRedeemingGift}}
+        Redeeming...
+      {{else}}
+        Redeem Gift
+      {{/if}}
+
+      {{#if this.currentUserIsAnonymous}}
+        <EmberTooltip @text="Click to login via GitHub" />
+      {{else if this.currentUserCanAccessMembershipBenefits}}
+        <EmberTooltip @text="You already have full access to CodeCrafters. You can claim this gift once your membership expires." />
+      {{/if}}
     </PrimaryButton>
   </div>
 </div>
