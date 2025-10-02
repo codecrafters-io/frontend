@@ -7,9 +7,10 @@ When you're asked to make changes, follow these rules:
 - Say consistent with the rest of our codebase. Read other files to understand what our patterns are.
 - Run `npm run lint` after making changes.
 - Once linting is successful, you can try running tests if there are ones that cover the area you changed.
-  - Use `npx run ember test --module '<module-name>'` to run tests.
-  - If you know the test file, the module name is at the top (`module('...', function (hooks) { ... })`)
-  - If you're unsure about the test file, ask me.
-- Don't run `npm run test`, that's super slow.
-- Don't run commands like `npm run build` / `npm run start`.
+  - Only run tests using the browser tool.
+  - The browser will already be open with a URL like this: `http://localhost:4200/tests/index.html?moduleId=abcd`
+  - Reload the page and you'll see test results there.
+  - You can use the console to check for any errors, you'll also see them printed on the page most of the time.
+- Do NOT run `npm run test`, that's super slow.
+- Do NOT run commands like `npm run build` / `npm run start`.
 
