@@ -49,7 +49,9 @@ module('Acceptance | concepts-test', function (hooks) {
 
 - Use `test` function for individual test cases
 - Test names should be descriptive and written in present tense
-- Use `async` keyword for test functions when needed
+- Always use `async` keyword for test functions when needed
+- Always start with `testScenario(this.server);`
+- Always sign in (use any of the signIn functions from `codecrafters-frontend/tests/support/authentication-helpers`) if the test requires a user to be logged in.
 - Structure tests with clear Arrange-Act-Assert pattern
 
 Example:
