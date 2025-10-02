@@ -876,10 +876,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
 
     await conceptsPage.conceptCards[3].draftLabel.hover();
-
-    assertTooltipContent(assert, {
-      contentString: 'This concept is only visible to staff',
-    });
+    assertTooltipContent(assert, { contentString: 'This concept is only visible to staff' });
   });
 
   test('draft concepts are visible to concept author', async function (assert) {

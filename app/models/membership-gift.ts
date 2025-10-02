@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 import type UserModel from 'codecrafters-frontend/models/user';
 
 export default class MembershipGiftModel extends Model {
@@ -10,4 +11,11 @@ export default class MembershipGiftModel extends Model {
   @attr('string') declare giftMessage: string;
   @attr('number') declare validityInDays: number;
   @attr('string') declare secretToken: string;
+
+  declare redeem: (this: MembershipGiftModel, payload: unknown) => Promise<void>;
 }
+
+MembershipGiftModel.prototype.redeem = memberAction({
+  path: 'redeem',
+  type: 'post',
+});
