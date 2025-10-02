@@ -12,6 +12,7 @@ export default {
     name: text('[data-test-course-extension-name]'),
     clickOnToggleExtensionButton: clickable('[data-test-toggle-extension-button]'),
     hasPill: isVisible('[data-test-extension-progress-pill]'),
+    pillText: text('[data-test-extension-progress-pill]'),
   }),
 
   extensionIdeaCards: collection('[data-test-course-extension-idea-card]'),
