@@ -16,11 +16,9 @@
       </div>
     </div>
     <div class="flex items-center gap-3">
-      <CoursePage::ConfigureExtensionsModal::ExtensionProgressPill
-        @extension={{@extension}}
-        @repository={{@repository}}
-        @isActivated={{this.optimisticValueForIsActivated}}
-      />
+      {{#if this.progressPillColor}}
+        <Pill @color={{this.progressPillColor}} data-test-extension-progress-pill>{{this.progressPillText}}</Pill>
+      {{/if}}
       <Toggle @isOn={{this.optimisticValueForIsActivated}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
     </div>
   </div>

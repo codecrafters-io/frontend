@@ -182,6 +182,6 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
     const disabledExtension1Card = cards.find((card) => card.name === 'Extension 1');
-    assert.false(disabledExtension1Card.hasPill, 'Disabled extension has no pill');
+    assert.true(disabledExtension1Card.hasPill, 'Disabled extension still has pill when completed');
   });
 });
