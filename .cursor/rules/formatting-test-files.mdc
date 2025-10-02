@@ -1,0 +1,116 @@
+---
+alwaysApply: true
+---
+# Test File Formatting Rules
+
+## General Structure
+
+Test files should follow this structure:
+1. Import statements (alphabetically sorted)
+2. Module declaration
+3. Setup functions
+4. Helper functions (if any)
+5. Test cases
+
+## Import Statements
+
+- Import statements should be alphabetically sorted
+
+Example:
+```js
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+```
+
+## Module Declarations
+
+- Use `module` function for grouping related tests
+- Module names should match their path on disk.
+  - For example, `tests/acceptance/concepts-test.js` should be `Acceptance | concepts-test`.
+  - For example, `tests/acceptance/perks-page/claim-test.js` should be `Acceptance | perks-page | claim-test`.
+- Always include hooks in the module function signature
+
+Example:
+```js
+module('Acceptance | concepts-test', function (hooks) {
+  // test cases here
+});
+```
+
+## Setup Functions
+
+- Use appropriate setup functions based on test type:
+  - `setupApplicationTest` for acceptance tests
+  - `setupTest` for unit tests
+  - `setupRenderingTest` for integration tests
+- Setup functions should be called immediately after module declaration
+
+## Test Cases
+
+- Use `test` function for individual test cases
+- Test names should be descriptive and written in present tense
+- Use `async` keyword for test functions when needed
+- Structure tests with clear Arrange-Act-Assert pattern
+
+Example:
+```js
+test('can create concept', async function (assert) {
+  // Arrange
+  testScenario(this.server);
+  signInAsStaff(this.owner, this.server);
+
+  // Act
+  await conceptsPage.visit();
+  await conceptsPage.clickOnCreateConceptButton();
+
+  // Assert
+  assert.strictEqual(currentURL(), '/concepts/new-concept/admin/basic-details');
+});
+```
+
+## Page Object Files (tests/pages/**.ts)
+
+- The page object file names follow patterns like:
+  - `tests/pages/concepts-page.ts`
+  - `tests/pages/settings/billing-page.ts`
+- Import from 'ember-cli-page-object' and 'codecrafters-frontend/tests/support/create-page'
+- Use `createPage` function to wrap the page object definition
+- Use `visitable` for URL patterns
+- Use `collection` for repeated elements
+- Use `clickable`, `text`, `isPresent`, etc. for element interactions
+
+Example:
+
+```ts
+import { attribute, clickable, collection, isPresent, text, triggerable, visitable } from 'ember-cli-page-object';
+import createPage from 'codecrafters-frontend/tests/support/create-page';
+
+export default createPage({
+  clickOnCreateConceptButton: clickable('[data-test-create-concept-button]'),
+
+  conceptCards: collection('[data-test-concept-card]', {
+    title: text('[data-test-concept-title]'),
+    // other properties
+  }),
+
+  visit: visitable('/concepts'),
+});
+```
+
+## Page Object Component Files (tests/pages/components/**.ts)
+
+- The page object component file names follow patterns like:
+  - `tests/pages/components/concept-card.ts`
+  - This matches the actual component name 1:1.
+- Unlike page object files, do NOT use `createPage` function to wrap the object.
+
+Example:
+```ts
+import { clickable, text } from 'ember-cli-page-object';
+
+export default {
+  scope: '[data-test-concept-card]',
+  clickOnNextButton: clickable('[data-test-next-button]'),
+  title: text('[data-test-concept-card-title]'),
+};
+```
