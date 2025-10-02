@@ -17,8 +17,7 @@
     stroke-width="4"
     stroke-linecap="round"
     class="progress-donut-circle {{if this.isComplete 'stroke-teal-500' 'stroke-blue-500'}}"
-    data-target-offset={{this.targetOffset}}
-    {{progress-donut}}
+    style={{this.progressStyle}}
     ...attributes
   />
 </svg>
