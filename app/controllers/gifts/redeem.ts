@@ -24,7 +24,7 @@ export default class GiftsRedeemController extends Controller {
 
   get redeemButtonIsDisabled() {
     // Button is disabled if user already has membership benefits
-    return this.currentUserCanAccessMembershipBenefits;
+    return this.currentUserCanAccessMembershipBenefits || this.isRedeemingGift;
   }
 
   @action
@@ -42,13 +42,12 @@ export default class GiftsRedeemController extends Controller {
     this.isRedeemingGift = true;
 
     try {
-      // TODO: Implement actual gift redeeming logic
-      // This would typically involve calling an API endpoint to redeem the gift
-      // For now, we'll just redirect to the catalog page as a placeholder
+      await this.model.redeem({});
       this.router.transitionTo('catalog');
-    } catch {
+    } catch (error) {
       // TODO: Handle error appropriately
       this.isRedeemingGift = false;
+      throw error;
     }
   }
 }
