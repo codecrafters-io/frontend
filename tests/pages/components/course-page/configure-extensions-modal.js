@@ -1,4 +1,4 @@
-import { clickable, collection, text } from 'ember-cli-page-object';
+import { clickable, collection, isVisible, text } from 'ember-cli-page-object';
 import { waitUntil } from '@ember/test-helpers';
 
 export default {
@@ -11,6 +11,8 @@ export default {
   extensionCards: collection('[data-test-course-extension-card]', {
     name: text('[data-test-course-extension-name]'),
     clickOnToggleExtensionButton: clickable('[data-test-toggle-extension-button]'),
+    hasPill: isVisible('[data-test-extension-progress-pill]'),
+    pillText: text('[data-test-extension-progress-pill]'),
   }),
 
   extensionIdeaCards: collection('[data-test-course-extension-idea-card]'),

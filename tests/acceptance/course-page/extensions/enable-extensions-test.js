@@ -8,6 +8,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
+import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 
 module('Acceptance | course-page | extensions | enable-extensions', function (hooks) {
@@ -134,5 +135,57 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     assert.true(coursePage.configureExtensionsModal.isVisible, 'configure extensions modal is visible');
+  });
+
+  test('progress pills show correct status for different extension states', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    let repository = this.server.create('repository', 'withBaseStagesCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    let extensions = course.extensions.models.sortBy('position');
+    let extension1Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[0].slug);
+    let extension2Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[1].slug);
+
+    extension1Stages.forEach((stage) => {
+      this.server.create('submission', 'withStageCompletion', {
+        repository,
+        courseStage: stage,
+        createdAt: repository.createdAt,
+      });
+    });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository,
+      courseStage: extension2Stages.sortBy('positionWithinExtension')[0],
+      createdAt: repository.createdAt,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.adminPanel.clickOnStartCourse();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
+    await percySnapshot('Configure Extensions Modal - Progress Pills');
+
+    let cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+
+    assert.true(cards[0].hasPill, 'Extension 1 has completed pill');
+    assert.strictEqual(cards[0].pillText, 'Completed', 'Extension 1 pill shows "Completed"');
+    assert.true(cards[1].hasPill, 'Extension 2 has in-progress pill');
+    assert.strictEqual(cards[1].pillText, 'In Progress', 'Extension 2 pill shows "In Progress"');
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+    cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    const disabledExtension1Card = cards.find((card) => card.name === 'Extension 1');
+    assert.true(disabledExtension1Card.hasPill, 'Disabled extension still has pill when completed');
+    assert.strictEqual(disabledExtension1Card.pillText, 'Completed', 'Disabled extension pill still shows "Completed"');
   });
 });

@@ -42,6 +42,17 @@ export default class ExtensionCard extends Component<Signature> {
     }
   }
 
+  get progressPillType(): 'completed' | 'in_progress' | null {
+    const stages = this.args.extension.sortedStages;
+    const allComplete = stages.length > 0 && stages.every((stage) => this.args.repository.stageIsComplete(stage));
+    const currentStageInExtension = this.args.repository.currentStage && stages.includes(this.args.repository.currentStage);
+
+    if (allComplete) return 'completed';
+    if (currentStageInExtension) return 'in_progress';
+
+    return null;
+  }
+
   syncActivation = task({ keepLatest: true }, async (): Promise<void> => {
     if (this.unsavedIsActivatedValue === null) {
       return;
