@@ -7,13 +7,13 @@ interface Signature {
 
   Args: {
     total: number;
-    completed: number | undefined;
+    completed: number;
   };
 }
 
 export default class ProgressDonut extends Component<Signature> {
   get isComplete(): boolean {
-    return this.args.total > 0 && (this.args.completed || 0) >= this.args.total;
+    return this.args.total > 0 && this.args.completed >= this.args.total;
   }
 
   get progressPercentage(): number {
@@ -22,17 +22,13 @@ export default class ProgressDonut extends Component<Signature> {
     }
 
     // Apply minimum width of 10%
-    return Math.max(10, (100 * (this.args.completed || 0)) / this.args.total);
+    return Math.max(10, (100 * this.args.completed) / this.args.total);
   }
 
   get progressStyle(): SafeString {
-    const targetOffset = (62.83 * (100 - this.progressPercentage)) / 100;
+    const targetOffset = (2 * Math.PI * 9 * (100 - this.progressPercentage)) / 100;
 
     return htmlSafe(`--target-offset: ${targetOffset}`);
-  }
-
-  get targetOffset(): number {
-    return (62.83 * (100 - this.progressPercentage)) / 100;
   }
 }
 

@@ -1,6 +1,6 @@
 <div class="flex items-center gap-1.5" data-test-course-progress ...attributes>
   <div class="w-5 h-5">
-    <ProgressDonut @total={{@course.stages.length}} @completed={{@lastUsedRepository.completedStages.length}} data-test-course-progress-donut />
+    <ProgressDonut @total={{@course.stages.length}} @completed={{or @lastUsedRepository.completedStages.length 0}} data-test-course-progress-donut />
   </div>
 
   <div class="text-xs {{if @lastUsedRepository.allStagesAreComplete 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>

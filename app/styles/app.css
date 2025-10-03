@@ -42,7 +42,7 @@ body {
 
 @keyframes progress-donut {
   from {
-    stroke-dashoffset: 62.83;
+    stroke-dashoffset: 56.55;
   }
 
   to {
@@ -51,8 +51,8 @@ body {
 }
 
 .progress-donut-circle {
-  stroke-dasharray: 62.83 62.83;
-  stroke-dashoffset: 62.83;
+  stroke-dasharray: 56.55 56.55;
+  stroke-dashoffset: 56.55;
   animation: progress-donut 400ms ease-out forwards;
 }
 
