@@ -30,6 +30,7 @@
       <div
         class="bg-white dark:bg-gray-850 rounded-lg shadow-lg border border-gray-200 dark:border-white/10 pt-2 mt-1 mb-1 w-56 overflow-y-auto max-h-[min(400px,50vh)]"
         data-test-language-dropdown-content
+        {{on "scroll" this.handleDropdownContentScroll}}
       >
         {{#if @shouldShowAllLanguagesOption}}
           <AllLanguagesDropdownLink
@@ -48,9 +49,10 @@
           />
         {{/each}}
 
-        <div
-          class="sticky -bottom-2 left-0 right-0 w-full h-11 bg-linear-to-t from-white/95 via-white/80 dark:from-gray-900/95 dark:via-gray-900/80 via-85% to-transparent"
-        ></div>
+        <shadow-overlay
+          class="block absolute left-px right-px bottom-1 mb-px h-10 rounded-b-lg pointer-events-none bg-linear-to-t from-white/95 via-white/80 dark:from-gray-900/95 dark:via-gray-900/80 via-85% to-transparent"
+          style={{this.shadowOverlayStyle}}
+        ></shadow-overlay>
       </div>
     </dd.Content>
   </BasicDropdown>
