@@ -1,9 +1,11 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 
 interface Signature {
   Args: {
     course: CourseModel;
+    completedStages?: CourseStageModel[];
   };
 }
 

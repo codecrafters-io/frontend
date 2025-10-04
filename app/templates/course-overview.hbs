@@ -6,7 +6,7 @@
   <div class="flex items-start flex-row mb-4">
     <div class="grow">
       <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
-      <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full" />
+      <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} @completedStages={{this.model.completedStages}} class="w-full" />
     </div>
 
     <div class="hidden lg:block sticky top-2 w-80 shrink-0 pt-2 ml-2">

@@ -85,9 +85,26 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.true(courseOverviewPage.stageListItems[0].hasCompletionCheckmark, 'first stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[0].hasDifficultyLabel, 'first stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[1].hasCompletionCheckmark, 'second stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[1].hasDifficultyLabel, 'second stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[2].hasCompletionCheckmark, 'third stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[2].hasDifficultyLabel, 'third stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[3].hasCompletionCheckmark, 'fourth stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[3].hasDifficultyLabel, 'fourth stage does not have a difficulty label');
+
+    assert.false(courseOverviewPage.stageListItems[4].hasCompletionCheckmark, 'fifth stage does not have a completion checkmark');
+    assert.true(courseOverviewPage.stageListItems[4].hasDifficultyLabel, 'fifth stage has a difficulty label');
+    assert.false(courseOverviewPage.stageListItems[5].hasCompletionCheckmark, 'sixth stage does not have a completion checkmark');
+    assert.true(courseOverviewPage.stageListItems[6].hasDifficultyLabel, 'sixth stage has a difficulty label');
+
+    await percySnapshot('Course Stages - Stages list checkmarks');
+
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command', 'stage title is shown in the header');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
