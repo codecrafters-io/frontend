@@ -59,6 +59,18 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await codeExamplesPage.solutionCards[1].clickOnExpandButton();
 
     await codeExamplesPage.languageDropdown.toggle();
+
+    assert.true(codeExamplesPage.languageDropdown.shadowOverlay.isPresent);
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(0);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1);
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(100);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0);
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(0);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1);
+
     await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'expected 1 python solution to be present');
