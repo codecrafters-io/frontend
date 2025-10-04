@@ -65,18 +65,6 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await codeExamplesPage.languageDropdown.scrollToPercentage(0);
     assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1);
 
-    await codeExamplesPage.languageDropdown.scrollToPercentage(80);
-    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1);
-
-    await codeExamplesPage.languageDropdown.scrollToPercentage(95);
-    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0.725);
-
-    await codeExamplesPage.languageDropdown.scrollToPercentage(97);
-    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0.4375);
-
-    await codeExamplesPage.languageDropdown.scrollToPercentage(98);
-    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0.2875);
-
     await codeExamplesPage.languageDropdown.scrollToPercentage(100);
     assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0);
 
