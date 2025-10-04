@@ -48,7 +48,7 @@ export default class GithubFileActionsComponent extends Component<Signature> {
   }
 
   private getLatestProvisionedExport(): CommunitySolutionExportModel | null {
-    return this.args.solution.exports.rejectBy('isExpired').filterBy('isProvisioned').sortBy('expiresAt').lastObject || null;
+    return this.args.solution.exports.rejectBy('isExpired').filterBy('isProvisioned').sortBy('expiresAt').at(-1) || null;
   }
 
   @action
