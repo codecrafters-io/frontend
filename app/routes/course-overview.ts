@@ -47,47 +47,48 @@ export default class CourseOverviewRoute extends BaseRoute {
     this.metaData.imageUrl = this.previousMetaImageUrl;
   }
 
-  async model(params: { course_slug: string }): Promise<ModelType> {
-    if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
-      // Trigger a refresh anyway
-      this.store.findAll('course', {
+  async #findCourse(slug: string) {
+    return (
+      await this.store.findAll('course', {
         include: 'extensions,stages,language-configurations.language',
-      });
+      })
+    ).findBy('slug', slug);
+  }
 
-      const course = this.store.peekAll('course').findBy('slug', params.course_slug);
+  #getCompletedStages(course: CourseModel) {
+    if (!course || !this.authenticator.currentUser) {
+      return [];
+    }
 
-      return {
-        course,
-        completedStages: this.#peekCompletedStages(course),
-      };
+    return this.authenticator.currentUser.repositories
+      .filter((repository) => repository.course === course)
+      .flatMap((repository) => repository.completedStages);
+  }
+
+  async model({ course_slug }: { course_slug: string }): Promise<ModelType> {
+    let course: CourseModel = this.#peekCourse(course_slug);
+
+    if (course) {
+      // Trigger a refresh anyway, without await
+      this.#findCourse(course_slug);
     } else {
-      const courses = await this.store.findAll('course', {
-        include: 'extensions,stages,language-configurations.language',
-      });
+      course = await this.#findCourse(course_slug);
 
-      const course = courses.findBy('slug', params.course_slug);
-
-      if (!course) {
-        return { course: undefined as unknown as CourseModel };
-      }
-
-      if (this.authenticator.isAuthenticated) {
+      if (course && this.authenticator.isAuthenticated) {
         await this.store.query('repository', {
           include: RepositoryPoller.defaultIncludedResources,
           course_id: course.id,
         });
       }
-
-      return {
-        course,
-        completedStages: this.#peekCompletedStages(course),
-      };
     }
+
+    return {
+      course,
+      completedStages: this.#getCompletedStages(course),
+    };
   }
 
-  #peekCompletedStages(course: CourseModel) {
-    const completedStageIds = this.store.peekAll('course-stage-completion').map((completion) => completion.courseStage.id);
-
-    return course.stages.filter((stage: CourseStageModel) => completedStageIds.includes(stage.id));
+  #peekCourse(slug: string) {
+    return this.store.peekAll('course').findBy('slug', slug);
   }
 }
