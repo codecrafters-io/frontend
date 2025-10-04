@@ -59,6 +59,21 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await codeExamplesPage.solutionCards[1].clickOnExpandButton();
 
     await codeExamplesPage.languageDropdown.toggle();
+
+    assert.true(codeExamplesPage.languageDropdown.shadowOverlay.isPresent, 'shadow overlay should be present');
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(0);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1, 'shadow overlay has opacity 1 when scroll is at the top');
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(98);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0.2, 'shadow overlay has opacity 0.2 when scroll is at the 98%');
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(100);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 0, 'shadow overlay has opacity 0 when scroll is at the bottom');
+
+    await codeExamplesPage.languageDropdown.scrollToPercentage(0);
+    assert.strictEqual(codeExamplesPage.languageDropdown.shadowOverlay.opacity, 1, 'shadow overlay has opacity 1 when scroll is back at the top');
+
     await codeExamplesPage.languageDropdown.clickOnLink('Python');
 
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'expected 1 python solution to be present');
