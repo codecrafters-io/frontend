@@ -24,6 +24,14 @@ export default class CourseOverviewController extends Controller {
     }
   }
 
+  get completedStages() {
+    if (!this.model.course) {
+      return [];
+    }
+
+    return this.userRepositories.filter((repository) => repository.course === this.model.course).flatMap((repository) => repository.completedStages);
+  }
+
   get currentUser() {
     return this.authenticator.currentUser;
   }
