@@ -26,19 +26,19 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     this.loadAllCourseExtensionIdeas();
   }
 
+  get disabledExtensions() {
+    const extensions = this.args.repository.course.sortedExtensions;
+    const activatedIds = this.args.repository.extensionActivations.map((activation) => activation.extension.id);
+
+    return extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
+  }
+
   get enabledExtensions() {
     const extensions = this.args.repository.course.sortedExtensions;
     const extensionActivations = this.args.repository.extensionActivations.sortBy('position');
-    const activatedIds = extensionActivations.map(activation => activation.extension.id);
+    const activatedIds = extensionActivations.map((activation) => activation.extension.id);
 
-    return activatedIds.map(id => extensions.find(ext => ext.id === id)!).filter(Boolean);
-  }
-
-  get disabledExtensions() {
-    const extensions = this.args.repository.course.sortedExtensions;
-    const activatedIds = this.args.repository.extensionActivations.map(activation => activation.extension.id);
-
-    return extensions.filter(ext => !activatedIds.includes(ext.id)).sortBy('position');
+    return activatedIds.map((id) => extensions.find((ext) => ext.id === id)!).filter(Boolean);
   }
 
   get orderedCourseExtensionIdeas() {
@@ -49,20 +49,11 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   }
 
   @action
-  async loadAllCourseExtensionIdeas() {
-    this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
-      include: 'course,current-user-votes,current-user-votes.user',
-    })) as unknown as CourseExtensionIdeaModel[];
-  }
-
-  @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
     // Map sorted extensions to their activation IDs with new positions (1-based)
     const positions = sortedItems
       .map((extension, index) => {
-        const activation = this.args.repository.extensionActivations.find(
-          (act) => act.extension.id === extension.id
-        );
+        const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
         if (!activation) return null;
 
         return {
@@ -87,6 +78,13 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       console.error('Error reordering extensions:', error);
       // TODO: Show error message to user and revert positions
     }
+  }
+
+  @action
+  async loadAllCourseExtensionIdeas() {
+    this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
+      include: 'course,current-user-votes,current-user-votes.user',
+    })) as unknown as CourseExtensionIdeaModel[];
   }
 }
 

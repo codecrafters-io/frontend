@@ -10,10 +10,7 @@ export default class CourseExtensionActivation extends Model {
   @attr('date') declare activatedAt: Date;
   @attr('number') declare position: number;
 
-  declare reorder: (
-    this: Model,
-    payload: { repository_id: string; positions: Array<{ id: string; position: number }> }
-  ) => Promise<void>;
+  declare reorder: (this: Model, payload: { repository_id: string; positions: Array<{ id: string; position: number }> }) => Promise<void>;
 }
 
 CourseExtensionActivation.prototype.reorder = collectionAction({
