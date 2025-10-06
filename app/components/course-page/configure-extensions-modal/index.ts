@@ -28,17 +28,13 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   get allExtensionsSorted() {
     const extensions = this.args.repository.course.sortedExtensions;
-    const extensionActivations = this.args.repository.extensionActivations.sortBy('position');
-    const activatedIds = extensionActivations.map((activation) => activation.extension.id);
+    const disabled = extensions.filter((ext) => !this.enabledExtensions.includes(ext)).sortBy('position');
 
-    const enabled = activatedIds.map((id) => extensions.find((ext) => ext.id === id)).filter(Boolean) as CourseExtensionModel[];
-    const disabled = extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
-
-    return [...enabled, ...disabled];
+    return [...this.enabledExtensions, ...disabled];
   }
 
-  get enabledExtensionIds() {
-    return this.args.repository.extensionActivations.map((activation) => activation.extension.id);
+  get enabledExtensions() {
+    return this.args.repository.extensionActivations.map((activation) => activation.extension);
   }
 
   get orderedCourseExtensionIdeas() {
@@ -69,15 +65,10 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       activation.position = position;
     });
 
-    try {
-      await (this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel).reorder({
-        repository_id: this.args.repository.id,
-        positions: positions.map(({ id, position }) => ({ id, position })),
-      });
-    } catch (error) {
-      console.error('Error reordering extensions:', error);
-      // TODO: Show error message to user and revert positions
-    }
+    await (this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel).reorder({
+      repository_id: this.args.repository.id,
+      positions: positions.map(({ id, position }) => ({ id, position })),
+    });
   }
 
   @action

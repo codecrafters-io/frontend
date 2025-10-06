@@ -188,4 +188,36 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.true(disabledExtension1Card.hasPill, 'Disabled extension still has pill when completed');
     assert.strictEqual(disabledExtension1Card.pillText, 'Completed', 'Disabled extension pill still shows "Completed"');
   });
+
+  test('disabled extensions appear after enabled extensions', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.adminPanel.clickOnStartCourse();
+    await coursePage.sidebar.configureExtensionsToggles[0].click();
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+
+    let cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    assert.strictEqual(cards[0].name, 'Extension 2', 'Enabled Extension 2 appears first');
+    assert.strictEqual(cards[1].name, 'Extension 1', 'Disabled Extension 1 appears after');
+
+    await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
+
+    cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    assert.strictEqual(cards[0].name, 'Extension 2', 'Extension 2 is still first');
+    assert.strictEqual(cards[1].name, 'Extension 1', 'Extension 1 is second');
+  });
 });
