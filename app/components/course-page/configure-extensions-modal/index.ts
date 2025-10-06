@@ -46,8 +46,9 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
-    // Map sorted extensions to their activation IDs with new positions (1-based)
-    const positions = sortedItems
+    const enabledExtensions = sortedItems.filter((extension) => this.enabledExtensions.includes(extension));
+
+    const positions = enabledExtensions
       .map((extension, index) => {
         const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
         if (!activation) return null;
@@ -55,12 +56,12 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
         return {
           activation,
           id: activation.id,
-          position: index + 1, // 1-based position
+          position: index + 1, // 1-based counting
         };
       })
       .filter(Boolean) as Array<{ activation: CourseExtensionActivationModel; id: string; position: number }>;
 
-    // Optimistically update positions locally first so the drag doesn't feel jarring
+    // This is to pre-update so the drag isn't jarring
     positions.forEach(({ activation, position }) => {
       activation.position = position;
     });
