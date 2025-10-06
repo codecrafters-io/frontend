@@ -54,9 +54,11 @@
     <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} />
   </div>
 
-  <div class="prose dark:prose-invert">
-    <p class={{if @isComplete "line-through"}}>
-      When you run the above command, the "Listening for a git push" message below will change, and the first stage will be activated.
-    </p>
-  </div>
+  {{#unless @isComplete}}
+    <div class="prose dark:prose-invert">
+      <p>
+        Run the commands above to proceed to the next stage.
+      </p>
+    </div>
+  {{/unless}}
 </div>
