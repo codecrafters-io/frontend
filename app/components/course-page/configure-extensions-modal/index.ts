@@ -26,19 +26,19 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     this.loadAllCourseExtensionIdeas();
   }
 
-  get disabledExtensions() {
-    const extensions = this.args.repository.course.sortedExtensions;
-    const activatedIds = this.args.repository.extensionActivations.map((activation) => activation.extension.id);
-
-    return extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
-  }
-
-  get enabledExtensions() {
+  get allExtensionsSorted() {
     const extensions = this.args.repository.course.sortedExtensions;
     const extensionActivations = this.args.repository.extensionActivations.sortBy('position');
     const activatedIds = extensionActivations.map((activation) => activation.extension.id);
 
-    return activatedIds.map((id) => extensions.find((ext) => ext.id === id)!).filter(Boolean);
+    const enabled = activatedIds.map((id) => extensions.find((ext) => ext.id === id)!).filter(Boolean);
+    const disabled = extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
+
+    return [...enabled, ...disabled];
+  }
+
+  get enabledExtensionIds() {
+    return this.args.repository.extensionActivations.map((activation) => activation.extension.id);
   }
 
   get orderedCourseExtensionIdeas() {

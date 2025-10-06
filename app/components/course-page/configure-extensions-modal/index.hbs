@@ -8,14 +8,14 @@
   </AlertWithIcon>
 
   <div class="grid grid-cols-1 gap-4 mb-6" {{sortable-group onChange=this.handleSortableItemsReordered}}>
-    {{#each this.enabledExtensions as |extension|}}
-      <div {{sortable-item model=extension}}>
+    {{#each this.allExtensionsSorted key="id" as |extension|}}
+      {{#if (includes this.enabledExtensionIds extension.id)}}
+        <div {{sortable-item model=extension}}>
+          <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+        </div>
+      {{else}}
         <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
-      </div>
-    {{/each}}
-
-    {{#each this.disabledExtensions as |extension|}}
-      <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+      {{/if}}
     {{/each}}
   </div>
 

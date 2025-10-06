@@ -67,10 +67,14 @@ export default class ExtensionCard extends Component<Signature> {
         await activation.destroyRecord();
       }
     } else {
+      const existingPositions = this.args.repository.extensionActivations.map((a) => a.position || 0);
+      const nextPosition = existingPositions.length > 0 ? Math.max(...existingPositions) + 1 : 1;
+
       await this.store
         .createRecord('course-extension-activation', {
           repository: this.args.repository,
           extension: this.args.extension,
+          position: nextPosition,
         })
         .save();
     }
