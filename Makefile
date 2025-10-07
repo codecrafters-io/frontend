@@ -17,43 +17,7 @@ refresh_concept_fixtures:
 	gsed -i '1s/^/export default /' mirage/concept-fixtures/*.js
 
 refresh_course_fixtures:
-	gh api repos/codecrafters-io/build-your-own-redis/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/redis.js
-
-	gh api repos/codecrafters-io/build-your-own-docker/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/docker.js
-
-	gh api repos/codecrafters-io/build-your-own-git/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/git.js
-
-	gh api repos/codecrafters-io/build-your-own-sqlite/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/sqlite.js
-
-	gh api repos/codecrafters-io/build-your-own-grep/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/grep.js
-
-	gh api repos/codecrafters-io/build-your-own-dummy/contents/course-definition.yml \
-		| jq -r .content \
-		| base64 -d \
-		| yq -o json eval \
-		> mirage/course-fixtures/dummy.js
-
-	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
+	./scripts/refresh-course-fixtures.sh
 
 serve:
 	npm run start
