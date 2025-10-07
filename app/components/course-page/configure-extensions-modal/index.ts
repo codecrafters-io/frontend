@@ -28,13 +28,10 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   get allExtensionsSorted() {
     const extensions = this.args.repository.course.sortedExtensions;
-    const disabled = extensions.filter((ext) => !this.enabledExtensions.includes(ext)).sortBy('position');
+    const enabledExtensions = this.args.repository.extensionActivations.sortBy('position').map((activation) => activation.extension);
+    const disabled = extensions.filter((ext) => !this.isExtensionEnabled(ext)).sortBy('position');
 
-    return [...this.enabledExtensions, ...disabled];
-  }
-
-  get enabledExtensions() {
-    return this.args.repository.extensionActivations.map((activation) => activation.extension);
+    return [...enabledExtensions, ...disabled];
   }
 
   get orderedCourseExtensionIdeas() {
@@ -46,9 +43,8 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
-    const enabledExtensions = sortedItems.filter((extension) => this.enabledExtensions.includes(extension));
-
-    const positions = enabledExtensions
+    const positions = sortedItems
+      .filter((extension) => this.isExtensionEnabled(extension))
       .map((extension, index) => {
         const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
         if (!activation) return null;
@@ -70,6 +66,11 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       repository_id: this.args.repository.id,
       positions: positions.map(({ id, position }) => ({ id, position })),
     });
+  }
+
+  @action
+  isExtensionEnabled(extension: CourseExtensionModel): boolean {
+    return this.args.repository.extensionActivations.some((activation) => activation.extension.id === extension.id);
   }
 
   @action
