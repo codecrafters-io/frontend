@@ -1,7 +1,6 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
 import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
