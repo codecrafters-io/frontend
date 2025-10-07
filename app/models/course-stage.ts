@@ -159,6 +159,19 @@ invalid_command: command not found
     return this.position > 3;
   }
 
+  buildInstructionsMarkdownFor(repository: RepositoryModel) {
+    const variables: Record<string, unknown> = {};
+
+    this.store.peekAll('language').forEach((language) => {
+      variables[`lang_is_${(language as LanguageModel).slug}`] = repository.language === language;
+    });
+
+    // Set placeholder language_name to a concrete one (Python) since it's the least awkward among all other options
+    variables['language_name'] = repository.language?.name || 'Python';
+
+    return Mustache.render(this.descriptionMarkdownTemplate, variables);
+  }
+
   hasCommunitySolutionsForLanguage(language: LanguageModel) {
     return ((this.communitySolutionCounts || {})[language.slug] || 0) > 0;
   }

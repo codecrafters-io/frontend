@@ -42,6 +42,27 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
   });
 
+  test('stage card opens links in new tab', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    const stage = course.stages.models.toArray().find((stage) => stage.position === 2);
+    stage.update({ descriptionMarkdownTemplate: `[link1](https://link1.com), [link2](https://link2.com)` });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
+    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+
+    assert.strictEqual(document.querySelectorAll('#your-task-card a').length, 2);
+    assert.strictEqual(document.querySelectorAll('#your-task-card a[target="_blank"]').length, 2);
+  });
+
   test('can view previous stages after completing them', async function (assert) {
     testScenario(this.server);
     const currentUser = signIn(this.owner, this.server);
