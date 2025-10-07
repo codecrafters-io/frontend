@@ -53,10 +53,6 @@ export default class CourseStageInstructionsController extends Controller {
     return !!this.prerequisiteInstructionsMarkdown;
   }
 
-  get shouldShowStage1ForumLinkCTA() {
-    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed' && this.currentStep.status !== 'complete';
-  }
-
   get shouldShowTestRunnerCard() {
     return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus !== 'passed';
   }
