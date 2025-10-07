@@ -14,10 +14,11 @@ exit_with_error "#{definition_file_path} is not a file" unless File.file?(defini
 
 definition_file = YAML.load_file(definition_file_path)
 
-definition_file["stages"].each do |stage|
-  file = Dir.glob(File.join(definition_repository_path, "stage_descriptions", "*-#{stage["slug"]}.md")).first
-  exit_with_error "Unable to locate stage description file for #{stage["slug"]} in #{definition_repository_path}/stage_descriptions" unless File.file?(file)
-  stage["description_md"] = File.read(file)
+definition_file["stages"].each do |stage_definition|
+  stage_slug = stage_definition["slug"]
+  file = Dir.glob(File.join(definition_repository_path, "stage_descriptions", "*-#{stage_slug}.md")).first
+  exit_with_error "Unable to locate stage description file for #{stage_slug} in #{definition_repository_path}/stage_descriptions" unless File.file?(file)
+  stage_definition["description_md"] = File.read(file)
 end
 
 puts "export default #{JSON.pretty_generate(definition_file)}"
