@@ -66,14 +66,6 @@ export default class SecondStageTutorialCard extends Component<Signature> {
     return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('implement-solution');
   }
 
-  get readInstructionsStepIsComplete() {
-    return this.implementSolutionStepIsComplete || this.readInstructionsStepWasMarkedAsComplete;
-  }
-
-  get readInstructionsStepWasMarkedAsComplete() {
-    return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('read-instructions');
-  }
-
   get runTestsStepIsComplete() {
     return (
       this.args.repository.stageIsComplete(this.args.courseStage) ||
@@ -92,18 +84,7 @@ export default class SecondStageTutorialCard extends Component<Signature> {
 
   @action
   handleStepCompletedManually(step: StepDefinition) {
-    if (step.id === 'read-instructions') {
-      this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
-
-      this.analyticsEventTracker.track('completed_second_stage_tutorial_step', {
-        step_number: 1,
-        step_id: 'read-instructions',
-        repository_id: this.args.repository.id,
-      });
-    }
-
     if (step.id === 'implement-solution') {
-      this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('read-instructions');
       this.coursePageState.recordManuallyCompletedStepInSecondStageInstructions('implement-solution');
 
       this.analyticsEventTracker.track('completed_second_stage_tutorial_step', {
