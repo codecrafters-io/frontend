@@ -75,7 +75,7 @@ export default class CourseOverviewRoute extends BaseRoute {
   }
 
   #queryUserRepositories(course: CourseModel) {
-    if (course && this.authenticator.isAuthenticated) {
+    if (this.authenticator.isAuthenticated) {
       return this.store.query('repository', {
         include: RepositoryPoller.defaultIncludedResources,
         course_id: course.id,
