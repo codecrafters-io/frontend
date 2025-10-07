@@ -19,15 +19,6 @@
           />
         {{/if}}
 
-        {{#if @model.courseStage.isFirst}}
-          <CoursePage::CourseStageStep::FirstStageTutorialCard
-            @repository={{@model.activeRepository}}
-            @courseStage={{@model.courseStage}}
-            @currentStep={{this.currentStep}}
-            class="mb-6"
-          />
-        {{/if}}
-
         {{#if @model.courseStage.isSecond}}
           <CoursePage::CourseStageStep::SecondStageTutorialCard
             @repository={{@model.activeRepository}}
@@ -37,45 +28,28 @@
           />
         {{/if}}
 
-        {{#if this.shouldShowTestRunnerCard}}
-          <div class="mb-6">
-            <CoursePage::CourseStageStep::TestRunnerCard
-              {{! template-lint-disable no-duplicate-id }}
-              id="test-runner-card"
-              @isCollapsible={{not @model.courseStage.isFirst}}
-              @repository={{@model.activeRepository}}
-              @stage={{@model.courseStage}}
-              @onExpand={{if @model.courseStage.isFirst this.handleTestRunnerCardExpandedOnFirstStage undefined}}
-            />
-
-            {{#if @model.courseStage.isFirst}}
-              <EmberPopover @popperContainer="body">
-                <div class="prose prose-sm prose-invert text-white">
-                  {{#if (eq this.currentStep.testsStatus "failed")}}
-                    <p>
-                      This failure is expected! Check the
-                      <a href="#first-stage-tutorial-card">How to pass this stage</a>
-                      section for instructions.
-                    </p>
-                  {{else}}
-                    <p>
-                      Check the
-                      <a href="#first-stage-tutorial-card">How to pass this stage</a>
-                      section for instructions.
-                    </p>
-                  {{/if}}
-                </div>
-              </EmberPopover>
-            {{/if}}
-          </div>
-        {{/if}}
-
         {{! TODO: Bring this back? }}
         {{!-- {{#if this.shouldShowPrerequisites}}
         <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
       {{/if}} --}}
 
-        <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
+        {{#if @model.courseStage.isFirst}}
+          <CoursePage::CourseStageStep::FirstStageYourTaskCard @currentStep={{this.currentStep}} />
+        {{else}}
+          <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
+        {{/if}}
+
+        {{#if this.shouldShowTestRunnerCard}}
+          <div class="mt-6">
+            <CoursePage::CourseStageStep::TestRunnerCard
+              {{! template-lint-disable no-duplicate-id }}
+              id="test-runner-card"
+              @isCollapsible={{true}}
+              @repository={{@model.activeRepository}}
+              @stage={{@model.courseStage}}
+            />
+          </div>
+        {{/if}}
 
         <div data-percy-hints-section>
           <div class="border-b border-gray-200 dark:border-white/5 pb-2 mb-6 mt-8 flex items-center justify-between">

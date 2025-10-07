@@ -1,21 +1,18 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
-import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
-    courseStage: CourseStageModel;
     currentStep: CourseStageStep;
   };
 }
@@ -30,31 +27,18 @@ class BaseStep {
   }
 }
 
-class NavigateToFileStep extends BaseStep implements StepDefinition {
-  id = 'navigate-to-file';
-  canBeCompletedManually = true;
-
-  get titleMarkdown() {
-    if (!this.repository.firstStageSolution) {
-      return 'Navigate to README.md';
-    }
-
-    const filename = this.repository.firstStageSolution.changedFiles[0]!.filename;
-
-    if (filename) {
-      return `Navigate to ${filename}`;
-    } else {
-      return 'Navigate to file';
-    }
-  }
-}
-
 class UncommentCodeStep extends BaseStep implements StepDefinition {
   id = 'uncomment-code';
   canBeCompletedManually = true;
 
   get titleMarkdown() {
-    return 'Uncomment code';
+    const filename = this.repository.firstStageSolution?.changedFiles[0]?.filename;
+
+    if (filename) {
+      return `Uncomment code in ${filename}`;
+    } else {
+      return 'Uncomment code';
+    }
   }
 }
 
@@ -63,24 +47,27 @@ class SubmitCodeStep extends BaseStep implements StepDefinition {
   canBeCompletedManually = false;
 
   get titleMarkdown() {
-    return 'Submit changes';
+    return 'Commit and push your changes';
   }
 }
 
-export default class FirstStageTutorialCard extends Component<Signature> {
+export default class FirstStageYourTaskCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
   get filename() {
-    const solution = this.args.courseStage.solutions.find((solution) => solution.language === this.args.repository.language);
+    const solution = this.args.currentStep.courseStage.solutions.find((solution) => solution.language === this.args.currentStep.repository.language);
 
     return solution?.changedFiles[0]?.filename;
   }
 
   get hasPassedTests() {
     return this.args.currentStep.testsStatus === 'passed' || this.args.currentStep.status === 'complete';
+  }
+
+  get instructionsMarkdown() {
+    return this.args.currentStep.courseStage.buildInstructionsMarkdownFor(this.args.currentStep.repository);
   }
 
   get navigateToFileStepIsComplete() {
@@ -93,14 +80,20 @@ export default class FirstStageTutorialCard extends Component<Signature> {
 
   get steps() {
     return [
-      new NavigateToFileStep(this.args.repository, this.navigateToFileStepIsComplete),
-      new UncommentCodeStep(this.args.repository, this.uncommentCodeStepIsComplete),
-      new SubmitCodeStep(this.args.repository, this.submitCodeStepIsComplete),
+      new UncommentCodeStep(this.args.currentStep.repository, this.uncommentCodeStepIsComplete),
+      new SubmitCodeStep(this.args.currentStep.repository, this.submitCodeStepIsComplete),
     ];
   }
 
   get submitCodeStepIsComplete() {
-    return this.args.repository.lastSubmissionHasSuccessStatus || this.args.repository.stageIsComplete(this.args.courseStage);
+    return (
+      this.args.currentStep.repository.lastSubmissionHasSuccessStatus ||
+      this.args.currentStep.repository.stageIsComplete(this.args.currentStep.courseStage)
+    );
+  }
+
+  get truncatedInstructionsMarkdown(): string {
+    return this.instructionsMarkdown.split('\n\n')[0]!;
   }
 
   get uncommentCodeStepIsComplete() {
@@ -119,7 +112,7 @@ export default class FirstStageTutorialCard extends Component<Signature> {
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
         step_number: 1,
         step_id: 'navigate-to-file',
-        repository_id: this.args.repository.id,
+        repository_id: this.args.currentStep.repository.id,
       });
     }
 
@@ -130,7 +123,7 @@ export default class FirstStageTutorialCard extends Component<Signature> {
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
         step_number: 2,
         step_id: 'uncomment-code',
-        repository_id: this.args.repository.id,
+        repository_id: this.args.currentStep.repository.id,
       });
     }
   }
@@ -143,6 +136,6 @@ export default class FirstStageTutorialCard extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard': typeof FirstStageTutorialCard;
+    'CoursePage::CourseStageStep::FirstStageYourTaskCard': typeof FirstStageYourTaskCard;
   }
 }

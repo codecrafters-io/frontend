@@ -1,50 +1,38 @@
-<div class="mb-6">
+<div class="mb-3">
   <div class="prose prose-compact dark:prose-invert mb-3">
     First, run this command to
     <span class="font-semibold">commit your changes</span>:
   </div>
 
-  <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-3" />
+  <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-1.5" />
 
-  <div class="prose prose-compact dark:prose-invert">
-    <p>
-      The output of the command should look like this:
-    </p>
+  <div class="flex items-center gap-0.5 pl-0.5">
+    {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
 
-    <pre class="max-w-2xl"><code class="text-xs">[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
-
-    <p class="text-xs">
-      <b>Note:</b>
-      If your output doesn't match the above,
-      <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>read this</a>.
-    </p>
+    <span class="text-blue-500 text-xs underline font-medium">
+      <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
+    </span>
   </div>
 </div>
 
-<div class="mb-6">
+<div>
   <div class="prose prose-compact dark:prose-invert mb-3">
     Next, run this command to
     <span class="font-semibold">push your changes</span>:
   </div>
 
-  <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-3" />
+  <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-1.5" />
 
-  <div class="prose prose-compact dark:prose-invert">
-    <p>
-      The output of the command should look like this:
-    </p>
+  <div class="flex items-center gap-0.5 pl-0.5">
+    {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
 
-    <pre class="language-bash max-w-2xl"><code class="text-xs">remote: Welcome to CodeCrafters! Your commit was received successfully.</code></pre>
-
-    <p class="text-xs">
-      <b>Note:</b>
-      If your output doesn't match the above,
-      <a href="#" {{on "click" (fn (mut this.isPushModalOpen) true)}}>read this</a>.
-    </p>
+    <span class="text-blue-500 text-xs underline font-medium">
+      <a href="#" {{on "click" (fn (mut this.isPushModalOpen) true)}}>Troubleshoot</a>
+    </span>
   </div>
 </div>
 
-<div class="prose dark:prose-invert">
+{{!-- <div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
     Once you run the commands above, the
     <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
@@ -67,7 +55,7 @@
     <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
     to troubleshoot.
   </p>
-{{/unless}}
+{{/unless}} --}}
 
 {{#if this.isCommitModalOpen}}
   <ModalBackdrop class="cursor-pointer">
