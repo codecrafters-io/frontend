@@ -46,7 +46,7 @@ class SubmitCodeStep extends BaseStep implements StepDefinition {
   canBeCompletedManually = false;
 
   get titleMarkdown() {
-    return 'Commit and push your changes';
+    return 'Git push to submit your changes';
   }
 }
 
@@ -67,14 +67,6 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
 
   get instructionsMarkdown() {
     return this.args.currentStep.courseStage.buildInstructionsMarkdownFor(this.args.currentStep.repository);
-  }
-
-  get navigateToFileStepIsComplete() {
-    return this.navigateToFileStepWasMarkedAsComplete || this.uncommentCodeStepIsComplete;
-  }
-
-  get navigateToFileStepWasMarkedAsComplete() {
-    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('navigate-to-file');
   }
 
   get steps() {
@@ -105,19 +97,8 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
 
   @action
   handleStepCompletedManually(step: StepDefinition) {
-    if (step.id === 'navigate-to-file') {
-      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
-
-      this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
-        step_number: 1,
-        step_id: 'navigate-to-file',
-        repository_id: this.args.currentStep.repository.id,
-      });
-    }
-
     if (step.id === 'uncomment-code') {
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
-      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('navigate-to-file');
 
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
         step_number: 2,
