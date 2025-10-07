@@ -101,11 +101,6 @@ export default class CourseStageInstructionsController extends Controller {
   }
 
   @action
-  handleTestRunnerCardExpandedOnFirstStage() {
-    document.getElementById('first-stage-tutorial-card')?.scrollIntoView({ behavior: 'smooth' });
-  }
-
-  @action
   loadLanguageGuides(): void {
     this.loadLanguageGuidesTask.perform();
   }

@@ -1,0 +1,60 @@
+<CoursePage::InstructionsCard
+  @contentIdentifier={{@currentStep.courseStage.id}}
+  {{! TODO: See if we still need this id marker?}}
+  id="your-task-card"
+  class="group/your-task-card"
+  data-test-your-task-card
+  data-test-first-stage-your-task-card
+  ...attributes
+>
+  <:header>
+    <CoursePage::CourseStageStep::YourTaskCard::Header @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} class="mb-5 w-full" />
+  </:header>
+
+  <:content>
+    <div class="prose dark:prose-invert has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
+      {{markdown-to-html this.instructionsMarkdown}}
+
+      <h4 id="first-stage-tutorial-heading">
+        How to pass this stage
+      </h4>
+
+      <p>
+        Since this is the first stage, we've included some commented code to help you get started. To pass this stage, simply uncomment the code and
+        submit your changes.
+      </p>
+    </div>
+
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32 mt-5" as |stepList|>
+      {{#if (eq stepList.expandedStep.id "uncomment-code")}}
+        <CoursePage::CourseStageStep::FirstStageYourTaskCard::UncommentCodeStep
+          @repository={{@currentStep.repository}}
+          @courseStage={{@currentStep.courseStage}}
+          @isComplete={{this.uncommentCodeStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "submit-code")}}
+        <CoursePage::CourseStageStep::FirstStageYourTaskCard::SubmitCodeStep
+          @courseStage={{@currentStep.courseStage}}
+          @filename={{this.filename}}
+          @isComplete={{this.submitCodeStepIsComplete}}
+        />
+      {{/if}}
+    </ExpandableStepList>
+
+    {{#if (eq this.coursePageState.nextStep this.coursePageState.activeStep)}}
+      <div class="mt-4 flex">
+        <PrimaryLinkButton
+          @route={{this.coursePageState.activeStep.routeParams.route}}
+          @models={{this.coursePageState.activeStep.routeParams.models}}
+          data-test-continue-button
+        >
+          {{#if (eq this.coursePageState.activeStep.type "CourseStageStep")}}
+            View Next Stage →
+          {{else}}
+            View Next Step →
+          {{/if}}
+        </PrimaryLinkButton>
+      </div>
+    {{/if}}
+  </:content>
+</CoursePage::InstructionsCard>
