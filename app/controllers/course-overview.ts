@@ -25,10 +25,6 @@ export default class CourseOverviewController extends Controller {
   }
 
   get completedStages() {
-    if (!this.model.course) {
-      return [];
-    }
-
     return this.userRepositories.flatMap((repository) => repository.completedStages);
   }
 
