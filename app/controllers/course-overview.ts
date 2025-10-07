@@ -29,7 +29,7 @@ export default class CourseOverviewController extends Controller {
       return [];
     }
 
-    return this.userRepositories.filter((repository) => repository.course === this.model.course).flatMap((repository) => repository.completedStages);
+    return this.userRepositories.flatMap((repository) => repository.completedStages);
   }
 
   get currentUser() {
