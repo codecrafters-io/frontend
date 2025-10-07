@@ -101,7 +101,7 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
       this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
 
       this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
-        step_number: 2,
+        step_number: 1,
         step_id: 'uncomment-code',
         repository_id: this.args.currentStep.repository.id,
       });
