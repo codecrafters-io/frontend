@@ -6,40 +6,7 @@
   ...attributes
 >
   <:header>
-    <div class="flex items-center justify-between flex-wrap gap-3 border-b border-gray-200 dark:border-white/5 pb-2 mb-5 w-full">
-      <div class="flex items-center gap-x-3 gap-y-1.5 flex-wrap">
-        <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200 shrink-0">Your Task</h2>
-        <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} class="shrink-0" />
-
-        <FeedbackButton
-          @source="stage_instructions_card"
-          @sourceMetadata={{hash language_slug=(or @repository.language.slug "unknown") stage_slug=@courseStage.slug}}
-          @dropdownPosition="bottom"
-          @placeholderText={{"Got any feedback on this stage's instructions? Please let us know!"}}
-          class="shrink-0"
-          as |dd|
-        >
-          <TertiaryButton @size="extra-small" class={{if dd.isOpen "opacity-100" "sm:opacity-0 sm:group-hover/your-task-card:opacity-100"}}>
-            Share Feedback
-          </TertiaryButton>
-        </FeedbackButton>
-
-        {{#if (or (current-user-is-course-author @courseStage.course) (current-user-is-staff))}}
-          <a
-            href="{{@courseStage.course.definitionRepositoryLink}}/edit/main/course-definition.yml"
-            class="text-gray-400 opacity-0 group-hover/your-task-card:opacity-100 items-center hover:text-gray-600 ml-1 text-xs hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-test-edit-on-github-link
-          >
-            {{svg-jar "pencil-alt" class="inline-flex w-4 mr-1 fill-current"}}
-            Edit
-          </a>
-        {{/if}}
-      </div>
-
-      <CourseStageDifficultyLabel @stage={{@courseStage}} class="shrink-0" />
-    </div>
+    <CoursePage::CourseStageStep::YourTaskCard::Header @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} class="mb-5 w-full" />
   </:header>
 
   <:content>
