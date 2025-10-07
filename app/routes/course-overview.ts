@@ -45,35 +45,43 @@ export default class CourseOverviewRoute extends BaseRoute {
     this.metaData.imageUrl = this.previousMetaImageUrl;
   }
 
-  async model(params: { course_slug: string }): Promise<ModelType> {
-    if (this.store.peekAll('course').findBy('slug', params.course_slug)) {
-      // Trigger a refresh anyway
-      this.store.findAll('course', {
+  async #findCourse(slug: string) {
+    return (
+      await this.store.findAll('course', {
         include: 'extensions,stages,language-configurations.language',
-      });
+      })
+    ).findBy('slug', slug);
+  }
 
-      return {
-        course: this.store.peekAll('course').findBy('slug', params.course_slug),
-      };
+  async model({ course_slug }: { course_slug: string }): Promise<ModelType> {
+    let course: CourseModel = this.#peekCourse(course_slug);
+
+    if (course) {
+      // Trigger a refresh anyway, without await
+      this.#findCourse(course_slug);
+      this.#queryUserRepositories(course);
     } else {
-      const courses = await this.store.findAll('course', {
-        include: 'extensions,stages,language-configurations.language',
-      });
-
-      const course = courses.findBy('slug', params.course_slug);
-
-      if (!course) {
-        return { course: undefined as unknown as CourseModel };
-      }
-
-      if (this.authenticator.isAuthenticated) {
-        await this.store.query('repository', {
-          include: RepositoryPoller.defaultIncludedResources,
-          course_id: course.id,
-        });
-      }
-
-      return { course };
+      course = await this.#findCourse(course_slug);
+      await this.#queryUserRepositories(course);
     }
+
+    return {
+      course,
+    };
+  }
+
+  #peekCourse(slug: string) {
+    return this.store.peekAll('course').findBy('slug', slug);
+  }
+
+  #queryUserRepositories(course: CourseModel) {
+    if (this.authenticator.isAuthenticated) {
+      return this.store.query('repository', {
+        include: RepositoryPoller.defaultIncludedResources,
+        course_id: course.id,
+      });
+    }
+
+    return;
   }
 }

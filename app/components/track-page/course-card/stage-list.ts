@@ -6,7 +6,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    completedStages: CourseStageModel[];
+    completedStages?: CourseStageModel[];
     course: CourseModel;
   };
 }

@@ -24,6 +24,10 @@ export default class CourseOverviewController extends Controller {
     }
   }
 
+  get completedStages() {
+    return this.userRepositories.flatMap((repository) => repository.completedStages);
+  }
+
   get currentUser() {
     return this.authenticator.currentUser;
   }
