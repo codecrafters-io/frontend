@@ -83,10 +83,6 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
     );
   }
 
-  get truncatedInstructionsMarkdown(): string {
-    return this.instructionsMarkdown.split('\n\n')[0]!;
-  }
-
   get uncommentCodeStepIsComplete() {
     return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
   }
