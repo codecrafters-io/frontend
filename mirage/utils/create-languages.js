@@ -9,6 +9,7 @@ export default function createLanguages(server) {
   server.create('language', { name: 'Gleam', slug: 'gleam', trackStatus: 'beta' });
   server.create('language', { name: 'Go', slug: 'go', trackStatus: 'live' });
   server.create('language', { name: 'Haskell', slug: 'haskell', trackStatus: 'beta' });
+  server.create('language', { name: 'Odin', slug: 'odin', trackStatus: 'beta' });
   server.create('language', { name: 'Java', slug: 'java', trackStatus: 'beta' });
   server.create('language', { name: 'JavaScript', slug: 'javascript', trackStatus: 'beta' });
   server.create('language', { name: 'Kotlin', slug: 'kotlin', trackStatus: 'beta' });
