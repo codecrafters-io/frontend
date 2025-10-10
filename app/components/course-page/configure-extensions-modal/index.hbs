@@ -7,15 +7,21 @@
     Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
   </AlertWithIcon>
 
-  <div class="grid grid-cols-1 gap-4 mb-6" {{sortable-group onChange=this.handleSortableItemsReordered}}>
-    {{#each this.allExtensionsSorted key="id" as |extension|}}
-      {{#if (includes this.enabledExtensions extension)}}
-        <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}}>
-          <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
-        </div>
-      {{else}}
+  <div class="grid grid-cols-1 gap-4 mb-6">
+    {{#if this.enabledExtensions.length}}
+      <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
+        {{#each this.enabledExtensions key="id" as |extension|}}
+          <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}} class="mb-4">
+            <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+
+    {{#each this.disabledExtensions key="id" as |extension|}}
+      <div class="mb-4">
         <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
-      {{/if}}
+      </div>
     {{/each}}
   </div>
 

@@ -26,15 +26,19 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     this.loadAllCourseExtensionIdeas();
   }
 
-  get allExtensionsSorted() {
+  get disabledExtensions() {
     const extensions = this.args.repository.course.sortedExtensions;
-    const disabled = extensions.filter((ext) => !this.enabledExtensions.includes(ext)).sortBy('position');
+    const activatedIds = this.args.repository.extensionActivations.map((activation) => activation.extension.id);
 
-    return [...this.enabledExtensions, ...disabled];
+    return extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
   }
 
   get enabledExtensions() {
-    return this.args.repository.extensionActivations.sortBy('position').map((activation) => activation.extension);
+    const extensions = this.args.repository.course.sortedExtensions;
+    const extensionActivations = this.args.repository.extensionActivations.sortBy('position');
+    const activatedIds = extensionActivations.map((activation) => activation.extension.id);
+
+    return activatedIds.map((id) => extensions.find((ext) => ext.id === id)!).filter(Boolean);
   }
 
   get orderedCourseExtensionIdeas() {
@@ -46,8 +50,8 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
+    // Map sorted extensions to their activation IDs with new positions (1-based)
     const positions = sortedItems
-      .filter((extension) => this.isExtensionEnabled(extension))
       .map((extension, index) => {
         const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
         if (!activation) return null;
@@ -55,25 +59,25 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
         return {
           activation,
           id: activation.id,
-          position: index + 1, // 1-based counting
+          position: index + 1, // 1-based position
         };
       })
       .filter(Boolean) as Array<{ activation: CourseExtensionActivationModel; id: string; position: number }>;
 
-    // This is to pre-update so the drag isn't jarring
+    // Optimistically update positions locally first so the drag doesn't feel jarring
     positions.forEach(({ activation, position }) => {
       activation.position = position;
     });
 
-    await (this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel).reorder({
-      repository_id: this.args.repository.id,
-      positions: positions.map(({ id, position }) => ({ id, position })),
-    });
-  }
-
-  @action
-  isExtensionEnabled(extension: CourseExtensionModel): boolean {
-    return this.args.repository.extensionActivations.some((activation) => activation.extension.id === extension.id);
+    try {
+      await (this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel).reorder({
+        repository_id: this.args.repository.id,
+        positions: positions.map(({ id, position }) => ({ id, position })),
+      });
+    } catch (error) {
+      console.error('Error reordering extensions:', error);
+      // TODO: Show error message to user and revert positions
+    }
   }
 
   @action
