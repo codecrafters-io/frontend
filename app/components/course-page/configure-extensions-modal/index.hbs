@@ -9,7 +9,7 @@
 
   <div class="grid grid-cols-1 gap-4 mb-6" {{sortable-group onChange=this.handleSortableItemsReordered}}>
     {{#each this.allExtensionsSorted key="id" as |extension|}}
-      {{#if (this.isExtensionEnabled extension)}}
+      {{#if (includes this.enabledExtensions extension)}}
         <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}}>
           <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
         </div>

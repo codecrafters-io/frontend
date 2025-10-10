@@ -28,10 +28,13 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   get allExtensionsSorted() {
     const extensions = this.args.repository.course.sortedExtensions;
-    const enabledExtensions = this.args.repository.extensionActivations.sortBy('position').map((activation) => activation.extension);
-    const disabled = extensions.filter((ext) => !this.isExtensionEnabled(ext)).sortBy('position');
+    const disabled = extensions.filter((ext) => !this.enabledExtensions.includes(ext)).sortBy('position');
 
-    return [...enabledExtensions, ...disabled];
+    return [...this.enabledExtensions, ...disabled];
+  }
+
+  get enabledExtensions() {
+    return this.args.repository.extensionActivations.sortBy('position').map((activation) => activation.extension);
   }
 
   get orderedCourseExtensionIdeas() {
