@@ -5,7 +5,6 @@ import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
 import Store from '@ember-data/store';
-import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { service } from '@ember/service';
@@ -101,9 +100,6 @@ export default class ExtensionCard extends Component<Signature> {
       itemsToRemove.forEach((item) => {
         item.unloadRecord();
       });
-
-      // Rebuild the step list to reflect the updated extensions
-      this.coursePageState.setStepList(new StepListDefinition(this.args.repository));
     });
 
     // If we performed the same action as whatever the user's latest request was, then we can reset the request.
