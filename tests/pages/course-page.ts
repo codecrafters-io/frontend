@@ -1,7 +1,6 @@
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
-import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageYourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-your-task-card';
@@ -15,6 +14,7 @@ import SecondStageTutorialCard from 'codecrafters-frontend/tests/pages/component
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
+import CreateRepositoryQuestionnaire from 'codecrafters-frontend/tests/pages/components/course-page/introduction-step/welcome-card/create-repository-questionnaire';
 import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
@@ -67,8 +67,6 @@ export default create({
 
     scope: '[data-test-configure-github-integration-modal]',
   },
-
-  createRepositoryCard: CreateRepositoryCard,
 
   currentStepCompleteModal: {
     clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
@@ -212,5 +210,11 @@ export default create({
   },
 
   visit: visitable('/courses/:course_slug'),
+
+  welcomeCard: {
+    createRepositoryQuestionnaire: CreateRepositoryQuestionnaire,
+    scope: '[data-test-welcome-card]',
+  },
+
   yourTaskCard: YourTaskCard,
 });

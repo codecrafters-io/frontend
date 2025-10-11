@@ -21,7 +21,7 @@ export default class IntroductionStep extends StepDefinition {
       return {
         dotColor: 'yellow',
         dotType: 'blinking',
-        text: 'Complete pre-challenge assessment to proceed',
+        text: 'Complete introduction questionnaire to proceed',
       };
     } else {
       return {
@@ -45,7 +45,7 @@ export default class IntroductionStep extends StepDefinition {
       return 'not_started';
     }
 
-    // Old users don't have a pre-challenge assessment, let's still show this as completed for them.
+    // Old users don't have a questionnaire, let's still show this as completed for them.
     // @ts-expect-error repository.firstSubmissionCreated not typed
     if (this.repository.firstSubmissionCreated) {
       return 'complete';

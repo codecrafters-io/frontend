@@ -1,4 +1,4 @@
-<CoursePage::InstructionsCard @title="Introduction" ...attributes>
+<CoursePage::InstructionsCard @title="Introduction" data-test-welcome-card ...attributes>
   <:content>
     <div class="prose dark:prose-invert">
       <p>
@@ -9,5 +9,10 @@
 
       {{markdown-to-html @repository.course.descriptionMarkdown}}
     </div>
+
+    <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire
+      @repository={{@repository}}
+      @preferredLanguageSlug={{@preferredLanguageSlug}}
+    />
   </:content>
 </CoursePage::InstructionsCard>
