@@ -35,10 +35,6 @@
   {{#if this.unsavedProficiencyLevel}}
     <PrimaryButton {{on "click" this.handleContinueButtonClick}} data-test-continue-button class="mt-3">
       Continue
-
-      {{#unless this.unsavedProficiencyLevel}}
-        <EmberTooltip @text="Select an option above to continue." />
-      {{/unless}}
     </PrimaryButton>
   {{/if}}
 </div>
