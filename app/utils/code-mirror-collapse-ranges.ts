@@ -141,8 +141,13 @@ function initCollapsedRangesStateField(collapsedRanges: LineRange[] = []) {
 
 const baseTheme = EditorView.baseTheme({
   '& .cm-collapsedRanges': {
+    '--collapsed-ranges-padding-start': '0.625rem',
+    '--collapsed-ranges-padding-end': '1rem',
+    '--collapsed-ranges-padding-top': '0.3125rem',
+    '--collapsed-ranges-padding-bottom': '0.3125rem',
     '& .cm-collapsedRangesInner': {
-      padding: '5px 5px 5px 10px',
+      padding:
+        'var(--collapsed-ranges-padding-top) var(--collapsed-ranges-padding-end) var(--collapsed-ranges-padding-bottom) var(--collapsed-ranges-padding-start)',
       background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
       color: '#444',
       cursor: 'pointer',

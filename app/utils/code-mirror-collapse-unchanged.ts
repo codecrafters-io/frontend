@@ -159,8 +159,13 @@ function buildCollapsedRanges(state: EditorState, margin: number, minLines: numb
 
 const baseTheme = EditorView.baseTheme({
   '& .cm-cc-collapsedLines': {
+    '--collapsed-lines-padding-start': '0.625rem',
+    '--collapsed-lines-padding-end': '1rem',
+    '--collapsed-lines-padding-top': '0.3125rem',
+    '--collapsed-lines-padding-bottom': '0.3125rem',
     '& .cm-cc-collapsedLinesInner': {
-      padding: '5px 5px 5px 10px',
+      padding:
+        'var(--collapsed-lines-padding-top) var(--collapsed-lines-padding-end) var(--collapsed-lines-padding-bottom) var(--collapsed-lines-padding-start)',
       background: 'linear-gradient(to bottom, transparent 0, #f3f3f3 30%, #f3f3f3 70%, transparent 100%)',
       color: '#444',
       cursor: 'pointer',
