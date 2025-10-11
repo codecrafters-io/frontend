@@ -1,0 +1,44 @@
+<div class="prose dark:prose-invert mb-5">
+  <p>
+    How would you describe your experience level with
+    {{if @repository.language @repository.language.name "this language"}}? We can tailor your experience accordingly.
+  </p>
+</div>
+
+<div data-test-select-language-proficiency-level-step>
+  <div class="flex items-center flex-wrap max-w-3xl gap-3">
+    {{#each-in @repository.languageProficiencyLevelMappings as |key value|}}
+      <TertiaryButton
+        class="{{if
+            (eq this.optimisticProficiencyLevel key)
+            'border-teal-500 text-teal-500 hover:border-teal-500 dark:border-teal-400 dark:text-teal-400 dark:hover:border-teal-400'
+          }}"
+        {{on "click" (fn this.handleSelect key)}}
+        data-test-option-button
+      >
+        {{value}}
+      </TertiaryButton>
+    {{/each-in}}
+  </div>
+
+  <AnimatedContainer class="w-full">
+    {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
+      <AlertWithIcon class="mt-3">
+        {{! The extra #if convinces glint that the value isn't null }}
+        {{#if this.feedbackAlertMarkdown}}
+          {{markdown-to-html this.feedbackAlertMarkdown}}
+        {{/if}}
+      </AlertWithIcon>
+    {{/animated-if}}
+  </AnimatedContainer>
+
+  {{#if this.unsavedProficiencyLevel}}
+    <PrimaryButton {{on "click" this.handleContinueButtonClick}} data-test-continue-button class="mt-3">
+      Continue
+
+      {{#unless this.unsavedProficiencyLevel}}
+        <EmberTooltip @text="Select an option above to continue." />
+      {{/unless}}
+    </PrimaryButton>
+  {{/if}}
+</div>

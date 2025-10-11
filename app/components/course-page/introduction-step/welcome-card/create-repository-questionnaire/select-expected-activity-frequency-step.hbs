@@ -1,17 +1,17 @@
-<div class="prose dark:prose-invert mb-5" data-test-select-expected-activity-frequency-section>
+<div class="prose dark:prose-invert mb-5">
   <p>
     <b>How often do you intend to practice?</b>
     Learners that maintain a consistent cadence are most likely to meet their learning objectives.
   </p>
 </div>
 
-<div>
+<div data-test-select-expected-activity-frequency-step>
   <div class="flex items-center flex-wrap max-w-4xl gap-3">
     {{#each-in @repository.expectedActivityFrequencyMappings as |key value|}}
       <TertiaryButton
-        @isDisabled={{@isDisabled}}
         class="{{if (eq @repository.expectedActivityFrequency key) 'border-teal-500 text-teal-500'}}"
         {{on "click" (fn this.handleSelect key)}}
+        data-test-option-button
       >
         {{value}}
       </TertiaryButton>
