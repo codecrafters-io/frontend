@@ -30,16 +30,18 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Auto Select Language - Before Clicking Show-Other-Languages Button');
 
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
-    assert.strictEqual(coursePage.createRepositoryCard.languageButtons.length, 1, 'only one language-button can be visible');
-    assert.strictEqual(coursePage.createRepositoryCard.languageButtons[0].text, 'Python', 'the only one language-button must be Python');
-    assert.ok(coursePage.createRepositoryCard.showOtherLanguagesButton.isVisible, 'show-other-languages button is visible');
+    const questionnaire = coursePage.welcomeCard.createRepositoryQuestionnaire;
 
-    await coursePage.createRepositoryCard.showOtherLanguagesButton.click();
+    assert.strictEqual(questionnaire.expandedStepTitle, 'Step 1: Preferred Language', 'current section title is preferred language');
+    assert.strictEqual(questionnaire.selectLanguageStep.languageButtons.length, 1, 'only one language-button can be visible');
+    assert.strictEqual(questionnaire.selectLanguageStep.languageButtons[0].text, 'Python', 'the only one language-button must be Python');
+    assert.ok(questionnaire.selectLanguageStep.showOtherLanguagesButton.isVisible, 'show-other-languages button is visible');
+
+    await questionnaire.selectLanguageStep.showOtherLanguagesButton.click();
     await percySnapshot('Auto Select Language - After Clicking Show-Other-Languages Button');
 
-    assert.ok(coursePage.createRepositoryCard.languageButtons.length > 1, 'more than one language button are visible');
-    assert.ok(coursePage.createRepositoryCard.showOtherLanguagesButton.isHidden, 'show-other-languages button is hidden');
+    assert.ok(questionnaire.selectLanguageStep.languageButtons.length > 1, 'more than one language button are visible');
+    assert.ok(questionnaire.selectLanguageStep.showOtherLanguagesButton.isHidden, 'show-other-languages button is hidden');
 
     await animationsSettled();
   });
@@ -76,11 +78,13 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Select Language');
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
 
+    const questionnaire = coursePage.welcomeCard.createRepositoryQuestionnaire;
+
+    assert.strictEqual(questionnaire.expandedStepTitle, 'Step 1: Preferred Language', 'current section title is preferred language');
     assert.strictEqual(coursePage.header.progressIndicatorText, 'Select a language to proceed', 'progress indicator says select language to proceed');
 
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await questionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     await animationsSettled();
 
     expectedRequests = [
@@ -93,7 +97,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after language selection');
 
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
+    assert.strictEqual(questionnaire.expandedStepTitle, 'Step 2: Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -106,26 +110,31 @@ module('Acceptance | course-page | start-course', function (hooks) {
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
+    assert.notOk(questionnaire.selectLanguageProficiencyLevelStep.continueButton.isVisible, 'continue button is not shown until option is selected');
 
-    assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
-
-    await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await questionnaire.selectLanguageProficiencyLevelStep.clickOnOptionButton('Beginner');
     await animationsSettled();
     await percySnapshot('Start Course - Language Proficiency Selected');
 
-    await coursePage.createRepositoryCard.clickOnNextQuestionButton();
+    await questionnaire.selectLanguageProficiencyLevelStep.continueButton.click();
     await animationsSettled();
 
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Practice Cadence', 'current section title is practice cadence');
+    assert.strictEqual(questionnaire.expandedStepTitle, 'Step 3: Practice Cadence', 'current section title is practice cadence');
     await percySnapshot('Start Course - Select Practice Cadence');
 
-    await coursePage.createRepositoryCard.clickOnOptionButton('Every day');
+    await questionnaire.selectExpectedActivityFrequencyStep.clickOnOptionButton('Every day');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Accountability', 'current section title is accountability');
+    assert.strictEqual(
+      coursePage.welcomeCard.createRepositoryQuestionnaire.expandedStepTitle,
+      'Step 4: Accountability',
+      'current section title is accountability',
+    );
     await percySnapshot('Start Course - Accountability');
-    await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
-    await coursePage.createRepositoryCard.clickOnContinueButton();
+    await questionnaire.selectRemindersPreferenceStep.clickOnOptionButton('Yes please');
+
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'current step complete modal is visible');
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
 
     assert.strictEqual(coursePage.header.stepName, 'Repository Setup', 'step name is repository setup');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
@@ -157,11 +166,11 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
-    assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
-
     await percySnapshot('Start Course - Git Push Received');
 
-    await coursePage.repositorySetupCard.continueButton.click();
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'current step complete modal is visible');
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
+
     assert.strictEqual(currentURL(), '/courses/dummy/stages/ah7?repo=1', 'current URL is course page URL');
 
     await percySnapshot('Start Course - Waiting For Second Push', {
@@ -206,7 +215,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
     await animationsSettled();
 
     await coursePage.repositoryDropdown.click();
@@ -235,7 +244,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/dummy/introduction?repo=1', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
