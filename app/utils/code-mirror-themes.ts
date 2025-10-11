@@ -4,6 +4,13 @@ import tailwindColors from 'tailwindcss/colors';
 import blendColors from 'codecrafters-frontend/utils/blend-colors';
 
 const BASE_STYLE = {
+  // Main editor element (.cm-editor)
+  '&': {
+    '--line-height': '1.5rem',
+    '--line-indentation-start': '0.625rem',
+    '--line-indentation-end': '1rem',
+  },
+
   // Container for all gutters
   '.cm-gutters': {
     '&.cm-gutters-before': {
@@ -17,7 +24,7 @@ const BASE_STYLE = {
 
   // All gutter elements
   '.cm-gutterElement': {
-    lineHeight: '1.5rem',
+    lineHeight: 'var(--line-height)',
   },
 
   // Line numbers gutter
@@ -198,7 +205,7 @@ const BASE_STYLE = {
 
       '& .cm-cc-collapsedLinesInner': {
         borderTop: 'none',
-        paddingTop: '6px',
+        paddingTop: 'calc(var(--collapsed-lines-padding-top) + 1px)',
       },
     },
 
@@ -247,7 +254,7 @@ const BASE_STYLE = {
 
       '& .cm-collapsedRangesInner': {
         borderTop: 'none',
-        paddingTop: '6px',
+        paddingTop: 'calc(var(--collapsed-ranges-padding-top) + 1px)',
       },
     },
 
@@ -264,8 +271,8 @@ const BASE_STYLE = {
 
   // All lines in the document
   '.cm-line': {
-    lineHeight: '1.5rem',
-    padding: '0 1rem 0 0.625rem',
+    lineHeight: 'var(--line-height)',
+    padding: '0 var(--line-indentation-end) 0 var(--line-indentation-start)',
 
     '&.cm-changedLine': {
       backgroundColor: 'rgba(0, 255, 0, 0.15)',
@@ -278,8 +285,8 @@ const BASE_STYLE = {
 
   // All deleted chunks in the document
   '.cm-deletedChunk': {
-    lineHeight: '1.5rem',
-    padding: '0 1rem 0 0.625rem',
+    lineHeight: 'var(--line-height)',
+    padding: '0 var(--line-indentation-end) 0 var(--line-indentation-start)',
     backgroundColor: 'rgba(255, 0, 0, 0.1)',
 
     '& del': {
