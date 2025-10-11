@@ -107,7 +107,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     await animationsSettled();
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
@@ -123,7 +123,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     await animationsSettled();
 
     await coursePage.sidebar.configureExtensionsToggles[0].hover();

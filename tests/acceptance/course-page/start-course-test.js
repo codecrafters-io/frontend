@@ -215,7 +215,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     await animationsSettled();
 
     await coursePage.repositoryDropdown.click();
@@ -244,7 +244,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     assert.contains(currentURL(), '/courses/dummy/introduction?repo=1', 'current URL includes repo ID');
 
     await coursePage.repositoryDropdown.click();
