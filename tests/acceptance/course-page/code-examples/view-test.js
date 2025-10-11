@@ -121,7 +121,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -236,7 +236,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -300,7 +300,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -347,7 +347,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -386,7 +386,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -422,7 +422,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -462,7 +462,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -508,7 +508,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -556,7 +556,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 

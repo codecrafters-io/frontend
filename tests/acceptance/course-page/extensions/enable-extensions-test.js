@@ -175,7 +175,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.sidebar.configureExtensionsToggles[0].click();
     await percySnapshot('Configure Extensions Modal - Progress Pills');
 
-    let cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    let cards = [...coursePage.configureExtensionsModal.extensionCards];
 
     assert.true(cards[0].hasPill, 'Extension 1 has completed pill');
     assert.strictEqual(cards[0].pillText, 'Completed', 'Extension 1 pill shows "Completed"');
@@ -183,7 +183,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     assert.strictEqual(cards[1].pillText, 'In Progress', 'Extension 2 pill shows "In Progress"');
 
     await coursePage.configureExtensionsModal.toggleExtension('Extension 1');
-    cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    cards = [...coursePage.configureExtensionsModal.extensionCards];
     const disabledExtension1Card = cards.find((card) => card.name === 'Extension 1');
     assert.true(disabledExtension1Card.hasPill, 'Disabled extension still has pill when completed');
     assert.strictEqual(disabledExtension1Card.pillText, 'Completed', 'Disabled extension pill still shows "Completed"');

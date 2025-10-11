@@ -66,7 +66,7 @@ export default class EarningsContainer extends Component<Signature> {
   }
 
   get sortedPayouts() {
-    return this.currentUser.affiliateEarningsPayouts.toArray().sort((a, b) => {
+    return [...this.currentUser.affiliateEarningsPayouts].sort((a, b) => {
       if (a.completedAt && b.completedAt) {
         return b.completedAt.getTime() - a.completedAt.getTime();
       } else if (!a.completedAt && b.completedAt) {

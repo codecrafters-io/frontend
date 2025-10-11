@@ -81,9 +81,9 @@ export default class CourseLeaderboard extends Component<Signature> {
     let entries: CourseLeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
+      entries = entries.concat(this.entriesFromAPI.filter((entry) => entry.user !== this.authenticator.currentUser));
     } else {
-      entries = entries.concat(this.entriesFromAPI.toArray());
+      entries = entries.concat(this.entriesFromAPI);
     }
 
     return entries.concat(this.entriesFromCurrentUser);
@@ -97,7 +97,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       return [];
     }
 
-    const allRepositories = this.args.repositories.toArray();
+    const allRepositories = [...this.args.repositories];
 
     if (this.args.activeRepository) {
       allRepositories.push(this.args.activeRepository);

@@ -6,7 +6,7 @@ export default create({
 
   async clickOnQuestionCard(slug: string) {
     await waitUntil(() => this.questionCards.length > 0); // Ensure skeleton UI is gone
-    await this.questionCards.toArray().findBy('slug', slug)!.click();
+    await [...this.questionCards].findBy('slug', slug)!.click();
   },
 
   questionCards: collection('[data-test-question-card]', {

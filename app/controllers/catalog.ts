@@ -20,18 +20,17 @@ export default class CatalogController extends Controller {
 
   get languages() {
     return this.model.courses
-      .toArray()
-      .flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages.toArray() : []))
+      .flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : []))
       .uniq();
   }
 
   get orderedCourses() {
     if (!this.authenticator.currentUser) {
-      return this.courses.toArray().sort((course1, course2) => {
+      return [...this.courses].sort((course1, course2) => {
         return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
       });
     } else {
-      return this.courses.toArray().sort((course1, course2) => {
+      return [...this.courses].sort((course1, course2) => {
         const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('lastActivityAt');
         const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
 
@@ -60,7 +59,7 @@ export default class CatalogController extends Controller {
     if (!this.authenticator.currentUser) {
       return this.languages.sortBy('sortPositionForTrack');
     } else {
-      return this.languages.toArray().sort((language1, language2) => {
+      return [...this.languages].sort((language1, language2) => {
         const repositoriesForLanguage1 = this.authenticator
           .currentUser!.repositories.filterBy('language', language1)
           .filterBy('firstSubmissionCreated');

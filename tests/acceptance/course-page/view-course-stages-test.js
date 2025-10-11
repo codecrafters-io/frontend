@@ -49,7 +49,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
 
-    const stage = course.stages.models.toArray().find((stage) => stage.position === 2);
+    const stage = course.stages.models.find((stage) => stage.position === 2);
     stage.update({ descriptionMarkdownTemplate: `[link1](https://link1.com), [link2](https://link2.com)` });
 
     await catalogPage.visit();
@@ -82,25 +82,25 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.sortBy('position')[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: redis.stages.models.sortBy('position')[2],
       completedAt: new Date(new Date().getTime() - (1 + 86400000)), // yesterday
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: redis.stages.models.sortBy('position')[3],
       completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: redis.stages.models.sortBy('position')[3],
       status: 'closed',
     });
 
@@ -186,13 +186,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     [2, 3].forEach((stageNumber) => {
       this.server.create('course-stage-completion', {
         repository: repository,
-        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+        courseStage: docker.stages.models.sortBy('position')[stageNumber - 1],
       });
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sortBy('position')[2],
       status: 'closed',
     });
 
@@ -228,12 +228,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+      courseStage: docker.stages.models.sortBy('position')[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sortBy('position')[2],
     });
 
     await catalogPage.visit();
@@ -265,12 +265,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+      courseStage: docker.stages.models.sortBy('position')[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sortBy('position')[2],
     });
 
     await catalogPage.visit();
@@ -300,12 +300,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[1],
+      courseStage: docker.stages.models.sortBy('position')[1],
     });
 
     this.server.create('course-stage-completion', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sortBy('position')[2],
     });
 
     await catalogPage.visit();
@@ -339,13 +339,13 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     [2, 3].forEach((stageNumber) => {
       this.server.create('course-stage-completion', {
         repository: repository,
-        courseStage: docker.stages.models.sortBy('position').toArray()[stageNumber - 1],
+        courseStage: docker.stages.models.sortBy('position')[stageNumber - 1],
       });
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: docker.stages.models.sortBy('position').toArray()[2],
+      courseStage: docker.stages.models.sortBy('position')[2],
       status: 'closed',
     });
 

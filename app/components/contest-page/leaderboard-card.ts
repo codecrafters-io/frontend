@@ -21,12 +21,11 @@ export default class ContestPageLeaderboardCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   get orderedSurroundingEntries(): LeaderboardEntryModel[] {
-    return this.args.surroundingEntries.toArray().sort((a, b) => b.score - a.score);
+    return [...this.args.surroundingEntries].sort((a, b) => b.score - a.score);
   }
 
   get orderedTopEntries(): LeaderboardEntryModel[] {
-    return this.args.topEntries
-      .toArray()
+    return [...this.args.topEntries]
       .sort((a, b) => b.score - a.score)
       .filter((entry) => !entry.isBanned || (this.authenticator.currentUser && entry.user.id === this.authenticator.currentUser.id));
   }

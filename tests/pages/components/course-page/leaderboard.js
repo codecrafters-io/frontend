@@ -16,7 +16,7 @@ export default {
     clickOnLink: clickOnText('div[role="button"]'),
 
     hasLink(text) {
-      return this.links.toArray().some((link) => link.text.includes(text));
+      return [...this.links].some((link) => link.text.includes(text));
     },
 
     links: collection('div[role="button"]', {

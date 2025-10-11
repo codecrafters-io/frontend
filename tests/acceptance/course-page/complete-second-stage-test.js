@@ -32,7 +32,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     // Auto-create next submission
     this.server.create('submission', 'withEvaluatingStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
       clientType: 'system',
     });
 
@@ -87,7 +87,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -128,7 +128,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'cli',
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -146,7 +146,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'git',
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
