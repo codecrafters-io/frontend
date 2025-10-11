@@ -122,7 +122,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
-    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
     await animationsSettled();
     await coursePage.sidebar.clickOnStepListItem('The first stage');
 

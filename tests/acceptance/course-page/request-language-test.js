@@ -22,19 +22,19 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
-    await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnRequestLanguageButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
-    assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.ok(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     await percySnapshot('Requested Languages Prompt');
 
-    await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnRequestLanguageButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
-    assert.notOk(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.notOk(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'has requested languages prompt');
   });
 
   test('can view requested languages', async function (assert) {
@@ -52,13 +52,13 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
-    assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.ok(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
-    await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnRequestLanguageButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.requestLanguageDropdown.clickOnLanguageSuggestion('Nim');
 
     await animationsSettled();
-    assert.notOk(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
+    assert.notOk(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'requested languages prompt is removed');
   });
 
   test('can view no language found text', async function (assert) {
@@ -71,8 +71,8 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
-    await coursePage.createRepositoryCard.clickOnRequestLanguageButton();
-    await coursePage.createRepositoryCard.requestLanguageDropdown.fillInLanguage('Unknown');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnRequestLanguageButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.requestLanguageDropdown.fillInLanguage('Unknown');
 
     await animationsSettled();
     await percySnapshot('Unknown Request Language');
@@ -93,7 +93,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
-    assert.notOk(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'does not requested languages prompt');
+    assert.notOk(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'does not requested languages prompt');
   });
 
   test('sees language prompt if subset of requested languages are still unsupported', async function (assert) {
@@ -117,10 +117,10 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
-    assert.ok(coursePage.createRepositoryCard.hasRequestedLanguagesPrompt, 'has requested languages prompt');
+    assert.ok(coursePage.welcomeCard.createRepositoryQuestionnaire.hasRequestedLanguagesPrompt, 'has requested languages prompt');
 
     assert.strictEqual(
-      coursePage.createRepositoryCard.requestedLanguagesPrompt.willLetYouKnowText,
+      coursePage.welcomeCard.createRepositoryQuestionnaire.requestedLanguagesPrompt.willLetYouKnowText,
       "We'll let you know once Nim support is available on this challenge.",
     );
   });
