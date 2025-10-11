@@ -189,7 +189,7 @@ invalid_command: command not found
   }
 
   hasSolutionForLanguagesOtherThan(language: LanguageModel) {
-    return this.solutions.any((solution) => solution.language !== language);
+    return this.solutions.some((solution) => solution.language !== language);
   }
 
   prerequisiteInstructionsMarkdownFor(repository: RepositoryModel) {
