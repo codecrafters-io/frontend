@@ -4,8 +4,8 @@
   {{did-update this.handleDidUpdateIsComplete @step.isComplete}}
   ...attributes
 >
-  <div class="{{if @isExpanded 'mb-2' ''}} flex items-center justify-between gap-2">
-    <div class="flex items-center gap-1">
+  <div class="{{if @isExpanded 'mb-3' ''}} flex items-center justify-between gap-2">
+    <div class="flex items-center gap-1 {{if @isExpanded 'border-b-2 border-gray-200 dark:border-white/5' ''}}">
       <div class="prose dark:prose-invert {{if @step.isComplete 'opacity-50'}}" data-test-step-title>
         {{markdown-to-html (concat "**Step " @number "**: " @step.titleMarkdown)}}
       </div>
