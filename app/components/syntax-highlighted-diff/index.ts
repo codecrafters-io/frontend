@@ -70,7 +70,7 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
         isFirstLineOfFile: index === 0,
         isLastLineOfFile: index === this.codeLinesWithTypes.length - 1,
         isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
-        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
+        isTargetedByExpandedComments: this.expandedComments.some((comment) => this.commentTargetsLine(comment, index + 1)),
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,

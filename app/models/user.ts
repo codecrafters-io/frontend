@@ -160,7 +160,7 @@ export default class UserModel extends Model {
   }
 
   get hasEarnedThreeInADayBadge() {
-    return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
+    return this.badgeAwards.some((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
 
   get hasJoinedAffiliateProgram() {
