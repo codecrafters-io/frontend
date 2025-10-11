@@ -13,7 +13,9 @@ export default class TeamsPayController extends Controller {
   @tracked teamPaymentFlowId;
 
   get completedSteps() {
-    return [this.isStep1Complete ? 1 : null, this.isStep2Complete ? 2 : null, this.isStep3Complete ? 3 : null].compact();
+    return [this.isStep1Complete ? 1 : null, this.isStep2Complete ? 2 : null, this.isStep3Complete ? 3 : null].filter(
+      (item) => item !== undefined && item !== null,
+    );
   }
 
   get initialStep() {
