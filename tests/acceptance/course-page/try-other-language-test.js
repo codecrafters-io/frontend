@@ -69,7 +69,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=new');
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Go');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Go');
     await animationsSettled();
 
     expectedRequests = [
@@ -84,15 +84,15 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, 'Go', 'Repository name should change');
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=2', 'current URL is course page URL with repo query param');
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnOptionButton('Beginner');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageProficiencyLevelStep.clickOnOptionButton('Beginner');
     await animationsSettled();
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnNextQuestionButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageProficiencyLevelStep.continueButton.click();
     await animationsSettled();
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnOptionButton('Every day');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectExpectedActivityFrequencyStep.clickOnOptionButton('Every day');
     await animationsSettled();
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnOptionButton('Yes please');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectRemindersPreferenceStep.clickOnOptionButton('Yes please');
     await animationsSettled();
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnContinueButton();
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.continueButton.click();
 
     assert.ok(coursePage.repositorySetupCard.statusIsInProgress, 'current status is in progress');
 

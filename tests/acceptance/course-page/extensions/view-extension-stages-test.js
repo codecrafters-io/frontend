@@ -35,7 +35,7 @@ module('Acceptance | course-page | extensions | view-extension-stages', function
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
 
-    await coursePage.welcomeCard.createRepositoryQuestionnaire.clickOnLanguageButton('Python');
+    await coursePage.welcomeCard.createRepositoryQuestionnaire.selectLanguageStep.clickOnLanguageButton('Python');
     await animationsSettled();
 
     assert.strictEqual(currentURL(), '/courses/dummy/introduction?repo=1', 'current URL is course page URL');
