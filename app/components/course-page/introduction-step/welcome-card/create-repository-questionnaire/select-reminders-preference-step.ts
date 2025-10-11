@@ -6,18 +6,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    isDisabled: boolean;
     repository: RepositoryModel;
   };
 }
 
-export default class SelectRemindersPreferenceSection extends Component<Signature> {
+export default class SelectRemindersPreferenceStep extends Component<Signature> {
   @action
   async handleSelect(remindersAreEnabled: RepositoryModel['remindersAreEnabled']) {
-    if (this.args.isDisabled) {
-      return;
-    }
-
     if (!this.args.repository.isSaving) {
       this.args.repository.remindersAreEnabled = remindersAreEnabled;
 
@@ -28,6 +23,6 @@ export default class SelectRemindersPreferenceSection extends Component<Signatur
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::IntroductionStep::CreateRepositoryCard::SelectRemindersPreferenceSection': typeof SelectRemindersPreferenceSection;
+    'CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire::SelectRemindersPreferenceStep': typeof SelectRemindersPreferenceStep;
   }
 }

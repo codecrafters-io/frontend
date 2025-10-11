@@ -4,14 +4,14 @@
   </AlertWithIcon>
 {{/if}}
 
-<div class="prose dark:prose-invert mb-5" data-test-select-language-section>
+<div class="prose dark:prose-invert mb-5">
   <p>
     <b>Which language would you like to use?</b>
     We'll create a Git repository with starter code for you to work on.
   </p>
 </div>
 
-<div>
+<div data-test-select-language-step>
   <div class="flex gap-3 items-center flex-wrap max-w-3xl">
     {{#if @repository.language}}
       {{! @glint-expect-error: @repository.isSaving is not typed correctly }}

@@ -9,5 +9,10 @@
 
       {{markdown-to-html @repository.course.descriptionMarkdown}}
     </div>
+
+    <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire
+      @repository={{@repository}}
+      @preferredLanguageSlug={{@preferredLanguageSlug}}
+    />
   </:content>
 </CoursePage::InstructionsCard>

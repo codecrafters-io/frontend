@@ -1,0 +1,26 @@
+<div data-test-create-repository-questionnaire>
+  <ExpandableStepList @steps={{this.steps}} class="mt-6" as |stepList|>
+    {{#if (eq stepList.expandedStep.id "select-language")}}
+      <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire::SelectLanguageStep
+        @preferredLanguageSlug={{@preferredLanguageSlug}}
+        @errorMessage={{this.repositoryCreationErrorMessage}}
+        @repository={{@repository}}
+        @onLanguageSelection={{this.handleLanguageSelection}}
+      />
+    {{else if (eq stepList.expandedStep.id "select-language-proficiency-level")}}
+      <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire::SelectLanguageProficiencyLevelStep @repository={{@repository}} />
+    {{else if (eq stepList.expandedStep.id "select-expected-activity-frequency")}}
+      <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire::SelectExpectedActivityFrequencyStep @repository={{@repository}} />
+    {{else if (eq stepList.expandedStep.id "select-reminders-preference")}}
+      <CoursePage::IntroductionStep::WelcomeCard::CreateRepositoryQuestionnaire::SelectRemindersPreferenceStep @repository={{@repository}} />
+    {{/if}}
+  </ExpandableStepList>
+
+  {{#if this.allStepsComplete}}
+    <div class="mt-6">
+      <PrimaryLinkButton @route="course.setup" data-test-continue-button>
+        Continue →
+      </PrimaryLinkButton>
+    </div>
+  {{/if}}
+</div>
