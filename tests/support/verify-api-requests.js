@@ -1,4 +1,4 @@
-export default function verifyApiRequests(server, expectedRequests) {
+export default function verifyApiRequests(server, expectedPaths) {
   const requests = server.pretender.handledRequests;
 
   // Filter out analytics and current user requests
@@ -15,30 +15,29 @@ export default function verifyApiRequests(server, expectedRequests) {
     );
   });
 
-  // Debugging
-  // console.group('API Requests Verification');
-  // console.log('Expected requests:', expectedRequests);
-  // console.log('Actual requests:', filteredRequests.map(r => new URL(r.url).pathname));
-  // console.groupEnd();
+  const actualPaths = filteredRequests.map((request) => new URL(request.url).pathname);
 
   // Verify number of requests matches
-  if (filteredRequests.length !== expectedRequests.length) {
-    throw new Error(
-      `Expected ${expectedRequests.length} API requests but got ${filteredRequests.length}.\n` +
-        `Expected: ${expectedRequests.join(', ')}\n` +
-        `Actual: ${filteredRequests.map((r) => new URL(r.url).pathname).join(', ')}`,
-    );
-  }
-
-  // Verify each request matches in order
-  filteredRequests.forEach((request, index) => {
-    const actualPath = new URL(request.url).pathname;
-    const expectedPath = expectedRequests[index];
+  for (let i = 0; i < Math.max(filteredRequests.length, expectedPaths.length); i++) {
+    const expectedPath = expectedPaths[i];
+    const actualPath = actualPaths[i];
 
     if (actualPath !== expectedPath) {
-      throw new Error(`API request mismatch at index ${index}.\n` + `Expected: ${expectedPath}\n` + `Actual: ${actualPath}`);
+      let lines = [];
+
+      for (let j = 0; j < i; j++) {
+        lines.push(`✔ [${j}] ${expectedPaths[j]}`);
+      }
+
+      lines.push(`✗ [${i}] Expected: ${expectedPath ? expectedPath : '<none>'} | Actual: ${actualPath ? actualPath : '<none>'}`);
+
+      for (let j = i + 1; j < Math.max(filteredRequests.length, expectedPaths.length); j++) {
+        lines.push(`   [${j}] Expected: ${expectedPaths[j] ? expectedPaths[j] : '<none>'} | Actual: ${actualPaths[j] ? actualPaths[j] : '<none>'}`);
+      }
+
+      throw new Error(lines.join('\n'));
     }
-  });
+  }
 
   return true;
 }
