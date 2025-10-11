@@ -26,7 +26,7 @@ export default class TrackCard extends Component<Signature> {
 
     return this.authenticator.currentUser.repositories
       .filterBy('language', this.args.language)
-      .toArray()
+
       .flatMap((repository) => repository.completedStages)
       .uniq().length;
   }

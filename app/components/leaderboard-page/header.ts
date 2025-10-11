@@ -28,7 +28,7 @@ export default class LeaderboardPageHeader extends Component<Signature> {
       ...preferredLanguageSlugs.map((slug) => allLanguages.find((language) => language.slug === slug)).filter(Boolean),
 
       // Next, show all languages alphabetically
-      ...allLanguages
+      ...(allLanguages as unknown as LanguageModel[])
         .sortBy('sortPositionForTrack')
         .reject((language) => preferredLanguageSlugs.includes(language.slug))
         .filter((language) => language.liveOrBetaStagesCount > 0),

@@ -97,8 +97,7 @@ function syncRepositoryStageList(server, repository) {
     debugConsole().timeEnd(`stage ${stage.slug} (${stage.position})`);
   });
 
-  const currentIds = repository.stageList.items.models
-    .toArray()
+  const currentIds = [...repository.stageList.items.models]
     .map((item) => item.id)
     .sort()
     .join(',');

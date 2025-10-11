@@ -22,7 +22,7 @@ export default class BuildpacksController extends Controller {
   get sortedOutdatedBuildpacks() {
     return this.model.course.buildpacks
       .filterBy('isOutdated')
-      .toArray()
+
       .sort((a, b) => {
         if (a.language.name === b.language.name) {
           return a.createdAt.getTime() - b.createdAt.getTime();

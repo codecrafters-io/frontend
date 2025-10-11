@@ -4,10 +4,7 @@ import helpscoutBeacon from 'codecrafters-frontend/tests/pages/components/helpsc
 
 export default createPage({
   clickOnConceptCard(title: string) {
-    return this.conceptCards
-      .toArray()
-      .find((card: { title: string }) => card.title === title)
-      .click();
+    return [...this.conceptCards].find((card: { title: string }) => card.title === title).click();
   },
 
   clickOnCreateConceptButton: clickable('[data-test-create-concept-button]'),

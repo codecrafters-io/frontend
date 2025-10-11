@@ -39,9 +39,9 @@ export default class TrackLeaderboard extends Component<Signature> {
     let entries: TrackLeaderboardEntryModel[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI!.toArray().filter((entry) => entry.user !== this.currentUser));
+      entries = entries.concat(this.entriesFromAPI!.filter((entry) => entry.user !== this.currentUser));
     } else {
-      entries = entries.concat(this.entriesFromAPI!.toArray());
+      entries = entries.concat(this.entriesFromAPI!);
     }
 
     return entries.concat(this.entriesFromCurrentUser);
@@ -59,7 +59,7 @@ export default class TrackLeaderboard extends Component<Signature> {
     }
 
     const completedStagesCount = currentUserRepositories.reduce((result, repository) => {
-      return result.concat(repository.courseStageCompletions.toArray()).uniqBy('courseStage');
+      return result.concat(repository.courseStageCompletions).uniqBy('courseStage');
     }, [] as CourseStageCompletionModel[]).length;
 
     return [

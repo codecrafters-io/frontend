@@ -20,15 +20,12 @@ export default {
   scope: '[data-test-configure-extensions-modal]',
 
   async toggleExtension(name) {
-    await waitUntil(() => this.extensionCards.toArray().length > 0, { timeoutMessage: 'No extension cards found' });
+    await waitUntil(() => [...this.extensionCards].length > 0, { timeoutMessage: 'No extension cards found' });
 
-    await waitUntil(() => this.extensionCards.toArray().find((card) => card.name === name), {
+    await waitUntil(() => [...this.extensionCards].find((card) => card.name === name), {
       timeoutMessage: `No extension card found with name ${name}`,
     });
 
-    await this.extensionCards
-      .toArray()
-      .find((card) => card.name === name)
-      .clickOnToggleExtensionButton();
+    await [...this.extensionCards].find((card) => card.name === name).clickOnToggleExtensionButton();
   },
 };

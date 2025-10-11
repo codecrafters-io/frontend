@@ -33,8 +33,7 @@ export default class LeaderboardController extends Controller {
   }
 
   get sortedLanguagesForDropdown(): LanguageModel[] {
-    return this.store
-      .peekAll('language')
+    return (this.store.peekAll('language') as unknown as LanguageModel[])
       .sortBy('sortPositionForTrack')
       .filter((language) => language.liveOrBetaStagesCount > 0);
   }

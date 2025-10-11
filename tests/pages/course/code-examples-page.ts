@@ -50,7 +50,7 @@ export default createPage({
       clickOnLink: clickOnText('[data-test-dropdown-link]'),
 
       hasLink(linkText: string) {
-        return this.links.length > 0 && this.links.toArray().some((link) => link.text === linkText);
+        return this.links.length > 0 && [...this.links].some((link) => link.text === linkText);
       },
 
       links: collection('[data-test-dropdown-link]', {
