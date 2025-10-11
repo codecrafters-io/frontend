@@ -20,7 +20,7 @@ export default class ExtensionCompletedStep extends StepDefinition {
       return true; // If the extension isn't complete, we don't want to show this step.
     }
 
-    const isLastExtension = this.repository.activatedCourseExtensions.lastObject === this.extension;
+    const isLastExtension = this.repository.activatedCourseExtensions.at(-1) === this.extension;
     const allExtensionsAreActivated = this.repository.activatedCourseExtensions.length === this.repository.course.sortedExtensions.length;
 
     // If the extension is complete and it is the last extension, we don't want to show this step either.

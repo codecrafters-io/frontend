@@ -143,7 +143,7 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    return this.courseStageCompletions.sortBy('courseStage.position').lastObject?.courseStage;
+    return this.courseStageCompletions.sortBy('courseStage.position').at(-1)?.courseStage;
   }
 
   get isRecentlyCreated() {
