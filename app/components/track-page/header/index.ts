@@ -6,6 +6,7 @@ import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { A } from '@ember/array';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -29,11 +30,13 @@ export default class TrackPageHeader extends Component<Signature> {
   }
 
   get topParticipants(): UserModel[] {
-    return this.store
-      .peekAll('track-leaderboard-entry')
-      .filterBy('language', this.args.language)
-      .toSorted(fieldComparator('completedStagesCount'))
-      .reverse()
+    return A(
+      this.store
+        .peekAll('track-leaderboard-entry')
+        .filterBy('language', this.args.language)
+        .toSorted(fieldComparator('completedStagesCount'))
+        .reverse(),
+    )
       .uniqBy('user')
       .slice(0, 3)
       .map((item) => item.user);

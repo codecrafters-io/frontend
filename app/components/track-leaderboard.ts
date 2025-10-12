@@ -12,6 +12,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { A } from '@ember/array';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -62,7 +63,7 @@ export default class TrackLeaderboard extends Component<Signature> {
     }
 
     const completedStagesCount = currentUserRepositories.reduce((result, repository) => {
-      return result.concat(repository.courseStageCompletions).uniqBy('courseStage');
+      return A(result.concat(repository.courseStageCompletions)).uniqBy('courseStage');
     }, [] as CourseStageCompletionModel[]).length;
 
     return [
