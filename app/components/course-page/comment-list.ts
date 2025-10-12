@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
@@ -43,7 +44,7 @@ export default class CommentList extends Component<Signature> {
   }
 
   get sortedComments() {
-    return this.visibleComments.sortBy('score').reverse();
+    return this.visibleComments.toSorted(fieldComparator('score')).reverse();
   }
 
   get topLevelPersistedComments() {

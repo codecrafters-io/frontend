@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
 import DateService from 'codecrafters-frontend/services/date';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -44,7 +45,7 @@ export default class ContestPageNavigation extends Component<Signature> {
   }
 
   get sortedNavigableContests(): ContestModel[] {
-    return this.navigableContests.sortBy('startsAt');
+    return this.navigableContests.toSorted(fieldComparator('startsAt'));
   }
 }
 

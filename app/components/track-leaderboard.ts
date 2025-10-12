@@ -5,12 +5,13 @@ import move from 'ember-animated/motions/move';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type Store from '@ember-data/store';
-import type TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
+import TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -75,7 +76,7 @@ export default class TrackLeaderboard extends Component<Signature> {
   }
 
   get sortedEntries() {
-    return this.entries.sortBy('completedStagesCount').reverse();
+    return this.entries.toSorted(fieldComparator('completedStagesCount')).reverse();
   }
 
   @action

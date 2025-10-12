@@ -1,3 +1,5 @@
+import { get } from '@ember/object';
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import LanguageModel from 'codecrafters-frontend/models/language';
@@ -28,7 +30,17 @@ export default class TrackPageCourseCardList extends Component<Signature> {
             .filter((item) => item.language === this.args.language)
             .filter((item) => item.course === course)
             .filter((item) => item.firstSubmissionCreated)
-            .sortBy('completedStages.length', 'lastSubmissionAt')
+            .toSorted((a, b) => {
+              for (const key of ['completedStages.length', 'lastSubmissionAt']) {
+                const compareValue = compare(get(a, key), get(b, key));
+
+                if (compareValue) {
+                  return compareValue;
+                }
+              }
+
+              return 0;
+            })
             .at(-1)
         : null;
 

@@ -3,6 +3,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 // Example diff is defined as array because VSCode strips trailing spaces
 // in blank lines when saving the file, even inside multiline strings
@@ -68,7 +69,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     let submission = this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     submission.update('changedFiles', [

@@ -5,6 +5,7 @@ import { currentURL } from '@ember/test-helpers';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createCommunitySolutionsAnalysis from 'codecrafters-frontend/mirage/utils/create-community-solutions-analysis';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-admin | code-example-insights-index', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,8 +18,8 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     this.language_1 = this.server.schema.languages.findBy({ name: 'C' });
     this.language_2 = this.server.schema.languages.findBy({ name: 'Python' });
     this.course = this.server.schema.courses.findBy({ slug: 'redis' });
-    this.courseStage_1 = this.course.stages.models.sortBy('position')[0];
-    this.courseStage_2 = this.course.stages.models.sortBy('position')[1];
+    this.courseStage_1 = this.course.stages.models.toSorted(fieldComparator('position'))[0];
+    this.courseStage_2 = this.course.stages.models.toSorted(fieldComparator('position'))[1];
 
     this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_1, this.language_1);
     this.analysis = createCommunitySolutionsAnalysis(this.server, this.courseStage_2, this.language_2);

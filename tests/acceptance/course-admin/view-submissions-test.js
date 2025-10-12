@@ -6,6 +6,7 @@ import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import percySnapshot from '@percy/ember';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-admin | view-submissions', function (hooks) {
   setupApplicationTest(hooks);
@@ -36,7 +37,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -62,7 +63,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -91,7 +92,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -131,7 +132,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     let testerVersion = this.server.create('course-tester-version', {
@@ -162,7 +163,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -252,8 +253,8 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let stage1 = redis.stages.models.sortBy('position')[0].slug;
-    let stage2 = redis.stages.models.sortBy('position')[1].slug;
+    let stage1 = redis.stages.models.toSorted(fieldComparator('position'))[0].slug;
+    let stage2 = redis.stages.models.toSorted(fieldComparator('position'))[1].slug;
 
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
@@ -272,7 +273,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let stage1 = redis.stages.models.sortBy('position')[0].name;
+    let stage1 = redis.stages.models.toSorted(fieldComparator('position'))[0].name;
 
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
     this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
@@ -327,7 +328,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     this.server.create('submission', 'withFailureStatus', {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -364,7 +365,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       treeSha: 'fooa77c9d85161984249205b5b83772b63ae866e',
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });
@@ -401,7 +402,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       treeSha: null,
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await submissionsPage.visit({ course_slug: 'redis' });

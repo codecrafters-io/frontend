@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type { ModelType } from 'codecrafters-frontend/routes/course-overview';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseOverviewController extends Controller {
   declare model: ModelType;
@@ -10,7 +11,7 @@ export default class CourseOverviewController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get activeRepository(): RepositoryModel | null {
-    return [...this.userRepositories.sortBy('lastSubmissionAt')].reverse()[0] || null;
+    return [...this.userRepositories.toSorted(fieldComparator('lastSubmissionAt'))].reverse()[0] || null;
   }
 
   get completedStages() {

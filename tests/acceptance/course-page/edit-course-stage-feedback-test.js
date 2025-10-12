@@ -6,6 +6,7 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | edit-course-stage-feedback', function (hooks) {
   setupApplicationTest(hooks);
@@ -29,7 +30,7 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
     [2, 3].forEach((stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
+        courseStage: redis.stages.models.toSorted(fieldComparator('position'))[stageNumber - 1],
       });
     });
 

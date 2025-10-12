@@ -11,6 +11,7 @@ import windowMock from 'ember-window-mock';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | view-screencasts-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,7 +55,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
       return server.create('course-stage-screencast', {
         language: language,
         user: currentUser,
-        courseStage: redis.stages.models.sortBy('position')[1],
+        courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
         authorName: null,
         canonicalUrl: 'https://www.loom.com/share/1dd746eaaba34bc2b5459ad929934c08?sid=a5f6ec60-5ae4-4e9c-9566-33235d483431',
         publishedAt: publishedAt,

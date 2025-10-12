@@ -7,6 +7,7 @@ import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseExtensionIdeasController extends Controller {
   declare model: {
@@ -26,7 +27,9 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse).sortBy('sortPositionForRoadmapPage');
+    return this.model.courseExtensionIdeas
+      .filter((item) => item.course === this.selectedCourse)
+      .toSorted(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   get orderedCourses() {
@@ -37,7 +40,7 @@ export default class CourseExtensionIdeasController extends Controller {
       .filter((item) => !item.releaseStatusIsDeprecated)
       .filter((item) => !item.releaseStatusIsAlpha)
       .filter((item) => !item.visibilityIsPrivate)
-      .sortBy('sortPositionForTrack');
+      .toSorted(fieldComparator('sortPositionForTrack'));
   }
 
   get selectedCourse() {

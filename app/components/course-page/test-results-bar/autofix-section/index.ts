@@ -6,6 +6,7 @@ import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-l
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -42,7 +43,7 @@ export default class AutofixSection extends Component<Signature> {
       this.lastSubmission.autofixRequests
         .filter((item) => !item.isNew)
         .filter((item) => !item.creatorTypeIsSystem)
-        .sortBy('createdAt')
+        .toSorted(fieldComparator('createdAt'))
         .at(-1) || null
     );
   }

@@ -8,6 +8,7 @@ import { setupAnimationTest, animationsSettled } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -181,12 +182,12 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[0],
     });
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

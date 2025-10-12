@@ -25,6 +25,7 @@ import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
@@ -175,7 +176,7 @@ export default class CourseModel extends Model {
 
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
-    return this.baseStages.sortBy('position');
+    return this.baseStages.toSorted(fieldComparator('position'));
   }
 
   get sortedExtensionStages() {
@@ -183,7 +184,7 @@ export default class CourseModel extends Model {
   }
 
   get sortedExtensions() {
-    return this.extensions.sortBy('position');
+    return this.extensions.toSorted(fieldComparator('position'));
   }
 
   get testerRepositoryLink() {

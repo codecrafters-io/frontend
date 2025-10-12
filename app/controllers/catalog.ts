@@ -4,6 +4,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CatalogController extends Controller {
   declare model: ModelType;
@@ -37,10 +38,14 @@ export default class CatalogController extends Controller {
           .filter((item) => item.lastActivityAt);
 
         const lastActivityForCourse1At =
-          repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1)!.lastActivityAt.getTime() : null;
+          repositoriesForCourse1.length > 0
+            ? repositoriesForCourse1.toSorted(fieldComparator('lastActivityAt')).at(-1)!.lastActivityAt.getTime()
+            : null;
 
         const lastActivityForCourse2At =
-          repositoriesForCourse2.length > 0 ? repositoriesForCourse2.sortBy('lastActivityAt').at(-1)!.lastActivityAt.getTime() : null;
+          repositoriesForCourse2.length > 0
+            ? repositoriesForCourse2.toSorted(fieldComparator('lastActivityAt')).at(-1)!.lastActivityAt.getTime()
+            : null;
 
         if (lastActivityForCourse1At && lastActivityForCourse2At && lastActivityForCourse1At > lastActivityForCourse2At) {
           return -1;
@@ -59,7 +64,7 @@ export default class CatalogController extends Controller {
 
   get orderedLanguages() {
     if (!this.authenticator.currentUser) {
-      return this.languages.sortBy('sortPositionForTrack');
+      return this.languages.toSorted(fieldComparator('sortPositionForTrack'));
     } else {
       return [...this.languages].sort((language1, language2) => {
         const repositoriesForLanguage1 = this.authenticator
@@ -81,9 +86,9 @@ export default class CatalogController extends Controller {
         // Second priority: among languages with repositories, sort by most recent submission first
         if (language1HasRepository && language2HasRepository) {
           // @ts-expect-error at(-1) is not defined on Array
-          const lastSubmissionForLanguage1 = repositoriesForLanguage1.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          const lastSubmissionForLanguage1 = repositoriesForLanguage1.toSorted(fieldComparator('lastSubmissionAt')).at(-1).lastSubmissionAt;
           // @ts-expect-error at(-1) is not defined on Array
-          const lastSubmissionForLanguage2 = repositoriesForLanguage2.sortBy('lastSubmissionAt').at(-1).lastSubmissionAt;
+          const lastSubmissionForLanguage2 = repositoriesForLanguage2.toSorted(fieldComparator('lastSubmissionAt')).at(-1).lastSubmissionAt;
 
           const language1SubmissionTime = lastSubmissionForLanguage1?.getTime() || 0;
           const language2SubmissionTime = lastSubmissionForLanguage2?.getTime() || 0;

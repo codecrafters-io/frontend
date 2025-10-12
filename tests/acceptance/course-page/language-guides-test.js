@@ -6,6 +6,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | language-guides', function (hooks) {
   setupApplicationTest(hooks);
@@ -21,7 +22,7 @@ module('Acceptance | course-page | language-guides', function (hooks) {
 
     this.server.create('course-stage-language-guide', {
       markdownForBeginner: 'In this stage, blah blah...',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       language: python,
     });
 
@@ -32,7 +33,7 @@ module('Acceptance | course-page | language-guides', function (hooks) {
           filename: 'app/main.py',
         },
       ],
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       language: python,
     });
 

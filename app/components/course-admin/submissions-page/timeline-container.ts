@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -29,7 +30,7 @@ function groupBy<T>(collection: T[], keyFn: (item: T) => string): Record<string,
 
 export default class AdminCourseSubmissionsPageTimelineContainer extends Component<Signature> {
   get groupedSubmissions(): Record<string, SubmissionModel[]> {
-    return groupBy([...this.args.submissions].sortBy('createdAt').reverse(), (submission) => {
+    return groupBy([...this.args.submissions].toSorted(fieldComparator('createdAt')).reverse(), (submission) => {
       return submission.createdAt.toISOString().slice(0, 10);
     });
   }
