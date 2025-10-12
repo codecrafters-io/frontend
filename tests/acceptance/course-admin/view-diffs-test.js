@@ -79,7 +79,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
     ]);
 
     await submissionsPage.visit({ course_slug: 'redis' });
-    await submissionsPage.timelineContainer.entries.objectAt(1).click();
+    await submissionsPage.timelineContainer.entries[1].click();
     await submissionsPage.clickOnLink('Diff');
 
     assert.strictEqual(

@@ -76,8 +76,8 @@ export default create({
 
   async setLineText(lineNumber: number, newContent?: string) {
     await this.content.focus();
-    await this.content.lines.objectAt(lineNumber).click();
-    await this.content.lines.objectAt(lineNumber).fillIn(newContent);
+    await this.content.lines[lineNumber].click();
+    await this.content.lines[lineNumber].fillIn(newContent);
     await this.content.blur();
   },
 });
