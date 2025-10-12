@@ -29,6 +29,9 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items initially');
+
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     let cards = coursePage.configureExtensionsModal.extensionCards.toArray();
@@ -57,6 +60,10 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
 
     assert.strictEqual(extension2Activation.position, 1, 'Extension 2 has position 1');
     assert.strictEqual(extension1Activation.position, 2, 'Extension 1 has position 2');
+
+    await coursePage.configureExtensionsModal.clickOnCloseButton();
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list still has 8 items after reorder');
   });
 
   test('reorder persists after closing and reopening modal', async function (assert) {
@@ -76,6 +83,9 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.adminPanel.clickOnStartCourse();
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items initially');
+
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     const sortableCards = document.querySelectorAll('[data-test-sortable-extension-card]');
@@ -88,6 +98,9 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     await animationsSettled();
 
     await coursePage.configureExtensionsModal.clickOnCloseButton();
+
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list still has 8 items after reorder');
+
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     let cards = coursePage.configureExtensionsModal.extensionCards.toArray();

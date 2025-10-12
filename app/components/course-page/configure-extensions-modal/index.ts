@@ -75,17 +75,6 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   }
 
   @action
-  async syncExtensionActivations(): Promise<void> {
-    await this.store.query('repository', {
-      course_id: this.args.repository.course.id,
-      include: 'stage-list,stage-list.items,stage-list.items.stage,extension-activations,extension-activations.extension',
-    });
-
-    // Rebuild the step list to reflect the updated extensions
-    this.coursePageState.setStepList(new StepListDefinition(this.args.repository));
-  }
-
-  @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
     // Map sorted extensions to their activation IDs with new positions (1-based)
     const positions = sortedItems
@@ -124,6 +113,20 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
       include: 'course,current-user-votes,current-user-votes.user',
     })) as unknown as CourseExtensionIdeaModel[];
+  }
+
+  @action
+  async syncExtensionActivations(): Promise<void> {
+    await this.store.query('repository', {
+      course_id: this.args.repository.course.id,
+      include: 'stage-list,stage-list.items,stage-list.items.stage,extension-activations,extension-activations.extension',
+    });
+
+    // Rebuild the step list to reflect the updated extensions
+    this.coursePageState.setStepList(new StepListDefinition(this.args.repository));
+
+    // The stage a user is currently on might not be present in the list anymore
+    this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
   }
 }
 
