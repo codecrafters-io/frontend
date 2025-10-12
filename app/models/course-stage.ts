@@ -185,7 +185,7 @@ invalid_command: command not found
   }
 
   hasSolutionForLanguage(language: LanguageModel) {
-    return !!this.solutions.findBy('language', language);
+    return !!this.solutions.find((item) => item.language === language);
   }
 
   hasSolutionForLanguagesOtherThan(language: LanguageModel) {

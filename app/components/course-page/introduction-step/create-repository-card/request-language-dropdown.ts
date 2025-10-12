@@ -104,7 +104,7 @@ export default class RequestLanguageDropdown extends Component<Signature> {
       this.isSyncing = true;
       await this.args.user.courseLanguageRequests
         .filter((item) => item.course === this.args.course)
-        .findBy('language', language)!
+        .find((item) => item.language === language)!
         .destroyRecord();
       this.isSyncing = false;
 

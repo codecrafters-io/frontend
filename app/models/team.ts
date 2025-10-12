@@ -25,11 +25,17 @@ export default class TeamModel extends Model {
   @equal('pricingPlanType', 'yearly') declare pricingPlanTypeIsYearly: boolean;
 
   get activePilot() {
-    return this.pilots.sortBy('endDate').reverse().findBy('isActive');
+    return this.pilots
+      .sortBy('endDate')
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get activeSubscription() {
-    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+    return this.subscriptions
+      .sortBy('startDate')
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get admins() {
@@ -41,7 +47,10 @@ export default class TeamModel extends Model {
   }
 
   get expiredPilot() {
-    return this.pilots.sortBy('endDate').reverse().findBy('isExpired');
+    return this.pilots
+      .sortBy('endDate')
+      .reverse()
+      .find((item) => item.isExpired);
   }
 
   get hasActivePilot() {

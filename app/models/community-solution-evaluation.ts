@@ -23,7 +23,7 @@ export default class CommunitySolutionEvaluationModel extends Model {
   @tracked promptFileContents: string | null = null;
 
   get trustedEvaluation(): TrustedCommunitySolutionEvaluationModel | null {
-    return this.communitySolution.trustedEvaluations.findBy('evaluator', this.evaluator) || null;
+    return this.communitySolution.trustedEvaluations.find((item) => item.evaluator === this.evaluator) || null;
   }
 
   async fetchLogsFileContentsIfNeeded(): Promise<void> {

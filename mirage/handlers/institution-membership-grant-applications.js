@@ -2,6 +2,7 @@ export default function (server) {
   server.post('/institution-membership-grant-applications', function (schema) {
     const attrs = this.normalizedRequestAttrs();
 
+    // eslint-disable-next-line ember/no-array-prototype-extensions
     const approvedApplication = schema.institutionMembershipGrantApplications.findBy({
       normalizedEmailAddress: attrs.normalizedEmailAddress,
       institutionId: attrs.institutionId,

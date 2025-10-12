@@ -5,6 +5,7 @@ export default function createCourseExtensionIdeas(server) {
     const isReleased = courseExtensionIdeaData.development_status === 'released';
 
     server.create('course-extension-idea', {
+      // eslint-disable-next-line ember/no-array-prototype-extensions
       course: server.schema.courses.findBy({ slug: courseExtensionIdeaData.course_slug }),
       createdAt: new Date(),
       descriptionMarkdown: courseExtensionIdeaData.description_md,

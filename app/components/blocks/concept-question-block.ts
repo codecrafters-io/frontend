@@ -24,7 +24,7 @@ export default class ConceptQuestionBlock extends Component<Signature> {
   @service declare store: Store;
 
   get question() {
-    return this.store.peekAll('concept-question').findBy('slug', this.args.model.conceptQuestionSlug);
+    return this.store.peekAll('concept-question').find((item) => item.slug === this.args.model.conceptQuestionSlug);
   }
 
   @action

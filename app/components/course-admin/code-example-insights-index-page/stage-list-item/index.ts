@@ -13,7 +13,7 @@ interface Signature {
 
 export default class StageListItem extends Component<Signature> {
   get analysis() {
-    return this.args.stage.communitySolutionsAnalyses.findBy('language', this.args.language);
+    return this.args.stage.communitySolutionsAnalyses.find((item) => item.language === this.args.language);
   }
 }
 

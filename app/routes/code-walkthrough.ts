@@ -16,11 +16,11 @@ export default class CodeWalkthroughRoute extends BaseRoute {
   async model(params: { code_walkthrough_slug: string }): Promise<ModelType> {
     let codeWalkthrough;
 
-    if (this.store.peekAll('code-walkthrough').findBy('slug', params.code_walkthrough_slug)) {
-      codeWalkthrough = this.store.peekAll('code-walkthrough').findBy('slug', params.code_walkthrough_slug);
+    if (this.store.peekAll('code-walkthrough').find((item) => item.slug === params.code_walkthrough_slug)) {
+      codeWalkthrough = this.store.peekAll('code-walkthrough').find((item) => item.slug === params.code_walkthrough_slug);
     } else {
       const codeWalkthroughs = await this.store.findAll('code-walkthrough', { include: '' });
-      codeWalkthrough = codeWalkthroughs.findBy('slug', params.code_walkthrough_slug);
+      codeWalkthrough = codeWalkthroughs.find((item) => item.slug === params.code_walkthrough_slug);
     }
 
     return codeWalkthrough;

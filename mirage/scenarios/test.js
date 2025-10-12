@@ -43,6 +43,7 @@ export default function (server, courses = ['redis', 'docker', 'dummy', 'git', '
     createCourseFromData(server, courseToDataMap[courseSlug]);
   });
 
+  // eslint-disable-next-line ember/no-array-prototype-extensions
   const redis = server.schema.courses.findBy({ slug: 'redis' });
 
   // TODO: Do this for all courses?
