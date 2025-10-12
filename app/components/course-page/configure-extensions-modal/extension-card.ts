@@ -1,13 +1,7 @@
 import Component from '@glimmer/component';
 import CourseExtensionModel from 'codecrafters-frontend/models/course-extension';
-import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import RepositoryStageListItemModel from 'codecrafters-frontend/models/repository-stage-list-item';
-import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
-import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
@@ -17,13 +11,11 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     extension: CourseExtensionModel;
+    onToggle: (extension: CourseExtensionModel) => Promise<void>;
   };
 }
 
 export default class ExtensionCard extends Component<Signature> {
-  @service declare store: Store;
-  @service declare coursePageState: CoursePageStateService;
-
   @tracked unsavedIsActivatedValue: boolean | null = null;
 
   get activations() {
@@ -58,62 +50,10 @@ export default class ExtensionCard extends Component<Signature> {
       return;
     }
 
-    // Store values at the start of the task
-    const shouldCreate = this.unsavedIsActivatedValue === true;
-    const shouldDestroy = !shouldCreate;
+    await this.args.onToggle(this.args.extension);
 
-    if (shouldDestroy) {
-      for (const activation of this.activations) {
-        await activation.destroyRecord();
-      }
-    } else {
-      await this.store
-        .createRecord('course-extension-activation', {
-          repository: this.args.repository,
-          extension: this.args.extension,
-        })
-        .save();
-    }
-
-    await this.store.query('repository', {
-      course_id: this.args.repository.course.id,
-      include: RepositoryPoller.defaultIncludedResources,
-    });
-
-    // For some reason, running this in the current run-loop causes problems?
-    next(() => {
-      const newStageListItemIds = this.args.repository.stageList!.items.map((x) => x.id);
-      const itemsToRemove: RepositoryStageListItemModel[] = [];
-
-      this.store.peekAll('repository-stage-list-item').forEach((item) => {
-        if (item.list !== this.args.repository.stageList) {
-          return;
-        }
-
-        if (newStageListItemIds.includes(item.id)) {
-          return;
-        }
-
-        itemsToRemove.push(item);
-      });
-
-      itemsToRemove.forEach((item) => {
-        item.unloadRecord();
-      });
-    });
-
-    // If we performed the same action as whatever the user's latest request was, then we can reset the request.
-    if (shouldCreate && this.unsavedIsActivatedValue === true && this.isActivated) {
-      this.unsavedIsActivatedValue = null;
-    }
-
-    // If we performed the same action as whatever the user's latest request was, then we can reset the request.
-    if (shouldDestroy && this.unsavedIsActivatedValue === false && !this.isActivated) {
-      this.unsavedIsActivatedValue = null;
-    }
-
-    // The stage a user is currently on might not be present in the list anymore
-    this.coursePageState.navigateToActiveStepIfCurrentStepIsInvalid();
+    // Reset optimistic state after toggle completes
+    this.unsavedIsActivatedValue = null;
   });
 
   @action

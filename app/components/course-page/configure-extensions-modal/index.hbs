@@ -12,7 +12,11 @@
       <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
         {{#each this.enabledExtensions key="id" as |extension|}}
           <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}} class="mb-4">
-            <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+            <CoursePage::ConfigureExtensionsModal::ExtensionCard
+              @extension={{extension}}
+              @repository={{@repository}}
+              @onToggle={{this.handleExtensionToggle}}
+            />
           </div>
         {{/each}}
       </div>
@@ -20,7 +24,11 @@
 
     {{#each this.disabledExtensions key="id" as |extension|}}
       <div class="mb-4">
-        <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+        <CoursePage::ConfigureExtensionsModal::ExtensionCard
+          @extension={{extension}}
+          @repository={{@repository}}
+          @onToggle={{this.handleExtensionToggle}}
+        />
       </div>
     {{/each}}
   </div>

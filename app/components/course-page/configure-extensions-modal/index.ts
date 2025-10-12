@@ -38,7 +38,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   get enabledExtensions() {
     const extensions = this.args.repository.course.sortedExtensions;
-    const extensionActivations = this.args.repository.extensionActivations.sortBy('position');
+    const extensionActivations = this.args.repository.extensionActivations.slice().sort((a, b) => a.position - b.position);
     const activatedIds = extensionActivations.map((activation) => activation.extension.id);
 
     return activatedIds.map((id) => extensions.find((ext) => ext.id === id)!).filter(Boolean);
@@ -49,6 +49,40 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       .filterBy('course', this.args.repository.course)
       .rejectBy('developmentStatus', 'released')
       .sortBy('sortPositionForRoadmapPage');
+  }
+
+  @action
+  async handleExtensionToggle(extension: CourseExtensionModel): Promise<void> {
+    const activations = this.args.repository.extensionActivations.filter((activation) => activation.extension === extension);
+    const isCurrentlyActivated = activations.length > 0;
+
+    if (isCurrentlyActivated) {
+      // Deactivate: destroy all activations for this extension
+      for (const activation of activations) {
+        await activation.destroyRecord();
+      }
+    } else {
+      // Activate: create new activation
+      await this.store
+        .createRecord('course-extension-activation', {
+          repository: this.args.repository,
+          extension: extension,
+        })
+        .save();
+    }
+
+    await this.syncExtensionActivations();
+  }
+
+  @action
+  async syncExtensionActivations(): Promise<void> {
+    await this.store.query('repository', {
+      course_id: this.args.repository.course.id,
+      include: 'stage-list,stage-list.items,stage-list.items.stage,extension-activations,extension-activations.extension',
+    });
+
+    // Rebuild the step list to reflect the updated extensions
+    this.coursePageState.setStepList(new StepListDefinition(this.args.repository));
   }
 
   @action
@@ -78,8 +112,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
         positions: positions.map(({ id, position }) => ({ id, position })),
       });
 
-      // Rebuild the step list to reflect the updated extension order
-      this.coursePageState.setStepList(new StepListDefinition(this.args.repository));
+      await this.syncExtensionActivations();
     } catch (error) {
       console.error('Error reordering extensions:', error);
       // TODO: Show error message to user and revert positions
