@@ -74,17 +74,19 @@ export class StepListDefinition {
     } else {
       let stepsInNextGroup: StepDefinition[] = [];
 
-      this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
-        const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
+      this.repository.stageList.items
+        .filter((item) => !item.isBaseStage)
+        .forEach((item) => {
+          const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
 
-        if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
-          stepsInNextGroup.push(new ExtensionCompletedStep(this.repository, extensionInNextGroup));
-          stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
-          stepsInNextGroup = [];
-        }
+          if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
+            stepsInNextGroup.push(new ExtensionCompletedStep(this.repository, extensionInNextGroup));
+            stepGroups.push(new ExtensionStepGroup(extensionInNextGroup, stepsInNextGroup));
+            stepsInNextGroup = [];
+          }
 
-        stepsInNextGroup.push(new CourseStageStep(this.repository, item));
-      });
+          stepsInNextGroup.push(new CourseStageStep(this.repository, item));
+        });
 
       if (stepsInNextGroup.length > 0) {
         const extensionInLastGroup = (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension as CourseExtensionModel;

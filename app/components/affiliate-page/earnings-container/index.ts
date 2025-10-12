@@ -48,7 +48,7 @@ export default class EarningsContainer extends Component<Signature> {
 
   get paidOutEarningsAmountInCents() {
     return this.currentUser.affiliateEarningsPayouts
-      .rejectBy('statusIsFailed')
+      .filter((item) => !item.statusIsFailed)
       .map((item) => item.amountInCents)
       .reduce((a, b) => a + b, 0);
   }

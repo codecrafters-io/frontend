@@ -43,7 +43,7 @@ export default class CommentCard extends Component {
   }
 
   get visibleChildComments() {
-    let persistedComments = this.args.comment.childComments.rejectBy('isNew');
+    let persistedComments = this.args.comment.childComments.filter((item) => !item.isNew);
 
     if (this.currentUserIsStaff) {
       return persistedComments;

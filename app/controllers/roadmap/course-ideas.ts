@@ -13,6 +13,6 @@ export default class CourseIdeasController extends Controller {
   };
 
   get orderedCourseIdeas() {
-    return this.model.courseIdeas.rejectBy('isArchived').sortBy('sortPositionForRoadmapPage');
+    return this.model.courseIdeas.filter((item) => !item.isArchived).sortBy('sortPositionForRoadmapPage');
   }
 }

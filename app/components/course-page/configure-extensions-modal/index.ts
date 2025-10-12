@@ -27,7 +27,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   get orderedCourseExtensionIdeas() {
     return this.allCourseExtensionIdeas
       .filter((item) => item.course === this.args.repository.course)
-      .rejectBy('developmentStatus', 'released')
+      .filter((item) => item.developmentStatus !== 'released')
       .sortBy('sortPositionForRoadmapPage');
   }
 
