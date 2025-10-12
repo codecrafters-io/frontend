@@ -6,6 +6,7 @@ import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import uniqFieldReductor from 'codecrafters-frontend/utils/uniq-field-reductor';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -34,7 +35,7 @@ export default class TrackPageHeader extends Component<Signature> {
       .filter((item) => item.language === this.args.language)
       .sort(fieldComparator('completedStagesCount'))
       .reverse()
-      .uniqBy('user')
+      .reduce(uniqFieldReductor('user'), [])
       .slice(0, 3)
       .map((item) => item.user);
   }
