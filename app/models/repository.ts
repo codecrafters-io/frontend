@@ -94,11 +94,11 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStageSlugs() {
-    return this.completedStages.mapBy('slug');
+    return this.completedStages.map((item) => item.slug);
   }
 
   get completedStages() {
-    return this.courseStageCompletions.mapBy('courseStage').uniq();
+    return this.courseStageCompletions.map((item) => item.courseStage).uniq();
   }
 
   get currentStage() {

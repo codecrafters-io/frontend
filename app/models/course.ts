@@ -93,7 +93,7 @@ export default class CourseModel extends Model {
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').map((item) => item.language);
   }
 
   get concepts() {
@@ -179,7 +179,7 @@ export default class CourseModel extends Model {
   }
 
   get sortedExtensionStages() {
-    return this.sortedExtensions.mapBy('sortedStages').flat();
+    return this.sortedExtensions.map((item) => item.sortedStages).flat();
   }
 
   get sortedExtensions() {

@@ -19,7 +19,10 @@ export default class TeamPageMembersListItem extends Component {
   }
 
   get sortedCourses() {
-    return this.args.membership.user.courseParticipations.mapBy('course').uniq().sortBy('sortPositionForTrack');
+    return this.args.membership.user.courseParticipations
+      .map((item) => item.course)
+      .uniq()
+      .sortBy('sortPositionForTrack');
   }
 
   @action

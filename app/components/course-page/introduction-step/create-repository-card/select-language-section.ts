@@ -26,7 +26,7 @@ export default class SelectLanguageSection extends Component<Signature> {
   @tracked shouldShowNonPreferredLanguages = false;
 
   get availableLanguages() {
-    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).mapBy('language');
+    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).map((item) => item.language);
   }
 
   get orderedLanguageConfigurations() {
@@ -44,7 +44,9 @@ export default class SelectLanguageSection extends Component<Signature> {
   }
 
   get requestedLanguages() {
-    return this.args.repository.user.courseLanguageRequests.filter((item) => item.course === this.args.repository.course).mapBy('language');
+    return this.args.repository.user.courseLanguageRequests
+      .filter((item) => item.course === this.args.repository.course)
+      .map((item) => item.language);
   }
 
   @action

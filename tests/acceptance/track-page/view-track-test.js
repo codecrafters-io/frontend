@@ -119,7 +119,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
     signIn(this.owner, this.server);
 
     await trackPage.visit({ track_slug: 'javascript' });
-    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own React'));
+    assert.notOk(trackPage.cards.map((item) => item.title).includes('Build your own React'));
   });
 
   test('it does not show a challenge if it is deprecated', async function (assert) {
@@ -137,7 +137,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
     });
 
     await visit('/tracks/go');
-    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Docker'));
+    assert.notOk(trackPage.cards.map((item) => item.title).includes('Build your own Docker'));
   });
 
   test('it does not show a challenge if it is private', async function (assert) {
@@ -147,7 +147,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
     redis.update({ visibility: 'private' });
 
     await visit('/tracks/python');
-    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Redis'), 'private course should not be included');
+    assert.notOk(trackPage.cards.map((item) => item.title).includes('Build your own Redis'), 'private course should not be included');
   });
 
   test('it does not show a challenge if it is private and user has repository', async function (assert) {
@@ -165,7 +165,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
     });
 
     await visit('/tracks/python');
-    assert.notOk(trackPage.cards.mapBy('title').includes('Build your own Redis'), 'private course should not be included');
+    assert.notOk(trackPage.cards.map((item) => item.title).includes('Build your own Redis'), 'private course should not be included');
   });
 
   test('visiting from catalog page has no loading page', async function (assert) {
@@ -214,7 +214,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
 
-    let cardTitles = trackPage.cards.mapBy('title');
+    let cardTitles = trackPage.cards.map((item) => item.title);
     let gitIndex = cardTitles.indexOf('Build your own Git →');
     let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
 
@@ -246,7 +246,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
 
-    let cardTitles = trackPage.cards.mapBy('title');
+    let cardTitles = trackPage.cards.map((item) => item.title);
     let grepIndex = cardTitles.indexOf('Build your own grep →');
     let sqliteIndex = cardTitles.indexOf('Build your own SQLite →');
 
@@ -279,7 +279,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
     await visit('/tracks/go');
 
-    let cardTitles = trackPage.cards.mapBy('title');
+    let cardTitles = trackPage.cards.map((item) => item.title);
     let dummyIndex = cardTitles.indexOf('Build your own Dummy →');
     let grepIndex = cardTitles.indexOf('Build your own grep →');
     let dockerIndex = cardTitles.indexOf('Build your own Docker →');
