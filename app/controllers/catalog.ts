@@ -104,7 +104,7 @@ export default class CatalogController extends Controller {
 
     return this.authenticator.currentUser.featureSuggestions
       .filter((item) => item.featureIsProductWalkthrough)
-      .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
+      .filter((item) => !item.isDismissed)[0] as FeatureSuggestionModel | null;
   }
 
   shouldDisplayCourse(course: CourseModel) {

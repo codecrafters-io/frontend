@@ -31,12 +31,12 @@ export default class CourseExtensionIdeasController extends Controller {
 
   get orderedCourses() {
     return this.model.courseExtensionIdeas
-      .rejectBy('developmentStatusIsReleased')
+      .filter((item) => !item.developmentStatusIsReleased)
       .map((item) => item.course)
       .uniq()
-      .rejectBy('releaseStatusIsDeprecated')
-      .rejectBy('releaseStatusIsAlpha')
-      .rejectBy('visibilityIsPrivate')
+      .filter((item) => !item.releaseStatusIsDeprecated)
+      .filter((item) => !item.releaseStatusIsAlpha)
+      .filter((item) => !item.visibilityIsPrivate)
       .sortBy('sortPositionForTrack');
   }
 

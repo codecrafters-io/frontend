@@ -127,7 +127,10 @@ export default class UserModel extends Model {
   }
 
   get currentAffiliateReferral() {
-    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse()[0];
+    return this.affiliateReferralsAsCustomer
+      .filter((item) => !item.isNew)
+      .sortBy('createdAt')
+      .reverse()[0];
   }
 
   get expiredSubscription() {
@@ -170,11 +173,11 @@ export default class UserModel extends Model {
   }
 
   get hasJoinedAffiliateProgram() {
-    return this.affiliateLinks.rejectBy('isNew').length > 0;
+    return this.affiliateLinks.filter((item) => !item.isNew).length > 0;
   }
 
   get hasJoinedReferralProgram() {
-    return this.referralLinks.rejectBy('isNew').length > 0;
+    return this.referralLinks.filter((item) => !item.isNew).length > 0;
   }
 
   get isTeamAdmin() {
@@ -194,11 +197,11 @@ export default class UserModel extends Model {
   }
 
   get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filter((item) => item.featureIsProductWalkthrough).rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsProductWalkthrough).filter((item) => !item.isDismissed)[0] || null;
   }
 
   get pendingRepositoryWorkflowTutorialFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filter((item) => item.featureIsRepositoryWorkflowTutorial).rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsRepositoryWorkflowTutorial).filter((item) => !item.isDismissed)[0] || null;
   }
 
   get teamHasActivePilot() {
@@ -217,7 +220,7 @@ export default class UserModel extends Model {
     return (
       this.promotionalDiscounts
         .filter((item) => item.type === type)
-        .rejectBy('isExpired')
+        .filter((item) => !item.isExpired)
         .sortBy('createdAt')
         .reverse()[0] || null
     );

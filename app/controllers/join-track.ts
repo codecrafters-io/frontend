@@ -12,7 +12,10 @@ export default class JoinTrackController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get courses(): CourseModel[] {
-    return this.model.courses.rejectBy('releaseStatusIsAlpha').rejectBy('releaseStatusIsDeprecated').rejectBy('visibilityIsPrivate');
+    return this.model.courses
+      .filter((item) => !item.releaseStatusIsAlpha)
+      .filter((item) => !item.releaseStatusIsDeprecated)
+      .filter((item) => !item.visibilityIsPrivate);
   }
 
   get sortedCourses(): CourseModel[] {

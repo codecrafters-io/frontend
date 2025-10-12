@@ -101,11 +101,11 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
-    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
+    return this.stages.filter((item) => !item.primaryExtensionSlug); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').map((item) => item.language);
+    return this.languageConfigurations.filter((item) => !item.releaseStatusIsAlpha).map((item) => item.language);
   }
 
   get concepts() {
