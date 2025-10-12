@@ -102,7 +102,7 @@ export default class CourseStageModel extends Model {
   }
 
   get otherConceptsForCourse() {
-    return this.course.concepts.reject((concept) => this.concepts.includes(concept));
+    return this.course.concepts.filter((concept) => !this.concepts.includes(concept));
   }
 
   get participationAnalysis() {
