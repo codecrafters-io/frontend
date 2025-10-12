@@ -33,10 +33,7 @@ export default class CourseExtensionIdeasController extends Controller {
   }
 
   get orderedCourses() {
-    return this.model.courseExtensionIdeas
-      .filter((item) => !item.developmentStatusIsReleased)
-      .map((item) => item.course)
-      .uniq()
+    return [...new Set(this.model.courseExtensionIdeas.filter((item) => !item.developmentStatusIsReleased).map((item) => item.course))]
       .filter((item) => !item.releaseStatusIsDeprecated)
       .filter((item) => !item.releaseStatusIsAlpha)
       .filter((item) => !item.visibilityIsPrivate)

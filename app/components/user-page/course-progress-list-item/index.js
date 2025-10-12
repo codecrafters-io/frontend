@@ -28,9 +28,9 @@ export default class CourseProgressListItem extends Component {
 
   get languagesText() {
     if (this.hasCompletedCourseUsingAnyLanguage) {
-      return `using ${arrayToSentence(this.completedCourseParticipations.map((item) => item.language.name).uniq())}`;
+      return `using ${arrayToSentence([...new Set(this.completedCourseParticipations.map((item) => item.language.name))])}`;
     } else {
-      return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).uniq())}`;
+      return `using ${arrayToSentence([...new Set(this.args.courseParticipations.map((item) => item.language.name))])}`;
     }
   }
 

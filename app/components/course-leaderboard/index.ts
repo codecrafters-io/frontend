@@ -104,7 +104,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       allRepositories.push(this.args.activeRepository);
     }
 
-    return allRepositories.uniq().map((repository) => {
+    return [...new Set(allRepositories)].map((repository) => {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,

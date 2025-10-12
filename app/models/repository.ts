@@ -72,10 +72,7 @@ export default class RepositoryModel extends Model {
   @attr('number') declare submissionsCount: number;
 
   get activatedCourseExtensions() {
-    return this.extensionActivations
-      .toSorted(fieldComparator('activatedAt'))
-      .map((activation) => activation.extension)
-      .uniq();
+    return [...new Set(this.extensionActivations.toSorted(fieldComparator('activatedAt')).map((activation) => activation.extension))];
   }
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
@@ -100,7 +97,7 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStages() {
-    return this.courseStageCompletions.map((item) => item.courseStage).uniq();
+    return [...new Set(this.courseStageCompletions.map((item) => item.courseStage))];
   }
 
   get currentStage() {

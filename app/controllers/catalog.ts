@@ -20,7 +20,7 @@ export default class CatalogController extends Controller {
   }
 
   get languages() {
-    return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).uniq();
+    return [...new Set(this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])))];
   }
 
   get orderedCourses() {

@@ -190,7 +190,7 @@ export default class UserModel extends Model {
   }
 
   get languagesFromCompletedCourseParticipations() {
-    return this.completedCourseParticipations.map((item) => item.language).uniq();
+    return [...new Set(this.completedCourseParticipations.map((item) => item.language))];
   }
 
   get managedTeams() {

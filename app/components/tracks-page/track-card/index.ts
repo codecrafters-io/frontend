@@ -24,10 +24,13 @@ export default class TrackCard extends Component<Signature> {
       return 0;
     }
 
-    return this.authenticator.currentUser.repositories
-      .filter((item) => item.language === this.args.language)
-      .flatMap((repository) => repository.completedStages)
-      .uniq().length;
+    return [
+      ...new Set(
+        this.authenticator.currentUser.repositories
+          .filter((item) => item.language === this.args.language)
+          .flatMap((repository) => repository.completedStages),
+      ),
+    ].length;
   }
 
   get currentUserHasStartedTrack() {
