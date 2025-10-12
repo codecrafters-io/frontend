@@ -54,7 +54,7 @@ export default class JoinCourseRoute extends BaseRoute {
       include: 'extensions,stages,language-configurations.language',
     });
 
-    const course = courses.findBy('slug', params.course_slug);
+    const course = courses.find((item) => item.slug === params.course_slug);
 
     if (this.authenticator.isAuthenticated && course) {
       await this.store.query('repository', {

@@ -33,7 +33,7 @@ export default class TrackPageHeader extends Component<Signature> {
     return A(
       this.store
         .peekAll('track-leaderboard-entry')
-        .filterBy('language', this.args.language)
+        .filter((item) => item.language === this.args.language)
         .toSorted(fieldComparator('completedStagesCount'))
         .reverse(),
     )

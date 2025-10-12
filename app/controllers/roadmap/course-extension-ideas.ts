@@ -41,7 +41,7 @@ export default class CourseExtensionIdeasController extends Controller {
   }
 
   get selectedCourse() {
-    return this.store.peekAll('course').findBy('slug', this.selectedCourseSlug);
+    return this.store.peekAll('course').find((item) => item.slug === this.selectedCourseSlug);
   }
 
   @action
