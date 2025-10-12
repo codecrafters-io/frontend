@@ -13,11 +13,11 @@ export default create({
   }),
 
   memberByGithubName(githubName) {
-    return [...this.members].findBy('githubName', githubName);
+    return [...this.members].find((item) => item.githubName === githubName);
   },
 
   memberByUsername(username) {
-    return [...this.members].findBy('username', username);
+    return [...this.members].find((item) => item.username === username);
   },
 
   setupSubscriptionContainer: {

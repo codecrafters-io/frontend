@@ -27,7 +27,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
   async model(params: { stage_slug: string; language_slug?: string; sort_mode?: string }): Promise<CodeExampleInsightsRouteModel> {
     // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
-    const courseStage = course.stages.findBy('slug', params.stage_slug);
+    const courseStage = course.stages.find((item) => item.slug === params.stage_slug);
 
     if (!courseStage) {
       throw new Error(`Course stage with slug "${params.stage_slug}" not found`);

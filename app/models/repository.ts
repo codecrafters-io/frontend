@@ -215,7 +215,7 @@ export default class RepositoryModel extends Model {
   }
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    return this.courseStageFeedbackSubmissions.findBy('courseStage', courseStage);
+    return this.courseStageFeedbackSubmissions.find((item) => item.courseStage === courseStage);
   }
 
   extensionStagesAreComplete(extension: CourseExtensionModel) {

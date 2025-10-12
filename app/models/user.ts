@@ -100,7 +100,10 @@ export default class UserModel extends Model {
   }
 
   get activeSubscription() {
-    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+    return this.subscriptions
+      .sortBy('startDate')
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get adminProfileUrl() {
@@ -131,7 +134,10 @@ export default class UserModel extends Model {
     if (this.hasActiveSubscription) {
       return null;
     } else {
-      return this.subscriptions.sortBy('startDate').reverse().findBy('isInactive');
+      return this.subscriptions
+        .sortBy('startDate')
+        .reverse()
+        .find((item) => item.isInactive);
     }
   }
 

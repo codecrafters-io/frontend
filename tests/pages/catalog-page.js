@@ -11,12 +11,12 @@ export default create({
 
   async clickOnCourse(courseName) {
     await waitUntil(() => this.courseCards.length > 0); // Ensure skeleton UI is gone
-    await [...this.courseCards].findBy('name', courseName).click();
+    await [...this.courseCards].find((item) => item.name === courseName).click();
   },
 
   async clickOnTrack(trackName) {
     await waitUntil(() => this.trackCards.length > 0); // Ensure skeleton UI is gone
-    await [...this.trackCards].findBy('name', trackName).click();
+    await [...this.trackCards].find((item) => item.name === trackName).click();
   },
 
   courseCards: collection('[data-test-course-card]', CourseCard),

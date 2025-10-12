@@ -54,7 +54,7 @@ export default class LanguageGuideCard extends Component<Signature> {
       return undefined;
     }
 
-    return this.args.courseStage.languageGuides.findBy('language', this.currentLanguage);
+    return this.args.courseStage.languageGuides.find((item) => item.language === this.currentLanguage);
   }
 
   get sortedLanguagesForDropdown(): LanguageModel[] {
