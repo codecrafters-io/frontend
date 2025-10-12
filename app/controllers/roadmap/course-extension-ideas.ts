@@ -32,7 +32,7 @@ export default class CourseExtensionIdeasController extends Controller {
   get orderedCourses() {
     return this.model.courseExtensionIdeas
       .rejectBy('developmentStatusIsReleased')
-      .mapBy('course')
+      .map((item) => item.course)
       .uniq()
       .rejectBy('releaseStatusIsDeprecated')
       .rejectBy('releaseStatusIsAlpha')

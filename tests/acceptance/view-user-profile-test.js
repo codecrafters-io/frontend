@@ -27,7 +27,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: redis,
       language: python,
       user: currentUser,
-      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 1).mapBy('slug'),
+      completedStageSlugs: redis.stages.models
+        .sortBy('position')
+        .slice(0, 1)
+        .map((item) => item.slug),
       lastSubmissionAt: new Date('2022-10-10'),
     });
 
@@ -35,7 +38,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: redis,
       language: go,
       user: currentUser,
-      completedStageSlugs: redis.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: redis.stages.models
+        .sortBy('position')
+        .slice(0, 5)
+        .map((item) => item.slug),
       lastSubmissionAt: new Date('2021-10-10'),
     });
 
@@ -43,7 +49,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: grep,
       language: go,
       user: currentUser,
-      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: grep.stages.models
+        .sortBy('position')
+        .slice(0, 5)
+        .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),
     });
 
@@ -51,7 +60,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: git,
       language: python,
       user: currentUser,
-      completedStageSlugs: git.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: git.stages.models
+        .sortBy('position')
+        .slice(0, 5)
+        .map((item) => item.slug),
     });
 
     this.server.create('course-participation', {
@@ -234,7 +246,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: grep,
       language: go,
       user: currentUser,
-      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: grep.stages.models
+        .sortBy('position')
+        .slice(0, 5)
+        .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),
     });
 
@@ -264,7 +279,10 @@ module('Acceptance | view-user-profile', function (hooks) {
       course: grep,
       language: go,
       user: currentUser,
-      completedStageSlugs: grep.stages.models.sortBy('position').slice(0, 5).mapBy('slug'),
+      completedStageSlugs: grep.stages.models
+        .sortBy('position')
+        .slice(0, 5)
+        .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),
     });
 
@@ -279,6 +297,6 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
     assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
-    assert.notOk(userPage.courseProgressListItems.mapBy('name').includes('Build your own Redis'), 'private course should not be included');
+    assert.notOk(userPage.courseProgressListItems.map((item) => item.name).includes('Build your own Redis'), 'private course should not be included');
   });
 });

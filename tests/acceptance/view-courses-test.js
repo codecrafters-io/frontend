@@ -325,7 +325,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
 
     assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
-    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Docker'), 'docker should not be included');
+    assert.notOk(catalogPage.courseCards.map((item) => item.name).includes('Build your own Docker'), 'docker should not be included');
   });
 
   test('it should not show private courses in catalog', async function (assert) {
@@ -338,7 +338,7 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
 
     assert.strictEqual(catalogPage.courseCards.length, 3, 'expected 3 course cards to be present');
-    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should not be included');
+    assert.notOk(catalogPage.courseCards.map((item) => item.name).includes('Build your own Redis'), 'redis should not be included');
   });
 
   test('it should show private courses in catalog if user has repository', async function (assert) {
@@ -358,6 +358,6 @@ module('Acceptance | view-courses', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.ok(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should be included');
+    assert.ok(catalogPage.courseCards.map((item) => item.name).includes('Build your own Redis'), 'redis should be included');
   });
 });

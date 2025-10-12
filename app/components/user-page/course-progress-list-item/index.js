@@ -15,7 +15,7 @@ export default class CourseProgressListItem extends Component {
   }
 
   get completedStagesCount() {
-    return Math.max(...this.args.courseParticipations.mapBy('completedStageSlugs').map((stage_list) => stage_list.length));
+    return Math.max(...this.args.courseParticipations.map((item) => item.completedStageSlugs).map((stage_list) => stage_list.length));
   }
 
   get course() {
@@ -28,9 +28,9 @@ export default class CourseProgressListItem extends Component {
 
   get languagesText() {
     if (this.hasCompletedCourseUsingAnyLanguage) {
-      return `using ${arrayToSentence(this.completedCourseParticipations.mapBy('language.name').uniq())}`;
+      return `using ${arrayToSentence(this.completedCourseParticipations.map((item) => item.language.name).uniq())}`;
     } else {
-      return `using ${arrayToSentence(this.args.courseParticipations.mapBy('language.name').uniq())}`;
+      return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).uniq())}`;
     }
   }
 

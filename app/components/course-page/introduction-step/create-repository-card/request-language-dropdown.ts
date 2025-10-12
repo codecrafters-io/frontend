@@ -46,14 +46,14 @@ export default class RequestLanguageDropdown extends Component<Signature> {
     });
 
     if (this.searchQuery.length > 0) {
-      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).mapBy('item');
+      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).map((item) => item.item);
     } else {
       return allSuggestions;
     }
   }
 
   get requestedLanguages(): LanguageModel[] {
-    return this.args.user.courseLanguageRequests.filter((item) => item.course === this.args.course).mapBy('language');
+    return this.args.user.courseLanguageRequests.filter((item) => item.course === this.args.course).map((item) => item.language);
   }
 
   @action

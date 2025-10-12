@@ -35,7 +35,7 @@ export default class TrackPageHeader extends Component<Signature> {
       .reverse()
       .uniqBy('user')
       .slice(0, 3)
-      .mapBy('user');
+      .map((item) => item.user);
   }
 }
 

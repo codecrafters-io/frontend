@@ -186,11 +186,11 @@ export default class UserModel extends Model {
   }
 
   get languagesFromCompletedCourseParticipations() {
-    return this.completedCourseParticipations.mapBy('language').uniq();
+    return this.completedCourseParticipations.map((item) => item.language).uniq();
   }
 
   get managedTeams() {
-    return this.teamMemberships.filter((item) => item.isAdmin).mapBy('team');
+    return this.teamMemberships.filter((item) => item.isAdmin).map((item) => item.team);
   }
 
   get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
@@ -210,7 +210,7 @@ export default class UserModel extends Model {
   }
 
   get teams() {
-    return this.teamMemberships.mapBy('team');
+    return this.teamMemberships.map((item) => item.team);
   }
 
   activePromotionalDiscountForType(type: PromotionalDiscountModel['type']) {

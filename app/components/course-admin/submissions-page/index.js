@@ -27,7 +27,10 @@ export default class AdminCourseSubmissionsPage extends Component {
     let description = 'Showing submissions in ';
 
     if (this.args.filteredLanguages[0]) {
-      description += `${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
+      description += `${this.args.filteredLanguages
+        .map((item) => item.name)
+        .sort()
+        .join(' / ')}`;
     } else {
       description += `all languages`;
     }
@@ -35,7 +38,10 @@ export default class AdminCourseSubmissionsPage extends Component {
     description += ', for ';
 
     if (this.args.filteredCourseStages[0]) {
-      description += `stage ${this.args.filteredCourseStages.mapBy('name').sort().join(' / ')}`;
+      description += `stage ${this.args.filteredCourseStages
+        .map((item) => item.name)
+        .sort()
+        .join(' / ')}`;
     } else {
       description += `all stages`;
     }
@@ -47,7 +53,10 @@ export default class AdminCourseSubmissionsPage extends Component {
     let title = '';
 
     if (this.args.filteredLanguages[0]) {
-      title += `Language: ${this.args.filteredLanguages.mapBy('name').sort().join(' / ')}`;
+      title += `Language: ${this.args.filteredLanguages
+        .map((item) => item.name)
+        .sort()
+        .join(' / ')}`;
     } else {
       title += `Languages: All`;
     }
@@ -55,7 +64,10 @@ export default class AdminCourseSubmissionsPage extends Component {
     title += ' & ';
 
     if (this.args.filteredCourseStages[0]) {
-      title += `Stage: ${this.args.filteredCourseStages.mapBy('name').sort().join(' / ')}`;
+      title += `Stage: ${this.args.filteredCourseStages
+        .map((item) => item.name)
+        .sort()
+        .join(' / ')}`;
     } else {
       title += `Stages: All`;
     }

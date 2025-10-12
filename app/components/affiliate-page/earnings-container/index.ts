@@ -49,12 +49,14 @@ export default class EarningsContainer extends Component<Signature> {
   get paidOutEarningsAmountInCents() {
     return this.currentUser.affiliateEarningsPayouts
       .rejectBy('statusIsFailed')
-      .mapBy('amountInCents')
+      .map((item) => item.amountInCents)
       .reduce((a, b) => a + b, 0);
   }
 
   get pendingEarningsAmountInCents() {
-    const withheldEarningsAmountInCents = this.currentUser.affiliateLinks.mapBy('withheldEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    const withheldEarningsAmountInCents = this.currentUser.affiliateLinks
+      .map((item) => item.withheldEarningsAmountInCents)
+      .reduce((a, b) => a + b, 0);
     const totalUnpaidEarningsAmountInCents = Math.max(0, this.totalEarningsAmountInCents - this.paidOutEarningsAmountInCents);
 
     // We only render "pending" earnings if we haven't paid out more than the user's total earnings.
@@ -86,7 +88,7 @@ export default class EarningsContainer extends Component<Signature> {
   }
 
   get totalEarningsAmountInCents() {
-    return this.currentUser.affiliateLinks.mapBy('totalEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    return this.currentUser.affiliateLinks.map((item) => item.totalEarningsAmountInCents).reduce((a, b) => a + b, 0);
   }
 
   get totalEarningsAmountInDollars() {
@@ -94,7 +96,7 @@ export default class EarningsContainer extends Component<Signature> {
   }
 
   get withdrawableEarningsAmountInCents() {
-    return this.currentUser.affiliateLinks.mapBy('withdrawableEarningsAmountInCents').reduce((a, b) => a + b, 0);
+    return this.currentUser.affiliateLinks.map((item) => item.withdrawableEarningsAmountInCents).reduce((a, b) => a + b, 0);
   }
 
   get withdrawableEarningsAmountInDollars() {
