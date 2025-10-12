@@ -50,10 +50,15 @@ export default class ExtensionCard extends Component<Signature> {
       return;
     }
 
-    await this.args.onToggle(this.args.extension);
-
-    // Reset optimistic state after toggle completes
-    this.unsavedIsActivatedValue = null;
+    try {
+      await this.args.onToggle(this.args.extension);
+      // Reset optimistic state after successful toggle
+      this.unsavedIsActivatedValue = null;
+    } catch (error) {
+      // Reset optimistic state on failure to restore UI consistency
+      this.unsavedIsActivatedValue = null;
+      throw error; // Re-throw to allow error handling by parent components
+    }
   });
 
   @action
