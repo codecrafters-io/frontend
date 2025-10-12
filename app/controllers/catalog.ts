@@ -19,9 +19,7 @@ export default class CatalogController extends Controller {
   }
 
   get languages() {
-    return this.model.courses
-      .flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : []))
-      .uniq();
+    return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).uniq();
   }
 
   get orderedCourses() {
@@ -31,8 +29,12 @@ export default class CatalogController extends Controller {
       });
     } else {
       return [...this.courses].sort((course1, course2) => {
-        const repositoriesForCourse1 = this.authenticator.currentUser!.repositories.filterBy('course', course1).filterBy('lastActivityAt');
-        const repositoriesForCourse2 = this.authenticator.currentUser!.repositories.filterBy('course', course2).filterBy('lastActivityAt');
+        const repositoriesForCourse1 = this.authenticator
+          .currentUser!.repositories.filter((item) => item.course === course1)
+          .filter((item) => item.lastActivityAt);
+        const repositoriesForCourse2 = this.authenticator
+          .currentUser!.repositories.filter((item) => item.course === course2)
+          .filter((item) => item.lastActivityAt);
 
         const lastActivityForCourse1At =
           repositoriesForCourse1.length > 0 ? repositoriesForCourse1.sortBy('lastActivityAt').at(-1)!.lastActivityAt.getTime() : null;
@@ -61,12 +63,12 @@ export default class CatalogController extends Controller {
     } else {
       return [...this.languages].sort((language1, language2) => {
         const repositoriesForLanguage1 = this.authenticator
-          .currentUser!.repositories.filterBy('language', language1)
-          .filterBy('firstSubmissionCreated');
+          .currentUser!.repositories.filter((item) => item.language === language1)
+          .filter((item) => item.firstSubmissionCreated);
 
         const repositoriesForLanguage2 = this.authenticator
-          .currentUser!.repositories.filterBy('language', language2)
-          .filterBy('firstSubmissionCreated');
+          .currentUser!.repositories.filter((item) => item.language === language2)
+          .filter((item) => item.firstSubmissionCreated);
 
         // First priority: languages with repositories come before those without
         const language1HasRepository = repositoriesForLanguage1.length > 0;
@@ -101,14 +103,15 @@ export default class CatalogController extends Controller {
     }
 
     return this.authenticator.currentUser.featureSuggestions
-      .filterBy('featureIsProductWalkthrough')
+      .filter((item) => item.featureIsProductWalkthrough)
       .rejectBy('isDismissed')[0] as FeatureSuggestionModel | null;
   }
 
   shouldDisplayCourse(course: CourseModel) {
     const userIsStaffOrCourseAuthor =
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-    const userHasRepository = this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('course', course).length > 0;
+    const userHasRepository =
+      this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
 
     if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
       return userHasRepository;

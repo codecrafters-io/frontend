@@ -67,7 +67,7 @@ export default class CourseController extends Controller {
       return null;
     }
 
-    return this.currentUser.featureSuggestions.filterBy('featureIsPrivateLeaderboard').rejectBy('isDismissed')[0];
+    return this.currentUser.featureSuggestions.filter((item) => item.featureIsPrivateLeaderboard).rejectBy('isDismissed')[0];
   }
 
   @action

@@ -11,7 +11,7 @@ export default class CourseProgressListItem extends Component {
   }
 
   get completedCourseParticipations() {
-    return this.args.courseParticipations.filterBy('isCompleted');
+    return this.args.courseParticipations.filter((item) => item.isCompleted);
   }
 
   get completedStagesCount() {

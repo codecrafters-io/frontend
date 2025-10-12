@@ -24,7 +24,7 @@ export default class TrackPageHeader extends Component<Signature> {
   @service declare store: Store;
 
   get currentUserHasStartedTrack() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filterBy('language', this.args.language)[0];
+    return this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.language === this.args.language)[0];
   }
 
   get topParticipants(): UserModel[] {

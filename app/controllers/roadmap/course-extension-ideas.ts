@@ -26,7 +26,7 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('sortPositionForRoadmapPage');
+    return this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse).sortBy('sortPositionForRoadmapPage');
   }
 
   get orderedCourses() {

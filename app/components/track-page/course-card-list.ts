@@ -25,9 +25,9 @@ export default class TrackPageCourseCardList extends Component<Signature> {
     const coursesWithProgress = this.args.courses.map((course) => {
       const repositoryWithMostProgress = this.authenticator.currentUser
         ? this.authenticator.currentUser.repositories
-            .filterBy('language', this.args.language)
-            .filterBy('course', course)
-            .filterBy('firstSubmissionCreated')
+            .filter((item) => item.language === this.args.language)
+            .filter((item) => item.course === course)
+            .filter((item) => item.firstSubmissionCreated)
             .sortBy('completedStages.length', 'lastSubmissionAt')
             .at(-1)
         : null;

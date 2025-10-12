@@ -27,7 +27,9 @@ export default class CourseOverviewResumeTrackButton extends Component<Signature
     }
 
     return this.args.courses.find((course) => {
-      const courseRepositories = this.authenticator.currentUser!.repositories.filterBy('course', course).filterBy('language', this.args.language);
+      const courseRepositories = this.authenticator
+        .currentUser!.repositories.filter((item) => item.course === course)
+        .filter((item) => item.language === this.args.language);
 
       return courseRepositories.length > 0 && !courseRepositories.some((repository) => repository.allStagesAreComplete);
     });

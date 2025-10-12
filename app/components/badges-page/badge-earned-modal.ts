@@ -25,7 +25,7 @@ export default class BadgeEarnedModal extends Component<Signature> {
   }
 
   get currentUserBadgeAwards(): BadgeAwardModel[] {
-    return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+    return this.currentUser.badgeAwards.filter((item) => item.badge === this.args.badge);
   }
 
   get lastAwardedAt() {

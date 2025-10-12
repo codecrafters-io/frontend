@@ -53,7 +53,7 @@ export default class RequestLanguageDropdown extends Component<Signature> {
   }
 
   get requestedLanguages(): LanguageModel[] {
-    return this.args.user.courseLanguageRequests.filterBy('course', this.args.course).mapBy('language');
+    return this.args.user.courseLanguageRequests.filter((item) => item.course === this.args.course).mapBy('language');
   }
 
   @action
@@ -102,7 +102,10 @@ export default class RequestLanguageDropdown extends Component<Signature> {
   async toggleLanguageSelection(language: LanguageModel) {
     if (this.requestedLanguages.includes(language)) {
       this.isSyncing = true;
-      await this.args.user.courseLanguageRequests.filterBy('course', this.args.course).findBy('language', language)!.destroyRecord();
+      await this.args.user.courseLanguageRequests
+        .filter((item) => item.course === this.args.course)
+        .findBy('language', language)!
+        .destroyRecord();
       this.isSyncing = false;
 
       this.inputElement.focus();
