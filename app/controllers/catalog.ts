@@ -25,11 +25,11 @@ export default class CatalogController extends Controller {
 
   get orderedCourses() {
     if (!this.authenticator.currentUser) {
-      return [...this.courses].sort((course1, course2) => {
+      return this.courses.toSorted((course1, course2) => {
         return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
       });
     } else {
-      return [...this.courses].sort((course1, course2) => {
+      return this.courses.toSorted((course1, course2) => {
         const repositoriesForCourse1 = this.authenticator
           .currentUser!.repositories.filter((item) => item.course === course1)
           .filter((item) => item.lastActivityAt);
@@ -66,7 +66,7 @@ export default class CatalogController extends Controller {
     if (!this.authenticator.currentUser) {
       return this.languages.toSorted(fieldComparator('sortPositionForTrack'));
     } else {
-      return [...this.languages].sort((language1, language2) => {
+      return this.languages.toSorted((language1, language2) => {
         const repositoriesForLanguage1 = this.authenticator
           .currentUser!.repositories.filter((item) => item.language === language1)
           .filter((item) => item.firstSubmissionCreated);
