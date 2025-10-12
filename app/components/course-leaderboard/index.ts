@@ -138,7 +138,7 @@ export default class CourseLeaderboard extends Component<Signature> {
 
       result.push(
         new CourseLeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
+          status: entriesForUser.some((item) => item.status === 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
           completedStageSlugs: entryWithMostStageCompletions!.completedStageSlugs,
           currentCourseStage: entryWithMostStageCompletions!.currentCourseStage,
           language: entryWithMostStageCompletions!.language,

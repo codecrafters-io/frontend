@@ -202,11 +202,11 @@ export default class UserModel extends Model {
   }
 
   get teamHasActivePilot() {
-    return this.teams.isAny('hasActivePilot');
+    return !!this.teams.some((item) => item.hasActivePilot);
   }
 
   get teamHasActiveSubscription() {
-    return this.teams.isAny('hasActiveSubscription');
+    return !!this.teams.some((item) => item.hasActiveSubscription);
   }
 
   get teams() {
