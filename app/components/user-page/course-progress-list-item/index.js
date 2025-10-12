@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 
 export default class CourseProgressListItem extends Component {
   @service router;
@@ -28,9 +29,9 @@ export default class CourseProgressListItem extends Component {
 
   get languagesText() {
     if (this.hasCompletedCourseUsingAnyLanguage) {
-      return `using ${arrayToSentence(this.completedCourseParticipations.map((item) => item.language.name).uniq())}`;
+      return `using ${arrayToSentence(this.completedCourseParticipations.map((item) => item.language.name).reduce(uniqReductor(), []))}`;
     } else {
-      return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).uniq())}`;
+      return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).reduce(uniqReductor(), []))}`;
     }
   }
 
