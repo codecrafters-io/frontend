@@ -80,11 +80,11 @@ export default class AcceptReferralContainer extends Component<Signature> {
         })
         .save();
 
-      const freeUsageGrant = await this.store.query('free-usage-grant', {
+      const freeUsageGrant = (await this.store.query('free-usage-grant', {
         user_id: this.currentUser?.id,
-      });
+      })) as unknown as FreeUsageGrantModel[];
 
-      this.freeUsageGrantExpiresAt = format(freeUsageGrant.objectAt(0)?.expiresAt, 'dd MMM yyyy');
+      this.freeUsageGrantExpiresAt = format(freeUsageGrant[0]?.expiresAt as Date, 'dd MMM yyyy');
       this.isAccepted = true;
     }
   }

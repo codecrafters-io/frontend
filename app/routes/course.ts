@@ -67,7 +67,7 @@ export default class CourseRoute extends BaseRoute {
     } else if (transition.to.queryParams.track) {
       const lastPushedRepositoryForTrack = repositories
         // @ts-expect-error transition.to.queryParams not typed
-        .filter((item) => get(item, 'language.slug') === transition.to.queryParams.track)
+        .filter((item) => item.language?.slug === transition.to.queryParams.track)
         .filter((item) => item.firstSubmissionCreated)
         .toSorted(fieldComparator('lastSubmissionAt'))
         .at(-1);
