@@ -30,7 +30,7 @@ export default class LeaderboardPageHeader extends Component<Signature> {
       // Next, show all languages alphabetically
       ...allLanguages
         .sortBy('sortPositionForTrack')
-        .reject((language) => preferredLanguageSlugs.includes(language.slug))
+        .filter((language) => !preferredLanguageSlugs.includes(language.slug))
         .filter((language) => language.liveOrBetaStagesCount > 0),
     ];
   }
