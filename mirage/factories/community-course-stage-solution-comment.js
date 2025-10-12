@@ -5,6 +5,6 @@ export default Factory.extend({
   downvotesCount: () => 0,
 
   afterCreate(comment) {
-    comment.target.update('approvedCommentsCount', comment.target.comments.models.filterBy('approvalStatus', 'approved').length);
+    comment.target.update('approvedCommentsCount', comment.target.comments.models.filter((item) => item.approvalStatus === 'approved').length);
   },
 });

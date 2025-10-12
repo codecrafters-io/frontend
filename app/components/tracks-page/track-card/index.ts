@@ -25,15 +25,16 @@ export default class TrackCard extends Component<Signature> {
     }
 
     return this.authenticator.currentUser.repositories
-      .filterBy('language', this.args.language)
-
+      .filter((item) => item.language === this.args.language)
       .flatMap((repository) => repository.completedStages)
       .uniq().length;
   }
 
   get currentUserHasStartedTrack() {
     if (this.authenticator.currentUser) {
-      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated')[0];
+      return !!this.authenticator.currentUser.repositories
+        .filter((item) => item.language === this.args.language)
+        .filter((item) => item.firstSubmissionCreated)[0];
     } else {
       return false;
     }

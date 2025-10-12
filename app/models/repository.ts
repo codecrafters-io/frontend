@@ -211,7 +211,7 @@ export default class RepositoryModel extends Model {
   }
 
   courseStageCompletionFor(courseStage: CourseStageModel) {
-    return this.courseStageCompletions.filterBy('courseStage', courseStage).sortBy('completedAt')[0];
+    return this.courseStageCompletions.filter((item) => item.courseStage === courseStage).sortBy('completedAt')[0];
   }
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
@@ -223,7 +223,9 @@ export default class RepositoryModel extends Model {
   }
 
   hasClosedCourseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {
-    return this.courseStageFeedbackSubmissions.filterBy('courseStage', courseStage).filterBy('status', 'closed').length > 0;
+    return (
+      this.courseStageFeedbackSubmissions.filter((item) => item.courseStage === courseStage).filter((item) => item.status === 'closed').length > 0
+    );
   }
 
   async refreshStateFromServer() {

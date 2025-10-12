@@ -40,9 +40,11 @@ export class StepListDefinition {
         steps.push(new CourseStageStep(this.repository, fakeStageListItem));
       });
     } else {
-      this.repository.stageList.items.filterBy('isBaseStage').forEach((item) => {
-        steps.push(new CourseStageStep(this.repository, item));
-      });
+      this.repository.stageList.items
+        .filter((item) => item.isBaseStage)
+        .forEach((item) => {
+          steps.push(new CourseStageStep(this.repository, item));
+        });
     }
 
     steps.push(new BaseStagesCompletedStep(this.repository));

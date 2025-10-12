@@ -52,7 +52,9 @@ export default class TrackLeaderboard extends Component<Signature> {
       return [];
     }
 
-    const currentUserRepositories = this.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated');
+    const currentUserRepositories = this.currentUser.repositories
+      .filter((item) => item.language === this.args.language)
+      .filter((item) => item.firstSubmissionCreated);
 
     if (currentUserRepositories.length === 0) {
       return [];

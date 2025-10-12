@@ -34,7 +34,7 @@ export default class SelectLanguageSection extends Component<Signature> {
   }
 
   get preferredLanguages() {
-    return this.availableLanguages.filterBy('slug', this.args.preferredLanguageSlug);
+    return this.availableLanguages.filter((item) => item.slug === this.args.preferredLanguageSlug);
   }
 
   get requestedAndUnsupportedLanguages() {
@@ -44,7 +44,7 @@ export default class SelectLanguageSection extends Component<Signature> {
   }
 
   get requestedLanguages() {
-    return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
+    return this.args.repository.user.courseLanguageRequests.filter((item) => item.course === this.args.repository.course).mapBy('language');
   }
 
   @action

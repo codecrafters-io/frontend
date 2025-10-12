@@ -33,12 +33,14 @@ export default class CourseCard extends Component<Signature> {
     }
 
     if (this.authenticator.currentUserIsLoaded) {
-      const lastPushedRepository = this.currentUser!.repositories.filterBy('course', this.args.course)
-        .filterBy('firstSubmissionCreated')
+      const lastPushedRepository = this.currentUser!.repositories.filter((item) => item.course === this.args.course)
+        .filter((item) => item.firstSubmissionCreated)
         .sortBy('lastSubmissionAt')
         .at(-1);
 
-      const lastCreatedRepository = this.currentUser!.repositories.filterBy('course', this.args.course).sortBy('createdAt').at(-1);
+      const lastCreatedRepository = this.currentUser!.repositories.filter((item) => item.course === this.args.course)
+        .sortBy('createdAt')
+        .at(-1);
 
       return lastPushedRepository ? lastPushedRepository : (lastCreatedRepository ?? null);
     } else {

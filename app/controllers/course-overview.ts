@@ -23,7 +23,9 @@ export default class CourseOverviewController extends Controller {
 
   get userRepositories() {
     if (this.authenticator.currentUser) {
-      return this.authenticator.currentUser.repositories.filterBy('course', this.model.course).filterBy('firstSubmissionCreated');
+      return this.authenticator.currentUser.repositories
+        .filter((item) => item.course === this.model.course)
+        .filter((item) => item.firstSubmissionCreated);
     } else {
       return [];
     }

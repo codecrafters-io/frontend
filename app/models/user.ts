@@ -120,7 +120,7 @@ export default class UserModel extends Model {
   }
 
   get completedCourseParticipations() {
-    return this.courseParticipations.filterBy('isCompleted');
+    return this.courseParticipations.filter((item) => item.isCompleted);
   }
 
   get currentAffiliateReferral() {
@@ -184,15 +184,15 @@ export default class UserModel extends Model {
   }
 
   get managedTeams() {
-    return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+    return this.teamMemberships.filter((item) => item.isAdmin).mapBy('team');
   }
 
   get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filterBy('featureIsProductWalkthrough').rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsProductWalkthrough).rejectBy('isDismissed')[0] || null;
   }
 
   get pendingRepositoryWorkflowTutorialFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filterBy('featureIsRepositoryWorkflowTutorial').rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsRepositoryWorkflowTutorial).rejectBy('isDismissed')[0] || null;
   }
 
   get teamHasActivePilot() {
@@ -208,7 +208,13 @@ export default class UserModel extends Model {
   }
 
   activePromotionalDiscountForType(type: PromotionalDiscountModel['type']) {
-    return this.promotionalDiscounts.filterBy('type', type).rejectBy('isExpired').sortBy('createdAt').reverse()[0] || null;
+    return (
+      this.promotionalDiscounts
+        .filter((item) => item.type === type)
+        .rejectBy('isExpired')
+        .sortBy('createdAt')
+        .reverse()[0] || null
+    );
   }
 
   canAttemptCourseStage(courseStage: CourseStageModel) {
@@ -221,7 +227,7 @@ export default class UserModel extends Model {
   }
 
   hasStartedCourse(course: CourseModel) {
-    return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
+    return this.repositories.filter((item) => !item.isNew).filter((item) => item.course === course).length > 0;
   }
 
   isCourseAuthor(course: CourseModel) {

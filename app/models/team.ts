@@ -33,7 +33,7 @@ export default class TeamModel extends Model {
   }
 
   get admins() {
-    return this.memberships.filterBy('isAdmin', true).mapBy('user');
+    return this.memberships.filter((item) => item.isAdmin === true).mapBy('user');
   }
 
   get canStartSelfServeBillingFlow() {

@@ -66,8 +66,8 @@ export default class CourseRoute extends BaseRoute {
     } else if (transition.to.queryParams.track) {
       const lastPushedRepositoryForTrack = repositories
         // @ts-expect-error transition.to.queryParams not typed
-        .filterBy('language.slug', transition.to.queryParams.track)
-        .filterBy('firstSubmissionCreated')
+        .filter((item) => item.language?.slug === transition.to.queryParams.track)
+        .filter((item) => item.firstSubmissionCreated)
         .sortBy('lastSubmissionAt')
         .at(-1);
 
@@ -77,7 +77,10 @@ export default class CourseRoute extends BaseRoute {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
     } else {
-      const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
+      const lastPushedRepository = repositories
+        .filter((item) => item.firstSubmissionCreated)
+        .sortBy('lastSubmissionAt')
+        .at(-1);
       const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
 
       if (lastPushedRepository) {
