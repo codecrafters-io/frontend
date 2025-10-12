@@ -8,6 +8,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsAdmin, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | view-user-profile', function (hooks) {
   setupApplicationTest(hooks);
@@ -28,7 +29,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: python,
       user: currentUser,
       completedStageSlugs: redis.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 1)
         .map((item) => item.slug),
       lastSubmissionAt: new Date('2022-10-10'),
@@ -39,7 +40,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: go,
       user: currentUser,
       completedStageSlugs: redis.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 5)
         .map((item) => item.slug),
       lastSubmissionAt: new Date('2021-10-10'),
@@ -50,7 +51,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: go,
       user: currentUser,
       completedStageSlugs: grep.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 5)
         .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),
@@ -61,7 +62,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: python,
       user: currentUser,
       completedStageSlugs: git.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 5)
         .map((item) => item.slug),
     });
@@ -247,7 +248,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: go,
       user: currentUser,
       completedStageSlugs: grep.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 5)
         .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),
@@ -280,7 +281,7 @@ module('Acceptance | view-user-profile', function (hooks) {
       language: go,
       user: currentUser,
       completedStageSlugs: grep.stages.models
-        .sortBy('position')
+        .toSorted(fieldComparator('position'))
         .slice(0, 5)
         .map((item) => item.slug),
       lastSubmissionAt: new Date('2020-10-10'),

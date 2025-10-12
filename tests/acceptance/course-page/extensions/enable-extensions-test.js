@@ -10,6 +10,7 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import createCourseExtensionIdeas from 'codecrafters-frontend/mirage/utils/create-course-extension-ideas';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | extensions | enable-extensions', function (hooks) {
   setupApplicationTest(hooks);
@@ -151,7 +152,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
       user: currentUser,
     });
 
-    let extensions = course.extensions.models.sortBy('position');
+    let extensions = course.extensions.models.toSorted(fieldComparator('position'));
     let extension1Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[0].slug);
     let extension2Stages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[1].slug);
 
@@ -165,7 +166,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
 
     this.server.create('submission', 'withStageCompletion', {
       repository,
-      courseStage: extension2Stages.sortBy('positionWithinExtension')[0],
+      courseStage: extension2Stages.toSorted(fieldComparator('positionWithinExtension'))[0],
       createdAt: repository.createdAt,
     });
 

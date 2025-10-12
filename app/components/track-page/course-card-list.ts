@@ -5,6 +5,7 @@ import comingSoonImage from '/assets/images/icons/coming-soon.png';
 import logoImage from '/assets/images/logo/outline-color.svg';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -28,7 +29,7 @@ export default class TrackPageCourseCardList extends Component<Signature> {
             .filter((item) => item.language === this.args.language)
             .filter((item) => item.course === course)
             .filter((item) => item.firstSubmissionCreated)
-            .sortBy('completedStages.length', 'lastSubmissionAt')
+            .toSorted(fieldComparator('completedStagesCount', 'lastSubmissionAt'))
             .at(-1)
         : null;
 

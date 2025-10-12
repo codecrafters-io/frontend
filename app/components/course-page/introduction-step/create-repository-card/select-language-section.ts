@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
@@ -30,7 +31,9 @@ export default class SelectLanguageSection extends Component<Signature> {
   }
 
   get orderedLanguageConfigurations() {
-    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).sortBy('language.name');
+    return this.args.repository.course
+      .availableLanguageConfigurationsForUser(this.args.repository.user)
+      .toSorted((a, b) => compare(a.language.name, b.language.name));
   }
 
   get preferredLanguages() {

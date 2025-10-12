@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class AdminCourseSubmissionsPage extends Component {
   @service router;
@@ -12,7 +13,7 @@ export default class AdminCourseSubmissionsPage extends Component {
   constructor() {
     super(...arguments);
 
-    this.selectedSubmission = this.args.submissions.sortBy('createdAt').at(-1);
+    this.selectedSubmission = this.args.submissions.toSorted(fieldComparator('createdAt')).at(-1);
   }
 
   get currentCourseStage() {
@@ -76,7 +77,7 @@ export default class AdminCourseSubmissionsPage extends Component {
   }
 
   get sortedLanguagesForDropdown() {
-    return this.args.course.betaOrLiveLanguages.sortBy('name');
+    return this.args.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
   }
 
   @action

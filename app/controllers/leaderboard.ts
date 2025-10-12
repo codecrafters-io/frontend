@@ -9,6 +9,7 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class LeaderboardController extends Controller {
   @service declare authenticator: AuthenticatorService;
@@ -34,7 +35,7 @@ export default class LeaderboardController extends Controller {
 
   get sortedLanguagesForDropdown(): LanguageModel[] {
     return (this.store.peekAll('language') as unknown as LanguageModel[])
-      .sortBy('sortPositionForTrack')
+      .toSorted(fieldComparator('sortPositionForTrack'))
       .filter((language) => language.liveOrBetaStagesCount > 0);
   }
 

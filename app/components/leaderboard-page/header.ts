@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
@@ -29,7 +30,7 @@ export default class LeaderboardPageHeader extends Component<Signature> {
 
       // Next, show all languages alphabetically
       ...(allLanguages as unknown as LanguageModel[])
-        .sortBy('sortPositionForTrack')
+        .toSorted(fieldComparator('sortPositionForTrack'))
         .filter((language) => !preferredLanguageSlugs.includes(language.slug))
         .filter((language) => language.liveOrBetaStagesCount > 0),
     ];

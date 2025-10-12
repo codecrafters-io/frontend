@@ -28,6 +28,7 @@ import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-eve
 import config from 'codecrafters-frontend/config/environment';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService!: FeatureFlagsService;
@@ -101,7 +102,7 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions
-      .sortBy('startDate')
+      .toSorted(fieldComparator('startDate'))
       .reverse()
       .find((item) => item.isActive);
   }
@@ -129,7 +130,7 @@ export default class UserModel extends Model {
   get currentAffiliateReferral() {
     return this.affiliateReferralsAsCustomer
       .filter((item) => !item.isNew)
-      .sortBy('createdAt')
+      .toSorted(fieldComparator('activatedAt'))
       .reverse()[0];
   }
 
@@ -138,7 +139,7 @@ export default class UserModel extends Model {
       return null;
     } else {
       return this.subscriptions
-        .sortBy('startDate')
+        .toSorted(fieldComparator('startDate'))
         .reverse()
         .find((item) => item.isInactive);
     }
@@ -221,7 +222,7 @@ export default class UserModel extends Model {
       this.promotionalDiscounts
         .filter((item) => item.type === type)
         .filter((item) => !item.isExpired)
-        .sortBy('createdAt')
+        .toSorted(fieldComparator('createdAt'))
         .reverse()[0] || null
     );
   }

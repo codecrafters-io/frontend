@@ -4,6 +4,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Args: {
@@ -35,11 +36,11 @@ export default class CourseCard extends Component<Signature> {
     if (this.authenticator.currentUserIsLoaded) {
       const lastPushedRepository = this.currentUser!.repositories.filter((item) => item.course === this.args.course)
         .filter((item) => item.firstSubmissionCreated)
-        .sortBy('lastSubmissionAt')
+        .sort(fieldComparator('lastSubmissionAt'))
         .at(-1);
 
       const lastCreatedRepository = this.currentUser!.repositories.filter((item) => item.course === this.args.course)
-        .sortBy('createdAt')
+        .sort(fieldComparator('createdAt'))
         .at(-1);
 
       return lastPushedRepository ? lastPushedRepository : (lastCreatedRepository ?? null);

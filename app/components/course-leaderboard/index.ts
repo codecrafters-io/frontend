@@ -8,6 +8,7 @@ import { action, get } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -134,7 +135,7 @@ export default class CourseLeaderboard extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').at(-1);
+      const entryWithMostStageCompletions = entriesForUser.toSorted(fieldComparator('completedStagesCount', 'lastAttemptAt')).at(-1);
 
       result.push(
         new CourseLeaderboardEntry({
@@ -148,7 +149,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       );
     }
 
-    return result.sortBy('completedStagesCount', 'lastAttemptAt').reverse();
+    return result.toSorted(fieldComparator('completedStagesCount', 'lastAttemptAt')).reverse();
   }
 
   @action

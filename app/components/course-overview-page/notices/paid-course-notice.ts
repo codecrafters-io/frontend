@@ -2,6 +2,7 @@ import type Store from '@ember-data/store';
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,17 +16,19 @@ export default class PaidCourseNotice extends Component<Signature> {
   @service declare store: Store;
 
   get betaCourse(): CourseModel | null {
-    return this.store
-      .peekAll('course')
-      .sortBy('sortPositionForTrack')
-      .find((course: CourseModel) => course.releaseStatusIsBeta);
+    return (
+      (this.store.peekAll('course') as unknown as CourseModel[])
+        .toSorted(fieldComparator('sortPositionForTrack'))
+        .find((course: CourseModel) => course.releaseStatusIsBeta) || null
+    );
   }
 
   get freeCourse(): CourseModel | null {
-    return this.store
-      .peekAll('course')
-      .sortBy('sortPositionForTrack')
-      .find((course: CourseModel) => course.isFree);
+    return (
+      (this.store.peekAll('course') as unknown as CourseModel[])
+        .toSorted(fieldComparator('sortPositionForTrack'))
+        .find((course: CourseModel) => course.isFree) || null
+    );
   }
 
   get freeOrBetaCourse(): CourseModel | null {

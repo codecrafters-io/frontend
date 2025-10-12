@@ -4,6 +4,7 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
@@ -51,7 +52,7 @@ export default class CodeExampleInsightsController extends Controller {
   }
 
   get sortedLanguagesForDropdown() {
-    return this.model.courseStage.course.betaOrLiveLanguages.sortBy('name');
+    return this.model.courseStage.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
   }
 
   get sortedSolutions(): CommunityCourseStageSolutionModel[] {

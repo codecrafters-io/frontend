@@ -12,6 +12,7 @@ import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export type ModelType = {
   course: CourseModel;
@@ -68,7 +69,7 @@ export default class CourseRoute extends BaseRoute {
         // @ts-expect-error transition.to.queryParams not typed
         .filter((item) => item.language?.slug === transition.to.queryParams.track)
         .filter((item) => item.firstSubmissionCreated)
-        .sortBy('lastSubmissionAt')
+        .toSorted(fieldComparator('lastSubmissionAt'))
         .at(-1);
 
       if (lastPushedRepositoryForTrack) {
@@ -79,9 +80,9 @@ export default class CourseRoute extends BaseRoute {
     } else {
       const lastPushedRepository = repositories
         .filter((item) => item.firstSubmissionCreated)
-        .sortBy('lastSubmissionAt')
+        .toSorted(fieldComparator('lastSubmissionAt'))
         .at(-1);
-      const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
+      const lastCreatedRepository = repositories.toSorted(fieldComparator('createdAt')).at(-1);
 
       if (lastPushedRepository) {
         return lastPushedRepository;

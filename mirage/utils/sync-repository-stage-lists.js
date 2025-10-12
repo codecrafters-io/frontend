@@ -1,3 +1,5 @@
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+
 const DEBUG = false;
 
 function debugConsole() {
@@ -39,7 +41,7 @@ function syncRepositoryStageList(server, repository) {
 
   const stageListItems = [];
 
-  repository.course.stages.models.sortBy('position').forEach((stage) => {
+  repository.course.stages.models.toSorted(fieldComparator('position')).forEach((stage) => {
     debugConsole().time(`stage ${stage.slug} (${stage.position})`);
     debugConsole().group(`${stage.slug} (${stage.position})`);
 

@@ -19,6 +19,8 @@ import { buildSectionList as buildPreChallengeAssessmentSectionList } from 'code
 import { cached } from '@glimmer/tracking';
 import { memberAction } from 'ember-api-actions';
 import { service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { compare } from '@ember/utils';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -71,7 +73,7 @@ export default class RepositoryModel extends Model {
 
   get activatedCourseExtensions() {
     return this.extensionActivations
-      .sortBy('activatedAt')
+      .toSorted(fieldComparator('activatedAt'))
       .map((activation) => activation.extension)
       .uniq();
   }
@@ -99,6 +101,10 @@ export default class RepositoryModel extends Model {
 
   get completedStages() {
     return this.courseStageCompletions.map((item) => item.courseStage).uniq();
+  }
+
+  get completedStagesCount() {
+    return this.completedStages.length;
   }
 
   get currentStage() {
@@ -143,7 +149,7 @@ export default class RepositoryModel extends Model {
       return null;
     }
 
-    return this.courseStageCompletions.sortBy('courseStage.position').at(-1)?.courseStage;
+    return this.courseStageCompletions.toSorted((a, b) => compare(a.courseStage.position, b.courseStage.position)).at(-1)?.courseStage;
   }
 
   get isRecentlyCreated() {
@@ -211,7 +217,7 @@ export default class RepositoryModel extends Model {
   }
 
   courseStageCompletionFor(courseStage: CourseStageModel) {
-    return this.courseStageCompletions.filter((item) => item.courseStage === courseStage).sortBy('completedAt')[0];
+    return this.courseStageCompletions.filter((item) => item.courseStage === courseStage).toSorted(fieldComparator('completedAt'))[0];
   }
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {

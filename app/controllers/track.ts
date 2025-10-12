@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import { type ModelType } from 'codecrafters-frontend/routes/track';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class TrackController extends Controller {
   declare model: ModelType;
@@ -17,7 +18,7 @@ export default class TrackController extends Controller {
   }
 
   get sortedCourses(): CourseModel[] {
-    return this.courses.sortBy('sortPositionForTrack');
+    return this.courses.toSorted(fieldComparator('sortPositionForTrack'));
   }
 
   get testimonials(): CourseModel['testimonials'] {

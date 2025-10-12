@@ -7,6 +7,7 @@ import TeamPilot from './team-pilot';
 import SlackIntegration from './slack-integration';
 import TeamSubscription from './team-subscription';
 import type InvoiceModel from './invoice';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class TeamModel extends Model {
   @hasMany('slack-integration', { async: false, inverse: 'team' }) declare slackIntegrations: SlackIntegration[];
@@ -26,14 +27,14 @@ export default class TeamModel extends Model {
 
   get activePilot() {
     return this.pilots
-      .sortBy('endDate')
+      .toSorted(fieldComparator('endDate'))
       .reverse()
       .find((item) => item.isActive);
   }
 
   get activeSubscription() {
     return this.subscriptions
-      .sortBy('startDate')
+      .toSorted(fieldComparator('startDate'))
       .reverse()
       .find((item) => item.isActive);
   }
@@ -48,7 +49,7 @@ export default class TeamModel extends Model {
 
   get expiredPilot() {
     return this.pilots
-      .sortBy('endDate')
+      .toSorted(fieldComparator('endDate'))
       .reverse()
       .find((item) => item.isExpired);
   }

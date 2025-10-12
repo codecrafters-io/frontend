@@ -11,6 +11,7 @@ import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 import { waitUntil } from '@ember/test-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 // This isn't exposed as a feature anymore, disable for now
 module('Acceptance | course-page | autofix', function (hooks) {
@@ -37,7 +38,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -126,7 +127,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -175,7 +176,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -187,7 +188,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

@@ -5,6 +5,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -31,7 +32,7 @@ export default class TrackPageHeader extends Component<Signature> {
     return this.store
       .peekAll('track-leaderboard-entry')
       .filter((item) => item.language === this.args.language)
-      .sortBy('completedStagesCount')
+      .toSorted(fieldComparator('completedStagesCount'))
       .reverse()
       .uniqBy('user')
       .slice(0, 3)
