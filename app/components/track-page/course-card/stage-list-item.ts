@@ -14,6 +14,14 @@ interface Signature {
 
 export default class StageListItem extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+
+  get routeAndModels(): { route: string; models: string[] } {
+    if (this.args.stage.isFirst && !this.args.isComplete) {
+      return { route: 'course.introduction', models: [this.args.stage.course.slug] };
+    } else {
+      return { route: 'course.stage.instructions', models: [this.args.stage.course.slug, this.args.stage.slug] };
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

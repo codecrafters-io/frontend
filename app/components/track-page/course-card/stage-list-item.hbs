@@ -1,6 +1,6 @@
 <LinkTo
-  @route="course.stage.instructions"
-  @models={{array @stage.course.slug @stage.slug}}
+  @route={{this.routeAndModels.route}}
+  @models={{this.routeAndModels.models}}
   class="block hover:bg-gray-50 dark:hover:bg-gray-700/50 py-1.5 -mx-1.5 px-1.5 rounded-sm"
   data-test-stage-list-item
   ...attributes
