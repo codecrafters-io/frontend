@@ -33,6 +33,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       '/api/v1/courses', // fetch courses (catalog page)
       '/api/v1/languages', // fetch languages (catalog page)
       '/api/v1/courses', // fetch course details (course overview page)
+      '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)

@@ -1,12 +1,12 @@
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
-import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
+import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
-import Header from 'codecrafters-frontend/tests/pages/components/course-page/header';
-import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
-import FirstStageTutorialCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-tutorial-card';
-import LanguageDropdown from './components/language-dropdown';
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
+import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
+import FirstStageYourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-your-task-card';
+import Header from 'codecrafters-frontend/tests/pages/components/course-page/header';
+import LanguageDropdown from './components/language-dropdown';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
@@ -114,7 +114,7 @@ export default create({
 
   header: Header,
   feedbackPrompt: FeedbackPrompt,
-  firstStageTutorialCard: FirstStageTutorialCard,
+  firstStageYourTaskCard: FirstStageYourTaskCard,
 
   freeCourseLabel: {
     hover: triggerable('mouseenter'),

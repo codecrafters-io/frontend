@@ -76,6 +76,6 @@ Many companies allow employees to expense CodeCrafters as part of their learning
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FaqList: typeof FaqList;
+    'PricingPage::FaqList': typeof FaqList;
   }
 }

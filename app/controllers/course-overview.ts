@@ -10,18 +10,11 @@ export default class CourseOverviewController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get activeRepository(): RepositoryModel | null {
-    if (this.authenticator.currentUser) {
-      return (
-        this.authenticator.currentUser.repositories
-          .filterBy('course', this.model.course)
-          .filterBy('firstSubmissionCreated')
-          .sortBy('lastSubmissionAt')
-          .toArray()
-          .reverse()[0] || null
-      );
-    } else {
-      return null;
-    }
+    return this.userRepositories.sortBy('lastSubmissionAt').toArray().reverse()[0] || null;
+  }
+
+  get completedStages() {
+    return this.userRepositories.flatMap((repository) => repository.completedStages);
   }
 
   get currentUser() {

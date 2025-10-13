@@ -44,6 +44,6 @@ export default class SubmitCodeStep extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard::SubmitCodeStep': typeof SubmitCodeStep;
+    'CoursePage::CourseStageStep::FirstStageYourTaskCard::SubmitCodeStep': typeof SubmitCodeStep;
   }
 }

@@ -42,6 +42,27 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
   });
 
+  test('stage card opens links in new tab', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    const stage = course.stages.models.toArray().find((stage) => stage.position === 2);
+    stage.update({ descriptionMarkdownTemplate: `[link1](https://link1.com), [link2](https://link2.com)` });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
+    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+
+    assert.strictEqual(document.querySelectorAll('#your-task-card a').length, 2);
+    assert.strictEqual(document.querySelectorAll('#your-task-card a[target="_blank"]').length, 2);
+  });
+
   test('can view previous stages after completing them', async function (assert) {
     testScenario(this.server);
     const currentUser = signIn(this.owner, this.server);
@@ -85,9 +106,26 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.true(courseOverviewPage.stageListItems[0].hasCompletionCheckmark, 'first stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[0].hasDifficultyLabel, 'first stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[1].hasCompletionCheckmark, 'second stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[1].hasDifficultyLabel, 'second stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[2].hasCompletionCheckmark, 'third stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[2].hasDifficultyLabel, 'third stage does not have a difficulty label');
+    assert.true(courseOverviewPage.stageListItems[3].hasCompletionCheckmark, 'fourth stage has a completion checkmark');
+    assert.false(courseOverviewPage.stageListItems[3].hasDifficultyLabel, 'fourth stage does not have a difficulty label');
+
+    assert.false(courseOverviewPage.stageListItems[4].hasCompletionCheckmark, 'fifth stage does not have a completion checkmark');
+    assert.true(courseOverviewPage.stageListItems[4].hasDifficultyLabel, 'fifth stage has a difficulty label');
+    assert.false(courseOverviewPage.stageListItems[5].hasCompletionCheckmark, 'sixth stage does not have a completion checkmark');
+    assert.true(courseOverviewPage.stageListItems[6].hasDifficultyLabel, 'sixth stage has a difficulty label');
+
+    await percySnapshot('Course Stages - Stages list checkmarks');
+
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command');
+    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command', 'stage title is shown in the header');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();

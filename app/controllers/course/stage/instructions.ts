@@ -53,10 +53,6 @@ export default class CourseStageInstructionsController extends Controller {
     return !!this.prerequisiteInstructionsMarkdown;
   }
 
-  get shouldShowStage1ForumLinkCTA() {
-    return this.model.courseStage.isFirst && this.currentStep.testsStatus !== 'passed' && this.currentStep.status !== 'complete';
-  }
-
   get shouldShowTestRunnerCard() {
     return this.isCurrentStage && this.currentStep.status !== 'complete' && this.currentStep.testsStatus !== 'passed';
   }
@@ -102,11 +98,6 @@ export default class CourseStageInstructionsController extends Controller {
       // @ts-expect-error Ember dosn't support types for variadic arguments
       this.router.transitionTo(nextStep.routeParams.route, ...nextStep.routeParams.models);
     }
-  }
-
-  @action
-  handleTestRunnerCardExpandedOnFirstStage() {
-    document.getElementById('first-stage-tutorial-card')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   @action

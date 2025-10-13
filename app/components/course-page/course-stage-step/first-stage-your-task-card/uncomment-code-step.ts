@@ -12,18 +12,18 @@ interface Signature {
   };
 }
 
-export default class NavigateToFileStep extends Component<Signature> {
+export default class UncommentCodeStep extends Component<Signature> {
   get filename() {
-    return this.solution?.changedFiles[0]?.filename;
+    return this.args.repository.firstStageSolution?.changedFiles[0]?.filename;
   }
 
   get solution() {
-    return this.args.courseStage.solutions.find((solution) => solution.language === this.args.repository.language);
+    return this.args.repository.firstStageSolution;
   }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::FirstStageTutorialCard::NavigateToFileStep': typeof NavigateToFileStep;
+    'CoursePage::CourseStageStep::FirstStageYourTaskCard::UncommentCodeStep': typeof UncommentCodeStep;
   }
 }

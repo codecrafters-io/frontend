@@ -40,6 +40,7 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
         'fetch languages (catalog)',
         'fetch courses (course page)',
         'fetch repositories (course page)',
+        'fetch repositories (course page)',
         'fetch leaderboard entries (course page)',
         'fetch courses (course overview)',
         'fetch hints (course page)',

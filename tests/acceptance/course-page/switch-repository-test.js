@@ -46,6 +46,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       'fetch languages (catalog)',
       'fetch courses (course page)',
       'fetch repositories (course page)',
+      'fetch repositories (course page)',
       'fetch leaderboard entries (course page)',
       'fetch courses (course page)',
       'fetch hints (course page)',

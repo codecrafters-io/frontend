@@ -53,7 +53,7 @@ export default class CourseStageStep extends StepDefinition {
     return `
 This failure is expected!
 
-Check the [How to pass this stage](#first-stage-tutorial-card) section for instructions.`.trim();
+Check the [How to pass this stage](#first-stage-tutorial-heading) section for instructions.`.trim();
   }
 
   get lastFailedSubmission() {

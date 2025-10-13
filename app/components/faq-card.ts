@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import type { Faq } from './faq-list';
+import type { Faq } from './pricing-page/faq-list';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,7 +12,7 @@ interface Signature {
   };
 }
 
-export default class FaqItem extends Component<Signature> {
+export default class FaqCard extends Component<Signature> {
   @action
   toggleItem() {
     this.args.onToggle(this.args.faq);
@@ -21,6 +21,6 @@ export default class FaqItem extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    FaqItem: typeof FaqItem;
+    FaqCard: typeof FaqCard;
   }
 }

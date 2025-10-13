@@ -1,0 +1,5 @@
+<div class="flex flex-col divide-y divide-gray-100 dark:divide-white/5 border-t border-b border-gray-100 dark:border-white/5">
+  {{#each @faqs key="@index" as |faq|}}
+    <CollapsibleFaqListItem @faq={{faq}} @onToggle={{this.handleFaqToggle}} @isOpen={{eq faq this.openFaqItem}} />
+  {{/each}}
+</div>
