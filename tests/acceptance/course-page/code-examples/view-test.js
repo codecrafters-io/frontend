@@ -9,6 +9,7 @@ import { animationsSettled, setupAnimationTest } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | code-examples | view', function (hooks) {
   setupApplicationTest(hooks);
@@ -121,7 +122,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
@@ -236,13 +237,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -300,18 +301,18 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
     });
 
     await catalogPage.visit();
@@ -347,13 +348,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -386,13 +387,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -422,13 +423,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -462,13 +463,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -508,13 +509,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -556,13 +557,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();

@@ -7,6 +7,7 @@ import TeamPilot from './team-pilot';
 import SlackIntegration from './slack-integration';
 import TeamSubscription from './team-subscription';
 import type InvoiceModel from './invoice';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class TeamModel extends Model {
   @hasMany('slack-integration', { async: false, inverse: 'team' }) declare slackIntegrations: SlackIntegration[];
@@ -25,15 +26,21 @@ export default class TeamModel extends Model {
   @equal('pricingPlanType', 'yearly') declare pricingPlanTypeIsYearly: boolean;
 
   get activePilot() {
-    return this.pilots.sortBy('endDate').reverse().findBy('isActive');
+    return this.pilots
+      .toSorted(fieldComparator('endDate'))
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get activeSubscription() {
-    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+    return this.subscriptions
+      .toSorted(fieldComparator('startDate'))
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get admins() {
-    return this.memberships.filterBy('isAdmin', true).mapBy('user');
+    return this.memberships.filter((item) => item.isAdmin === true).map((item) => item.user);
   }
 
   get canStartSelfServeBillingFlow() {
@@ -41,7 +48,10 @@ export default class TeamModel extends Model {
   }
 
   get expiredPilot() {
-    return this.pilots.sortBy('endDate').reverse().findBy('isExpired');
+    return this.pilots
+      .toSorted(fieldComparator('endDate'))
+      .reverse()
+      .find((item) => item.isExpired);
   }
 
   get hasActivePilot() {
@@ -69,7 +79,7 @@ export default class TeamModel extends Model {
   }
 
   get members() {
-    return this.memberships.mapBy('user');
+    return this.memberships.map((item) => item.user);
   }
 
   get pricingFrequencyUnit() {

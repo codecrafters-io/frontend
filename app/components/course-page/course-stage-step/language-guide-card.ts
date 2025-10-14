@@ -9,6 +9,8 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { compare } from '@ember/utils';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -41,7 +43,7 @@ export default class LanguageGuideCard extends Component<Signature> {
       return this.args.repository.language;
     }
 
-    return this.args.courseStage.languageGuides.sortBy('language.name')[0]?.language || null;
+    return this.args.courseStage.languageGuides.toSorted((a, b) => compare(a.language.name, b.language.name))[0]?.language || null;
   }
 
   get isLoading(): boolean {
@@ -54,11 +56,11 @@ export default class LanguageGuideCard extends Component<Signature> {
       return undefined;
     }
 
-    return this.args.courseStage.languageGuides.findBy('language', this.currentLanguage);
+    return this.args.courseStage.languageGuides.find((item) => item.language === this.currentLanguage);
   }
 
   get sortedLanguagesForDropdown(): LanguageModel[] {
-    return this.args.courseStage.course.betaOrLiveLanguages.sortBy('name');
+    return this.args.courseStage.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
   }
 
   @action

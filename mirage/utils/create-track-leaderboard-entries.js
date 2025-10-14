@@ -1,4 +1,5 @@
 export default function createTrackLeaderboardEntries(server, languageSlug) {
+  // eslint-disable-next-line ember/no-array-prototype-extensions
   let language = server.schema.languages.findBy({ slug: languageSlug });
 
   let user1 = server.create('user', {

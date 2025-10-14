@@ -1,3 +1,4 @@
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
@@ -26,15 +27,17 @@ export default class SelectLanguageSection extends Component<Signature> {
   @tracked shouldShowNonPreferredLanguages = false;
 
   get availableLanguages() {
-    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).mapBy('language');
+    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).map((item) => item.language);
   }
 
   get orderedLanguageConfigurations() {
-    return this.args.repository.course.availableLanguageConfigurationsForUser(this.args.repository.user).sortBy('language.name');
+    return this.args.repository.course
+      .availableLanguageConfigurationsForUser(this.args.repository.user)
+      .toSorted((a, b) => compare(a.language.name, b.language.name));
   }
 
   get preferredLanguages() {
-    return this.availableLanguages.filterBy('slug', this.args.preferredLanguageSlug);
+    return this.availableLanguages.filter((item) => item.slug === this.args.preferredLanguageSlug);
   }
 
   get requestedAndUnsupportedLanguages() {
@@ -44,7 +47,9 @@ export default class SelectLanguageSection extends Component<Signature> {
   }
 
   get requestedLanguages() {
-    return this.args.repository.user.courseLanguageRequests.filterBy('course', this.args.repository.course).mapBy('language');
+    return this.args.repository.user.courseLanguageRequests
+      .filter((item) => item.course === this.args.repository.course)
+      .map((item) => item.language);
   }
 
   @action

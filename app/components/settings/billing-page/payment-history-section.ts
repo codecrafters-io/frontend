@@ -35,7 +35,7 @@ export default class PaymentHistorySection extends Component<Signature> {
       const result = await this.store.query('charge', {
         filter: { user_id: this.args.user.id },
       });
-      this.charges = result.toArray();
+      this.charges = result as unknown as ChargeModel[];
     } catch (error) {
       console.error('Failed to fetch charges:', error);
       this.errorMessage = 'Failed to load payment history. Please contact us at hello@codecrafters.io if this error persists.';

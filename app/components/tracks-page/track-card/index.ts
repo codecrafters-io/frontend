@@ -24,16 +24,20 @@ export default class TrackCard extends Component<Signature> {
       return 0;
     }
 
-    return this.authenticator.currentUser.repositories
-      .filterBy('language', this.args.language)
-      .toArray()
-      .flatMap((repository) => repository.completedStages)
-      .uniq().length;
+    return [
+      ...new Set(
+        this.authenticator.currentUser.repositories
+          .filter((item) => item.language === this.args.language)
+          .flatMap((repository) => repository.completedStages),
+      ),
+    ].length;
   }
 
   get currentUserHasStartedTrack() {
     if (this.authenticator.currentUser) {
-      return !!this.authenticator.currentUser.repositories.filterBy('language', this.args.language).filterBy('firstSubmissionCreated')[0];
+      return !!this.authenticator.currentUser.repositories
+        .filter((item) => item.language === this.args.language)
+        .filter((item) => item.firstSubmissionCreated)[0];
     } else {
       return false;
     }

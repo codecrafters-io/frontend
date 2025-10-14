@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseCard extends Component {
   @service authenticator;
@@ -20,12 +21,15 @@ export default class CourseCard extends Component {
 
     if (this.authenticator.currentUserIsLoaded) {
       const lastPushedRepository = this.currentUser.repositories
-        .filterBy('course', this.args.course)
-        .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt')
+        .filter((item) => item.course === this.args.course)
+        .filter((item) => item.firstSubmissionCreated)
+        .toSorted(fieldComparator('lastSubmissionAt'))
         .at(-1);
 
-      const lastCreatedRepository = this.currentUser.repositories.filterBy('course', this.args.course).sortBy('createdAt').at(-1);
+      const lastCreatedRepository = this.currentUser.repositories
+        .filter((item) => item.course === this.args.course)
+        .toSorted(fieldComparator('createdAt'))
+        .at(-1);
 
       return lastPushedRepository ? lastPushedRepository : lastCreatedRepository;
     } else {

@@ -1,5 +1,7 @@
 export default function createLeaderboardEntries(server, languageSlug, courseSlug) {
+  // eslint-disable-next-line ember/no-array-prototype-extensions
   let language = server.schema.languages.findBy({ slug: languageSlug });
+  // eslint-disable-next-line ember/no-array-prototype-extensions
   let course = server.schema.courses.findBy({ slug: courseSlug });
 
   let user1 = server.create('user', {

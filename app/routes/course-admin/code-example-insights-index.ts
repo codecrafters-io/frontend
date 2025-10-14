@@ -4,6 +4,7 @@ import Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunitySolutionsAnalysisModel from 'codecrafters-frontend/models/community-solutions-analysis';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export type ModelType = {
   analyses: CommunitySolutionsAnalysisModel[];
@@ -26,7 +27,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
     const course = this.modelFor('course-admin').course as CourseModel;
     const languages = course.betaOrLiveLanguages;
     // Default to the first language in the list
-    let selectedLanguage: LanguageModel = languages.sortBy('slug')[0]!;
+    let selectedLanguage: LanguageModel = languages.toSorted(fieldComparator('slug'))[0]!;
 
     if (params.language_slug) {
       const found = languages.find((l) => l.slug === params.language_slug);

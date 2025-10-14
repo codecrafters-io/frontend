@@ -13,7 +13,7 @@ interface Signature {
 
 export default class RequestedLanguagesPrompt extends Component<Signature> {
   get willLetYouKnowText() {
-    return `We'll let you know once ${this.args.requestedAndUnsupportedLanguages.mapBy('name').join(' / ')} support is available on this challenge.`;
+    return `We'll let you know once ${this.args.requestedAndUnsupportedLanguages.map((item) => item.name).join(' / ')} support is available on this challenge.`;
   }
 }
 

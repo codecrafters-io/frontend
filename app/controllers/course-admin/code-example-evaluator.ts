@@ -5,6 +5,7 @@ import { service } from '@ember/service';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CodeExampleEvaluatorController extends Controller {
   declare model: CodeExampleEvaluatorRouteModel;
@@ -33,7 +34,7 @@ export default class CodeExampleEvaluatorController extends Controller {
   }
 
   get sortedLanguagesForDropdown() {
-    return this.model.course.betaOrLiveLanguages.sortBy('name');
+    return this.model.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
   }
 
   @action

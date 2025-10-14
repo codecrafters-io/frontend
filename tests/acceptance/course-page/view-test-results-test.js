@@ -8,6 +8,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { waitUntil } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | view-test-results', function (hooks) {
   setupApplicationTest(hooks);
@@ -43,7 +44,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     this.server.create('submission', 'withEvaluatingStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[0],
     });
 
     await catalogPage.visit();
@@ -73,7 +74,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();
@@ -104,7 +105,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       clientType: 'cli',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await catalogPage.visit();

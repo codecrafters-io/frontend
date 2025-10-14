@@ -28,24 +28,24 @@ export default class ReferralLinkRoute extends BaseRoute {
   }
 
   async model(params: { referral_link_slug: string }) {
-    const referralLinks = await this.store.query('referral-link', {
+    const referralLinks = (await this.store.query('referral-link', {
       slug: params.referral_link_slug,
       include: 'user',
-    });
+    })) as unknown as ReferralLinkModel[];
 
     let acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel | null = null;
 
     if (this.authenticator.isAuthenticated) {
-      const acceptedReferralOfferFreeUsageGrants = await this.store.query('free-usage-grant', {
+      const acceptedReferralOfferFreeUsageGrants = (await this.store.query('free-usage-grant', {
         sourceType: 'accepted_referral_offer',
         user_id: this.authenticator.currentUser?.id,
-      });
+      })) as unknown as FreeUsageGrantModel[];
 
-      acceptedReferralOfferFreeUsageGrant = acceptedReferralOfferFreeUsageGrants.objectAt(0);
+      acceptedReferralOfferFreeUsageGrant = acceptedReferralOfferFreeUsageGrants[0] || null;
     }
 
     return {
-      referralLink: referralLinks.objectAt(0),
+      referralLink: referralLinks[0],
       acceptedReferralOfferFreeUsageGrant: acceptedReferralOfferFreeUsageGrant,
     };
   }

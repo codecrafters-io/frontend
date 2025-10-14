@@ -5,6 +5,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export type CodeExampleInsightsRouteModel = {
   courseStage: CourseStageModel;
@@ -27,7 +28,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
   async model(params: { stage_slug: string; language_slug?: string; sort_mode?: string }): Promise<CodeExampleInsightsRouteModel> {
     // @ts-expect-error modelFor not typed
     const course = this.modelFor('course-admin').course as CourseModel;
-    const courseStage = course.stages.findBy('slug', params.stage_slug);
+    const courseStage = course.stages.find((item) => item.slug === params.stage_slug);
 
     if (!courseStage) {
       throw new Error(`Course stage with slug "${params.stage_slug}" not found`);
@@ -36,7 +37,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
     const languages = course.betaOrLiveLanguages;
 
     // Default to the first language in the list
-    let selectedLanguage: LanguageModel = languages.sortBy('slug')[0]!;
+    let selectedLanguage: LanguageModel = languages.toSorted(fieldComparator('slug'))[0]!;
 
     if (params.language_slug) {
       const found = languages.find((l) => l.slug === params.language_slug);

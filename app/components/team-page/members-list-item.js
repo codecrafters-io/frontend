@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import window from 'ember-window-mock';
 import Component from '@glimmer/component';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class TeamPageMembersListItem extends Component {
   @service authenticator;
@@ -19,7 +20,7 @@ export default class TeamPageMembersListItem extends Component {
   }
 
   get sortedCourses() {
-    return this.args.membership.user.courseParticipations.mapBy('course').uniq().sortBy('sortPositionForTrack');
+    return [...new Set(this.args.membership.user.courseParticipations.map((item) => item.course))].toSorted(fieldComparator('sortPositionForTrack'));
   }
 
   @action

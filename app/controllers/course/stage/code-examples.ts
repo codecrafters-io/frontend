@@ -9,6 +9,7 @@ import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CodeExamplesController extends Controller {
   declare model: {
@@ -43,7 +44,7 @@ export default class CodeExamplesController extends Controller {
       return this.repository.language;
     }
 
-    const sortedBetaOrLiveLanguages = this.repository.course.betaOrLiveLanguages.sortBy('language.name');
+    const sortedBetaOrLiveLanguages = this.repository.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
 
     return (
       sortedBetaOrLiveLanguages.find((language) => this.courseStage.hasCommunitySolutionsForLanguage(language)) ||
@@ -57,7 +58,7 @@ export default class CodeExamplesController extends Controller {
   }
 
   get sortedLanguagesForDropdown() {
-    return this.courseStage.course.betaOrLiveLanguages.sortBy('name');
+    return this.courseStage.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
   }
 
   get sortedSolutions() {

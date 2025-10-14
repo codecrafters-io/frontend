@@ -2,6 +2,7 @@ import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
 import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 import type UserModel from './user';
 import type AffiliateReferralModel from './affiliate-referral';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class AffiliateLinkModel extends Model {
   @belongsTo('user', { async: false, inverse: 'affiliateLinks' }) declare user: UserModel;
@@ -35,7 +36,7 @@ export default class AffiliateLinkModel extends Model {
       .map((referrals) => {
         return (referrals.find((referral) => !referral.statusIsInactive) || referrals[0]) as AffiliateReferralModel;
       })
-      .sortBy('activatedAt')
+      .toSorted(fieldComparator('activatedAt'))
       .reverse();
   }
 

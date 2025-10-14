@@ -1,5 +1,6 @@
 import CourseModel from 'codecrafters-frontend/models/course';
 import Model, { attr, belongsTo } from '@ember-data/model';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseExtensionModel extends Model {
   @belongsTo('course', { async: false, inverse: 'extensions' }) declare course: CourseModel;
@@ -10,7 +11,7 @@ export default class CourseExtensionModel extends Model {
   @attr('number') declare position: number;
 
   get sortedStages() {
-    return this.stages.sortBy('positionWithinExtension');
+    return this.stages.toSorted(fieldComparator('positionWithinExtension'));
   }
 
   get stages() {

@@ -9,7 +9,7 @@ export default {
   feedbackDropdown: FeedbackDropdown,
 
   hasLink: function (linkText: string) {
-    return !!this.links.toArray().find((link) => link.text === linkText);
+    return !![...this.links].find((link) => link.text === linkText);
   },
 
   freeWeeksLeftButton: BillingStatusBadge.freeWeeksLeftButton,
@@ -19,7 +19,7 @@ export default {
   }),
 
   linkHrefFor: function (linkText: string) {
-    return this.links.toArray().find((link) => link.text === linkText)!.href;
+    return [...this.links].find((link) => link.text === linkText)!.href;
   },
 
   memberBadge: BillingStatusBadge.memberBadge,

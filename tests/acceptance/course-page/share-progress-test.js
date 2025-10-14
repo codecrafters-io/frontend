@@ -6,6 +6,7 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | share-progress', function (hooks) {
   setupApplicationTest(hooks);
@@ -31,7 +32,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -63,7 +64,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -118,7 +119,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

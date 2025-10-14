@@ -25,6 +25,7 @@ import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
@@ -89,11 +90,11 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
-    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
+    return this.stages.filter((item) => !item.primaryExtensionSlug); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+    return this.languageConfigurations.filter((item) => !item.releaseStatusIsAlpha).map((item) => item.language);
   }
 
   get concepts() {
@@ -175,15 +176,15 @@ export default class CourseModel extends Model {
 
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
-    return this.baseStages.sortBy('position');
+    return this.baseStages.toSorted(fieldComparator('position'));
   }
 
   get sortedExtensionStages() {
-    return this.sortedExtensions.mapBy('sortedStages').flat();
+    return this.sortedExtensions.map((item) => item.sortedStages).flat();
   }
 
   get sortedExtensions() {
-    return this.extensions.sortBy('position');
+    return this.extensions.toSorted(fieldComparator('position'));
   }
 
   get testerRepositoryLink() {

@@ -2,10 +2,8 @@ export default function (server) {
   server.post('/institution-membership-grant-applications', function (schema) {
     const attrs = this.normalizedRequestAttrs();
 
-    const approvedApplication = schema.institutionMembershipGrantApplications.findBy({
-      normalizedEmailAddress: attrs.normalizedEmailAddress,
-      institutionId: attrs.institutionId,
-      status: 'approved',
+    const approvedApplication = schema.institutionMembershipGrantApplications.find((item) => {
+      return item.normalizedEmailAddress === attrs.normalizedEmailAddress && item.institutionId === attrs.institutionId && item.status === 'approved';
     });
 
     if (approvedApplication) {

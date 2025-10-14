@@ -29,11 +29,11 @@ export default createPage({
   },
 
   findCourseExtensionIdeaCard(name) {
-    return this.courseExtensionIdeaCards.toArray().find((card) => card.name === name);
+    return [...this.courseExtensionIdeaCards].find((card) => card.name === name);
   },
 
   findCourseIdeaCard(name) {
-    return this.courseIdeaCards.toArray().find((card) => card.name === name);
+    return [...this.courseIdeaCards].find((card) => card.name === name);
   },
 
   selectedCourseName: text('[data-test-course-dropdown-trigger] [data-test-current-course-name]'),

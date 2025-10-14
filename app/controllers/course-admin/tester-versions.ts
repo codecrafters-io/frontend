@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseTesterVersionsController extends Controller {
   declare model: {
@@ -22,7 +23,7 @@ export default class CourseTesterVersionsController extends Controller {
   @tracked isSyncingWithGitHub = false;
 
   get sortedTesterVersions() {
-    return this.model.course.testerVersions.sortBy('createdAt').reverse();
+    return this.model.course.testerVersions.toSorted(fieldComparator('createdAt')).reverse();
   }
 
   @action

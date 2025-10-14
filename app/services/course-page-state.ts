@@ -91,11 +91,11 @@ export default class CoursePageStateService extends Service {
   }
 
   recordManuallyCompletedStepInFirstStageInstructions(stepId: string): void {
-    this.manuallyCompletedStepIdsInFirstStageInstructions = [...this.manuallyCompletedStepIdsInFirstStageInstructions, stepId].uniq();
+    this.manuallyCompletedStepIdsInFirstStageInstructions = [...new Set([...this.manuallyCompletedStepIdsInFirstStageInstructions, stepId])];
   }
 
   recordManuallyCompletedStepInSecondStageInstructions(stepId: string): void {
-    this.manuallyCompletedStepIdsInSecondStageInstructions = [...this.manuallyCompletedStepIdsInSecondStageInstructions, stepId].uniq();
+    this.manuallyCompletedStepIdsInSecondStageInstructions = [...new Set([...this.manuallyCompletedStepIdsInSecondStageInstructions, stepId])];
   }
 
   resetManuallyCompletedSteps(): void {

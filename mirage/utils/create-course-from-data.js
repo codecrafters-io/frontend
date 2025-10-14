@@ -52,6 +52,7 @@ function createLanguageConfigurations(server, course, courseData) {
   const languageConfigurations = [];
 
   for (const languageConfigurationData of courseData.languages) {
+    // eslint-disable-next-line ember/no-array-prototype-extensions
     const language = server.schema.languages.findBy({ slug: languageConfigurationData.slug });
 
     if (!language) {

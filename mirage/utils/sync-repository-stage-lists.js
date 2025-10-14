@@ -1,3 +1,5 @@
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+
 const DEBUG = false;
 
 function debugConsole() {
@@ -39,7 +41,7 @@ function syncRepositoryStageList(server, repository) {
 
   const stageListItems = [];
 
-  repository.course.stages.models.sortBy('position').forEach((stage) => {
+  repository.course.stages.models.toSorted(fieldComparator('position')).forEach((stage) => {
     debugConsole().time(`stage ${stage.slug} (${stage.position})`);
     debugConsole().group(`${stage.slug} (${stage.position})`);
 
@@ -71,7 +73,7 @@ function syncRepositoryStageList(server, repository) {
     stageListItems.push(stageListItem);
 
     debugConsole().time('find courseStageCompletion');
-    const courseStageCompletion = repository.courseStageCompletions.models.findBy('courseStage.id', stage.id);
+    const courseStageCompletion = [...repository.courseStageCompletions.models].find((item) => item.courseStage.id === stage.id);
     const isDisabled = false; // for now
     debugConsole().timeEnd('find courseStageCompletion');
 
@@ -97,8 +99,7 @@ function syncRepositoryStageList(server, repository) {
     debugConsole().timeEnd(`stage ${stage.slug} (${stage.position})`);
   });
 
-  const currentIds = repository.stageList.items.models
-    .toArray()
+  const currentIds = [...repository.stageList.items.models]
     .map((item) => item.id)
     .sort()
     .join(',');

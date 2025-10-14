@@ -56,7 +56,7 @@ export default class JoinTrackRoute extends BaseRoute {
       include: 'extensions,stages,language-configurations.language',
     })) as unknown as CourseModel[];
 
-    const language = this.store.peekAll('language').findBy('slug', params.track_slug) as LanguageModel;
+    const language = this.store.peekAll('language').find((item) => item.slug === params.track_slug) as LanguageModel;
 
     return {
       courses: courses.filter((course) => course.betaOrLiveLanguages.includes(language)),
