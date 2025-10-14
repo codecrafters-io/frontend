@@ -51,7 +51,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.notOk(coursePage.upgradePrompt.isVisible, 'code examples list should not include upgrade prompt for early stages');
     assert.strictEqual(codeExamplesPage.solutionCards.length, 2, 'expected 2 Go solutions to be present'); // Go is picked by default
 
@@ -132,7 +132,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     // Stage 2: (Completed, has solutions)
     await coursePage.sidebar.clickOnStepListItem('Respond to PING').click();
     await animationsSettled();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     await percySnapshot('Community Solutions');
 
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'Solutions are visible');
@@ -179,7 +179,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.strictEqual(codeExamplesPage.solutionCards.length, 2);
   });
 
@@ -196,7 +196,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
     await codeExamplesPage.solutionCards[0].moreDropdown.clickOnLink('View full diff');
@@ -248,7 +248,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
@@ -274,7 +274,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
@@ -317,12 +317,12 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
@@ -359,7 +359,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnInstructionsButton();
 
     assert.ok(coursePage.yourTaskCard.isVisible, 'user is redirected to instructions');
@@ -398,7 +398,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
@@ -434,7 +434,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
@@ -474,7 +474,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
     await codeExamplesPage.languageDropdown.toggle();
@@ -520,13 +520,13 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
@@ -568,7 +568,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible the first time');
 
@@ -615,7 +615,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Implement the ECHO command');
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await codeExamplesPage.languageDropdown.toggle();
     await codeExamplesPage.languageDropdown.clickOnLink('Go');

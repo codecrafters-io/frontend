@@ -45,7 +45,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await codeExamplesPage.solutionCards[0].upvoteButton.hover();
 
@@ -90,7 +90,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await codeExamplesPage.solutionCards[0].downvoteButton.hover();
 
@@ -144,7 +144,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     await codeExamplesPage.solutionCards[0].downvoteButton.hover();
 
@@ -175,7 +175,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on own solution');
     assert.false(codeExamplesPage.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on own solution');
@@ -212,7 +212,7 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.false(codeExamplesPage.solutionCards[0].upvoteButton.isPresent, 'upvote button should not be present on unscored solution');
     assert.false(codeExamplesPage.solutionCards[0].downvoteButton.isPresent, 'downvote button should not be present on unscored solution');
