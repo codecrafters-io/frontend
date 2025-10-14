@@ -6,6 +6,8 @@
    - Run `npm run lint:fix`
 2. **Analyze failures**
    - Check the output for any failures
-3. **Fix issues systematically**
+3. **Fix issues**
    - Fix one issue at a time
-   - Re-run `npm run lint:fix` after each fix
+4. **Confirm fixes**
+   - Re-run `npm run lint:fix` to confirm that all issues are fixed
+   - If there are still failures, repeat steps 3 and 4
