@@ -37,9 +37,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   }
 
   get enabledExtensions() {
-    const extensionActivations = this.args.repository.extensionActivations
-      .slice()
-      .sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+    const extensionActivations = this.args.repository.extensionActivations.slice().sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
 
     return extensionActivations.map((activation) => activation.extension);
   }

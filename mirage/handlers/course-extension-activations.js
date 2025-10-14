@@ -1,32 +1,34 @@
 export default function (server) {
-  server.post('/course-extension-activations', function (schema, request) {
-    const attrs = JSON.parse(request.requestBody).courseExtensionActivation;
+  server.post('/course-extension-activations', function (schema) {
+    const attrs = this.normalizedRequestAttrs();
+    const existingActivations = schema.courseExtensionActivations.where({ repositoryId: attrs.repositoryId });
+    attrs.position = existingActivations.length + 1;
 
-    // If no position is provided, set it to the next available position
-    if (!attrs.position) {
-      const existingActivations = schema.courseExtensionActivations.where({ repositoryId: attrs.repositoryId });
-      attrs.position = existingActivations.length + 1;
-    }
-
-    return server.create('course-extension-activation', attrs);
+    return schema.courseExtensionActivations.create(attrs);
   });
 
   server.delete('/course-extension-activations/:id');
 
   server.post('/course-extension-activations/reorder', function (schema, request) {
-    const { positions } = JSON.parse(request.requestBody);
+    const { repository_id, positions } = JSON.parse(request.requestBody);
 
-    const updatedActivations = [];
+    const repositoryActivations = schema.courseExtensionActivations.where({ repositoryId: repository_id });
+    repositoryActivations.models.forEach((activation, index) => {
+      activation.update({ position: -1000 - index });
+    });
 
     positions.forEach(({ id, position }) => {
       const activation = schema.courseExtensionActivations.find(id);
 
       if (activation) {
         activation.update({ position });
-        updatedActivations.push(activation);
       }
     });
 
-    return { courseExtensionActivations: updatedActivations };
+    const orderedActivations = schema.courseExtensionActivations
+      .where({ repositoryId: repository_id })
+      .models.sort((a, b) => a.position - b.position);
+
+    return { courseExtensionActivations: orderedActivations };
   });
 }
