@@ -14,10 +14,10 @@
 {{#if this.languageGuide}}
   <div
     class="prose dark:prose-invert has-prism-highlighting mb-3"
-    {{highlight-code-blocks @languageGuide.markdownForBeginner}}
+    {{highlight-code-blocks this.languageGuide.markdownForBeginner}}
     data-test-language-guide-card
   >
-    {{markdown-to-html @languageGuide.markdownForBeginner}}
+    {{markdown-to-html this.languageGuide.markdownForBeginner}}
   </div>
 {{/if}}
 
