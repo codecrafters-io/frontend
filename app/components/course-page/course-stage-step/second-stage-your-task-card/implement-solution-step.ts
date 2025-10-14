@@ -1,10 +1,7 @@
 import Component from '@glimmer/component';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -14,13 +11,15 @@ interface Signature {
     repository: RepositoryModel;
     courseStage: CourseStageModel;
     isComplete: boolean;
-    languageGuide?: CourseStageLanguageGuideModel;
   };
 }
 
 export default class ImplementSolutionStep extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
   @tracked solutionIsBlurred = true;
+
+  get languageGuide() {
+    return this.args.courseStage.languageGuides.findBy('language', this.args.repository.language);
+  }
 
   get solution() {
     return this.args.repository.secondStageSolution;
@@ -40,6 +39,6 @@ export default class ImplementSolutionStep extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageTutorialCard::ImplementSolutionStep': typeof ImplementSolutionStep;
+    'CoursePage::CourseStageStep::SecondStageYourTaskCard::ImplementSolutionStep': typeof ImplementSolutionStep;
   }
 }

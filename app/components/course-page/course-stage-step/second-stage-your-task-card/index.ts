@@ -1,22 +1,18 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
-import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
-import { action } from '@ember/object';
 import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
-    courseStage: CourseStageModel;
-    languageGuide?: CourseStageLanguageGuideModel;
+    currentStep: CourseStageStep;
   };
 }
 
@@ -48,17 +44,17 @@ class RunTestsStep extends BaseStep implements StepDefinition {
   }
 }
 
-export default class SecondStageTutorialCard extends Component<Signature> {
+export default class SecondStageYourTaskCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
   get implementSolutionStepIsComplete() {
     return (
       this.implementSolutionStepWasMarkedAsComplete ||
       this.runTestsStepIsComplete ||
-      (this.args.repository.lastSubmission?.courseStage === this.args.courseStage && !this.args.repository.lastSubmission?.clientTypeIsSystem) // Run tests (in progress)
+      (this.args.currentStep.repository.lastSubmission?.courseStage === this.args.currentStep.courseStage &&
+        !this.args.currentStep.repository.lastSubmission?.clientTypeIsSystem) // Run tests (in progress)
     );
   }
 
@@ -66,19 +62,23 @@ export default class SecondStageTutorialCard extends Component<Signature> {
     return this.coursePageState.manuallyCompletedStepIdsInSecondStageInstructions.includes('implement-solution');
   }
 
+  get instructionsMarkdown() {
+    return this.args.currentStep.courseStage.buildInstructionsMarkdownFor(this.args.currentStep.repository);
+  }
+
   get runTestsStepIsComplete() {
     return (
-      this.args.repository.stageIsComplete(this.args.courseStage) ||
-      (this.args.repository.lastSubmissionHasSuccessStatus &&
-        this.args.repository.lastSubmission.courseStage === this.args.courseStage &&
-        !this.args.repository.lastSubmission?.clientTypeIsSystem)
+      this.args.currentStep.repository.stageIsComplete(this.args.currentStep.courseStage) ||
+      (this.args.currentStep.repository.lastSubmissionHasSuccessStatus &&
+        this.args.currentStep.repository.lastSubmission.courseStage === this.args.currentStep.courseStage &&
+        !this.args.currentStep.repository.lastSubmission?.clientTypeIsSystem)
     );
   }
 
   get steps() {
     return [
-      new ImplementSolutionStep(this.args.repository, this.implementSolutionStepIsComplete),
-      new RunTestsStep(this.args.repository, this.runTestsStepIsComplete),
+      new ImplementSolutionStep(this.args.currentStep.repository, this.implementSolutionStepIsComplete),
+      new RunTestsStep(this.args.currentStep.repository, this.runTestsStepIsComplete),
     ];
   }
 
@@ -90,7 +90,7 @@ export default class SecondStageTutorialCard extends Component<Signature> {
       this.analyticsEventTracker.track('completed_second_stage_tutorial_step', {
         step_number: 2,
         step_id: 'implement-solution',
-        repository_id: this.args.repository.id,
+        repository_id: this.args.currentStep.repository.id,
       });
     }
   }
@@ -103,6 +103,6 @@ export default class SecondStageTutorialCard extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageTutorialCard': typeof SecondStageTutorialCard;
+    'CoursePage::CourseStageStep::SecondStageYourTaskCard': typeof SecondStageYourTaskCard;
   }
 }
