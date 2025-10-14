@@ -1,6 +1,6 @@
 import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
-import { settled } from '@ember/test-helpers';
+import { settled, waitFor } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -45,6 +45,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     });
 
     await settled();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     cards = coursePage.configureExtensionsModal.extensionCards.toArray();
     assert.strictEqual(cards[0].name, 'Extension 2', 'First card is now Extension 2');
@@ -91,6 +92,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     });
 
     await settled();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
