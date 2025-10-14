@@ -71,15 +71,12 @@ export class StepListDefinition {
       });
     } else {
       const positionByExtensionId = new Map(this.repository.extensionActivations.map((act) => [act.extension.id, act.position]));
-
-      const getItemPosition = (item: RepositoryStageListItemModel) => {
-        return positionByExtensionId.get(item.stage.primaryExtension?.id ?? '') ?? 999;
-      };
+      const getPosition = (item: RepositoryStageListItemModel) => positionByExtensionId.get(item.stage.primaryExtension?.id ?? '') ?? 999;
 
       const sortedExtensionItems = this.repository.stageList.items
         .rejectBy('isBaseStage')
         .slice()
-        .sort((a, b) => getItemPosition(a) - getItemPosition(b));
+        .sort((a, b) => getPosition(a) - getPosition(b));
 
       let stepsInNextGroup: StepDefinition[] = [];
 
