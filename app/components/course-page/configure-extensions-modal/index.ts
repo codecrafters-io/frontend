@@ -74,7 +74,6 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
-    // Map sorted extensions to their activation IDs with new positions (1-based)
     const positions = sortedItems
       .map((extension, index) => {
         const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
@@ -88,13 +87,19 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       })
       .filter(Boolean) as Array<{ activation: CourseExtensionActivationModel; id: string; position: number }>;
 
-    // Optimistically update positions locally first so the drag doesn't feel jarring
+    const originalPositions = positions.map(({ activation }) => ({
+      activation,
+      originalPosition: activation.position,
+    }));
+
     positions.forEach(({ activation, position }) => {
       activation.position = position;
     });
 
+    const tempRecord = this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel;
+
     try {
-      await (this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel).reorder({
+      await tempRecord.reorder({
         repository_id: this.args.repository.id,
         positions: positions.map(({ id, position }) => ({ id, position })),
       });
@@ -102,7 +107,14 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       await this.syncExtensionActivations();
     } catch (error) {
       console.error('Error reordering extensions:', error);
-      // TODO: Show error message to user and revert positions
+
+      originalPositions.forEach(({ activation, originalPosition }) => {
+        activation.position = originalPosition;
+      });
+
+      // TODO: Show error message to user
+    } finally {
+      tempRecord.unloadRecord();
     }
   }
 
