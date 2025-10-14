@@ -50,13 +50,8 @@ export default class ExtensionCard extends Component<Signature> {
       return;
     }
 
-    try {
-      await this.args.onToggle(this.args.extension);
-      this.unsavedIsActivatedValue = null;
-    } catch (error) {
-      this.unsavedIsActivatedValue = null;
-      throw error;
-    }
+    await this.args.onToggle(this.args.extension);
+    this.unsavedIsActivatedValue = null;
   });
 
   @action
