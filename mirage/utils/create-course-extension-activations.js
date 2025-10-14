@@ -3,7 +3,7 @@ export default function createCourseExtensionActivations(server, repository) {
     server.create('course-extension-activation', {
       extension,
       repository,
-      position: index + 1, // 1-based position
+      position: index + 1,
     });
   });
 }

@@ -29,7 +29,6 @@
       <Toggle @isOn={{this.optimisticValueForIsActivated}} {{on "click" this.handleClick}} data-test-toggle-extension-button />
     </div>
   </div>
-  {{! Text }}
   <div class="prose dark:prose-invert prose-sm">
     {{markdown-to-html @extension.descriptionMarkdown}}
   </div>

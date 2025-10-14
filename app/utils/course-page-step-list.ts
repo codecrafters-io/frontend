@@ -70,7 +70,6 @@ export class StepListDefinition {
         stepGroups.push(new ExtensionStepGroup(extension, steps));
       });
     } else {
-      // Sort extension stage list items by their activation position
       const positionByExtensionId = new Map(this.repository.extensionActivations.map((act) => [act.extension.id, act.position]));
 
       const getItemPosition = (item: RepositoryStageListItemModel) => {

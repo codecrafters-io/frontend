@@ -15,12 +15,12 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: course,
+      course,
       language: python,
       user: currentUser,
     });
@@ -40,10 +40,8 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     const sortableCards = document.querySelectorAll('[data-test-sortable-extension-card]');
     assert.strictEqual(sortableCards.length, 2, 'Should have 2 sortable cards');
 
-    const firstCardHeight = sortableCards[0].getBoundingClientRect().height;
-
     await drag('mouse', '[data-test-sortable-extension-card]:first-child [data-test-sortable-item-drag-handle]', () => {
-      return { dy: firstCardHeight + 10, dx: 0 };
+      return { dy: sortableCards[0].getBoundingClientRect().height + 10, dx: 0 };
     });
 
     await settled();
@@ -52,10 +50,9 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     assert.strictEqual(cards[0].name, 'Extension 2', 'First card is now Extension 2');
     assert.strictEqual(cards[1].name, 'Extension 1', 'Second card is now Extension 1');
 
-    // Verify the positions were persisted by checking the server
-    let activations = this.server.schema.courseExtensionActivations.all().models;
-    let extension1Activation = activations.find((a) => a.extension.name === 'Extension 1');
-    let extension2Activation = activations.find((a) => a.extension.name === 'Extension 2');
+    const activations = this.server.schema.courseExtensionActivations.all().models;
+    const extension1Activation = activations.find((a) => a.extension.name === 'Extension 1');
+    const extension2Activation = activations.find((a) => a.extension.name === 'Extension 2');
 
     assert.strictEqual(extension2Activation.position, 1, 'Extension 2 has position 1');
     assert.strictEqual(extension1Activation.position, 2, 'Extension 1 has position 2');
@@ -69,12 +66,12 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: course,
+      course,
       language: python,
       user: currentUser,
     });
@@ -88,10 +85,9 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
     const sortableCards = document.querySelectorAll('[data-test-sortable-extension-card]');
-    const firstCardHeight = sortableCards[0].getBoundingClientRect().height;
 
     await drag('mouse', '[data-test-sortable-extension-card]:first-child [data-test-sortable-item-drag-handle]', () => {
-      return { dy: firstCardHeight + 10, dx: 0 };
+      return { dy: sortableCards[0].getBoundingClientRect().height + 10, dx: 0 };
     });
 
     await settled();
@@ -102,7 +98,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
 
-    let cards = coursePage.configureExtensionsModal.extensionCards.toArray();
+    const cards = coursePage.configureExtensionsModal.extensionCards.toArray();
     assert.strictEqual(cards[0].name, 'Extension 2', 'First card is Extension 2');
     assert.strictEqual(cards[1].name, 'Extension 1', 'Second card is Extension 1');
   });
