@@ -19,15 +19,6 @@
           />
         {{/if}}
 
-        {{#if @model.courseStage.isSecond}}
-          <CoursePage::CourseStageStep::SecondStageTutorialCard
-            @repository={{@model.activeRepository}}
-            @courseStage={{@model.courseStage}}
-            @languageGuide={{this.languageGuide}}
-            class="mb-6"
-          />
-        {{/if}}
-
         {{! TODO: Bring this back? }}
         {{!-- {{#if this.shouldShowPrerequisites}}
         <CoursePage::CourseStageStep::PrerequisitesCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} class="mb-6" />
@@ -35,6 +26,8 @@
 
         {{#if @model.courseStage.isFirst}}
           <CoursePage::CourseStageStep::FirstStageYourTaskCard @currentStep={{this.currentStep}} />
+        {{else if @model.courseStage.isSecond}}
+          <CoursePage::CourseStageStep::SecondStageYourTaskCard @currentStep={{this.currentStep}} />
         {{else}}
           <CoursePage::CourseStageStep::YourTaskCard @repository={{@model.activeRepository}} @courseStage={{@model.courseStage}} />
         {{/if}}

@@ -1,0 +1,42 @@
+<CoursePage::InstructionsCard
+  @contentIdentifier={{@currentStep.courseStage.id}}
+  id="your-task-card"
+  class="group/your-task-card"
+  data-test-your-task-card
+  data-test-second-stage-your-task-card
+  ...attributes
+>
+  <:header>
+    <CoursePage::CourseStageStep::YourTaskCard::Header @currentStep={{@currentStep}} class="mb-5 w-full" />
+  </:header>
+
+  <:content>
+    <div class="prose dark:prose-invert has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
+      {{markdown-to-html this.instructionsMarkdown}}
+
+      <h3>
+        How to pass this stage
+      </h3>
+
+      <p>
+        In this stage, you'll implement your own solution. Unlike stage 1, your repository doesn't contain commented code to pass this stage.
+      </p>
+    </div>
+
+    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32 mt-5" as |stepList|>
+      {{#if (eq stepList.expandedStep.id "implement-solution")}}
+        <CoursePage::CourseStageStep::SecondStageYourTaskCard::ImplementSolutionStep
+          @repository={{@currentStep.repository}}
+          @courseStage={{@currentStep.courseStage}}
+          @isComplete={{this.implementSolutionStepIsComplete}}
+        />
+      {{else if (eq stepList.expandedStep.id "run-tests")}}
+        <CoursePage::CourseStageStep::SecondStageYourTaskCard::RunTestsStep
+          @repository={{@currentStep.repository}}
+          @courseStage={{@currentStep.courseStage}}
+          @isComplete={{this.runTestsStepIsComplete}}
+        />
+      {{/if}}
+    </ExpandableStepList>
+  </:content>
+</CoursePage::InstructionsCard>

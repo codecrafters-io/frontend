@@ -28,7 +28,7 @@ module('Acceptance | course-page | code-examples | toggle-diff-source', function
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.sidebar.clickOnStepListItem('Respond to PING');
 
-    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
+    await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'expected 1 Go solution to be present');
 
     const moreDropdown = codeExamplesPage.solutionCards[0].moreDropdown;

@@ -59,8 +59,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('The second stage');
     await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
 
-    assert.strictEqual(document.querySelectorAll('#your-task-card a').length, 2);
-    assert.strictEqual(document.querySelectorAll('#your-task-card a[target="_blank"]').length, 2);
+    const linkElements = document.querySelectorAll('#your-task-card a');
+    const firstLinkElement = Array.from(linkElements).find((link) => link.textContent === 'link1');
+    const secondLinkElement = Array.from(linkElements).find((link) => link.textContent === 'link2');
+
+    assert.strictEqual(firstLinkElement.getAttribute('target'), '_blank');
+    assert.strictEqual(secondLinkElement.getAttribute('target'), '_blank');
   });
 
   test('can view previous stages after completing them', async function (assert) {

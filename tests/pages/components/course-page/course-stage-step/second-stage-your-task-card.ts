@@ -9,7 +9,7 @@ export default {
   hasRevealSolutionButton: isVisible('[data-test-reveal-solution-button]'),
   hasSolutionBlurredOverlay: isVisible('[data-test-solution-blurred-overlay]'),
   hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
-  scope: '#second-stage-tutorial-card',
+  scope: '[data-test-second-stage-your-task-card]',
 
   scrollIntoView() {
     return document.querySelector(this.scope)!.scrollIntoView();

@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -26,6 +26,6 @@ export default class RunTestsStep extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageTutorialCard::RunTestsStep': typeof RunTestsStep;
+    'CoursePage::CourseStageStep::SecondStageYourTaskCard::RunTestsStep': typeof RunTestsStep;
   }
 }

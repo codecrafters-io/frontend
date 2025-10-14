@@ -37,10 +37,6 @@ export default class CourseStageInstructionsController extends Controller {
     return this.model.activeRepository.currentStage === this.model.courseStage;
   }
 
-  get languageGuide() {
-    return this.model.courseStage.languageGuides.findBy('language', this.model.activeRepository.language);
-  }
-
   get prerequisiteInstructionsMarkdown() {
     return this.model.courseStage.prerequisiteInstructionsMarkdownFor(this.model.activeRepository);
   }
