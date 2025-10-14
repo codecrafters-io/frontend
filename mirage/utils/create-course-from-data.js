@@ -85,6 +85,7 @@ function courseAttributesFromData(courseData) {
     shortDescription: courseData.short_description_md,
     slug: courseData.slug,
     testimonials: courseData.marketing.testimonials,
+    visibility: 'public', // TODO: Fetch this from fixtures
   };
 }
 
