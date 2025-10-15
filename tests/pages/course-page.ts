@@ -128,19 +128,6 @@ export default create({
     scope: '[data-test-install-cli-link]',
   },
 
-  languageGuideCard: {
-    backToRepositoryLanguageButton: {
-      scope: '[data-test-back-to-repository-language-button]',
-    },
-
-    clickOnExpandButton: clickable('[data-test-expand-button]'),
-    clickOnCollapseButton: clickable('[data-test-collapse-button]'),
-
-    feedbackDropdown: FeedbackDropdown,
-    languageDropdown: LanguageDropdown,
-    scope: '[data-test-language-guide-card]',
-  },
-
   leaderboard: Leaderboard,
 
   monthlyChallengeBanner: {

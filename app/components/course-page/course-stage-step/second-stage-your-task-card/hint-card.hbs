@@ -18,11 +18,7 @@
   <div>
     <AnimatedContainer>
       {{#animated-if this.isExpanded use=this.transition duration=200}}
-        <div
-          class="p-3 pt-0 prose dark:prose-invert has-prism-highlighting"
-          {{highlight-code-blocks @hint.bodyMarkdown}}
-          data-test-language-guide-card
-        >
+        <div class="p-3 pt-0 prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @hint.bodyMarkdown}}>
           {{markdown-to-html @hint.bodyMarkdown}}
         </div>
       {{/animated-if}}
