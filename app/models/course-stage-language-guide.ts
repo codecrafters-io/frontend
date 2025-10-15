@@ -13,8 +13,10 @@ export default class CourseStageLanguageGuideModel extends Model.extend(Viewable
   @belongsTo('course-stage', { async: false, inverse: 'languageGuides' }) declare courseStage: CourseStageModel;
   @belongsTo('language', { async: false, inverse: null }) declare language: LanguageModel;
 
+  @attr('boolean') declare requiresRegeneration: boolean;
+
+  // TODO: Remove these, replace with "hints" structure
   @attr('string') declare markdownForBeginner: string;
   @attr('string') declare markdownForIntermediate: string;
   @attr('string') declare markdownForAdvanced: string;
-  @attr('boolean') declare requiresRegeneration: boolean;
 }

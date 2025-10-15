@@ -15,23 +15,20 @@ interface Signature {
 }
 
 export default class ImplementSolutionStep extends Component<Signature> {
+  @tracked revealedHintIndexes: number[] = [];
   @tracked solutionIsBlurred = true;
-
-  get languageGuide() {
-    return this.args.courseStage.languageGuides.findBy('language', this.args.repository.language);
-  }
 
   get solution() {
     return this.args.repository.secondStageSolution;
   }
 
   @action
-  handleHideSolutionButtonClick() {
+  handleHideSolutionButtonClick(): void {
     this.solutionIsBlurred = true;
   }
 
   @action
-  handleRevealSolutionButtonClick() {
+  handleRevealSolutionButtonClick(): void {
     this.solution?.createView();
     this.solutionIsBlurred = false;
   }

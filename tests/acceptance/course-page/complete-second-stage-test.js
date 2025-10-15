@@ -8,6 +8,7 @@ import { setupAnimationTest, animationsSettled } from 'ember-animated/test-suppo
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 
 module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -34,6 +35,37 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       repository: repository,
       courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
       clientType: 'system',
+    });
+
+    const solution = createCourseStageSolution(this.server, course, 2, python);
+
+    solution.update({
+      hintsJson: [
+        {
+          bodyMarkdown: `
+Use Python's [input()](https://docs.python.org/3/library/functions.html#input) function to capture the command the user types in:
+
+\`\`\`python
+# Capture the user's command in the "command" variable
+command = input()
+\`\`\`
+
+The \`input()\` function waits for the user to enter a command and then returns it as a string.`,
+          titleMarkdown: 'Capturing user input',
+        },
+        {
+          bodyMarkdown: `
+Use Python's [print()](https://docs.python.org/3/library/functions.html#print) function to print the \`<command>: command not found\` message:
+
+\`\`\`python
+# Prints the "<command>: command not found" message
+print(f"{command}: command not found")
+\`\`\`
+
+The \`print()\` function prints a string to the console. The above code uses a [f-string](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals) to include the command in the message.`,
+          titleMarkdown: 'Printing the error message',
+        },
+      ],
     });
 
     await catalogPage.visit();

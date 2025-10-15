@@ -1,0 +1,31 @@
+<div
+  class="border border-gray-300 dark:border-white/10 rounded-sm overflow-hidden
+    {{unless this.isExpanded 'hover:bg-gray-50 dark:hover:bg-gray-700/50'}}"
+  ...attributes
+>
+  {{! bg-gradient-to-b from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 }}
+  <div class="flex items-center p-3 gap-1.5" {{on "click" this.handleHeaderClick}} role="button">
+    <div class="flex items-center justify-center transition-transform duration-200 rotate-90 {{if this.isExpanded 'rotate-180'}}">
+      <span class="text-gray-400 triangle-up" aria-hidden="true">
+      </span>
+    </div>
+    <span class="text-gray-700">
+      <span class="font-semibold text-gray-700">Hint #{{add @hintIndex 1}}:</span>
+      {{@hint.titleMarkdown}}
+    </span>
+  </div>
+
+  <div>
+    <AnimatedContainer>
+      {{#animated-if this.isExpanded use=this.transition duration=200}}
+        <div
+          class="p-3 pt-0 prose dark:prose-invert has-prism-highlighting"
+          {{highlight-code-blocks @hint.bodyMarkdown}}
+          data-test-language-guide-card
+        >
+          {{markdown-to-html @hint.bodyMarkdown}}
+        </div>
+      {{/animated-if}}
+    </AnimatedContainer>
+  </div>
+</div>
