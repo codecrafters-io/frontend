@@ -10,7 +10,6 @@ export default class CourseStageSolutionModel extends Model.extend(ViewableMixin
 
   @attr() declare authorDetails: { [key: string]: string }; // free-form JSON
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
-  @attr('string') declare explanationMarkdown: string;
   @attr() declare reviewersDetails: Array<{ [key: string]: string }>; // free-form JSON
 
   @belongsTo('course-stage', { async: false, inverse: 'solutions' }) declare courseStage: CourseStageModel;
@@ -18,9 +17,5 @@ export default class CourseStageSolutionModel extends Model.extend(ViewableMixin
 
   get hasContributorDetails() {
     return this.authorDetails || (this.reviewersDetails && this.reviewersDetails[0]);
-  }
-
-  get hasExplanation() {
-    return !!this.explanationMarkdown;
   }
 }
