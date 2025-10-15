@@ -18,10 +18,6 @@ export default class ImplementSolutionStep extends Component<Signature> {
   @tracked revealedHintIndexes: number[] = [];
   @tracked solutionIsBlurred = true;
 
-  get languageGuide() {
-    return this.args.courseStage.languageGuides.findBy('language', this.args.repository.language);
-  }
-
   get solution() {
     return this.args.repository.secondStageSolution;
   }
@@ -29,15 +25,6 @@ export default class ImplementSolutionStep extends Component<Signature> {
   @action
   handleHideSolutionButtonClick(): void {
     this.solutionIsBlurred = true;
-  }
-
-  @action
-  handleRevealHintButtonClick(hintIndex: number): void {
-    if (this.revealedHintIndexes.includes(hintIndex)) {
-      return;
-    }
-
-    this.revealedHintIndexes = [...this.revealedHintIndexes, hintIndex];
   }
 
   @action

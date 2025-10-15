@@ -31,7 +31,7 @@ class ImplementSolutionStep extends BaseStep implements StepDefinition {
   canBeCompletedManually = true;
 
   get titleMarkdown() {
-    return 'Implement solution';
+    return 'Write code to pass this stage';
   }
 }
 
