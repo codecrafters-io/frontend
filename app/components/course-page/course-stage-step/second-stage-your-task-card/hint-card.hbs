@@ -1,6 +1,6 @@
 <div
   class="border border-gray-300 dark:border-white/10 rounded-sm overflow-hidden
-    {{if (not this.isExpanded) 'hover:bg-gray-50 dark:hover:bg-gray-700/50'}}"
+    {{unless this.isExpanded 'hover:bg-gray-50 dark:hover:bg-gray-700/50'}}"
   ...attributes
 >
   {{! bg-gradient-to-b from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 }}

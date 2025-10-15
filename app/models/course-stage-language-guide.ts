@@ -6,7 +6,6 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 
-
 export default class CourseStageLanguageGuideModel extends Model.extend(ViewableMixin) {
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;

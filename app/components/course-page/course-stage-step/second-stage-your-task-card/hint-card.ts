@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import type { Hint } from 'codecrafters-frontend/models/course-stage-language-guide';
+import type { Hint } from 'codecrafters-frontend/models/course-stage-solution';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import fade from 'ember-animated/transitions/fade';
