@@ -1,6 +1,7 @@
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import { settled } from '@ember/test-helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -20,10 +21,10 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
     const go = this.server.schema.languages.findBy({ slug: 'go' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     const repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
@@ -32,33 +33,37 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     [2, 3].forEach((stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
+        courseStage: dummy.stages.models.sortBy('position')[stageNumber - 1],
       });
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'stage 4 is active');
+    assert.strictEqual(coursePage.header.stepName, 'Finish with ext1', 'stage 4 is active');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'stage 3 is active');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', 'stage 3 is active');
 
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', '3rd stage is expanded');
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+
+    // Wait for feedback submission to be created
+    await settled();
+
     await percySnapshot('Course Stage Feedback Prompt - No Selection');
 
     await coursePage.feedbackPrompt.clickOnOption('😍');
@@ -77,7 +82,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
 
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'Finish with ext1', 'next stage is shown after feedback submission');
 
     const submission = this.server.schema.courseStageFeedbackSubmissions.first();
     assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');
@@ -89,51 +94,55 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: dummy.stages.models.sortBy('position')[1], // Stage #2
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '4th is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', '3rd stage is expanded');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', '2nd stage is expanded');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Nice work! How did we do?');
 
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
+        courseStage: dummy.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
       });
 
       await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     };
 
     await completeStage(3);
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '3rd stage is expanded');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', '3rd stage is expanded');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
+
+    // Wait for feedback submission to be created
+    await settled();
+
     assert.strictEqual(coursePage.feedbackPrompt.questionText, 'Great streak! How did we do?');
 
-    await completeStage(6);
-    await coursePage.sidebar.clickOnStepListItem('Implement the SET & GET commands');
+    await completeStage(4);
+    await coursePage.sidebar.stepListItems[6].click();
     await animationsSettled();
 
     // TODO: Bring back the last & penultimate feedback prompts!
@@ -157,32 +166,32 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: dummy.stages.models.sortBy('position')[1], // Stage #2
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: dummy.stages.models.sortBy('position')[1], // Stage #2
       language: go,
       user: currentUser,
       status: 'closed',
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', '3rd stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', '3rd stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is git push listener');
 
     await animationsSettled();
@@ -194,24 +203,36 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    this.server.create('repository', 'withBaseStagesCompleted', {
-      course: redis,
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
+    // Complete stages 2 and 3
+    [2, 3].forEach((stageNumber) => {
+      this.server.create('submission', 'withStageCompletion', {
+        repository: repository,
+        courseStage: dummy.stages.models.sortBy('position')[stageNumber - 1],
+      });
+    });
+
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Expiry');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
+
+    // Wait for feedback submission to be created
+    await settled();
+
     await coursePage.feedbackPrompt.clickOnOption('😍');
     await coursePage.feedbackPrompt.fillInExplanation('I love this course!');
 
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.header.stepName, 'Base stages complete!', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'Finish with ext1', 'next stage is shown after feedback submission');
 
     const submission = this.server.schema.courseStageFeedbackSubmissions.first();
     assert.strictEqual(submission.explanation, 'I love this course!', 'explanation is saved');

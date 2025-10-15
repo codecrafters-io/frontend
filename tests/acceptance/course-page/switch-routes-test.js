@@ -15,23 +15,23 @@ module('Acceptance | course-page | switch-routes', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
 
     const scrollableArea = document.querySelector('#course-page-scrollable-area');
     scrollableArea.scrollTop = 100;
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     assert.strictEqual(scrollableArea.scrollTop, 0, 'scroll position is reset to the top of the page');
   });
 });

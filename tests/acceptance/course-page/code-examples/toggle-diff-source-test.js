@@ -18,15 +18,15 @@ module('Acceptance | course-page | code-examples | toggle-diff-source', function
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, go);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
     assert.strictEqual(codeExamplesPage.solutionCards.length, 1, 'expected 1 Go solution to be present');

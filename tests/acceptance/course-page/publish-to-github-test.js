@@ -21,16 +21,16 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Publish to GitHub');
@@ -44,10 +44,10 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -60,7 +60,7 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.repositoryDropdown.click();
 
@@ -96,17 +96,17 @@ module('Acceptance | course-page | publish-to-github-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     this.server.create('github-app-installation', { user: currentUser, githubConfigureUrl: 'https://google.com' });
 
-    await coursePage.visit({ course_slug: 'redis', action: 'github_app_installation_completed' });
+    await coursePage.visit({ course_slug: 'dummy', action: 'github_app_installation_completed' });
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github modal is open');
 
     window.confirm = () => true;

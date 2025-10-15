@@ -29,23 +29,23 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
       username: 'author',
     });
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     const python = this.server.schema.languages.findBy({ slug: 'python' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
-    this.solution = createCommunityCourseStageSolution(this.server, redis, 2, python, solutionAuthor);
+    this.solution = createCommunityCourseStageSolution(this.server, dummy, 2, python, solutionAuthor);
   });
 
   async function navigateToCodeExamples() {
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await coursePage.clickOnHeaderTabLink('Code Examples');
   }
 
@@ -99,7 +99,7 @@ module('Acceptance | course-page | code-examples | export-to-github', function (
 
   test('shows direct GitHub link when solution is published', async function (assert) {
     this.solution.update({
-      githubRepositoryName: 'author/redis-solution',
+      githubRepositoryName: 'author/dummy-solution',
       githubRepositoryIsPrivate: false,
       commitSha: 'abc123',
     });

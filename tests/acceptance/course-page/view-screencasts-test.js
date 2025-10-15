@@ -23,14 +23,14 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     assert.expect(2);
 
     try {
-      await visit('/courses/redis/stages/rg2/screencasts');
+      await visit('/courses/dummy/stages/lr7/screencasts');
     } catch (e) {
       assert.strictEqual(1, 1);
     }
 
     assert.strictEqual(
       windowMock.location.href,
-      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcourses%2Fredis%2Fstages%2Frg2%2Fscreencasts`,
+      `${windowMock.location.origin}/login?next=http%3A%2F%2Flocalhost%3A${window.location.port}%2Fcourses%2Fdummy%2Fstages%2Flr7%2Fscreencasts`,
       'should redirect to login URL',
     );
   });
@@ -42,10 +42,10 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let go = this.server.schema.languages.findBy({ name: 'Go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -54,7 +54,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
       return server.create('course-stage-screencast', {
         language: language,
         user: currentUser,
-        courseStage: redis.stages.models.sortBy('position')[1],
+        courseStage: dummy.stages.models.sortBy('position')[1],
         authorName: null,
         canonicalUrl: 'https://www.loom.com/share/1dd746eaaba34bc2b5459ad929934c08?sid=a5f6ec60-5ae4-4e9c-9566-33235d483431',
         publishedAt: publishedAt,
@@ -74,7 +74,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     createScreencast(this.server, go, '2024-01-30T19:11:29.254Z', 'Go screencast #2', 5000); // Newer
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.yourTaskCard.clickOnActionButton('View Screencasts');
 
