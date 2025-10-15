@@ -20,10 +20,10 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -43,19 +43,19 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     ];
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -77,24 +77,24 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     currentUser.update({ featureFlags: { 'should-see-leaderboard': 'test' } });
 
     const go = this.server.schema.languages.findBy({ slug: 'go' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     const repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -112,25 +112,25 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'second stage is active');
     assert.ok(coursePage.testRunnerCard.isVisible, 'test runner card is visible');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       clientType: 'cli',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

@@ -20,7 +20,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     let currentUser = this.server.schema.users.first();
@@ -76,7 +76,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -87,14 +87,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
@@ -151,7 +151,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -162,21 +162,21 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
       createdAt: new Date(2002, 1),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003, 1),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
@@ -250,7 +250,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -262,14 +262,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.create('course-leaderboard-entry', {
       status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      currentCourseStage: dummy.stages.models.find((x) => x.position === 2),
       language: python,
       user: otherUser,
       lastAttemptAt: new Date(),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
@@ -291,7 +291,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -303,14 +303,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.create('course-leaderboard-entry', {
       status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      currentCourseStage: dummy.stages.models.find((x) => x.position === 2),
       language: python,
       user: otherUser,
       lastAttemptAt: new Date(),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
@@ -324,7 +324,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     // Refresh the page
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     // Verify the selection persisted
@@ -339,7 +339,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     // Refresh the page
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     // Verify the selection persisted
@@ -357,7 +357,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -376,7 +376,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -391,7 +391,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -402,7 +402,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -422,7 +422,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -451,7 +451,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -466,7 +466,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -477,14 +477,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     let userRepository = this.server.create('repository', 'withBaseStagesCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
       createdAt: new Date(2002),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003),
@@ -499,7 +499,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');

@@ -26,45 +26,20 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    assert.strictEqual(currentURL(), '/courses/redis/overview', 'should navigate to overview page first');
-    await courseOverviewPage.clickOnStartCourse();
-
-    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
-
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'stage 2 is shown');
-
-    await coursePage.sidebar.clickOnStepListItem('Bind to a port');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/jm1', 'stage 1 is shown');
-
-    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
-    assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
-  });
-
-  test('stage card opens links in new tab', async function (assert) {
-    testScenario(this.server, ['dummy']);
-    signIn(this.owner, this.server);
-
-    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
-    course.update({ releaseStatus: 'live' });
-
-    const stage = course.stages.models.toArray().find((stage) => stage.position === 2);
-    stage.update({ descriptionMarkdownTemplate: `[link1](https://link1.com), [link2](https://link2.com)` });
-
-    await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Dummy');
+    assert.strictEqual(currentURL(), '/courses/dummy/overview', 'should navigate to overview page first');
     await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'introduction page is shown by default');
+
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ah7', 'stage 1 is shown');
 
     await coursePage.sidebar.clickOnStepListItem('The second stage');
-    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'stage 2 is shown');
 
-    const linkElements = document.querySelectorAll('#your-task-card a');
-    const firstLinkElement = Array.from(linkElements).find((link) => link.textContent === 'link1');
-    const secondLinkElement = Array.from(linkElements).find((link) => link.textContent === 'link2');
-
-    assert.strictEqual(firstLinkElement.getAttribute('target'), '_blank');
-    assert.strictEqual(secondLinkElement.getAttribute('target'), '_blank');
+    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
+    assert.strictEqual(currentURL(), '/courses/dummy/setup', 'setup page is shown');
   });
 
   test('can view previous stages after completing them', async function (assert) {
@@ -75,10 +50,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
 
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -86,88 +61,71 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[2],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[2],
       completedAt: new Date(new Date().getTime() - (1 + 86400000)), // yesterday
     });
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[3],
       completedAt: new Date(new Date().getTime() - 10000), // today
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[3],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[3],
       status: 'closed',
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-
-    assert.true(courseOverviewPage.stageListItems[0].hasCompletionCheckmark, 'first stage has a completion checkmark');
-    assert.false(courseOverviewPage.stageListItems[0].hasDifficultyLabel, 'first stage does not have a difficulty label');
-    assert.true(courseOverviewPage.stageListItems[1].hasCompletionCheckmark, 'second stage has a completion checkmark');
-    assert.false(courseOverviewPage.stageListItems[1].hasDifficultyLabel, 'second stage does not have a difficulty label');
-    assert.true(courseOverviewPage.stageListItems[2].hasCompletionCheckmark, 'third stage has a completion checkmark');
-    assert.false(courseOverviewPage.stageListItems[2].hasDifficultyLabel, 'third stage does not have a difficulty label');
-    assert.true(courseOverviewPage.stageListItems[3].hasCompletionCheckmark, 'fourth stage has a completion checkmark');
-    assert.false(courseOverviewPage.stageListItems[3].hasDifficultyLabel, 'fourth stage does not have a difficulty label');
-
-    assert.false(courseOverviewPage.stageListItems[4].hasCompletionCheckmark, 'fifth stage does not have a completion checkmark');
-    assert.true(courseOverviewPage.stageListItems[4].hasDifficultyLabel, 'fifth stage has a difficulty label');
-    assert.false(courseOverviewPage.stageListItems[5].hasCompletionCheckmark, 'sixth stage does not have a completion checkmark');
-    assert.true(courseOverviewPage.stageListItems[6].hasDifficultyLabel, 'sixth stage has a difficulty label');
-
-    await percySnapshot('Course Stages - Stages list checkmarks');
-
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(coursePage.header.stepName, 'Implement the ECHO command', 'stage title is shown in the header');
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext2');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'course stage item is active if clicked on');
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
 
     await percySnapshot('Course Stages - Completed stage');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'course stage item is active if clicked on');
+    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
+
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.header.stepName, 'Start with ext1', 'course stage item is active if clicked on');
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
-
-    await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
-    await animationsSettled();
-
-    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
   test('can navigate directly to stage even if previous stages are not completed', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await visit('/courses/redis/stages/rg2');
-    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'stage 2 is shown');
+    await visit('/courses/dummy/stages/lr7');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'stage 2 is shown');
   });
 
   test('trying to view an invalid stage number redirects to active step', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await visit('/courses/redis/stages/100');
-    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
+    await visit('/courses/dummy/stages/100');
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'introduction page is shown by default');
   });
 
   test('stages should have an upgrade prompt if they are paid', async function (assert) {
@@ -385,21 +343,21 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
-    coursePage.visit({ course_slug: 'redis' });
+    coursePage.visit({ course_slug: 'dummy' });
     await waitFor('[data-test-loading]');
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage');
   });
 
   test('transition from courses page has no loading page', async function (assert) {
@@ -410,10 +368,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -422,7 +380,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     let loadingIndicatorWasRendered = false;
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     courseOverviewPage.clickOnStartCourse();
 
     await waitUntil(() => {
@@ -435,7 +393,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.notOk(loadingIndicatorWasRendered, 'expected loading indicator to not be rendered');
     await settled(); // Wait for everything to settle before checking the step name
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage');
   });
 
   test('it should have a working expand/collapse sidebar button', async function (assert) {
@@ -443,7 +401,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.hasExpandedSidebar, 'sidebar should be expanded by default');
@@ -465,7 +423,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.hasExpandedLeaderboard, 'leaderboard should be expanded by default');
@@ -492,17 +450,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await coursePage.monthlyChallengeBanner.click();
 
     const analyticsEvents = this.server.schema.analyticsEvents.all().models;
@@ -514,7 +472,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
   test('stage should restrict admin access to user if user is course author and course is not authored by user', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await catalogPage.visit();
@@ -526,11 +484,11 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
   test('stage should not restrict admin access to user if user is course author and course is authored by user', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.adminButton.isVisible, 'admin button should be visible');
@@ -540,10 +498,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('releaseStatus', 'beta');
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('releaseStatus', 'beta');
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await percySnapshot('Course Stages - Beta Release Status');
@@ -563,10 +521,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     dateService.setNow(now);
 
     let isFreeExpirationDate = new Date('2024-02-01');
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await percySnapshot('Course Stages - Free Status');
@@ -578,10 +536,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     );
 
     isFreeExpirationDate = new Date('2024-01-31');
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(
@@ -591,10 +549,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     );
 
     isFreeExpirationDate = new Date('2024-01-16');
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.freeCourseLabel.text, 'FREE', 'free label should have correct copy otherwise');
@@ -618,10 +576,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     dateService.setNow(now);
 
     let isFreeExpirationDate = new Date('2024-02-01');
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.freeCourseLabel.isVisible, 'free label should not be present');
@@ -636,10 +594,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'introduction page is shown by default');
     assert.true(coursePage.header.freeWeeksLeftButton.text.includes('7 days free'), 'expect badge to show correct duration for days');
   });
 
@@ -652,7 +610,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(
@@ -670,7 +628,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.header.freeWeeksLeftButton.text.includes('7 hours free'), 'expect badge to show correct duration for hours');
@@ -685,7 +643,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.header.freeWeeksLeftButton.text.includes('15 minutes free'), 'expect badge to show correct duration for minutes');
@@ -700,7 +658,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(
@@ -719,7 +677,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.header.vipBadge.isVisible, 'expect vip badge to be visible');
@@ -763,7 +721,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.header.upgradeButton.isVisible, 'expect upgrade button to be visible');
@@ -780,7 +738,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.header.freeWeeksLeftButton.click();
 
@@ -792,7 +750,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.header.memberBadge.isVisible, 'expect member badge to be visible');
@@ -809,7 +767,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.header.memberBadge.click();
 

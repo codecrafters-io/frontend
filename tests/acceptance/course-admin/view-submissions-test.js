@@ -14,7 +14,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 0);
 
     await percySnapshot('Admin - Course Submissions - No Submissions');
@@ -26,20 +26,20 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 3);
 
     await percySnapshot('Admin - Course Submissions - With Submissions');
@@ -51,10 +51,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       languageProficiencyLevel: 'beginner',
       user: currentUser,
@@ -62,10 +62,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     assert.true(submissionsPage.submissionDetails.text.includes('Beginner'), true);
 
     await submissionsPage.submissionDetails.userProficiencyInfoIcon.hover();
@@ -81,20 +81,20 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     assert.true(submissionsPage.submissionDetails.text.includes('Unknown'), true);
 
     await submissionsPage.submissionDetails.userProficiencyInfoIcon.hover();
@@ -107,10 +107,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it does not render the tester version if the user is not staff', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.false(submissionsPage.submissionDetails.text.includes('Tester version'));
   });
@@ -121,27 +121,27 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
     let testerVersion = this.server.create('course-tester-version', {
-      course: redis,
+      course: dummy,
       tagName: 'v1',
     });
 
     repository.submissions.models.forEach((submission) => submission.update({ testerVersion }));
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('v1'));
   });
@@ -152,20 +152,20 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.true(submissionsPage.submissionDetails.testerVersion.text.includes('Unknown'));
   });
@@ -179,13 +179,13 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let user3 = this.server.create('user', { username: 'user3' });
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user2 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user3 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: python, user: user1 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: python, user: user2 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: python, user: user3 });
 
-    await submissionsPage.visit({ course_slug: 'redis', usernames: 'user1,user2' });
+    await submissionsPage.visit({ course_slug: 'dummy', usernames: 'user1,user2' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
@@ -200,13 +200,13 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: python, user: user1 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: ruby, user: user2 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: javascript, user: user3 });
 
-    await submissionsPage.visit({ course_slug: 'redis', languages: 'python,ruby' });
+    await submissionsPage.visit({ course_slug: 'dummy', languages: 'python,ruby' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
@@ -221,13 +221,13 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
     let javascript = this.server.schema.languages.findBy({ slug: 'javascript' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: ruby, user: user2 });
-    this.server.create('repository', 'withFirstStageInProgress', { course: redis, language: javascript, user: user3 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: python, user: user1 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: ruby, user: user2 });
+    this.server.create('repository', 'withFirstStageInProgress', { course: dummy, language: javascript, user: user3 });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 6); // 3 users, 2 submissions each
     assert.strictEqual(submissionsPage.languageDropdown.currentLanguageName, 'All Languages');
 
@@ -251,14 +251,14 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let stage1 = redis.stages.models.sortBy('position')[0].slug;
-    let stage2 = redis.stages.models.sortBy('position')[1].slug;
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    let stage1 = dummy.stages.models.sortBy('position')[0].slug;
+    let stage2 = dummy.stages.models.sortBy('position')[1].slug;
 
-    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: dummy, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: dummy, language: ruby, user: user2 });
 
-    await submissionsPage.visit({ course_slug: 'redis', course_stage_slugs: stage1 + ',' + stage2 });
+    await submissionsPage.visit({ course_slug: 'dummy', course_stage_slugs: stage1 + ',' + stage2 });
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 stages each
   });
 
@@ -271,14 +271,14 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let python = this.server.schema.languages.findBy({ slug: 'python' });
     let ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    let stage1 = redis.stages.models.sortBy('position')[0].name;
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    let stage1 = dummy.stages.models.sortBy('position')[0].name;
 
-    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: python, user: user1 });
-    this.server.create('repository', 'withBaseStagesCompleted', { course: redis, language: ruby, user: user2 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: dummy, language: python, user: user1 });
+    this.server.create('repository', 'withBaseStagesCompleted', { course: dummy, language: ruby, user: user2 });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    await submissionsPage.visit({ course_slug: 'dummy' });
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 base stages each
     assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
 
     await submissionsPage.stageDropdown.click();
@@ -288,13 +288,13 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     await submissionsPage.stageDropdown.click();
     await submissionsPage.stageDropdown.clickOnStageLink('All Stages');
-    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 14); // 2 users, 7 stages each
+    assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 base stages each
     assert.strictEqual(submissionsPage.stageDropdown.currentStageName, 'All Stages');
   });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await submissionsPage.visit({ course_slug: 'git' });
@@ -303,11 +303,11 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
   test('it should be accessible if user is course author and authored current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
-    await submissionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(currentURL(), '/courses/redis/admin/submissions', 'route should be accessible');
+    await submissionsPage.visit({ course_slug: 'dummy' });
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/submissions', 'route should be accessible');
   });
 
   test('it should have the commit SHA in the header', async function (assert) {
@@ -316,10 +316,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -327,10 +327,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     this.server.create('submission', 'withFailureStatus', {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.ok(submissionsPage.submissionDetails.commitSha.isPresent, 'commit sha should be present');
 
@@ -352,10 +352,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -364,10 +364,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       treeSha: 'fooa77c9d85161984249205b5b83772b63ae866e',
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.ok(submissionsPage.submissionDetails.treeSha.isPresent, 'tree sha should be present');
 
@@ -389,10 +389,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -401,10 +401,10 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
       commitSha: 'a77c9d85161984249205b5b83772b63ae866e1f4',
       treeSha: null,
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
 
     assert.ok(submissionsPage.submissionDetails.treeSha.isPresent, 'tree sha should be present');
 

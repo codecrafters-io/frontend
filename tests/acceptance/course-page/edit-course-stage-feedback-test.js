@@ -17,10 +17,10 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
@@ -29,27 +29,27 @@ module('Acceptance | course-page | edit-course-stage-feedback', function (hooks)
     [2, 3].forEach((stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
+        courseStage: dummy.stages.models.sortBy('position')[stageNumber - 1],
       });
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.feedbackPrompt.clickOnOption('😍');
     await coursePage.feedbackPrompt.clickOnSubmitButton();
-    assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'next stage is shown after feedback submission');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'same stage is shown after feedback submission');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
     await coursePage.feedbackPrompt.clickOnEditFeedbackButton();
     await coursePage.feedbackPrompt.clickOnOption('😭');
     await coursePage.feedbackPrompt.clickOnSubmitButton();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'same stage is shown after editing feedback');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'same stage is shown after editing feedback');
   });
 });

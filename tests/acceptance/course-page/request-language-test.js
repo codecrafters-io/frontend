@@ -17,7 +17,7 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
@@ -43,12 +43,12 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let nim = this.server.schema.languages.findBy({ name: 'Nim' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
-    this.server.create('course-language-request', { user: currentUser, language: nim, course: redis });
+    this.server.create('course-language-request', { user: currentUser, language: nim, course: dummy });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
@@ -85,11 +85,11 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ name: 'Python' }),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
@@ -103,17 +103,17 @@ module('Acceptance | course-page | request-language-test', function (hooks) {
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ name: 'Python' }),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
     });
 
     this.server.create('course-language-request', {
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ name: 'Nim' }),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await animationsSettled();
 
