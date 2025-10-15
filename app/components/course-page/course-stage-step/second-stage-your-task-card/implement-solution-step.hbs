@@ -12,13 +12,25 @@
 </div>
 
 {{#if this.languageGuide}}
-  <div
-    class="prose dark:prose-invert has-prism-highlighting mb-3"
-    {{highlight-code-blocks this.languageGuide.markdownForBeginner}}
-    data-test-language-guide-card
-  >
-    {{markdown-to-html this.languageGuide.markdownForBeginner}}
-  </div>
+  {{#if (gt this.languageGuide.hints.length 0)}}
+    <div class="prose dark:prose-invert mb-3" data-test-language-guide-card>
+      <p>
+        Here are some hints to get you started:
+      </p>
+    </div>
+
+    {{#each this.languageGuide.hints as |hint hintIndex|}}
+      <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard @hint={{hint}} @hintIndex={{hintIndex}} class="mb-3" />
+    {{/each}}
+  {{else}}
+    <div
+      class="prose dark:prose-invert has-prism-highlighting mb-3"
+      {{highlight-code-blocks this.languageGuide.markdownForBeginner}}
+      data-test-language-guide-card
+    >
+      {{markdown-to-html this.languageGuide.markdownForBeginner}}
+    </div>
+  {{/if}}
 {{/if}}
 
 {{#if this.solution}}
@@ -26,9 +38,10 @@
     class="mb-3 group"
     @isBlurred={{this.solutionIsBlurred}}
     @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
+    {{on "click" this.handleRevealSolutionButtonClick}}
   >
     <:content>
-      <div class="grid gap-3 mt-6 mb-3">
+      <div class="grid gap-3 mb-3">
         {{#each this.solution.changedFiles as |changedFile|}}
           {{! Extra if condition convinces typescript that solution isn't null }}
           {{#if this.solution}}
