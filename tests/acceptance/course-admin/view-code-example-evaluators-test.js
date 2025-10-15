@@ -13,7 +13,7 @@ module('Acceptance | course-admin | view-code-example-evaluators', function (hoo
 
     this.currentUser = this.server.schema.users.first();
     this.language = this.server.schema.languages.findBy({ name: 'Python' });
-    this.course = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('community-solution-evaluator', {
       slug: 'relevance',

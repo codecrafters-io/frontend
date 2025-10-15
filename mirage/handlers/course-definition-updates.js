@@ -6,7 +6,7 @@ export default function (server) {
     const courseDefinitionUpdate = schema.courseDefinitionUpdates.find(request.params.id);
 
     if (courseDefinitionUpdate.summary.includes('[should_error]')) {
-      courseDefinitionUpdate.update({ lastErrorMessage: 'Expected "slug" to be "redis", got: "docker".\n\nChange slug to "redis" to fix this.' });
+      courseDefinitionUpdate.update({ lastErrorMessage: 'Expected "slug" to be "dummy", got: "docker".\n\nChange slug to "dummy" to fix this.' });
     } else {
       courseDefinitionUpdate.update({ appliedAt: new Date(), status: 'applied', lastErrorMessage: null });
     }

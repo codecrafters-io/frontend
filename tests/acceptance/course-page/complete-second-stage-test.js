@@ -167,26 +167,26 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     const user = signInAsStaff(this.owner, this.server);
 
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: user,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
+      courseStage: dummy.stages.models.sortBy('position')[0],
     });
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

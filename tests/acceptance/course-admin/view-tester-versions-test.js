@@ -16,7 +16,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 0, 'should have no tester versions');
     await percySnapshot('Admin - Course Tester Versions - No Tester Versions');
   });
@@ -27,7 +27,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -38,7 +38,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -48,7 +48,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v11',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 2, 'should have 2 tester versions');
     await percySnapshot('Admin - Course Tester Versions - With Tester Versions');
   });
@@ -59,7 +59,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -67,12 +67,12 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v10',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(testerVersionsPage.testerVersionListItem.length, 1, 'should have 1 tester version');
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -91,17 +91,17 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
-    course.update('testerRepositoryFullName', 'codecrafters-io/redis-tester');
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('testerRepositoryFullName', 'codecrafters-io/dummy-tester');
 
     await testerVersionsPage.visit({ course_slug: course.slug });
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, 'https://github.com/codecrafters-io/redis-tester');
-    assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, 'codecrafters-io/redis-tester');
+    assert.strictEqual(testerVersionsPage.testerRepositoryLink.href, 'https://github.com/codecrafters-io/dummy-tester');
+    assert.strictEqual(testerVersionsPage.testerRepositoryLink.text, 'codecrafters-io/dummy-tester');
   });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await testerVersionsPage.visit({ course_slug: 'git' });
@@ -110,11 +110,11 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
   test('it should be accessible if user is course author and authored current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(currentURL(), '/courses/redis/admin/tester-versions', 'route should be accessible');
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/tester-versions', 'route should be accessible');
   });
 
   test('it properly renders the provisioned test runners count', async function (assert) {
@@ -123,7 +123,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -134,7 +134,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -144,7 +144,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v11',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
 
     assert.ok(
       testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.isPresent,
@@ -168,7 +168,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -179,7 +179,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -189,7 +189,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v11',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[0].provisionedTestRunnersCount.hover();
 
     assertTooltipContent(assert, {
@@ -203,7 +203,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -214,7 +214,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -224,7 +224,7 @@ module('Acceptance | course-admin | view-tester-versions', function (hooks) {
       tagName: 'v11',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[1].provisionedTestRunnersCount.hover();
 
     assertTooltipContent(assert, {

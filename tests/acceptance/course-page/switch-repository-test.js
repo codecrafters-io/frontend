@@ -20,24 +20,24 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let go = this.server.schema.languages.findBy({ name: 'Go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
     let goRepository = this.server.create('repository', 'withFirstStageInProgress', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
       name: 'Go #1',
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     const baseRequestsCount = [
@@ -55,7 +55,7 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     ].length;
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
-    assert.strictEqual(coursePage.header.stepName, 'Bind to a port');
+    assert.strictEqual(coursePage.header.stepName, 'The first stage');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'polling should have run');
@@ -67,6 +67,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'selected repository should be active');
     assert.ok(coursePage.repositoryDropdown.isClosed, 'repository dropdown should be closed');
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage');
   });
 });

@@ -17,21 +17,21 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -49,21 +49,21 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -79,13 +79,13 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     assert.contains(
       coursePage.shareProgressModal.copyableText.value,
-      "I'm working on the @codecraftersio Build your own Redis challenge in Go.",
+      "I'm working on the @codecraftersio Build your own Dummy challenge in Go.",
       'correct copyable text is shown',
     );
 
     assert.contains(
       coursePage.shareProgressModal.copyableText.value,
-      'https://app.codecrafters.io/courses/redis/overview',
+      'https://app.codecrafters.io/courses/dummy/overview',
       'correct link in copyable text is shown',
     );
 
@@ -93,7 +93,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     assert.contains(
       coursePage.shareProgressModal.copyableText.value,
-      "I'm working on the CodeCrafters Build your own Redis challenge in Go.",
+      "I'm working on the CodeCrafters Build your own Dummy challenge in Go.",
       'correct copyable text is shown',
     );
   });
@@ -104,21 +104,21 @@ module('Acceptance | course-page | share-progress', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: go,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

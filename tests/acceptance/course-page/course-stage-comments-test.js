@@ -18,37 +18,37 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     const user = this.server.schema.users.first();
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      target: redis.stages.models.sortBy('position')[1],
+      target: dummy.stages.models.sortBy('position')[1],
       user: user,
     });
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      target: redis.stages.models.sortBy('position')[1],
+      target: dummy.stages.models.sortBy('position')[1],
       user: user,
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       user: user,
       language: this.server.schema.languages.findBy({ slug: 'python' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'title should be respond to ping');
     assert.strictEqual(coursePage.commentList.commentCards.length, 2);
 
     await percySnapshot('Course Stage Comments', {
@@ -62,18 +62,18 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     signIn(this.owner, this.server);
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ slug: 'python' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'title should be respond to ping');
     assert.ok(coursePage.commentList.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -95,13 +95,13 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     const user = this.server.schema.users.first();
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      targetId: redis.stages.models.sortBy('position')[1].id,
+      targetId: dummy.stages.models.sortBy('position')[1].id,
       targetType: 'course-stages',
       approvalStatus: 'approved',
       user: user,
@@ -110,23 +110,23 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      targetId: redis.stages.models.sortBy('position')[1].id,
+      targetId: dummy.stages.models.sortBy('position')[1].id,
       targetType: 'course-stages',
       approvalStatus: 'approved',
       user: user,
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ slug: 'python' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     const firstCommentCard = coursePage.commentList.commentCards[0];
@@ -150,16 +150,16 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     signIn(this.owner, this.server);
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ slug: 'python' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -195,10 +195,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -221,10 +221,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -251,13 +251,13 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     const user = this.server.schema.users.first();
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      target: redis.stages.models.sortBy('position')[1],
+      target: dummy.stages.models.sortBy('position')[1],
       approvalStatus: 'approved',
       user: user,
     });
@@ -265,22 +265,22 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     this.server.create('course-stage-comment', {
       createdAt: new Date('2020-01-01'),
       bodyMarkdown: "This is the _second_ comment, but it's longer. It's also **bold**. And long. Very very long should span more than one line.",
-      target: redis.stages.models.sortBy('position')[1],
+      target: dummy.stages.models.sortBy('position')[1],
       approvalStatus: 'approved',
       user: user,
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       user: this.server.schema.users.first(),
       language: this.server.schema.languages.findBy({ slug: 'python' }),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     const firstCommentCard = coursePage.commentList.commentCards[0];
@@ -310,21 +310,21 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     const user = this.server.schema.users.first();
 
     this.server.create('course-stage-comment', {
       createdAt: new Date('2022-01-02'),
       bodyMarkdown: 'This is the **first** comment',
-      target: redis.stages.models.sortBy('position')[1],
+      target: dummy.stages.models.sortBy('position')[1],
       user: user,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     assert.false(coursePage.commentList.commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
@@ -332,10 +332,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     user.update({ isStaff: true });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
@@ -345,13 +345,13 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       contentString: 'This user works at CodeCrafters',
     });
 
-    user.update({ authoredCourseSlugs: ['redis'] });
+    user.update({ authoredCourseSlugs: ['dummy'] });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff and course author');
@@ -359,10 +359,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     user.update({ isStaff: false });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     assert.strictEqual(
@@ -379,10 +379,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     user.update({ authoredCourseSlugs: ['git'] });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
     assert.false(

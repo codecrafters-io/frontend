@@ -32,24 +32,24 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 2, go);
-    const solution3 = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, go);
+    const solution3 = createCommunityCourseStageSolution(this.server, dummy, 2, go);
 
     solution3.update({
       commitSha: '1234567890',
-      githubRepositoryName: 'sarupbanskota/redis',
+      githubRepositoryName: 'sarupbanskota/dummy',
       githubRepositoryIsPrivate: false,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.notOk(coursePage.upgradePrompt.isVisible, 'code examples list should not include upgrade prompt for early stages');
@@ -90,30 +90,30 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     // Stage 2: Completed, has solutions in other languages
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 2, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, go);
 
     // Stage 3: Incomplete, no solutions in other languages
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
 
     // Stage 4: Incomplete, has solutions in other language
-    createCommunityCourseStageSolution(this.server, redis, 4, python);
-    createCommunityCourseStageSolution(this.server, redis, 4, go);
+    createCommunityCourseStageSolution(this.server, dummy, 4, python);
+    createCommunityCourseStageSolution(this.server, dummy, 4, go);
 
     // Stage 5: Incomplete, no solutions in other language
-    createCommunityCourseStageSolution(this.server, redis, 5, python);
+    createCommunityCourseStageSolution(this.server, dummy, 5, python);
 
     // Stage 6: Incomplete, has solutions in other language
-    createCommunityCourseStageSolution(this.server, redis, 6, python);
-    createCommunityCourseStageSolution(this.server, redis, 6, go);
+    createCommunityCourseStageSolution(this.server, dummy, 6, python);
+    createCommunityCourseStageSolution(this.server, dummy, 6, go);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -121,16 +121,16 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     // Stage 2: (Completed, has solutions)
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING').click();
+    await coursePage.sidebar.clickOnStepListItem('The second stage').click();
     await animationsSettled();
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await percySnapshot('Community Solutions');
@@ -164,19 +164,19 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     signIn(this.owner, this.server, currentUser);
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let teamMemberSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let teamMemberSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     teamMemberSolution.update({ user: teamMember, isRestrictedToTeam: true });
-    let otherUserSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserSolution.update({ user: otherUser });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
@@ -187,16 +187,16 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     await codeExamplesPage.solutionCards[0].toggleMoreDropdown();
     await codeExamplesPage.solutionCards[0].moreDropdown.clickOnLink('View full diff');
@@ -221,14 +221,14 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -236,17 +236,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -259,20 +259,20 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -285,14 +285,14 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -300,26 +300,26 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[2],
+      courseStage: dummy.stages.models.sortBy('position')[2],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
-    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     await animationsSettled();
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
@@ -332,14 +332,14 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -347,17 +347,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnInstructionsButton();
@@ -371,14 +371,14 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -386,17 +386,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
@@ -410,11 +410,11 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -422,17 +422,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -445,16 +445,16 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, go);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -462,17 +462,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
@@ -489,18 +489,18 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, go);
-    createCommunityCourseStageSolution(this.server, redis, 4, python);
-    createCommunityCourseStageSolution(this.server, redis, 4, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, go);
+    createCommunityCourseStageSolution(this.server, dummy, 4, python);
+    createCommunityCourseStageSolution(this.server, dummy, 4, go);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -508,25 +508,25 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
     await codeExamplesPage.stageIncompleteModal.clickOnShowCodeButton();
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
 
-    await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
+    await coursePage.sidebar.stepListItems[6].click(); // This was grabbing the wrong stage since the test for ext2, step2 was the same at start text
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     assert.ok(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is visible');
   });
@@ -537,18 +537,18 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, python);
-    createCommunityCourseStageSolution(this.server, redis, 3, go);
-    createCommunityCourseStageSolution(this.server, redis, 4, python);
-    createCommunityCourseStageSolution(this.server, redis, 4, go);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, python);
+    createCommunityCourseStageSolution(this.server, dummy, 3, go);
+    createCommunityCourseStageSolution(this.server, dummy, 4, python);
+    createCommunityCourseStageSolution(this.server, dummy, 4, go);
 
     let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       name: 'Python #1',
       user: currentUser,
@@ -556,17 +556,17 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.create('course-stage-completion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position').toArray()[1],
+      courseStage: dummy.stages.models.sortBy('position').toArray()[1],
       completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
     });
 
     this.server.create('submission', 'withStageCompletion', {
       repository: pythonRepository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: dummy.stages.models.sortBy('position')[1],
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -576,7 +576,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after dismissing modal');
 
-    this.server.schema.courseStages.findBy({ name: 'Respond to multiple PINGs' }).update({ marketingMarkdown: 'Updated marketing markdown' });
+    this.server.schema.courseStages.findBy({ name: 'Start with ext1' }).update({ marketingMarkdown: 'Updated marketing markdown' });
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after updating course stage');
@@ -600,22 +600,22 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
     // 5 is the threshold
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
-    createCommunityCourseStageSolution(this.server, redis, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
+    createCommunityCourseStageSolution(this.server, dummy, 5, go);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Implement the ECHO command');
-    await coursePage.clickOnHeaderTabLink('Code Examples');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext2');
+    await coursePage.yourTaskCard.clickOnActionButton('Code Examples');
 
     await codeExamplesPage.languageDropdown.toggle();
     await codeExamplesPage.languageDropdown.clickOnLink('Go');
