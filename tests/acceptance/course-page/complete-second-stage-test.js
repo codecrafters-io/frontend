@@ -40,7 +40,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     const solution = createCourseStageSolution(this.server, course, 2, python);
 
     solution.update({
-      hints: [
+      hintsJson: [
         {
           bodyMarkdown: `
 Use Python's [input()](https://docs.python.org/3/library/functions.html#input) function to capture the command the user types in:

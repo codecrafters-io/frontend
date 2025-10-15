@@ -17,7 +17,7 @@ export default class CourseStageSolutionModel extends Model.extend(ViewableMixin
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
 
   // @ts-expect-error empty '' not supported
-  @attr('') declare hints: Hint[] | undefined;
+  @attr('') declare hintsJson: Hint[] | undefined; // free-form JSON
 
   @attr() declare reviewersDetails: Array<{ [key: string]: string }>; // free-form JSON
 

@@ -11,8 +11,8 @@
 {{/unless}}
 
 {{#if this.solution}}
-  {{#if (gt this.solution.hints.length 0)}}
-    {{#each this.solution.hints as |hint hintIndex|}}
+  {{#if (gt this.solution.hintsJson.length 0)}}
+    {{#each this.solution.hintsJson as |hint hintIndex|}}
       <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard @hint={{hint}} @hintIndex={{hintIndex}} class="mb-3" />
     {{/each}}
   {{/if}}
