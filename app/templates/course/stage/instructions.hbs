@@ -1,8 +1,4 @@
-<CoursePage::PreviousStepsIncompleteOverlay
-  @currentStep={{this.currentStep}}
-  {{did-update this.loadLanguageGuides @model.courseStage}}
-  {{did-insert this.loadLanguageGuides}}
->
+<CoursePage::PreviousStepsIncompleteOverlay @currentStep={{this.currentStep}}>
   <CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
     <CoursePage::CourseStageStep::TestsPassedOverlay @currentStep={{this.currentStep}}>
       <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>

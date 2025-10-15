@@ -9,7 +9,6 @@ import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-l
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
 import { next } from '@ember/runloop';
-import { task } from 'ember-concurrency';
 import type Store from '@ember-data/store';
 
 export default class CourseStageInstructionsController extends Controller {
@@ -95,16 +94,4 @@ export default class CourseStageInstructionsController extends Controller {
       this.router.transitionTo(nextStep.routeParams.route, ...nextStep.routeParams.models);
     }
   }
-
-  @action
-  loadLanguageGuides(): void {
-    this.loadLanguageGuidesTask.perform();
-  }
-
-  loadLanguageGuidesTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.store.query('course-stage-language-guide', {
-      course_stage_id: this.model.courseStage.id,
-      include: 'course-stage,language',
-    });
-  });
 }
