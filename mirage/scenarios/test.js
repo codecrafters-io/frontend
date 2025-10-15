@@ -6,6 +6,7 @@ import dummyCourseData from 'codecrafters-frontend/mirage/course-fixtures/dummy'
 import gitCourseData from 'codecrafters-frontend/mirage/course-fixtures/git';
 import grepCourseData from 'codecrafters-frontend/mirage/course-fixtures/grep';
 import redisCourseData from 'codecrafters-frontend/mirage/course-fixtures/redis';
+import shellCourseData from 'codecrafters-frontend/mirage/course-fixtures/shell';
 import sqliteCourseData from 'codecrafters-frontend/mirage/course-fixtures/sqlite';
 
 export default function (server, courses = ['redis', 'docker', 'dummy', 'git', 'grep', 'sqlite']) {
@@ -32,6 +33,7 @@ export default function (server, courses = ['redis', 'docker', 'dummy', 'git', '
     git: gitCourseData,
     grep: grepCourseData,
     redis: redisCourseData,
+    shell: shellCourseData,
     sqlite: sqliteCourseData,
   };
 

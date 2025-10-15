@@ -56,39 +56,39 @@ export default {
       "slug": "ah7",
       "name": "The first stage",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.\n\nHere's a sample table:\n\n| Column 1 Header | Column 2 Header | Column 3 Header |\n| --------------- | --------------- | --------------- |\n| Row 1, Col 1    | Row 1, Col 2    | Row 1, Col 3    |\n| Row 2, Col 1    | Row 2, Col 2    | Row 2, Col 3    |\n| Row 3, Col 1    | Row 3, Col 2    | Row 3, Col 3    |\n\nAnd a new edit that must be synced automatically",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.\n\nHere's a sample table:\n\n| Column 1 Header | Column 2 Header | Column 3 Header |\n| --------------- | --------------- | --------------- |\n| Row 1, Col 1    | Row 1, Col 2    | Row 1, Col 3    |\n| Row 2, Col 1    | Row 2, Col 2    | Row 2, Col 3    |\n| Row 3, Col 1    | Row 3, Col 2    | Row 3, Col 3    |\n\nAnd a new edit that must be synced automatically"
     },
     {
       "slug": "lr7",
       "name": "The second stage",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD."
     },
     {
       "slug": "qh7",
       "primary_extension_slug": "ext1",
       "name": "Start with ext1",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD."
     },
     {
       "slug": "wd5",
       "primary_extension_slug": "ext1",
       "name": "Finish with ext1",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD."
     },
     {
       "slug": "ae0",
       "primary_extension_slug": "ext2",
       "name": "Start with ext2",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD."
     },
     {
       "slug": "um4",
@@ -98,8 +98,8 @@ export default {
       ],
       "name": "Finish with ext1 + ext2",
       "difficulty": "very_easy",
-      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD.",
-      "marketing_md": "In this stage, we'll do XYZ."
+      "marketing_md": "In this stage, we'll do XYZ.",
+      "description_md": "In this stage, we'll do XYZ\n\n**Example:** ABC\n\nYour program will be executed like this:\n\n```bash\n$ echo \"apple\" | ./your_executable.sh -E \"a\"\n```\n\nYou program must ABCD."
     }
   ]
 }
