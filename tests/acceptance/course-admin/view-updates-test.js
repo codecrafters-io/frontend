@@ -15,7 +15,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(updatesPage.updateListItems.length, 0, 'should have no updates');
 
     await percySnapshot('Admin - Course Updates - No Updates');
@@ -26,7 +26,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -39,7 +39,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
 
     this.server.create('course-definition-update', {
       appliedAt: new Date(2020, 1, 1),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       applier: this.server.schema.users.first(),
       description: 'Updated course description',
       definitionFileContentsDiff: '',
@@ -51,14 +51,14 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       summary: 'Description update',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(updatesPage.updateListItems.length, 2, 'should have 2 updates');
     await percySnapshot('Admin - Course Updates - With Updates');
 
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
     await percySnapshot('Admin - Course Updates - Pending Update');
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[1].clickOnViewUpdateButton();
     await percySnapshot('Admin - Course Updates - Applied Update');
   });
@@ -68,7 +68,7 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -79,12 +79,12 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
       summary: 'Update stage instructions',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(updatesPage.updateListItems.length, 1, 'should have 1 update');
 
     this.server.create('course-definition-update', {
       appliedAt: new Date(2020, 1, 1),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       applier: this.server.schema.users.first(),
       description: 'Updated course description',
       definitionFileContentsDiff: '',
@@ -106,17 +106,17 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
-    course.update('definitionRepositoryFullName', 'codecrafters-io/redis');
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('definitionRepositoryFullName', 'codecrafters-io/dummy');
 
     await updatesPage.visit({ course_slug: course.slug });
-    assert.strictEqual(updatesPage.definitionRepositoryLink.href, 'https://github.com/codecrafters-io/redis');
-    assert.strictEqual(updatesPage.definitionRepositoryLink.text, 'codecrafters-io/redis');
+    assert.strictEqual(updatesPage.definitionRepositoryLink.href, 'https://github.com/codecrafters-io/dummy');
+    assert.strictEqual(updatesPage.definitionRepositoryLink.text, 'codecrafters-io/dummy');
   });
 
   test('it should not be accessible if user is course author and did not author current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
     await updatesPage.visit({ course_slug: 'git' });
@@ -125,10 +125,10 @@ module('Acceptance | course-admin | view-updates', function (hooks) {
 
   test('it should be accessible if user is course author and authored current course', async function (assert) {
     testScenario(this.server);
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     signInAsCourseAuthor(this.owner, this.server, course);
 
-    await updatesPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(currentURL(), '/courses/redis/admin/updates', 'route should be accessible');
+    await updatesPage.visit({ course_slug: 'dummy' });
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/updates', 'route should be accessible');
   });
 });

@@ -2,12 +2,15 @@ export default {
   "slug": "dummy",
   "name": "Build your own Dummy",
   "short_name": "dummy",
-  "release_status": "alpha",
+  "release_status": "live",
   "description_md": "Add a description for your course here.",
   "short_description_md": "Add a short description for your course here.",
   "completion_percentage": 15,
   "completion_message_markdown": "Congratulations! You've completed all stages of this course. 🎉\nWe recommend you to take a break and celebrate your achievement!",
   "languages": [
+    {
+      "slug": "c"
+    },
     {
       "slug": "go"
     },
@@ -16,6 +19,12 @@ export default {
     },
     {
       "slug": "rust"
+    },
+    {
+      "slug": "java"
+    },
+    {
+      "slug": "javascript"
     }
   ],
   "marketing": {

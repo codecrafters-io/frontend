@@ -16,7 +16,7 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
 
     this.currentUser = this.server.schema.users.first();
     this.language = this.server.schema.languages.findBy({ name: 'Python' });
-    this.course = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.evaluator = this.server.create('community-solution-evaluator', {
       slug: 'relevance',
@@ -43,7 +43,7 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorsPage.visit({ course_slug: this.course.slug });
 
     await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
-    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/code-example-evaluators/relevance', 'URL is correct');
 
     await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
     await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
@@ -77,7 +77,7 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorsPage.visit({ course_slug: this.course.slug });
 
     await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
-    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/code-example-evaluators/relevance', 'URL is correct');
 
     await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
     await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
