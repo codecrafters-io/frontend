@@ -7,7 +7,7 @@ import { currentURL } from '@ember/test-helpers';
 import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 
 module('Acceptance | course-page | complete-second-stage', function (hooks) {
@@ -16,7 +16,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
   test('can complete second stage', async function (assert) {
     testScenario(this.server, ['dummy']);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -73,49 +73,10 @@ The \`print()\` function prints a string to the console. The above code uses a [
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is not complete');
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is expanded');
     assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is not complete');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isExpanded, 'Second step is not expanded');
-
-    await coursePage.secondStageYourTaskCard.steps[0].click();
-
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is not complete');
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is expanded');
-
-    await coursePage.clickOnHeaderTabLink('Code Examples');
-    await coursePage.clickOnHeaderTabLink('Instructions');
-
-    // TODO: See if we can retain expanded/collapsed state after switching tabs?
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is not complete');
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is expanded');
-
-    await coursePage.secondStageYourTaskCard.steps[0].click();
-    await coursePage.secondStageYourTaskCard.clickOnCompleteStepButton();
-
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is collapsed');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is not complete');
-    assert.ok(coursePage.secondStageYourTaskCard.steps[1].isExpanded, 'Second step is expanded');
-
-    await coursePage.clickOnHeaderTabLink('Code Examples');
-    await coursePage.clickOnHeaderTabLink('Instructions');
-
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is not complete');
-    assert.ok(coursePage.secondStageYourTaskCard.steps[1].isExpanded, 'Second step is expanded');
-
-    await coursePage.secondStageYourTaskCard.steps[0].click();
-
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is not complete');
-
-    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is expanded');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isExpanded, 'Second step is collapsed');
-
-    await coursePage.secondStageYourTaskCard.steps[1].click();
 
     // Asserts that we don't show the "To run tests again..." message for a system submission
-    assert.contains(coursePage.secondStageYourTaskCard.steps[1].instructions, 'To run tests, make changes to your code');
+    assert.contains(coursePage.secondStageYourTaskCard.steps[1].text, 'To run tests, make changes to your code');
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
@@ -127,8 +88,6 @@ The \`print()\` function prints a string to the console. The above code uses a [
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
     assert.ok(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is complete');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isExpanded, 'First step is collapsed');
-    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isExpanded, 'Second step is collapsed');
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
     await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');

@@ -15,10 +15,8 @@ export default {
     return document.querySelector(this.scope)!.scrollIntoView();
   },
 
-  steps: collection('[data-test-expandable-step-list-step]', {
+  steps: collection('[data-test-step-list-step]', {
     title: text('[data-test-step-title]'),
-    isExpanded: isVisible('[data-test-expanded-step-content]'),
     isComplete: isVisible('[data-test-step-complete-icon]'),
-    instructions: text('[data-test-expanded-step-content]'),
   }),
 };
