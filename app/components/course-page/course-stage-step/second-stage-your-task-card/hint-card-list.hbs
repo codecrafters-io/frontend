@@ -1,9 +1,0 @@
-{{#each @hints as |hint hintIndex|}}
-  <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard
-    @hint={{hint}}
-    @hintIndex={{hintIndex}}
-    @isExpanded={{eq this.expandedHintIndex hintIndex}}
-    @onHeaderClick={{fn this.handleHintCardHeaderClick hintIndex}}
-    class="mb-3"
-  />
-{{/each}}
