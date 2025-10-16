@@ -7,6 +7,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import percySnapshot from '@percy/ember';
 
 module('Acceptance | course-page | extensions | reorder-extensions', function (hooks) {
   setupApplicationTest(hooks);
@@ -45,7 +46,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     });
 
     await settled();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await percySnapshot('Configure Extensions Modal - Reorder Extensions');
 
     cards = coursePage.configureExtensionsModal.extensionCards.toArray();
     assert.strictEqual(cards[0].name, 'Extension 2', 'First card is now Extension 2');
@@ -92,7 +93,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     });
 
     await settled();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await percySnapshot('Configure Extensions Modal - Reorder Extensions');
 
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
