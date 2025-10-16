@@ -8,6 +8,7 @@ interface Signature {
 
   Args: {
     isDisabled: boolean;
+    onSelect: () => void;
     repository: RepositoryModel;
   };
 }
@@ -22,10 +23,6 @@ export default class SelectLanguageProficiencyLevelSection extends Component<Sig
       return `First time with ${languageDescriptor} and want to get familiar with its core syntax first? [Browse](https://docs.codecrafters.io/community/learning-resources) our recommended learning resources.`;
     } else if (this.args.repository.languageProficiencyLevel === 'beginner') {
       return `If you're just starting out with ${languageDescriptor}, CodeCrafters can be a good way to learn. To brush up on ${languageDescriptor} syntax first, [check out](https://docs.codecrafters.io/community/learning-resources#picking-up-language-basics) our recommended learning resources.`;
-    } else if (this.args.repository.languageProficiencyLevel === 'intermediate') {
-      return `If you're already familiar with ${languageDescriptor}, CodeCrafters can be a good way to improve. We recommend using our **Code Examples** feature to see code from other users.`;
-    } else if (this.args.repository.languageProficiencyLevel === 'advanced') {
-      return `If you're already familiar with ${languageDescriptor}, CodeCrafters can be a good way to further your mastery. If you get stuck, you can use our **Code Examples** feature to see code from other users.`;
     } else {
       return null;
     }
@@ -39,6 +36,10 @@ export default class SelectLanguageProficiencyLevelSection extends Component<Sig
 
     if (!this.args.repository.isSaving) {
       this.args.repository.languageProficiencyLevel = proficiencyLevel;
+
+      if (!this.feedbackAlertMarkdown) {
+        this.args.onSelect();
+      }
 
       await this.args.repository.save();
     }
