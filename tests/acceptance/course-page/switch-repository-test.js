@@ -1,8 +1,8 @@
-import apiRequestsCount from 'codecrafters-frontend/tests/support/api-requests-count';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -40,25 +40,26 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    const baseRequestsCount = [
-      'fetch courses (catalog)',
-      'fetch repositories (catalog)',
-      'fetch languages (catalog)',
-      'fetch courses (course page)',
-      'fetch repositories (course page)',
-      'fetch repositories (course page)',
-      'fetch leaderboard entries (course page)',
-      'fetch courses (course page)',
-      'fetch hints (course page)',
-      'fetch language guides (course page)',
-      'fetch course stage comments (course page)',
-    ].length;
+    const expectedRequests = [
+      '/api/v1/repositories', // fetch repositories (catalog page)
+      '/api/v1/courses', // fetch courses (catalog page)
+      '/api/v1/languages', // fetch languages (catalog page)
+      '/api/v1/courses', // fetch course details (course overview page)
+      '/api/v1/repositories', // fetch repositories (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/courses', // refresh course (course page)
+      '/api/v1/repositories', // fetch repositories (course page)
+      '/api/v1/course-stage-comments', // fetch stage comments (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/repositories', // poll repositories (course page)
+      '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
+    ];
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.header.stepName, 'Bind to a port');
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    assert.strictEqual(apiRequestsCount(this.server), baseRequestsCount + 2, 'polling should have run');
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
     await coursePage.repositoryDropdown.click();
     assert.strictEqual(coursePage.repositoryDropdown.content.nonActiveRepositoryCount, 1, 'non active repositories should be 1');

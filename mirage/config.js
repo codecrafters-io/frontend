@@ -27,7 +27,6 @@ import courseLeaderboardEntries from './handlers/course-leaderboard-entries';
 import courseStageComments from './handlers/course-stage-comments';
 import courseStageCompletions from './handlers/course-stage-completions';
 import courseStageFeedbackSubmissions from './handlers/course-stage-feedback-submissions';
-import courseStageLanguageGuides from './handlers/course-stage-language-guides';
 import courseTesterVersions from './handlers/course-tester-versions';
 import courses from './handlers/courses';
 import downvotes from './handlers/downvotes';
@@ -168,7 +167,6 @@ function routes() {
   courseStageComments(this);
   courseStageCompletions(this);
   courseStageFeedbackSubmissions(this);
-  courseStageLanguageGuides(this);
   courseTesterVersions(this);
   courses(this);
   downvotes(this);
