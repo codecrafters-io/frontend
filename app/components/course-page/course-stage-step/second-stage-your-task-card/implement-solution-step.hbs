@@ -12,14 +12,19 @@
 
 {{#if this.solution}}
   {{#if (gt this.solution.hintsJson.length 0)}}
-    {{! Extra if condition convinces typescript that hintsJson isn't null }}
-    {{#if this.solution.hintsJson}}
-      <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCardList @hints={{this.solution.hintsJson}} class="mb-3" />
-    {{/if}}
+    {{#each this.solution.hintsJson as |hint hintIndex|}}
+      <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard
+        @hint={{hint}}
+        @hintIndex={{hintIndex}}
+        @isExpanded={{eq this.expandedHintIndex hintIndex}}
+        @onHeaderClick={{fn this.handleHintCardHeaderClick hintIndex}}
+        class="mb-3"
+      />
+    {{/each}}
   {{/if}}
 
   <BlurredOverlay
-    class="mb-3 group"
+    class="group"
     @isBlurred={{this.solutionIsBlurred}}
     @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
   >
@@ -37,17 +42,6 @@
           {{/if}}
         {{/each}}
       </div>
-
-      {{#unless this.solutionIsBlurred}}
-        <TertiaryButton
-          class="w-full mb-6 flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
-          {{on "click" this.handleHideSolutionButtonClick}}
-          data-test-hide-solution-button
-        >
-          {{svg-jar "eye-off" class="size-4"}}
-          Hide Solution
-        </TertiaryButton>
-      {{/unless}}
     </:content>
 
     <:overlay>
@@ -65,4 +59,19 @@
       </button>
     </:overlay>
   </BlurredOverlay>
+
+  <AnimatedContainer>
+    {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
+      <div class="flex items-center justify-center w-full">
+        <TertiaryButton
+          class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
+          {{on "click" this.handleHideSolutionButtonClick}}
+          data-test-hide-solution-button
+        >
+          {{svg-jar "eye-off" class="size-4"}}
+          Hide Solution
+        </TertiaryButton>
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
 {{/if}}

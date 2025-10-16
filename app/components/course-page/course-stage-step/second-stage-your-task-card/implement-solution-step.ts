@@ -3,6 +3,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -15,7 +16,9 @@ interface Signature {
 }
 
 export default class ImplementSolutionStep extends Component<Signature> {
-  @tracked revealedHintIndexes: number[] = [];
+  transition = fade;
+
+  @tracked expandedHintIndex: number | null = null;
   @tracked solutionIsBlurred = true;
 
   get solution() {
@@ -28,9 +31,20 @@ export default class ImplementSolutionStep extends Component<Signature> {
   }
 
   @action
+  handleHintCardHeaderClick(hintIndex: number): void {
+    if (this.expandedHintIndex === hintIndex) {
+      this.expandedHintIndex = null;
+    } else {
+      this.expandedHintIndex = hintIndex;
+      this.solutionIsBlurred = true;
+    }
+  }
+
+  @action
   handleRevealSolutionButtonClick(): void {
     this.solution?.createView();
     this.solutionIsBlurred = false;
+    this.expandedHintIndex = null;
   }
 }
 
