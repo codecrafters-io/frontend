@@ -12,7 +12,10 @@
 
 {{#if this.solution}}
   {{#if (gt this.solution.hintsJson.length 0)}}
-    <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCardList @hints={{this.solution.hintsJson}} class="mb-3" />
+    {{! Extra if condition convinces typescript that hintsJson isn't null }}
+    {{#if this.solution.hintsJson}}
+      <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCardList @hints={{this.solution.hintsJson}} class="mb-3" />
+    {{/if}}
   {{/if}}
 
   <BlurredOverlay
