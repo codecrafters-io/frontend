@@ -9,8 +9,6 @@ export default class CoursePageStateService extends Service {
   @tracked stepList?: StepListDefinition;
   @tracked testResultsBarIsExpanded = false;
 
-  @tracked manuallyCompletedStepIdsInSecondStageInstructions: string[] = [];
-
   // The active step is the step that the user is currently working on.
   // It might not be the same as the "current" step, which is the step that the user is currently viewing.
   get activeStep(): StepDefinition {
@@ -89,19 +87,7 @@ export default class CoursePageStateService extends Service {
     }
   }
 
-  recordManuallyCompletedStepInSecondStageInstructions(stepId: string): void {
-    this.manuallyCompletedStepIdsInSecondStageInstructions = [...this.manuallyCompletedStepIdsInSecondStageInstructions, stepId].uniq();
-  }
-
-  resetManuallyCompletedSteps(): void {
-    this.manuallyCompletedStepIdsInSecondStageInstructions = [];
-  }
-
   setStepList(newStepList: StepListDefinition): void {
-    if (newStepList.repository !== this.stepList?.repository) {
-      this.resetManuallyCompletedSteps();
-    }
-
     this.stepList = newStepList;
   }
 }
