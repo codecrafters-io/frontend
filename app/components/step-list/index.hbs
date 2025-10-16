@@ -1,45 +1,39 @@
-<div ...attributes class="ml-3.5">
+<div ...attributes class="flex flex-col gap-2">
   {{#each @steps key="id" as |step stepIndex|}}
-    {{#let (eq stepIndex (sub @steps.length 1)) as |isLastStep|}}
-      <div class="relative flex items-start pb-5" data-test-step-list-step>
-        {{! Vertical line }}
-        {{#if isLastStep}}
-          <div
-            class="absolute w-px h-[calc(100%-2.75rem)] top-[2.75rem] bg-transparent bg-gradient-to-b from-gray-200 dark:from-white/10 via-80% to-transparent"
-          />
-
+    <div class="flex items-stretch gap-3" data-test-step-list-step>
+      <div class="flex flex-col items-center gap-2">
+        {{#if step.isComplete}}
+          {{! Checkmark }}
+          {{svg-jar "check-circle" class="w-7 h-7 text-teal-500"}}
         {{else}}
-          <div class="absolute w-px h-[calc(100%-2.75rem)] top-[2.75rem] bg-gray-200/70 dark:bg-white/10" />
-        {{/if}}
-
-        {{! Step number }}
-        <div class="absolute ml-[-13px] py-2">
+          {{! Step number }}
           <div
-            class="h-7 w-7 flex-shrink-0 rounded-full bg-gray-50 dark:bg-white/10 text-xs text-gray-900 dark:text-gray-50 font-semibold flex items-center justify-center"
+            class="h-7 w-7 flex-shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 text-xs text-gray-800 dark:text-gray-200 font-semibold flex items-center justify-center"
           >
             {{add stepIndex 1}}
           </div>
+        {{/if}}
+
+        {{! Vertical line }}
+        {{#if (eq stepIndex (sub @steps.length 1))}}
+          <div class="w-px flex-grow bg-gradient-to-b from-gray-200/70 dark:from-white/10 via-gray-200/60 dark:via-white/8 via-80% to-transparent" />
+        {{else}}
+          <div class="w-px flex-grow bg-gray-200/70 dark:bg-white/10" />
+        {{/if}}
+      </div>
+
+      {{! Content }}
+      <div class="flex-grow">
+        <div class="flex h-7 items-center">
+          <div class="font-semibold text-gray-800 dark:text-gray-200" data-test-step-title>
+            {{step.titleMarkdown}}
+          </div>
         </div>
 
-        {{! Content }}
-        <div class="w-full overflow-hidden pl-8 pr-px">
-          <div class="flex items-center gap-3">
-            <div class="mt-2 font-semibold text-gray-900 dark:text-gray-200 {{if step.isComplete 'opacity-50' ''}}" data-test-step-title>
-              {{step.titleMarkdown}}
-            </div>
-
-            {{#if step.isComplete}}
-              <div class="flex mt-2" data-test-step-complete-icon>
-                {{svg-jar "check-circle" class="w-6 h-6 text-teal-500"}}
-              </div>
-            {{/if}}
-          </div>
-
-          <div class={{if @stepContainerClass @stepContainerClass "mt-3"}}>
-            {{yield (hash step=step)}}
-          </div>
+        <div class="pt-3 pb-5">
+          {{yield (hash step=step)}}
         </div>
       </div>
-    {{/let}}
+    </div>
   {{/each}}
 </div>

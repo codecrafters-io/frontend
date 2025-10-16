@@ -4,24 +4,17 @@ export interface StepDefinition {
   id: string;
   titleMarkdown: string;
   isComplete: boolean;
-  canBeCompletedManually: boolean;
 }
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    onManualStepComplete?: (step: StepDefinition) => void;
     steps: StepDefinition[];
-    stepContainerClass?: string;
   };
 
   Blocks: {
-    default: [
-      {
-        step: StepDefinition;
-      },
-    ];
+    default: [{ step: StepDefinition }];
   };
 }
 
