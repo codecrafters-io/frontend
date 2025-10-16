@@ -1,6 +1,6 @@
 import { drag } from 'ember-sortable/test-support';
 import { module, test } from 'qunit';
-import { settled, waitFor } from '@ember/test-helpers';
+import { settled } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -85,8 +85,6 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items initially');
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
-
-    const sortableCards = document.querySelectorAll('[data-test-sortable-extension-card]');
 
     await drag('mouse', '[data-test-sortable-extension-card]:first-child [data-test-sortable-item-drag-handle]', () => {
       return { dy: 120, dx: 0 };
