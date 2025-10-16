@@ -43,18 +43,20 @@
         {{/each}}
       </div>
 
-      {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
-        <div class="flex items-center justify-center w-full">
-          <TertiaryButton
-            class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
-            {{on "click" this.handleHideSolutionButtonClick}}
-            data-test-hide-solution-button
-          >
-            {{svg-jar "eye-off" class="size-4"}}
-            Hide Solution
-          </TertiaryButton>
-        </div>
-      {{/animated-if}}
+      <AnimatedContainer>
+        {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
+          <div class="flex items-center justify-center w-full">
+            <TertiaryButton
+              class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
+              {{on "click" this.handleHideSolutionButtonClick}}
+              data-test-hide-solution-button
+            >
+              {{svg-jar "eye-off" class="size-4"}}
+              Hide Solution
+            </TertiaryButton>
+          </div>
+        {{/animated-if}}
+      </AnimatedContainer>
     </:content>
 
     <:overlay>
