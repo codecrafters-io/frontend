@@ -23,11 +23,8 @@
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection
         @isDisabled={{bool this.expandedSection.isDisabled}}
         @repository={{@repository}}
+        @onSelect={{this.expandNextSection}}
       />
-
-      {{#if this.expandedSection.isComplete}}
-        <PrimaryButton class="mt-6" {{on "click" this.expandNextSection}} data-test-next-question-button>↓ Next question</PrimaryButton>
-      {{/if}}
     {{else if (eq this.expandedSection.type "SelectExpectedActivityFrequencySection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectExpectedActivityFrequencySection
         @isDisabled={{bool this.expandedSection.isDisabled}}
