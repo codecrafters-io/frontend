@@ -30,13 +30,13 @@
         <CoursePage::CourseStageStep::FirstStageYourTaskCard::UncommentCodeStep
           @repository={{@currentStep.repository}}
           @courseStage={{@currentStep.courseStage}}
-          @isComplete={{this.uncommentCodeStepIsComplete}}
+          @isComplete={{this.stepsAreComplete}}
         />
       {{else if (eq context.step.id "submit-code")}}
         <CoursePage::CourseStageStep::FirstStageYourTaskCard::SubmitCodeStep
           @courseStage={{@currentStep.courseStage}}
           @filename={{this.filename}}
-          @isComplete={{this.submitCodeStepIsComplete}}
+          @isComplete={{this.stepsAreComplete}}
         />
       {{/if}}
     </StepList>
