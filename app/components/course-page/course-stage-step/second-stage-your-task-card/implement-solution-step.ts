@@ -36,6 +36,7 @@ export default class ImplementSolutionStep extends Component<Signature> {
       this.expandedHintIndex = null;
     } else {
       this.expandedHintIndex = hintIndex;
+      this.solutionIsBlurred = true;
     }
   }
 
