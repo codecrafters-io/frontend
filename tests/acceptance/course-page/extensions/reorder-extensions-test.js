@@ -42,7 +42,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     assert.strictEqual(sortableCards.length, 2, 'Should have 2 sortable cards');
 
     await drag('mouse', '[data-test-sortable-extension-card]:first-child [data-test-sortable-item-drag-handle]', () => {
-      return { dy: sortableCards[0].getBoundingClientRect().height + 10, dx: 0 };
+      return { dy: 120, dx: 0 };
     });
 
     await settled();
@@ -89,7 +89,7 @@ module('Acceptance | course-page | extensions | reorder-extensions', function (h
     const sortableCards = document.querySelectorAll('[data-test-sortable-extension-card]');
 
     await drag('mouse', '[data-test-sortable-extension-card]:first-child [data-test-sortable-item-drag-handle]', () => {
-      return { dy: sortableCards[0].getBoundingClientRect().height + 10, dx: 0 };
+      return { dy: 120, dx: 0 };
     });
 
     await settled();
