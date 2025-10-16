@@ -11,15 +11,15 @@
     </div>
     <span class="text-gray-700">
       <span class="font-semibold text-gray-700">Hint #{{add @hintIndex 1}}:</span>
-      {{@hint.titleMarkdown}}
+      {{@hint.title_markdown}}
     </span>
   </div>
 
   <div>
     <AnimatedContainer>
       {{#animated-if this.isExpanded use=this.transition duration=200}}
-        <div class="p-3 pt-0 prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @hint.bodyMarkdown}}>
-          {{markdown-to-html @hint.bodyMarkdown}}
+        <div class="p-3 pt-0 prose dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @hint.body_markdown}}>
+          {{markdown-to-html @hint.body_markdown}}
         </div>
       {{/animated-if}}
     </AnimatedContainer>

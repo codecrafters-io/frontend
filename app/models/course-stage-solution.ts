@@ -6,8 +6,8 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
 export type Hint = {
-  bodyMarkdown: string;
-  titleMarkdown: string;
+  body_markdown: string;
+  title_markdown: string;
 };
 
 export default class CourseStageSolutionModel extends Model.extend(ViewableMixin) {

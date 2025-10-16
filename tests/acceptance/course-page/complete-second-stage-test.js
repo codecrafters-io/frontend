@@ -42,7 +42,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     solution.update({
       hintsJson: [
         {
-          bodyMarkdown: `
+          body_markdown: `
 Use Python's [input()](https://docs.python.org/3/library/functions.html#input) function to capture the command the user types in:
 
 \`\`\`python
@@ -51,10 +51,10 @@ command = input()
 \`\`\`
 
 The \`input()\` function waits for the user to enter a command and then returns it as a string.`,
-          titleMarkdown: 'Capturing user input',
+          title_markdown: 'Capturing user input',
         },
         {
-          bodyMarkdown: `
+          body_markdown: `
 Use Python's [print()](https://docs.python.org/3/library/functions.html#print) function to print the \`<command>: command not found\` message:
 
 \`\`\`python
@@ -63,7 +63,7 @@ print(f"{command}: command not found")
 \`\`\`
 
 The \`print()\` function prints a string to the console. The above code uses a [f-string](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals) to include the command in the message.`,
-          titleMarkdown: 'Printing the error message',
+          title_markdown: 'Printing the error message',
         },
       ],
     });
