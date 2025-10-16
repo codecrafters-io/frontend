@@ -44,14 +44,16 @@
       </div>
 
       {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
-        <TertiaryButton
-          class="w-full mb-6 flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
-          {{on "click" this.handleHideSolutionButtonClick}}
-          data-test-hide-solution-button
-        >
-          {{svg-jar "eye-off" class="size-4"}}
-          Hide Solution
-        </TertiaryButton>
+        <div class="flex items-center justify-center w-full">
+          <TertiaryButton
+            class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
+            {{on "click" this.handleHideSolutionButtonClick}}
+            data-test-hide-solution-button
+          >
+            {{svg-jar "eye-off" class="size-4"}}
+            Hide Solution
+          </TertiaryButton>
+        </div>
       {{/animated-if}}
     </:content>
 
