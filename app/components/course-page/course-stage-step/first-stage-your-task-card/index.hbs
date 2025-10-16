@@ -25,21 +25,21 @@
       </p>
     </div>
 
-    <ExpandableStepList @steps={{this.steps}} @onManualStepComplete={{this.handleStepCompletedManually}} class="scroll-mt-32 mt-5" as |stepList|>
-      {{#if (eq stepList.expandedStep.id "uncomment-code")}}
+    <StepList @steps={{this.steps}} class="mt-5" as |context|>
+      {{#if (eq context.step.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageYourTaskCard::UncommentCodeStep
           @repository={{@currentStep.repository}}
           @courseStage={{@currentStep.courseStage}}
           @isComplete={{this.uncommentCodeStepIsComplete}}
         />
-      {{else if (eq stepList.expandedStep.id "submit-code")}}
+      {{else if (eq context.step.id "submit-code")}}
         <CoursePage::CourseStageStep::FirstStageYourTaskCard::SubmitCodeStep
           @courseStage={{@currentStep.courseStage}}
           @filename={{this.filename}}
           @isComplete={{this.submitCodeStepIsComplete}}
         />
       {{/if}}
-    </ExpandableStepList>
+    </StepList>
 
     {{#if (eq this.coursePageState.nextStep this.coursePageState.activeStep)}}
       <div class="mt-4 flex">

@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type { StepDefinition } from 'codecrafters-frontend/components/expandable-step-list';
+import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -28,7 +28,6 @@ class BaseStep {
 
 class UncommentCodeStep extends BaseStep implements StepDefinition {
   id = 'uncomment-code';
-  canBeCompletedManually = true;
 
   get titleMarkdown() {
     const filename = this.repository.firstStageSolution?.changedFiles[0]?.filename;
@@ -43,7 +42,6 @@ class UncommentCodeStep extends BaseStep implements StepDefinition {
 
 class SubmitCodeStep extends BaseStep implements StepDefinition {
   id = 'submit-code';
-  canBeCompletedManually = false;
 
   get titleMarkdown() {
     return 'Git push to submit your changes';
@@ -71,37 +69,17 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
 
   get steps() {
     return [
-      new UncommentCodeStep(this.args.currentStep.repository, this.uncommentCodeStepIsComplete),
-      new SubmitCodeStep(this.args.currentStep.repository, this.submitCodeStepIsComplete),
+      new UncommentCodeStep(this.args.currentStep.repository, this.stepsAreComplete),
+      new SubmitCodeStep(this.args.currentStep.repository, this.stepsAreComplete),
     ];
   }
 
-  get submitCodeStepIsComplete() {
+  get stepsAreComplete() {
     return (
-      this.args.currentStep.repository.lastSubmissionHasSuccessStatus ||
-      this.args.currentStep.repository.stageIsComplete(this.args.currentStep.courseStage)
+      this.args.currentStep.repository.stageIsComplete(this.args.currentStep.courseStage) ||
+      (this.args.currentStep.repository.lastSubmission?.courseStage === this.args.currentStep.courseStage &&
+        this.args.currentStep.repository.lastSubmissionHasSuccessStatus)
     );
-  }
-
-  get uncommentCodeStepIsComplete() {
-    return this.uncommentCodeStepWasMarkedAsComplete || this.submitCodeStepIsComplete;
-  }
-
-  get uncommentCodeStepWasMarkedAsComplete() {
-    return this.coursePageState.manuallyCompletedStepIdsInFirstStageInstructions.includes('uncomment-code');
-  }
-
-  @action
-  handleStepCompletedManually(step: StepDefinition) {
-    if (step.id === 'uncomment-code') {
-      this.coursePageState.recordManuallyCompletedStepInFirstStageInstructions('uncomment-code');
-
-      this.analyticsEventTracker.track('completed_first_stage_tutorial_step', {
-        step_number: 1,
-        step_id: 'uncomment-code',
-        repository_id: this.args.currentStep.repository.id,
-      });
-    }
   }
 
   @action
