@@ -1,7 +1,5 @@
 import Component from '@glimmer/component';
 import type { Hint } from 'codecrafters-frontend/models/course-stage-solution';
-import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
@@ -10,17 +8,13 @@ interface Signature {
   Args: {
     hint: Hint;
     hintIndex: number;
+    isExpanded: boolean;
+    onHeaderClick: () => void;
   };
 }
 
 export default class HintCard extends Component<Signature> {
   transition = fade;
-  @tracked isExpanded = false;
-
-  @action
-  handleHeaderClick(): void {
-    this.isExpanded = !this.isExpanded;
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

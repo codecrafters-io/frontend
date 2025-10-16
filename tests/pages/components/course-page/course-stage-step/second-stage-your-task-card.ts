@@ -11,6 +11,11 @@ export default {
   hasScreencastsLink: isVisible('[data-test-screencasts-link]'),
   scope: '[data-test-second-stage-your-task-card]',
 
+  hints: collection('[data-test-hint-card]', {
+    clickOnHeader: clickable('[data-test-hint-card-header]'),
+    hasContent: isVisible('[data-test-hint-card-content]'),
+  }),
+
   scrollIntoView() {
     return document.querySelector(this.scope)!.scrollIntoView();
   },

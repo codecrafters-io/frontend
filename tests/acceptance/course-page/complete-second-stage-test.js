@@ -14,7 +14,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('can complete second stage', async function (assert) {
+  test('can complete second stage when hints & solution are present', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
 
@@ -42,30 +42,97 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     solution.update({
       hintsJson: [
         {
-          body_markdown: `
-Use Python's [input()](https://docs.python.org/3/library/functions.html#input) function to capture the command the user types in:
-
-\`\`\`python
-# Capture the user's command in the "command" variable
-command = input()
-\`\`\`
-
-The \`input()\` function waits for the user to enter a command and then returns it as a string.`,
-          title_markdown: 'Capturing user input',
+          body_markdown: 'test',
+          title_markdown: 'How do I XYZ?',
         },
         {
-          body_markdown: `
-Use Python's [print()](https://docs.python.org/3/library/functions.html#print) function to print the \`<command>: command not found\` message:
-
-\`\`\`python
-# Prints the "<command>: command not found" message
-print(f"{command}: command not found")
-\`\`\`
-
-The \`print()\` function prints a string to the console. The above code uses a [f-string](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals) to include the command in the message.`,
-          title_markdown: 'Printing the error message',
+          body_markdown: 'test',
+          title_markdown: 'How do I ABC?',
         },
       ],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.notOk(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is not complete');
+    assert.notOk(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is not complete');
+
+    // Asserts that we don't show the "To run tests again..." message for a system submission
+    assert.contains(coursePage.secondStageYourTaskCard.steps[1].text, 'To run tests, make changes to your code');
+
+    // Initially, no hints should be expanded
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[0].hasContent, 'First hint is not expanded initially');
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[1].hasContent, 'Second hint is not expanded initially');
+
+    // Click on first hint
+    await coursePage.secondStageYourTaskCard.hints[0].clickOnHeader();
+    await animationsSettled();
+
+    assert.ok(coursePage.secondStageYourTaskCard.hints[0].hasContent, 'First hint is expanded after clicking');
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[1].hasContent, 'Second hint is still not expanded');
+
+    // Click on second hint
+    await coursePage.secondStageYourTaskCard.hints[1].clickOnHeader();
+    await animationsSettled();
+
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[0].hasContent, 'First hint is collapsed after clicking second hint');
+    assert.ok(coursePage.secondStageYourTaskCard.hints[1].hasContent, 'Second hint is expanded after clicking');
+
+    // Click on first hint again
+    await coursePage.secondStageYourTaskCard.hints[0].clickOnHeader();
+    await animationsSettled();
+
+    assert.ok(coursePage.secondStageYourTaskCard.hints[0].hasContent, 'First hint is expanded again');
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[1].hasContent, 'Second hint is collapsed');
+
+    // Click on the same hint again to collapse it
+    await coursePage.secondStageYourTaskCard.hints[0].clickOnHeader();
+    await animationsSettled();
+
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[0].hasContent, 'First hint is collapsed when clicking the expanded hint');
+    assert.notOk(coursePage.secondStageYourTaskCard.hints[1].hasContent, 'Second hint remains collapsed');
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+    });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await finishRender();
+
+    assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
+    assert.ok(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is complete');
+
+    assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
+
+    assert.notOk(coursePage.testsPassedModal.isVisible, 'Tests passed modal disappears');
+    assert.ok(coursePage.currentStepCompleteModal.isVisible, 'Current step complete modal is visible');
+  });
+
+  test('can complete second stage when solution & hints are not present', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signInAsSubscriber(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+
+    course.update({ releaseStatus: 'live' });
+
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    // Auto-create next submission
+    this.server.create('submission', 'withEvaluatingStatus', {
+      repository: repository,
+      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      clientType: 'system',
     });
 
     await catalogPage.visit();
