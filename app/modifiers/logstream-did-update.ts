@@ -6,7 +6,6 @@ import Logstream from 'codecrafters-frontend/utils/logstream';
 import Modifier, { type ArgsFor } from 'ember-modifier';
 import { inject as service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
-import { action } from '@ember/object';
 import type { Owner } from '@ember/test-helpers/build-owner';
 
 interface Signature {
