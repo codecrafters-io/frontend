@@ -17,6 +17,7 @@ interface Signature {
 function cleanup(instance: LogstreamDidUpdateModifier) {
   if (instance.logstream) {
     instance.logstream.unsubscribe();
+    instance.logstream = undefined;
   }
 }
 
@@ -34,7 +35,10 @@ export default class LogstreamDidUpdateModifier extends Modifier<Signature> {
   modify(_element: HTMLElement, [callback, logstreamId]: Signature['Args']['Positional']) {
     cleanup(this);
 
-    this.logstream = new Logstream(logstreamId, this.actionCableConsumer, this.store, () => callback(this.logstream!));
+    this.logstream = new Logstream(logstreamId, this.actionCableConsumer, this.store, () => {
+      callback(this.logstream!);
+    });
+
     this.logstream.subscribe();
   }
 }
