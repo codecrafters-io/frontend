@@ -3,10 +3,11 @@
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type Store from '@ember-data/store';
 import Logstream from 'codecrafters-frontend/utils/logstream';
-import Modifier from 'ember-modifier';
+import Modifier, { type ArgsFor } from 'ember-modifier';
 import { inject as service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 import { action } from '@ember/object';
+import type { Owner } from '@ember/test-helpers/build-owner';
 
 interface Signature {
   Args: {
@@ -14,29 +15,28 @@ interface Signature {
   };
 }
 
+function cleanup(instance: LogstreamDidUpdateModifier) {
+  if (instance.logstream) {
+    instance.logstream.unsubscribe();
+  }
+}
+
 export default class LogstreamDidUpdateModifier extends Modifier<Signature> {
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare store: Store;
 
-  callback?: (logstream: Logstream) => void;
   logstream?: Logstream;
 
-  @action
-  handleLogstreamDidPoll(): void {
-    this.callback!(this.logstream!);
+  constructor(owner: unknown, args: ArgsFor<Signature>) {
+    super(owner as Owner, args);
+    registerDestructor(this, cleanup);
   }
 
   modify(_element: HTMLElement, [callback, logstreamId]: Signature['Args']['Positional']) {
-    this.logstream = new Logstream(logstreamId, this.actionCableConsumer, this.store, this.handleLogstreamDidPoll);
-    this.callback = callback;
+    cleanup(this);
 
-    console.log(`subscribing to logstream#${logstreamId}`);
+    this.logstream = new Logstream(logstreamId, this.actionCableConsumer, this.store, () => callback(this.logstream!));
     this.logstream.subscribe();
-
-    registerDestructor(this, () => {
-      console.log(`unsubscribing from logstream#${logstreamId}`);
-      this.logstream?.unsubscribe();
-    });
   }
 }
 
