@@ -3,8 +3,8 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export type Faq = {
-  query: string;
-  answerMarkdown: string;
+  question_markdown: string;
+  answer_markdown: string;
 };
 
 interface Signature {

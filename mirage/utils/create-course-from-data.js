@@ -77,6 +77,7 @@ function courseAttributesFromData(courseData) {
     completionPercentage: courseData.completion_percentage,
     descriptionMarkdown: courseData.description_md,
     difficulty: courseData.marketing.difficulty,
+    frequentlyAskedQuestions: courseData.marketing.frequently_asked_questions || [],
     name: courseData.name,
     releaseStatus: courseData.release_status,
     sampleExtensionIdeaTitle: courseData.marketing.sample_extension_idea_title,
