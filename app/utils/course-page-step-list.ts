@@ -70,9 +70,17 @@ export class StepListDefinition {
         stepGroups.push(new ExtensionStepGroup(extension, steps));
       });
     } else {
+      const positionByExtensionId = new Map(this.repository.extensionActivations.map((act) => [act.extension.id, act.position]));
+      const getPosition = (item: RepositoryStageListItemModel) => positionByExtensionId.get(item.stage.primaryExtension?.id ?? '') ?? 999;
+
+      const sortedExtensionItems = this.repository.stageList.items
+        .rejectBy('isBaseStage')
+        .slice()
+        .sort((a, b) => getPosition(a) - getPosition(b));
+
       let stepsInNextGroup: StepDefinition[] = [];
 
-      this.repository.stageList.items.rejectBy('isBaseStage').forEach((item) => {
+      sortedExtensionItems.forEach((item) => {
         const extensionInNextGroup = stepsInNextGroup[0] && (stepsInNextGroup[0] as CourseStageStep).courseStage.primaryExtension;
 
         if (extensionInNextGroup && item.stage.primaryExtension != extensionInNextGroup) {
