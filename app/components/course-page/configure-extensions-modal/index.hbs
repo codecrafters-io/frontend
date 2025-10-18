@@ -7,7 +7,7 @@
     Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
   </AlertWithIcon>
 
-  <div class="grid grid-cols-1 gap-4 mb-6">
+  <div class="grid grid-cols-1">
     {{#if this.enabledExtensions.length}}
       <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
         {{#each this.enabledExtensions key="id" as |extension|}}
