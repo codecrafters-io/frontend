@@ -33,16 +33,16 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   }
 
   get disabledExtensions() {
-    const extensions = this.args.repository.course.sortedExtensions;
     const activatedIds = this.args.repository.extensionActivations.map((activation) => activation.extension.id);
 
-    return extensions.filter((ext) => !activatedIds.includes(ext.id)).sortBy('position');
+    return this.args.repository.course.sortedExtensions.filter((ext) => !activatedIds.includes(ext.id));
   }
 
   get enabledExtensions() {
-    const extensionActivations = this.args.repository.extensionActivations.slice().sort((a, b) => (a.position ?? 999) - (b.position ?? 999));
-
-    return extensionActivations.map((activation) => activation.extension);
+    return this.args.repository.extensionActivations
+      .slice()
+      .sort((a, b) => (a.position ?? 999) - (b.position ?? 999))
+      .map((activation) => activation.extension);
   }
 
   get orderedCourseExtensionIdeas() {

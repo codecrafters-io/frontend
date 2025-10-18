@@ -6,15 +6,15 @@
   data-test-course-extension-card
 >
   <div class="flex items-start justify-between mb-3">
-    <div class="flex items-center flex-wrap gap-2 mr-2 mb-0.5">
+    <div class="flex items-center flex-wrap gap-2 mr-2">
       {{#if this.optimisticValueForIsActivated}}
-        <div class="text-gray-400 text-lg cursor-grab" {{sortable-handle}} data-test-sortable-item-drag-handle>
+        <div class="text-gray-400 text-xl cursor-grab flex items-center h-7" {{sortable-handle}} data-test-sortable-item-drag-handle>
           ☰
         </div>
       {{/if}}
       <div
         class="{{if this.optimisticValueForIsActivated 'text-teal-600 dark:text-teal-500' 'text-gray-800 dark:text-gray-50'}}
-          font-bold text-xl tracking-tight"
+          font-bold text-xl tracking-tight h-7 flex items-center"
         data-test-course-extension-name
       >
         {{@extension.name}}
