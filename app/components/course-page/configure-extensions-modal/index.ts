@@ -107,7 +107,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       .filter(Boolean) as Array<{
       activation: CourseExtensionActivationModel;
       id: string;
-      originalPosition: number | null;
+      originalPosition: number;
       newPosition: number;
     }>;
 
@@ -130,7 +130,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
       // Rollback on error
       updates.forEach(({ activation, originalPosition }) => {
-        activation.position = originalPosition!;
+        activation.position = originalPosition;
       });
 
       // TODO: Show error message to user
