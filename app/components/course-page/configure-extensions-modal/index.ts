@@ -9,6 +9,9 @@ import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import move from 'ember-animated/motions/move';
+import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import { easeOut } from 'ember-animated/easings/cosine';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -47,6 +50,22 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       .filterBy('course', this.args.repository.course)
       .rejectBy('developmentStatus', 'released')
       .sortBy('sortPositionForRoadmapPage');
+  }
+
+  // @ts-expect-error ember-animated not typed
+  // eslint-disable-next-line require-yield
+  *extensionTransition({ insertedSprites, removedSprites }) {
+    for (const sprite of insertedSprites) {
+      sprite.startTranslatedBy(0, -20);
+      move(sprite, { easing: easeOut });
+      fadeIn(sprite, { easing: easeOut });
+    }
+
+    for (const sprite of removedSprites) {
+      sprite.endTranslatedBy(0, -20);
+      move(sprite, { easing: easeOut });
+      fadeOut(sprite, { easing: easeOut });
+    }
   }
 
   @action

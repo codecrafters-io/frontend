@@ -9,28 +9,34 @@
 
   <div class="grid grid-cols-1">
     {{#if this.enabledExtensions.length}}
-      <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
-        {{#each this.enabledExtensions key="id" as |extension|}}
-          <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}} class="mb-4">
-            <CoursePage::ConfigureExtensionsModal::ExtensionCard
-              @extension={{extension}}
-              @repository={{@repository}}
-              @onToggle={{this.handleExtensionToggle}}
-            />
-          </div>
-        {{/each}}
-      </div>
+      <AnimatedContainer>
+        <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
+          {{#animated-each this.enabledExtensions key="id" use=this.extensionTransition duration=200 as |extension|}}
+            <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}} class="mb-4">
+              {{! @glint-ignore: animated-each doesn't preserve exact types, but extension is always CourseExtensionModel at runtime }}
+              <CoursePage::ConfigureExtensionsModal::ExtensionCard
+                @extension={{extension}}
+                @repository={{@repository}}
+                @onToggle={{this.handleExtensionToggle}}
+              />
+            </div>
+          {{/animated-each}}
+        </div>
+      </AnimatedContainer>
     {{/if}}
 
-    {{#each this.disabledExtensions key="id" as |extension|}}
-      <div class="mb-4">
-        <CoursePage::ConfigureExtensionsModal::ExtensionCard
-          @extension={{extension}}
-          @repository={{@repository}}
-          @onToggle={{this.handleExtensionToggle}}
-        />
-      </div>
-    {{/each}}
+    <AnimatedContainer>
+      {{#animated-each this.disabledExtensions key="id" use=this.extensionTransition duration=200 as |extension|}}
+        <div class="mb-4">
+          <CoursePage::ConfigureExtensionsModal::ExtensionCard
+            {{! @glint-ignore: animated-each doesn't preserve exact types, but extension is always CourseExtensionModel at runtime }}
+            @extension={{extension}}
+            @repository={{@repository}}
+            @onToggle={{this.handleExtensionToggle}}
+          />
+        </div>
+      {{/animated-each}}
+    </AnimatedContainer>
   </div>
 
   <div class="border-b border-gray-200 dark:border-white/5 pb-1 mb-6 flex items-center gap-2">
