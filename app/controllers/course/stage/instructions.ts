@@ -8,7 +8,6 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
-import { next } from '@ember/runloop';
 import type Store from '@ember-data/store';
 
 export default class CourseStageInstructionsController extends Controller {
@@ -63,12 +62,13 @@ export default class CourseStageInstructionsController extends Controller {
 
   @action
   handleDidUpdateTestsStatus(_element: HTMLDivElement, [newTestsStatus]: [CourseStageStep['testsStatus']]) {
-    if (newTestsStatus === 'evaluating') {
-      // Ensure the new test runner card is in DOM (it shifts around when the tests status changes)
-      next(() => {
-        document.getElementById('test-runner-card')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    }
+    // TODO: Revive this once we decide where to place the test runner card
+    // if (newTestsStatus === 'evaluating') {
+    //   // Ensure the new test runner card is in DOM (it shifts around when the tests status changes)
+    //   next(() => {
+    //     document.getElementById('test-runner-card')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    //   });
+    // }
 
     // For tests passed, let's scroll all the way to the top
     if (newTestsStatus === 'passed') {
