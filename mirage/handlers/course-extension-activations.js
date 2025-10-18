@@ -12,8 +12,7 @@ export default function (server) {
   server.post('/course-extension-activations/reorder', function (schema, request) {
     const { repository_id, positions } = JSON.parse(request.requestBody);
 
-    const repositoryActivations = schema.courseExtensionActivations.where({ repositoryId: repository_id });
-    repositoryActivations.models.forEach((activation, index) => {
+    schema.courseExtensionActivations.where({ repositoryId: repository_id }).models.forEach((activation, index) => {
       activation.update({ position: -1000 - index });
     });
 
@@ -25,10 +24,8 @@ export default function (server) {
       }
     });
 
-    const orderedActivations = schema.courseExtensionActivations
-      .where({ repositoryId: repository_id })
-      .models.sort((a, b) => a.position - b.position);
-
-    return { courseExtensionActivations: orderedActivations };
+    return {
+      courseExtensionActivations: schema.courseExtensionActivations.where({ repositoryId: repository_id }).models.sortBy('position'),
+    };
   });
 }

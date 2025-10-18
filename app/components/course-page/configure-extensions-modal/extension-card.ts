@@ -27,11 +27,7 @@ export default class ExtensionCard extends Component<Signature> {
   }
 
   get optimisticValueForIsActivated(): boolean {
-    if (this.unsavedIsActivatedValue !== null) {
-      return this.unsavedIsActivatedValue;
-    } else {
-      return this.isActivated;
-    }
+    return this.unsavedIsActivatedValue ?? this.isActivated;
   }
 
   get progressPillType(): 'completed' | 'in_progress' | null {
@@ -56,12 +52,7 @@ export default class ExtensionCard extends Component<Signature> {
 
   @action
   async handleClick(): Promise<void> {
-    if (this.unsavedIsActivatedValue === null) {
-      this.unsavedIsActivatedValue = !this.isActivated;
-    } else {
-      this.unsavedIsActivatedValue = !this.unsavedIsActivatedValue;
-    }
-
+    this.unsavedIsActivatedValue = !this.optimisticValueForIsActivated;
     this.syncActivation.perform();
   }
 }

@@ -71,9 +71,8 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   @action
   async handleExtensionToggle(extension: CourseExtensionModel): Promise<void> {
     const activations = this.args.repository.extensionActivations.filter((activation) => activation.extension === extension);
-    const isCurrentlyActivated = activations.length > 0;
 
-    if (isCurrentlyActivated) {
+    if (activations.length > 0) {
       // Deactivate: destroy all activations for this extension
       for (const activation of activations) {
         await activation.destroyRecord();
@@ -83,7 +82,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
       await this.store
         .createRecord('course-extension-activation', {
           repository: this.args.repository,
-          extension: extension,
+          extension,
         })
         .save();
     }
@@ -93,7 +92,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
 
   @action
   async handleSortableItemsReordered(sortedItems: CourseExtensionModel[]) {
-    const positions = sortedItems
+    const updates = sortedItems
       .map((extension, index) => {
         const activation = this.args.repository.extensionActivations.find((act) => act.extension.id === extension.id);
         if (!activation) return null;
@@ -101,18 +100,20 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
         return {
           activation,
           id: activation.id,
-          position: index + 1, // 1-based position
+          originalPosition: activation.position,
+          newPosition: index + 1, // 1-based position
         };
       })
-      .filter(Boolean) as Array<{ activation: CourseExtensionActivationModel; id: string; position: number }>;
+      .filter(Boolean) as Array<{
+      activation: CourseExtensionActivationModel;
+      id: string;
+      originalPosition: number | null;
+      newPosition: number;
+    }>;
 
-    const originalPositions = positions.map(({ activation }) => ({
-      activation,
-      originalPosition: activation.position,
-    }));
-
-    positions.forEach(({ activation, position }) => {
-      activation.position = position;
+    // Optimistically update positions
+    updates.forEach(({ activation, newPosition }) => {
+      activation.position = newPosition;
     });
 
     const tempRecord = this.store.createRecord('course-extension-activation') as CourseExtensionActivationModel;
@@ -120,15 +121,16 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     try {
       await tempRecord.reorder({
         repository_id: this.args.repository.id,
-        positions: positions.map(({ id, position }) => ({ id, position })),
+        positions: updates.map(({ id, newPosition }) => ({ id, position: newPosition })),
       });
 
       await this.syncExtensionActivations();
     } catch (error) {
       console.error('Error reordering extensions:', error);
 
-      originalPositions.forEach(({ activation, originalPosition }) => {
-        activation.position = originalPosition;
+      // Rollback on error
+      updates.forEach(({ activation, originalPosition }) => {
+        activation.position = originalPosition!;
       });
 
       // TODO: Show error message to user
