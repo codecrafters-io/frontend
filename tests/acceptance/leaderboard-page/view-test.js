@@ -142,6 +142,24 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
     assert.strictEqual(leaderboardPage.entriesTable.entries[1].username, 'python-user-2', 'second entry should be python-user-2');
   });
 
+  test('shows progress donuts for entries', async function (assert) {
+    const language = this.server.schema.languages.all().models.find((language) => language.slug === 'rust');
+    const leaderboard = language.leaderboard;
+
+    const sampleUserData = [
+      { username: 'user1', score: 1000, leaderboard },
+      { username: 'user2', score: 500, leaderboard },
+    ];
+
+    createLeaderboardEntriesFromSampleData(this.server, sampleUserData);
+
+    await leaderboardPage.visit({ language_slug: 'rust' });
+
+    assert.strictEqual(leaderboardPage.entriesTable.entries.length, 2, '2 entries should be shown');
+    assert.ok(leaderboardPage.entriesTable.entries[0].progressDonut.isVisible, 'First entry should have a progress donut');
+    assert.ok(leaderboardPage.entriesTable.entries[1].progressDonut.isVisible, 'Second entry should have a progress donut');
+  });
+
   // Test that surrounding entries are shown if user is not within top 10
   // Test that surrounding entries are not shown if user is within top 10
 });
