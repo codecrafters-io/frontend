@@ -15,7 +15,7 @@
   <AnimatedContainer>
     {{#animated-if @isOpen use=this.transition duration=200}}
       <div class="pb-3 pl-6">
-        <div class="prose dark:prose-invert">{{markdown-to-html @faq.answer_markdown}}</div>
+        <div class="prose dark:prose-invert prose-compact">{{markdown-to-html @faq.answer_markdown}}</div>
       </div>
     {{/animated-if}}
   </AnimatedContainer>
