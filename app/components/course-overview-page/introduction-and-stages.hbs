@@ -6,7 +6,10 @@
 
     {{#if (gt @course.frequentlyAskedQuestions.length 0)}}
       <div class="mb-6">
-        <CollapsibleFaqList @faqs={{@course.frequentlyAskedQuestions}} />
+        {{! Extra if convinces typescript that frequentlyAskedQuestions is not null }}
+        {{#if @course.frequentlyAskedQuestions}}
+          <CollapsibleFaqList @faqs={{@course.frequentlyAskedQuestions}} />
+        {{/if}}
       </div>
     {{/if}}
 
