@@ -8,11 +8,15 @@ interface Signature {
   Args: {
     total: number;
     completed: number;
-    variant?: 'default' | 'muted' | 'highlighted';
+    color?: 'teal' | 'grey';
   };
 }
 
 export default class ProgressDonut extends Component<Signature> {
+  get color(): 'teal' | 'grey' {
+    return this.args.color || 'teal';
+  }
+
   get isComplete(): boolean {
     return this.args.total > 0 && this.args.completed >= this.args.total;
   }
@@ -30,10 +34,6 @@ export default class ProgressDonut extends Component<Signature> {
     const targetOffset = (2 * Math.PI * 9 * (100 - this.progressPercentage)) / 100;
 
     return htmlSafe(`--target-offset: ${targetOffset}`);
-  }
-
-  get variant(): 'default' | 'muted' | 'highlighted' {
-    return this.args.variant || 'default';
   }
 }
 

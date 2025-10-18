@@ -26,10 +26,6 @@ export default class LeaderboardPageEntriesTableRow extends Component<Signature>
     return this.args.entry.user === this.authenticator.currentUser;
   }
 
-  get totalStages(): number {
-    return this.args.entry.leaderboard.highestPossibleScore;
-  }
-
   get visibleCourses(): CourseModel[] {
     return this.args.entry.relatedCourses.slice(-MAX_VISIBLE_COURSES);
   }
