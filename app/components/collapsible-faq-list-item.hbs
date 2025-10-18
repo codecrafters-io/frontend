@@ -9,13 +9,13 @@
       {{svg-jar "chevron-down" class=(concat "w-5 h-5 transition-transform duration-500 " (if @isOpen "rotate-180"))}}
     </div>
 
-    <div class="font-medium text-gray-800 dark:text-gray-200">{{@faq.question_markdown}}</div>
+    <div class="font-semibold text-gray-800 dark:text-gray-200">{{@faq.question_markdown}}</div>
   </div>
 
   <AnimatedContainer>
     {{#animated-if @isOpen use=this.transition duration=200}}
       <div class="pb-3 pl-6">
-        <div class="prose dark:prose-invert prose-sm">{{markdown-to-html @faq.answer_markdown}}</div>
+        <div class="prose dark:prose-invert">{{markdown-to-html @faq.answer_markdown}}</div>
       </div>
     {{/animated-if}}
   </AnimatedContainer>
