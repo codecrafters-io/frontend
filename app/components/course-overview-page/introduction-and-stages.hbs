@@ -5,12 +5,10 @@
     </div>
 
     {{#if (gt @course.frequentlyAskedQuestions.length 0)}}
-      <div class="mb-6">
-        {{! Extra if convinces typescript that frequentlyAskedQuestions is not null }}
-        {{#if @course.frequentlyAskedQuestions}}
-          <CollapsibleFaqList @faqs={{@course.frequentlyAskedQuestions}} />
-        {{/if}}
-      </div>
+      {{! Extra if convinces typescript that frequentlyAskedQuestions is not null }}
+      {{#if @course.frequentlyAskedQuestions}}
+        <CollapsibleFaqList @faqs={{@course.frequentlyAskedQuestions}} class="mb-6" />
+      {{/if}}
     {{/if}}
 
     <h3 class="font-semibold text-gray-600 dark:text-gray-400 text-center text-sm relative mb-3">
