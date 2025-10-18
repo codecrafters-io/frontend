@@ -57,7 +57,7 @@
     <div class="flex items-center justify-end gap-2">
       <div class="w-5 h-5 flex-shrink-0">
         <ProgressDonut
-          @total={{@entry.leaderboard.highestPossibleScore}}
+          @total={{@entry.leaderboard.language.liveOrBetaStagesCount}}
           @completed={{@entry.scoreUpdatesCount}}
           @color={{if this.isCurrentUser "teal" "grey"}}
         />
