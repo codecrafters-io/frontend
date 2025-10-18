@@ -8,7 +8,6 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
-import { next } from '@ember/runloop';
 import type Store from '@ember-data/store';
 
 export default class CourseStageInstructionsController extends Controller {
