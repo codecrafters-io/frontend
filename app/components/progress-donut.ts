@@ -8,6 +8,7 @@ interface Signature {
   Args: {
     total: number;
     completed: number;
+    variant?: 'default' | 'muted' | 'highlighted';
   };
 }
 
@@ -29,6 +30,10 @@ export default class ProgressDonut extends Component<Signature> {
     const targetOffset = (2 * Math.PI * 9 * (100 - this.progressPercentage)) / 100;
 
     return htmlSafe(`--target-offset: ${targetOffset}`);
+  }
+
+  get variant(): 'default' | 'muted' | 'highlighted' {
+    return this.args.variant || 'default';
   }
 }
 

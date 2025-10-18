@@ -54,7 +54,10 @@
   </LeaderboardPage::EntriesTable::RowCell>
 
   <LeaderboardPage::EntriesTable::RowCell class="hidden md:table-cell">
-    <div class="flex items-center justify-end">
+    <div class="flex items-center justify-end gap-2">
+      <div class="w-5 h-5 flex-shrink-0">
+        <ProgressDonut @total={{this.totalStages}} @completed={{@entry.scoreUpdatesCount}} @variant={{if this.isCurrentUser "highlighted" "muted"}} />
+      </div>
       <div class="text-xs font-mono">
         <span
           class="{{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-700 dark:text-gray-200'}}"

@@ -6,7 +6,15 @@
     r="9"
     fill="none"
     stroke-width="5"
-    class="{{if this.isComplete 'stroke-teal-100 dark:stroke-teal-900' 'stroke-blue-100 dark:stroke-blue-900'}}"
+    class="{{if
+        (eq this.variant 'muted')
+        (if this.isComplete 'stroke-gray-100 dark:stroke-gray-900' 'stroke-gray-100 dark:stroke-gray-900')
+        (if
+          (eq this.variant 'highlighted')
+          'stroke-teal-100 dark:stroke-teal-900/30'
+          (if this.isComplete 'stroke-teal-100 dark:stroke-teal-900' 'stroke-blue-100 dark:stroke-blue-900')
+        )
+      }}"
   />
   {{! Progress circle }}
   <circle
@@ -15,7 +23,12 @@
     r="9"
     fill="none"
     stroke-width="5"
-    class="progress-donut-circle {{if this.isComplete 'stroke-teal-500' 'stroke-blue-500'}}"
+    class="progress-donut-circle
+      {{if
+        (eq this.variant 'muted')
+        (if this.isComplete 'stroke-gray-500' 'stroke-gray-400')
+        (if (eq this.variant 'highlighted') 'stroke-teal-600 dark:stroke-teal-400' (if this.isComplete 'stroke-teal-500' 'stroke-blue-500'))
+      }}"
     style={{this.progressStyle}}
     ...attributes
   />
