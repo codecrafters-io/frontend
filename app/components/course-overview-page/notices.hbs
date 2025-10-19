@@ -14,10 +14,12 @@
     </p>
   </AlertWithIcon>
 {{else if (and @course.isFree @course.isFreeUntil)}}
-  <AlertWithIcon @type="success" data-test-course-free-notice ...attributes>
-    This challenge is free until
-    {{this.formattedCourseIsFreeExpirationDate}}!
-  </AlertWithIcon>
+  {{#unless this.authenticator.currentUser.canAccessMembershipBenefits}}
+    <AlertWithIcon @type="success" data-test-course-free-notice ...attributes>
+      This challenge is free until
+      {{this.formattedCourseIsFreeExpirationDate}}!
+    </AlertWithIcon>
+  {{/unless}}
 {{else if @course.releaseStatusIsDeprecated}}
   <AlertWithIcon @type="info" data-test-course-deprecated-notice ...attributes>
     This challenge is deprecated.<br />
