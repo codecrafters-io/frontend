@@ -29,7 +29,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     return this.allCourseExtensionIdeas
       .filter((item) => item.course === this.args.repository.course)
       .filter((item) => item.developmentStatus !== 'released')
-      .toSorted(fieldComparator('sortPositionForRoadmapPage'));
+      .sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   @action

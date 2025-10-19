@@ -35,7 +35,7 @@ export default class RequestLanguageDropdown extends Component<Signature> {
     return this.store
       .peekAll('language')
       .filter((language) => !this.args.course.betaOrLiveLanguages.includes(language))
-      .toSorted(fieldComparator('name'));
+      .sort(fieldComparator('name'));
   }
 
   get languageSuggestions() {

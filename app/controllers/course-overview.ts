@@ -11,7 +11,7 @@ export default class CourseOverviewController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get activeRepository(): RepositoryModel | null {
-    return [...this.userRepositories.toSorted(fieldComparator('lastSubmissionAt'))].reverse()[0] || null;
+    return this.userRepositories.toSorted(fieldComparator('lastSubmissionAt')).reverse()[0] || null;
   }
 
   get completedStages() {

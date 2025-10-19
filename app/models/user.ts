@@ -130,7 +130,7 @@ export default class UserModel extends Model {
   get currentAffiliateReferral() {
     return this.affiliateReferralsAsCustomer
       .filter((item) => !item.isNew)
-      .toSorted(fieldComparator('activatedAt'))
+      .sort(fieldComparator('activatedAt'))
       .reverse()[0];
   }
 
@@ -222,7 +222,7 @@ export default class UserModel extends Model {
       this.promotionalDiscounts
         .filter((item) => item.type === type)
         .filter((item) => !item.isExpired)
-        .toSorted(fieldComparator('createdAt'))
+        .sort(fieldComparator('createdAt'))
         .reverse()[0] || null
     );
   }

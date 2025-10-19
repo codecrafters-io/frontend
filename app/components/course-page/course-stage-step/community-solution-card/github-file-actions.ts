@@ -53,7 +53,7 @@ export default class GithubFileActionsComponent extends Component<Signature> {
       this.args.solution.exports
         .filter((item) => !item.isExpired)
         .filter((item) => item.isProvisioned)
-        .toSorted(fieldComparator('expiresAt'))
+        .sort(fieldComparator('expiresAt'))
         .at(-1) || null
     );
   }

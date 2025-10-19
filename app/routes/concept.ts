@@ -105,7 +105,7 @@ export default class ConceptRoute extends BaseRoute {
     const cachedEngagement = this.store
       .peekAll('concept-engagement')
       .filter((e) => e.concept.slug === concept.slug && e.user === user)
-      .toSorted(fieldComparator('createdAt'))
+      .sort(fieldComparator('createdAt'))
       .reverse()[0];
 
     return (

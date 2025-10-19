@@ -14,6 +14,6 @@ export default class CourseIdeasController extends Controller {
   };
 
   get orderedCourseIdeas() {
-    return this.model.courseIdeas.filter((item) => !item.isArchived).toSorted(fieldComparator('sortPositionForRoadmapPage'));
+    return this.model.courseIdeas.filter((item) => !item.isArchived).sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 }

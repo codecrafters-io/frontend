@@ -40,7 +40,7 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
       this.authenticator
         .currentUser!.institutionMembershipGrantApplications.filter((application) => application.institution.id === this.args.institution.id)
         .filter((application) => !application.isNew)
-        .toSorted(fieldComparator('createdAt'))
+        .sort(fieldComparator('createdAt'))
         .at(-1) || null
     );
   }

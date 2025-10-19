@@ -29,7 +29,7 @@ export default class TrackPageCourseCardList extends Component<Signature> {
             .filter((item) => item.language === this.args.language)
             .filter((item) => item.course === course)
             .filter((item) => item.firstSubmissionCreated)
-            .toSorted(fieldComparator('completedStagesCount', 'lastSubmissionAt'))
+            .sort(fieldComparator('completedStagesCount', 'lastSubmissionAt'))
             .at(-1)
         : null;
 

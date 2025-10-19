@@ -19,9 +19,10 @@ export default class CourseAdminFeedbackController extends Controller {
       submissions = submissions.filter((feedbackSubmission) => !feedbackSubmission.isAcknowledgedByStaff);
     }
 
-    submissions = submissions.filter((feedbackSubmission) => feedbackSubmission.status !== 'open');
-
-    return submissions.toSorted(fieldComparator('createdAt')).reverse();
+    return submissions
+      .filter((feedbackSubmission) => feedbackSubmission.status !== 'open')
+      .sort(fieldComparator('createdAt'))
+      .reverse();
   }
 
   // @ts-expect-error ember-animated not typed

@@ -69,7 +69,7 @@ export default class CourseRoute extends BaseRoute {
         // @ts-expect-error transition.to.queryParams not typed
         .filter((item) => item.language?.slug === transition.to.queryParams.track)
         .filter((item) => item.firstSubmissionCreated)
-        .toSorted(fieldComparator('lastSubmissionAt'))
+        .sort(fieldComparator('lastSubmissionAt'))
         .at(-1);
 
       if (lastPushedRepositoryForTrack) {
@@ -80,7 +80,7 @@ export default class CourseRoute extends BaseRoute {
     } else {
       const lastPushedRepository = repositories
         .filter((item) => item.firstSubmissionCreated)
-        .toSorted(fieldComparator('lastSubmissionAt'))
+        .sort(fieldComparator('lastSubmissionAt'))
         .at(-1);
       const lastCreatedRepository = repositories.toSorted(fieldComparator('createdAt')).at(-1);
 

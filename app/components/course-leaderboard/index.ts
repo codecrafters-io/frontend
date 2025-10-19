@@ -149,7 +149,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       );
     }
 
-    return result.toSorted(fieldComparator('completedStagesCount', 'lastAttemptAt')).reverse();
+    return result.sort(fieldComparator('completedStagesCount', 'lastAttemptAt')).reverse();
   }
 
   @action

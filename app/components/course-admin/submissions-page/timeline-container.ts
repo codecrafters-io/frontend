@@ -30,7 +30,7 @@ function groupBy<T>(collection: T[], keyFn: (item: T) => string): Record<string,
 
 export default class AdminCourseSubmissionsPageTimelineContainer extends Component<Signature> {
   get groupedSubmissions(): Record<string, SubmissionModel[]> {
-    return groupBy([...this.args.submissions].toSorted(fieldComparator('createdAt')).reverse(), (submission) => {
+    return groupBy([...this.args.submissions].sort(fieldComparator('createdAt')).reverse(), (submission) => {
       return submission.createdAt.toISOString().slice(0, 10);
     });
   }

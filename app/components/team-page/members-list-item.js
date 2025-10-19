@@ -23,7 +23,7 @@ export default class TeamPageMembersListItem extends Component {
     return this.args.membership.user.courseParticipations
       .map((item) => item.course)
       .uniq()
-      .toSorted(fieldComparator('sortPositionForTrack'));
+      .sort(fieldComparator('sortPositionForTrack'));
   }
 
   @action

@@ -217,7 +217,7 @@ export default class RepositoryModel extends Model {
   }
 
   courseStageCompletionFor(courseStage: CourseStageModel) {
-    return this.courseStageCompletions.filter((item) => item.courseStage === courseStage).toSorted(fieldComparator('completedAt'))[0];
+    return this.courseStageCompletions.filter((item) => item.courseStage === courseStage).sort(fieldComparator('completedAt'))[0];
   }
 
   courseStageFeedbackSubmissionFor(courseStage: CourseStageModel) {

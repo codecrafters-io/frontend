@@ -36,7 +36,7 @@ export default class AffiliateLinkModel extends Model {
       .map((referrals) => {
         return (referrals.find((referral) => !referral.statusIsInactive) || referrals[0]) as AffiliateReferralModel;
       })
-      .toSorted(fieldComparator('activatedAt'))
+      .sort(fieldComparator('activatedAt'))
       .reverse();
   }
 

@@ -34,14 +34,14 @@ export default class ConfigureGithubIntegrationModal extends Component {
     if (recentlyCreatedRepositories.length > 0) {
       groups.push({
         title: 'Recently created',
-        repositories: recentlyCreatedRepositories.toSorted(fieldComparator('createdAt')).reverse(),
+        repositories: recentlyCreatedRepositories.sort(fieldComparator('createdAt')).reverse(),
       });
     }
 
     if (allOtherRepositories.length > 0) {
       groups.push({
         title: 'All repositories',
-        repositories: allOtherRepositories.toSorted(fieldComparator('fullName')),
+        repositories: allOtherRepositories.sort(fieldComparator('fullName')),
       });
     }
 

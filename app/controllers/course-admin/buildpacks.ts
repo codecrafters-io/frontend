@@ -17,13 +17,13 @@ export default class BuildpacksController extends Controller {
   @tracked errorMessage: string | null = null;
 
   get sortedLatestBuildpacks() {
-    return this.model.course.buildpacks.filter((item) => item.isLatest).toSorted((a, b) => compare(a.language.name, b.language.name));
+    return this.model.course.buildpacks.filter((item) => item.isLatest).sort((a, b) => compare(a.language.name, b.language.name));
   }
 
   get sortedOutdatedBuildpacks() {
     return this.model.course.buildpacks
       .filter((item) => item.isOutdated)
-      .toSorted((a, b) => {
+      .sort((a, b) => {
         if (a.language.name === b.language.name) {
           return a.createdAt.getTime() - b.createdAt.getTime();
         } else {

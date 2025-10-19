@@ -27,9 +27,7 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas
-      .filter((item) => item.course === this.selectedCourse)
-      .toSorted(fieldComparator('sortPositionForRoadmapPage'));
+    return this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse).sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   get orderedCourses() {
@@ -40,7 +38,7 @@ export default class CourseExtensionIdeasController extends Controller {
       .filter((item) => !item.releaseStatusIsDeprecated)
       .filter((item) => !item.releaseStatusIsAlpha)
       .filter((item) => !item.visibilityIsPrivate)
-      .toSorted(fieldComparator('sortPositionForTrack'));
+      .sort(fieldComparator('sortPositionForTrack'));
   }
 
   get selectedCourse() {

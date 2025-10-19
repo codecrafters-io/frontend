@@ -43,7 +43,7 @@ export default class AutofixSection extends Component<Signature> {
       this.lastSubmission.autofixRequests
         .filter((item) => !item.isNew)
         .filter((item) => !item.creatorTypeIsSystem)
-        .toSorted(fieldComparator('createdAt'))
+        .sort(fieldComparator('createdAt'))
         .at(-1) || null
     );
   }
