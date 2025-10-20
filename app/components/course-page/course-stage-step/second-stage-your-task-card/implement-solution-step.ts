@@ -33,8 +33,10 @@ export default class ImplementSolutionStep extends Component<Signature> {
   @action
   handleHintCardHeaderClick(hintIndex: number): void {
     if (this.expandedHintIndex === hintIndex) {
+      // Trigger collapsed hint analytics event
       this.expandedHintIndex = null;
     } else {
+      // Trigger expand hint analytics event
       this.expandedHintIndex = hintIndex;
       this.solutionIsBlurred = true;
     }
