@@ -163,9 +163,9 @@ export default class CourseModel extends Model {
   get sortPositionForTrack() {
     const orderedSlugs = [
       'shell',
+      'redis',
       'grep',
       'interpreter',
-      'redis',
       'bittorrent',
       'kafka',
       'git',
