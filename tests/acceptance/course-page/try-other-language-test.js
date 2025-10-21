@@ -14,7 +14,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can try other language', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();

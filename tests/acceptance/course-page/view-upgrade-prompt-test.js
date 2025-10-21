@@ -12,7 +12,7 @@ module('Acceptance | course-page | view-upgrade-prompt', function (hooks) {
   setupAnimationTest(hooks);
 
   hooks.beforeEach(async function () {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
 
     this.language = this.server.schema.languages.findBy({ slug: 'go' });
     this.course = this.server.schema.courses.findBy({ slug: 'dummy' });

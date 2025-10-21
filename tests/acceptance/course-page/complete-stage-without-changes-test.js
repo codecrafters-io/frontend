@@ -12,7 +12,7 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
   setupAnimationTest(hooks);
 
   test('can complete stage without changes', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();

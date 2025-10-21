@@ -51,7 +51,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
   });
 
   test('modal has the correct submissions count copy', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -127,7 +127,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
   });
 
   test('can delete repository via mouse down', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -163,7 +163,7 @@ module('Acceptance | course-page | delete-repository-test', function (hooks) {
   });
 
   test('can delete repository via touch start', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();

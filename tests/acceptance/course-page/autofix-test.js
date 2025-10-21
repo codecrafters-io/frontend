@@ -40,7 +40,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
@@ -129,7 +129,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
@@ -178,7 +178,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
@@ -216,7 +216,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.testResultsBar.clickOnBottomSection();
 
@@ -266,7 +266,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();

@@ -14,7 +14,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can complete second stage', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
@@ -106,7 +106,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   });
 
   test('cannot complete second stage if tests passed via CLI', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();

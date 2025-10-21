@@ -18,7 +18,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can auto select language coming from track page', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -45,7 +45,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
   });
 
   test('can start course', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -175,7 +175,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
   });
 
   test('repository dropdown has the correct tooltip copy', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -225,7 +225,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
   });
 
   test('can start repo and abandon halfway (regression)', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });

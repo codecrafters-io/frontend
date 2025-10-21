@@ -13,7 +13,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
   setupAnimationTest(hooks);
 
   test('can complete first stage', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
@@ -82,7 +82,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
   });
 
   test('retains state when navigating to other course page areas', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();

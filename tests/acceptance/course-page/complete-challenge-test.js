@@ -36,12 +36,13 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     await percySnapshot('Course Completed Page');
 
+    // Dummy doesn't have a publish to github link so leaving grep for now
     await coursePage.courseCompletedCard.clickOnPublishToGithubLink();
     assert.ok(coursePage.configureGithubIntegrationModal.isOpen, 'configure github integration modal is open');
   });
 
   test('custom course completion message is displayed', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();

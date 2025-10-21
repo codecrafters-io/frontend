@@ -13,7 +13,7 @@ module('Acceptance | course-page | dark-mode', function (hooks) {
   setupAnimationTest(hooks);
 
   test('free users can view upgrade prompt', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signIn(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -40,7 +40,7 @@ module('Acceptance | course-page | dark-mode', function (hooks) {
   });
 
   test('paid users can toggle dark mode', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
