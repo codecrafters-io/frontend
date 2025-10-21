@@ -62,9 +62,9 @@ export default class CopyableTerminalCommand extends Component<Signature> {
   }
 
   @action
-  async handleCopyEvent(event: ClipboardEvent) {
+  async handleCopyEvent() {
     this.analyticsEventTracker.track('copied_terminal_command', {
-      copied_text: event.clipboardData?.getData('text') || 'unknown',
+      copied_text: document.getSelection()?.toString() || 'unknown',
       copy_method: 'select',
       displayed_commands: this.args.commands,
     });
