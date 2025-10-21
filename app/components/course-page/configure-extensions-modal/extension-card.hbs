@@ -9,7 +9,7 @@
     <div class="flex items-center flex-wrap gap-2 mr-2">
       {{#if this.optimisticValueForIsActivated}}
         <div class="text-gray-400 text-xl cursor-grab flex items-center h-7" {{sortable-handle}} data-test-sortable-item-drag-handle>
-          ☰
+          {{svg-jar "menu" class="w-4 h-4"}}
         </div>
       {{/if}}
       <div
