@@ -1,6 +1,5 @@
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import CourseStageCommentModel from 'codecrafters-frontend/models/course-stage-comment';
-import CourseStageLanguageGuideModel from 'codecrafters-frontend/models/course-stage-language-guide';
 import CourseStageScreencastModel from 'codecrafters-frontend/models/course-stage-screencast';
 import CourseStageSolutionModel from 'codecrafters-frontend/models/course-stage-solution';
 import CourseModel from 'codecrafters-frontend/models/course';
@@ -23,7 +22,6 @@ export default class CourseStageModel extends Model {
   @hasMany('community-course-stage-solution', { async: false, inverse: 'courseStage' })
   declare communitySolutions: CommunityCourseStageSolutionModel[];
 
-  @hasMany('course-stage-language-guide', { async: false, inverse: 'courseStage' }) declare languageGuides: CourseStageLanguageGuideModel[];
   @hasMany('course-stage-participation', { async: false, inverse: 'stage' }) declare participations: CourseStageParticipationModel[];
 
   @hasMany('course-stage-participation-analysis', { async: false, inverse: 'stage' })

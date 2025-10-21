@@ -20,15 +20,16 @@
       </TertiaryButton>
     {{/each-in}}
 
-    <AnimatedContainer class="w-full">
-      {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
-        <AlertWithIcon>
-          {{! The extra #if convinces glint that the value isn't null }}
-          {{#if this.feedbackAlertMarkdown}}
+    {{#if this.feedbackAlertMarkdown}}
+      <AnimatedContainer class="w-full">
+        {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
+          <AlertWithIcon @type="info">
             {{markdown-to-html this.feedbackAlertMarkdown}}
-          {{/if}}
-        </AlertWithIcon>
-      {{/animated-if}}
-    </AnimatedContainer>
+          </AlertWithIcon>
+        {{/animated-if}}
+      </AnimatedContainer>
+
+      <PrimaryButton class="mt-6" {{on "click" @onSelect}} data-test-next-question-button>↓ Next question</PrimaryButton>
+    {{/if}}
   </div>
 </div>

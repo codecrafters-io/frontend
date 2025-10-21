@@ -37,6 +37,13 @@ export default class CourseModel extends Model {
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare difficulty: string;
   @attr('string') declare forumUrl: string;
+
+  // TODO: Make not nullable
+  @attr() declare frequentlyAskedQuestions?: {
+    question_markdown: string;
+    answer_markdown: string;
+  }[];
+
   @attr('date') declare isFreeUntil: Date | null;
   @attr('string') declare name: string;
   @attr('string') declare releaseStatus: string;
@@ -156,9 +163,9 @@ export default class CourseModel extends Model {
   get sortPositionForTrack() {
     const orderedSlugs = [
       'shell',
+      'redis',
       'grep',
       'interpreter',
-      'redis',
       'bittorrent',
       'kafka',
       'git',

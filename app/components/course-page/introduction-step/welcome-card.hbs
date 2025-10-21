@@ -9,5 +9,12 @@
 
       {{markdown-to-html @repository.course.descriptionMarkdown}}
     </div>
+
+    {{#if (gt @repository.course.frequentlyAskedQuestions.length 0)}}
+      {{! Extra if convinces typescript that frequentlyAskedQuestions is not null}}
+      {{#if @repository.course.frequentlyAskedQuestions}}
+        <CollapsibleFaqList @faqs={{@repository.course.frequentlyAskedQuestions}} class="mt-6" />
+      {{/if}}
+    {{/if}}
   </:content>
 </CoursePage::InstructionsCard>

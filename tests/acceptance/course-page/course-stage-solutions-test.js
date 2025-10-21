@@ -1,4 +1,4 @@
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import percySnapshot from '@percy/ember';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -51,12 +51,14 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
     await percySnapshot('Second Stage Solution - Before Reveal');
 
     await coursePage.secondStageYourTaskCard.clickOnSolutionBlurredOverlay();
+    await animationsSettled();
     assert.notOk(coursePage.secondStageYourTaskCard.hasSolutionBlurredOverlay, 'Expect solution blurred overlay to be hidden');
     assert.notOk(coursePage.secondStageYourTaskCard.hasRevealSolutionButton, 'Expect reveal solution button to be hidden');
     assert.ok(coursePage.secondStageYourTaskCard.hasHideSolutionButton, 'Expect hide solution button to be visible');
     await percySnapshot('Second Stage Solution - After Reveal');
 
     await coursePage.secondStageYourTaskCard.clickOnHideSolutionButton();
+    await animationsSettled();
     assert.ok(coursePage.secondStageYourTaskCard.hasSolutionBlurredOverlay, 'Expect solution blurred overlay to be visible');
     assert.ok(coursePage.secondStageYourTaskCard.hasRevealSolutionButton, 'Expect reveal solution button to be visible');
     assert.notOk(coursePage.secondStageYourTaskCard.hasHideSolutionButton, 'Expect hide solution button to be hidden');

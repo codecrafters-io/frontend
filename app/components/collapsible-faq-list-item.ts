@@ -1,11 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import fade from 'ember-animated/transitions/fade';
-
-export type Faq = {
-  query: string;
-  answerMarkdown: string;
-};
+import type { Faq } from './collapsible-faq-list';
 
 interface Signature {
   Element: HTMLDivElement;

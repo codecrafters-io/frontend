@@ -1,0 +1,7 @@
+<div ...attributes class="flex flex-col gap-2">
+  {{#each @steps key="id" as |step stepIndex|}}
+    <StepList::Item @step={{step}} @stepIndex={{stepIndex}} @totalStepsCount={{@steps.length}}>
+      {{yield (hash step=step)}}
+    </StepList::Item>
+  {{/each}}
+</div>

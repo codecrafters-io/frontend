@@ -1,34 +1,35 @@
-<div class="prose dark:prose-invert prose-compact mb-3">
-  <p>
-    Head over to your editor / IDE and implement your solution.
-  </p>
-
-  {{#unless this.solution}}
+{{#unless this.solution}}
+  <div class="prose dark:prose-invert prose-compact mb-3">
+    <p>
+      Head over to your editor / IDE and implement your solution.
+    </p>
     <p>
       If you want a quick look at what functions to use or how to structure your code, we recommend looking at
       <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
     </p>
-  {{/unless}}
-</div>
-
-{{#if this.languageGuide}}
-  <div
-    class="prose dark:prose-invert has-prism-highlighting mb-3"
-    {{highlight-code-blocks this.languageGuide.markdownForBeginner}}
-    data-test-language-guide-card
-  >
-    {{markdown-to-html this.languageGuide.markdownForBeginner}}
   </div>
-{{/if}}
+{{/unless}}
 
 {{#if this.solution}}
+  {{#if (gt this.solution.hintsJson.length 0)}}
+    {{#each this.solution.hintsJson as |hint hintIndex|}}
+      <CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard
+        @hint={{hint}}
+        @hintIndex={{hintIndex}}
+        @isExpanded={{eq this.expandedHintIndex hintIndex}}
+        @onHeaderClick={{fn this.handleHintCardHeaderClick hintIndex}}
+        class="mb-3"
+      />
+    {{/each}}
+  {{/if}}
+
   <BlurredOverlay
-    class="mb-3 group"
+    class="group"
     @isBlurred={{this.solutionIsBlurred}}
     @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-900/20 dark:group-hover:bg-gray-900/0"
   >
     <:content>
-      <div class="grid gap-3 mt-6 mb-3">
+      <div class="grid gap-3 mb-3">
         {{#each this.solution.changedFiles as |changedFile|}}
           {{! Extra if condition convinces typescript that solution isn't null }}
           {{#if this.solution}}
@@ -41,17 +42,6 @@
           {{/if}}
         {{/each}}
       </div>
-
-      {{#unless this.solutionIsBlurred}}
-        <TertiaryButton
-          class="w-full mb-6 flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:bg-gray-800 dark:hover:bg-gray-700/50"
-          {{on "click" this.handleHideSolutionButtonClick}}
-          data-test-hide-solution-button
-        >
-          {{svg-jar "eye-off" class="size-4"}}
-          Hide Solution
-        </TertiaryButton>
-      {{/unless}}
     </:content>
 
     <:overlay>
@@ -61,11 +51,27 @@
       >
         <div class="flex items-center gap-2">
           {{svg-jar "eye" class="size-6"}}
-          <span>Click to reveal solution</span>
+          <span>Reveal complete solution</span>
         </div>
       </SecondaryButton>
+
       <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
       </button>
     </:overlay>
   </BlurredOverlay>
+
+  <AnimatedContainer>
+    {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
+      <div class="flex items-center justify-center w-full">
+        <TertiaryButton
+          class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
+          {{on "click" this.handleHideSolutionButtonClick}}
+          data-test-hide-solution-button
+        >
+          {{svg-jar "eye-off" class="size-4"}}
+          Hide Solution
+        </TertiaryButton>
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
 {{/if}}

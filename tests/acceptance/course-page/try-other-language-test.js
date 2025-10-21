@@ -40,7 +40,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
-      '/api/v1/course-stage-language-guides', // fetch language guides (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
     ];
 

@@ -1,11 +1,4 @@
 {{#if this.solution}}
-  <div class="prose dark:prose-invert mb-3">
-    <p>
-      Uncomment the following code in
-      <code>{{this.filename}}</code>:
-    </p>
-  </div>
-
   <div class="flex flex-col gap-4">
     {{#each this.solution.changedFiles as |changedFile|}}
       <FileDiffCard @code={{changedFile.diff}} @filename={{changedFile.filename}} @language={{this.solution.language.slug}} />
