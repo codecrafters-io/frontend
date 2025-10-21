@@ -45,10 +45,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'The second stage', 'title should be the second stage');
     assert.strictEqual(coursePage.commentList.commentCards.length, 2);
 
     await percySnapshot('Course Stage Comments', {
@@ -71,9 +71,10 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
+    await coursePage.sidebar.clickOnStepListItem('The first stage');
     await animationsSettled();
 
-    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'title should be respond to ping');
+    assert.strictEqual(coursePage.header.stepName, 'The first stage', 'title should be the first stage for creating new comments');
     assert.ok(coursePage.commentList.submitButtonIsDisabled, 'submit button should be disabled if no input is provided');
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -126,7 +127,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     const firstCommentCard = coursePage.commentList.commentCards[0];
@@ -159,7 +160,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -198,7 +199,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -224,7 +225,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     await coursePage.commentList.fillInCommentInput('This is a comment');
@@ -280,7 +281,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     const firstCommentCard = coursePage.commentList.commentCards[0];
@@ -324,7 +325,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.false(coursePage.commentList.commentCards[0].userLabel.isPresent, 'should have no label if not staff or current course author');
@@ -335,7 +336,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff');
@@ -351,7 +352,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.strictEqual(coursePage.commentList.commentCards[0].userLabel.text, 'staff', 'should have staff label if staff and course author');
@@ -362,7 +363,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.strictEqual(
@@ -382,7 +383,7 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('The first stage');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await animationsSettled();
 
     assert.false(
