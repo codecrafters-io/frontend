@@ -45,10 +45,10 @@ module('Acceptance | view-courses', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -77,10 +77,10 @@ module('Acceptance | view-courses', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -95,7 +95,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressDonut);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/55 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/6 stages');
   });
 
   test('it renders with progress if user has created a repository', async function (assert) {
@@ -104,10 +104,10 @@ module('Acceptance | view-courses', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
@@ -116,7 +116,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.true(catalogPage.courseCards[0].hasProgressDonut);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/55 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/6 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -226,13 +226,13 @@ module('Acceptance | view-courses', function (hooks) {
 
     let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
 
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    redis.update({ isFreeUntil: isFreeExpirationDate });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update({ isFreeUntil: isFreeExpirationDate });
 
     await catalogPage.visit();
 
     assert.notOk(
-      catalogPage.courseCardByName('Build your own Redis').hasFreeLabel,
+      catalogPage.courseCardByName('Build your own Dummy').hasFreeLabel,
       'free challenges should not have the free label if user has subscription',
     );
   });
@@ -254,15 +254,15 @@ module('Acceptance | view-courses', function (hooks) {
     signIn(this.owner, this.server);
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     catalogPage.visit();
 
     let loadingIndicatorWasRendered;
@@ -338,13 +338,13 @@ module('Acceptance | view-courses', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    redis.update({ visibility: 'private' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update({ visibility: 'private' });
 
     await catalogPage.visit();
 
     assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
-    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should not be included');
+    assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Dummy'), 'dummy should not be included');
   });
 
   test('it should show private courses in catalog if user has repository', async function (assert) {
@@ -353,17 +353,17 @@ module('Acceptance | view-courses', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    redis.update({ visibility: 'private' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update({ visibility: 'private' });
 
     this.server.create('repository', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
 
-    assert.ok(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should be included');
+    assert.ok(catalogPage.courseCards.mapBy('name').includes('Build your own Dummy'), 'dummy should be included');
   });
 });

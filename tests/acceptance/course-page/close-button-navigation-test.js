@@ -17,9 +17,9 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
 
     await catalogPage.visit();
     await catalogPage.clickOnTrack('Python');
-    await trackPage.clickOnCourseCard('Build your own Git →');
+    await trackPage.clickOnCourseCard('Build your own Dummy →');
 
-    assert.contains(currentURL(), '/courses/git/introduction?track=python', 'current URL includes track parameter');
+    assert.contains(currentURL(), '/courses/dummy/introduction?track=python', 'current URL includes track parameter');
 
     await coursePage.header.clickOnCloseCourseButton();
 
@@ -32,7 +32,7 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
 
     const user = this.server.schema.users.first();
     const ruby = this.server.schema.languages.findBy({ slug: 'ruby' });
-    const course = this.server.schema.courses.findBy({ slug: 'git' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
       user,
@@ -41,10 +41,10 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Git');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.contains(currentURL(), '/courses/git/stages/ic4', 'should be on course page');
+    assert.contains(currentURL(), '/courses/dummy/stages/lr7', 'should be on course page');
 
     await coursePage.header.clickOnCloseCourseButton();
 
@@ -55,9 +55,9 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await coursePage.visit({ course_slug: 'git', course_stage_slug: 'introduction' });
+    await coursePage.visit({ course_slug: 'dummy', course_stage_slug: 'introduction' });
 
-    assert.contains(currentURL(), '/courses/git/introduction', 'should be on course page');
+    assert.contains(currentURL(), '/courses/dummy/introduction', 'should be on course page');
 
     await coursePage.header.clickOnCloseCourseButton();
 

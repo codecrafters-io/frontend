@@ -72,16 +72,16 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: docker,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
-    await visit('/courses/docker/completed');
-    assert.strictEqual(currentURL(), '/courses/docker/stages/kf3', 'URL is /stages/kf3');
+    await visit('/courses/dummy/completed');
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'URL is /stages/lr7');
   });
 
   test('next step button in completed step modal/notice redirects to next step if the next step is base stages completed', async function (assert) {
@@ -90,33 +90,33 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
-    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     this.server.create('repository', 'withBaseStagesCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Expiry');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
 
     // Try using current step complete modal first
     assert.contains(coursePage.currentStepCompleteModal.nextOrActiveStepButton.text, 'View next step');
     await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
 
-    assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
+    assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'URL is /base-stages-completed');
 
     // Try the same using the completed step notice
-    await coursePage.sidebar.clickOnStepListItem('Expiry');
+    await coursePage.sidebar.clickOnStepListItem('Start with ext1');
     await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
 
     assert.contains(coursePage.completedStepNotice.nextOrActiveStepButton.text, 'View next step', 'copy for next or active step button is correct');
 
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
-    assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
+    assert.strictEqual(currentURL(), '/courses/dummy/base-stages-completed', 'URL is /base-stages-completed');
   });
 });

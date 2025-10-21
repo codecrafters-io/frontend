@@ -15,9 +15,9 @@ module('Acceptance | view-course-overview', function (hooks) {
     testScenario(this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/dummy/overview');
   });
 
   test('it renders when user is logged in', async function (assert) {
@@ -25,17 +25,17 @@ module('Acceptance | view-course-overview', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
-    assert.strictEqual(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/dummy/overview');
   });
 
   test('it renders when user accesses URL directly', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    await courseOverviewPage.visit({ course_slug: 'redis' });
-    assert.strictEqual(currentURL(), '/courses/redis/overview');
+    await courseOverviewPage.visit({ course_slug: 'dummy' });
+    assert.strictEqual(currentURL(), '/courses/dummy/overview');
   });
 
   test('it renders when anonymous user views alpha course', async function (assert) {
@@ -53,10 +53,10 @@ module('Acceptance | view-course-overview', function (hooks) {
   test('it renders for course with extensions', async function (assert) {
     testScenario(this.server);
 
-    await courseOverviewPage.visit({ course_slug: 'redis' });
+    await courseOverviewPage.visit({ course_slug: 'dummy' });
     await percySnapshot('Course Overview - With Extensions');
 
-    assert.strictEqual(currentURL(), '/courses/redis/overview');
+    assert.strictEqual(currentURL(), '/courses/dummy/overview');
   });
 
   test('it renders for course without extensions', async function (assert) {
@@ -72,10 +72,10 @@ module('Acceptance | view-course-overview', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.server.schema.courses.findBy({ slug: 'redis' }).update({ releaseStatus: 'beta' });
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update({ releaseStatus: 'beta' });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
     assert.strictEqual(
       courseOverviewPage.betaNoticeText,
@@ -117,10 +117,10 @@ module('Acceptance | view-course-overview', function (hooks) {
     dateService.setNow(now);
 
     let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
-    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+    this.server.schema.courses.findBy({ slug: 'dummy' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
 
     assert.strictEqual(courseOverviewPage.freeNoticeText, 'This challenge is free until 21 January 2024!');
   });
