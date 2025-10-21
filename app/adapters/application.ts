@@ -34,6 +34,8 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
       if (this.cookies.read('_gcl_aw')) {
         headers['x-google-click-id'] = this.cookies.read('_gcl_aw')!;
       }
+
+      headers['x-browser-url'] = window.location.href;
     }
 
     headers['x-codecrafters-client-version'] = this.versionTracker.currentVersion;
