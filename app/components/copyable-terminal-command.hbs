@@ -53,6 +53,7 @@
       @language="shellscript"
       @theme={{if this.darkMode.isEnabled "github-dark-default" "github-light"}}
       @shouldDisplayLineNumbers={{false}}
+      {{on "copy" this.handleCopyEvent}}
     />
   </div>
 </div>
