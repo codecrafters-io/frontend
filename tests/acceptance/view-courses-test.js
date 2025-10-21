@@ -62,6 +62,8 @@ module('Acceptance | view-courses', function (hooks) {
   test('it renders alpha courses if user is staff', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update({ releaseStatus: 'alpha' });
 
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');

@@ -47,7 +47,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressDonut, 'expected first track to have progress donut');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/86 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/92 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
