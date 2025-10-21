@@ -60,6 +60,15 @@ export default class CopyableTerminalCommand extends Component<Signature> {
       this.args.onCopyButtonClick();
     }
   }
+
+  @action
+  async handleCopyEvent(event: ClipboardEvent) {
+    this.analyticsEventTracker.track('copied_terminal_command', {
+      copied_text: event.clipboardData?.getData('text') || 'unknown',
+      copy_method: 'select',
+      displayed_commands: this.args.commands,
+    });
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
