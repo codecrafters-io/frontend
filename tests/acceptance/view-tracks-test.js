@@ -210,6 +210,6 @@ module('Acceptance | view-tracks', function (hooks) {
     await catalogPage.visit();
 
     assert.ok(catalogPage.trackCards[0].hasPopularLabel, 'go should have popular label');
-    assert.ok(catalogPage.trackCards[0].text.includes('86 stages'), 'number of stages should not include deprecated stages count');
+    assert.ok(catalogPage.trackCards[0].text.includes('92 stages'), 'number of stages should not include deprecated stages count');
   });
 });

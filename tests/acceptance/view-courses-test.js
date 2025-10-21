@@ -18,7 +18,7 @@ module('Acceptance | view-courses', function (hooks) {
     course.update({ releaseStatus: 'beta' });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     await percySnapshot('Catalog Page');
 
@@ -54,7 +54,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     await percySnapshot('Catalog Page - Dark Mode');
   });
@@ -84,7 +84,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.strictEqual(catalogPage.courseCards[1].actionText, 'Start');
@@ -141,7 +141,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     await percySnapshot('Courses Page - Courses in progress');
 
@@ -198,7 +198,7 @@ module('Acceptance | view-courses', function (hooks) {
     redis.update({ isFreeUntil: isFreeExpirationDate });
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Redis');
     assert.strictEqual(catalogPage.courseCards[1].name, 'Build your own grep');
@@ -244,7 +244,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
   });
 
   test('second time visit with local repository data has no loading page', async function (assert) {
@@ -274,7 +274,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
   });
 
   test('second time visit without local repository data has no loading page ', async function (assert) {
@@ -296,7 +296,7 @@ module('Acceptance | view-courses', function (hooks) {
     });
 
     assert.notOk(loadingIndicatorWasRendered, 'loading indicator was not rendered');
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
   });
 
   test('it should show deprecated courses if user already has progress', async function (assert) {
@@ -328,7 +328,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
     assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Docker'), 'docker should not be included');
   });
 
@@ -341,7 +341,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     await catalogPage.visit();
 
-    assert.strictEqual(catalogPage.courseCards.length, 3, 'expected 3 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
     assert.notOk(catalogPage.courseCards.mapBy('name').includes('Build your own Redis'), 'redis should not be included');
   });
 

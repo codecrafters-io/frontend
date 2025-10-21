@@ -2,7 +2,7 @@ export default {
   "slug": "dummy",
   "name": "Build your own Dummy",
   "short_name": "dummy",
-  "release_status": "alpha",
+  "release_status": "live",
   "description_md": "Add a description for your course here.",
   "short_description_md": "Add a short description for your course here.",
   "completion_percentage": 15,
