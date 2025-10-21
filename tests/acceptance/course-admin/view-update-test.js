@@ -13,11 +13,11 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
-    course.update('definitionRepositoryFullName', 'codecrafters-io/redis');
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('definitionRepositoryFullName', 'codecrafters-io/dummy');
 
     const update = this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -28,7 +28,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     });
 
     const secondUpdate = this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -39,11 +39,11 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       summary: 'test',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[1].clickOnViewUpdateButton();
     assert.strictEqual(updatePage.viewDiffLink.href, `https://github.com/${course.definitionRepositoryFullName}/commit/${update.newCommitSha}`);
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.strictEqual(
@@ -57,7 +57,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     const update = this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: ' old contents\n',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -67,7 +67,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       summary: 'test',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     update.update('definitionFileContentsDiff', '-old contents\n+updated diff\n');
@@ -92,7 +92,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: 'old contents',
       description: 'Dummy description in markdown:\n- item 1\n- item 2\n- item 3',
       lastErrorMessage: null,
@@ -102,7 +102,7 @@ module('Acceptance | course-admin | view-update', function (hooks) {
       summary: 'test',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.dom('[data-test-description] ul').exists('description should be properly rendered as html');

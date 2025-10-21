@@ -16,7 +16,7 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     this.currentUser = this.server.schema.users.first();
     this.language_1 = this.server.schema.languages.findBy({ name: 'C' });
     this.language_2 = this.server.schema.languages.findBy({ name: 'Python' });
-    this.course = this.server.schema.courses.findBy({ slug: 'redis' });
+    this.course = this.server.schema.courses.findBy({ slug: 'dummy' });
     this.courseStage_1 = this.course.stages.models.sortBy('position')[0];
     this.courseStage_2 = this.course.stages.models.sortBy('position')[1];
 
@@ -26,7 +26,7 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     // Visiting /courses/shell/admin/code-examples should redirect to
     // the page for the first language in the list
     await codeExampleInsightsIndexPage.visit({ course_slug: this.course.slug });
-    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55);
+    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 6);
 
     let stageEntries_1 = codeExampleInsightsIndexPage.stageListItems[0].text;
     assert.strictEqual(stageEntries_1, `${this.courseStage_1.name} 1 solutions 10 lines 0 upvotes 0 downvotes`, 'Stage list item text is correct');
@@ -37,9 +37,9 @@ module('Acceptance | course-admin | code-example-insights-index', function (hook
     await codeExampleInsightsIndexPage.languageDropdown.click();
     await codeExampleInsightsIndexPage.languageDropdown.clickOnLanguageLink('Python');
     assert.strictEqual(codeExampleInsightsIndexPage.languageDropdown.currentLanguageName, 'Python');
-    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 55);
+    assert.strictEqual(codeExampleInsightsIndexPage.stageListItems.length, 6);
 
-    assert.strictEqual(currentURL(), '/courses/redis/admin/code-examples?language_slug=python');
+    assert.strictEqual(currentURL(), '/courses/dummy/admin/code-examples?language_slug=python');
 
     let stageEntries_2 = codeExampleInsightsIndexPage.stageListItems[1].text;
     assert.strictEqual(stageEntries_2, `${this.courseStage_2.name} 1 solutions 10 lines 0 upvotes 0 downvotes`, 'Stage list item text is correct');

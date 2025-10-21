@@ -17,21 +17,21 @@ module('Acceptance | course-page | code-examples | publish-to-github', function 
     testScenario(this.server);
     const currentUser = signIn(this.owner, this.server);
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
     });
 
-    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, dummy, 2, python);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
     assert.notOk(coursePage.configureGithubIntegrationModal.isVisible, 'configure github integration modal should not be visible');

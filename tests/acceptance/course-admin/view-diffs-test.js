@@ -58,7 +58,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let redis = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
@@ -78,7 +78,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
       },
     ]);
 
-    await submissionsPage.visit({ course_slug: 'redis' });
+    await submissionsPage.visit({ course_slug: 'dummy' });
     await submissionsPage.timelineContainer.entries.objectAt(1).click();
     await submissionsPage.clickOnLink('Diff');
 

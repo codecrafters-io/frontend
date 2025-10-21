@@ -12,7 +12,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    await feedbackPage.visit({ course_slug: 'redis' });
+    await feedbackPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(feedbackPage.feedbackListItems.length, 0, 'should have no feedback');
 
     await percySnapshot('Admin - Stage Feedback - No Feedback');
@@ -22,7 +22,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     const language = this.server.schema.languages.findBy({ slug: 'ruby' });
     const user = this.server.schema.users.first();
 
@@ -61,7 +61,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       status: 'closed',
     });
 
-    await feedbackPage.visit({ course_slug: 'redis' });
+    await feedbackPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(feedbackPage.feedbackListItems.length, 2, 'should have 2 feedback');
     await percySnapshot('Admin - Stage Feedback - With Feedback');
   });
@@ -70,7 +70,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
-    const course = this.server.schema.courses.findBy({ slug: 'redis' });
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     const language = this.server.schema.languages.findBy({ slug: 'ruby' });
     const user = this.server.schema.users.first();
 
@@ -90,7 +90,7 @@ module('Acceptance | course-admin | view-feedback', function (hooks) {
       status: 'open',
     });
 
-    await feedbackPage.visit({ course_slug: 'redis' });
+    await feedbackPage.visit({ course_slug: 'dummy' });
     assert.strictEqual(feedbackPage.feedbackListItems.length, 0, 'should have 0 feedback');
   });
 });

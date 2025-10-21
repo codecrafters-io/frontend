@@ -19,7 +19,7 @@ module('Acceptance | course-admin | tester-versions-page | deprovision-test-runn
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2022, 1, 1),
       isLatest: true,
@@ -31,7 +31,7 @@ module('Acceptance | course-admin | tester-versions-page | deprovision-test-runn
 
     const oldTesterVersion = this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -40,7 +40,7 @@ module('Acceptance | course-admin | tester-versions-page | deprovision-test-runn
       tagName: 'v10',
     });
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
     assert.strictEqual(testerVersionPage.descriptionText, 'This tester version has 4 provisioned test runners.');
 

@@ -30,20 +30,20 @@ module('Acceptance | course-admin | code-examples | pin', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let redis = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let python = this.server.schema.languages.findBy({ slug: 'python' });
 
     createCommunityCourseStageSolution(this.server, redis, 2, python);
     const solution = createCommunityCourseStageSolution(this.server, redis, 2, go);
 
-    await codeExamplePage.visit({ course_slug: 'redis', code_example_id: solution.id });
+    await codeExamplePage.visit({ course_slug: 'dummy', code_example_id: solution.id });
     await codeExamplePage.clickOnPinCodeExampleToggle();
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
     assert.true(codeExamplesPage.solutionCards[0].text.includes("Editor's choice"));

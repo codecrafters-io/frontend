@@ -14,6 +14,7 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
+  // Using redis for these tests since they test stage-specific UI behavior that depends on redis's structure
   test('can view solutions before starting course', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

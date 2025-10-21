@@ -20,7 +20,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsSubscriber(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     let currentUser = this.server.schema.users.first();
@@ -32,7 +32,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, '1 leaderboard entry should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to current user');
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle until user pushes submission');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 6', 'progress text must be shown');
 
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
@@ -46,7 +46,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 55', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 6', 'progress text must still be 0 if first stage is not completed');
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
@@ -54,7 +54,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 55', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 6', 'progress text must still be 0 if first stage is not completed');
 
     this.server.schema.submissions.find(2).update({ status: 'success' });
 
@@ -67,7 +67,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     await settled();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must still be 0 if first stage is not completed');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must still be 0 if first stage is not completed');
   });
 
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
@@ -76,7 +76,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -87,27 +87,27 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 1, 'other entry should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must be shown');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once course has started');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '0 / 6', 'progress text must be shown');
 
     let repository = currentUser.reload().repositories.models[0];
     repository.update({
@@ -140,9 +140,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, '2 leaderboard entries should be present once other user has been passed');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entries should be sorted by last attempt');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
   });
 
   test('can view leaderboard when current user has leaderboard entry', async function (assert) {
@@ -151,7 +151,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -162,37 +162,37 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
       createdAt: new Date(2002, 1),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003, 1),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
   });
 
   test('can view leaderboard when current user has completed all stages', async function (assert) {
@@ -201,7 +201,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let grep = this.server.schema.courses.findBy({ slug: 'grep' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -212,37 +212,37 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     this.server.create('repository', 'withAllStagesCompleted', {
-      course: grep,
+      course: dummy,
       language: python,
       user: currentUser,
       createdAt: new Date(2002),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: grep,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own grep');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '15 / 15', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '6 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 15', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '15 / 15', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '6 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 15', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
   });
 
   test('team member can view leaderboard when no recent players in organization are present', async function (assert) {
@@ -250,7 +250,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -262,14 +262,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.create('course-leaderboard-entry', {
       status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      currentCourseStage: dummy.stages.models.find((x) => x.position === 2),
       language: python,
       user: otherUser,
       lastAttemptAt: new Date(),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
@@ -291,7 +291,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -303,14 +303,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     this.server.create('course-leaderboard-entry', {
       status: 'idle',
-      currentCourseStage: redis.stages.models.find((x) => x.position === 2),
+      currentCourseStage: dummy.stages.models.find((x) => x.position === 2),
       language: python,
       user: otherUser,
       lastAttemptAt: new Date(),
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 0, 'no leaderboard entries should be present by default');
@@ -324,7 +324,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     // Refresh the page
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     // Verify the selection persisted
@@ -339,7 +339,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     // Refresh the page
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     // Verify the selection persisted
@@ -357,7 +357,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -376,7 +376,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -391,7 +391,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(coursePage.privateLeaderboardFeatureSuggestion.isPresent, 'should have feature suggestion');
@@ -402,7 +402,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signInAsTeamMember(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -422,7 +422,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -451,7 +451,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     signIn(this.owner, this.server, user);
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.true(coursePage.leaderboard.inviteButton.isPresent, 'invite button is present');
@@ -466,7 +466,7 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
 
     let otherUser = this.server.create('user', {
       id: 'other-user',
@@ -477,14 +477,14 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     let userRepository = this.server.create('repository', 'withBaseStagesCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: currentUser,
       createdAt: new Date(2002),
     });
 
     this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
+      course: dummy,
       language: python,
       user: otherUser,
       createdAt: new Date(2003),
@@ -499,13 +499,13 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.leaderboard.entries.length, 2, 'one entry for current user and one for other user should be shown');
     assert.strictEqual(coursePage.leaderboard.entries[0].username, currentUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '8 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '3 / 6', 'progress text must be shown');
     assert.strictEqual(coursePage.leaderboard.entries[1].username, otherUser.username, 'leaderboard entry should correspond to name from API');
-    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 55', 'progress text must be shown');
+    assert.strictEqual(coursePage.leaderboard.entries[1].progressText, '1 / 6', 'progress text must be shown');
   });
 });

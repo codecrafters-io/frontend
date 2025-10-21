@@ -14,7 +14,7 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: false,
@@ -24,7 +24,7 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
 
     this.server.create('course-tester-version', {
       activator: this.server.schema.users.first(),
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       commitSha: '1234567890',
       createdAt: new Date(2021, 1, 1),
       isLatest: true,
@@ -40,11 +40,11 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
       return true;
     };
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
 
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[1].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
 
@@ -54,7 +54,7 @@ module('Acceptance | course-admin | tester-versions-page | activate', function (
     latestTesterVersion.update({ isLatest: false });
 
     await testerVersionsPage.visit({ course_slug: 'git' });
-    await testerVersionsPage.visit({ course_slug: 'redis' });
+    await testerVersionsPage.visit({ course_slug: 'dummy' });
     await testerVersionsPage.testerVersionListItem[0].viewTesterVersionButton.click();
     await testerVersionPage.activateTesterVersionButton.click();
 

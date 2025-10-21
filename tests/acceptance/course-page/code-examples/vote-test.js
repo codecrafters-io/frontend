@@ -32,18 +32,18 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserOneSolution.update({ user: otherUserOne, score: 100 });
-    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserTwoSolution.update({ user: otherUserTwo, score: 100 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -77,18 +77,18 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserOneSolution.update({ user: otherUserOne, score: 100 });
-    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserTwoSolution.update({ user: otherUserTwo, score: 100 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -131,18 +131,18 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserOneSolution.update({ user: otherUserOne, score: 100 });
-    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserTwoSolution.update({ user: otherUserTwo, score: 100 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -164,16 +164,16 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
 
     let currentUser = this.server.schema.users.first();
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let currentUserSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let currentUserSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     currentUserSolution.update({ user: currentUser, score: 100 });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
 
@@ -199,18 +199,18 @@ module('Acceptance | course-page | code-examples | vote', function (hooks) {
       username: 'gufran',
     });
 
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
     let go = this.server.schema.languages.findBy({ slug: 'go' });
 
-    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserOneSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserOneSolution.update({ user: otherUserOne });
-    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, redis, 2, go);
+    let otherUserTwoSolution = createCommunityCourseStageSolution(this.server, dummy, 2, go);
     otherUserTwoSolution.update({ user: otherUserTwo });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
+    await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await coursePage.sidebar.clickOnStepListItem('The second stage');
 
     await coursePage.clickOnHeaderTabLink('Code Examples');
 

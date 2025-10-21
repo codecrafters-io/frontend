@@ -15,7 +15,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -26,7 +26,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
       summary: 'test',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.ok(updatePage.applyUpdateButton.isPresent);
@@ -41,7 +41,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     this.server.create('course-definition-update', {
-      course: this.server.schema.courses.findBy({ slug: 'redis' }),
+      course: this.server.schema.courses.findBy({ slug: 'dummy' }),
       definitionFileContentsDiff: '',
       description: 'Updated stage instructions for stage 1 & stage 2',
       lastErrorMessage: null,
@@ -52,7 +52,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
       summary: 'test [should_error]',
     });
 
-    await updatesPage.visit({ course_slug: 'redis' });
+    await updatesPage.visit({ course_slug: 'dummy' });
     await updatesPage.updateListItems[0].clickOnViewUpdateButton();
 
     assert.ok(updatePage.applyUpdateButton.isPresent);
@@ -65,7 +65,7 @@ module('Acceptance | course-admin | apply-update', function (hooks) {
 
     assert.strictEqual(
       updatePage.errorMessage.text,
-      'We encountered an error when applying this update: Expected "slug" to be "redis", got: "docker". Change slug to "redis" to fix this.',
+      'We encountered an error when applying this update: Expected "slug" to be "dummy", got: "docker". Change slug to "dummy" to fix this.',
     );
 
     await percySnapshot('Admin - Course Updates - Pending Update With Error');

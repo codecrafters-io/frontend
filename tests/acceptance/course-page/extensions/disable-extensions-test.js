@@ -13,7 +13,7 @@ module('Acceptance | course-page | extensions | disable-extensions', function (h
   setupAnimationTest(hooks);
 
   test('can disable extensions when viewing an extension stage', async function (assert) {
-    testScenario(this.server, ['dummy']);
+    testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
     const currentUser = this.server.schema.users.first();
