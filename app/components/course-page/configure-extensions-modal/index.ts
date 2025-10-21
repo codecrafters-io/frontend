@@ -26,6 +26,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   @service declare store: Store;
   @service declare coursePageState: CoursePageStateService;
   @tracked allCourseExtensionIdeas: CourseExtensionIdeaModel[] = [];
+  @tracked disablingExtensionIds: Record<string, boolean> = {};
 
   constructor(owner: unknown, args: Signature['Args']) {
     super(owner, args);
@@ -35,14 +36,15 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   get disabledExtensions() {
     const activatedIds = this.args.repository.extensionActivations.map((activation) => activation.extension.id);
 
-    return this.args.repository.course.sortedExtensions.filter((ext) => !activatedIds.includes(ext.id));
+    return this.args.repository.course.sortedExtensions.filter((ext) => !activatedIds.includes(ext.id) || this.disablingExtensionIds[ext.id]);
   }
 
   get enabledExtensions() {
     return this.args.repository.extensionActivations
       .slice()
       .sort((a, b) => (a.position ?? 999) - (b.position ?? 999))
-      .map((activation) => activation.extension);
+      .map((activation) => activation.extension)
+      .filter((ext) => !this.disablingExtensionIds[ext.id]);
   }
 
   get orderedCourseExtensionIdeas() {
@@ -71,23 +73,34 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   @action
   async handleExtensionToggle(extension: CourseExtensionModel): Promise<void> {
     const activations = this.args.repository.extensionActivations.filter((activation) => activation.extension === extension);
+    const isDisabling = activations.length > 0;
 
-    if (activations.length > 0) {
-      // Deactivate: destroy all activations for this extension
-      for (const activation of activations) {
-        await activation.destroyRecord();
-      }
-    } else {
-      // Activate: create new activation
-      await this.store
-        .createRecord('course-extension-activation', {
-          repository: this.args.repository,
-          extension,
-        })
-        .save();
+    if (isDisabling) {
+      this.disablingExtensionIds = { ...this.disablingExtensionIds, [extension.id]: true };
     }
 
-    await this.syncExtensionActivations();
+    try {
+      if (isDisabling) {
+        for (const activation of activations) {
+          await activation.destroyRecord();
+        }
+      } else {
+        await this.store
+          .createRecord('course-extension-activation', {
+            repository: this.args.repository,
+            extension,
+          })
+          .save();
+      }
+
+      await this.syncExtensionActivations();
+    } finally {
+      if (isDisabling) {
+        const newState = { ...this.disablingExtensionIds };
+        delete newState[extension.id];
+        this.disablingExtensionIds = newState;
+      }
+    }
   }
 
   @action
@@ -137,6 +150,11 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
     } finally {
       tempRecord.unloadRecord();
     }
+  }
+
+  @action
+  isExtensionDisabling(extensionId: string): boolean {
+    return !!this.disablingExtensionIds[extensionId];
   }
 
   @action

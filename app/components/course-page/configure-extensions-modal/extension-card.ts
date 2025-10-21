@@ -11,6 +11,7 @@ interface Signature {
   Args: {
     repository: RepositoryModel;
     extension: CourseExtensionModel;
+    isDisabling?: boolean;
     onToggle: (extension: CourseExtensionModel) => Promise<void>;
   };
 }
@@ -27,6 +28,10 @@ export default class ExtensionCard extends Component<Signature> {
   }
 
   get optimisticValueForIsActivated(): boolean {
+    if (this.args.isDisabling) {
+      return false;
+    }
+
     return this.unsavedIsActivatedValue ?? this.isActivated;
   }
 
@@ -41,6 +46,12 @@ export default class ExtensionCard extends Component<Signature> {
     return null;
   }
 
+  @action
+  async handleClick(): Promise<void> {
+    this.unsavedIsActivatedValue = !this.optimisticValueForIsActivated;
+    this.syncActivation.perform();
+  }
+
   syncActivation = task({ keepLatest: true }, async (): Promise<void> => {
     if (this.unsavedIsActivatedValue === null) {
       return;
@@ -49,12 +60,6 @@ export default class ExtensionCard extends Component<Signature> {
     await this.args.onToggle(this.args.extension);
     this.unsavedIsActivatedValue = null;
   });
-
-  @action
-  async handleClick(): Promise<void> {
-    this.unsavedIsActivatedValue = !this.optimisticValueForIsActivated;
-    this.syncActivation.perform();
-  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

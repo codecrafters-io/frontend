@@ -11,13 +11,14 @@
     {{#if this.enabledExtensions.length}}
       <AnimatedContainer>
         <div {{sortable-group onChange=this.handleSortableItemsReordered}}>
-          {{#animated-each this.enabledExtensions key="id" use=this.extensionTransition duration=400 as |extension|}}
+          {{#animated-each this.enabledExtensions key="id" use=this.extensionTransition duration=500 as |extension|}}
             <div {{sortable-item model=extension}} data-test-sortable-extension-card data-test-sortable-extension-id={{extension.id}} class="mb-4">
               {{! @glint-ignore: animated-each doesn't preserve exact types, but extension is always CourseExtensionModel at runtime }}
               <CoursePage::ConfigureExtensionsModal::ExtensionCard
                 @extension={{extension}}
                 @repository={{@repository}}
                 @onToggle={{this.handleExtensionToggle}}
+                @isDisabling={{this.isExtensionDisabling extension.id}}
               />
             </div>
           {{/animated-each}}
@@ -26,13 +27,14 @@
     {{/if}}
 
     <AnimatedContainer>
-      {{#animated-each this.disabledExtensions key="id" use=this.extensionTransition duration=400 as |extension|}}
+      {{#animated-each this.disabledExtensions key="id" use=this.extensionTransition duration=500 as |extension|}}
         <div class="mb-4">
           <CoursePage::ConfigureExtensionsModal::ExtensionCard
             {{! @glint-ignore: animated-each doesn't preserve exact types, but extension is always CourseExtensionModel at runtime }}
             @extension={{extension}}
             @repository={{@repository}}
             @onToggle={{this.handleExtensionToggle}}
+            @isDisabling={{this.isExtensionDisabling extension.id}}
           />
         </div>
       {{/animated-each}}
