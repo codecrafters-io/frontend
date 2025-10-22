@@ -1,14 +1,12 @@
 {{#if this.solution}}
-  <div class="prose dark:prose-invert">
-    <ul>
-      <li>
-        To simplify getting started, we’ve solved this first stage for you.
-      </li>
-      <li>
-        Uncomment the relevant code in
-        <code>{{this.filename}}</code>, save your file, and submit your changes by following the steps below.
-      </li>
-    </ul>
+  <div class="prose dark:prose-invert prose-compact">
+    <p>
+      To simplify getting started, we’ve solved this first stage for you.
+    </p>
+    <p>
+      Uncomment the relevant code in
+      <code>{{this.filename}}</code>, save your file, and submit your changes by following the steps below.
+    </p>
   </div>
 {{else if (not @repository.language)}}
   <div class="prose dark:prose-invert">
