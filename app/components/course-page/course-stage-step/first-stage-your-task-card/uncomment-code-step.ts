@@ -14,7 +14,7 @@ interface Signature {
 
 export default class UncommentCodeStep extends Component<Signature> {
   get filename() {
-    return this.args.repository.firstStageSolution?.changedFiles[0]?.filename;
+    return this.solution!.changedFiles[0]!.filename;
   }
 
   get solution() {
