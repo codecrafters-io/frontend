@@ -23,7 +23,7 @@ export default class ConceptList extends Component<Signature> {
     return this.args.conceptGroup.conceptSlugs.reduce((acc, slug) => {
       const concept = this.store.peekAll('concept').find((concept) => concept.slug === slug);
 
-      if (concept) {
+      if (concept && concept.statusIsPublished) {
         acc.push(concept);
       }
 
