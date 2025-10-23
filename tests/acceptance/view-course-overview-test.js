@@ -7,7 +7,6 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import TimeService from 'codecrafters-frontend/services/time';
 
 module('Acceptance | view-course-overview', function (hooks) {
   setupApplicationTest(hooks);

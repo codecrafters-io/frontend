@@ -128,11 +128,11 @@ export default class CourseModel extends Model {
   }
 
   get isFree() {
-    return this.isFreeUntil && this.isFreeUntil > new Date(this.date.now());
+    return this.isFreeUntil && this.isFreeUntil > this.time.currentTime;
   }
 
   get isFreeThisMonth() {
-    if (!this.isFreeUntil) {
+    if (!this.isFree) {
       return false;
     }
 
@@ -140,7 +140,7 @@ export default class CourseModel extends Model {
     const lastDayOfThisMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     const firstDayOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
-    return isSameDay(this.isFreeUntil, lastDayOfThisMonth) || isSameDay(this.isFreeUntil, firstDayOfNextMonth);
+    return isSameDay(this.isFreeUntil!, lastDayOfThisMonth) || isSameDay(this.isFreeUntil!, firstDayOfNextMonth);
   }
 
   get latestTesterVersion() {
