@@ -151,6 +151,31 @@ module('Acceptance | view-course-overview', function (hooks) {
     assert.contains(courseOverviewPage.freeCourseNoticeText, 'The core challenge experience is completely free until 22 January 2024.');
   });
 
+  test('it has a notice for free users when a course is paid', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', null);
+    await courseOverviewPage.visit({ course_slug: 'redis' });
+
+    assert.contains(courseOverviewPage.paidCourseNoticeText, 'This challenge requires a CodeCrafters Membership.');
+    assert.contains(courseOverviewPage.paidCourseNoticeText, 'View Membership Plans →');
+  });
+
+  test('it has a notice for free users when a course is paid and other free courses exist', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.schema.courses.findBy({ slug: 'grep' }).update('isFreeUntil', new Date(new Date().getTime() + 20 * 24 * 60 * 60 * 1000));
+
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', null);
+    await courseOverviewPage.visit({ course_slug: 'redis' });
+
+    assert.contains(courseOverviewPage.paidCourseNoticeText, 'This challenge requires a CodeCrafters Membership.');
+    assert.contains(courseOverviewPage.paidCourseNoticeText, 'Try Build your own grep →');
+    assert.contains(courseOverviewPage.paidCourseNoticeText, 'View Membership Plans →');
+  });
+
   test('stages for extensions are ordered properly', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

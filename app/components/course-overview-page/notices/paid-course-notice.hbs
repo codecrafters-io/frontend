@@ -1,27 +1,63 @@
-<div class="rounded-lg border border-blue-300 bg-blue-50 p-6" data-test-paid-course-notice>
-  <div class="flex items-start gap-4">
+<Alert @color="yellow" @size="large" data-test-paid-course-notice ...attributes>
+  <div class="flex items-start gap-2">
     <div class="mt-1 flex-shrink-0">
-      {{svg-jar "lock" class="w-6 h-6 fill-current text-blue-600"}}
+      {{svg-jar "lock-closed" class="w-6 h-6 fill-current text-gray-800"}}
     </div>
     <div class="flex-1">
-      <h3 class="text-lg font-bold text-blue-900 mb-2">
-        {{@course.name}}
-        is included with a membership.
+      <h3 class="text-lg font-bold text-gray-800 mb-2 mt-0.5">
+        This challenge requires a CodeCrafters Membership.
       </h3>
-      <p class="text-blue-800 text-sm mb-4">
-        This challenge is exclusively available to CodeCrafters members. Unlock premium challenges, advanced features, and more with a membership.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <a
-          href="https://codecrafters.io/pricing"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center justify-center px-4 py-2.5 font-bold rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-          data-test-view-membership-plans-button
-        >
-          View Membership Plans →
-        </a>
+
+      <div class="prose prose-sm prose-compact mb-4">
+        <p>
+          You're welcome to study the full challenge structure and stage instructions for free. A membership is needed for submitting your code and
+          viewing those of others.
+        </p>
+
+        {{#if this.freeOrBetaCourse}}
+          <p>
+            <strong>Want to try a free challenge?</strong>
+            Try
+            <LinkTo @route="course" @model={{this.freeOrBetaCourse.slug}}>{{this.freeOrBetaCourse.name}}</LinkTo>
+            —
+            {{#if this.freeOrBetaCourse.isFreeThisMonth}}
+              it's free this month.
+            {{else if this.freeOrBetaCourse.isFree}}
+              it's free until
+              {{date-format this.freeOrBetaCourse.isFreeUntil format="d MMMM yyyy"}}.
+            {{else if this.freeOrBetaCourse.releaseStatusIsBeta}}
+              it's free during beta.
+            {{/if}}
+          </p>
+        {{/if}}
+      </div>
+
+      <div class="flex items-center gap-4">
+        {{#if this.freeOrBetaCourse}}
+          <LinkTo
+            @route="course"
+            @model={{this.freeOrBetaCourse.slug}}
+            class="px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
+            data-test-try-free-challenge-button
+          >
+            Try
+            {{this.freeOrBetaCourse.name}}
+            →
+          </LinkTo>
+
+          <LinkTo @route="pay" class="text-gray-700 hover:text-gray-800 hover:underline font-bold text-sm" data-test-view-membership-plans-button>
+            View Membership Plans →
+          </LinkTo>
+        {{else}}
+          <LinkTo
+            @route="pay"
+            class="px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
+            data-test-view-membership-plans-button
+          >
+            View Membership Plans →
+          </LinkTo>
+        {{/if}}
       </div>
     </div>
   </div>
-</div>
+</Alert>
