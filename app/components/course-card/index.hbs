@@ -10,7 +10,7 @@
     {{#if this.isSkeleton}}
       <div class="bg-gray-100 dark:bg-gray-800 w-8 h-8 rounded-full" />
     {{else}}
-      <CourseLogo @course={{@course}} />
+      <CourseLogo @course={{this.course}} />
     {{/if}}
   </div>
 
@@ -21,7 +21,7 @@
         {{#if this.isSkeleton}}
           <span class="inline-block bg-gray-100 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}
-          <span>{{@course.name}}</span>
+          <span>{{this.course.name}}</span>
         {{/if}}
       </div>
     </div>
@@ -37,7 +37,7 @@
           </div>
         </div>
       {{else}}
-        <span>{{@course.shortDescription}}</span>
+        <span>{{this.course.shortDescription}}</span>
       {{/if}}
     </div>
   </div>
@@ -49,23 +49,23 @@
         <div class="bg-gray-100 dark:bg-gray-800 rounded-sm h-4 w-24"></div>
       {{else}}
         {{#if this.lastUsedRepository}}
-          <CourseCard::ProgressBar @course={{@course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
+          <CourseCard::ProgressBar @course={{this.course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
         {{else}}
-          {{#if @course.releaseStatusIsAlpha}}
+          {{#if this.course.releaseStatusIsAlpha}}
             <div
               class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded-sm px-1 py-0.25 mr-3"
               data-test-course-alpha-label
             >
               ALPHA
             </div>
-          {{else if @course.releaseStatusIsBeta}}
+          {{else if this.course.releaseStatusIsBeta}}
             <BetaCourseLabel class="mr-3" />
-          {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
-            <FreeCourseLabel @course={{@course}} />
+          {{else if (and this.course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
+            <FreeCourseLabel @course={{this.course}} />
           {{else}}
             <div class="flex items-center">
               {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
-              <span class="text-xs text-gray-500">{{@course.stages.length}} stages</span>
+              <span class="text-xs text-gray-500">{{this.course.stages.length}} stages</span>
             </div>
           {{/if}}
         {{/if}}
