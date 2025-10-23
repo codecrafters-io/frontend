@@ -1,6 +1,6 @@
 <Alert @color="teal" @size="large" data-test-free-course-notice ...attributes>
   <div class="flex items-start gap-2">
-    <div class="mt-1 flex-shrink-0">
+    <div class="mt-1 flex-shrink-0 hidden sm:block">
       {{svg-jar "sparkles" class="w-6 h-6 fill-current text-teal-500"}}
     </div>
     <div class="flex-1">
@@ -26,8 +26,8 @@
 
         If you'd like to enjoy advanced features such as running turbo tests, dark mode, or unlimited code examples, you'll need a membership.
       </p>
-      <div class="flex items-center gap-4">
-        <PrimaryLinkButton @route="course" @model={{@course.slug}} data-test-start-challenge-button>
+      <div class="flex items-center flex-wrap flex-col sm:flex-row gap-4">
+        <PrimaryLinkButton @route="course" @model={{@course.slug}} class="w-full sm:w-auto text-center" data-test-start-challenge-button>
           Start free challenge →
         </PrimaryLinkButton>
 
