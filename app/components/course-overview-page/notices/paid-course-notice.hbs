@@ -1,6 +1,6 @@
 <Alert @color="yellow" @size="large" data-test-paid-course-notice ...attributes>
   <div class="flex items-start gap-2">
-    <div class="mt-1 flex-shrink-0">
+    <div class="mt-1 flex-shrink-0 hidden sm:block">
       {{svg-jar "lock-closed" class="w-6 h-6 fill-current text-gray-800"}}
     </div>
     <div class="flex-1">
@@ -32,12 +32,12 @@
         {{/if}}
       </div>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center flex-wrap flex-col sm:flex-row gap-4">
         {{#if this.freeOrBetaCourse}}
           <LinkTo
             @route="course"
             @model={{this.freeOrBetaCourse.slug}}
-            class="px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
+            class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
             data-test-try-free-challenge-button
           >
             Try
@@ -51,7 +51,7 @@
         {{else}}
           <LinkTo
             @route="pay"
-            class="px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
+            class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
             data-test-view-membership-plans-button
           >
             View Membership Plans →
