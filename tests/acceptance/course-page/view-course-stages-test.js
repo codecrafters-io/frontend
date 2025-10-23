@@ -555,7 +555,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    let currentTime = new Date('2024-01-02T00:00:00.000Z');
+    // Use noon UTC so expectations are same in PST and UTC
+    let currentTime = new Date('2024-01-01T12:00:00.000Z');
 
     // TODO: Find cleaner way to do this?
     this.owner.unregister('service:date');
@@ -580,7 +581,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     );
 
     // Last day of this month
-    isFreeExpirationDate = new Date('2024-01-31T00:00:00.000Z');
+    isFreeExpirationDate = new Date('2024-01-31T12:00:00.000Z');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
@@ -594,7 +595,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     );
 
     // Some other day in the month
-    isFreeExpirationDate = new Date('2024-01-16T00:00:00.000Z');
+    isFreeExpirationDate = new Date('2024-01-16T12:00:00.000Z');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
