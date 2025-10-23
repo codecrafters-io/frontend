@@ -1,0 +1,27 @@
+<div class="rounded-lg border border-blue-300 bg-blue-50 p-6" data-test-paid-course-notice>
+  <div class="flex items-start gap-4">
+    <div class="mt-1 flex-shrink-0">
+      {{svg-jar "lock" class="w-6 h-6 fill-current text-blue-600"}}
+    </div>
+    <div class="flex-1">
+      <h3 class="text-lg font-bold text-blue-900 mb-2">
+        {{@course.name}}
+        is included with a membership.
+      </h3>
+      <p class="text-blue-800 text-sm mb-4">
+        This challenge is exclusively available to CodeCrafters members. Unlock premium challenges, advanced features, and more with a membership.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a
+          href="https://codecrafters.io/pricing"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center px-4 py-2.5 font-bold rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+          data-test-view-membership-plans-button
+        >
+          View Membership Plans →
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

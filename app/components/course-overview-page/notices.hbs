@@ -13,10 +13,6 @@
       to be notified when this challenge is available.
     </p>
   </AlertWithIcon>
-{{else if (and @course.isFree @course.isFreeUntil)}}
-  {{#unless this.authenticator.currentUser.canAccessMembershipBenefits}}
-    <CourseOverviewPage::Notices::FreeCourseNotice @course={{@course}} ...attributes />
-  {{/unless}}
 {{else if @course.releaseStatusIsDeprecated}}
   <AlertWithIcon @type="info" data-test-course-deprecated-notice ...attributes>
     This challenge is deprecated.<br />
@@ -24,4 +20,8 @@
       Since you're a member, you can still access the challenge if you'd like.
     {{/if}}
   </AlertWithIcon>
+{{else if (and @course.isFree (not this.authenticator.currentUser.canAccessMembershipBenefits))}}
+  <CourseOverviewPage::Notices::FreeCourseNotice @course={{@course}} ...attributes />
+{{else if (and @course.releaseStatusIsLive (not this.authenticator.currentUser.canAccessMembershipBenefits))}}
+  <CourseOverviewPage::Notices::PaidCourseNotice @course={{@course}} ...attributes />
 {{/if}}
