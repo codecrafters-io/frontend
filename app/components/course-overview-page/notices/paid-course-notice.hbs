@@ -35,7 +35,7 @@
       <div class="flex items-center flex-wrap flex-col sm:flex-row gap-4">
         {{#if this.freeOrBetaCourse}}
           <LinkTo
-            @route="course"
+            @route="course-overview"
             @model={{this.freeOrBetaCourse.slug}}
             class="w-full sm:w-auto text-center px-4 py-2 text-sm font-semibold bg-gray-800 rounded-sm text-white hover:bg-gray-700"
             data-test-try-free-challenge-button
