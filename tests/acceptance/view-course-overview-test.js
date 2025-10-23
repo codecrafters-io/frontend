@@ -132,12 +132,12 @@ module('Acceptance | view-course-overview', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    this.owner.unregister('service:date');
-    this.owner.register('service:date', FakeDateService);
-
-    let currentTime = new Date('2024-01-02');
+    // Use noon UTC so expectations are same in PST and UTC
+    let currentTime = new Date('2024-01-02T12:00:00.000Z');
 
     // TODO: Find cleaner way to do this?
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
     this.owner.lookup('service:date').setNow(currentTime);
     this.owner.lookup('service:time').currentTime = currentTime;
 
@@ -147,8 +147,8 @@ module('Acceptance | view-course-overview', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.contains(courseOverviewPage.freeCourseNoticeText, 'Build your own Redis is free until 21 January 2024.');
-    assert.contains(courseOverviewPage.freeCourseNoticeText, 'The core challenge experience is completely free until 21 January 2024.');
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'Build your own Redis is free until 22 January 2024.');
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'The core challenge experience is completely free until 22 January 2024.');
   });
 
   test('stages for extensions are ordered properly', async function (assert) {

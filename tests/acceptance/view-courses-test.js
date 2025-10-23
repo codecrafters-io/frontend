@@ -182,20 +182,11 @@ module('Acceptance | view-courses', function (hooks) {
   test('it renders if user is not signed in', async function (assert) {
     testScenario(this.server);
 
-    this.owner.unregister('service:date');
-    this.owner.register('service:date', FakeDateService);
-
-    let dateService = this.owner.lookup('service:date');
-    let now = new Date('2024-01-01').getTime();
-    dateService.setNow(now);
-
-    let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
-
     const grep = this.server.schema.courses.findBy({ slug: 'grep' });
     grep.update({ releaseStatus: 'beta' });
 
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
-    redis.update({ isFreeUntil: isFreeExpirationDate });
+    redis.update({ isFreeUntil: new Date(new Date().getTime() + 20 * 24 * 60 * 60 * 1000) });
 
     await catalogPage.visit();
     assert.strictEqual(catalogPage.courseCards.length, 4, 'expected 4 course cards to be present');
