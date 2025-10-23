@@ -1,3 +1,11 @@
-<div class="flex p-3 border rounded-sm shadow-xs {{this.containerColorClasses}} {{this.containerInteractivityClasses}}" ...attributes>
+<div
+  class="flex border rounded-sm shadow-xs
+    {{this.containerColorClasses}}
+    {{this.containerInteractivityClasses}}
+    {{if this.sizeIsLarge 'px-5 py-4'}}
+    {{if this.sizeIsRegular 'p-3'}}
+    "
+  ...attributes
+>
   {{yield}}
 </div>
