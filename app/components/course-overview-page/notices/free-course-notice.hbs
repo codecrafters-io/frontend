@@ -21,25 +21,19 @@
           this month.
         {{else}}
           until
-          {{date-format @course.isFreeUntil format="d MMMM yyyy"}}
+          {{date-format @course.isFreeUntil format="d MMMM yyyy"}}.
         {{/if}}
 
         If you'd like to enjoy advanced features such as running turbo tests, dark mode, or unlimited code examples, you'll need a membership.
       </p>
       <div class="flex items-center gap-4">
-        <PrimaryLinkButton @route="course-overview" @model={{@course.slug}} data-test-start-challenge-button>
+        <PrimaryLinkButton @route="course" @model={{@course.slug}} data-test-start-challenge-button>
           Start free challenge →
         </PrimaryLinkButton>
 
-        <a
-          href="https://codecrafters.io/pricing"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-teal-500 hover:text-teal-600 font-bold text-sm"
-          data-test-view-membership-plans-button
-        >
+        <LinkTo @route="pay" class="text-teal-500 hover:text-teal-600 font-bold text-sm" data-test-view-membership-plans-button>
           View Membership Plans →
-        </a>
+        </LinkTo>
       </div>
     </div>
   </div>

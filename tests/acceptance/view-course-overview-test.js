@@ -7,6 +7,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import TimeService from 'codecrafters-frontend/services/time';
 
 module('Acceptance | view-course-overview', function (hooks) {
   setupApplicationTest(hooks);
@@ -105,24 +106,50 @@ module('Acceptance | view-course-overview', function (hooks) {
     );
   });
 
-  test('it has the notice for when a course is free', async function (assert) {
+  test('it has the notice for when a course is free this month', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     this.owner.unregister('service:date');
     this.owner.register('service:date', FakeDateService);
 
-    let dateService = this.owner.lookup('service:date');
-    let now = new Date('2024-01-01').getTime();
-    dateService.setNow(now);
+    let currentTime = new Date('2024-01-02');
 
-    let isFreeExpirationDate = new Date(dateService.now() + 20 * 24 * 60 * 60 * 1000);
+    // TODO: Find cleaner way to do this?
+    this.owner.lookup('service:date').setNow(currentTime);
+    this.owner.lookup('service:time').currentTime = currentTime;
+
+    let isFreeExpirationDate = new Date(currentTime.getTime() + 30 * 24 * 60 * 60 * 1000);
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
 
-    assert.strictEqual(courseOverviewPage.freeNoticeText, 'This challenge is free until 21 January 2024!');
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'Build your own Redis is free this January.');
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'The core challenge experience is completely free this month.');
+  });
+
+  test('it has the notice for when a course is free until a specific date', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.owner.unregister('service:date');
+    this.owner.register('service:date', FakeDateService);
+
+    let currentTime = new Date('2024-01-02');
+
+    // TODO: Find cleaner way to do this?
+    this.owner.lookup('service:date').setNow(currentTime);
+    this.owner.lookup('service:time').currentTime = currentTime;
+
+    let isFreeExpirationDate = new Date(currentTime.getTime() + 20 * 24 * 60 * 60 * 1000);
+    this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'Build your own Redis is free until 21 January 2024.');
+    assert.contains(courseOverviewPage.freeCourseNoticeText, 'The core challenge experience is completely free until 21 January 2024.');
   });
 
   test('stages for extensions are ordered properly', async function (assert) {
