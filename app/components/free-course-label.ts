@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import DateService from 'codecrafters-frontend/services/date';
-import { format, isSameDay } from 'date-fns';
-import { inject as service } from '@ember/service';
+import { format } from 'date-fns';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -18,22 +16,6 @@ export interface Signature {
 }
 
 export default class FreeCourseLabel extends Component<Signature> {
-  @service declare date: DateService;
-
-  get labelCopy(): string {
-    const now = this.date.now();
-    const today = new Date(now);
-    const courseIsFreeExpirationDate = this.args.course.isFreeUntil as Date;
-    const lastDayOfThisMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-    const firstDayOfNextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-
-    if (isSameDay(courseIsFreeExpirationDate, lastDayOfThisMonth) || isSameDay(courseIsFreeExpirationDate, firstDayOfNextMonth)) {
-      return 'FREE THIS MONTH';
-    } else {
-      return 'FREE';
-    }
-  }
-
   get tooltipCopy(): string {
     return `This challenge is free until ${format(this.args.course.isFreeUntil as Date, 'd MMMM yyyy')}!`;
   }
