@@ -15,10 +15,7 @@
   </AlertWithIcon>
 {{else if (and @course.isFree @course.isFreeUntil)}}
   {{#unless this.authenticator.currentUser.canAccessMembershipBenefits}}
-    <AlertWithIcon @type="success" data-test-course-free-notice ...attributes>
-      This challenge is free until
-      {{this.formattedCourseIsFreeExpirationDate}}!
-    </AlertWithIcon>
+    <CourseOverviewPage::Notices::FreeCourseNotice @course={{@course}} ...attributes />
   {{/unless}}
 {{else if @course.releaseStatusIsDeprecated}}
   <AlertWithIcon @type="info" data-test-course-deprecated-notice ...attributes>

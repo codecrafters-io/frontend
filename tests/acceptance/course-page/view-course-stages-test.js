@@ -555,14 +555,17 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    // Use noon UTC so expectations are same in PST and UTC
+    let currentTime = new Date('2024-01-01T12:00:00.000Z');
+
+    // TODO: Find cleaner way to do this?
     this.owner.unregister('service:date');
     this.owner.register('service:date', FakeDateService);
+    this.owner.lookup('service:date').setNow(currentTime);
+    this.owner.lookup('service:time').currentTime = currentTime;
 
-    let dateService = this.owner.lookup('service:date');
-    let now = new Date('2024-01-01').getTime();
-    dateService.setNow(now);
-
-    let isFreeExpirationDate = new Date('2024-02-01');
+    // First day of next month
+    let isFreeExpirationDate = new Date('2024-02-01T00:00:00.000Z');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
@@ -577,7 +580,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       'free label should be present and have correct copy when expiration is first day of next month',
     );
 
-    isFreeExpirationDate = new Date('2024-01-31');
+    // Last day of this month
+    isFreeExpirationDate = new Date('2024-01-31T12:00:00.000Z');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();
@@ -590,7 +594,8 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
       'free label should be present and have correct copy when expiration is last day of this month',
     );
 
-    isFreeExpirationDate = new Date('2024-01-16');
+    // Some other day in the month
+    isFreeExpirationDate = new Date('2024-01-16T12:00:00.000Z');
     this.server.schema.courses.findBy({ slug: 'redis' }).update('isFreeUntil', isFreeExpirationDate);
 
     await catalogPage.visit();

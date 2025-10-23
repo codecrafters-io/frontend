@@ -5,6 +5,7 @@ interface Signature {
 
   Args: {
     color: 'blue' | 'green' | 'red' | 'teal' | 'yellow';
+    size?: 'regular' | 'large';
     isInteractive?: boolean;
   };
 
@@ -36,6 +37,14 @@ export default class Alert extends Component<Signature> {
       teal: 'hover:bg-teal-100/40 dark:hover:bg-teal-900/40',
       yellow: 'hover:bg-yellow-100/40 dark:hover:bg-yellow-900/40',
     }[this.args.color];
+  }
+
+  get sizeIsLarge(): boolean {
+    return this.args.size === 'large';
+  }
+
+  get sizeIsRegular(): boolean {
+    return this.args.size === 'regular' || !this.args.size;
   }
 }
 

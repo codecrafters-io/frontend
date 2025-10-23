@@ -9,7 +9,8 @@ export default create({
   betaNoticeText: text('[data-test-course-beta-notice]'),
   clickOnStartCourse: clickable('[data-test-course-overview-header] [data-test-start-course-button]'),
   deprecatedNoticeText: text('[data-test-course-deprecated-notice]'),
-  freeNoticeText: text('[data-test-course-free-notice]'),
+  freeCourseNoticeText: text('[data-test-free-course-notice]'),
+  paidCourseNoticeText: text('[data-test-paid-course-notice]'),
   stageListItems: collection('[data-test-stage-list-item]', {
     hasCompletionCheckmark: isPresent('[data-test-stage-complete-checkmark]'),
     hasDifficultyLabel: isPresent('[data-test-course-difficulty-label]'),

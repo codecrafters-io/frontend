@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import TimeService from 'codecrafters-frontend/services/time';
 import { inject as service } from '@ember/service';
 
 interface Signature {
@@ -11,12 +11,12 @@ interface Signature {
   };
 }
 
-export default class Notices extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
+export default class FreeCourseNotice extends Component<Signature> {
+  @service declare time: TimeService;
 }
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::Notices': typeof Notices;
+    'CourseOverviewPage::Notices::FreeCourseNotice': typeof FreeCourseNotice;
   }
 }

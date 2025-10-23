@@ -8,10 +8,8 @@ import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester
 import DateService from 'codecrafters-frontend/services/date';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import Model, { attr, hasMany } from '@ember-data/model';
+import TimeService from 'codecrafters-frontend/services/time';
 import UserModel from 'codecrafters-frontend/models/user';
-import { inject as service } from '@ember/service';
-import { memberAction } from 'ember-api-actions';
-import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
@@ -25,10 +23,16 @@ import reactLogo from '/assets/images/challenge-logos/challenge-logo-react.svg';
 import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
+import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
+import { inject as service } from '@ember/service';
+import { memberAction } from 'ember-api-actions';
+import { isSameDay } from 'date-fns';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
 export default class CourseModel extends Model {
+  @service declare time: TimeService;
+
   @attr('date') declare buildpacksLastSyncedAt: Date;
   @attr('string') declare completionMessageMarkdown: string | null;
   @attr('number') declare completionPercentage: number;
@@ -124,7 +128,19 @@ export default class CourseModel extends Model {
   }
 
   get isFree() {
-    return this.isFreeUntil && this.isFreeUntil > new Date(this.date.now());
+    return this.isFreeUntil && this.isFreeUntil > this.time.currentTime;
+  }
+
+  get isFreeThisMonth() {
+    if (!this.isFree) {
+      return false;
+    }
+
+    const now = this.time.currentTime;
+    const lastDayOfThisMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const firstDayOfNextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+
+    return isSameDay(this.isFreeUntil!, lastDayOfThisMonth) || isSameDay(this.isFreeUntil!, firstDayOfNextMonth);
   }
 
   get latestTesterVersion() {
