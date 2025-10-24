@@ -61,6 +61,18 @@ export default class CourseCard extends Component<Signature> {
       query: {},
     };
   }
+
+  get shouldShowLockIcon() {
+    if (this.authenticator.currentUser?.canAccessPaidContent) {
+      return false;
+    }
+
+    if (!this.args.course) {
+      return false;
+    }
+
+    return !(this.args.course.releaseStatusIsBeta || this.args.course.isFree);
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {

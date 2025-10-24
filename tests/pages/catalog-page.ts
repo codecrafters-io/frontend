@@ -9,19 +9,27 @@ import helpscoutBeacon from 'codecrafters-frontend/tests/pages/components/helpsc
 export default create({
   accountDropdown: AccountDropdown,
 
-  async clickOnCourse(courseName) {
+  async clickOnCourse(courseName: string) {
     await waitUntil(() => this.courseCards.length > 0); // Ensure skeleton UI is gone
-    await this.courseCards.toArray().findBy('name', courseName).click();
+
+    await this.courseCards
+      .toArray()
+      .find((courseCard) => courseCard.name === courseName)!
+      .click();
   },
 
-  async clickOnTrack(trackName) {
+  async clickOnTrack(trackName: string) {
     await waitUntil(() => this.trackCards.length > 0); // Ensure skeleton UI is gone
-    await this.trackCards.toArray().findBy('name', trackName).click();
+
+    await this.trackCards
+      .toArray()
+      .find((trackCard) => trackCard.name === trackName)!
+      .click();
   },
 
   courseCards: collection('[data-test-course-card]', CourseCard),
 
-  courseCardByName(name) {
+  courseCardByName(name: string) {
     return this.courseCards.toArray().find((courseCard) => courseCard.name === name);
   },
 
