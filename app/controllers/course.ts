@@ -153,9 +153,10 @@ export default class CourseController extends Controller {
       step.status === 'complete' && this.stepStatusPreviouslyWas && this.stepStatusPreviouslyWas !== 'complete';
 
     const stepHasNotChanged = this.stepIdPreviouslyWas === step.id && this.stepTypePreviouslyWas === step.type;
-    const stepIsSetupOrCourseStageStep = step.type === 'CourseStageStep' || step.type === 'SetupStep';
+    const stepIsCourseStageStep = step.type === 'CourseStageStep';
 
-    if (stepIsSetupOrCourseStageStep && stepIsCompleteButNotPreviouslyComplete && stepHasNotChanged) {
+    // TODO: Investigate confetti for completed workflow step
+    if (stepIsCourseStageStep && stepIsCompleteButNotPreviouslyComplete && stepHasNotChanged) {
       this.confetti.fireOnFocus({
         particleCount: 200,
         spread: 120,
