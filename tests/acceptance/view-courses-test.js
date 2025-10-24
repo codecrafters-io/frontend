@@ -71,7 +71,7 @@ module('Acceptance | view-courses', function (hooks) {
 
   test('it renders with progress if user has started a course', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -98,7 +98,7 @@ module('Acceptance | view-courses', function (hooks) {
 
   test('it renders with progress if user has created a repository', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -119,7 +119,7 @@ module('Acceptance | view-courses', function (hooks) {
 
   test('it sorts course cards based on last push', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -155,7 +155,7 @@ module('Acceptance | view-courses', function (hooks) {
 
   test('it renders completed course cards', async function (assert) {
     testScenario(this.server, ['dummy', 'sqlite']);
-    signIn(this.owner, this.server);
+    signInAsSubscriber(this.owner, this.server);
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -200,6 +200,11 @@ module('Acceptance | view-courses', function (hooks) {
     assert.ok(catalogPage.courseCardByName('Build your own Redis').hasFreeLabel, 'free challenges should have free label');
     assert.notOk(catalogPage.courseCardByName('Build your own Git').hasBetaLabel, 'live challenges should not have beta label');
     assert.notOk(catalogPage.courseCardByName('Build your own SQLite').hasBetaLabel, 'live challenges should not have beta label');
+
+    assert.notOk(catalogPage.courseCards[0].hasLockIcon, 'beta course card should not have lock icon');
+    assert.notOk(catalogPage.courseCards[1].hasLockIcon, 'free course card should not have lock icon');
+    assert.ok(catalogPage.courseCards[2].hasLockIcon, 'live course card should have lock icon');
+    assert.ok(catalogPage.courseCards[3].hasLockIcon, 'live course card should have lock icon');
   });
 
   test('course card does not render free label if user has access to membership benefits', async function (assert) {
