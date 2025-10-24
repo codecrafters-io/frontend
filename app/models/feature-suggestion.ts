@@ -1,5 +1,6 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type UserModel from './user';
+import { action } from '@ember/object';
 
 export default class FeatureSuggestionModel extends Model {
   @attr('string') declare featureSlug: string;
@@ -21,5 +22,11 @@ export default class FeatureSuggestionModel extends Model {
 
   get isDismissed() {
     return !!this.dismissedAt;
+  }
+
+  @action
+  async dismiss() {
+    this.dismissedAt = new Date();
+    await this.save();
   }
 }

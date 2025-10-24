@@ -38,19 +38,27 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
     if (this.authenticator.currentUser!.pendingRepositoryWorkflowTutorialFeatureSuggestion) {
       this.currentScreen = 'start-workflow-tutorial';
     } else {
-      this.currentScreen = 'start-workflow-tutorial';
-      // this.currentScreen = 'step-previously-completed';
+      this.currentScreen = 'step-previously-completed';
     }
   }
 
   @action
-  handleNextButtonClick() {
+  async handleBackToReviewButtonClick() {
+    this.currentScreen = 'workflow-tutorial-step-1';
+  }
+
+  @action
+  async handleNextButtonClick() {
     if (this.currentScreen == 'start-workflow-tutorial') {
       this.currentScreen = 'workflow-tutorial-step-1';
     } else if (this.currentScreen == 'workflow-tutorial-step-1') {
       this.currentScreen = 'workflow-tutorial-step-2';
     } else if (this.currentScreen == 'workflow-tutorial-step-2') {
       this.currentScreen = 'workflow-tutorial-completed';
+
+      if (this.authenticator.currentUser!.pendingRepositoryWorkflowTutorialFeatureSuggestion) {
+        await this.authenticator.currentUser!.pendingRepositoryWorkflowTutorialFeatureSuggestion.dismiss();
+      }
     } else if (this.currentScreen == 'workflow-tutorial-completed') {
       this.router.transitionTo('course.stage.instructions', this.args.step.repository.course.firstStage!.slug);
     } else {

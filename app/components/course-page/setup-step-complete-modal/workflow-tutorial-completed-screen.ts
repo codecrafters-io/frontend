@@ -7,7 +7,7 @@ interface Signature {
   Args: {
     step: SetupStep;
     onNextButtonClick: () => void;
-    onBackToReviewClick: () => void;
+    onBackToReviewButtonClick: () => void;
   };
 }
 
