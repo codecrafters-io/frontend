@@ -1,0 +1,46 @@
+<div class="inline-block" ...attributes>
+  {{! Root folder }}
+  <div class="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+    {{svg-jar "folder-open-outline" class="w-5 h-5"}}
+    <span class="font-mono text-xs">codecrafters-shell-python</span>
+  </div>
+
+  {{! Nested items with tree structure }}
+  <div class="relative ml-2 mt-1">
+    {{! Vertical line from app to other files }}
+    <div class="absolute left-0 top-0 bottom-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+
+    {{! App folder }}
+    <div class="relative flex items-center gap-2 mb-1">
+      <div class="w-3 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <div class="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+        {{svg-jar "folder-open-outline" class="w-5 h-5"}}
+        <span class="font-mono text-xs">app</span>
+      </div>
+    </div>
+
+    {{! Nested items under app }}
+    <div class="relative ml-3 mb-1">
+      {{! Vertical line for nested items }}
+      <div class="absolute left-0 top-0 bottom-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+
+      {{! main.py file }}
+      <div class="relative flex items-center gap-2">
+        <div class="w-3 h-px bg-gray-300 dark:bg-gray-600"></div>
+        <div class="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+          {{svg-jar "document-text-outline" class="w-5 h-5"}}
+          <span class="font-mono text-xs">main.py</span>
+        </div>
+      </div>
+    </div>
+
+    {{! Other files folder (grayed out) }}
+    <div class="relative flex items-center gap-2">
+      <div class="w-3 h-px bg-gray-300 dark:bg-gray-600"></div>
+      <div class="flex items-center gap-2 text-gray-400 dark:text-gray-500">
+        {{svg-jar "folder-open-outline" class="w-5 h-5 opacity-50"}}
+        <span class="font-mono text-xs">other files</span>
+      </div>
+    </div>
+  </div>
+</div>
