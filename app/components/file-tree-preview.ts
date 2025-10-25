@@ -24,6 +24,7 @@ export default class FileTreePreview extends Component<Signature> {
         {
           type: 'folder',
           name: 'other files',
+          isGrayedOut: true,
           children: [],
         },
       ],
