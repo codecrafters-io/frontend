@@ -7,6 +7,7 @@ interface Signature {
 
   Args: {
     onNextButtonClick: () => void;
+    onStepSelect: (stepNumber: number) => void;
     step: SetupStep;
   };
 }

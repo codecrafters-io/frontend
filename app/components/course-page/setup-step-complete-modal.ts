@@ -65,6 +65,15 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
       throw new Error(`Invalid screen for next button click: ${this.currentScreen}`);
     }
   }
+
+  @action
+  handleStepSelect(stepNumber: number) {
+    if (stepNumber === 1) {
+      this.currentScreen = 'workflow-tutorial-step-1';
+    } else if (stepNumber === 2) {
+      this.currentScreen = 'workflow-tutorial-step-2';
+    }
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
