@@ -39,13 +39,11 @@ export default class SetupStep extends StepDefinition {
   get routeParams() {
     return {
       route: 'course.setup',
-      // @ts-expect-error repository.course not typed
       models: [this.repository.course.slug],
     };
   }
 
   get status() {
-    // @ts-expect-error repository.firstSubmissionCreated not typed
     if (this.repository.firstSubmissionCreated) {
       return 'complete';
     }

@@ -174,6 +174,55 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
   });
 
+  test('can start course with workflow tutorial', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('feature-suggestion', { user: user, featureSlug: 'repository_workflow_tutorial' });
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    await courseOverviewPage.clickOnStartCourse();
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
+
+    await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await coursePage.createRepositoryCard.clickOnNextQuestionButton();
+    await coursePage.createRepositoryCard.clickOnOptionButton('Every day');
+    await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
+    await coursePage.createRepositoryCard.clickOnContinueButton();
+
+    let repository = this.server.schema.repositories.find(1);
+    this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
+
+    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    await finishRender();
+
+    assert.ok(coursePage.setupStepCompleteModal.isVisible, 'setup step complete modal is visible');
+
+    // Click through start screen
+    await coursePage.setupStepCompleteModal.clickOnNextButton();
+    await animationsSettled();
+
+    // Click through workflow tutorial step 1
+    await coursePage.setupStepCompleteModal.clickOnNextButton();
+    await animationsSettled();
+
+    // Click through workflow tutorial step 2
+    await coursePage.setupStepCompleteModal.clickOnNextButton();
+    await animationsSettled();
+
+    // Click through workflow tutorial completed screen (navigates to first stage)
+    await coursePage.setupStepCompleteModal.clickOnNextButton();
+    await animationsSettled();
+
+    assert.strictEqual(currentURL(), '/courses/dummy/stages/ah7?repo=1', 'current URL is first stage page URL');
+  });
+
   test('repository dropdown has the correct tooltip copy', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);

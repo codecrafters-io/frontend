@@ -10,6 +10,7 @@ import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pag
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
 import RepositorySetupCard from 'codecrafters-frontend/tests/pages/components/course-page/repository-setup-card';
 import SecondStageYourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/second-stage-your-task-card';
+import SetupStepCompleteModal from 'codecrafters-frontend/tests/pages/components/course-page/setup-step-complete-modal';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
@@ -148,6 +149,8 @@ export default create({
   },
 
   secondStageYourTaskCard: SecondStageYourTaskCard,
+
+  setupStepCompleteModal: SetupStepCompleteModal,
 
   shareProgressModal: {
     clickOnCopyButton: clickable('[data-test-copy-button]'),
