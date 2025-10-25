@@ -1,5 +1,5 @@
-<ModalBody @allowManualClose={{false}} @onClose={{@onClose}} class="w-full" data-test-previous-steps-incomplete-modal ...attributes>
-  <div class="flex flex-col items-center w-full">
+<ModalBody @allowManualClose={{false}} @onClose={{@onClose}} data-test-previous-steps-incomplete-modal ...attributes>
+  <div class="flex flex-col items-center w-full max-w-2xs">
     <div class="text-[60px] text-center">
       ⚠️
     </div>
@@ -8,8 +8,8 @@
       Previous steps incomplete!
     </div>
 
-    <div class="prose dark:prose-invert mb-5 text-center" data-test-completion-message>
-      <p class="text-balance">
+    <div class="prose dark:prose-invert prose-compact mb-5" data-test-completion-message>
+      <p class="text-balance text-center">
         This step depends on previous steps that you haven't completed yet.
       </p>
     </div>
