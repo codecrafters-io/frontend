@@ -14,7 +14,9 @@
       </p>
     </div>
 
-    <img src="/assets/images/test.png" alt="Work in your Git repo" class="w-full h-48 mb-4" />
+    <div class="w-full h-48 mb-4 bg-white border border-gray-200 dark:border-gray-700 rounded-sm flex flex-col items-stretch justify-center p-4">
+      <FileTreePreview @rootFolder={{this.rootFolderForfileTreePreview}} />
+    </div>
 
     <div class="prose prose-sm dark:prose-invert text-center text-pretty">
       <p>
