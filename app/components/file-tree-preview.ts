@@ -3,40 +3,13 @@ import type { FileTreeFolderItem } from './file-tree-preview/types';
 
 interface Signature {
   Element: HTMLDivElement;
+
+  Args: {
+    rootFolder: FileTreeFolderItem;
+  };
 }
 
-export default class FileTreePreview extends Component<Signature> {
-  get rootFolder(): FileTreeFolderItem {
-    return {
-      type: 'folder',
-      name: 'codecrafters-shell-python',
-      children: [
-        {
-          type: 'folder',
-          name: 'app',
-          children: [
-            {
-              type: 'file',
-              name: 'main.py',
-            },
-          ],
-        },
-        {
-          type: 'folder',
-          name: 'other files',
-          isGrayedOut: true,
-          children: [
-            {
-              type: 'file',
-              name: 'README.md',
-              isGrayedOut: true,
-            },
-          ],
-        },
-      ],
-    };
-  }
-}
+export default class FileTreePreview extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
