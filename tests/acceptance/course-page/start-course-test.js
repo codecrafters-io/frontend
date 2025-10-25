@@ -178,7 +178,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     const user = signIn(this.owner, this.server);
 
-    this.server.create('feature-suggestion', { user: user, featureSlug: 'repository_workflow_tutorial' });
+    this.server.create('feature-suggestion', { user: user, featureSlug: 'repository-workflow-tutorial' });
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
