@@ -191,6 +191,10 @@ export default class UserModel extends Model {
     return this.featureSuggestions.filterBy('featureIsProductWalkthrough').rejectBy('isDismissed')[0] || null;
   }
 
+  get pendingRepositoryWorkflowTutorialFeatureSuggestion(): FeatureSuggestionModel | null {
+    return this.featureSuggestions.filterBy('featureIsRepositoryWorkflowTutorial').rejectBy('isDismissed')[0] || null;
+  }
+
   get teamHasActivePilot() {
     return this.teams.isAny('hasActivePilot');
   }

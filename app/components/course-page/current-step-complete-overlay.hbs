@@ -19,12 +19,23 @@
     {{yield}}
   </:content>
   <:overlay>
-    <CoursePage::CurrentStepCompleteModal
-      {{! Ensure this is visible on insert in case confetti is fired }}
-      {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-      class="mt-8 ml-3 mr-3 md:ml-6 md:mr-6"
-      @onClose={{this.handleModalDismissed}}
-      @activeStep={{this.coursePageState.activeStep}}
-    />
+    {{#if (eq @currentStep.type "SetupStep")}}
+      <CoursePage::SetupStepCompleteModal
+        {{! Ensure this is visible on insert in case confetti is fired }}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+        class="mt-8 mx-3 md:mx-6"
+        @onClose={{this.handleModalDismissed}}
+        {{! @glint-expect-error currentStep is guaranteed to be a SetupStep here }}
+        @step={{@currentStep}}
+      />
+    {{else}}
+      <CoursePage::CurrentStepCompleteModal
+        {{! Ensure this is visible on insert in case confetti is fired }}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+        class="mt-8 mx-3 md:mx-6"
+        @onClose={{this.handleModalDismissed}}
+        @activeStep={{this.coursePageState.activeStep}}
+      />
+    {{/if}}
   </:overlay>
 </BlurredOverlay>
