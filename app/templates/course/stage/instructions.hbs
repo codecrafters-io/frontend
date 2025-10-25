@@ -3,7 +3,7 @@
     <CoursePage::CourseStageStep::TestsPassedOverlay @currentStep={{this.currentStep}}>
       <div class="pt-6 pb-32 px-3 md:px-6 lg:px-10" {{did-update this.handleDidUpdateTestsStatus this.currentStep.testsStatus}}>
         {{#if this.shouldShowUpgradePrompt}}
-          <CoursePage::UpgradePrompt @featureSlugToHighlight="content" class="mb-6" />
+          <CourseOverviewPage::Notices::PaidCourseNotice @course={{@model.courseStage.course}} class="mb-6" />
         {{/if}}
 
         {{#if this.shouldShowFeedbackPrompt}}

@@ -121,6 +121,7 @@ export default create({
 
   hasExpandedLeaderboard: isVisible('[data-test-collapse-leaderboard-button]'),
   hasExpandedSidebar: isVisible('[data-test-collapse-sidebar-button]'),
+  hasPaidCourseNotice: isVisible('[data-test-paid-course-notice]'),
 
   installCliLink: {
     scope: '[data-test-install-cli-link]',
@@ -191,9 +192,9 @@ export default create({
     scope: '[data-test-upgrade-modal]',
   },
 
-  upgradePrompt: {
-    scope: '[data-test-upgrade-prompt]',
-    secondaryCopy: text('[data-test-upgrade-prompt-secondary-copy]'),
+  paidCourseNotice: {
+    scope: '[data-test-paid-course-notice]',
+    text: text('[data-test-paid-course-notice]'),
   },
 
   visit: visitable('/courses/:course_slug'),

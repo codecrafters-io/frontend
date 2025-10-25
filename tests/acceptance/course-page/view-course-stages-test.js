@@ -170,7 +170,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/redis/introduction', 'introduction page is shown by default');
   });
 
-  test('stages should have an upgrade prompt if they are paid', async function (assert) {
+  test('stages should have an paid course notice if they are paid', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -204,18 +204,18 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.ok(coursePage.upgradePrompt.isVisible, 'course stage item that is not free should have upgrade prompt');
+    assert.ok(coursePage.paidCourseNotice.isVisible, 'course stage item that is not free should have paid course notice');
 
-    await percySnapshot('Course Stages - Upgrade Prompt on Active Stage');
+    await percySnapshot('Course Stages - Paid Course Notice on Active Stage');
 
     await coursePage.sidebar.clickOnStepListItem('Handle exit codes').click(); // The previous completed stage
-    assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is completed should not have upgrade prompt');
+    assert.notOk(coursePage.hasPaidCourseNotice, 'course stage item that is completed should not have paid course notice');
 
     await coursePage.sidebar.clickOnStepListItem('Process isolation').click(); // The next pending stage
-    assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is pending should not have upgrade prompt');
+    assert.ok(coursePage.hasPaidCourseNotice, 'course stage item that is pending should not have paid course notice');
   });
 
-  test('stages should not have an upgrade prompt if user is a subscriber', async function (assert) {
+  test('stages should not have a paid course notice if user is a subscriber', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -244,10 +244,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.notOk(coursePage.hasPaidCourseNotice, 'course stage item that is not free should not have paid course notice for subscribers');
   });
 
-  test('stages should not have an upgrade prompt if user team has a subscription', async function (assert) {
+  test('stages should not have a paid course notice if user team has a subscription', async function (assert) {
     testScenario(this.server);
     signInAsSubscribedTeamMember(this.owner, this.server);
 
@@ -281,10 +281,10 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Docker');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.notOk(coursePage.hasUpgradePrompt, 'course stage item that is not free should have upgrade prompt');
+    assert.notOk(coursePage.hasPaidCourseNotice, 'course stage item that is not free should not have paid course notice for team members');
   });
 
-  test('stages should not have an upgrade prompt if user has active free usage grants', async function (assert) {
+  test('stages should not have a paid course notice if user has active free usage grants', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -317,12 +317,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.notOk(
-      coursePage.hasUpgradePrompt,
-      'course stage item that is not free should not have upgrade prompt if user has active free usage grants',
+      coursePage.hasPaidCourseNotice,
+      'course stage item that is not free should not have paid course notice if user has active free usage grants',
     );
   });
 
-  test('stages should have an upgrade prompt if user has expired free usage grants', async function (assert) {
+  test('stages should have a paid course notice if user has expired free usage grants', async function (assert) {
     testScenario(this.server);
 
     const user = this.server.schema.users.first();
@@ -358,22 +358,22 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.ok(
-      coursePage.upgradePrompt.isVisible,
-      'course stage item that is not free should have upgrade prompt if user has expired free usage grants',
+      coursePage.paidCourseNotice.isVisible,
+      'course stage item that is not free should have paid course notice if user has expired free usage grants',
     );
 
     await coursePage.sidebar.clickOnStepListItem('Handle exit codes').click(); // The previous completed stage
 
     assert.notOk(
-      coursePage.hasUpgradePrompt,
-      'course stage item that is completed should not have upgrade prompt if user has expired free usage grants',
+      coursePage.hasPaidCourseNotice,
+      'course stage item that is completed should not have paid course notice if user has expired free usage grants',
     );
 
     await coursePage.sidebar.clickOnStepListItem('Process isolation').click(); // The next pending stage
 
-    assert.notOk(
-      coursePage.hasUpgradePrompt,
-      'course stage item that is pending should not have upgrade prompt if user has expired free usage grants',
+    assert.ok(
+      coursePage.hasPaidCourseNotice,
+      'course stage item that is pending should have paid course notice if user has expired free usage grants',
     );
   });
 
