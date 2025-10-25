@@ -17,7 +17,7 @@ export default class FeatureSuggestionModel extends Model {
   }
 
   get featureIsRepositoryWorkflowTutorial() {
-    return this.featureSlug === 'repository_workflow_tutorial';
+    return this.featureSlug === 'repository-workflow-tutorial';
   }
 
   get isDismissed() {

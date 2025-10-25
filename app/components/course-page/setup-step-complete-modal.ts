@@ -17,7 +17,7 @@ interface Signature {
 }
 
 type Screen =
-  | 'start-workflow-tutorial' // When a user has a pending "repository_workflow_tutorial" feature suggesion
+  | 'start-workflow-tutorial' // When a user has a pending "repository-workflow-tutorial" feature suggesion
   | 'workflow-tutorial-step-1' // Step 1 of the workflow tutorial
   | 'workflow-tutorial-step-2' // Step 2 of the workflow tutorial
   | 'workflow-tutorial-completed' // When the user just completed the workflow tutorial
