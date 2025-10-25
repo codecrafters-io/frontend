@@ -1,21 +1,30 @@
 <div class="flex flex-col items-center w-full" ...attributes>
-  <div class="w-12 h-12 rounded-full bg-gray-50 border border-gray-200 dark:bg-gray-850 dark:border-gray-700 flex items-center justify-center mb-4">
-    {{svg-jar "check" class="w-6 h-6 text-gray-700 dark:text-gray-300"}}
+  <div class="text-[60px]">
+    🎉
   </div>
 
   <div class="mb-2 font-bold text-2xl text-gray-700 dark:text-gray-100 text-center text-pretty">
-    Setup complete!
+    Setup Complete!
   </div>
 
   <div class="prose dark:prose-invert mb-6 text-center text-pretty" data-test-completion-message>
     <p>
-      You've setup your CodeCrafters repository.
+      {{@step.completionNoticeMessage}}
     </p>
   </div>
 
-  <PrimaryButton data-test-next-button class="shrink-0 w-full" {{on "click" @onNextButtonClick}}>
-    Review the workflow →
-  </PrimaryButton>
+  <PrimaryLinkButton
+    @route={{this.activeStep.routeParams.route}}
+    @models={{this.activeStep.routeParams.models}}
+    data-test-next-button
+    class="shrink-0 w-full text-center"
+  >
+    {{#if (eq this.nextStep this.activeStep)}}
+      <span>View first stage →</span>
+    {{else}}
+      <span>Back to current {{if (eq this.activeStep.type "CourseStageStep") "stage" "step"}} →</span>
+    {{/if}}
+  </PrimaryLinkButton>
 
   <div
     class="mt-3 text-gray-500 hover:text-gray-800 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 shrink-0 text-xs"

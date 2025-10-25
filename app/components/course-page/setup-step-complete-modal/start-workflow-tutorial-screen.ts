@@ -6,7 +6,7 @@ interface Signature {
 
   Args: {
     onNextButtonClick: () => void;
-    onShowInstructionsAgainButtonClick: () => void;
+    onViewInstructionsButtonClick: () => void;
     step: SetupStep;
   };
 }

@@ -6,7 +6,7 @@
           <CoursePage::SetupStepCompleteModal::StartWorkflowTutorialScreen
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
-            @onShowInstructionsAgainButtonClick={{@onClose}}
+            @onViewInstructionsButtonClick={{@onClose}}
             class="w-full max-w-3xs"
           />
         {{else if (eq currentScreen "workflow-tutorial-step-1")}}
@@ -26,6 +26,12 @@
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
             @onBackToReviewButtonClick={{this.handleBackToReviewButtonClick}}
+            class="w-full max-w-60"
+          />
+        {{else if (eq currentScreen "step-previously-completed")}}
+          <CoursePage::SetupStepCompleteModal::StepPreviouslyCompletedScreen
+            @step={{@step}}
+            @onViewInstructionsButtonClick={{@onClose}}
             class="w-full max-w-60"
           />
         {{else}}
