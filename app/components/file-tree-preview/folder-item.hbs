@@ -6,22 +6,24 @@
 
   {{#if @item.children}}
     <div class="relative ml-2.5 pt-2">
-      {{! Vertical line connecting all children }}
-      <div class="absolute left-0 top-0 bottom-2.5 w-px bg-gray-300 dark:bg-gray-600"></div>
-
       {{#each @item.children as |child childIndex|}}
         {{#let (eq childIndex (sub @item.children.length 1)) as |isLast|}}
-          <div class="relative flex items-start gap-0.5 {{if isLast '' 'mb-2.5'}}">
-            {{! Horizontal line }}
-            <div class="w-3 mt-2.5 h-px bg-gray-300 dark:bg-gray-600"></div>
+          <div class="flex items-stretch">
+            {{! Vertical line connecting all children }}
+            <div class="w-px {{if isLast 'h-[calc(0.625em+1px)]' ''}} bg-gray-300 dark:bg-gray-600"></div>
 
-            {{#if (eq child.type "file")}}
-              {{! @glint-expect-error: type narrowing }}
-              <FileTreePreview::FileItem @item={{child}} />
-            {{else if (eq child.type "folder")}}
-              {{! @glint-expect-error: type narrowing }}
-              <FileTreePreview::FolderItem @item={{child}} />
-            {{/if}}
+            <div class="relative flex items-start gap-0.5 {{if isLast '' 'pb-2'}}">
+              {{! Horizontal line }}
+              <div class="w-3 mt-2.5 h-px bg-gray-300 dark:bg-gray-600"></div>
+
+              {{#if (eq child.type "file")}}
+                {{! @glint-expect-error: type narrowing }}
+                <FileTreePreview::FileItem @item={{child}} />
+              {{else if (eq child.type "folder")}}
+                {{! @glint-expect-error: type narrowing }}
+                <FileTreePreview::FolderItem @item={{child}} />
+              {{/if}}
+            </div>
           </div>
         {{/let}}
       {{/each}}
