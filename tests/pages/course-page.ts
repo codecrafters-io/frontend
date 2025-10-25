@@ -192,6 +192,10 @@ export default create({
     scope: '[data-test-upgrade-modal]',
   },
 
+  upgradePrompt: {
+    scope: '[data-test-upgrade-prompt]',
+  },
+
   paidCourseNotice: {
     scope: '[data-test-paid-course-notice]',
     text: text('[data-test-paid-course-notice]'),
