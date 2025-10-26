@@ -1,11 +1,13 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     course: CourseModel;
+    language?: LanguageModel;
   };
 
   Blocks: {

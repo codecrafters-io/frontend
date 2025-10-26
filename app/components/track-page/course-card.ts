@@ -50,7 +50,7 @@ export default class CourseCard extends Component<Signature> {
 
   @action
   handleClick() {
-    this.router.transitionTo('course', this.args.course.slug, { queryParams: { track: this.args.language.slug } });
+    this.router.transitionTo('course-overview', this.args.course.slug, { queryParams: { track: this.args.language.slug } });
   }
 }
 

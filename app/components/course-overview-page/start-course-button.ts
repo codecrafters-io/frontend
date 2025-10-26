@@ -3,12 +3,14 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { inject as service } from '@ember/service';
 import type { BaseButtonSignature } from '../base-button';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 interface Signature {
   Element: HTMLAnchorElement;
 
   Args: {
     course: CourseModel;
+    language?: LanguageModel;
     size?: BaseButtonSignature['Args']['size'];
   };
 }
