@@ -7,6 +7,9 @@ export default createPage({
 
   entriesTable: {
     entries: collection('[data-test-leaderboard-entry-row]', {
+      progressDonut: {
+        scope: '[data-test-progress-donut]',
+      },
       username: text('[data-test-username]'),
     }),
   },
