@@ -27,6 +27,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Dummy →');
+    await courseOverviewPage.clickOnStartCourse();
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction?track=python', 'current URL is course page URL');
 
     await percySnapshot('Auto Select Language - Before Clicking Show-Other-Languages Button');
 
@@ -292,6 +294,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await coursePage.header.clickOnCloseCourseButton();
     await trackPage.clickOnCourseCard('Build your own Dummy →');
+    await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
 

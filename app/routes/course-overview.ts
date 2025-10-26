@@ -9,12 +9,16 @@ import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 
 export interface ModelType {
   course: CourseModel;
+  language?: LanguageModel;
 }
 
 export default class CourseOverviewRoute extends BaseRoute {
+  queryParams = { track: {} };
+
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
   @service declare metaData: MetaDataService;
@@ -53,7 +57,7 @@ export default class CourseOverviewRoute extends BaseRoute {
     ).findBy('slug', slug);
   }
 
-  async model({ course_slug }: { course_slug: string }): Promise<ModelType> {
+  async model({ course_slug, track }: { course_slug: string; track?: string }): Promise<ModelType> {
     let course: CourseModel = this.#peekCourse(course_slug);
 
     if (course) {
@@ -67,6 +71,7 @@ export default class CourseOverviewRoute extends BaseRoute {
 
     return {
       course,
+      language: track ? course.betaOrLiveLanguages.find((language) => language.slug === track) : undefined,
     };
   }
 

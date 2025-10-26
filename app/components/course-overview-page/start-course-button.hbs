@@ -1,4 +1,10 @@
-<PrimaryLinkButton @route="course" @model={{@course.slug}} @size={{or @size "large"}} data-test-start-course-button>
+<PrimaryLinkButton
+  @route="course"
+  @model={{@course.slug}}
+  @query={{hash track=(or @language.slug null)}}
+  @size={{or @size "large"}}
+  data-test-start-course-button
+>
   <div class="flex items-center">
     {{#if this.currentUserIsAnonymous}}
       {{svg-jar "github" class="fill-current w-5 transform transition-all mr-2"}}

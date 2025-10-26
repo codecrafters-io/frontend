@@ -148,6 +148,14 @@ export default class CourseController extends Controller {
   }
 
   @action
+  resetController(_controller: unknown, isExiting: boolean, _transition: unknown) {
+    if (isExiting) {
+      this.repo = undefined;
+      this.track = undefined;
+    }
+  }
+
+  @action
   setOrUpdateCurrentStepValues(_: HTMLDivElement, [step, _id, _status, _type]: [StepDefinition, string, string, string]) {
     const stepIsCompleteButNotPreviouslyComplete =
       step.status === 'complete' && this.stepStatusPreviouslyWas && this.stepStatusPreviouslyWas !== 'complete';

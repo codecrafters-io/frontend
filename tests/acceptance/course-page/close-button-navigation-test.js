@@ -18,8 +18,9 @@ module('Acceptance | course-page | close-button-navigation', function (hooks) {
     await catalogPage.visit();
     await catalogPage.clickOnTrack('Python');
     await trackPage.clickOnCourseCard('Build your own Git →');
+    await courseOverviewPage.clickOnStartCourse();
 
-    assert.contains(currentURL(), '/courses/git/introduction?track=python', 'current URL includes track parameter');
+    assert.strictEqual(currentURL(), '/courses/git/introduction?track=python', 'current URL includes track parameter');
 
     await coursePage.header.clickOnCloseCourseButton();
 
