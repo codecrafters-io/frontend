@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -12,27 +13,15 @@ interface Signature {
   };
 }
 
-function groupBy<T>(collection: T[], keyFn: (item: T) => string): Record<string, T[]> {
-  const result: Record<string, T[]> = {};
-
-  collection.forEach((element) => {
-    const groupKey = keyFn(element);
-
-    if (Object.hasOwnProperty.call(result, groupKey)) {
-      result[groupKey]!.push(element);
-    } else {
-      result[groupKey] = [element];
-    }
-  });
-
-  return result;
-}
-
 export default class AdminCourseSubmissionsPageTimelineContainer extends Component<Signature> {
   get groupedSubmissions(): Record<string, SubmissionModel[]> {
-    return groupBy([...this.args.submissions].sort(fieldComparator('createdAt')).reverse(), (submission) => {
-      return submission.createdAt.toISOString().slice(0, 10);
-    });
+    return this.args.submissions
+      .toSorted(fieldComparator('createdAt'))
+      .reverse()
+      .reduce(
+        groupByFieldReductor(({ createdAt }) => createdAt.toISOString().slice(0, 10)),
+        {},
+      );
   }
 }
 

@@ -7,7 +7,7 @@ type Chunk = {
   lines: Array<Line>;
 };
 
-type Line = {
+export type Line = {
   isTargetedByComments: boolean;
   isTargetedByExpandedComments: boolean;
   html: SafeString;
