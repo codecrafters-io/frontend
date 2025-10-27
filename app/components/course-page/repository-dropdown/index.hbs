@@ -42,6 +42,12 @@
           Back to Catalog
         </CoursePage::RepositoryDropdownAction>
 
+        {{#if (or this.currentUser.isStaff (current-user-is-course-author @activeRepository.course))}}
+          <CoursePage::RepositoryDropdownAction @icon="cog" {{on "click" (fn this.handleAdminButtonClick dd.actions)}} data-test-course-admin-link>
+            Admin
+          </CoursePage::RepositoryDropdownAction>
+        {{/if}}
+
         <div
           {{! @glint-expect-error model.isNew has wrong type !}}
           class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex group {{if @activeRepository.isNew 'text-gray-300 dark:text-gray-700'}}"

@@ -521,7 +521,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Git');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.false(coursePage.adminButton.isVisible, 'admin button should not be visible');
+    await coursePage.repositoryDropdown.click();
+
+    assert.false(
+      coursePage.repositoryDropdown.content.actions.toArray().some((action) => action.text.includes('Admin')),
+      'admin link should not be visible in dropdown',
+    );
   });
 
   test('stage should not restrict admin access to user if user is course author and course is authored by user', async function (assert) {
@@ -533,7 +538,12 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.true(coursePage.adminButton.isVisible, 'admin button should be visible');
+    await coursePage.repositoryDropdown.click();
+
+    assert.true(
+      coursePage.repositoryDropdown.content.actions.toArray().some((action) => action.text.includes('Admin')),
+      'admin link should be visible in dropdown',
+    );
   });
 
   test('beta label renders properly', async function (assert) {

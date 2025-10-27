@@ -17,10 +17,6 @@ import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-pa
 import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
 export default create({
-  adminButton: {
-    scope: '[data-test-course-admin-button]',
-  },
-
   betaLabelText: text('[data-test-course-beta-label]'),
   clickOnCollapseLeaderboardButton: clickable('[data-test-collapse-leaderboard-button]'),
   clickOnCollapseSidebarButton: clickable('[data-test-collapse-sidebar-button]'),
