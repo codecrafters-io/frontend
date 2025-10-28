@@ -18,7 +18,7 @@
 
     {{#if this.videoEmbedHtml}}
       <div class="mb-5 max-w-3xl rounded-xl overflow-hidden">
-        {{{this.videoEmbedHtml}}}
+        {{html-safe this.videoEmbedHtml}}
       </div>
     {{/if}}
 

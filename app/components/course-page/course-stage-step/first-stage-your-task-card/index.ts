@@ -3,10 +3,10 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -91,7 +91,7 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
           allowfullscreen
           scrolling="no"
           allow="encrypted-media *;"
-        ></iframe></div> `;
+        ></iframe></div>`;
     } else {
       return null;
     }
