@@ -84,6 +84,7 @@ export default class CourseModel extends Model {
   @equal('slug', 'grep') declare isGrep: boolean;
   @equal('slug', 'react') declare isReact: boolean;
   @equal('slug', 'redis') declare isRedis: boolean;
+  @equal('slug', 'shell') declare isShell: boolean;
   @equal('slug', 'sqlite') declare isSQLite: boolean;
   @equal('slug', 'bittorrent') declare isBittorrent: boolean;
   @equal('slug', 'dns-server') declare isDnsServer: boolean;

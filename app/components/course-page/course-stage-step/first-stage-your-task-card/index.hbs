@@ -12,15 +12,23 @@
   </:header>
 
   <:content>
-    <div class="prose dark:prose-invert has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
+    <div class="prose dark:prose-invert has-prism-highlighting mb-3" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
       {{markdown-to-html this.instructionsMarkdown}}
-
-      <h4 id="first-stage-tutorial-heading">
-        How to pass this stage
-      </h4>
     </div>
 
-    <StepList @steps={{this.steps}} class="mt-5" as |context|>
+    {{#if this.videoEmbedHtml}}
+      <div class="mb-5 max-w-3xl rounded-xl overflow-hidden">
+        {{{this.videoEmbedHtml}}}
+      </div>
+    {{/if}}
+
+    <div class="prose dark:prose-invert mb-4">
+      <h3 id="first-stage-tutorial-heading">
+        How to pass this stage
+      </h3>
+    </div>
+
+    <StepList @steps={{this.steps}} as |context|>
       {{#if (eq context.step.id "uncomment-code")}}
         <CoursePage::CourseStageStep::FirstStageYourTaskCard::UncommentCodeStep
           @repository={{@currentStep.repository}}
