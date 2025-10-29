@@ -8,7 +8,7 @@
  * @param {K} fieldName - name of the field used to detect duplicates
  * @returns {(acc: T[], item: T) => T[]} reducer function for Array.prototype.reduce
  */
-export default function uniqFieldReductor<T, K extends keyof T>(fieldName: K) {
+export default function uniqFieldReducer<T, K extends keyof T>(fieldName: K) {
   const seen = new Set<T[K]>();
 
   return (acc: T[], item: T): T[] => {

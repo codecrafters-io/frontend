@@ -1,7 +1,7 @@
-import uniqFieldReductor from 'codecrafters-frontend/utils/uniq-field-reductor';
+import uniqFieldReducer from 'codecrafters-frontend/utils/uniq-field-reducer';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | uniq-field-reductor', function () {
+module('Unit | Utility | uniq-field-reducer', function () {
   test('it filters an array of objects by unique properties', function (assert) {
     const arr = [
       { a: 1, b: 'unique-1' },
@@ -12,7 +12,7 @@ module('Unit | Utility | uniq-field-reductor', function () {
     ];
 
     assert.deepEqual(
-      arr.reduce(uniqFieldReductor('a'), []),
+      arr.reduce(uniqFieldReducer('a'), []),
       [
         { a: 1, b: 'unique-1' },
         { a: 2, b: 'unique-2' },
@@ -22,7 +22,7 @@ module('Unit | Utility | uniq-field-reductor', function () {
     );
 
     assert.deepEqual(
-      arr.reduce(uniqFieldReductor('b'), []),
+      arr.reduce(uniqFieldReducer('b'), []),
       [
         { a: 1, b: 'unique-1' },
         { a: 1, b: 'non-unique' },
