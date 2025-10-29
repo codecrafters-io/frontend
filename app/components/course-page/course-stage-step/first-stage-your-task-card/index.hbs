@@ -12,12 +12,12 @@
   </:header>
 
   <:content>
-    <div class="prose dark:prose-invert has-prism-highlighting mb-3" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
+    <div class="prose dark:prose-invert has-prism-highlighting mb-5" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
       {{markdown-to-html this.instructionsMarkdown}}
     </div>
 
     {{#if this.videoEmbedHtml}}
-      <div class="mb-5 max-w-3xl rounded-xl overflow-hidden">
+      <div class="mb-8 max-w-3xl rounded-xl overflow-hidden">
         {{html-safe this.videoEmbedHtml}}
       </div>
     {{/if}}
