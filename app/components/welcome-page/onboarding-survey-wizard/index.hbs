@@ -1,17 +1,22 @@
 <div class="border border-gray-200 p-4 sm:p-8 bg-white max-w-(--breakpoint-md) w-full rounded-sm" data-test-onboarding-survey-wizard>
   <AnimatedContainer>
-    {{#animated-if (eq this.currentStep 1) use=this.fade}}
-      <WelcomePage::OnboardingSurveyWizard::Step1
-        @onContinueButtonClick={{this.handleContinueButtonClick}}
-        @onSurveyUpdated={{this.handleSurveyUpdated}}
-        @onboardingSurvey={{@onboardingSurvey}}
-      />
-    {{else}}{{#if (eq this.currentStep 2)}}
-        <WelcomePage::OnboardingSurveyWizard::Step2
-          @onboardingSurvey={{@onboardingSurvey}}
+    <AnimatedIf @predicate={{(eq this.currentStep 1)}} @use={{this.fade}}>
+      <:default>
+        <WelcomePage::OnboardingSurveyWizard::Step1
           @onContinueButtonClick={{this.handleContinueButtonClick}}
           @onSurveyUpdated={{this.handleSurveyUpdated}}
+          @onboardingSurvey={{@onboardingSurvey}}
         />
-      {{/if}}{{/animated-if}}
+      </:default>
+      <:else>
+        {{#if (eq this.currentStep 2)}}
+          <WelcomePage::OnboardingSurveyWizard::Step2
+            @onboardingSurvey={{@onboardingSurvey}}
+            @onContinueButtonClick={{this.handleContinueButtonClick}}
+            @onSurveyUpdated={{this.handleSurveyUpdated}}
+          />
+        {{/if}}
+      </:else>
+    </AnimatedIf>
   </AnimatedContainer>
 </div>
