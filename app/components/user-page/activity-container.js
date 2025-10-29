@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
+import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
 
 export default class ActivityContainer extends Component {
   get profileEventGroups() {
@@ -8,7 +8,7 @@ export default class ActivityContainer extends Component {
       .toSorted(fieldComparator('occurredAt'))
       .reverse()
       .reduce(
-        groupByFieldReductor((profileEvent) => this.formatDate(profileEvent.occurredAt)),
+        groupByFieldReducer((profileEvent) => this.formatDate(profileEvent.occurredAt)),
         {},
       );
   }

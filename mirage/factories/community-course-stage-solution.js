@@ -1,5 +1,5 @@
 import { Factory } from 'miragejs';
-import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
+import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
 
 export default Factory.extend({
   submittedAt: () => new Date(),
@@ -9,7 +9,7 @@ export default Factory.extend({
 
     for (let [languageSlug, solutions] of Object.entries(
       communitySolution.courseStage.communitySolutions.models.reduce(
-        groupByFieldReductor((solution) => solution.language.slug),
+        groupByFieldReducer((solution) => solution.language.slug),
         {},
       ),
     )) {
