@@ -5,7 +5,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -28,7 +28,7 @@ export default class TrackCard extends Component<Signature> {
     return this.authenticator.currentUser.repositories
       .filter((item) => item.language === this.args.language)
       .flatMap((repository) => repository.completedStages)
-      .reduce(uniqReductor(), []).length;
+      .reduce(uniqReducer(), []).length;
   }
 
   get currentUserHasStartedTrack() {

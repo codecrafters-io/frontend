@@ -21,7 +21,7 @@ import { memberAction } from 'ember-api-actions';
 import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import { compare } from '@ember/utils';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 type ExpectedActivityFrequency = keyof typeof RepositoryModel.expectedActivityFrequencyMappings;
 type LanguageProficiencyLevel = keyof typeof RepositoryModel.languageProficiencyLevelMappings;
@@ -76,7 +76,7 @@ export default class RepositoryModel extends Model {
     return this.extensionActivations
       .toSorted(fieldComparator('activatedAt'))
       .map((activation) => activation.extension)
-      .reduce(uniqReductor(), []);
+      .reduce(uniqReducer(), []);
   }
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
@@ -101,7 +101,7 @@ export default class RepositoryModel extends Model {
   }
 
   get completedStages() {
-    return this.courseStageCompletions.map((item) => item.courseStage).reduce(uniqReductor(), []);
+    return this.courseStageCompletions.map((item) => item.courseStage).reduce(uniqReducer(), []);
   }
 
   get completedStagesCount() {

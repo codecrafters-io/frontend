@@ -29,7 +29,7 @@ import config from 'codecrafters-frontend/config/environment';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService!: FeatureFlagsService;
@@ -191,7 +191,7 @@ export default class UserModel extends Model {
   }
 
   get languagesFromCompletedCourseParticipations() {
-    return this.completedCourseParticipations.map((item) => item.language).reduce(uniqReductor(), []);
+    return this.completedCourseParticipations.map((item) => item.language).reduce(uniqReducer(), []);
   }
 
   get managedTeams() {
