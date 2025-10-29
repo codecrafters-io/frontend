@@ -4,6 +4,7 @@ import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { compare } from '@ember/utils';
 
 export default class BuildpacksController extends Controller {
   declare model: {
@@ -16,13 +17,12 @@ export default class BuildpacksController extends Controller {
   @tracked errorMessage: string | null = null;
 
   get sortedLatestBuildpacks() {
-    return this.model.course.buildpacks.filterBy('isLatest').sortBy('language.name');
+    return this.model.course.buildpacks.filter((item) => item.isLatest).sort((a, b) => compare(a.language.name, b.language.name));
   }
 
   get sortedOutdatedBuildpacks() {
     return this.model.course.buildpacks
-      .filterBy('isOutdated')
-      .toArray()
+      .filter((item) => item.isOutdated)
       .sort((a, b) => {
         if (a.language.name === b.language.name) {
           return a.createdAt.getTime() - b.createdAt.getTime();

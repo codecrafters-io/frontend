@@ -86,7 +86,7 @@ export default class CourseStageModel extends Model {
 
   // TODO: Change usages to account for extensions!
   get isLast() {
-    return this === this.course.sortedBaseStages.lastObject;
+    return this === this.course.sortedBaseStages.at(-1);
   }
 
   get isPenultimate() {
@@ -102,7 +102,7 @@ export default class CourseStageModel extends Model {
   }
 
   get otherConceptsForCourse() {
-    return this.course.concepts.reject((concept) => this.concepts.includes(concept));
+    return this.course.concepts.filter((concept) => !this.concepts.includes(concept));
   }
 
   get participationAnalysis() {
@@ -185,11 +185,11 @@ invalid_command: command not found
   }
 
   hasSolutionForLanguage(language: LanguageModel) {
-    return !!this.solutions.findBy('language', language);
+    return !!this.solutions.find((item) => item.language === language);
   }
 
   hasSolutionForLanguagesOtherThan(language: LanguageModel) {
-    return this.solutions.any((solution) => solution.language !== language);
+    return this.solutions.some((solution) => solution.language !== language);
   }
 
   prerequisiteInstructionsMarkdownFor(repository: RepositoryModel) {

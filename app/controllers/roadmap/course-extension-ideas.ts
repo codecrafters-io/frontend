@@ -7,6 +7,8 @@ import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 
 export default class CourseExtensionIdeasController extends Controller {
   declare model: {
@@ -26,22 +28,22 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filterBy('course', this.selectedCourse).sortBy('sortPositionForRoadmapPage');
+    return this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse).sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   get orderedCourses() {
     return this.model.courseExtensionIdeas
-      .rejectBy('developmentStatusIsReleased')
-      .mapBy('course')
-      .uniq()
-      .rejectBy('releaseStatusIsDeprecated')
-      .rejectBy('releaseStatusIsAlpha')
-      .rejectBy('visibilityIsPrivate')
-      .sortBy('sortPositionForTrack');
+      .filter((item) => !item.developmentStatusIsReleased)
+      .map((item) => item.course)
+      .reduce(uniqReductor(), [])
+      .filter((item) => !item.releaseStatusIsDeprecated)
+      .filter((item) => !item.releaseStatusIsAlpha)
+      .filter((item) => !item.visibilityIsPrivate)
+      .sort(fieldComparator('sortPositionForTrack'));
   }
 
   get selectedCourse() {
-    return this.store.peekAll('course').findBy('slug', this.selectedCourseSlug);
+    return this.store.peekAll('course').find((item) => item.slug === this.selectedCourseSlug);
   }
 
   @action

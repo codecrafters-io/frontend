@@ -2,6 +2,7 @@ import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import ConceptModel from 'codecrafters-frontend/models/concept';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -34,11 +35,10 @@ export default class ConceptQuestionBlockEditor extends Component<Signature> {
   }
 
   get usedQuestionSlugs() {
-    const questionSlugs = this.args.concept.parsedBlocks
+    return this.args.concept.parsedBlocks
       .filter((block): block is ConceptQuestionBlockDefinition => block.type === 'concept_question')
-      .map((block) => block.conceptQuestionSlug);
-
-    return [...new Set(questionSlugs)];
+      .map((block) => block.conceptQuestionSlug)
+      .reduce(uniqReductor(), []);
   }
 
   @action

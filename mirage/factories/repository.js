@@ -1,6 +1,7 @@
 import { Factory, trait } from 'miragejs';
 import createCourseExtensionActivations from '../utils/create-course-extension-activations';
 import syncRepositoryStageLists from '../utils/sync-repository-stage-lists';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default Factory.extend({
   createdAt: () => new Date(),
@@ -16,13 +17,13 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position')[0],
+        courseStage: repository.course.stages.models.toSorted(fieldComparator('position'))[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });
       server.create('submission', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position')[0],
+        courseStage: repository.course.stages.models.toSorted(fieldComparator('position'))[0],
         createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
         status: 'evaluating',
       });
@@ -61,13 +62,13 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position')[0],
+        courseStage: repository.course.stages.models.toSorted(fieldComparator('position'))[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });
       server.create('submission', 'withStageCompletion', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position')[0],
+        courseStage: repository.course.stages.models.toSorted(fieldComparator('position'))[0],
         createdAt: new Date(repository.createdAt.getTime() + 1000), // 1s
       });
     },
@@ -75,8 +76,8 @@ export default Factory.extend({
 
   withSecondStageCompleted: trait({
     afterCreate(repository, server) {
-      const firstStage = repository.course.stages.models.sortBy('position')[0];
-      const secondStage = repository.course.stages.models.sortBy('position')[1];
+      const firstStage = repository.course.stages.models.toSorted(fieldComparator('position'))[0];
+      const secondStage = repository.course.stages.models.toSorted(fieldComparator('position'))[1];
 
       [firstStage, secondStage].forEach((stage, index) => {
         server.create('submission', 'withFailureStatus', {
@@ -99,7 +100,7 @@ export default Factory.extend({
     afterCreate(repository, server) {
       server.create('submission', 'withFailureStatus', {
         repository,
-        courseStage: repository.course.stages.models.sortBy('position')[0],
+        courseStage: repository.course.stages.models.toSorted(fieldComparator('position'))[0],
         createdAt: repository.createdAt,
         status: 'failure',
       });

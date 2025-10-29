@@ -30,6 +30,7 @@ export default function stubLocalStorage(cache: Map<string, string> = new Map<st
   });
 
   stub(window.localStorage, 'clear').callsFake(function () {
+    // eslint-disable-next-line ember/no-array-prototype-extensions
     cache.clear();
   });
 

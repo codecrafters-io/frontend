@@ -183,7 +183,7 @@ module('Acceptance | view-course-overview', function (hooks) {
     await courseOverviewPage.visit({ course_slug: 'grep' });
 
     const grep = this.server.schema.courses.findBy({ slug: 'grep' });
-    const grepLastBaseStageIndex = grep.stages.models.rejectBy('primaryExtensionSlug').length - 1;
+    const grepLastBaseStageIndex = grep.stages.models.filter((item) => !item.primaryExtensionSlug).length - 1;
 
     assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 1].text.includes('Single Backreference'));
     assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Multiple Backreferences'));

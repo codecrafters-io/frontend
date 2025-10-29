@@ -6,6 +6,7 @@ import type BadgeModel from 'codecrafters-frontend/models/badge';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -25,12 +26,12 @@ export default class BadgeEarnedModal extends Component<Signature> {
   }
 
   get currentUserBadgeAwards(): BadgeAwardModel[] {
-    return this.currentUser.badgeAwards.filterBy('badge', this.args.badge);
+    return this.currentUser.badgeAwards.filter((item) => item.badge === this.args.badge);
   }
 
   get lastAwardedAt() {
     if (this.userHasBadgeAward) {
-      return (this.currentUserBadgeAwards.sortBy('awardedAt').reverse()[0] as BadgeAwardModel).awardedAt;
+      return (this.currentUserBadgeAwards.toSorted(fieldComparator('awardedAt')).reverse()[0] as BadgeAwardModel).awardedAt;
     } else {
       return null;
     }

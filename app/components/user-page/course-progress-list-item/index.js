@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 
 export default class CourseProgressListItem extends Component {
   @service router;
@@ -11,11 +12,11 @@ export default class CourseProgressListItem extends Component {
   }
 
   get completedCourseParticipations() {
-    return this.args.courseParticipations.filterBy('isCompleted');
+    return this.args.courseParticipations.filter((item) => item.isCompleted);
   }
 
   get completedStagesCount() {
-    return Math.max(...this.args.courseParticipations.mapBy('completedStageSlugs').map((stage_list) => stage_list.length));
+    return Math.max(...this.args.courseParticipations.map((item) => item.completedStageSlugs).map((stage_list) => stage_list.length));
   }
 
   get course() {
@@ -28,9 +29,9 @@ export default class CourseProgressListItem extends Component {
 
   get languagesText() {
     if (this.hasCompletedCourseUsingAnyLanguage) {
-      return `using ${arrayToSentence(this.completedCourseParticipations.mapBy('language.name').uniq())}`;
+      return `using ${arrayToSentence(this.completedCourseParticipations.map((item) => item.language.name).reduce(uniqReductor(), []))}`;
     } else {
-      return `using ${arrayToSentence(this.args.courseParticipations.mapBy('language.name').uniq())}`;
+      return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).reduce(uniqReductor(), []))}`;
     }
   }
 

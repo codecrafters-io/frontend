@@ -3,6 +3,7 @@ import CourseStageFeedbackSubmissionModel from 'codecrafters-frontend/models/cou
 import { tracked } from '@glimmer/tracking';
 import move from 'ember-animated/motions/move';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CourseAdminFeedbackController extends Controller {
   declare model: {
@@ -18,9 +19,10 @@ export default class CourseAdminFeedbackController extends Controller {
       submissions = submissions.filter((feedbackSubmission) => !feedbackSubmission.isAcknowledgedByStaff);
     }
 
-    submissions = submissions.filter((feedbackSubmission) => feedbackSubmission.status !== 'open');
-
-    return submissions.sortBy('createdAt').reverse();
+    return submissions
+      .filter((feedbackSubmission) => feedbackSubmission.status !== 'open')
+      .sort(fieldComparator('createdAt'))
+      .reverse();
   }
 
   // @ts-expect-error ember-animated not typed

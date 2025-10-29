@@ -1,5 +1,6 @@
 import Controller from '@ember/controller';
 import type { ModelType } from 'codecrafters-frontend/routes/course-admin/stage-insights';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class StageInsightsController extends Controller {
   declare model: ModelType;
@@ -11,21 +12,21 @@ export default class StageInsightsController extends Controller {
   get sortedActiveParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'active')
-      .sortBy('firstAttemptAt')
+      .sort(fieldComparator('firstAttemptAt'))
       .reverse();
   }
 
   get sortedCompleteParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'complete')
-      .sortBy('firstAttemptAt')
+      .sort(fieldComparator('firstAttemptAt'))
       .reverse();
   }
 
   get sortedDroppedOffAfterAttemptParticipations() {
     return this.model.stage.participations
       .filter((participation) => participation.status === 'dropped_off_after_attempt')
-      .sortBy('firstAttemptAt')
+      .sort(fieldComparator('firstAttemptAt'))
       .reverse();
   }
 }

@@ -8,6 +8,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CommunityCourseStageSolution from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CommunitySolutionExportModel from 'codecrafters-frontend/models/community-solution-export';
 import type Store from '@ember-data/store';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -48,7 +49,13 @@ export default class GithubFileActionsComponent extends Component<Signature> {
   }
 
   private getLatestProvisionedExport(): CommunitySolutionExportModel | null {
-    return this.args.solution.exports.rejectBy('isExpired').filterBy('isProvisioned').sortBy('expiresAt').lastObject || null;
+    return (
+      this.args.solution.exports
+        .filter((item) => !item.isExpired)
+        .filter((item) => item.isProvisioned)
+        .sort(fieldComparator('expiresAt'))
+        .at(-1) || null
+    );
   }
 
   @action

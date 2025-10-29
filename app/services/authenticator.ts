@@ -87,7 +87,9 @@ export default class AuthenticatorService extends Service {
   }
 
   logout(): void {
+    // eslint-disable-next-line ember/no-array-prototype-extensions
     this.sessionTokenStorage.clear();
+    // eslint-disable-next-line ember/no-array-prototype-extensions
     this.currentUserCacheStorage.clear();
     this.cacheBuster++;
   }

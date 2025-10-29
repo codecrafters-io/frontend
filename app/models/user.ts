@@ -28,6 +28,8 @@ import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-eve
 import config from 'codecrafters-frontend/config/environment';
 import { collectionAction, memberAction } from 'ember-api-actions';
 import { inject as service } from '@ember/service';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 
 export default class UserModel extends Model {
   @service('feature-flags') featureFlagsService!: FeatureFlagsService;
@@ -100,7 +102,10 @@ export default class UserModel extends Model {
   }
 
   get activeSubscription() {
-    return this.subscriptions.sortBy('startDate').reverse().findBy('isActive');
+    return this.subscriptions
+      .toSorted(fieldComparator('startDate'))
+      .reverse()
+      .find((item) => item.isActive);
   }
 
   get adminProfileUrl() {
@@ -120,18 +125,24 @@ export default class UserModel extends Model {
   }
 
   get completedCourseParticipations() {
-    return this.courseParticipations.filterBy('isCompleted');
+    return this.courseParticipations.filter((item) => item.isCompleted);
   }
 
   get currentAffiliateReferral() {
-    return this.affiliateReferralsAsCustomer.rejectBy('isNew').sortBy('createdAt').reverse()[0];
+    return this.affiliateReferralsAsCustomer
+      .filter((item) => !item.isNew)
+      .sort(fieldComparator('activatedAt'))
+      .reverse()[0];
   }
 
   get expiredSubscription() {
     if (this.hasActiveSubscription) {
       return null;
     } else {
-      return this.subscriptions.sortBy('startDate').reverse().findBy('isInactive');
+      return this.subscriptions
+        .toSorted(fieldComparator('startDate'))
+        .reverse()
+        .find((item) => item.isInactive);
     }
   }
 
@@ -160,15 +171,15 @@ export default class UserModel extends Model {
   }
 
   get hasEarnedThreeInADayBadge() {
-    return this.badgeAwards.any((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
+    return this.badgeAwards.some((badgeAward) => badgeAward.badge.slug === 'three-in-a-day');
   }
 
   get hasJoinedAffiliateProgram() {
-    return this.affiliateLinks.rejectBy('isNew').length > 0;
+    return this.affiliateLinks.filter((item) => !item.isNew).length > 0;
   }
 
   get hasJoinedReferralProgram() {
-    return this.referralLinks.rejectBy('isNew').length > 0;
+    return this.referralLinks.filter((item) => !item.isNew).length > 0;
   }
 
   get isTeamAdmin() {
@@ -180,35 +191,41 @@ export default class UserModel extends Model {
   }
 
   get languagesFromCompletedCourseParticipations() {
-    return this.completedCourseParticipations.mapBy('language').uniq();
+    return this.completedCourseParticipations.map((item) => item.language).reduce(uniqReductor(), []);
   }
 
   get managedTeams() {
-    return this.teamMemberships.filterBy('isAdmin').mapBy('team');
+    return this.teamMemberships.filter((item) => item.isAdmin).map((item) => item.team);
   }
 
   get pendingProductWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filterBy('featureIsProductWalkthrough').rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsProductWalkthrough).filter((item) => !item.isDismissed)[0] || null;
   }
 
   get pendingRepositoryWorkflowTutorialFeatureSuggestion(): FeatureSuggestionModel | null {
-    return this.featureSuggestions.filterBy('featureIsRepositoryWorkflowTutorial').rejectBy('isDismissed')[0] || null;
+    return this.featureSuggestions.filter((item) => item.featureIsRepositoryWorkflowTutorial).filter((item) => !item.isDismissed)[0] || null;
   }
 
   get teamHasActivePilot() {
-    return this.teams.isAny('hasActivePilot');
+    return !!this.teams.some((item) => item.hasActivePilot);
   }
 
   get teamHasActiveSubscription() {
-    return this.teams.isAny('hasActiveSubscription');
+    return !!this.teams.some((item) => item.hasActiveSubscription);
   }
 
   get teams() {
-    return this.teamMemberships.mapBy('team');
+    return this.teamMemberships.map((item) => item.team);
   }
 
   activePromotionalDiscountForType(type: PromotionalDiscountModel['type']) {
-    return this.promotionalDiscounts.filterBy('type', type).rejectBy('isExpired').sortBy('createdAt').reverse()[0] || null;
+    return (
+      this.promotionalDiscounts
+        .filter((item) => item.type === type)
+        .filter((item) => !item.isExpired)
+        .sort(fieldComparator('createdAt'))
+        .reverse()[0] || null
+    );
   }
 
   canAttemptCourseStage(courseStage: CourseStageModel) {
@@ -221,7 +238,7 @@ export default class UserModel extends Model {
   }
 
   hasStartedCourse(course: CourseModel) {
-    return this.repositories.rejectBy('isNew').filterBy('course', course).length > 0;
+    return this.repositories.filter((item) => !item.isNew).filter((item) => item.course === course).length > 0;
   }
 
   isCourseAuthor(course: CourseModel) {

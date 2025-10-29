@@ -1,5 +1,5 @@
 import { Factory } from 'miragejs';
-import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
+import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
 
 export default Factory.extend({
   submittedAt: () => new Date(),
@@ -8,7 +8,10 @@ export default Factory.extend({
     const communitySolutionCounts = {};
 
     for (let [languageSlug, solutions] of Object.entries(
-      groupBy(communitySolution.courseStage.communitySolutions.models, (solution) => solution.language.slug),
+      communitySolution.courseStage.communitySolutions.models.reduce(
+        groupByFieldReductor((solution) => solution.language.slug),
+        {},
+      ),
     )) {
       communitySolutionCounts[languageSlug] = solutions.length;
     }

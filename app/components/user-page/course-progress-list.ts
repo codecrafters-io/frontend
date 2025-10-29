@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
-import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
+import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -14,15 +14,17 @@ interface Signature {
 export default class CourseProgressList extends Component<Signature> {
   get courseParticipationGroups() {
     const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(
-      groupBy(
-        this.args.user.courseParticipations.filter(
+      this.args.user.courseParticipations
+        .filter(
           (participation) =>
             !participation.course.releaseStatusIsDeprecated &&
             !participation.course.visibilityIsPrivate &&
             !participation.course.releaseStatusIsAlpha,
+        )
+        .reduce(
+          groupByFieldReductor((participation) => participation.course.id),
+          {},
         ),
-        'course',
-      ),
     );
 
     const sortedParticipationsGroupedByCourse = participationsGroupedByCourse.map((group) =>

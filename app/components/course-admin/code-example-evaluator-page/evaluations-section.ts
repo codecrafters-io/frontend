@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import type { Tab } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -54,7 +55,7 @@ export default class EvaluationsSection extends Component<Signature> {
 
   @action
   handleDidInsertTabContents() {
-    this.sortedEvaluations = this.filteredEvaluations.sortBy('updatedAt').reverse();
+    this.sortedEvaluations = this.filteredEvaluations.toSorted(fieldComparator('updatedAt')).reverse();
   }
 
   @action

@@ -25,7 +25,7 @@ export default function (server) {
     const userEntry = leaderboard.entries.models.find((entry) => entry.user.id === user.id);
 
     if (userEntry) {
-      attrs.rank = leaderboard.entries.models.sort((a, b) => b.score - a.score).indexOf(userEntry) + 1;
+      attrs.rank = leaderboard.entries.models.toSorted((a, b) => b.score - a.score).indexOf(userEntry) + 1;
     } else {
       attrs.rank = leaderboard.entries.models.length + 1;
     }

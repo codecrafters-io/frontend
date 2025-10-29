@@ -8,6 +8,7 @@ import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -34,7 +35,7 @@ export default class RequestLanguageDropdown extends Component<Signature> {
     return this.store
       .peekAll('language')
       .filter((language) => !this.args.course.betaOrLiveLanguages.includes(language))
-      .sortBy('name');
+      .sort(fieldComparator('name'));
   }
 
   get languageSuggestions() {
@@ -46,14 +47,14 @@ export default class RequestLanguageDropdown extends Component<Signature> {
     });
 
     if (this.searchQuery.length > 0) {
-      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).mapBy('item');
+      return new Fuse(allSuggestions, { keys: ['language.name'] }).search(this.searchQuery).map((item) => item.item);
     } else {
       return allSuggestions;
     }
   }
 
   get requestedLanguages(): LanguageModel[] {
-    return this.args.user.courseLanguageRequests.filterBy('course', this.args.course).mapBy('language');
+    return this.args.user.courseLanguageRequests.filter((item) => item.course === this.args.course).map((item) => item.language);
   }
 
   @action
@@ -102,7 +103,10 @@ export default class RequestLanguageDropdown extends Component<Signature> {
   async toggleLanguageSelection(language: LanguageModel) {
     if (this.requestedLanguages.includes(language)) {
       this.isSyncing = true;
-      await this.args.user.courseLanguageRequests.filterBy('course', this.args.course).findBy('language', language)!.destroyRecord();
+      await this.args.user.courseLanguageRequests
+        .filter((item) => item.course === this.args.course)
+        .find((item) => item.language === language)!
+        .destroyRecord();
       this.isSyncing = false;
 
       this.inputElement.focus();

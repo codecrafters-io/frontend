@@ -54,7 +54,7 @@ export default class CourseOverviewRoute extends BaseRoute {
       await this.store.findAll('course', {
         include: 'extensions,stages,language-configurations.language',
       })
-    ).findBy('slug', slug);
+    ).find((item) => item.slug === slug);
   }
 
   async model({ course_slug, track }: { course_slug: string; track?: string }): Promise<ModelType> {
@@ -76,7 +76,7 @@ export default class CourseOverviewRoute extends BaseRoute {
   }
 
   #peekCourse(slug: string) {
-    return this.store.peekAll('course').findBy('slug', slug);
+    return this.store.peekAll('course').find((item) => item.slug === slug);
   }
 
   #queryUserRepositories(course: CourseModel) {

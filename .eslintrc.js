@@ -45,7 +45,7 @@ module.exports = {
       },
     ],
 
-    'ember/no-array-prototype-extensions': 'off', // FIXME: Change to error - prototype extensions are deprecated since Ember 5.10
+    'ember/no-array-prototype-extensions': 'error', // Prototype extensions are deprecated since Ember 5.10
     'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
     'ember/no-runloop': 'off', // Run-loop isn't deprecated yet. Switching to ember-concurrency would require a lot of effort. We can use ember-lifeline as a drop-in replacement whenever run-loop becomes deprecated.
     '@typescript-eslint/member-ordering': [

@@ -12,25 +12,19 @@ export default create({
   async clickOnCourse(courseName: string) {
     await waitUntil(() => this.courseCards.length > 0); // Ensure skeleton UI is gone
 
-    await this.courseCards
-      .toArray()
-      .find((courseCard) => courseCard.name === courseName)!
-      .click();
+    await [...this.courseCards].find((courseCard) => courseCard.name === courseName)!.click();
   },
 
   async clickOnTrack(trackName: string) {
     await waitUntil(() => this.trackCards.length > 0); // Ensure skeleton UI is gone
 
-    await this.trackCards
-      .toArray()
-      .find((trackCard) => trackCard.name === trackName)!
-      .click();
+    await [...this.trackCards].find((trackCard) => trackCard.name === trackName)!.click();
   },
 
   courseCards: collection('[data-test-course-card]', CourseCard),
 
   courseCardByName(name: string) {
-    return this.courseCards.toArray().find((courseCard) => courseCard.name === name);
+    return [...this.courseCards].find((courseCard) => courseCard.name === name);
   },
 
   helpscoutBeacon: helpscoutBeacon,

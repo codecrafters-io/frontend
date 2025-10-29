@@ -9,7 +9,7 @@ interface Signature {
 
 export default class Content extends Component<Signature> {
   get sortedConcepts() {
-    return this.args.conceptGroup.concepts.toArray().sort((a, b) => {
+    return this.args.conceptGroup.concepts.toSorted((a, b) => {
       return this.args.conceptGroup.conceptSlugs.indexOf(a.slug) - this.args.conceptGroup.conceptSlugs.indexOf(b.slug);
     });
   }

@@ -75,7 +75,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: redis.stages.models.find((stage) => stage.position === 2),
     });
 
     await catalogPage.visit();

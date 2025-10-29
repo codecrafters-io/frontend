@@ -7,6 +7,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | submit-course-stage-feedback', function (hooks) {
   setupApplicationTest(hooks);
@@ -32,7 +33,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     [2, 3].forEach((stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1],
+        courseStage: redis.stages.models.toSorted(fieldComparator('position'))[stageNumber - 1],
       });
     });
 
@@ -99,7 +100,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1], // Stage #2
     });
 
     await catalogPage.visit();
@@ -118,7 +119,7 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     const completeStage = async (stageNumber) => {
       this.server.create('submission', 'withStageCompletion', {
         repository: repository,
-        courseStage: redis.stages.models.sortBy('position')[stageNumber - 1], // Stage #3
+        courseStage: redis.stages.models.toSorted(fieldComparator('position'))[stageNumber - 1], // Stage #3
       });
 
       await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -167,12 +168,12 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1], // Stage #2
     });
 
     this.server.create('course-stage-feedback-submission', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1], // Stage #2
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1], // Stage #2
       language: go,
       user: currentUser,
       status: 'closed',

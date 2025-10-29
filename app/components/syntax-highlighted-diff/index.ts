@@ -1,16 +1,17 @@
 import * as shiki from 'shiki';
 import Component from '@glimmer/component';
 import getOrCreateCachedHighlighterPromise, { preloadHighlighter } from 'codecrafters-frontend/utils/highlighter-cache';
-import groupDiffLinesIntoChunks from 'codecrafters-frontend/utils/group-diff-lines-into-chunks';
+import groupDiffLinesIntoChunks, { type Line } from 'codecrafters-frontend/utils/group-diff-lines-into-chunks';
 import type CommunityCourseStageSolutionCommentModel from 'codecrafters-frontend/models/community-course-stage-solution-comment';
 import { action } from '@ember/object';
-import { escapeHtml, groupBy, zip } from 'codecrafters-frontend/utils/lodash-utils';
+import { escapeHtml, zip } from 'codecrafters-frontend/utils/lodash-utils';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 import { transformerNotationDiff } from '@shikijs/transformers';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
+import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
 
 /**
  * Time to wait at the end of `highlightCode` task before allowing a new run to be performed
@@ -70,15 +71,15 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
         isFirstLineOfFile: index === 0,
         isLastLineOfFile: index === this.codeLinesWithTypes.length - 1,
         isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
-        isTargetedByExpandedComments: this.expandedComments.any((comment) => this.commentTargetsLine(comment, index + 1)),
+        isTargetedByExpandedComments: this.expandedComments.some((comment) => this.commentTargetsLine(comment, index + 1)),
         html: htmlSafe(`${node.outerHTML}`),
         type: lineType,
         number: index + 1,
         comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
-        hasComments: this.topLevelCommentsGroupedByLine[index + 1]?.length > 0,
+        hasComments: (this.topLevelCommentsGroupedByLine[index + 1] || []).length > 0,
         commentsAreExpanded: this.lineNumberWithExpandedComments === index + 1,
       };
-    });
+    }) as unknown as Line[];
 
     return groupDiffLinesIntoChunks(
       lines,
@@ -146,7 +147,10 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
   }
 
   get topLevelCommentsGroupedByLine() {
-    return groupBy(this.args.comments || [], (comment: CommunityCourseStageSolutionCommentModel) => comment.subtargetEndLine || 0);
+    return (this.args.comments || []).reduce(
+      groupByFieldReductor((comment) => comment.subtargetEndLine || 0),
+      {},
+    );
   }
 
   commentTargetsLine(comment: CommunityCourseStageSolutionCommentModel, lineNumber: number) {

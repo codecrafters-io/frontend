@@ -8,6 +8,7 @@ import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -38,8 +39,9 @@ export default class CampusProgramApplicationModal extends Component<Signature> 
     return (
       this.authenticator
         .currentUser!.institutionMembershipGrantApplications.filter((application) => application.institution.id === this.args.institution.id)
-        .reject((application) => application.isNew)
-        .sortBy('createdAt').lastObject || null
+        .filter((application) => !application.isNew)
+        .sort(fieldComparator('createdAt'))
+        .at(-1) || null
     );
   }
 

@@ -6,6 +6,7 @@ import { partition } from 'codecrafters-frontend/utils/lodash-utils';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class ConfigureGithubIntegrationModal extends Component {
   rippleSpinnerImage = rippleSpinnerImage;
@@ -33,14 +34,14 @@ export default class ConfigureGithubIntegrationModal extends Component {
     if (recentlyCreatedRepositories.length > 0) {
       groups.push({
         title: 'Recently created',
-        repositories: recentlyCreatedRepositories.sortBy('createdAt').reverse(),
+        repositories: recentlyCreatedRepositories.sort(fieldComparator('createdAt')).reverse(),
       });
     }
 
     if (allOtherRepositories.length > 0) {
       groups.push({
         title: 'All repositories',
-        repositories: allOtherRepositories.sortBy('fullName'),
+        repositories: allOtherRepositories.sort(fieldComparator('fullName')),
       });
     }
 

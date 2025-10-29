@@ -7,6 +7,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | course-stage-solutions', function (hooks) {
   setupApplicationTest(hooks);
@@ -27,7 +28,7 @@ module('Acceptance | course-page | course-stage-solutions', function (hooks) {
           filename: 'app/main.py',
         },
       ],
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
       language: python,
     });
 

@@ -8,6 +8,8 @@ import { action, get } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -81,9 +83,9 @@ export default class CourseLeaderboard extends Component<Signature> {
     let entries: CourseLeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI.toArray().filter((entry) => entry.user !== this.authenticator.currentUser));
+      entries = entries.concat(this.entriesFromAPI.filter((entry) => entry.user !== this.authenticator.currentUser));
     } else {
-      entries = entries.concat(this.entriesFromAPI.toArray());
+      entries = entries.concat(this.entriesFromAPI);
     }
 
     return entries.concat(this.entriesFromCurrentUser);
@@ -97,13 +99,13 @@ export default class CourseLeaderboard extends Component<Signature> {
       return [];
     }
 
-    const allRepositories = this.args.repositories.toArray();
+    const allRepositories = [...this.args.repositories];
 
     if (this.args.activeRepository) {
       allRepositories.push(this.args.activeRepository);
     }
 
-    return allRepositories.uniq().map((repository) => {
+    return allRepositories.reduce(uniqReductor(), []).map((repository) => {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,
@@ -134,11 +136,11 @@ export default class CourseLeaderboard extends Component<Signature> {
     const result = [];
 
     for (const entriesForUser of Object.values(entriesGroupedByUser)) {
-      const entryWithMostStageCompletions = entriesForUser.sortBy('completedStagesCount', 'lastSubmissionAt').lastObject;
+      const entryWithMostStageCompletions = entriesForUser.toSorted(fieldComparator('completedStagesCount', 'lastAttemptAt')).at(-1);
 
       result.push(
         new CourseLeaderboardEntry({
-          status: entriesForUser.isAny('status', 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
+          status: entriesForUser.some((item) => item.status === 'evaluating') ? 'evaluating' : entryWithMostStageCompletions!.status,
           completedStageSlugs: entryWithMostStageCompletions!.completedStageSlugs,
           currentCourseStage: entryWithMostStageCompletions!.currentCourseStage,
           language: entryWithMostStageCompletions!.language,
@@ -148,7 +150,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       );
     }
 
-    return result.sortBy('completedStagesCount', 'lastAttemptAt').reverse();
+    return result.sort(fieldComparator('completedStagesCount', 'lastAttemptAt')).reverse();
   }
 
   @action

@@ -4,6 +4,7 @@ import window from 'ember-window-mock';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-go';
@@ -39,11 +40,11 @@ export default class CommentCard extends Component {
   }
 
   get sortedChildComments() {
-    return this.visibleChildComments.sortBy('createdAt');
+    return this.visibleChildComments.toSorted(fieldComparator('createdAt'));
   }
 
   get visibleChildComments() {
-    let persistedComments = this.args.comment.childComments.rejectBy('isNew');
+    let persistedComments = this.args.comment.childComments.filter((item) => !item.isNew);
 
     if (this.currentUserIsStaff) {
       return persistedComments;

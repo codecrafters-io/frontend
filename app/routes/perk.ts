@@ -17,8 +17,8 @@ export default class PerkRoute extends BaseRoute {
   }
 
   async model(params: { slug: string }) {
-    const perk = await this.store.query('perk', { slug: params.slug });
+    const perk = (await this.store.query('perk', { slug: params.slug })) as unknown as PerkModel[];
 
-    return perk.objectAt(0);
+    return perk[0];
   }
 }

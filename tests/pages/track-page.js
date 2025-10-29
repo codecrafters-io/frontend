@@ -8,7 +8,7 @@ export default createPage({
   }),
 
   async clickOnCourseCard(courseName) {
-    this.cards.toArray().findBy('title', courseName).click();
+    [...this.cards].find((item) => item.title === courseName).click();
     await finishRender(); // Page has poller
   },
 

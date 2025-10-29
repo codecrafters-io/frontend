@@ -9,6 +9,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -33,7 +34,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     // Auto-create next submission
     this.server.create('submission', 'withEvaluatingStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
       clientType: 'system',
     });
 
@@ -96,7 +97,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -131,7 +132,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     // Auto-create next submission
     this.server.create('submission', 'withEvaluatingStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
       clientType: 'system',
     });
 
@@ -147,7 +148,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -186,7 +187,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'cli',
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -204,7 +205,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'git',
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -239,12 +240,12 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[0],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[0],
     });
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

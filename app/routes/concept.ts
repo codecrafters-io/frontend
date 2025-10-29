@@ -11,6 +11,7 @@ import Store from '@ember-data/store';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
 import type Transition from '@ember/routing/transition';
 import type ConceptController from 'codecrafters-frontend/controllers/concept';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export type ConceptRouteModel = {
   allConcepts: ConceptModel[];
@@ -104,7 +105,7 @@ export default class ConceptRoute extends BaseRoute {
     const cachedEngagement = this.store
       .peekAll('concept-engagement')
       .filter((e) => e.concept.slug === concept.slug && e.user === user)
-      .sortBy('createdAt')
+      .sort(fieldComparator('createdAt'))
       .reverse()[0];
 
     return (

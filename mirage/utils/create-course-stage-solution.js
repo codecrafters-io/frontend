@@ -1,5 +1,6 @@
 export default function createCourseStageSolution(server, course, stagePosition, language) {
   let stage = course.stages.models.filter((stage) => stage.position === stagePosition)[0];
+  // eslint-disable-next-line ember/no-array-prototype-extensions
   language = language || server.schema.languages.findBy({ slug: 'go' });
 
   return server.create('course-stage-solution', {

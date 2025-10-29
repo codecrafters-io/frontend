@@ -3,10 +3,7 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 
 export default createPage({
   clickOnConceptCard(title: string) {
-    return this.conceptCards
-      .toArray()
-      .find((card: { title: string }) => card.title === title)
-      .click();
+    return [...this.conceptCards].find((card: { title: string }) => card.title === title).click();
   },
 
   conceptCards: collection('[data-test-concept-card]', {

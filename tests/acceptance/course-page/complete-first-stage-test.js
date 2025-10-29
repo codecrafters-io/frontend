@@ -32,7 +32,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     this.server.create('submission', {
       repository: this.server.schema.repositories.find(1),
       status: 'failure',
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 1),
+      courseStage: course.stages.models.find((stage) => stage.position === 1),
     });
 
     await catalogPage.visit();
@@ -46,7 +46,7 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
 
     this.server.create('submission', 'withSuccessStatus', {
       repository: this.server.schema.repositories.find(1),
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 1),
+      courseStage: course.stages.models.find((stage) => stage.position === 1),
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

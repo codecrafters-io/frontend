@@ -6,6 +6,10 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 
+export interface ModelType {
+  course: CourseModel;
+}
+
 export default class CourseAdminRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
@@ -22,7 +26,7 @@ export default class CourseAdminRoute extends BaseRoute {
     }
   }
 
-  async model(params: { course_slug: string }) {
+  async model(params: { course_slug: string }): Promise<ModelType> {
     const courses = await this.store.findAll('course', {
       include: 'extensions,stages,language-configurations.language',
     });

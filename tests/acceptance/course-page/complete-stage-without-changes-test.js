@@ -30,7 +30,7 @@ module('Acceptance | course-page | complete-stage-without-changes', function (ho
     // Auto-created submission passes too
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
-      courseStage: course.stages.models.toArray().find((stage) => stage.position === 2),
+      courseStage: course.stages.models.find((stage) => stage.position === 2),
       clientType: 'system',
       commitSha: repository.lastSubmission.commitSha,
       treeSha: repository.lastSubmission.treeSha,

@@ -9,6 +9,7 @@ import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -54,7 +55,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withFailureStatus', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -93,7 +94,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     this.server.create('submission', 'withStageCompletion', {
       repository: repository,
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
@@ -129,7 +130,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     this.server.create('submission', 'withSuccessStatus', {
       repository: repository,
       clientType: 'cli',
-      courseStage: redis.stages.models.sortBy('position')[1],
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));

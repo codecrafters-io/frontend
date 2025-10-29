@@ -22,7 +22,7 @@ export default createPage({
   }),
 
   lineItemAmountText(lineItemTitle) {
-    return this.lineItems.toArray().find((lineItem) => lineItem.titleText === lineItemTitle).amountText;
+    return [...this.lineItems].find((lineItem) => lineItem.titleText === lineItemTitle).amountText;
   },
 
   getStartedButton: {

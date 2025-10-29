@@ -27,6 +27,7 @@ import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { isSameDay } from 'date-fns';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
@@ -101,11 +102,11 @@ export default class CourseModel extends Model {
   @service declare date: DateService;
 
   get baseStages() {
-    return this.stages.rejectBy('primaryExtensionSlug'); // TODO[Extensions]: Filter out stages with extensions
+    return this.stages.filter((item) => !item.primaryExtensionSlug); // TODO[Extensions]: Filter out stages with extensions
   }
 
   get betaOrLiveLanguages() {
-    return this.languageConfigurations.rejectBy('releaseStatusIsAlpha').mapBy('language');
+    return this.languageConfigurations.filter((item) => !item.releaseStatusIsAlpha).map((item) => item.language);
   }
 
   get concepts() {
@@ -199,15 +200,15 @@ export default class CourseModel extends Model {
 
   // TODO[Extensions]: Should we include stages from extensions?
   get sortedBaseStages() {
-    return this.baseStages.sortBy('position');
+    return this.baseStages.toSorted(fieldComparator('position'));
   }
 
   get sortedExtensionStages() {
-    return this.sortedExtensions.mapBy('sortedStages').flat();
+    return this.sortedExtensions.map((item) => item.sortedStages).flat();
   }
 
   get sortedExtensions() {
-    return this.extensions.sortBy('position');
+    return this.extensions.toSorted(fieldComparator('position'));
   }
 
   get testerRepositoryLink() {

@@ -12,6 +12,7 @@ import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export type ModelType = {
   course: CourseModel;
@@ -66,9 +67,10 @@ export default class CourseRoute extends BaseRoute {
     } else if (transition.to.queryParams.track) {
       const lastPushedRepositoryForTrack = repositories
         // @ts-expect-error transition.to.queryParams not typed
-        .filterBy('language.slug', transition.to.queryParams.track)
-        .filterBy('firstSubmissionCreated')
-        .sortBy('lastSubmissionAt').lastObject;
+        .filter((item) => item.language?.slug === transition.to.queryParams.track)
+        .filter((item) => item.firstSubmissionCreated)
+        .sort(fieldComparator('lastSubmissionAt'))
+        .at(-1);
 
       if (lastPushedRepositoryForTrack) {
         return lastPushedRepositoryForTrack;
@@ -76,8 +78,11 @@ export default class CourseRoute extends BaseRoute {
         return this.store.createRecord('repository', { course: course, user: this.authenticator.currentUser });
       }
     } else {
-      const lastPushedRepository = repositories.filterBy('firstSubmissionCreated').sortBy('lastSubmissionAt').at(-1);
-      const lastCreatedRepository = repositories.sortBy('createdAt').at(-1);
+      const lastPushedRepository = repositories
+        .filter((item) => item.firstSubmissionCreated)
+        .sort(fieldComparator('lastSubmissionAt'))
+        .at(-1);
+      const lastCreatedRepository = repositories.toSorted(fieldComparator('createdAt')).at(-1);
 
       if (lastPushedRepository) {
         return lastPushedRepository;

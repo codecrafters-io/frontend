@@ -1,7 +1,8 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { groupBy } from 'codecrafters-frontend/utils/lodash-utils';
 import type UserModel from './user';
 import type AffiliateReferralModel from './affiliate-referral';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
 
 export default class AffiliateLinkModel extends Model {
   @belongsTo('user', { async: false, inverse: 'affiliateLinks' }) declare user: UserModel;
@@ -26,16 +27,16 @@ export default class AffiliateLinkModel extends Model {
   }
 
   get visibleReferrals(): AffiliateReferralModel[] {
-    const referralsGroupedByCustomer: Record<string, AffiliateReferralModel[]> = groupBy(
-      this.referrals,
-      (referral: AffiliateReferralModel) => referral.customer.id,
+    const referralsGroupedByCustomer = this.referrals.reduce(
+      groupByFieldReductor((referral) => referral.customer.id),
+      {},
     );
 
     return Object.values(referralsGroupedByCustomer)
       .map((referrals) => {
         return (referrals.find((referral) => !referral.statusIsInactive) || referrals[0]) as AffiliateReferralModel;
       })
-      .sortBy('activatedAt')
+      .sort(fieldComparator('activatedAt'))
       .reverse();
   }
 

@@ -33,9 +33,9 @@ export default class TrackLeaderboardEntry extends Component<Signature> {
   get progressDenominator() {
     return this.store
       .peekAll('course')
-      .rejectBy('releaseStatusIsAlpha')
+      .filter((course) => !course.releaseStatusIsAlpha)
       .filter((course: CourseModel) => course.betaOrLiveLanguages.includes(this.args.entry!.language as LanguageModel))
-      .mapBy('stages.length')
+      .map((item) => item.stages.length)
       .reduce((a, b) => a + b, 0);
   }
 
