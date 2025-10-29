@@ -3,10 +3,10 @@ import Component from '@glimmer/component';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
-import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -80,6 +80,21 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
       (this.args.currentStep.repository.lastSubmission?.courseStage === this.args.currentStep.courseStage &&
         this.args.currentStep.repository.lastSubmissionHasSuccessStatus)
     );
+  }
+
+  get videoEmbedHtml() {
+    if (this.args.currentStep.courseStage.course.isShell) {
+      return `
+           <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe
+          src="https://www.loom.com/embed/63531adfeb6242eeaff9171bc1211947?hide_title=true&hideEmbedTopBar=true&hide_owner=true"
+          style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;"
+          allowfullscreen
+          scrolling="no"
+          allow="encrypted-media *;"
+        ></iframe></div>`;
+    } else {
+      return null;
+    }
   }
 
   @action
