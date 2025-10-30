@@ -12,7 +12,14 @@ import { compare } from '@ember/utils';
  * @template K - keys of T that will be used for comparison
  * @param {K} field - primary field to compare
  * @param {...K[]} moreFields - additional fields used as tiebreakers
- * @returns {(a: T, b: T) => number} comparator function for sorting
+ * @returns {(a: T, b: T) => number} comparator function for Array.prototype.sort
+ *
+ * @example
+ * ```ts
+ * const arr = [{ a:1, b:2 }, { a:1, b:1 }, { a:2, b:0 }];
+ * arr.sort(fieldComparator('a', 'b')); // sort by `a`, then by `b`
+ * // -> [{ a:1, b:1 }, { a:1, b:2 }, { a:2, b:0 }]
+ * ```
  */
 export default function fieldComparator<T, K extends keyof T>(field: K, ...moreFields: K[]): (a: T, b: T) => number {
   return (a, b) => {

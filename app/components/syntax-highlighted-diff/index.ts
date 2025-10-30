@@ -11,7 +11,7 @@ import { transformerNotationDiff } from '@shikijs/transformers';
 import { task, timeout } from 'ember-concurrency';
 import { service } from '@ember/service';
 import type DarkModeService from 'codecrafters-frontend/services/dark-mode';
-import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
+import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
 
 /**
  * Time to wait at the end of `highlightCode` task before allowing a new run to be performed
@@ -148,7 +148,7 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
 
   get topLevelCommentsGroupedByLine() {
     return (this.args.comments || []).reduce(
-      groupByFieldReductor((comment) => comment.subtargetEndLine || 0),
+      groupByFieldReducer((comment) => comment.subtargetEndLine || 0),
       {},
     );
   }

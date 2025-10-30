@@ -5,7 +5,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 export default class CatalogController extends Controller {
   declare model: ModelType;
@@ -21,7 +21,7 @@ export default class CatalogController extends Controller {
   }
 
   get languages() {
-    return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).reduce(uniqReductor(), []);
+    return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).reduce(uniqReducer(), []);
   }
 
   get orderedCourses() {

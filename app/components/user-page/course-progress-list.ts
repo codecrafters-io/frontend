@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
-import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
+import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -22,7 +22,7 @@ export default class CourseProgressList extends Component<Signature> {
             !participation.course.releaseStatusIsAlpha,
         )
         .reduce(
-          groupByFieldReductor((participation) => participation.course.id),
+          groupByFieldReducer((participation) => participation.course.id),
           {},
         ),
     );

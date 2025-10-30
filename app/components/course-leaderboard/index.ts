@@ -9,7 +9,7 @@ import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -105,7 +105,7 @@ export default class CourseLeaderboard extends Component<Signature> {
       allRepositories.push(this.args.activeRepository);
     }
 
-    return allRepositories.reduce(uniqReductor(), []).map((repository) => {
+    return allRepositories.reduce(uniqReducer(), []).map((repository) => {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,

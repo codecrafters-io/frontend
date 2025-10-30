@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import window from 'ember-window-mock';
 import Component from '@glimmer/component';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 export default class TeamPageMembersListItem extends Component {
   @service authenticator;
@@ -23,7 +23,7 @@ export default class TeamPageMembersListItem extends Component {
   get sortedCourses() {
     return this.args.membership.user.courseParticipations
       .map((item) => item.course)
-      .reduce(uniqReductor(), [])
+      .reduce(uniqReducer(), [])
       .sort(fieldComparator('sortPositionForTrack'));
   }
 

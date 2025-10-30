@@ -8,7 +8,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqReductor from 'codecrafters-frontend/utils/uniq-reductor';
+import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
 export default class CourseExtensionIdeasController extends Controller {
   declare model: {
@@ -35,7 +35,7 @@ export default class CourseExtensionIdeasController extends Controller {
     return this.model.courseExtensionIdeas
       .filter((item) => !item.developmentStatusIsReleased)
       .map((item) => item.course)
-      .reduce(uniqReductor(), [])
+      .reduce(uniqReducer(), [])
       .filter((item) => !item.releaseStatusIsDeprecated)
       .filter((item) => !item.releaseStatusIsAlpha)
       .filter((item) => !item.visibilityIsPrivate)

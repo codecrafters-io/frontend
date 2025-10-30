@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type SubmissionModel from 'codecrafters-frontend/models/submission';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import groupByFieldReductor from 'codecrafters-frontend/utils/group-by-field-reductor';
+import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,7 +19,7 @@ export default class AdminCourseSubmissionsPageTimelineContainer extends Compone
       .toSorted(fieldComparator('createdAt'))
       .reverse()
       .reduce(
-        groupByFieldReductor(({ createdAt }) => createdAt.toISOString().slice(0, 10)),
+        groupByFieldReducer(({ createdAt }) => createdAt.toISOString().slice(0, 10)),
         {},
       );
   }
