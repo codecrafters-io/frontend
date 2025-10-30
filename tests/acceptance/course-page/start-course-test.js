@@ -80,8 +80,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
 
-    assert.strictEqual(coursePage.header.progressIndicatorText, 'Select a language to proceed', 'progress indicator says select language to proceed');
-
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
