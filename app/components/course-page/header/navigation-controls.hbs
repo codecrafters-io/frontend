@@ -4,18 +4,6 @@
       <button class="flex items-center py-1 lg:hidden" type="button" {{on "click" @onMobileSidebarButtonClick}}>
         {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
       </button>
-
-      <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
-
-      <div class="flex items-center">
-        {{#if @course.releaseStatusIsBeta}}
-          <BetaCourseLabel />
-        {{else if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
-          <FreeCourseLabel @course={{@course}} />
-        {{else if (and (eq @currentStep.type "CourseStageStep") this.currentStepAsCourseStageStep.courseStage.primaryExtension)}}
-          <BetaCourseExtensionLabel />
-        {{/if}}
-      </div>
     </div>
 
     <div class="flex items-center gap-3 flex-wrap-reverse justify-end">
