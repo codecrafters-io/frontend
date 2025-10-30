@@ -1,0 +1,74 @@
+<div data-test-course-page-header ...attributes>
+  <div class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900 pt-6 pb-5">
+    <CoursePage::Header::NavigationControls
+      @activeRepository={{@activeRepository}}
+      @activeStep={{@activeStep}}
+      @course={{@course}}
+      @currentStep={{@currentStep}}
+      @nextStep={{@nextStep}}
+      @onMobileSidebarButtonClick={{@onMobileSidebarButtonClick}}
+      @stepList={{@stepList}}
+      @track={{@track}}
+    />
+
+    <div class="mt-6">
+      <div class="flex flex-col items-start">
+        <div class="flex items-center flex-wrap gap-x-3">
+          <div class="text-lg sm:text-xl md:text-2xl">
+            {{#if (eq @currentStep.type "CourseStageStep")}}
+              <span class="font-bold text-gray-700 dark:text-gray-300" data-test-step-name>{{this.currentStepAsCourseStageStep.courseStage.name}}</span>
+              <span class="font-mono text-base sm:text-lg md:text-xl">
+                <span class="text-gray-300 dark:text-gray-700">#</span><span
+                  class="font-mono text-gray-400 dark:text-gray-600 uppercase"
+                >{{this.currentStepAsCourseStageStep.courseStage.slug}}</span>
+              </span>
+            {{else}}
+              <span class="font-bold text-gray-700 dark:text-gray-200" data-test-step-name>{{@currentStep.title}}</span>
+            {{/if}}
+          </div>
+
+          <div class="flex items-center md:h-8 h-7 shrink-0">
+            <CoursePage::StepStatusPill @step={{@currentStep}} />
+          </div>
+        </div>
+
+        {{! For complete steps, we have the "You've completed this step" banner" }}
+        {{! For in-progress steps, users shouldn't be focused on this area anyway }}
+        {{#if (and (not-eq @currentStep.status "complete") (not-eq @currentStep.status "in_progress"))}}
+          <CoursePage::StepProgressIndicator @step={{@currentStep}} class="mt-2 ml-0.5" />
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div {{in-viewport-did-change this.handleScrollMarkerInViewportDidChange}}>
+  </div>
+
+  <div
+    class="flex items-center justify-between border-b sticky top-0 z-20 px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900
+      {{if this.isSticky 'shadow-xs pt-1 border-gray-300 dark:border-white/10' 'pt-0 border-gray-200 dark:border-white/5'}}
+      transition-all gap-x-3"
+    data-test-course-page-header-sticky-section
+  >
+    <CoursePage::Header::TabList
+      @course={{@course}}
+      @stepList={{@stepList}}
+      @currentStep={{@currentStep}}
+      @activeStep={{@activeStep}}
+      @nextStep={{@nextStep}}
+      class="-mb-px"
+    />
+
+    {{#if this.isSticky}}
+      <div class="shrink-0 flex items-center gap-x-3">
+        {{#if (eq @currentStep.type "CourseStageStep")}}
+          <div class="hidden sm:inline-flex items-center text-xs font-semibold text-gray-500">
+            Stage #<span class="uppercase">{{this.currentStepAsCourseStageStep.courseStage.slug}}</span>
+          </div>
+        {{/if}}
+
+        <CoursePage::StepStatusPill @step={{@currentStep}} class="shrink-0" />
+      </div>
+    {{/if}}
+  </div>
+</div>
