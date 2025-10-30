@@ -20,7 +20,6 @@ interface Signature {
     course: CourseModel;
     currentStep: StepDefinition;
     nextStep: StepDefinition | null;
-    onMobileSidebarButtonClick: () => void;
     stepList: StepListDefinition;
     track: string | undefined;
   };
