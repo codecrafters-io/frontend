@@ -5,8 +5,6 @@
         {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
       </button>
 
-      <CoursePage::StepSwitcherContainer @currentStep={{@currentStep}} @stepList={{@stepList}} />
-
       <div class="flex items-center">
         {{#if @course.releaseStatusIsBeta}}
           <BetaCourseLabel />
