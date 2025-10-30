@@ -5,7 +5,7 @@ alwaysApply: true
 When you're asked to make changes, follow these rules:
 
 - Say consistent with the rest of our codebase. Read other files to understand what our patterns are.
-- Run `npm run lint` after making changes.
+- Run `npm run lint:fix` after making changes.
   - You can ignore any `pauseTest()` related failures. These are needed for debugging purposes.
 - Once linting is successful, you can try running tests if there are ones that cover the area you changed.
   - Only run tests using the browser tool.
