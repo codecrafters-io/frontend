@@ -20,13 +20,12 @@ interface Signature {
     course: CourseModel;
     currentStep: StepDefinition;
     nextStep: StepDefinition | null;
-    onMobileSidebarButtonClick: () => void;
     stepList: StepListDefinition;
     track: string | undefined;
   };
 }
 
-export default class NavigationControls extends Component<Signature> {
+export default class TopRightSection extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
@@ -57,6 +56,6 @@ export default class NavigationControls extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::Header::NavigationControls': typeof NavigationControls;
+    'CoursePage::Header::TopRightSection': typeof TopRightSection;
   }
 }
