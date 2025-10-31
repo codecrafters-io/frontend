@@ -5,16 +5,17 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    title: string;
+    descriptionMarkdown: string;
     stages: CourseStageModel[];
     completedStages?: CourseStageModel[];
-    currentStage?: CourseStageModel;
   };
 }
 
-export default class StageList extends Component<Signature> {}
+export default class CourseOverviewPageStageCardListItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::StageList': typeof StageList;
+    'CourseOverviewPage::StageCardList::Item': typeof CourseOverviewPageStageCardListItem;
   }
 }

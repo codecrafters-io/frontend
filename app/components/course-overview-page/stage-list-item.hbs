@@ -1,0 +1,20 @@
+<div class="relative flex items-center" data-test-stage-list-item ...attributes>
+  {{! Bullet point }}
+  <div class="relative z-10 mr-1 flex-shrink-0">
+    <div
+      class="w-3.5 h-3.5 rounded-full border-3
+        {{if (or @isCurrent @isComplete) 'bg-teal-500 border-teal-500' 'bg-gray-200 dark:bg-gray-800 border-white dark:border-gray-600'}}"
+    ></div>
+  </div>
+
+  {{! Stage name and difficulty }}
+  <div class="flex-1 flex items-center justify-between min-w-0 gap-4">
+    <div class="text-gray-600 dark:text-gray-300 text-sm truncate">
+      {{@stage.name}}
+    </div>
+
+    <div class="flex-shrink-0">
+      <CourseStageDifficultyLabel @stage={{@stage}} />
+    </div>
+  </div>
+</div>
