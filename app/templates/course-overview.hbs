@@ -7,7 +7,7 @@
     <div class="grow">
       <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
       <CourseOverviewPage::IntroductionAndFaq @course={{this.model.course}} class="w-full mb-4" />
-      <CourseOverviewPage::Stages @course={{this.model.course}} @completedStages={{this.completedStages}} class="w-full" />
+      <CourseOverviewPage::StageCardList @course={{this.model.course}} @completedStages={{this.completedStages}} class="w-full" />
     </div>
 
     <div class="hidden lg:block sticky top-2 w-80 shrink-0 pt-2 ml-2">
