@@ -1,10 +1,17 @@
-<div class="bg-white dark:bg-gray-850 rounded-md shadow-xs border border-gray-200 dark:border-white/5 relative" ...attributes>
-  <div class="p-4 md:p-6">
-    <h3 class="font-semibold text-gray-600 dark:text-gray-400 text-center text-sm relative mb-3">
-      <span class="block h-px w-full bg-gray-200 dark:bg-white/5 absolute top-50-percent -mt-px"></span>
-      <span class="relative px-6 bg-white dark:bg-gray-850">Stages</span>
-    </h3>
+<div class="space-y-4">
+  <CourseOverviewPage::StageCardList::Item
+    @title="Base Stages"
+    @descriptionMarkdown={{@course.descriptionMarkdown}}
+    @stages={{@course.sortedBaseStages}}
+    @completedStages={{@completedStages}}
+  />
 
-    <CourseOverviewPage::StageList @course={{@course}} @completedStages={{@completedStages}} />
-  </div>
+  {{#each @course.sortedExtensions as |extension|}}
+    <CourseOverviewPage::StageCardList::Item
+      @title={{extension.name}}
+      @descriptionMarkdown={{extension.descriptionMarkdown}}
+      @stages={{extension.sortedStages}}
+      @completedStages={{@completedStages}}
+    />
+  {{/each}}
 </div>
