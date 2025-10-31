@@ -11,10 +11,10 @@ interface Signature {
   };
 }
 
-export default class CourseOverviewPageStages extends Component<Signature> {}
+export default class CourseOverviewPageStageCardList extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CourseOverviewPage::Stages': typeof CourseOverviewPageStages;
+    'CourseOverviewPage::StageCardList': typeof CourseOverviewPageStageCardList;
   }
 }
