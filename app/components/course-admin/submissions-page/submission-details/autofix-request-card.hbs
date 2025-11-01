@@ -8,7 +8,7 @@
       </div>
     {{/if}}
 
-    {{#each @autofixRequest.changedFiles key="filename" as |changedFile index|}}
+    {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
       <FileDiffCard
         @code={{changedFile.diff}}
         @filename={{changedFile.filename}}
