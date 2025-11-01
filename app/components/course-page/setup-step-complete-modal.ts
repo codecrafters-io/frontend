@@ -48,6 +48,13 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
   }
 
   @action
+  async handleDidInsert() {
+    console.log('handleDidInsert');
+    // Pre-cache the workflow animation GIF to avoid flickering when it loads.
+    fetch('https://codecrafters.io/images/overview/workflow-animation-2.gif', { mode: 'no-cors' });
+  }
+
+  @action
   async handleNextButtonClick() {
     if (this.currentScreen == 'start-workflow-tutorial') {
       this.currentScreen = 'workflow-tutorial-step-1';

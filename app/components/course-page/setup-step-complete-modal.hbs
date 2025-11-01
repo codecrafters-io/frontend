@@ -1,6 +1,6 @@
 <ModalBody @allowManualClose={{false}} @onClose={{@onClose}} data-test-setup-step-complete-modal class="px-0! py-0!" ...attributes>
   <AnimatedContainer>
-    <div class="flex flex-col items-center py-8 px-4 sm:px-8">
+    <div class="flex flex-col items-center py-8 px-4 sm:px-8" {{did-insert this.handleDidInsert}}>
       {{#animated-value this.currentScreen use=this.transition duration=500 as |currentScreen|}}
         {{#if (eq currentScreen "start-workflow-tutorial")}}
           <CoursePage::SetupStepCompleteModal::StartWorkflowTutorialScreen
