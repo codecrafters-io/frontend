@@ -1,27 +1,44 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import type RouterService from '@ember/routing/router-service';
+import type CourseModel from 'codecrafters-frontend/models/course';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type SubmissionModel from 'codecrafters-frontend/models/submission';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
-export default class AdminCourseSubmissionsPage extends Component {
-  @service router;
+interface Signature {
+  Element: HTMLDivElement;
 
-  @tracked requestedLanguage = this.router.currentRoute.queryParams.languages;
-  @tracked selectedSubmission = null;
+  Args: {
+    course: CourseModel;
+    submissions: SubmissionModel[];
+    filteredLanguages: LanguageModel[];
+    filteredCourseStages: CourseStageModel[];
+  };
+}
 
-  constructor() {
-    super(...arguments);
+export default class AdminCourseSubmissionsPage extends Component<Signature> {
+  @service declare router: RouterService;
 
-    this.selectedSubmission = this.args.submissions.toSorted(fieldComparator('createdAt')).at(-1);
+  @tracked requestedLanguage: LanguageModel | null = null;
+  @tracked selectedSubmission: SubmissionModel | null = null;
+
+  constructor(owner: object, args: Signature['Args']) {
+    super(owner, args);
+
+    this.selectedSubmission = this.args.submissions.toSorted(fieldComparator('createdAt')).at(-1) ?? null;
+    this.requestedLanguage = this.args.filteredLanguages[0] || null;
   }
 
   get currentCourseStage() {
-    return this.args.filteredCourseStages[0];
+    return this.args.filteredCourseStages[0] || null;
   }
 
   get currentLanguage() {
-    return this.args.filteredLanguages[0];
+    return this.args.filteredLanguages[0] || null;
   }
 
   get filteringDescription() {
@@ -29,7 +46,7 @@ export default class AdminCourseSubmissionsPage extends Component {
 
     if (this.args.filteredLanguages[0]) {
       description += `${this.args.filteredLanguages
-        .map((item) => item.name)
+        .map((item: LanguageModel) => item.name)
         .sort()
         .join(' / ')}`;
     } else {
@@ -40,7 +57,7 @@ export default class AdminCourseSubmissionsPage extends Component {
 
     if (this.args.filteredCourseStages[0]) {
       description += `stage ${this.args.filteredCourseStages
-        .map((item) => item.name)
+        .map((item: CourseStageModel) => item.name)
         .sort()
         .join(' / ')}`;
     } else {
@@ -55,7 +72,7 @@ export default class AdminCourseSubmissionsPage extends Component {
 
     if (this.args.filteredLanguages[0]) {
       title += `Language: ${this.args.filteredLanguages
-        .map((item) => item.name)
+        .map((item: LanguageModel) => item.name)
         .sort()
         .join(' / ')}`;
     } else {
@@ -66,7 +83,7 @@ export default class AdminCourseSubmissionsPage extends Component {
 
     if (this.args.filteredCourseStages[0]) {
       title += `Stage: ${this.args.filteredCourseStages
-        .map((item) => item.name)
+        .map((item: CourseStageModel) => item.name)
         .sort()
         .join(' / ')}`;
     } else {
@@ -91,7 +108,7 @@ export default class AdminCourseSubmissionsPage extends Component {
   }
 
   @action
-  handleCourseStageChange(stage) {
+  handleCourseStageChange(stage: CourseStageModel | null) {
     if (!stage) {
       return;
     }
@@ -100,11 +117,22 @@ export default class AdminCourseSubmissionsPage extends Component {
   }
 
   @action
-  handleRequestedLanguageChange(language) {
+  handleRequestedLanguageChange(language: LanguageModel | null) {
     if (!language) {
       return;
     }
 
     this.router.transitionTo({ queryParams: { languages: language.slug } });
+  }
+
+  @action
+  handleSubmissionSelect(submission: SubmissionModel) {
+    this.selectedSubmission = submission;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CourseAdmin::SubmissionsPage': typeof AdminCourseSubmissionsPage;
   }
 }

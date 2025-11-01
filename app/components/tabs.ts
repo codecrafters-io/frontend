@@ -6,6 +6,7 @@ export type Tab = {
   slug: string;
   title: string;
   icon?: string;
+  isGrayedOut?: boolean;
 };
 
 export interface Signature {

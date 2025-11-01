@@ -33,7 +33,7 @@
 <div class="border-t border-gray-200 pb-4">
   <div class="flex h-screen items-stretch">
     <CourseAdmin::SubmissionsPage::TimelineContainer
-      @onSubmissionSelect={{mut this.selectedSubmission}}
+      @onSubmissionSelect={{this.handleSubmissionSelect}}
       @submissions={{@submissions}}
       @selectedSubmission={{this.selectedSubmission}}
       class="w-1/4 border-r border-gray-200 overflow-y-auto"
