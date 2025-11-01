@@ -12,7 +12,7 @@ export default function createCourseFromData(server, courseData) {
       name: courseExtensionData.name,
       slug: courseExtensionData.slug,
       position: courseExtensionPosition,
-      descriptionMarkdown: courseExtensionData.description_md,
+      descriptionMarkdown: courseExtensionData.description_markdown,
     });
 
     courseExtensionPosition++;
