@@ -1,11 +1,16 @@
 <div class="space-y-4 w-full" ...attributes>
-  <CourseOverviewPage::StageListCard @title="Base Stages" @descriptionMarkdown={{@course.descriptionMarkdown}} @stages={{@course.sortedBaseStages}} />
+  <CourseOverviewPage::StageListCard
+    @title={{if (gt @course.extensions.length 0) "Base Stages" "Stages"}}
+    @descriptionMarkdown={{@course.descriptionMarkdown}}
+    @stages={{@course.sortedBaseStages}}
+  />
 
   {{#each @course.sortedExtensions as |extension|}}
     <CourseOverviewPage::StageListCard
       @title={{extension.name}}
       @descriptionMarkdown={{extension.descriptionMarkdown}}
       @stages={{extension.sortedStages}}
+      @isCollapsedByDefault={{true}}
     />
   {{/each}}
 </div>
