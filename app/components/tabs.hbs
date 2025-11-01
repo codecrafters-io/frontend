@@ -7,6 +7,7 @@
         @isActive={{eq this.activeTabSlug tab.slug}}
         @size={{@size}}
         {{on "click" (fn this.handleTabChange tab)}}
+        class={{if tab.isGrayedOut "opacity-25"}}
       />
     {{/each}}
   </ul>

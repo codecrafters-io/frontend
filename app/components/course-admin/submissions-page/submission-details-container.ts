@@ -21,11 +21,13 @@ export default class SubmissionDetailsContainer extends Component<Signature> {
         slug: 'diff',
         title: 'Diff',
         icon: 'code',
+        isGrayedOut: !!(this.args.submission && !this.args.submission.hasChangedFiles),
       },
       {
         slug: 'community_solution',
         title: 'Code Example',
         icon: 'users',
+        isGrayedOut: !!(this.args.submission && !this.args.submission.communitySolution),
       },
     ];
   }
