@@ -6,9 +6,6 @@ interface Signature {
 
   Args: {
     stage: CourseStageModel;
-    isComplete?: boolean;
-    isCurrent?: boolean;
-    isLast?: boolean;
   };
 }
 

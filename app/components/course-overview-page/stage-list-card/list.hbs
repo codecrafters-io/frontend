@@ -9,8 +9,6 @@
     {{#each @stages as |stage index|}}
       <CourseOverviewPage::StageListCard::ListItem
         @stage={{stage}}
-        @isComplete={{includes stage @completedStages}}
-        @isCurrent={{eq stage @currentStage}}
         @isLast={{eq index (sub @stages.length 1)}}
         class="{{if (eq index (sub @stages.length 1)) 'pt-1' 'py-1'}}"
       />
