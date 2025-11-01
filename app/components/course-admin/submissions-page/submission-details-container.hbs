@@ -11,6 +11,8 @@
           <SubmissionLogsPreview @submission={{@submission}} />
         {{else if (eq activeTabSlug "community_solution")}}
           <CourseAdmin::SubmissionsPage::SubmissionDetails::CommunitySolutionContainer @submission={{@submission}} />
+        {{else if (eq activeTabSlug "autofix_requests")}}
+          <CourseAdmin::SubmissionsPage::SubmissionDetails::AutofixContainer @submission={{@submission}} />
         {{/if}}
       </div>
     </Tabs>

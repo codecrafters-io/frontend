@@ -1,0 +1,25 @@
+<div ...attributes>
+  {{#if (eq @autofixRequest.status "success")}}
+    {{#if @autofixRequest.explanationMarkdown}}
+      <div class="prose prose-sm prose-compact mb-4">
+        <p><strong>Explanation:</strong></p>
+
+        {{markdown-to-html @autofixRequest.explanationMarkdown}}
+      </div>
+    {{/if}}
+
+    {{#each @autofixRequest.changedFiles key="filename" as |changedFile index|}}
+      <FileDiffCard
+        @code={{changedFile.diff}}
+        @filename={{changedFile.filename}}
+        @language={{@autofixRequest.repository.language.slug}}
+        @useCodeMirror={{true}}
+      />
+    {{/each}}
+  {{else}}
+    <div class="flex items-center gap-2 mb-4">
+      {{svg-jar "shield-exclamation" class="w-4 h-4 text-red-500"}}
+      <span class="text-red-500">Status: {{@autofixRequest.status}}</span>
+    </div>
+  {{/if}}
+</div>
