@@ -12,6 +12,7 @@
       <FileDiffCard
         @code={{changedFile.diff}}
         @filename={{changedFile.filename}}
+        {{! @glint-expect-error language can be null }}
         @language={{@autofixRequest.repository.language.slug}}
         @useCodeMirror={{true}}
       />
