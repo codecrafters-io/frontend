@@ -81,7 +81,7 @@
                 @code={{changedFile.diff}}
                 @filename={{changedFile.filename}}
                 @forceDarkTheme={{true}}
-                {{! @glint-expect-error language.slug can be null? }}
+                {{! @glint-expect-error language can be nullable }}
                 @language={{@autofixRequest.submission.repository.language.slug}}
                 class="mt-6"
               />

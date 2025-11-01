@@ -29,6 +29,12 @@ export default class SubmissionDetailsContainer extends Component<Signature> {
         icon: 'users',
         isGrayedOut: !!(this.args.submission && !this.args.submission.communitySolution),
       },
+      {
+        slug: 'autofix_requests',
+        title: 'Autofix',
+        icon: 'sparkles',
+        isGrayedOut: !!(this.args.submission && this.args.submission.autofixRequests.length === 0),
+      },
     ];
   }
 }

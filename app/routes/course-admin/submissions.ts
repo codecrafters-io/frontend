@@ -54,6 +54,7 @@ export default class CourseAdminSubmissionsRoute extends BaseRoute {
       ...filters,
       ...{
         include: [
+          'autofix-requests',
           'evaluations',
           'repository.buildpack',
           'repository.language',

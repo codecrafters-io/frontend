@@ -12,6 +12,7 @@ export default class AutofixRequestModel extends Model {
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare logstreamId: string; // For streaming logs when status is in_progress
   @attr('string') declare logsBase64: string; // Base64-encoded logs
+  @attr('number') declare resultDelayInMilliseconds: number | null;
   @attr('string') declare status: string; // 'in_progress' | 'success' | 'failure' | 'error'
 
   get creatorTypeIsSystem() {

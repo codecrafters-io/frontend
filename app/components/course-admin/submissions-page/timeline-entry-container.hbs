@@ -39,6 +39,13 @@
     </div>
 
     <div class="mt-1 flex items-center gap-1">
+      {{#if this.shouldShowAutofixIcon}}
+        <div>
+          {{svg-jar "sparkles" class=(concat "w-4 h-4 fill-current " this.autofixIconClass)}}
+          <EmberTooltip @text="This submission has an autofix request" />
+        </div>
+      {{/if}}
+
       {{#if (eq @submission.flakinessCheckStatus "failure")}}
         <div>
           {{svg-jar "flag" class="text-yellow-500 w-4 fill-current"}}

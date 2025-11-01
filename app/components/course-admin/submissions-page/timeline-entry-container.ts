@@ -10,8 +10,23 @@ interface Signature {
 }
 
 export default class TimelineEntryContainer extends Component<Signature> {
+  get autofixIconClass(): string {
+    switch (this.args.submission.autofixRequests[0]!.status) {
+      case 'success':
+        return 'text-teal-500';
+      case 'in_progress':
+        return 'text-yellow-500';
+      default:
+        return 'text-red-500';
+    }
+  }
+
   get formattedTimestamp(): string {
     return this.timestamp.toLocaleTimeString('en-US', { timeStyle: 'short' }).toLowerCase();
+  }
+
+  get shouldShowAutofixIcon(): boolean {
+    return this.args.submission.autofixRequests.length > 0;
   }
 
   get timestamp(): Date {
