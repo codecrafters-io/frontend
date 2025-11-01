@@ -7,7 +7,7 @@
 
   <div class="relative">
     {{#each @stages as |stage index|}}
-      <CourseOverviewPage::StageListItem
+      <CourseOverviewPage::StageListCard::ListItem
         @stage={{stage}}
         @isComplete={{includes stage @completedStages}}
         @isCurrent={{eq stage @currentStage}}
