@@ -7,11 +7,13 @@ import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import { tracked } from '@glimmer/tracking';
 import type UserModel from 'codecrafters-frontend/models/user';
+import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 export default class AuthenticatorService extends Service {
   @service declare router: RouterService;
   @service declare sessionTokenStorage: SessionTokenStorageService;
   @service declare currentUserCacheStorage: CurrentUserCacheStorageService;
+  @service declare localStorage: LocalStorageService;
   @service declare store: Store;
 
   // TODO: See if there's a way around using this
@@ -91,6 +93,8 @@ export default class AuthenticatorService extends Service {
     this.sessionTokenStorage.clear();
     // eslint-disable-next-line ember/no-array-prototype-extensions
     this.currentUserCacheStorage.clear();
+    // eslint-disable-next-line ember/no-array-prototype-extensions
+    this.localStorage.clear();
     this.cacheBuster++;
   }
 
