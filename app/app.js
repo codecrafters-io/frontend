@@ -1,6 +1,7 @@
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
+import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import config from 'codecrafters-frontend/config/environment';
 import 'codecrafters-frontend/config/deprecation-workflow';
 import * as Sentry from '@sentry/ember';
@@ -26,6 +27,7 @@ export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
   Resolver = Resolver;
+  inspector = setupInspector(this);
 }
 
 loadInitializers(App, config.modulePrefix);
