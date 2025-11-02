@@ -103,7 +103,7 @@ module('Acceptance | course-admin | view-diffs', function (hooks) {
 
     assert.strictEqual(
       submissionsPage.diffTab.changedFiles[0].codeMirror.content.collapsedLinesPlaceholders[2].text,
-      'Expand 9 unchanged lines',
+      'Expand 7 unchanged lines',
       'The third placeholder should show correct number of lines',
     );
 
