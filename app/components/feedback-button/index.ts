@@ -93,6 +93,8 @@ export default class FeedbackButton extends Component<Signature> {
 
   @action
   handleTextareaKeydown(event: KeyboardEvent) {
+    // TEMP: Avoid conflict with concepts keyboard shortcuts.
+    // TODO:Find a cleaner way
     event.stopPropagation();
   }
 }
