@@ -90,6 +90,11 @@ export default class FeedbackButton extends Component<Signature> {
   handleSentimentOptionSelected(sentimentOption: string) {
     this.feedbackSubmission.selectedSentiment = sentimentOption;
   }
+
+  @action
+  handleTextareaKeydown(event: KeyboardEvent) {
+    event.stopPropagation();
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
