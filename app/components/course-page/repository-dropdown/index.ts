@@ -44,7 +44,7 @@ export default class CoursePageRepositoryDropdown extends Component<Signature> {
   @action
   async handleAdminButtonClick(dropdownActions: { close: () => void }) {
     dropdownActions.close();
-    this.router.transitionTo('course-admin.submissions', this.args.activeRepository.course.slug);
+    window.open(this.router.urlFor('course-admin.submissions', this.args.activeRepository.course.slug), '_blank');
   }
 
   @action
