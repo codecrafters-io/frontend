@@ -129,7 +129,7 @@ const ChunkField = StateField.define<readonly Chunk[]>({
 
 function buildCollapsedRanges(state: EditorState, margin: number, minLines: number) {
   const builder = new RangeSetBuilder<Decoration>();
-  const isA = true; // state.facet(mergeConfig).side == 'a';
+  const isA = false; // state.facet(mergeConfig).side == 'a';
   const chunks = state.field(ChunkField);
   let prevLine = 1;
 
