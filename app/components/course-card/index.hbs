@@ -20,7 +20,7 @@
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
       <div class="text-lg font-semibold text-gray-800 dark:text-gray-200 mr-2" data-test-course-name>
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-100 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+          <span class="inline-block bg-gray-100 dark:bg-gray-800 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}
           <span>{{this.course.name}}</span>
         {{/if}}
@@ -89,7 +89,10 @@
           {{/if}}
         </span>
 
-        {{svg-jar "arrow-right" class="w-4 fill-current text-gray-300 group-hover:text-teal-500 transition-colors"}}
+        {{svg-jar
+          "arrow-right"
+          class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-colors"
+        }}
       {{/if}}
     </div>
   </div>
