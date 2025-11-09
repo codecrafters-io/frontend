@@ -99,6 +99,7 @@
         "@types/showdown": "^2.0.2",
         "@types/three": "^0.172.0",
         "@uiw/codemirror-theme-github": "^4.25.4",
+        "atob": "^2.1.2",
         "autoprefixer": "^10.4.21",
         "broccoli-asset-rev": "^3.0.0",
         "canvas-confetti": "^1.9.4",
@@ -187,6 +188,7 @@
         "typescript-eslint": "^8.50.0",
         "webpack": "^5.104.1",
         "webpack-bundle-analyzer": "^5.1.0",
+        "xmlhttprequest-ssl": "^4.0.0",
       },
     },
   },
@@ -3536,6 +3538,8 @@
     "xml-name-validator": ["xml-name-validator@5.0.0", "", {}, "sha512-EvGK8EJ3DhaHfbRlETOWAS5pO9MZITeauHKJyb8wyajUfQUenkIg2MvLDTZ4T/TgIcm3HU0TFBgWWboAZ30UHg=="],
 
     "xmlchars": ["xmlchars@2.2.0", "", {}, "sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw=="],
+
+    "xmlhttprequest-ssl": ["xmlhttprequest-ssl@4.0.0", "", {}, "sha512-b7DXzbCm8VWmII2mQiQHy5VG1L6YBUnNxuCooldWpMUXTwa08uXEz1q5Nv6wlULnSI5GiHuwBIq6pNJrqRh/8Q=="],
 
     "xtend": ["xtend@4.0.2", "", {}, "sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ=="],
 

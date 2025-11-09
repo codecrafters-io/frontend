@@ -1,3 +1,6 @@
+const atob = require('atob');
+const XMLHttpRequest = require('xmlhttprequest-ssl').XMLHttpRequest;
+
 module.exports = function (/* environment */) {
   return {
     /*
@@ -11,8 +14,10 @@ module.exports = function (/* environment */) {
     */
     buildSandboxGlobals(defaultGlobals) {
       return Object.assign({}, defaultGlobals, {
+        atob,
         AbortController,
         URLSearchParams,
+        XMLHttpRequest,
       });
     },
   };

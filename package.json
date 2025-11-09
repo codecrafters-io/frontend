@@ -110,6 +110,7 @@
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.172.0",
     "@uiw/codemirror-theme-github": "^4.25.4",
+    "atob": "^2.1.2",
     "autoprefixer": "^10.4.21",
     "broccoli-asset-rev": "^3.0.0",
     "canvas-confetti": "^1.9.4",
@@ -197,7 +198,8 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0",
     "webpack": "^5.104.1",
-    "webpack-bundle-analyzer": "^5.1.0"
+    "webpack-bundle-analyzer": "^5.1.0",
+    "xmlhttprequest-ssl": "^4.0.0"
   },
   "engines": {
     "node": "22.*"
