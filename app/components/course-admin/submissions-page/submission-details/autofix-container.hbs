@@ -10,5 +10,17 @@
     <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded-sm mb-4">
       This submission doesn't have any autofix requests.
     </div>
+
+    <PrimaryButtonWithSpinner @shouldShowSpinner={{this.createAutofixRequestTask.isRunning}} {{on "click" this.handleCreateAutofixButtonClick}}>
+      Create Autofix Request
+    </PrimaryButtonWithSpinner>
+
+    {{#if this.autofixCreationError}}
+      <AlertWithIcon @type="error" class="mt-3">
+        <p>
+          {{this.autofixCreationError}}
+        </p>
+      </AlertWithIcon>
+    {{/if}}
   {{/if}}
 </div>
