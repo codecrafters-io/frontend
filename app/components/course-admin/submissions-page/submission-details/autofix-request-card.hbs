@@ -1,4 +1,11 @@
 <div ...attributes>
+  {{#if (not-eq @autofixRequest.status "in_progress")}}
+    <div class="prose prose-sm prose-compact mb-4">
+      <a class="flex items-center gap-1 text-gray-500 font-medium" href={{this.autofixRequestAdminUrl}} target="_blank" rel="noopener noreferrer">
+        {{svg-jar "external-link" class="w-4 h-4"}}
+        {{@autofixRequest.id}}</a>
+    </div>
+  {{/if}}
   {{#if (eq @autofixRequest.status "success")}}
     {{#if @autofixRequest.explanationMarkdown}}
       <div class="prose prose-sm prose-compact mb-4">
@@ -13,7 +20,7 @@
         @code={{changedFile.diff}}
         @filename={{changedFile.filename}}
         {{! @glint-expect-error language can be null }}
-        @language={{@autofixRequest.repository.language.slug}}
+        @language={{@autofixRequest.submission.repository.language.slug}}
         @useCodeMirror={{true}}
       />
     {{/each}}
