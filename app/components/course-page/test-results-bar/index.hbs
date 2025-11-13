@@ -5,6 +5,7 @@
   ...attributes
 >
   {{#if this.isExpanded}}
+    {{! template-lint-disable no-pointer-down-event-binding }}
     <div
       class="group/resize-handler h-3 bg-transparent absolute top-0 left-0 right-0 flex items-center justify-center cursor-ns-resize z-10"
       role="button"
