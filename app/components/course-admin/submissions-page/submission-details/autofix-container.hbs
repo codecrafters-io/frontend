@@ -1,11 +1,6 @@
 <div class="course-admin-submission-autofix-container" ...attributes>
-  {{#if (gt @submission.autofixRequests.length 0)}}
-    {{#each @submission.autofixRequests key="id" as |autofixRequest index|}}
-      <CourseAdmin::SubmissionsPage::SubmissionDetails::AutofixRequestCard
-        @autofixRequest={{autofixRequest}}
-        class="{{if (not-eq index (sub @submission.autofixRequests.length 1)) 'mb-4'}}"
-      />
-    {{/each}}
+  {{#if this.latestAutofixRequest}}
+    <CourseAdmin::SubmissionsPage::SubmissionDetails::AutofixRequestCard @autofixRequest={{this.latestAutofixRequest}} class="mb-4" />
   {{else}}
     <div class="bg-gray-800 p-4 text-white font-mono text-xs leading-relaxed rounded-sm mb-4">
       This submission doesn't have any autofix requests.
@@ -13,7 +8,7 @@
   {{/if}}
 
   <PrimaryButtonWithSpinner @shouldShowSpinner={{this.createAutofixRequestTask.isRunning}} {{on "click" this.handleCreateAutofixButtonClick}}>
-    {{#if (gt @submission.autofixRequests.length 0)}}
+    {{#if this.latestAutofixRequest}}
       Retry Autofix Request
     {{else}}
       Create Autofix Request
