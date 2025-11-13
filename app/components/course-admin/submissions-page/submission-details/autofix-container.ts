@@ -22,7 +22,7 @@ export default class AutofixContainer extends Component<Signature> {
   @tracked autofixCreationError: string | null = null;
 
   get latestAutofixRequest(): AutofixRequestModel | null {
-    return this.args.submission.autofixRequests.sort(fieldComparator('createdAt')).at(-1) ?? null;
+    return this.args.submission.autofixRequests.toSorted(fieldComparator('createdAt')).at(-1) ?? null;
   }
 
   createAutofixRequestTask = task({ drop: true }, async (): Promise<void> => {
