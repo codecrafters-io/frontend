@@ -24,7 +24,7 @@ export default class TestResultsBar extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked customHeight = htmlSafe('height: 100vh');
+  @tracked customHeight = htmlSafe('height: 75vh');
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
