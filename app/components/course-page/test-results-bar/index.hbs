@@ -1,6 +1,6 @@
 <div
-  class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center"
-  style={{if this.isExpanded this.customHeight}}
+  class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
+  style={{this.containerStyle}}
   data-test-test-results-bar
   ...attributes
 >
@@ -17,10 +17,7 @@
     </div>
   {{/if}}
 
-  <div
-    class="relative w-full max-w-(--breakpoint-lg) xl:max-w-(--breakpoint-xl) flex flex-col grow overflow-auto {{unless this.isExpanded 'h-0'}}"
-    data-test-contents
-  >
+  <div class="relative w-full flex flex-col grow overflow-auto {{unless this.isExpanded 'h-0'}}" data-test-contents>
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection
         @onCollapseButtonClick={{this.handleCollapseButtonClick}}
