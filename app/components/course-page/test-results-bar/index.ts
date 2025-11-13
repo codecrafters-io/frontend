@@ -24,7 +24,9 @@ export default class TestResultsBar extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked customHeight = '75vh';
+  @tracked bottomSectionElement: HTMLDivElement | null = null;
+  @tracked expandedContainerHeight = '75vh';
+  @tracked isResizing = false;
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -44,11 +46,11 @@ export default class TestResultsBar extends Component<Signature> {
     }
   }
 
-  get containerStyle() {
+  get expandedContainerStyle() {
     if (this.isExpanded) {
-      return htmlSafe(`height: ${this.customHeight}`);
+      return htmlSafe(`height: ${this.expandedContainerHeight}`);
     } else {
-      return htmlSafe('height: auto');
+      return htmlSafe('height: 0px');
     }
   }
 
@@ -66,26 +68,33 @@ export default class TestResultsBar extends Component<Signature> {
   }
 
   @action
+  handleDidInsertBottomSectionElement(element: HTMLDivElement) {
+    this.bottomSectionElement = element;
+  }
+
+  @action
   handleExpandButtonClick() {
     this.coursePageState.testResultsBarIsExpanded = true;
   }
 
   @action
   handleMouseResize(event: MouseEvent) {
-    const newHeight = window.innerHeight - event.clientY;
-    this.customHeight = `max(250px, min(calc(100vh - 20px), ${newHeight}px))`;
+    const newHeight = window.innerHeight - event.clientY - (this.bottomSectionElement?.offsetHeight || 0);
+    this.expandedContainerHeight = `max(200px, min(calc(100vh - 50px), ${newHeight}px))`;
   }
 
   @action
   handleTouchResize(event: TouchEvent) {
     const touch = event.touches[0] as Touch;
-    const newHeight = window.innerHeight - touch.clientY;
-    this.customHeight = `max(250px, min(calc(100vh - 20px), ${newHeight}px))`;
+    const newHeight = window.innerHeight - touch.clientY - (this.bottomSectionElement?.offsetHeight || 0);
+    this.expandedContainerHeight = `max(200px, min(calc(100vh - 50px), ${newHeight}px))`;
   }
 
   @action
   startResize(event: MouseEvent | TouchEvent) {
     event.preventDefault();
+
+    this.isResizing = true;
 
     // Trigger mouse resize on left click only
     if (event instanceof MouseEvent && event.button === 0) {
@@ -99,12 +108,14 @@ export default class TestResultsBar extends Component<Signature> {
 
   @action
   stopMouseResize() {
+    this.isResizing = false;
     document.removeEventListener('mousemove', this.handleMouseResize);
     document.removeEventListener('mouseup', this.stopMouseResize);
   }
 
   @action
   stopTouchResize() {
+    this.isResizing = false;
     document.removeEventListener('touchmove', this.handleTouchResize);
     document.removeEventListener('touchend', this.stopTouchResize);
   }
