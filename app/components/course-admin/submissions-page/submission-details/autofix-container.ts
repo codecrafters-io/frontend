@@ -5,6 +5,8 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -18,6 +20,10 @@ export default class AutofixContainer extends Component<Signature> {
   @service declare store: Store;
 
   @tracked autofixCreationError: string | null = null;
+
+  get latestAutofixRequest(): AutofixRequestModel | null {
+    return this.args.submission.autofixRequests.sort(fieldComparator('createdAt')).at(-1) ?? null;
+  }
 
   createAutofixRequestTask = task({ drop: true }, async (): Promise<void> => {
     this.autofixCreationError = null;
