@@ -1,26 +1,24 @@
 <div
-  class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center"
-  style={{if this.isExpanded this.customHeight}}
+  class="bg-gray-900 border-t border-gray-800 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
+  style={{this.containerStyle}}
   data-test-test-results-bar
   ...attributes
 >
   {{#if this.isExpanded}}
     {{! template-lint-disable no-pointer-down-event-binding }}
     <div
-      class="absolute bg-gray-700 hover:bg-gray-500 cursor-ns-resize h-1 rounded-sm top-1 w-12 z-10"
+      class="group/resize-handler h-3 bg-transparent absolute top-0 left-0 right-0 flex items-center justify-center cursor-ns-resize z-10"
       role="button"
       {{on "mousedown" this.startResize}}
       {{on "touchstart" this.startResize}}
       data-test-resize-handler
     >
-      <div class="absolute -top-1.5 left-0 right-0 h-4 bg-transparent"></div>
+      <div class="bg-gray-700 group-hover/resize-handler:bg-gray-500 h-0.5 rounded-sm w-16">
+      </div>
     </div>
   {{/if}}
 
-  <div
-    class="relative w-full max-w-(--breakpoint-lg) xl:max-w-(--breakpoint-xl) flex flex-col grow overflow-auto {{unless this.isExpanded 'h-0'}}"
-    data-test-contents
-  >
+  <div class="relative w-full flex flex-col grow overflow-auto {{unless this.isExpanded 'h-0'}}" data-test-contents>
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection
         @onCollapseButtonClick={{this.handleCollapseButtonClick}}

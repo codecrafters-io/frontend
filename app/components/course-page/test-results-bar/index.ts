@@ -24,7 +24,7 @@ export default class TestResultsBar extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare authenticator: AuthenticatorService;
   @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
-  @tracked customHeight = htmlSafe('height: 100vh');
+  @tracked customHeight = '75vh';
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -41,6 +41,14 @@ export default class TestResultsBar extends Component<Signature> {
       }
     } else {
       return ['logs'];
+    }
+  }
+
+  get containerStyle() {
+    if (this.isExpanded) {
+      return htmlSafe(`height: ${this.customHeight}`);
+    } else {
+      return htmlSafe('height: auto');
     }
   }
 
@@ -65,14 +73,14 @@ export default class TestResultsBar extends Component<Signature> {
   @action
   handleMouseResize(event: MouseEvent) {
     const newHeight = window.innerHeight - event.clientY;
-    this.customHeight = htmlSafe(`height: min(100vh, ${newHeight}px)`);
+    this.customHeight = `max(250px, min(calc(100vh - 20px), ${newHeight}px))`;
   }
 
   @action
   handleTouchResize(event: TouchEvent) {
     const touch = event.touches[0] as Touch;
     const newHeight = window.innerHeight - touch.clientY;
-    this.customHeight = htmlSafe(`height: ${newHeight}px`);
+    this.customHeight = `max(250px, min(calc(100vh - 20px), ${newHeight}px))`;
   }
 
   @action
