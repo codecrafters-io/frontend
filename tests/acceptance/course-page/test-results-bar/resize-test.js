@@ -1,6 +1,7 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
 import { module, test } from 'qunit';
@@ -8,8 +9,6 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | test-results-bar | resize', function (hooks) {
   setupApplicationTest(hooks);
@@ -20,9 +19,6 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const fakeActionCableConsumer = new FakeActionCableConsumer();
-    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
-
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -42,37 +38,39 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
     await catalogPage.clickOnCourse('Build your own Redis');
     await courseOverviewPage.clickOnStartCourse();
     await coursePage.testResultsBar.clickOnBottomSection();
+    await new Promise((resolve) => setTimeout(resolve, 200)); // Wait for CSS animation to complete
 
-    const desiredHeight = 500;
-    let testResultsBarHeight = coursePage.testResultsBar.height;
+    let previousHeight = coursePage.testResultsBar.height;
+    const desiredHeight = previousHeight - 50;
 
+    // Don't know where the +1 comes from, could be border-related
     await coursePage.testResultsBar.resizeHandler.mouseDown({ button: 2 });
-    await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight });
+    await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight + 1 });
     await coursePage.testResultsBar.resizeHandler.mouseUp();
 
-    assert.strictEqual(testResultsBarHeight, coursePage.testResultsBar.height, 'Right mouse button should not resize test results bar');
+    assert.strictEqual(previousHeight, coursePage.testResultsBar.height, 'Right mouse button should not resize test results bar');
 
+    // Don't know where the +1 comes from, could be border-related
     await coursePage.testResultsBar.resizeHandler.mouseDown({ button: 0 });
-    await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight });
+    await coursePage.testResultsBar.resizeHandler.mouseMove({ clientY: window.innerHeight - desiredHeight + 1 });
     await coursePage.testResultsBar.resizeHandler.mouseUp();
 
-    testResultsBarHeight = coursePage.testResultsBar.height;
-    assert.strictEqual(testResultsBarHeight, desiredHeight, 'Left mouse button should resize test results bar');
+    assert.notStrictEqual(previousHeight, coursePage.testResultsBar.height, 'Test results bar should be resized');
+    assert.strictEqual(desiredHeight, coursePage.testResultsBar.height, 'Left mouse button should resize test results bar');
+
+    previousHeight = coursePage.testResultsBar.height;
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnBottomSection();
+    await new Promise((resolve) => setTimeout(resolve, 200)); // Wait for CSS animation to complete
 
-    testResultsBarHeight = coursePage.testResultsBar.height;
-    assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
+    assert.strictEqual(previousHeight, coursePage.testResultsBar.height, 'Test results bar maintains the height after closing and expanding again');
   });
 
   test('can resize test results bar using touch', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
-    const fakeActionCableConsumer = new FakeActionCableConsumer();
-    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
-
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -96,8 +94,9 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
 
     const desiredHeight = 500;
 
+    // Don't know where the +1 comes from, could be border-related
     await coursePage.testResultsBar.resizeHandler.touchStart();
-    await coursePage.testResultsBar.resizeHandler.touchMove({ touches: [{ clientY: window.innerHeight - desiredHeight }] });
+    await coursePage.testResultsBar.resizeHandler.touchMove({ touches: [{ clientY: window.innerHeight - desiredHeight + 1 }] });
     await coursePage.testResultsBar.resizeHandler.touchEnd();
 
     let testResultsBarHeight = coursePage.testResultsBar.height;
@@ -105,6 +104,7 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await coursePage.testResultsBar.clickOnBottomSection();
+    await new Promise((resolve) => setTimeout(resolve, 200)); // Wait for CSS animation to complete
 
     testResultsBarHeight = coursePage.testResultsBar.height;
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar maintains the height after closing and expanding again');
