@@ -1,4 +1,3 @@
-import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
