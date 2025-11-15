@@ -17,10 +17,10 @@ interface Signature {
 }
 
 export default class TestsPassedOverlay extends Component<Signature> {
+  transition = fade;
+
   @tracked lastSeenStepId: string | null = null;
   @tracked modalWasDismissed = false;
-
-  transition = fade;
 
   get shouldShowModal(): boolean {
     return !this.modalWasDismissed && this.args.currentStep.status === 'in_progress' && this.args.currentStep.testsStatus === 'passed';
