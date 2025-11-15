@@ -6,7 +6,7 @@
 >
   <:content>
     <AnimatedContainer>
-      {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
+      {{#animated-if this.modalWasDismissed duration=150 use=this.transition}}
         <CoursePage::CourseStageStep::TestsPassedNotice
           class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
           {{! Ensure this is visible when modal is dismissed }}
