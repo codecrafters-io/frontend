@@ -62,17 +62,19 @@ export default class CourseStageInstructionsController extends Controller {
 
   @action
   handleDidUpdateTestsStatus(_element: HTMLDivElement, [newTestsStatus]: [CourseStageStep['testsStatus']]) {
-    // TODO: Revive this once we decide where to place the test runner card
-    // if (newTestsStatus === 'evaluating') {
-    //   // Ensure the new test runner card is in DOM (it shifts around when the tests status changes)
-    //   next(() => {
-    //     document.getElementById('test-runner-card')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    //   });
-    // }
-
-    // For tests passed, let's scroll all the way to the top
+    // For tests passed, let's collapse the test results bar and scroll all the way to the top
     if (newTestsStatus === 'passed') {
+      this.coursePageState.testResultsBarIsExpanded = false;
       document.getElementById('course-page-scrollable-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // When tests are run, let's expand the test results bar. It'll automatically collapse when tests pass.
+    if (
+      newTestsStatus === 'evaluating' &&
+      this.model.activeRepository.lastSubmission &&
+      !this.model.activeRepository.lastSubmission.clientTypeIsSystem
+    ) {
+      this.coursePageState.testResultsBarIsExpanded = true;
     }
   }
 
