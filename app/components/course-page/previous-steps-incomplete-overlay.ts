@@ -22,7 +22,7 @@ export default class PreviousStepsIncompleteOverlay extends Component<Signature>
   transition = fade;
 
   @tracked modalWasDismissed = false;
-  @tracked lastSeenStepId: string | null = null;
+  @tracked lastSeenStepStatus: string | null = null;
 
   @service declare coursePageState: CoursePageStateService;
 
@@ -41,17 +41,13 @@ export default class PreviousStepsIncompleteOverlay extends Component<Signature>
   }
 
   @action
-  handleStepIdUpdated() {
-    if (this.args.currentStep.id === this.lastSeenStepId) {
+  handleStepStatusUpdated() {
+    if (this.args.currentStep.status === this.lastSeenStepStatus) {
       return;
     }
 
-    // If the modal was dismissed and the step is no longer locked, let's reset state so it shows again on locked steps
-    if (this.modalWasDismissed && this.args.currentStep.status !== 'locked') {
-      this.modalWasDismissed = false;
-    }
-
-    this.lastSeenStepId = this.args.currentStep.id;
+    this.lastSeenStepStatus = this.args.currentStep.status;
+    this.modalWasDismissed = false;
   }
 }
 
