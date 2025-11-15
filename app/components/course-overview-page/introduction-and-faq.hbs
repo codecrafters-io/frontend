@@ -1,0 +1,14 @@
+<div class="bg-white dark:bg-gray-850 rounded-md shadow-xs border border-gray-200 dark:border-white/5 relative" ...attributes>
+  <div class="p-4 md:p-6">
+    <div class="prose dark:prose-invert">
+      {{markdown-to-html @course.descriptionMarkdown}}
+    </div>
+
+    {{#if (gt @course.frequentlyAskedQuestions.length 0)}}
+      {{! Extra if convinces typescript that frequentlyAskedQuestions is not null }}
+      {{#if @course.frequentlyAskedQuestions}}
+        <CollapsibleFaqList @faqs={{@course.frequentlyAskedQuestions}} class="mt-4" />
+      {{/if}}
+    {{/if}}
+  </div>
+</div>
