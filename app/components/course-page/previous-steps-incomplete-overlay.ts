@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -18,6 +19,8 @@ interface Signature {
 }
 
 export default class PreviousStepsIncompleteOverlay extends Component<Signature> {
+  transition = fade;
+
   @tracked modalWasDismissed = false;
   @tracked lastSeenStepId: string | null = null;
 
@@ -43,8 +46,12 @@ export default class PreviousStepsIncompleteOverlay extends Component<Signature>
       return;
     }
 
+    // If the modal was dismissed and the step is no longer locked, let's reset state so it shows again on locked steps
+    if (this.modalWasDismissed && this.args.currentStep.status !== 'locked') {
+      this.modalWasDismissed = false;
+    }
+
     this.lastSeenStepId = this.args.currentStep.id;
-    this.modalWasDismissed = false;
   }
 }
 
