@@ -6,7 +6,7 @@
 >
   <:content>
     <AnimatedContainer>
-      {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
+      {{#animated-if this.modalWasDismissed duration=150 use=this.transition}}
         <CoursePage::CompletedStepNotice
           {{! @glint-expect-error repository is nullable according to coursePageState }}
           @repository={{this.coursePageState.stepList.repository}}
