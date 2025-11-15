@@ -6,7 +6,6 @@ interface Signature {
 
   Args: {
     allowManualClose?: boolean;
-    isWide?: boolean;
     onClose?: () => void;
     shouldHideCloseButton?: boolean;
   };

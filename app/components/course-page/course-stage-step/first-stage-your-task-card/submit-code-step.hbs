@@ -57,7 +57,7 @@
 
 {{#if this.isCommitModalOpen}}
   <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} @isWide={{true}} class="w-fit cursor-default">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} class="w-fit cursor-default max-w-(--breakpoint-lg)">
       <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
         Commit changes
       </div>
@@ -129,7 +129,7 @@
 
 {{#if this.isPushModalOpen}}
   <ModalBackdrop class="cursor-pointer">
-    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} @isWide={{true}} class="w-fit cursor-default">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} class="w-fit cursor-default max-w-(--breakpoint-lg)">
       <div class="mb-6 font-semibold text-2xl text-gray-800 dark:text-gray-200 mr-8">
         Push changes
       </div>
