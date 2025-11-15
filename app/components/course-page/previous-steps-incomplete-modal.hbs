@@ -1,8 +1,6 @@
 <ModalBody @allowManualClose={{false}} @onClose={{@onClose}} data-test-previous-steps-incomplete-modal class="max-w-xl" ...attributes>
   <div class="flex flex-col items-center w-full max-w-2xs">
-    <div class="text-[60px] text-center">
-      ⚠️
-    </div>
+    {{svg-jar "exclamation" class="w-16 h-16 mb-3 fill-yellow-500"}}
 
     <div class="mb-3 font-bold text-2xl text-gray-700 dark:text-gray-100 text-center">
       Previous steps incomplete!
