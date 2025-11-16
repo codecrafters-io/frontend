@@ -7,5 +7,11 @@ export default {
   submitButtonIsDisabled: hasClass('cursor-not-allowed', '[data-test-submit-button]'),
   commentCards: collection('[data-test-comment-card]', CommentCard),
   fillInCommentInput: fillable('[data-test-comment-input]'),
+
+  toggleRejectedCommentsButton: {
+    scope: '[data-test-toggle-rejected-comments-button]',
+    click: clickable(),
+  },
+
   scope: '[data-test-comment-list]',
 };

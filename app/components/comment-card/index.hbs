@@ -52,13 +52,15 @@
         {{#if this.currentUser.isStaff}}
           <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
             <dd.Trigger>
-              {{#if (eq @comment.approvalStatus "approved")}}
-                <Pill @color="green">{{@comment.approvalStatus}}</Pill>
-              {{else if (eq @comment.approvalStatus "rejected")}}
-                <Pill @color="gray">{{@comment.approvalStatus}}</Pill>
-              {{else if (eq @comment.approvalStatus "awaiting_approval")}}
-                <Pill @color="yellow">{{@comment.approvalStatus}}</Pill>
-              {{/if}}
+              <div data-test-approval-status-label>
+                {{#if (eq @comment.approvalStatus "approved")}}
+                  <Pill @color="green">{{@comment.approvalStatus}}</Pill>
+                {{else if (eq @comment.approvalStatus "rejected")}}
+                  <Pill @color="gray">{{@comment.approvalStatus}}</Pill>
+                {{else if (eq @comment.approvalStatus "awaiting_approval")}}
+                  <Pill @color="yellow">{{@comment.approvalStatus}}</Pill>
+                {{/if}}
+              </div>
             </dd.Trigger>
             <dd.Content>
               <div

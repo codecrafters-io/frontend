@@ -16,5 +16,9 @@ export default {
     hover: triggerable('mouseenter'),
   },
 
+  approvalStatusLabel: {
+    scope: '[data-test-approval-status-label]',
+  },
+
   scope: '[data-test-comment-card]',
 };
