@@ -84,6 +84,11 @@ export default class CommentCard extends Component {
   }
 
   @action
+  handleToggleRejectedChildCommentsButtonClick() {
+    this.rejectedChildCommentsAreExpanded = !this.rejectedChildCommentsAreExpanded;
+  }
+
+  @action
   updateCommentStatus(status, dropdownActions) {
     dropdownActions.close();
     this.args.comment.approvalStatus = status;
