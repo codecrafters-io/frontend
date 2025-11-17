@@ -16,6 +16,7 @@ export default class CourseExtensionIdeaModel extends Model {
   @attr('date') declare createdAt: Date;
   @attr('string') declare descriptionMarkdown: string;
   @attr('string') declare developmentStatus: string;
+  @attr('boolean') declare isArchived: boolean;
   @attr('string') declare name: string;
   @attr('date') declare releasedAt: Date | null;
   @attr('string') declare slug: string;

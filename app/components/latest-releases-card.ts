@@ -22,6 +22,7 @@ export default class LatestReleasesCard extends Component<Signature> {
     const releases: Release[] = [];
 
     this.args.courseExtensionIdeas
+      .filter((idea: CourseExtensionIdeaModel) => !idea.isArchived)
       .filter((idea: CourseExtensionIdeaModel) => idea.developmentStatusIsReleased)
       .forEach((idea: CourseExtensionIdeaModel) => {
         releases.push({
