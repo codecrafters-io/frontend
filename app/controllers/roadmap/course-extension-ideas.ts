@@ -28,11 +28,15 @@ export default class CourseExtensionIdeasController extends Controller {
   @service declare store: Store;
 
   get orderedCourseExtensionIdeas() {
-    return this.model.courseExtensionIdeas.filter((item) => item.course === this.selectedCourse).sort(fieldComparator('sortPositionForRoadmapPage'));
+    return this.model.courseExtensionIdeas
+      .filter((item) => !item.isArchived)
+      .filter((item) => item.course === this.selectedCourse)
+      .sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   get orderedCourses() {
     return this.model.courseExtensionIdeas
+      .filter((item) => !item.isArchived)
       .filter((item) => !item.developmentStatusIsReleased)
       .map((item) => item.course)
       .reduce(uniqReducer(), [])
