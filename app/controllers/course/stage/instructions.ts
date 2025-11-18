@@ -62,19 +62,27 @@ export default class CourseStageInstructionsController extends Controller {
 
   @action
   handleDidUpdateTestsStatus(_element: HTMLDivElement, [newTestsStatus]: [CourseStageStep['testsStatus']]) {
-    // For tests passed, let's collapse the test results bar and scroll all the way to the top
-    if (newTestsStatus === 'passed') {
-      this.coursePageState.testResultsBarIsExpanded = false;
-      document.getElementById('course-page-scrollable-area')?.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // TODO: Add a feature flag here
+    if (this.authenticator.currentUser?.isStaff) {
+      // For tests passed, let's collapse the test results bar and scroll all the way to the top
+      if (newTestsStatus === 'passed') {
+        this.coursePageState.testResultsBarIsExpanded = false;
+        document.getElementById('course-page-scrollable-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+      }
 
-    // When tests are run, let's expand the test results bar. It'll automatically collapse when tests pass.
-    if (
-      newTestsStatus === 'evaluating' &&
-      this.model.activeRepository.lastSubmission &&
-      !this.model.activeRepository.lastSubmission.clientTypeIsSystem
-    ) {
-      this.coursePageState.testResultsBarIsExpanded = true;
+      // When tests are run, let's expand the test results bar. It'll automatically collapse when tests pass.
+      if (
+        newTestsStatus === 'evaluating' &&
+        this.model.activeRepository.lastSubmission &&
+        !this.model.activeRepository.lastSubmission.clientTypeIsSystem
+      ) {
+        this.coursePageState.testResultsBarIsExpanded = true;
+      }
+    } else {
+      // For tests passed, let's scroll all the way to the top
+      if (newTestsStatus === 'passed') {
+        document.getElementById('course-page-scrollable-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
   }
 
