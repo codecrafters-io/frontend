@@ -5,16 +5,8 @@ import { inject as service } from '@ember/service';
 export default class MoreDropdown extends Component {
   @service authenticator;
 
-  get shouldShowDeleteButton() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.id === this.args.comment.user.id;
-  }
-
-  get shouldShowEditButton() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.id === this.args.comment.user.id;
-  }
-
-  get shouldShowEditInAdminPanelButton() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.isStaff;
+  get currentUser() {
+    return this.authenticator.currentUser;
   }
 
   @action
@@ -29,5 +21,12 @@ export default class MoreDropdown extends Component {
     dropdownActions.close();
 
     return this.args.onEditButtonClick();
+  }
+
+  @action
+  handleToggleRejectedChildCommentsButtonClick(dropdownActions) {
+    dropdownActions.close();
+
+    return this.args.onToggleRejectedChildCommentsButtonClick();
   }
 }

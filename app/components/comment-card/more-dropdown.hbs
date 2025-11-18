@@ -9,7 +9,7 @@
       class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm text-sm text-gray-600 dark:text-gray-300 min-w-[150px] max-w-xl bg-white dark:bg-gray-850"
       data-test-more-dropdown-content
     >
-      {{#if this.shouldShowEditButton}}
+      {{#if (eq this.currentUser @comment.user)}}
         <div
           class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
           role="button"
@@ -17,9 +17,7 @@
         >
           Edit
         </div>
-      {{/if}}
 
-      {{#if this.shouldShowDeleteButton}}
         <div
           class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group text-red-600"
           role="button"
@@ -29,7 +27,7 @@
         </div>
       {{/if}}
 
-      {{#if this.shouldShowEditInAdminPanelButton}}
+      {{#if this.currentUser.isStaff}}
         <a
           href={{@comment.adminPanelEditUrl}}
           target="_blank"
@@ -39,11 +37,21 @@
           Edit as admin
         </a>
 
-        <div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group">
-          Score:
-          <span class="font-mono">{{round @comment.score}}</span>
-        </div>
+        {{#if @rejectedChildComments.length}}
+          <div
+            class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
+            role="button"
+            {{on "click" (fn this.handleToggleRejectedChildCommentsButtonClick dd.actions)}}
+          >
+            {{concat (if @rejectedChildCommentsAreExpanded "Hide" "Show") " " @rejectedChildComments.length " " "rejected replies"}}
+          </div>
+        {{/if}}
       {{/if}}
+
+      <div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group">
+        Score:
+        <span class="font-mono">{{round @comment.score}}</span>
+      </div>
     </div>
   </dd.Content>
 </BasicDropdown>

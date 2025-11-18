@@ -1,11 +1,5 @@
-import Component from '@glimmer/component';
 import Prism from 'prismjs';
-import window from 'ember-window-mock';
-import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-
+import 'prismjs/components/prism-diff';
 import 'prismjs/components/prism-c';
 import 'prismjs/components/prism-go';
 import 'prismjs/components/prism-nim';
@@ -22,35 +16,38 @@ import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-swift';
 import 'prismjs/components/prism-zig';
-
-import 'prismjs/components/prism-diff';
+//
+import Component from '@glimmer/component';
+import window from 'ember-window-mock';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 export default class CommentCard extends Component {
   @service authenticator;
   @service store;
+
   @tracked isEditing = false;
   @tracked shouldShowReplyForm = false;
+  @tracked rejectedChildCommentsAreExpanded = false;
+
+  get allChildComments() {
+    return this.args.comment.childComments.filter((item) => !item.isNew).sort(fieldComparator('createdAt'));
+  }
 
   get currentUser() {
     return this.authenticator.currentUser;
   }
 
-  get currentUserIsStaff() {
-    return this.currentUser && this.currentUser.isStaff;
-  }
-
-  get sortedChildComments() {
-    return this.visibleChildComments.toSorted(fieldComparator('createdAt'));
+  get rejectedChildComments() {
+    return this.allChildComments.filter((comment) => comment.isRejected);
   }
 
   get visibleChildComments() {
-    let persistedComments = this.args.comment.childComments.filter((item) => !item.isNew);
-
-    if (this.currentUserIsStaff) {
-      return persistedComments;
-    } else {
-      return persistedComments.filter((comment) => comment.isApproved || comment.user === this.authenticator.currentUser);
-    }
+    return this.allChildComments.filter(
+      (comment) => (this.currentUser?.isStaff ? !comment.isRejected : comment.isApproved) || comment.user === this.currentUser,
+    );
   }
 
   @action
@@ -84,6 +81,11 @@ export default class CommentCard extends Component {
   @action
   handleReplySubmitted() {
     this.shouldShowReplyForm = false;
+  }
+
+  @action
+  handleToggleRejectedChildCommentsButtonClick() {
+    this.rejectedChildCommentsAreExpanded = !this.rejectedChildCommentsAreExpanded;
   }
 
   @action

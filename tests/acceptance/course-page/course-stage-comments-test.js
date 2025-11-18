@@ -236,7 +236,8 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     await firstCommentCard.commentForm.commentInput.fillIn('This is a reply');
     await firstCommentCard.commentForm.clickOnPostReplyButton();
 
-    assert.strictEqual(coursePage.commentList.commentCards.length, 2, '2 comments cards should be present');
+    assert.strictEqual(coursePage.commentList.commentCards.length, 1, '1 comment card should be present');
+    assert.strictEqual(firstCommentCard.replyCards.length, 1, '1 reply card should be visible');
 
     const commentCard = coursePage.commentList.commentCards[0];
 
@@ -306,7 +307,6 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
     assert.strictEqual(firstCommentCard.replyCards.length, 2, 'reply card should be visible');
   });
 
-  // TODO: Can delete comment with replies
   test('comment has correct user label', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -390,5 +390,331 @@ module('Acceptance | course-page | course-stage-comments', function (hooks) {
       coursePage.commentList.commentCards[0].userLabel.isPresent,
       'should not have challenge author label if comment is not on authored course',
     );
+  });
+
+  test('staff can see rejected comments', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    this.server.create('user', {
+      id: 'another-user-id',
+      avatarUrl: 'https://github.com/emberjs.png',
+      createdAt: new Date('2019-01-02T00:00:00.000Z'),
+      username: 'AnotherUser',
+      authoredCourseSlugs: [],
+    });
+
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const loggedInUser = this.server.schema.users.first();
+    const anotherUser = this.server.schema.users.findBy({ id: 'another-user-id' });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-01'),
+      bodyMarkdown: 'Approved comment by logged in user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: loggedInUser,
+      approvalStatus: 'approved',
+      score: 1,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-02'),
+      bodyMarkdown: 'Rejected comment by logged in user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: loggedInUser,
+      approvalStatus: 'rejected',
+      score: 2,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-01-03'),
+      bodyMarkdown: 'Awaiting approval comment by logged in user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: loggedInUser,
+      approvalStatus: 'awaiting_approval',
+      score: 3,
+    });
+
+    const parentComment = this.server.create('course-stage-comment', {
+      createdAt: new Date('2024-01-01'),
+      bodyMarkdown: 'Approved comment by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'approved',
+      score: 4,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2025-01-02'),
+      bodyMarkdown: 'Rejected comment by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'rejected',
+      score: 5,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2025-01-03'),
+      bodyMarkdown: 'Awaiting approval comment by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'awaiting_approval',
+      score: 6,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-02-01'),
+      bodyMarkdown: 'Approved reply by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'approved',
+      parentComment,
+      score: 7,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-02-02'),
+      bodyMarkdown: 'Awaiting approval reply by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'awaiting_approval',
+      parentComment,
+      score: 8,
+    });
+
+    this.server.create('course-stage-comment', {
+      createdAt: new Date('2022-02-03'),
+      bodyMarkdown: 'Rejected reply by another user',
+      target: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      user: anotherUser,
+      approvalStatus: 'rejected',
+      parentComment,
+      score: 9,
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.commentList.commentCards.length, 4, 'non-staff user should see 4 comments');
+    assert.strictEqual(coursePage.commentList.commentCards[0].replyCards.length, 1, 'non-staff user should see 1 reply');
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[0].commentBodyText,
+      'Approved comment by another user',
+      'non-staff user should see comment by another user that is approved',
+    );
+
+    assert.notOk(
+      coursePage.commentList.commentCards[0].approvalStatusLabel.isVisible,
+      'non-staff user should not see "approved" label for comment by another user',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].commentBodyText,
+      'Awaiting approval comment by logged in user',
+      'non-staff user should see his own comment that is awaiting approval',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[0].replyCards[0].commentBodyText,
+      'Approved reply by another user',
+      'non-staff user should see reply by another user that is approved',
+    );
+
+    assert.notOk(
+      coursePage.commentList.commentCards[1].approvalStatusLabel.isVisible,
+      'non-staff user should not see "awaiting_approval" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[2].commentBodyText,
+      'Rejected comment by logged in user',
+      'non-staff user should see his own comment that is rejected',
+    );
+
+    assert.notOk(
+      coursePage.commentList.commentCards[2].approvalStatusLabel.isVisible,
+      'non-staff user should not see "rejected" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[3].commentBodyText,
+      'Approved comment by logged in user',
+      'non-staff user should see his own comment that is approved',
+    );
+
+    assert.notOk(
+      coursePage.commentList.commentCards[3].approvalStatusLabel.isVisible,
+      'non-staff user should not see "approved" label for his own comment',
+    );
+
+    assert.notOk(coursePage.commentList.toggleRejectedCommentsButton.isVisible, 'non-staff user should not see "Show rejected comments" button');
+
+    loggedInUser.update({ isStaff: true });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to PING');
+    await animationsSettled();
+
+    assert.strictEqual(coursePage.commentList.commentCards.length, 5, 'staff user should see 5 comments');
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 2, 'staff user should see 2 replies');
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[0].commentBodyText,
+      'Awaiting approval comment by another user',
+      'staff user should see comment by another user that is awaiting approval',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[0].approvalStatusLabel.text,
+      'awaiting_approval',
+      'staff user should see "awaiting_approval" label for comment by another user',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].commentBodyText,
+      'Approved comment by another user',
+      'staff user should see comment by another user that is approved',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].approvalStatusLabel.text,
+      'approved',
+      'staff user should see "approved" label for comment by another user',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].replyCards[0].commentBodyText,
+      'Approved reply by another user',
+      'staff user should see reply by another user that is approved',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].replyCards[1].commentBodyText,
+      'Awaiting approval reply by another user',
+      'staff user should see reply by another user that is awaiting approval',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[2].commentBodyText,
+      'Awaiting approval comment by logged in user',
+      'staff user should see his own comment that is awaiting approval',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[2].approvalStatusLabel.text,
+      'awaiting_approval',
+      'staff user should see "awaiting_approval" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[3].commentBodyText,
+      'Rejected comment by logged in user',
+      'staff user should see his own comment that is rejected',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[3].approvalStatusLabel.text,
+      'rejected',
+      'staff user should see "rejected" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[4].commentBodyText,
+      'Approved comment by logged in user',
+      'staff user should see his own comment that is approved',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[4].approvalStatusLabel.text,
+      'approved',
+      'staff user should see "approved" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.toggleRejectedCommentsButton.text,
+      'Show 2 rejected comments',
+      'staff user should see "Show rejected comments" button',
+    );
+
+    await coursePage.commentList.toggleRejectedCommentsButton.click();
+
+    assert.strictEqual(
+      coursePage.commentList.toggleRejectedCommentsButton.text,
+      'Hide rejected comments',
+      'staff user should see "Hide rejected comments" button',
+    );
+
+    assert.strictEqual(coursePage.commentList.commentCards.length, 7, 'staff user should see 7 comments');
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 2, 'staff user should see 2 replies');
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[5].commentBodyText,
+      'Rejected comment by logged in user',
+      'staff user should see his own comment that is rejected',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[5].approvalStatusLabel.text,
+      'rejected',
+      'staff user should see "rejected" label for his own comment',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[6].commentBodyText,
+      'Rejected comment by another user',
+      'staff user should see comment by another user that is rejected',
+    );
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[6].approvalStatusLabel.text,
+      'rejected',
+      'staff user should see "rejected" label for comment by another user',
+    );
+
+    await coursePage.commentList.toggleRejectedCommentsButton.click();
+
+    assert.strictEqual(
+      coursePage.commentList.toggleRejectedCommentsButton.text,
+      'Show 2 rejected comments',
+      'staff user should see "Show rejected comments" button',
+    );
+
+    assert.strictEqual(coursePage.commentList.commentCards.length, 5, 'staff user should see 5 comments');
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 2, 'staff user should see 2 replies');
+
+    assert.notOk(coursePage.commentList.commentCards[1].hideRejectedCommentsButton.isVisible, 'hide rejected replies button should be hidden');
+
+    await coursePage.commentList.commentCards[1].toggleDropdown();
+    await coursePage.commentList.commentCards[1].clickOnDropdownLink('Show 1 rejected replies');
+
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 3, 'staff user should see 3 replies');
+
+    assert.strictEqual(
+      coursePage.commentList.commentCards[1].replyCards[2].commentBodyText,
+      'Rejected reply by another user',
+      'staff user should see reply by another user that is rejected',
+    );
+
+    await coursePage.commentList.commentCards[1].toggleDropdown();
+    await coursePage.commentList.commentCards[1].clickOnDropdownLink('Hide 1 rejected replies');
+
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 2, 'staff user should see 2 replies');
+
+    await coursePage.commentList.commentCards[1].toggleDropdown();
+    await coursePage.commentList.commentCards[1].clickOnDropdownLink('Show 1 rejected replies');
+
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 3, 'staff user should see 3 replies');
+
+    await coursePage.commentList.commentCards[1].hideRejectedCommentsButton.click();
+
+    assert.strictEqual(coursePage.commentList.commentCards[1].replyCards.length, 2, 'staff user should see 2 replies');
   });
 });
