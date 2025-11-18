@@ -9,6 +9,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { settled } from '@ember/test-helpers';
 
 module('Acceptance | course-page | test-results-bar | resize', function (hooks) {
   setupApplicationTest(hooks);
@@ -98,6 +99,7 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
     await coursePage.testResultsBar.resizeHandler.touchStart();
     await coursePage.testResultsBar.resizeHandler.touchMove({ touches: [{ clientY: window.innerHeight - desiredHeight + 1 }] });
     await coursePage.testResultsBar.resizeHandler.touchEnd();
+    await settled(); // Flakiness, this seems to fix it
 
     let testResultsBarHeight = coursePage.testResultsBar.height;
     assert.strictEqual(testResultsBarHeight, desiredHeight, 'Test results bar should be resized using touch');
