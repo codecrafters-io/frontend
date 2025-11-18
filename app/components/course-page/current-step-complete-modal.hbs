@@ -8,7 +8,7 @@
       {{if (eq this.currentStep.type "CourseStageStep") "Stage Completed!" "Step Completed!"}}
     </div>
 
-    {{#if this.shouldShowLanguageLeaderboardRankSection}}
+    {{#if (eq this.currentStep.type "CourseStageStep")}}
       {{! If condition prevents type errors w/ Repository#language being nullable }}
       {{#if this.currentStepAsCourseStageStep.repository.language}}
         <CoursePage::CurrentStepCompleteModal::LanguageLeaderboardRankSection

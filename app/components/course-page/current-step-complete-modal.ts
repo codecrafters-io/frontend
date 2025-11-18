@@ -29,10 +29,6 @@ export default class CurrentStepCompleteModal extends Component<Signature> {
     return this.coursePageState.nextStep;
   }
 
-  get shouldShowLanguageLeaderboardRankSection() {
-    return this.currentStep.type === 'CourseStageStep' && this.featureFlags.shouldSeeLeaderboard;
-  }
-
   get stepForNextOrActiveStepButton() {
     return this.nextStep?.type === 'BaseStagesCompletedStep' ? this.nextStep : this.args.activeStep;
   }

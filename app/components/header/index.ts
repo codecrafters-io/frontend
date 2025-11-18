@@ -69,14 +69,12 @@ export default class Header extends Component<Signature> {
       { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
 
-    if (this.featureFlags.shouldSeeLeaderboard) {
-      links.push({
-        text: 'Leaderboard',
-        route: 'leaderboard',
-        type: 'route',
-        routeParams: [this.preferredLanguageLeaderboard.defaultLanguageSlug],
-      });
-    }
+    links.push({
+      text: 'Leaderboard',
+      route: 'leaderboard',
+      type: 'route',
+      routeParams: [this.preferredLanguageLeaderboard.defaultLanguageSlug],
+    });
 
     return links;
   }
