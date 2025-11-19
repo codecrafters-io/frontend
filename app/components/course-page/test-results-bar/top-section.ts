@@ -7,7 +7,6 @@ interface Signature {
   Args: {
     activeTabSlug: string;
     availableTabSlugs: string[];
-    onCollapseButtonClick: () => void;
     onActiveTabSlugChange: (slug: string) => void;
   };
 }
