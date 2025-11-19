@@ -1,0 +1,69 @@
+<div class="bg-gray-850 rounded-sm border border-white/5 p-4 w-full max-w-xl overflow-hidden" ...attributes data-test-autofix-request-card>
+  <AnimatedContainer>
+    {{#animated-value @autofixRequest.status duration=200 use=this.transition as |status|}}
+      {{#if (eq status "in_progress")}}
+        <div class="flex items-center gap-2">
+          <BlinkingDot @color="yellow" class="shrink-0" />
+          <span class="text-lg font-semibold text-white">Generating custom hint...</span>
+        </div>
+      {{else if (eq status "success")}}
+        <span class="text-lg font-semibold text-white">Hint: {{@autofixRequest.summary}}</span>
+      {{/if}}
+    {{/animated-value}}
+
+    <BlurredOverlay @isBlurred={{this.explanationIsBlurred}} @overlayClass="bg-gray-900/20" class="-mx-4 -mb-4">
+      <:content>
+        <div class="p-4">
+          <div class="prose prose-sm dark:prose-invert has-prism-highlighting">
+            {{#if (eq @autofixRequest.status "in_progress")}}
+              <p>
+                This is the content of a sample hint. We use this as a
+                <code>placeholder</code>
+                for the actual hint. It's blurred out so you shouldn't be seeing this...
+              </p>
+            {{else}}
+              {{markdown-to-html @autofixRequest.explanationMarkdown}}
+            {{/if}}
+          </div>
+
+          <BlurredOverlay @isBlurred={{and this.diffIsBlurred (not this.explanationIsBlurred)}} @overlayClass="bg-gray-900/20" class="-mx-4 -mb-4">
+            <:content>
+              <div class="p-4 flex flex-col gap-6">
+                {{#each this.changedFilesForRender key="filename" as |changedFile|}}
+                  <FileDiffCard
+                    @code={{changedFile.diff}}
+                    @filename={{changedFile.filename}}
+                    @forceDarkTheme={{true}}
+                    {{! @glint-expect-error language can be nullable }}
+                    @language={{@autofixRequest.submission.repository.language.slug}}
+                  />
+                {{/each}}
+              </div>
+            </:content>
+            <:overlay>
+              {{#if (eq @autofixRequest.status "success")}}
+                <SecondaryButton class="bg-gray-800 mt-10" {{on "click" (fn (mut this.diffWasUnblurred) true)}}>
+                  <div class="flex items-center gap-2">
+                    <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
+                    Show fixed code
+                  </div>
+                </SecondaryButton>
+              {{/if}}
+            </:overlay>
+          </BlurredOverlay>
+        </div>
+      </:content>
+
+      <:overlay>
+        {{#if (eq @autofixRequest.status "success")}}
+          <SecondaryButton class="bg-gray-800 mt-10" {{on "click" (fn (mut this.explanationWasUnblurred) true)}}>
+            <div class="flex items-center gap-2">
+              <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
+              Explain more?
+            </div>
+          </SecondaryButton>
+        {{/if}}
+      </:overlay>
+    </BlurredOverlay>
+  </AnimatedContainer>
+</div>
