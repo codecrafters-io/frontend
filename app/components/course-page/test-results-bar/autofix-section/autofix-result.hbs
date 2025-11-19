@@ -18,19 +18,6 @@
         <span class="font-mono text-xs text-white">Hints generated</span>
       {{/if}}
     </div>
-    {{#unless (eq @autofixRequest.status "in_progress")}}
-      <div
-        class="text-gray-400 underline text-xs px-3 py-2 inline-flex hover:text-gray-300"
-        {{on "click" (fn (mut this.shouldShowFullLog) (not this.shouldShowFullLog))}}
-        role="button"
-      >
-        {{#if this.shouldShowFullLog}}
-          Show summary
-        {{else}}
-          Show Full Log
-        {{/if}}
-      </div>
-    {{/unless}}
   </div>
 
   {{#if (eq @autofixRequest.status "in_progress")}}
@@ -47,15 +34,11 @@
       </div>
     </div>
   {{else}}
-    {{#if this.shouldShowFullLog}}
-      <div class="bg-gray-800 border border-gray-700 rounded-sm grow overflow-y-auto">
-        <div class="p-3">
-          <pre class="font-mono text-xs text-white whitespace-pre-wrap"><code>{{ansi-to-html @autofixRequest.logs}}</code></pre>
-        </div>
-      </div>
-    {{else if (eq @autofixRequest.status "success")}}
+    {{#if (eq @autofixRequest.status "success")}}
       <div class="grow overflow-y-auto">
         <div class="prose prose-sm dark:prose-invert has-prism-highlighting" {{highlight-code-blocks @autofixRequest.explanationMarkdown}}>
+          <h3>Hint: {{@autofixRequest.summary}}</h3>
+
           {{markdown-to-html @autofixRequest.explanationMarkdown}}
         </div>
 
@@ -65,13 +48,6 @@
               Share Feedback
             </TertiaryButton>
           </FeedbackButton>
-
-          <a
-            href="https://docs.codecrafters.io/experimental/ai-hints"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-sm text-gray-400 underline"
-          >Learn more</a>.
         </div>
 
         <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-900/20">

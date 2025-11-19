@@ -9,9 +9,13 @@ interface Signature {
     availableTabSlugs: string[];
     onActiveTabSlugChange: (slug: string) => void;
   };
+
+  Blocks: {
+    default: [];
+  };
 }
 
-export default class TopSection extends Component<Signature> {
+export default class Pane extends Component<Signature> {
   get tabs() {
     const allTabs = [
       {
@@ -37,6 +41,6 @@ export default class TopSection extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::TestResultsBar::TopSection': typeof TopSection;
+    'CoursePage::TestResultsBar::Pane': typeof Pane;
   }
 }

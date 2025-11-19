@@ -18,34 +18,45 @@
   {{/if}}
 
   <div
-    class="relative w-full flex flex-col grow overflow-auto {{unless this.isResizing 'transition-[height] duration-200 ease-out'}}"
+    class="relative w-full flex flex-col grow {{unless this.isResizing 'transition-[height] duration-200 ease-out'}}"
     style={{this.expandedContainerStyle}}
     data-test-contents
   >
     {{#if this.isExpanded}}
-      <div class="flex flex-col grow border-b border-gray-800 px-6">
-        <CoursePage::TestResultsBar::TopSection
-          @activeTabSlug={{this.activeTabSlug}}
-          @onActiveTabSlugChange={{fn (mut this.activeTabSlug)}}
-          @availableTabSlugs={{this.availableTabSlugs}}
-          class="mt-3 mb-3"
-        />
+      {{! min-h-0 ensures div doesn't outgrow container !}}
+      <div class="flex gap-6 grow border-b border-gray-800 px-6 min-h-0">
+        <CoursePage::TestResultsBar::Pane
+          @activeTabSlug={{this.activeTabSlugForLeftPane}}
+          @onActiveTabSlugChange={{fn (mut this.activeTabSlugForLeftPane)}}
+          @availableTabSlugs={{this.availableTabSlugsForLeftPane}}
+          class="transition-width duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2' 'w-full'}} grow"
+        >
+          {{#if (eq this.activeTabSlugForLeftPane "logs")}}
+            <CoursePage::TestResultsBar::LogsSection
+              @activeStep={{@activeStep}}
+              @currentStep={{@currentStep}}
+              @repository={{@repository}}
+              class="grow min-h-0"
+            />
+          {{else if (eq this.activeTabSlugForLeftPane "autofix")}}
+            {{! Extra if convinces glint that autofixRequest is not null }}
+            {{#if this.autofixRequestForActiveStep}}
+              <CoursePage::TestResultsBar::AutofixSection @autofixRequest={{this.autofixRequestForActiveStep}} class="grow min-h-0" />
+            {{/if}}
+          {{/if}}
+        </CoursePage::TestResultsBar::Pane>
 
-        {{#if (eq this.activeTabSlug "logs")}}
-          <CoursePage::TestResultsBar::LogsSection
-            @activeStep={{@activeStep}}
-            @currentStep={{@currentStep}}
-            @repository={{@repository}}
-            class="grow overflow-y-auto"
-          />
-        {{else if (eq this.activeTabSlug "autofix")}}
-          <CoursePage::TestResultsBar::AutofixSection
-            @activeStep={{@activeStep}}
-            @currentStep={{@currentStep}}
-            @repository={{@repository}}
-            class="grow overflow-y-auto"
-          />
-        {{/if}}
+        <CoursePage::TestResultsBar::Pane
+          @activeTabSlug={{this.activeTabSlugForRightPane}}
+          @onActiveTabSlugChange={{fn (mut this.activeTabSlugForRightPane)}}
+          @availableTabSlugs={{this.availableTabSlugsForRightPane}}
+          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2 opacity-100' 'w-[0] opacity-0'}} grow"
+        >
+          {{! Extra if convinces glint that autofixRequest is not null }}
+          {{#if this.autofixRequestForActiveStep}}
+            <CoursePage::TestResultsBar::AutofixSection @autofixRequest={{this.autofixRequestForActiveStep}} class="grow min-h-0" />
+          {{/if}}
+        </CoursePage::TestResultsBar::Pane>
       </div>
 
       <div

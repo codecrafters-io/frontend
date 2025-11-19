@@ -156,6 +156,7 @@
     "ember-qunit": "^9.0.1",
     "ember-resize-modifier": "^0.7.1",
     "ember-resolver": "^13.1.0",
+    "ember-screen": "^2.0.0",
     "ember-sinon-qunit": "^7.5.0",
     "ember-sortable": "^5.3.3",
     "ember-source": "~5.12.0",
