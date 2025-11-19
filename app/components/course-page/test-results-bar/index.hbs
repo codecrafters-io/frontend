@@ -24,7 +24,6 @@
   >
     {{#if this.isExpanded}}
       <CoursePage::TestResultsBar::TopSection
-        @onCollapseButtonClick={{this.handleCollapseButtonClick}}
         @activeTabSlug={{this.activeTabSlug}}
         @onActiveTabSlugChange={{fn (mut this.activeTabSlug)}}
         @availableTabSlugs={{this.availableTabSlugs}}
@@ -47,9 +46,12 @@
         />
       {{/if}}
 
-      <div class="absolute top-[3px] left-0 right-0 flex items-center justify-center">
-        {{! TODO: Add this back when we have a way to resize the logs section. }}
-        {{! <div class="w-20 h-1 rounded-full bg-gray-700 cursor-ns-resize hover:bg-gray-600"></div> }}
+      <div
+        class="absolute top-0 right-0 flex px-6 py-5 items-center justify-center text-gray-500 hover:text-gray-400"
+        {{on "click" this.handleCollapseButtonClick}}
+        role="button"
+      >
+        {{svg-jar "x" class="w-5 h-5 fill-current"}}
       </div>
     {{/if}}
   </div>
