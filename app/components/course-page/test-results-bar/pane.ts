@@ -25,7 +25,7 @@ export default class Pane extends Component<Signature> {
       },
       {
         slug: 'autofix',
-        title: 'AI Hints',
+        title: 'Custom Hints',
         icon: 'sparkles',
       },
     ];
