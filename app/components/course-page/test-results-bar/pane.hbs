@@ -1,10 +1,15 @@
 <div ...attributes>
-  <CoursePage::TestResultsBar::TopSection
-    @activeTabSlug={{@activeTabSlug}}
-    @onActiveTabSlugChange={{@onActiveTabSlugChange}}
-    @availableTabSlugs={{@availableTabSlugs}}
-    class="mt-3 mb-3"
-  />
+  <ul class="flex items-center gap-2 overflow-x-auto mt-3 mb-3">
+    {{#each this.tabs as |tab|}}
+      <TabHeader
+        @size="small"
+        @icon={{tab.icon}}
+        @text={{tab.title}}
+        @isActive={{eq tab.slug @activeTabSlug}}
+        {{on "click" (fn this.handleTabClick tab)}}
+      />
+    {{/each}}
+  </ul>
 
   {{yield}}
 </div>
