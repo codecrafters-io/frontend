@@ -7,7 +7,14 @@
           <span class="text-lg font-semibold text-white">Generating custom hint...</span>
         </div>
       {{else if (eq status "success")}}
-        <span class="text-lg font-semibold text-white">Hint: {{@autofixRequest.summary}}</span>
+        <div class="flex items-start gap-2">
+          <StaticDot @color="green" class="shrink-0 mt-2" />
+
+          <span class="text-lg font-semibold text-white">
+            Hint:
+            {{@autofixRequest.summary}}
+          </span>
+        </div>
       {{/if}}
     {{/animated-value}}
 
