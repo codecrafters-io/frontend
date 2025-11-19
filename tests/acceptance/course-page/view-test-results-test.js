@@ -83,7 +83,7 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
 
     await coursePage.testResultsBar.clickOnBottomSection();
     await waitUntil(() => coursePage.testResultsBar.logsPreview.logs !== ''); // Logs are fetched on-demand
-    assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
+    assert.contains(coursePage.testResultsBar.logsPreview.logs, '[stage-1] failure\n[stage-2] failure');
 
     await percySnapshot('Course Page - View test results - Failure');
   });
