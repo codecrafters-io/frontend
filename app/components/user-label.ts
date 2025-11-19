@@ -49,8 +49,19 @@ export default class UserLabel extends Component<UserLabelSignature> {
         text: 'challenge author',
         tooltipText: 'This user is the author of one or more CodeCrafters challenges',
       };
+    } else if (this.args.user.username === 'codecrafters-bot') {
+      return {
+        text: 'bot',
+        tooltipText: 'Your friendly neighborhood bot',
+      };
     } else {
       return null;
     }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    UserLabel: typeof UserLabel;
   }
 }

@@ -46,15 +46,12 @@
   {{/if}}
 
   <div class="flex flex-col gap-4">
-    <div>
-      <div class="text-xs text-gray-400">
-        joined
-        {{date-from-now @user.createdAt}}
-      </div>
-
-      {{! @glint-expect-error not ts-ified yet }}
-      <UserLabel @user={{@user}} />
+    <div class="text-xs text-gray-400">
+      joined
+      {{date-from-now @user.createdAt}}
     </div>
+
+    <UserLabel @user={{@user}} class="self-start" />
 
     {{#if this.currentUser.isAdmin}}
       <TertiaryButton @size="extra-small" data-test-admin-profile-button class="w-fit">
