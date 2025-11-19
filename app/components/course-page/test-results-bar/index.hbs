@@ -24,7 +24,7 @@
   >
     {{#if this.isExpanded}}
       {{! min-h-0 ensures div doesn't outgrow container !}}
-      <div class="flex gap-6 grow border-b border-gray-800 px-6 min-h-0">
+      <div class="flex grow border-b border-gray-800 px-6 min-h-0">
         <CoursePage::TestResultsBar::Pane
           @activeTabSlug={{this.activeTabSlugForLeftPane}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlugForLeftPane)}}
@@ -50,7 +50,7 @@
           @activeTabSlug={{this.activeTabSlugForRightPane}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlugForRightPane)}}
           @availableTabSlugs={{this.availableTabSlugsForRightPane}}
-          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2 opacity-100' 'w-[0] opacity-0'}} grow"
+          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2 pl-6 opacity-100' 'w-[0] opacity-0'}} grow"
         >
           {{! Extra if convinces glint that autofixRequest is not null }}
           {{#if this.autofixRequestForActiveStep}}
