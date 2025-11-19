@@ -91,19 +91,27 @@ export default class TestResultsBar extends Component<Signature> {
   }
 
   @action
-  startResize(event: MouseEvent | TouchEvent) {
+  startMouseResize(event: MouseEvent) {
+    // Trigger mouse resize on left click only
+    if (event.button !== 0) {
+      return;
+    }
+
+    event.preventDefault();
+
+    this.isResizing = true;
+    document.addEventListener('mousemove', this.handleMouseResize);
+    document.addEventListener('mouseup', this.stopMouseResize);
+  }
+
+  @action
+  startTouchResize(event: TouchEvent) {
     event.preventDefault();
 
     this.isResizing = true;
 
-    // Trigger mouse resize on left click only
-    if (event instanceof MouseEvent && event.button === 0) {
-      document.addEventListener('mousemove', this.handleMouseResize);
-      document.addEventListener('mouseup', this.stopMouseResize);
-    } else {
-      document.addEventListener('touchmove', this.handleTouchResize);
-      document.addEventListener('touchend', this.stopTouchResize);
-    }
+    document.addEventListener('touchmove', this.handleTouchResize);
+    document.addEventListener('touchend', this.stopTouchResize);
   }
 
   @action
