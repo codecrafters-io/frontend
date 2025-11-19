@@ -1,19 +1,13 @@
 <div class="w-full bg-white dark:bg-gray-850" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
   <div
-    class="bg-gray-100 dark:bg-gray-800 pt-1.5 px-2 border-b border-gray-300 dark:border-white/10 flex items-center
-      {{if this.isReplying '' 'rounded-t'}}"
+    class="bg-gray-100 dark:bg-gray-825 pr-2 border-b border-gray-300 dark:border-white/10 flex items-center {{if this.isReplying '' 'rounded-t'}}"
   >
-    <div class="transform translate-y-px flex">
+    <div class="-mt-px -ml-px -mb-px flex">
       {{! @glint-expect-error Not ts-ified yet}}
       <CommentForm::TabHeader @text="Write" @isActive={{eq this.activeTab "write"}} {{on "click" (fn this.setActiveTab "write")}} />
 
       {{! @glint-expect-error Not ts-ified yet}}
-      <CommentForm::TabHeader
-        @text="Preview"
-        @isActive={{eq this.activeTab "preview"}}
-        {{on "click" (fn this.setActiveTab "preview")}}
-        class="ml-1"
-      />
+      <CommentForm::TabHeader @text="Preview" @isActive={{eq this.activeTab "preview"}} {{on "click" (fn this.setActiveTab "preview")}} />
     </div>
   </div>
 
@@ -24,7 +18,7 @@
         <Textarea
           {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
           @value={{this.comment.bodyMarkdown}}
-          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded-sm w-full p-2 text-sm bg-gray-100 dark:bg-gray-800 focus:bg-white dark:focus:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-teal-600"
+          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded-sm w-full p-2 text-sm bg-gray-100 dark:bg-gray-850 focus:bg-white dark:focus:bg-gray-850 placeholder-gray-500 dark:placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-teal-600"
           placeholder={{this.placeholderText}}
           rows="5"
           required="true"
