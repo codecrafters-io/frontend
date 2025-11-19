@@ -6,7 +6,7 @@ export default class AutofixRequestModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'autofixRequests' }) declare submission: SubmissionModel;
   @belongsTo('repository', { async: false, inverse: 'autofixRequests' }) declare repository: RepositoryModel;
 
-  @attr('string') declare creatorType: 'user' | 'system';
+  @attr('string') declare creatorType: 'user' | 'system' | 'staff';
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;
   @attr('string') declare explanationMarkdown: string;
@@ -14,9 +14,10 @@ export default class AutofixRequestModel extends Model {
   @attr('string') declare logsBase64: string; // Base64-encoded logs
   @attr('number') declare resultDelayInMilliseconds: number | null;
   @attr('string') declare status: string; // 'in_progress' | 'success' | 'failure' | 'error'
+  @attr('string') declare summary: string;
 
-  get creatorTypeIsSystem() {
-    return this.creatorType === 'system';
+  get creatorTypeIsStaff() {
+    return this.creatorType === 'staff';
   }
 
   get logs(): string {

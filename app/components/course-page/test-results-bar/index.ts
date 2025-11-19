@@ -9,6 +9,8 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import fade from 'ember-animated/transitions/fade';
+import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -20,13 +22,38 @@ interface Signature {
   };
 }
 
+interface ScreenService {
+  width: number;
+}
+
 export default class TestResultsBar extends Component<Signature> {
-  @service declare coursePageState: CoursePageStateService;
+  transition = fade;
+
   @service declare authenticator: AuthenticatorService;
-  @tracked activeTabSlug = 'logs'; // 'logs' | 'autofix'
+  @service declare coursePageState: CoursePageStateService;
+  @service declare screen: ScreenService;
+
+  @tracked activeTabSlugForLeftPane = 'logs'; // 'logs' | 'autofix'
+  @tracked activeTabSlugForRightPane = 'autofix';
   @tracked bottomSectionElement: HTMLDivElement | null = null;
   @tracked expandedContainerHeight = '75vh';
   @tracked isResizing = false;
+
+  get autofixRequestForActiveStep(): AutofixRequestModel | null {
+    if (this.args.activeStep.type !== 'CourseStageStep') {
+      return null;
+    }
+
+    const courseStageStep = this.args.activeStep as CourseStageStep;
+
+    return (
+      this.args.repository.lastSubmission?.autofixRequests
+        .filter((request) => !request.creatorTypeIsStaff)
+        .filter((request) => request.submission === this.args.repository.lastSubmission)
+        .filter((request) => request.submission.courseStage === courseStageStep.courseStage)
+        .at(-1) || null
+    );
+  }
 
   get availableTabSlugs() {
     if (this.args.activeStep.type === 'CourseStageStep') {
@@ -35,14 +62,28 @@ export default class TestResultsBar extends Component<Signature> {
       if (courseStageStep.courseStage.isFirst) {
         return ['logs'];
       } else {
-        if (this.authenticator.currentUser?.isStaff) {
+        if (this.authenticator.currentUser?.isStaff && this.autofixRequestForActiveStep) {
           return ['logs', 'autofix'];
         } else {
           return ['logs'];
         }
+
+        // return ['logs'];
       }
     } else {
       return ['logs'];
+    }
+  }
+
+  get availableTabSlugsForLeftPane() {
+    return this.availableTabSlugs.filter((slug) => !this.availableTabSlugsForRightPane.includes(slug));
+  }
+
+  get availableTabSlugsForRightPane() {
+    if (this.screen.width > 1024 && this.availableTabSlugs.length > 1) {
+      return ['autofix'];
+    } else {
+      return [];
     }
   }
 
@@ -60,6 +101,10 @@ export default class TestResultsBar extends Component<Signature> {
 
   get isExpanded() {
     return this.coursePageState.testResultsBarIsExpanded;
+  }
+
+  get shouldShowRightPane() {
+    return this.availableTabSlugsForRightPane.length > 0;
   }
 
   @action
