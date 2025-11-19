@@ -59,3 +59,9 @@ export default class UserLabel extends Component<UserLabelSignature> {
     }
   }
 }
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    UserLabel: typeof UserLabel;
+  }
+}
