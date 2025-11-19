@@ -24,28 +24,27 @@
   >
     {{#if this.isExpanded}}
       <div class="flex flex-col grow border-b border-gray-800 px-6">
-        <CoursePage::TestResultsBar::TopSection
+        <CoursePage::TestResultsBar::Pane
           @activeTabSlug={{this.activeTabSlug}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlug)}}
           @availableTabSlugs={{this.availableTabSlugs}}
-          class="mt-3 mb-3"
-        />
-
-        {{#if (eq this.activeTabSlug "logs")}}
-          <CoursePage::TestResultsBar::LogsSection
-            @activeStep={{@activeStep}}
-            @currentStep={{@currentStep}}
-            @repository={{@repository}}
-            class="grow overflow-y-auto"
-          />
-        {{else if (eq this.activeTabSlug "autofix")}}
-          <CoursePage::TestResultsBar::AutofixSection
-            @activeStep={{@activeStep}}
-            @currentStep={{@currentStep}}
-            @repository={{@repository}}
-            class="grow overflow-y-auto"
-          />
-        {{/if}}
+        >
+          {{#if (eq this.activeTabSlug "logs")}}
+            <CoursePage::TestResultsBar::LogsSection
+              @activeStep={{@activeStep}}
+              @currentStep={{@currentStep}}
+              @repository={{@repository}}
+              class="grow overflow-y-auto"
+            />
+          {{else if (eq this.activeTabSlug "autofix")}}
+            <CoursePage::TestResultsBar::AutofixSection
+              @activeStep={{@activeStep}}
+              @currentStep={{@currentStep}}
+              @repository={{@repository}}
+              class="grow overflow-y-auto"
+            />
+          {{/if}}
+        </CoursePage::TestResultsBar::Pane>
       </div>
 
       <div
