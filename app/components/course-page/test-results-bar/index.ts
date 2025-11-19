@@ -47,7 +47,7 @@ export default class TestResultsBar extends Component<Signature> {
     const courseStageStep = this.args.activeStep as CourseStageStep;
 
     return (
-      this.args.repository.lastSubmission?.autofixRequests
+      (this.args.repository.lastSubmission?.autofixRequests || [])
         .filter((request) => !request.creatorTypeIsStaff)
         .filter((request) => request.submission === this.args.repository.lastSubmission)
         .filter((request) => request.submission.courseStage === courseStageStep.courseStage)
