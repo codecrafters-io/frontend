@@ -14,6 +14,10 @@ export default class AffiliateLinkModel extends Model {
   @attr('string') declare slug: string;
   @attr('string') declare url: string;
 
+  get avatarIsGitHubAvatar(): boolean {
+    return this.affiliateAvatarUrl.includes('avatars.githubusercontent.com');
+  }
+
   get totalEarningsAmountInCents() {
     return this.referrals.reduce((sum, referral) => sum + referral.totalEarningsAmountInCents, 0);
   }

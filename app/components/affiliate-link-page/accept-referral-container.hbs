@@ -1,11 +1,19 @@
 <div
   class="flex flex-col items-center gap-y-6 bg-teal-50/25 dark:bg-teal-800/40 border-teal-500 dark:border-teal-600 px-4
     {{if (eq @verticalSize 'tall') 'py-12' 'py-8'}}
-    border rounded-md shadow-xl"
+    border rounded-md shadow-xl group"
   ...attributes
 >
   <div class="flex items-center justify-center">
-    <img alt="avatar" src={{@affiliateLink.affiliateAvatarUrl}} class="w-16 h-16 mr-2" />
+    {{#if @affiliateLink.avatarIsGitHubAvatar}}
+      <img
+        alt="avatar"
+        src={{@affiliateLink.affiliateAvatarUrl}}
+        class="w-16 h-16 mr-2 rounded-md border border-gray-300 shadow-xs group-hover:shadow-sm transition-shadow"
+      />
+    {{else}}
+      <img alt="avatar" src={{@affiliateLink.affiliateAvatarUrl}} class="w-16 h-16 mr-2" />
+    {{/if}}
 
     {{svg-jar "plus" class="w-10 h-10 text-gray-600 dark:text-gray-400 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
 
