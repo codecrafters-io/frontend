@@ -9,7 +9,7 @@ export default class AffiliateLinkModel extends Model {
 
   @hasMany('affiliate-referral', { async: false, inverse: 'affiliateLink' }) declare referrals: AffiliateReferralModel[];
 
-  @attr('string') declare affiliateUsername: string;
+  @attr('string') declare affiliateName: string;
   @attr('string') declare affiliateAvatarUrl: string;
   @attr('string') declare slug: string;
   @attr('string') declare url: string;

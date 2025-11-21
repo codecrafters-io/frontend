@@ -42,7 +42,7 @@ module('Acceptance | affiliate-link-page | accept-referral-offer', function (hoo
 
     this.server.create('affiliate-link', {
       user: referrer,
-      affiliateUsername: 'sarupbanskota',
+      affiliateName: 'sarupbanskota',
       affiliateAvatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
     });
 
