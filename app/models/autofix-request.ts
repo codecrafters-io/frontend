@@ -1,6 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubmissionModel from 'codecrafters-frontend/models/submission';
+import config from 'codecrafters-frontend/config/environment';
 
 export default class AutofixRequestModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'autofixRequests' }) declare submission: SubmissionModel;
@@ -15,6 +16,10 @@ export default class AutofixRequestModel extends Model {
   @attr('number') declare resultDelayInMilliseconds: number | null;
   @attr('string') declare status: string; // 'in_progress' | 'success' | 'failure' | 'error'
   @attr('string') declare summary: string;
+
+  get adminUrl() {
+    return `${config.x.backendUrl}/admin/autofix_requests/${this.id}`;
+  }
 
   get creatorTypeIsStaff() {
     return this.creatorType === 'staff';
