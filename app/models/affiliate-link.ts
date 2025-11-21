@@ -9,21 +9,17 @@ export default class AffiliateLinkModel extends Model {
 
   @hasMany('affiliate-referral', { async: false, inverse: 'affiliateLink' }) declare referrals: AffiliateReferralModel[];
 
+  @attr('string') declare affiliateName: string;
+  @attr('string') declare affiliateAvatarUrl: string;
   @attr('string') declare slug: string;
   @attr('string') declare url: string;
-  @attr('string') declare overriddenAffiliateUsername: string | null;
-  @attr('string') declare overriddenAffiliateAvatarUrl: string | null;
 
-  get avatarUrlForDisplay() {
-    return this.overriddenAffiliateAvatarUrl || this.user.avatarUrl;
+  get avatarIsGitHubAvatar(): boolean {
+    return this.affiliateAvatarUrl.includes('avatars.githubusercontent.com');
   }
 
   get totalEarningsAmountInCents() {
     return this.referrals.reduce((sum, referral) => sum + referral.totalEarningsAmountInCents, 0);
-  }
-
-  get usernameForDisplay() {
-    return this.overriddenAffiliateUsername || this.user.username;
   }
 
   get visibleReferrals(): AffiliateReferralModel[] {

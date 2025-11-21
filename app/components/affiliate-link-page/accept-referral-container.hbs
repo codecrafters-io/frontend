@@ -1,18 +1,18 @@
 <div
   class="flex flex-col items-center gap-y-6 bg-teal-50/25 dark:bg-teal-800/40 border-teal-500 dark:border-teal-600 px-4
     {{if (eq @verticalSize 'tall') 'py-12' 'py-8'}}
-    border rounded-md shadow-xl"
+    border rounded-md shadow-xl group"
   ...attributes
 >
   <div class="flex items-center justify-center">
-    {{#if @affiliateLink.overriddenAffiliateAvatarUrl}}
-      {{! No border for overridden avatars, we'll expect them to include a border in the image itself if needed }}
-      <img alt="avatar" src={{@affiliateLink.overriddenAffiliateAvatarUrl}} class="w-16 h-16 mr-2" />
-    {{else}}
-      <AvatarImage
-        @user={{@affiliateLink.user}}
-        class="w-16 h-16 border border-gray-300 shadow-xs group-hover:shadow-sm mr-2 transition-shadow rounded-md"
+    {{#if @affiliateLink.avatarIsGitHubAvatar}}
+      <img
+        alt="avatar"
+        src={{@affiliateLink.affiliateAvatarUrl}}
+        class="w-16 h-16 mr-2 rounded-md border border-gray-300 shadow-xs group-hover:shadow-sm transition-shadow"
       />
+    {{else}}
+      <img alt="avatar" src={{@affiliateLink.affiliateAvatarUrl}} class="w-16 h-16 mr-2" />
     {{/if}}
 
     {{svg-jar "plus" class="w-10 h-10 text-gray-600 dark:text-gray-400 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
@@ -21,7 +21,7 @@
   </div>
 
   <div class="prose dark:prose-invert text-center max-w-sm">
-    <b class="dark:text-gray-50">@{{@affiliateLink.usernameForDisplay}}</b>
+    <b class="dark:text-gray-50">@{{@affiliateLink.affiliateName}}</b>
     wants you to try CodeCrafters. Signing up is free.
     <b class="dark:text-gray-50">40% off</b>
     if you upgrade.

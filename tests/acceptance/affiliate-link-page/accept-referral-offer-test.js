@@ -34,13 +34,17 @@ module('Acceptance | affiliate-link-page | accept-referral-offer', function (hoo
     signIn(this.owner, this.server);
 
     const referrer = this.server.create('user', {
-      avatarUrl: 'https://github.com/sarupbanskota.png',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
       createdAt: new Date(),
       githubUsername: 'sarupbanskota',
       username: 'sarupbanskota',
     });
 
-    this.server.create('affiliate-link', { user: referrer });
+    this.server.create('affiliate-link', {
+      user: referrer,
+      affiliateName: 'sarupbanskota',
+      affiliateAvatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
+    });
 
     await affiliateLinkPage.visit({ via: 'referral1' });
     await affiliateLinkPage.acceptReferralButtons[0].click();

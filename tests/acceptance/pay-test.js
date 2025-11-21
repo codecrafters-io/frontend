@@ -118,6 +118,8 @@ module('Acceptance | pay-test', function (hooks) {
 
     const affiliateLink = this.server.create('affiliate-link', {
       user: user,
+      affiliateName: 'rohitpaulk',
+      affiliateAvatarUrl: 'https://avatars.githubusercontent.com/u/1234567890?v=4',
     });
 
     const affiliateReferral = this.server.create('affiliate-referral', {
