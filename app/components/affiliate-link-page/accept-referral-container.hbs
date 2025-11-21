@@ -5,15 +5,7 @@
   ...attributes
 >
   <div class="flex items-center justify-center">
-    {{#if @affiliateLink.overriddenAffiliateAvatarUrl}}
-      {{! No border for overridden avatars, we'll expect them to include a border in the image itself if needed }}
-      <img alt="avatar" src={{@affiliateLink.overriddenAffiliateAvatarUrl}} class="w-16 h-16 mr-2" />
-    {{else}}
-      <AvatarImage
-        @user={{@affiliateLink.user}}
-        class="w-16 h-16 border border-gray-300 shadow-xs group-hover:shadow-sm mr-2 transition-shadow rounded-md"
-      />
-    {{/if}}
+    <img alt="avatar" src={{@affiliateLink.affiliateAvatarUrl}} class="w-16 h-16 mr-2" />
 
     {{svg-jar "plus" class="w-10 h-10 text-gray-600 dark:text-gray-400 mr-2 opacity-90 group-hover:opacity-100 transition-all"}}
 
@@ -21,7 +13,7 @@
   </div>
 
   <div class="prose dark:prose-invert text-center max-w-sm">
-    <b class="dark:text-gray-50">@{{@affiliateLink.usernameForDisplay}}</b>
+    <b class="dark:text-gray-50">@{{@affiliateLink.affiliateUsername}}</b>
     wants you to try CodeCrafters. Signing up is free.
     <b class="dark:text-gray-50">40% off</b>
     if you upgrade.

@@ -8,20 +8,13 @@
   </div>
 
   <div class="bg-repeating-gradient-to-b from-yellow-100 to-amber-500 text-transparent bg-clip-text leading-7 inline-block mt-0.5">
-    {{#if @discount.affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
-      <img
-        alt="avatar"
-        src={{@discount.affiliateReferral.affiliateLink.overriddenAffiliateAvatarUrl}}
-        class="inline-block mb-0 w-6 h-6 transform -translate-y-px"
-      />
-    {{else}}
-      <AvatarImage
-        @user={{@discount.affiliateReferral.referrer}}
-        class="inline-block mb-0 w-6 h-6 border border-gray-100 rounded-full transform -translate-y-px"
-      />
-    {{/if}}
+    <img
+      alt="avatar"
+      src={{@discount.affiliateReferral.affiliateLink.affiliateAvatarUrl}}
+      class="inline-block mb-0 w-6 h-6 transform -translate-y-px"
+    />
 
-    <b>{{@discount.affiliateReferral.affiliateLink.usernameForDisplay}}</b>'s referral offer: Subscribe in
+    <b>{{@discount.affiliateReferral.affiliateLink.affiliateUsername}}</b>'s referral offer: Subscribe in
     <span class="font-bold percy-timestamp font-mono text-lg border-b border-yellow-500 border-dashed">{{this.timeLeftText}}</span>
     to get
     <span class="font-bold">40% off</span>
