@@ -53,7 +53,7 @@ export default class LeaderboardController extends Controller {
 
   loadEntriesTask = task({ restartable: true }, async () => {
     this.topEntries = (await this.store.query('leaderboard-entry', {
-      include: 'leaderboard,user',
+      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
       leaderboard_id: this.leaderboard.id,
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];
@@ -63,7 +63,7 @@ export default class LeaderboardController extends Controller {
     }
 
     this.surroundingEntries = (await this.store.query('leaderboard-entry', {
-      include: 'leaderboard,user',
+      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
       leaderboard_id: this.leaderboard.id,
       user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
       filter_type: 'around_me',
