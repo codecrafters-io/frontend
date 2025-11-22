@@ -115,29 +115,3 @@ jobs:
           files: test-results.xml
           seconds_between_github_writes: 0.01
           seconds_between_github_reads: 0.01
-
-  lint:
-    runs-on: depot-ubuntu-24.04-16
-    # Use cheaper machines for dependabot if we're low on namespace credits
-    # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-
-      # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
-      - id: cache
-        name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ./node_modules
-          key: modules-v2-${{ hashFiles('package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
-
-      - run: npm run lint

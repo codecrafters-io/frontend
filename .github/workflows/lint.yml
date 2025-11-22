@@ -1,0 +1,83 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: depot-ubuntu-24.04-16
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          # Ensure we are on an actual branch (not a detached HEAD)
+          ref: ${{ github.head_ref || github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
+      - id: cache
+        name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ./node_modules
+          key: modules-v2-${{ hashFiles('package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
+
+      - name: Run linter
+        id: lint
+        continue-on-error: true
+        run: npm run lint
+
+      - name: Auto-fix with linter
+        if: steps.lint.outcome == 'failure'
+        run: npm run lint:fix
+
+      - name: Show diff, commit and push fixes (non-master/main only)
+        if: |
+          steps.lint.outcome == 'failure' &&
+          github.ref != 'refs/heads/master' &&
+          github.ref != 'refs/heads/main' &&
+          (github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository))
+        run: |
+          BRANCH="${{ github.head_ref || github.ref_name }}"
+          echo "Preparing to push fixes to $BRANCH"
+
+          # Ensure we're on a branch, not detached HEAD
+          git checkout -B "$BRANCH"
+
+          git config user.name "codecrafters-bot"
+          git config user.email "hello@codecrafters.io"
+
+          # Only commit if there are changes
+          if ! git diff --quiet; then
+            echo "Auto-fix diff (before commit):"
+            git --no-pager diff
+            git add -A
+            git commit -m "chore(lint): auto-fix lint offenses"
+            git remote set-url origin "https://x-access-token:${{ secrets.CODECRAFTERS_BOT_TOKEN_FOR_LINT_FIXES }}@github.com/${{ github.repository }}.git"
+            git push origin HEAD:"$BRANCH"
+          else
+            echo "No changes to commit"
+          fi
+
+      - name: Fail if linting failed
+        if: steps.lint.outcome == 'failure'
+        run: |
+          echo "Linting failed. Auto-fixes (if any) have been pushed back to the branch. Failing the job to keep visibility."
+          exit 1
+
