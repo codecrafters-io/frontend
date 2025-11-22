@@ -13,7 +13,7 @@ interface Signature {
   };
 }
 
-const MAX_VISIBLE_COURSES = 7;
+const MAX_VISIBLE_COURSES = 3;
 
 export default class LeaderboardPageEntriesTableRow extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
