@@ -107,6 +107,7 @@
     "@typescript-eslint/eslint-plugin": "^8.45.0",
     "@typescript-eslint/parser": "^8.29.1",
     "@uiw/codemirror-theme-github": "^4.25.1",
+    "atob": "^2.1.2",
     "autoprefixer": "^10.4.21",
     "broccoli-asset-rev": "^3.0.0",
     "canvas-confetti": "^1.9.3",
@@ -195,7 +196,8 @@
     "tracked-built-ins": "^4.0.0",
     "typescript": "^5.8.3",
     "webpack": "^5.101.3",
-    "webpack-bundle-analyzer": "^4.10.2"
+    "webpack-bundle-analyzer": "^4.10.2",
+    "xmlhttprequest-ssl": "^4.0.0"
   },
   "engines": {
     "node": "22.*"
