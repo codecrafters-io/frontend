@@ -25,6 +25,10 @@ module.exports = function (environment) {
       disableInstrumentComponents: true,
     },
 
+    emberKeyboard: {
+      disableOnInputFields: true,
+    },
+
     x: {
       backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
 
@@ -51,6 +55,7 @@ module.exports = function (environment) {
       // The minor version doesn't do anything at the moment, might use in the future.
       version: `41.0.${process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) || 'dev'}`,
     },
+
     fastboot: {
       hostWhitelist: [/^localhost:\d+$/],
     },
