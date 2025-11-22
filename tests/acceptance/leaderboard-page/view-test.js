@@ -22,7 +22,7 @@ module('Acceptance | leaderboard-page | view', function (hooks) {
     const leaderboard = language.leaderboard;
 
     const sampleUserData = [
-      { username: 'Gufran', score: 6750, leaderboard },
+      { username: 'Gufran', score: 6750, affiliateName: 'rohitpaulk', leaderboard },
       { username: 'torvalds', score: 5250, leaderboard },
     ];
 
@@ -155,12 +155,24 @@ function createLeaderboardEntriesFromSampleData(server, sampleUserData) {
       avatarUrl: `https://github.com/${sampleUserDatum.username}.png`,
     });
 
-    server.create('leaderboard-entry', {
+    const leaderboardEntry = server.create('leaderboard-entry', {
       leaderboard: sampleUserDatum.leaderboard,
       user: user,
       score: sampleUserDatum.score,
       scoreUpdatesCount: Math.floor(sampleUserDatum.score / 10),
       relatedCourseSlugs: ['redis', 'shell', 'sqlite', 'grep'].slice(0, Math.floor(sampleUserDatum.score / 50)),
     });
+
+    if (sampleUserDatum.affiliateName) {
+      const affiliateUser = server.create('user', { username: sampleUserDatum.affiliateName });
+
+      const affiliateLink = server.create('affiliate-link', {
+        user: affiliateUser,
+        affiliateName: sampleUserDatum.affiliateName,
+        affiliateAvatarUrl: sampleUserDatum.affiliateAvatarUrl || `https://github.com/${sampleUserDatum.affiliateName}.png`,
+      });
+
+      leaderboardEntry.update('affiliateLink', affiliateLink);
+    }
   }
 }
