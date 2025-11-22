@@ -43,7 +43,7 @@
             data-test-affiliate-link-pill
           >
             <img src={{@entry.affiliateLink.affiliateAvatarUrl}} class="h-4 w-4 rounded-full" alt="Referrer avatar" />
-            <span>{{@entry.affiliateLink.affiliateName}}</span>
+            <span class="truncate">{{@entry.affiliateLink.affiliateName}}</span>
             <EmberTooltip @text="This user was referred by {{@entry.affiliateLink.affiliateName}}" />
           </a>
         {{/if}}
