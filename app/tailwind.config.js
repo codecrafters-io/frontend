@@ -78,14 +78,13 @@ module.exports = {
       black: 'black',
       blue: colors.sky,
       current: 'currentColor',
-      gray: colors.slate,
+      gray: colors.gray,
       green: colors.green,
       indigo: colors.indigo,
       purple: colors.purple,
       pink: colors.pink,
       red: colors.red,
       sky: colors.sky,
-      slate: colors.slate,
       teal: colors.teal,
       transparent: 'transparent',
       yellow: colors.yellow,
@@ -101,9 +100,9 @@ module.exports = {
       },
       colors: {
         gray: {
-          825: mixOklch(colors.slate[800], colors.slate[900], 0.25),
-          850: mixOklch(colors.slate[800], colors.slate[900], 0.5),
-          925: mixOklch(colors.slate[900], colors.slate[950], 0.5),
+          825: mixOklch(colors.gray[800], colors.gray[900], 0.25),
+          850: mixOklch(colors.gray[800], colors.gray[900], 0.5),
+          925: mixOklch(colors.gray[900], colors.gray[950], 0.5),
         },
       },
       fontSize: {
@@ -112,16 +111,16 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
-            '--tw-prose-bold': colors.slate[800],
-            '--tw-prose-code': colors.slate[700],
+            '--tw-prose-bold': colors.gray[800],
+            '--tw-prose-code': colors.gray[700],
             '--tw-prose-links': colors.sky[500],
-            '--tw-prose-pre-bg': colors.slate[100],
-            '--tw-prose-pre-code': colors.slate[700],
-            '--tw-prose-invert-bold': colors.slate[200],
-            '--tw-prose-invert-code': colors.slate[300],
-            '--tw-prose-invert-headings': colors.slate[200],
+            '--tw-prose-pre-bg': colors.gray[100],
+            '--tw-prose-pre-code': colors.gray[700],
+            '--tw-prose-invert-bold': colors.gray[200],
+            '--tw-prose-invert-code': colors.gray[300],
+            '--tw-prose-invert-headings': colors.gray[200],
             '--tw-prose-invert-links': colors.sky[500],
-            '--tw-prose-invert-pre-bg': colors.slate[800],
+            '--tw-prose-invert-pre-bg': colors.gray[800],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
