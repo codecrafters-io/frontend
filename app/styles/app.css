@@ -194,7 +194,7 @@ body {
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
-  background-color: #1e293b; /* slate-800 */
+  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
 }
 
 .sortable-item {
