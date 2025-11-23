@@ -25,25 +25,25 @@ export default class VoteButton extends Component<Signature> {
 
   <template>
     <button
-      type='button'
-      class='px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-950
-        {{if @userHasVoted "border-teal-500" "border-gray-300 dark:border-gray-700"}}
-        transition-all duration-75 group/vote-button'
+      type="button"
+      class="px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-950
+        {{if @userHasVoted 'border-teal-500' 'border-gray-300 dark:border-gray-700'}}
+        transition-all duration-75 group/vote-button"
       data-test-vote-button
       ...attributes
     >
       <span
         class={{if
           @userHasVoted
-          'text-teal-500 group-hover/vote-button:text-teal-600'
-          'text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400'
+          "text-teal-500 group-hover/vote-button:text-teal-600"
+          "text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400"
         }}
       >
-        {{svgJar 'thumb-up' class='w-5 fill-current'}}
+        {{svgJar "thumb-up" class="w-5 fill-current"}}
       </span>
 
       {{#if this.authenticator.isAnonymous}}
-        <EmberTooltip @text='Click to login via GitHub' />
+        <EmberTooltip @text="Click to login via GitHub" />
       {{/if}}
     </button>
   </template>

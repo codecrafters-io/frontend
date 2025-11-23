@@ -21,14 +21,14 @@ export default class SubmitCourseIdeaCard extends Component {
 
   <template>
     <div
-      class='group border-2 border-gray-200 border-dashed dark:border-white/5 hover:border-gray-400 dark:hover:border-gray-700 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400'
+      class="group border-2 border-gray-200 border-dashed dark:border-white/5 hover:border-gray-400 dark:hover:border-gray-700 px-5 py-10 lg:py-20 rounded-md flex flex-col items-center justify-center text-gray-400 dark:text-gray-600 hover:text-gray-600 dark:hover:text-gray-400"
       data-test-submit-course-idea-card
-      role='button'
-      {{on 'click' this.handleClick}}
+      role="button"
+      {{on "click" this.handleClick}}
     >
-      {{svgJar 'plus' class='w-12 h-12 fill-current'}}
+      {{svgJar "plus" class="w-12 h-12 fill-current"}}
 
-      <div class='mt-1 font-bold text-xl tracking-tight'>
+      <div class="mt-1 font-bold text-xl tracking-tight">
         Submit Idea
       </div>
     </div>
