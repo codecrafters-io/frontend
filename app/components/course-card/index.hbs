@@ -1,6 +1,6 @@
 <LinkTo
   class="flex flex-col justify-stretch group bg-white
-    {{if this.shouldShowLockIcon 'dark:bg-gray-950/70' 'dark:bg-gray-925/70'}}
+    {{if this.shouldShowLockIcon 'dark:bg-gray-950/70 hover:dark:bg-gray-925/70' 'dark:bg-gray-925/70'}}
     p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200 dark:border-white/5 relative"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
