@@ -1,10 +1,10 @@
 <div
-  class="flex flex-col items-start rounded-lg bg-gray-50 dark:bg-gray-900 shadow-md shadow-gray-300/50 dark:shadow-gray-950/50 border
-    {{if @isRecommended 'border-teal-500' 'border border-gray-100 dark:border-white/5'}}
+  class="flex flex-col items-start rounded-lg bg-gray-50 dark:bg-gray-925 shadow-md shadow-gray-300/50 dark:shadow-gray-950/50 border
+    {{if @isRecommended 'border-teal-500 dark:border-teal-700' 'border border-gray-100 dark:border-white/5'}}
     filter relative"
   ...attributes
 >
-  <div class="flex flex-col items-start bg-white dark:bg-gray-925 rounded-t-lg border-b border-gray-100 dark:border-white/5 px-6 pt-8 pb-8 w-full">
+  <div class="flex flex-col items-start bg-white dark:bg-gray-950 rounded-t-lg border-b border-gray-100 dark:border-white/5 px-6 pt-8 pb-8 w-full">
     <div class="text-lg font-bold text-gray-700 dark:text-gray-300 border-gray-100 uppercase">
       {{@title}}
     </div>
@@ -21,12 +21,12 @@
     <div class="w-full">
       {{#each @featureDescriptions as |featureDescription|}}
         <div class="flex items-center py-1 gap-2">
-          {{svg-jar "check" class="w-6 fill-current text-teal-500"}}
+          {{svg-jar "check" class="w-6 fill-current text-teal-500 dark:text-teal-600"}}
 
           {{#if featureDescription.link}}
             <a href={{featureDescription.link}} target="_blank" class="flex items-center gap-1 group" rel="noopener noreferrer">
               <span
-                class="text-gray-600 dark:text-gray-400 text-sm border-b border-gray-300 dark:border-gray-700 border-dashed group-hover:border-gray-400 dark:group-hover:border-gray-600"
+                class="text-gray-600 dark:text-gray-300 text-sm border-b border-gray-300 dark:border-gray-700 border-dashed group-hover:border-gray-400 dark:group-hover:border-gray-600"
               >{{featureDescription.text}}</span>
               {{svg-jar
                 "information-circle"
@@ -34,7 +34,7 @@
               }}
             </a>
           {{else}}
-            <span class="text-gray-600 dark:text-gray-400 text-sm">{{featureDescription.text}}</span>
+            <span class="text-gray-600 dark:text-gray-300 text-sm">{{featureDescription.text}}</span>
           {{/if}}
         </div>
       {{/each}}
@@ -43,7 +43,7 @@
     <div class="flex items-center justify-center w-full mt-6">
       {{#if @isRecommended}}
         <button
-          class="w-full flex items-center justify-center transition-colors p-3 font-bold rounded-full shadow border-2 border-teal-500 bg-teal-500 text-white hover:bg-teal-600 hover:border-teal-600 px-5 py-3 text-sm"
+          class="w-full flex items-center justify-center transition-colors p-3 font-bold rounded-full shadow border border-teal-500 hover:border-teal-600 dark:border-teal-700 dark:hover:border-teal-600 bg-teal-500 hover:bg-teal-600 dark:bg-teal-900 dark:hover:bg-teal-800 text-white dark:text-teal-50 px-5 py-3 text-sm"
           data-test-pricing-plan-card-cta
           type="button"
           {{on "click" @onCtaClick}}
