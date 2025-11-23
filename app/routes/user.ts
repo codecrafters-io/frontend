@@ -39,7 +39,7 @@ export default class UserRoute extends BaseRoute {
     return new RouteInfoMetadata({
       allowsAnonymousAccess: true,
       beaconVisibility: HelpscoutBeaconVisibility.Hidden,
-      colorScheme: RouteColorScheme.Light,
+      colorScheme: RouteColorScheme.Both,
     });
   }
 
