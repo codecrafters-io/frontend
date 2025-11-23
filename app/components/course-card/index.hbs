@@ -7,7 +7,7 @@
   @query={{this.linkToRoute.query}}
   data-test-course-card={{not this.isSkeleton}}
 >
-  <div class="flex flex-col justify-between {{if this.shouldShowLockIcon 'opacity-50 group-hover:opacity-100'}}">
+  <div class="flex flex-col grow justify-between {{if this.shouldShowLockIcon 'opacity-50 group-hover:opacity-100'}}">
     {{! Logo }}
     <div class="w-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
       {{#if this.isSkeleton}}
