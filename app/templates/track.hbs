@@ -1,12 +1,34 @@
 {{page-title @model.language.name}}
 
+<div class="fixed inset-0 flex items-stretch justify-stretch pointer-events-none">
+  <div class="w-full relative overflow-hidden rounded-sm">
+    {{! Left blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-32 -left-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-purple-800"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-red-800"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+
+    {{! Right blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-40 -right-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-blue-600"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-blue-700"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
   <TrackPage::Header @language={{@model.language}} @courses={{this.sortedCourses}} />
 </div>
 
 <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
 
-<div class="bg-white dark:bg-gray-925">
+<div class="bg-white dark:bg-gray-950">
   <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10">
     <div class="flex items-start">
       <div class="grow">
@@ -18,7 +40,7 @@
           />
         {{/if}}
 
-        <div class="border-b border-gray-200 dark:border-gray-700 pb-1 mb-4 flex">
+        <div class="border-b border-gray-200 dark:border-gray-900 pb-1 mb-4 flex">
           <div class="text-2xl font-semibold text-gray-900 dark:text-gray-200">
             {{@model.language.name}}
             Challenges
