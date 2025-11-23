@@ -12,6 +12,62 @@ const round = (num) =>
 const rem = (px) => `${round(px / 16)}rem`;
 const em = (px, base) => `${round(px / base)}em`;
 
+/**
+ * Mixes two OKLCH colors according to a given ratio.
+ * @param {string} color1 - First color in oklch format (e.g. 'oklch(0.70 0.10 240)')
+ * @param {string} color2 - Second color in oklch format (e.g. 'oklch(0.45 0.18 100)')
+ * @param {number} ratio - Value from 0 (all color1) to 1 (all color2)
+ * @returns {string} Resulting mixed color in oklch format
+ */
+function mixOklch(color1, color2, ratio) {
+  // Clamp ratio
+  ratio = Math.max(0, Math.min(ratio, 1));
+
+  // Parses oklch(color) string and returns array [l, c, h]
+  function parseOklch(str) {
+    // Remove 'oklch(' prefix and ')' suffix
+    const m = str.trim().match(/^oklch\(\s*([.\d]+%?)\s+([.\d]+)\s+([.\d]+)(?:\s*\/\s*[.\d]+)?\s*\)$/i);
+    if (!m) throw new Error(`Invalid OKLCH color: ${str}`);
+
+    // Handle percentage in lightness value (convert to 0-1 range)
+    let l = parseFloat(m[1]);
+
+    if (m[1].includes('%')) {
+      l = l / 100;
+    }
+
+    return [l, parseFloat(m[2]), parseFloat(m[3])];
+  }
+
+  // Interpolates two numbers, with optional hue interpolation using shortest angle
+  function interpolate(a, b, t, isHue) {
+    if (isHue) {
+      // Both are in [0, 360)
+      let delta = b - a;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+
+      return (((a + delta * t) % 360) + 360) % 360;
+    }
+
+    return a * (1 - t) + b * t;
+  }
+
+  const [l1, c1, h1] = parseOklch(color1);
+  const [l2, c2, h2] = parseOklch(color2);
+
+  const l = interpolate(l1, l2, ratio, false);
+  const c = interpolate(c1, c2, ratio, false);
+  const h = interpolate(h1, h2, ratio, true);
+
+  // Clamp values to their valid ranges
+  const clampedL = Math.max(0, Math.min(l, 1));
+  const clampedC = Math.max(0, c); // Chroma has no upper bound, but can't be <0
+  const clampedH = ((h % 360) + 360) % 360;
+
+  return `oklch(${clampedL.toFixed(4)} ${clampedC.toFixed(4)} ${clampedH.toFixed(2)})`;
+}
+
 module.exports = {
   content: [`./app/**/*.{html,js,ts,hbs,gts}`],
   darkMode: ['variant', ['&:is(.dark *)']],
@@ -45,9 +101,9 @@ module.exports = {
       },
       colors: {
         gray: {
-          825: '#1A2538',
-          850: '#172033',
-          925: '#0A1120',
+          825: mixOklch(colors.slate[800], colors.slate[900], 0.25),
+          850: mixOklch(colors.slate[800], colors.slate[900], 0.5),
+          925: mixOklch(colors.slate[900], colors.slate[950], 0.5),
         },
       },
       fontSize: {
