@@ -1,99 +1,100 @@
 <LinkTo
-  class="group bg-white dark:bg-gray-925/70 p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative
-    {{if this.shouldShowLockIcon 'opacity-50 hover:opacity-100'}}"
+  class="flex flex-col justify-stretch group bg-white dark:bg-gray-925/70 p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200 dark:border-white/5 relative"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
   @query={{this.linkToRoute.query}}
   data-test-course-card={{not this.isSkeleton}}
 >
-  {{! Logo }}
-  <div class="w-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
-    {{#if this.isSkeleton}}
-      <div class="bg-gray-100 dark:bg-gray-900 w-8 h-8 rounded-full" />
-    {{else}}
-      <CourseLogo @course={{this.course}} />
-    {{/if}}
-  </div>
+  <div class="flex flex-col justify-between flex-grow {{if this.shouldShowLockIcon 'opacity-50 group-hover:opacity-100'}}">
+    {{! Logo }}
+    <div class="w-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
+      {{#if this.isSkeleton}}
+        <div class="bg-gray-100 dark:bg-gray-900 w-8 h-8 rounded-full" />
+      {{else}}
+        <CourseLogo @course={{this.course}} />
+      {{/if}}
+    </div>
 
-  {{! Text }}
-  <div class="mb-6">
-    <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
-      <div class="text-lg font-semibold text-gray-900 dark:text-gray-200 mr-2" data-test-course-name>
+    {{! Text }}
+    <div class="mb-6">
+      <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
+        <div class="text-lg font-semibold text-gray-900 dark:text-gray-200 mr-2" data-test-course-name>
+          {{#if this.isSkeleton}}
+            <span class="inline-block bg-gray-100 dark:bg-gray-900 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+          {{else}}
+            <span>{{this.course.name}}</span>
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 pr-10" data-test-course-description>
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-100 dark:bg-gray-900 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+          <div>
+            <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
+              <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-900 rounded-sm"></div>
+            </div>
+            <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
+              <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-900 rounded-sm"></div>
+            </div>
+          </div>
         {{else}}
-          <span>{{this.course.name}}</span>
+          <span>{{this.course.shortDescription}}</span>
         {{/if}}
       </div>
     </div>
 
-    <div class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 pr-10" data-test-course-description>
-      {{#if this.isSkeleton}}
-        <div>
-          <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-900 rounded-sm"></div>
-          </div>
-          <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-900 rounded-sm"></div>
-          </div>
-        </div>
-      {{else}}
-        <span>{{this.course.shortDescription}}</span>
-      {{/if}}
-    </div>
-  </div>
-
-  {{! Footer }}
-  <div class="flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      {{#if this.isSkeleton}}
-        <div class="bg-gray-100 dark:bg-gray-900 rounded-sm h-4 w-24"></div>
-      {{else}}
-        {{#if this.lastUsedRepository}}
-          <CourseCard::ProgressBar @course={{this.course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
+    {{! Footer }}
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        {{#if this.isSkeleton}}
+          <div class="bg-gray-100 dark:bg-gray-900 rounded-sm h-4 w-24"></div>
         {{else}}
-          {{#if this.course.releaseStatusIsAlpha}}
-            <div
-              class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded-sm px-1 py-0.25 mr-3"
-              data-test-course-alpha-label
-            >
-              ALPHA
-            </div>
-          {{else if this.course.releaseStatusIsBeta}}
-            <BetaCourseLabel class="mr-3" />
-          {{else if (and this.course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
-            <FreeCourseLabel @course={{this.course}} />
+          {{#if this.lastUsedRepository}}
+            <CourseCard::ProgressBar @course={{this.course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
           {{else}}
-            <div class="flex items-center">
-              {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
-              <span class="text-xs text-gray-500">{{this.course.stages.length}} stages</span>
-            </div>
+            {{#if this.course.releaseStatusIsAlpha}}
+              <div
+                class="text-xs text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded-sm px-1 py-0.25 mr-3"
+                data-test-course-alpha-label
+              >
+                ALPHA
+              </div>
+            {{else if this.course.releaseStatusIsBeta}}
+              <BetaCourseLabel class="mr-3" />
+            {{else if (and this.course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
+              <FreeCourseLabel @course={{this.course}} />
+            {{else}}
+              <div class="flex items-center">
+                {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+                <span class="text-xs text-gray-500">{{this.course.stages.length}} stages</span>
+              </div>
+            {{/if}}
           {{/if}}
         {{/if}}
-      {{/if}}
-    </div>
+      </div>
 
-    <div class="flex items-center">
-      {{#if this.shouldShowLockIcon}}
-        <div class="flex items-center justify-center" data-test-lock-icon>
-          {{svg-jar "lock-closed" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
-        </div>
-      {{else}}
-        <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
-          {{#if this.lastUsedRepository.allStagesAreComplete}}
-            Start Again
-          {{else if this.lastUsedRepository}}
-            Resume
-          {{else}}
-            Start
-          {{/if}}
-        </span>
+      <div class="flex items-center">
+        {{#if this.shouldShowLockIcon}}
+          <div class="flex items-center justify-center" data-test-lock-icon>
+            {{svg-jar "lock-closed" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+          </div>
+        {{else}}
+          <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
+            {{#if this.lastUsedRepository.allStagesAreComplete}}
+              Start Again
+            {{else if this.lastUsedRepository}}
+              Resume
+            {{else}}
+              Start
+            {{/if}}
+          </span>
 
-        {{svg-jar
-          "arrow-right"
-          class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-colors"
-        }}
-      {{/if}}
+          {{svg-jar
+            "arrow-right"
+            class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-colors"
+          }}
+        {{/if}}
+      </div>
     </div>
   </div>
 </LinkTo>
