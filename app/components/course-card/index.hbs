@@ -1,11 +1,13 @@
 <LinkTo
-  class="flex flex-col justify-stretch group bg-white dark:bg-gray-925/70 p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200 dark:border-white/5 relative"
+  class="flex flex-col justify-stretch group bg-white
+    {{if this.shouldShowLockIcon 'dark:bg-gray-950/70' 'dark:bg-gray-925/70'}}
+    p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200 dark:border-white/5 relative"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
   @query={{this.linkToRoute.query}}
   data-test-course-card={{not this.isSkeleton}}
 >
-  <div class="flex flex-col justify-between flex-grow {{if this.shouldShowLockIcon 'opacity-50 group-hover:opacity-100'}}">
+  <div class="flex flex-col justify-between {{if this.shouldShowLockIcon 'opacity-50 group-hover:opacity-100'}}">
     {{! Logo }}
     <div class="w-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
       {{#if this.isSkeleton}}
