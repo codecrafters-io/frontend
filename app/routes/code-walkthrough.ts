@@ -2,7 +2,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import { inject as service } from '@ember/service';
 import type Store from '@ember-data/store';
 import type CodeWalkthroughModel from 'codecrafters-frontend/models/code-walkthrough';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = CodeWalkthroughModel;
 
@@ -10,7 +10,7 @@ export default class CodeWalkthroughRoute extends BaseRoute {
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model(params: { code_walkthrough_slug: string }): Promise<ModelType> {

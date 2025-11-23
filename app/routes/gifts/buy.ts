@@ -1,5 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
@@ -10,7 +10,7 @@ export default class GiftsPayRoute extends BaseRoute {
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model(params: { giftPaymentFlowId?: string }): Promise<ModelType> {

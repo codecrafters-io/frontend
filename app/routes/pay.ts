@@ -4,7 +4,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = {
@@ -21,7 +21,7 @@ export default class PayRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model() {

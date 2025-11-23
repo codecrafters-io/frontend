@@ -5,7 +5,7 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   affiliateLink: AffiliateLinkModel;
@@ -27,7 +27,7 @@ export default class JoinRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model(params: { affiliateLinkSlug: string }) {

@@ -6,7 +6,7 @@ import HeadDataService from 'codecrafters-frontend/services/meta-data';
 import Store from '@ember-data/store';
 import RouterService from '@ember/routing/router-service';
 import { inject as service } from '@ember/service';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ConceptGroupRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
@@ -22,7 +22,7 @@ export default class ConceptGroupRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   deactivate() {

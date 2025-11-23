@@ -8,7 +8,7 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
-import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import type Transition from '@ember/routing/transition';
 import type ConceptController from 'codecrafters-frontend/controllers/concept';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
@@ -63,7 +63,11 @@ export default class ConceptRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+    return new RouteInfoMetadata({
+      allowsAnonymousAccess: true,
+      beaconVisibility: HelpscoutBeaconVisibility.Hidden,
+      colorScheme: RouteColorScheme.Light,
+    });
   }
 
   deactivate() {

@@ -5,7 +5,7 @@ import type InstitutionModel from 'codecrafters-frontend/models/institution';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type InstitutionRouteModel = {
   institution: InstitutionModel;
@@ -27,7 +27,7 @@ export default class InstitutionRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model(params: { institution_slug: string }) {
