@@ -115,7 +115,8 @@ export default class DarkModeService extends Service {
    * "dark route", or derived from localStorage & system preference
    */
   get isEnabled(): boolean {
-    return this.currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences || this.isEnabledTemporarily);
+    return true;
+    // return this.currentRouteSupportsDarkMode && (this.#currentRouteRequiresDarkMode || this.#isEnabledViaPreferences || this.isEnabledTemporarily);
   }
 
   /**

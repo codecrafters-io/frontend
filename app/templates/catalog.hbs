@@ -1,5 +1,36 @@
 {{page-title "Catalog"}}
 
+<div class="fixed inset-0 flex items-stretch justify-stretch pointer-events-none">
+  <div class="w-full relative overflow-hidden rounded-sm">
+    {{! Left blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-32 -left-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-purple-800"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-red-800"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+
+    {{! Right blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-40 -right-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-blue-600"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-blue-700"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+
+    {{! Center blurred gradient }}
+    {{!-- <div class="w-1/2 h-60 absolute top-0 left-1/4 right-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-blue-600"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-purple-700"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div> --}}
+  </div>
+</div>
+
 <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
   <div class="border-b border-gray-200 dark:border-white/5 pb-2 mb-6">
     <h1 class="text-3xl text-gray-700 dark:text-gray-300 font-bold tracking-tighter">Challenges</h1>
