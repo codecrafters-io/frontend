@@ -35,10 +35,6 @@ export default class Logstream {
   }
 
   subscribeTask = task({ drop: true }, async (): Promise<void> => {
-    if (this.isSubscribed) {
-      return;
-    }
-
     this.isTerminated = false;
     this.isSubscribed = false;
 

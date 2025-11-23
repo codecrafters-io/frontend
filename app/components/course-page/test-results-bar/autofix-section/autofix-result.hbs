@@ -22,14 +22,9 @@
 
   {{#if (eq @autofixRequest.status "in_progress")}}
     <div class="bg-gray-800 border border-gray-700 rounded-sm overflow-y-auto relative grow">
-      <div
-        class="p-3"
-        {{did-insert this.handleMarkdownStreamElementInserted}}
-        {{did-update this.handleDidUpdateAutofixRequestLogstreamId @autofixRequest.logstreamId}}
-        {{will-destroy this.handleWillDestroyMarkdownStreamElement}}
-      >
-        {{#if this.logstream}}
-          <AnsiStream @content={{this.logstream.content}} class="text-xs whitespace-pre-wrap" />
+      <div class="p-3" {{logstream-did-update this.handleLogstreamDidUpdate @autofixRequest.logstreamId}}>
+        {{#if this.logstreamContent}}
+          <AnsiStream @content={{this.logstreamContent}} class="text-xs whitespace-pre-wrap" />
         {{/if}}
       </div>
     </div>
