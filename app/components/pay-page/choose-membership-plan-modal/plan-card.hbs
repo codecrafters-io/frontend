@@ -1,6 +1,6 @@
 <div
   class="flex items-start justify-between border
-    {{if @isSelected 'border-teal-500' 'border-gray-200 dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10'}}
+    {{if @isSelected 'border-teal-500 dark:border-teal-700' 'border-gray-200 dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10'}}
     rounded p-3
     {{if @isSelected 'bg-teal-50 dark:bg-teal-900/20' 'bg-white dark:bg-gray-925 hover:bg-gray-50 dark:hover:bg-gray-850'}}"
   role="button"
@@ -11,25 +11,27 @@
   <div class="flex items-start gap-2">
     <div
       class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5
-        {{if @isSelected 'border-teal-500' 'border-gray-400 dark:border-gray-600'}}"
+        {{if @isSelected 'border-teal-500 dark:border-teal-700' 'border-gray-400 dark:border-gray-600'}}"
     >
       {{#if @isSelected}}
-        <div class="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>
+        <div class="w-2.5 h-2.5 bg-teal-500 dark:bg-teal-700 rounded-full"></div>
       {{/if}}
     </div>
 
     <div>
       <div class="flex items-center gap-x-1.5">
-        <span class="text-gray-600 dark:text-gray-300 font-bold text-sm">
+        <span class="text-gray-700 dark:text-gray-200 font-bold text-sm">
           {{@plan.title}}
           pass
         </span>
         {{#if (eq @plan.validityInMonths 12)}}
-          <span class="inline-block bg-teal-500 text-white font-bold rounded px-1.5 py-1 text-xxs uppercase">best value</span>
+          <Pill @color="teal" @size="small">
+            BEST VALUE
+          </Pill>
         {{/if}}
       </div>
 
-      <div class="prose dark:prose-invert prose-xs prose-compact mt-1 text-gray-500 dark:text-gray-400">
+      <div class="prose dark:prose-invert text-gray-500 dark:text-gray-400 prose-xs prose-compact mt-1">
         {{#if @plan.validityInMonths}}
           <p>
             Access to all membership benefits for
