@@ -69,7 +69,7 @@
       @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
       @stepList={{this.coursePageState.stepListAsStepListDefinition}}
       @track={{@model.track}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900 pt-6 pb-2"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-925 pt-6 pb-2"
     />
 
     <CoursePage::Header::StickySection
@@ -78,7 +78,7 @@
       @currentStep={{this.coursePageState.currentStep}}
       @activeStep={{this.coursePageState.activeStep}}
       @nextStep={{this.coursePageState.nextStep}}
-      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-900"
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-925"
     />
     <div class="flex grow bg-white dark:bg-gray-850">
       <div class="grow shrink min-w-0">
@@ -87,7 +87,7 @@
 
       <div
         class="{{if this.leaderboardIsExpanded 'w-64 xl:w-80 pr-6' 'pr-4'}}
-          pt-6 shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-900 hidden md:block group"
+          pt-6 shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-925 hidden md:block group"
       >
         <div class="sticky top-14">
           {{#if this.leaderboardIsExpanded}}
