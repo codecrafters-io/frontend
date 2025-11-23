@@ -1,10 +1,10 @@
 <div ...attributes>
-  <img alt="avatar" src={{@user.avatarUrl}} class="border-2 border-white shadow-sm rounded-sm w-48 h-48 mb-6" />
+  <img alt="avatar" src={{@user.avatarUrl}} class="border-2 border-white dark:border-gray-700 shadow-sm rounded-sm w-48 h-48 mb-6" />
 
   {{#if @user.hasAnonymousModeEnabled}}
     <h1 class="mb-4">
       <a
-        class="group inline-flex items-center text-gray-400 w-full"
+        class="group inline-flex items-center text-gray-400 dark:text-gray-500 w-full"
         href="https://github.com/ghost"
         target="_blank"
         rel="noopener noreferrer"
@@ -14,16 +14,16 @@
           {{@user.username}}
         </div>
 
-        {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+        {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500 dark:group-hover:text-gray-400"}}
       </a>
     </h1>
   {{else}}
-    <h1 class="font-bold text-2xl text-gray-600" data-test-github-name>
+    <h1 class="font-bold text-2xl text-gray-600 dark:text-gray-300" data-test-github-name>
       {{@user.githubName}}
     </h1>
 
     <a
-      class="group inline-flex items-center text-gray-400 mb-4 w-full"
+      class="group inline-flex items-center text-gray-400 dark:text-gray-500 mb-4 w-full"
       href={{@user.githubProfileUrl}}
       target="_blank"
       rel="noopener noreferrer"
@@ -33,7 +33,7 @@
         {{@user.githubUsername}}
       </div>
 
-      {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500"}}
+      {{svg-jar "github" class="fill-current w-5 ml-2 group-hover:text-gray-500 dark:group-hover:text-gray-400"}}
     </a>
   {{/if}}
 
