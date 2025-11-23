@@ -14,11 +14,7 @@
   {{else}}
     <div
       class="flex items-center justify-between flex-wrap
-        {{if
-          @comment.parentComment
-          'py-1'
-          'bg-gray-50 dark:bg-gray-925 rounded-t py-2 px-4 border-b border-gray-200 dark:border-white/5'
-        }}"
+        {{if @comment.parentComment 'py-1' 'bg-gray-50 dark:bg-gray-925 rounded-t py-2 px-4 border-b border-gray-200 dark:border-white/5'}}"
     >
       <div class="flex items-center flex-wrap">
         <a
