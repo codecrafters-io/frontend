@@ -1,0 +1,13 @@
+<div class="relative">
+  {{! Connecting line }}
+  {{#if (gt @stages.length 1)}}
+    {{! template-lint-disable no-inline-styles }}
+    <div class="absolute left-[calc(0.4375rem-0.5px)] top-3 bottom-3 w-px bg-gray-200 dark:bg-white/5" style="height: calc(100% - 1rem);"></div>
+  {{/if}}
+
+  <div class="relative">
+    {{#each @stages as |stage index|}}
+      <CourseOverviewPage::StageListCard::ListItem @stage={{stage}} class="{{if (eq index (sub @stages.length 1)) 'pt-1' 'py-1'}}" />
+    {{/each}}
+  </div>
+</div>
