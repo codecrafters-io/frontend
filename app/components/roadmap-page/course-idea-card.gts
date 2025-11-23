@@ -73,31 +73,31 @@ export default class CourseIdeaCard extends Component<Signature> {
 
   <template>
     <div
-      class='group bg-white dark:bg-gray-925 p-5 rounded-md shadow-xs border
-        {{if this.userHasVoted "border-gray-300 dark:border-gray-700" "border-gray-200 dark:border-white/5"}}
+      class="group bg-white dark:bg-gray-925 p-5 rounded-md shadow-xs border
+        {{if this.userHasVoted 'border-gray-300 dark:border-gray-700' 'border-gray-200 dark:border-white/5'}}
         relative
-        {{if @courseIdea.developmentStatusIsReleased "opacity-50"}}'
+        {{if @courseIdea.developmentStatusIsReleased 'opacity-50'}}"
       data-test-course-idea-card
     >
-      <div class='flex items-start gap-3'>
-        <div class='flex flex-col gap-1 grow'>
-          <div class='flex items-center gap-2 flex-wrap mt-0.5 mb-2.5'>
-            <div class='text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight' data-test-course-idea-name>
+      <div class="flex items-start gap-3">
+        <div class="flex flex-col gap-1 grow">
+          <div class="flex items-center gap-2 flex-wrap mt-0.5 mb-2.5">
+            <div class="text-gray-700 dark:text-gray-200 font-bold text-xl tracking-tight" data-test-course-idea-name>
               {{@courseIdea.name}}
             </div>
 
             {{#if @courseIdea.developmentStatusIsReleased}}
-              <Pill @color='blue' data-test-development-status-pill>
-                <div class='flex items-center gap-1'>
-                  {{svgJar 'check-circle' class='w-3 fill-current'}}
+              <Pill @color="blue" data-test-development-status-pill>
+                <div class="flex items-center gap-1">
+                  {{svgJar "check-circle" class="w-3 fill-current"}}
                   Released
                 </div>
-                <EmberTooltip @text='This challenge is now available! Visit the catalog to try it out.' />
+                <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." />
               </Pill>
             {{else if @courseIdea.developmentStatusIsInProgress}}
-              <Pill @color='yellow' data-test-development-status-pill>
-                <div class='flex items-center gap-1'>
-                  {{svgJar 'shield-check' class='w-3 fill-current'}}
+              <Pill @color="yellow" data-test-development-status-pill>
+                <div class="flex items-center gap-1">
+                  {{svgJar "shield-check" class="w-3 fill-current"}}
                   In Progress
                 </div>
 
@@ -108,32 +108,32 @@ export default class CourseIdeaCard extends Component<Signature> {
                 {{/if}}
               </Pill>
             {{else if this.userHasVoted}}
-              <Pill @color='green' data-test-development-status-pill>
-                <div class='flex items-center gap-1'>
-                  {{svgJar 'thumb-up' class='w-3 fill-current'}}
+              <Pill @color="green" data-test-development-status-pill>
+                <div class="flex items-center gap-1">
+                  {{svgJar "thumb-up" class="w-3 fill-current"}}
                   Voted
                 </div>
                 <EmberTooltip @text="You've voted for this idea! We'll notify you when it launches." />
               </Pill>
             {{else if @courseIdea.isNewlyCreated}}
-              <Pill @color='green' data-test-development-status-pill>
+              <Pill @color="green" data-test-development-status-pill>
                 New
-                <EmberTooltip @text='This is a recently added idea! Vote to help us decide which ideas to prioritize.' />
+                <EmberTooltip @text="This is a recently added idea! Vote to help us decide which ideas to prioritize." />
               </Pill>
             {{/if}}
           </div>
-          <div class='prose dark:prose-invert prose-sm'>
+          <div class="prose dark:prose-invert prose-sm">
             {{MarkdownToHtml @courseIdea.descriptionMarkdown}}
           </div>
         </div>
 
-        <div class='flex flex-col gap-2 items-end shrink-0'>
-          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on 'click' this.handleVoteButtonClick}} />
+        <div class="flex flex-col gap-2 items-end shrink-0">
+          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on "click" this.handleVoteButtonClick}} />
 
-          <div class='flex items-center gap-1'>
-            <div class='{{if this.userHasVoted "text-teal-600 dark:text-teal-400" "text-gray-400 dark:text-gray-500"}} text-xs' data-test-vote-count>
+          <div class="flex items-center gap-1">
+            <div class="{{if this.userHasVoted 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}} text-xs" data-test-vote-count>
               {{@courseIdea.votesCount}}
-              {{if (eq @courseIdea.votesCount 1) 'vote' 'votes'}}
+              {{if (eq @courseIdea.votesCount 1) "vote" "votes"}}
             </div>
           </div>
         </div>
