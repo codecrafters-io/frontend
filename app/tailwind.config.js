@@ -65,7 +65,7 @@ module.exports = {
             '--tw-prose-invert-code': colors.slate[300],
             '--tw-prose-invert-headings': colors.slate[200],
             '--tw-prose-invert-links': colors.sky[500],
-            '--tw-prose-invert-pre-bg': colors.slate[900],
+            '--tw-prose-invert-pre-bg': colors.slate[800],
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',
