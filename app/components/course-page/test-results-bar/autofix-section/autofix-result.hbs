@@ -50,7 +50,7 @@
           </FeedbackButton>
         </div>
 
-        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-925/20">
+        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-950/20">
           <:content>
             {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
               <FileDiffCard

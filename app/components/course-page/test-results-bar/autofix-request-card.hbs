@@ -18,7 +18,7 @@
       {{/if}}
     {{/animated-value}}
 
-    <BlurredOverlay @isBlurred={{this.explanationIsBlurred}} @overlayClass="bg-gray-925/20" class="-mx-4 -mb-4">
+    <BlurredOverlay @isBlurred={{this.explanationIsBlurred}} @overlayClass="bg-gray-950/20" class="-mx-4 -mb-4">
       <:content>
         <div class="p-4">
           <div class="prose prose-sm dark:prose-invert has-prism-highlighting">
@@ -33,7 +33,7 @@
             {{/if}}
           </div>
 
-          <BlurredOverlay @isBlurred={{and this.diffIsBlurred (not this.explanationIsBlurred)}} @overlayClass="bg-gray-925/20" class="-mx-4 -mb-4">
+          <BlurredOverlay @isBlurred={{and this.diffIsBlurred (not this.explanationIsBlurred)}} @overlayClass="bg-gray-950/20" class="-mx-4 -mb-4">
             <:content>
               <div class="p-4 flex flex-col gap-6">
                 {{#each this.changedFilesForRender key="filename" as |changedFile|}}

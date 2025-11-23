@@ -26,7 +26,7 @@ export default class VoteButton extends Component<Signature> {
   <template>
     <button
       type='button'
-      class='px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-925
+      class='px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-950
         {{if @userHasVoted "border-teal-500" "border-gray-300 dark:border-gray-700"}}
         transition-all duration-75 group/vote-button'
       data-test-vote-button
