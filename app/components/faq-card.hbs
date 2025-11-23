@@ -4,21 +4,27 @@
     filter w-full bg-white dark:bg-gray-925"
   role="button"
   {{on "click" this.toggleItem}}
+  ...attributes
 >
   <div class="flex justify-between items-center">
     <div class="text-sm sm:text-base text-gray-900 dark:text-gray-300 {{if @isOpen 'font-semibold' 'font-normal'}}">{{@faq.query}}</div>
-    <div class="text-gray-500 dark:text-gray-400 pl-4">
-      {{#if @isOpen}}
-        {{svg-jar "minus" class="w-4 h-4"}}
-      {{else}}
-        {{svg-jar "plus" class="w-4 h-4"}}
-      {{/if}}
-    </div>
+
+    <AnimatedContainer>
+      <div class="text-gray-500 dark:text-gray-400 pl-4">
+        {{#animated-if @isOpen use=this.transition duration=200}}
+          {{svg-jar "minus" class="w-4 h-4"}}
+        {{else}}
+          {{svg-jar "plus" class="w-4 h-4"}}
+        {{/animated-if}}
+      </div>
+    </AnimatedContainer>
   </div>
 
-  {{#if @isOpen}}
-    <div class="w-full h-px bg-gray-200 dark:bg-white/5 mt-3 mb-4">
-    </div>
-    <div class="prose dark:prose-invert prose-sm sm:prose-base">{{markdown-to-html @faq.answerMarkdown}}</div>
-  {{/if}}
+  <AnimatedContainer>
+    {{#animated-if @isOpen use=this.transition duration=200}}
+      <div class="w-full h-px bg-gray-200 dark:bg-white/5 mt-3 mb-4">
+      </div>
+      <div class="prose dark:prose-invert prose-sm sm:prose-base">{{markdown-to-html @faq.answerMarkdown}}</div>
+    {{/animated-if}}
+  </AnimatedContainer>
 </div>
