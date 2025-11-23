@@ -1,7 +1,7 @@
 {{page-title (concat this.model.username "'s Profile")}}
 
 {{! Looks like a tailwind 3.3.0 bug, from-0% and to-100% are required to make the gradient work }}
-<div class="bg-linear-to-b from-0% to-100% from-gray-600 to-gray-900 h-56 w-full">
+<div class="bg-linear-to-b from-gray-600 to-gray-900 dark:from-gray-950 dark:to-gray-925 h-56 w-full">
 </div>
 
 <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 min-h-screen">
@@ -19,8 +19,11 @@
       {{/if}}
 
       {{#if this.model.profileDescriptionMarkdown}}
-        <div class="bg-white rounded-sm p-4 shadow-xs mb-8 border border-gray-200" data-test-profile-description-markdown>
-          <div class="prose">
+        <div
+          class="bg-white dark:bg-gray-925 rounded-sm p-4 shadow-xs mb-8 border border-gray-200 dark:border-white/5"
+          data-test-profile-description-markdown
+        >
+          <div class="prose dark:prose-invert">
             {{markdown-to-html this.model.profileDescriptionMarkdown}}
           </div>
         </div>
@@ -37,7 +40,7 @@
           {{#if (eq this.currentUser this.model)}}
             When you complete stages your progress will appear here.
             <br /><br />
-            <a href="https://app.codecrafters.io/users/jennkao" class="underline text-gray-600">See an example</a>.
+            <a href="https://app.codecrafters.io/users/jennkao" class="underline text-gray-600 dark:text-gray-300">See an example</a>.
           {{else}}
             This user has no activity on CodeCrafters yet.
           {{/if}}

@@ -1,5 +1,5 @@
 <div
-  class="group bg-white p-5 pb-4 rounded-md shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border border-gray-200 relative"
+  class="group bg-white dark:bg-gray-925 p-5 pb-4 rounded-md shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative"
   role="button"
   {{on "click" this.navigateToCourse}}
   data-test-course-progress-list-item
@@ -7,7 +7,7 @@
   <div>
     <div class="flex justify-between items-start mb-3">
       <div>
-        <div class="text-lg font-bold text-gray-600 mr-2 mb-0.5" data-test-course-name>
+        <div class="text-lg font-bold text-gray-600 dark:text-gray-300 mr-2 mb-0.5" data-test-course-name>
           {{this.course.name}}
         </div>
 
@@ -24,7 +24,7 @@
 
     {{! Text }}
     <div class="mb-4">
-      <div class="text-sm leading-relaxed text-gray-500" data-test-course-description>
+      <div class="text-sm leading-relaxed text-gray-500 dark:text-gray-400" data-test-course-description>
         {{this.course.shortDescription}}
       </div>
     </div>
