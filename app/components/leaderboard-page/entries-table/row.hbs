@@ -33,6 +33,20 @@
             {{@entry.user.username}}
           </a>
         </div>
+
+        {{#if @entry.affiliateLink}}
+          <a
+            href={{@entry.affiliateLink.user.codecraftersProfileUrl}}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 rounded-full px-2 pl-1.5 py-1 ring-1 ring-inset bg-teal-50 ring-teal-600/20 dark:bg-teal-950 dark:ring-teal-400/20 hover:bg-teal-100 dark:hover:bg-teal-900 transition-colors"
+            data-test-affiliate-link-pill
+          >
+            <img src={{@entry.affiliateLink.affiliateAvatarUrl}} class="h-4 w-4 rounded-full" alt="Referrer avatar" />
+            <span class="truncate text-xxs font-medium text-teal-700 dark:text-teal-400">{{@entry.affiliateLink.affiliateName}}</span>
+            <EmberTooltip @text="Referred by {{@entry.affiliateLink.affiliateName}}" />
+          </a>
+        {{/if}}
       </div>
       <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 {{unless this.isCurrentUser 'opacity-25 group-hover/table-row:opacity-100'}}">
         {{#if (gt this.hiddenCourses.length 0)}}

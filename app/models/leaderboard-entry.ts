@@ -1,9 +1,11 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import type AffiliateLinkModel from './affiliate-link';
 import type LeaderboardModel from './leaderboard';
 import type UserModel from './user';
 import CourseModel from './course';
 
 export default class LeaderboardEntryModel extends Model {
+  @belongsTo('affiliate-link', { async: false, inverse: null }) declare affiliateLink: AffiliateLinkModel | null;
   @belongsTo('leaderboard', { async: false, inverse: 'entries' }) declare leaderboard: LeaderboardModel;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
