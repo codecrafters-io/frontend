@@ -1,6 +1,6 @@
 {{! scroll-mt-12 accounts for the height of the sticky header }}
 <div
-  class="bg-gray-50 dark:bg-gray-800 rounded-md w-full scroll-mt-12"
+  class="bg-gray-50 dark:bg-gray-850 rounded-md w-full scroll-mt-12"
   ...attributes
   {{did-update this.handleContentIdentifierDidUpdate @contentIdentifier}}
 >
@@ -29,7 +29,7 @@
           <InstructionsCard::ExpandOrCollapseButton
             @icon="arrow-down"
             @text="Expand"
-            class="group-hover:bg-gray-100 dark:group-hover:bg-gray-800 group-hover:border-gray-300 dark:group-hover:border-white/10"
+            class="group-hover:bg-gray-100 dark:group-hover:bg-gray-850 group-hover:border-gray-300 dark:group-hover:border-white/10"
             {{on "click" this.handleExpandButtonClick}}
           />
         </div>

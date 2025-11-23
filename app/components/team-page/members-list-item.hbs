@@ -46,7 +46,7 @@
         {{#if (eq @membership.user this.currentUser)}}
           <button
             type="button"
-            class="pr-4 pl-2 py-2 text-gray-800 hover:text-red-600 underline font-bold flex items-center text-xs"
+            class="pr-4 pl-2 py-2 text-gray-850 hover:text-red-600 underline font-bold flex items-center text-xs"
             {{on "click" (fn this.handleLeaveTeamButtonClick @membership)}}
             data-test-leave-team-button
           >
@@ -55,7 +55,7 @@
         {{else if this.currentUserIsTeamAdmin}}
           <button
             type="button"
-            class="pr-4 pl-2 py-2 text-gray-800 hover:text-red-600 underline font-bold flex items-center text-xs"
+            class="pr-4 pl-2 py-2 text-gray-850 hover:text-red-600 underline font-bold flex items-center text-xs"
             {{on "click" (fn this.handleRemoveButtonClick @membership)}}
             data-test-remove-button
           >

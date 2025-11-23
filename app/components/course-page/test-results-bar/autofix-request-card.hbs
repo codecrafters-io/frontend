@@ -49,7 +49,7 @@
             </:content>
             <:overlay>
               {{#if (eq @autofixRequest.status "success")}}
-                <SecondaryButton class="bg-gray-800 mt-10" {{on "click" (fn (mut this.diffWasUnblurred) true)}}>
+                <SecondaryButton class="bg-gray-850 mt-10" {{on "click" (fn (mut this.diffWasUnblurred) true)}}>
                   <div class="flex items-center gap-2">
                     <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
                     Show fixed code
@@ -63,7 +63,7 @@
 
       <:overlay>
         {{#if (eq @autofixRequest.status "success")}}
-          <SecondaryButton class="bg-gray-800 mt-10" {{on "click" (fn (mut this.explanationWasUnblurred) true)}}>
+          <SecondaryButton class="bg-gray-850 mt-10" {{on "click" (fn (mut this.explanationWasUnblurred) true)}}>
             <div class="flex items-center gap-2">
               <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
               Explain more?

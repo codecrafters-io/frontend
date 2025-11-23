@@ -3,13 +3,13 @@
     <dd.Trigger>
       <div
         class="flex items-start gap-2 pl-3 py-3 rounded-sm group/dropdown-trigger text-left w-full
-          {{if dd.isOpen 'bg-gray-300/50 dark:bg-gray-800' 'hover:bg-gray-300/50 dark:hover:bg-gray-800'}}"
+          {{if dd.isOpen 'bg-gray-300/50 dark:bg-gray-850' 'hover:bg-gray-300/50 dark:hover:bg-gray-850'}}"
         data-test-repository-dropdown-trigger
       >
         <CourseLogo @course={{@activeRepository.course}} class="w-6 h-6 mt-0.25" />
 
         <div class="grow">
-          <h1 class="text-gray-800 dark:text-gray-200 font-semibold tracking-tight w-full">
+          <h1 class="text-gray-850 dark:text-gray-200 font-semibold tracking-tight w-full">
             {{@activeRepository.course.name}}
           </h1>
           <div class="text-xs text-gray-500 mt-1 w-full">
