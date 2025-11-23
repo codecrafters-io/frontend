@@ -1,4 +1,4 @@
-<div class="bg-gray-850 rounded-sm border border-white/5 p-4 w-full max-w-xl overflow-y-auto" ...attributes data-test-autofix-request-card>
+<div class="bg-gray-900 rounded-sm border border-white/5 p-4 w-full max-w-xl overflow-y-auto" ...attributes data-test-autofix-request-card>
   <AnimatedContainer>
     {{#animated-value @autofixRequest.status duration=200 use=this.transition as |status|}}
       {{#if (eq status "in_progress")}}

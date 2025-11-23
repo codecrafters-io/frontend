@@ -91,7 +91,7 @@ body {
   background: linear-gradient(to bottom, rgb(30 41 59 / 0%) 0%, rgb(30 41 59 / 0%) 30%, rgb(30 41 59 / 100%) 80%, rgb(30 41 59 / 100%) 100%);
 }
 
-.dark\:vertical-mask-gray-850:is(.dark *) {
+.dark\:vertical-mask-gray-900:is(.dark *) {
   background: linear-gradient(to bottom, rgb(23 32 51 / 0%) 0%, rgb(23 32 51 / 0%) 30%, rgb(23 32 51 / 100%) 80%, rgb(23 32 51 / 100%) 100%);
 }
 
