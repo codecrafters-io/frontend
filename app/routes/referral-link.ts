@@ -6,7 +6,7 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
-import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ReferralLinkRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
@@ -24,7 +24,7 @@ export default class ReferralLinkRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
   }
 
   async model(params: { referral_link_slug: string }) {

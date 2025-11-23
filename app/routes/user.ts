@@ -5,7 +5,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = UserModel | undefined;
 
@@ -36,7 +36,11 @@ export default class UserRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
+    return new RouteInfoMetadata({
+      allowsAnonymousAccess: true,
+      beaconVisibility: HelpscoutBeaconVisibility.Hidden,
+      colorScheme: RouteColorScheme.Light,
+    });
   }
 
   deactivate() {

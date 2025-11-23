@@ -6,7 +6,7 @@ module('Unit | Utility | route-info-metadata', function () {
     assert.ok(new RouteInfoMetadata());
   });
 
-  test('it defines a property `colorScheme`, by default set to `RouteColorSheme.Light`', function (assert): void {
-    assert.strictEqual(new RouteInfoMetadata().colorScheme, RouteColorScheme.Light);
+  test('it defines a property `colorScheme`, by default set to `RouteColorScheme.Both`', function (assert): void {
+    assert.strictEqual(new RouteInfoMetadata().colorScheme, RouteColorScheme.Both);
   });
 });
