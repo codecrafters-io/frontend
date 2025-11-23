@@ -30,17 +30,6 @@ function getLocalStorageKeys(): string[] {
  */
 export default class LocalStorageService extends Service {
   /**
-   * Initialize the service and perform cleanup of known legacy keys.
-   * TODO: legacy key removal is temporary and can be removed after migration.
-   */
-  constructor() {
-    super();
-
-    // TODO: Remove legacy keys from local storage - safe to drop a month after merge
-    this.clearLegacyKeys();
-  }
-
-  /**
    * Number of prefixed keys available in window.localStorage.
    */
   get length(): number {
@@ -53,22 +42,6 @@ export default class LocalStorageService extends Service {
   clear(): void {
     for (const key of getLocalStorageKeys()) {
       this.removeItem(key);
-    }
-  }
-
-  /**
-   * Remove known legacy keys that were stored without the current prefix.
-   * This is a one-time migration helper.
-   */
-  clearLegacyKeys() {
-    for (const key of [
-      'current_user_cache_v1:user_id',
-      'current_user_cache_v1:username',
-      'preferred-language-leaderboard-v1',
-      'leaderboard-team-selection-v1',
-      'session_token_v1',
-    ]) {
-      window.localStorage?.removeItem(key);
     }
   }
 
