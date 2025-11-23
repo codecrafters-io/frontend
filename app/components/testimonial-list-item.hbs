@@ -1,27 +1,31 @@
 <div class="block py-4 pr-6 pl-4 group" ...attributes>
   <div class="flex">
     <div class="flex flex-col items-center mr-3 px-1">
-      <span class="w-px bg-gray-200 group-hover:bg-gray-300 grow mb-2 transition-colors">
+      <span class="w-px bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 grow mb-2 transition-colors">
       </span>
-      <span class="text-4xl text-indigo-400 leading-none font-bold h-5">
+      <span class="text-4xl text-indigo-400 dark:text-indigo-500 leading-none font-bold h-5">
         &ldquo;
       </span>
-      <span class="w-px bg-gray-200 group-hover:bg-gray-300 grow mt-2 transition-colors">
+      <span class="w-px bg-gray-200 dark:bg-gray-700 group-hover:bg-gray-300 dark:group-hover:bg-gray-600 grow mt-2 transition-colors">
       </span>
     </div>
     <div class="grow flex flex-col min-h-16 justify-center py-1">
-      <div class="text-gray-500 text-sm leading-relaxed">
+      <div class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
         {{@testimonial.text}}
       </div>
     </div>
   </div>
   <div class="flex items-center mt-2">
-    <img alt="avatar" src={{@testimonial.authorAvatarImage}} class="w-6 h-6 filter drop-shadow-xs ring-1 ring-white rounded-full shadow-sm mr-3" />
+    <img
+      alt="avatar"
+      src={{@testimonial.authorAvatarImage}}
+      class="w-6 h-6 filter drop-shadow-xs ring-1 ring-white dark:ring-gray-925 rounded-full shadow-sm mr-3"
+    />
     <div class="block">
-      <div class="block text-gray-600 text-sm transition-colors font-semibold mb-0.5">
+      <div class="block text-gray-600 dark:text-gray-300 text-sm transition-colors font-semibold mb-0.5">
         {{@testimonial.authorName}}
       </div>
-      <div class="block text-gray-400 text-xs">
+      <div class="block text-gray-400 dark:text-gray-500 text-xs">
         {{@testimonial.authorDesignation}}
       </div>
     </div>

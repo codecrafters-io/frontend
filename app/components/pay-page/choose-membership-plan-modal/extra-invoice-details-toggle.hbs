@@ -1,5 +1,6 @@
-<div class="rounded border border-gray-200 p-4 mt-2 mb-6" ...attributes>
-  <div class="font-bold text-gray-600 text-balance border-b-2 border-gray-200 inline-block mb-3">Invoice details</div>
+<div class="rounded border border-gray-200 dark:border-white/5 p-4 mt-2 mb-6" ...attributes>
+  <div class="font-bold text-gray-600 dark:text-gray-300 text-balance border-b-2 border-gray-200 dark:border-white/5 inline-block mb-3">Invoice
+    details</div>
 
   <div class="prose dark:prose-invert prose-sm mb-3">
     <p>
@@ -9,16 +10,22 @@
 
   <div
     class="flex items-center justify-between gap-8 border
-      {{if @extraInvoiceDetailsRequested 'border-teal-400 bg-teal-50' 'border-gray-200'}}
+      {{if
+        @extraInvoiceDetailsRequested
+        'border-teal-400 dark:border-teal-500/60 bg-teal-50 dark:bg-teal-900/20'
+        'border-gray-200 dark:border-white/5'
+      }}
       rounded-sm p-4 mb-3"
     {{on "click" (fn @onToggle (not @extraInvoiceDetailsRequested))}}
     role="button"
     data-test-extra-invoice-details-toggle
   >
     <span class="flex grow flex-col">
-      <span class="text-sm font-semibold leading-6 {{if @extraInvoiceDetailsRequested 'text-teal-600' 'text-gray-950'}}">I need extra details on my
-        invoice</span>
-      <span class="text-xs text-gray-400">
+      <span
+        class="text-sm font-semibold leading-6
+          {{if @extraInvoiceDetailsRequested 'text-teal-600 dark:text-teal-400' 'text-gray-950 dark:text-gray-300'}}"
+      >I need extra details on my invoice</span>
+      <span class="text-xs text-gray-400 dark:text-gray-500">
         Choose this option if you need extra details like tax ID, business address etc. on your invoice.
       </span>
     </span>

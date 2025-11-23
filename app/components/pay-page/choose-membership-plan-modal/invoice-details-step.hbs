@@ -8,7 +8,7 @@
       @regionalDiscount={{@regionalDiscount}}
     />
 
-    <div class="absolute inset-0 bg-white/60 flex items-center justify-center">
+    <div class="absolute inset-0 bg-white/60 dark:bg-gray-925/60 flex items-center justify-center">
       <TertiaryButton @size="small" {{on "click" @onBackButtonClick}}>
         Change plan
       </TertiaryButton>
@@ -21,7 +21,7 @@
   />
 
   <div class="flex justify-between items-center">
-    <span class="text-gray-400 text-sm" role="button" {{on "click" @onBackButtonClick}}>
+    <span class="text-gray-400 dark:text-gray-500 text-sm" role="button" {{on "click" @onBackButtonClick}}>
       ← Back
     </span>
 

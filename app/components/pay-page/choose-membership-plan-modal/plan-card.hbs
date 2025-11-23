@@ -1,8 +1,8 @@
 <div
   class="flex items-start justify-between border
-    {{if @isSelected 'border-teal-500' 'border-gray-200 hover:border-gray-300'}}
+    {{if @isSelected 'border-teal-500' 'border-gray-200 dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10'}}
     rounded p-3
-    {{if @isSelected 'bg-teal-50' 'bg-white hover:bg-gray-50'}}"
+    {{if @isSelected 'bg-teal-50 dark:bg-teal-900/20' 'bg-white dark:bg-gray-925 hover:bg-gray-50 dark:hover:bg-gray-850'}}"
   role="button"
   {{on "click" @onClick}}
   data-test-plan-card
@@ -10,7 +10,8 @@
 >
   <div class="flex items-start gap-2">
     <div
-      class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5 {{if @isSelected 'border-teal-500' 'border-gray-400'}}"
+      class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5
+        {{if @isSelected 'border-teal-500' 'border-gray-400 dark:border-gray-600'}}"
     >
       {{#if @isSelected}}
         <div class="w-2.5 h-2.5 bg-teal-500 rounded-full"></div>
@@ -19,7 +20,7 @@
 
     <div>
       <div class="flex items-center gap-x-1.5">
-        <span class="text-gray-600 font-bold text-sm">
+        <span class="text-gray-600 dark:text-gray-300 font-bold text-sm">
           {{@plan.title}}
           pass
         </span>
@@ -28,7 +29,7 @@
         {{/if}}
       </div>
 
-      <div class="prose prose-xs prose-compact mt-1 text-gray-500">
+      <div class="prose dark:prose-invert prose-xs prose-compact mt-1 text-gray-500 dark:text-gray-400">
         {{#if @plan.validityInMonths}}
           <p>
             Access to all membership benefits for
@@ -42,7 +43,7 @@
       </div>
 
       {{#if this.discountedPriceInDollars}}
-        <div class="prose prose-xs prose-compact text-gray-500">
+        <div class="prose dark:prose-invert prose-xs prose-compact text-gray-500 dark:text-gray-400">
           <ul class="mt-0">
             {{#if @regionalDiscount}}
               <li data-test-regional-discount-notice>
@@ -74,18 +75,18 @@
   <div class="flex flex-col items-end pl-4 flex-shrink-0">
     {{#if this.discountedPriceInDollars}}
       <div class="flex items-center gap-x-1">
-        <span class="text-gray-400 font-bold line-through text-lg">${{@plan.priceInDollars}}</span>
+        <span class="text-gray-400 dark:text-gray-500 font-bold line-through text-lg">${{@plan.priceInDollars}}</span>
         <span class="text-teal-500 font-bold" data-test-discounted-price>
           ${{this.discountedPriceInDollars}}
         </span>
       </div>
     {{else}}
-      <div class="text-gray-600 font-bold">
+      <div class="text-gray-600 dark:text-gray-300 font-bold">
         ${{@plan.priceInDollars}}
       </div>
     {{/if}}
 
-    <div class="text-gray-500 text-xxs flex-shrink-0 text-right mt-0.5">
+    <div class="text-gray-500 dark:text-gray-400 text-xxs flex-shrink-0 text-right mt-0.5">
       {{#if this.amortizedMonthlyPriceInDollars}}
         Effectively ${{this.amortizedMonthlyPriceInDollars}}/mo
       {{else}}

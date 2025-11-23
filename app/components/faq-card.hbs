@@ -1,11 +1,13 @@
 <div
-  class="py-4 px-6 rounded-lg border {{if @isOpen 'border-gray-300 drop-shadow-xs' 'border-gray-200'}} filter w-full bg-white"
+  class="py-4 px-6 rounded-lg border
+    {{if @isOpen 'border-gray-300 dark:border-white/10 drop-shadow-xs' 'border-gray-200 dark:border-white/5'}}
+    filter w-full bg-white dark:bg-gray-925"
   role="button"
   {{on "click" this.toggleItem}}
 >
   <div class="flex justify-between items-center">
-    <div class="text-sm sm:text-base text-gray-900 {{if @isOpen 'font-semibold' 'font-normal'}}">{{@faq.query}}</div>
-    <div class="text-gray-500 pl-4">
+    <div class="text-sm sm:text-base text-gray-900 dark:text-gray-300 {{if @isOpen 'font-semibold' 'font-normal'}}">{{@faq.query}}</div>
+    <div class="text-gray-500 dark:text-gray-400 pl-4">
       {{#if @isOpen}}
         {{svg-jar "minus" class="w-4 h-4"}}
       {{else}}
@@ -15,7 +17,7 @@
   </div>
 
   {{#if @isOpen}}
-    <div class="w-full h-px bg-gray-200 mt-3 mb-4">
+    <div class="w-full h-px bg-gray-200 dark:bg-white/5 mt-3 mb-4">
     </div>
     <div class="prose dark:prose-invert prose-sm sm:prose-base">{{markdown-to-html @faq.answerMarkdown}}</div>
   {{/if}}
