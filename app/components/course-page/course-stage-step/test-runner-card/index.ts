@@ -27,19 +27,19 @@ export default class TestRunnerCard extends Component<Signature> {
     if (this.isExpanded) {
       return {
         passed: 'bg-teal-50 dark:bg-teal-900/10',
-        failed: 'bg-white dark:bg-gray-900/10',
+        failed: 'bg-white dark:bg-gray-925/10',
         evaluating: 'bg-yellow-50 dark:bg-yellow-900/10',
-        error_or_not_run: 'bg-white dark:bg-gray-900/10',
+        error_or_not_run: 'bg-white dark:bg-gray-925/10',
       }[this.testsStatus];
     } else {
       return (
         {
           passed: 'bg-linear-to-b from-white to-teal-50 hover:from-teal-50 hover:to-teal-100',
           failed:
-            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-850/40 dark:hover:to-gray-850/50',
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-900/40 dark:hover:to-gray-900/50',
           evaluating: 'bg-linear-to-b from-white to-yellow-50 dark:from-yellow-900/10 dark:to-yellow-900/20 hover:from-yellow-50 hover:to-yellow-100',
           error_or_not_run:
-            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-850/40 dark:hover:to-gray-850/50',
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-900/40 dark:hover:to-gray-900/50',
         }[this.testsStatus] || ''
       );
     }
