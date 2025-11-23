@@ -2,7 +2,7 @@
   <LinkTo
     @route={{@route}}
     @models={{(or @routeParams (array))}}
-    class="text-sm relative hover:text-gray-925 dark:hover:text-gray-100
+    class="text-sm relative hover:text-gray-950 dark:hover:text-gray-100
       {{if this.isActive 'text-gray-700 dark:text-gray-300' 'text-gray-600 dark:text-gray-400'}}
       "
     data-test-header-link
@@ -12,5 +12,5 @@
     {{@text}}
   </LinkTo>
 {{else if (eq @type "link")}}
-  <a href={{@route}} class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-925 dark:hover:text-gray-100" ...attributes>{{@text}}</a>
+  <a href={{@route}} class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-100" ...attributes>{{@text}}</a>
 {{/if}}

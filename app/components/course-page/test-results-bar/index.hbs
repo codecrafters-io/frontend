@@ -1,5 +1,5 @@
 <div
-  class="bg-gray-925 border-t border-gray-850 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
+  class="bg-gray-950 border-t border-gray-900 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
   data-test-test-results-bar
   ...attributes
 >
@@ -24,7 +24,7 @@
   >
     {{#if this.isExpanded}}
       {{! min-h-0 ensures div doesn't outgrow container !}}
-      <div class="flex grow border-b border-gray-850 px-6 min-h-0">
+      <div class="flex grow border-b border-gray-900 px-6 min-h-0">
         <CoursePage::TestResultsBar::Pane
           @activeTabSlug={{this.activeTabSlugForLeftPane}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlugForLeftPane)}}

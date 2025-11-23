@@ -8,7 +8,7 @@
   <div class="flex items-center min-w-0">
     <div class="{{unless @isCollapsed 'mr-2'}} shrink-0">
       {{#if this.isSkeleton}}
-        <div class="w-8 h-8 bg-gray-200 dark:bg-gray-850 rounded-sm"></div>
+        <div class="w-8 h-8 bg-gray-200 dark:bg-gray-900 rounded-sm"></div>
       {{else}}
         {{! additional if clause to satisfy glint }}
         {{#if @user}}
@@ -22,7 +22,7 @@
 
     {{#unless @isCollapsed}}
       {{#if this.isSkeleton}}
-        <span class="text-xs inline-block rounded-sm bg-gray-200 dark:bg-gray-850 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+        <span class="text-xs inline-block rounded-sm bg-gray-200 dark:bg-gray-900 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
       {{else}}
         <span
           class="text-xs text-gray-600 dark:text-gray-400 group-hover/leaderboard-entry:underline mr-2 shrink truncate"
@@ -43,7 +43,7 @@
         data-test-progress-text
       >
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-200 dark:bg-gray-850">{{#each (repeat 6)}}&nbsp;{{/each}}</span>
+          <span class="inline-block bg-gray-200 dark:bg-gray-900">{{#each (repeat 6)}}&nbsp;{{/each}}</span>
         {{else}}
           {{@progressNumerator}}
           /
@@ -51,10 +51,10 @@
         {{/if}}
       </span>
       {{#if this.isSkeleton}}
-        <div class="w-12 h-3.5 rounded-sm bg-gray-200 dark:bg-gray-850" />
+        <div class="w-12 h-3.5 rounded-sm bg-gray-200 dark:bg-gray-900" />
       {{else}}
         <div
-          class="w-12 h-3.5 rounded-sm flex overflow-hidden border group-hover/leaderboard-entry:bg-white dark:group-hover/leaderboard-entry:bg-gray-850 transition-all
+          class="w-12 h-3.5 rounded-sm flex overflow-hidden border group-hover/leaderboard-entry:bg-white dark:group-hover/leaderboard-entry:bg-gray-900 transition-all
             {{if
               (eq @status 'evaluating')
               'bg-yellow-50 dark:bg-yellow-900/80 border-yellow-500 dark:border-yellow-700 animate-pulse'

@@ -13,7 +13,7 @@
 
       <div class="flex items-start justify-between">
         <div>
-          <h3 class="text-lg font-bold text-gray-850">
+          <h3 class="text-lg font-bold text-gray-900">
             {{@model.solution.user.username}}'s
             {{@model.solution.language.name}}
             code example for
@@ -34,7 +34,7 @@
     <CoursePage::CourseStageStep::CommunitySolutionCard @solution={{@model.solution}} @isExpanded={{true}} class="mb-8" />
 
     <div class="border-b border-gray-200 mb-4 pb-2">
-      <h3 class="text-lg font-bold text-gray-850">
+      <h3 class="text-lg font-bold text-gray-900">
         Evaluations ({{@model.evaluations.length}})
       </h3>
     </div>
@@ -44,7 +44,7 @@
     {{/each}}
 
     <div class="border-b border-gray-200 mb-4 pb-2">
-      <h3 class="text-lg font-bold text-gray-850">
+      <h3 class="text-lg font-bold text-gray-900">
         Comparisons ({{@model.comparisons.length}})
       </h3>
     </div>

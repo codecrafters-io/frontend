@@ -79,8 +79,8 @@ body {
   );
 }
 
-.dark\:vertical-mask-gray-900:is(.dark *) {
-  background: linear-gradient(to bottom, rgb(15 23 42 / 0%) 0%, rgb(15 23 42 / 0%) 30%, rgb(15 23 42 / 100%) 80%, rgb(15 23 42 / 100%) 100%);
+.dark\:vertical-mask-gray-925:is(.dark *) {
+  background: linear-gradient(to bottom, rgb(8 15 29 / 0%) 0%, rgb(8 15 29 / 0%) 30%, rgb(8 15 29 / 100%) 80%, rgb(8 15 29 / 100%) 100%);
 }
 
 .syntax-highlighted-code pre {
@@ -194,7 +194,7 @@ body {
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
-  background-color: #1e293b; /* slate-800 */
+  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
 }
 
 .sortable-item {
