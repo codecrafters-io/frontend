@@ -4,7 +4,7 @@ import type UserModel from 'codecrafters-frontend/models/user';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 interface Signature {
-  Element: HTMLDivElement;
+  Element: HTMLButtonElement;
 
   Args: {
     size: 'small' | 'large';
@@ -13,6 +13,12 @@ interface Signature {
 
 export default class VipBadge extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+
+  get buttonSize() {
+    // arg:small -> PrimaryButton size:extra-small
+    // arg:large -> small
+    return this.args.size === 'large' ? 'small' : 'extra-small';
+  }
 
   get currentUser() {
     return this.authenticator.currentUser as UserModel;
