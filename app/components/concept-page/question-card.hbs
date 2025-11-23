@@ -1,6 +1,6 @@
 <div class="border border-gray-200 rounded-sm shadow-xs scroll-mb-10" data-test-question-card ...attributes>
   <div class="p-3 sm:p-4">
-    <div class="text-gray-800 mr-2 mb-2 border-b border-gray-200 pb-2.5 prose has-prism-highlighting" data-test-question-card-body>
+    <div class="text-gray-850 mr-2 mb-2 border-b border-gray-200 pb-2.5 prose has-prism-highlighting" data-test-question-card-body>
       {{markdown-to-html @question.queryMarkdown}}
     </div>
 
@@ -45,7 +45,7 @@
         data-test-question-submitted
         class="p-3 sm:p-4 shadow-xs border rounded-sm {{if this.selectedOptionIsCorrect 'border-green-400 bg-green-50' 'border-gray-300 bg-white'}}"
       >
-        <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+        <div class="mb-4 font-semibold {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-850'}}">
           {{#if this.selectedOptionIsCorrect}}
             <span class="mr-1" {{did-insert this.handleDidInsertCorrectAnswerEmoji}}>🎉</span>
             Correct!
@@ -55,7 +55,7 @@
           {{/if}}
         </div>
 
-        <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-800'}}">
+        <div class="leading-7 prose max-w-none {{if this.selectedOptionIsCorrect 'text-green-700' 'text-gray-850'}}">
           {{! if statement used for typechecker, explanation_markdown is always present !}}
           {{#if this.selectedOption.explanation_markdown}}
             {{markdown-to-html this.selectedOption.explanation_markdown}}

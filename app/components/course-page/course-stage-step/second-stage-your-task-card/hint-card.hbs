@@ -3,13 +3,13 @@
   data-test-hint-card
   ...attributes
 >
-  {{! bg-gradient-to-b from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 }}
+  {{! bg-gradient-to-b from-white to-gray-100 dark:from-gray-850 dark:to-gray-925 }}
   <div class="flex items-center p-3 gap-1.5" {{on "click" @onHeaderClick}} role="button" data-test-hint-card-header>
     <div class="flex items-center justify-center transition-transform duration-200 rotate-90 {{if @isExpanded 'rotate-180'}}">
       <span class="text-gray-400 dark:text-gray-600 triangle-up" aria-hidden="true">
       </span>
     </div>
-    <span class="text-gray-800 dark:text-gray-200">
+    <span class="text-gray-850 dark:text-gray-200">
       <span class="font-semibold">Hint #{{add @hintIndex 1}}:</span>
       {{@hint.title_markdown}}
     </span>

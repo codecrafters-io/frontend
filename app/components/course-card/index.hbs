@@ -1,5 +1,5 @@
 <LinkTo
-  class="group bg-white dark:bg-gray-850 p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative
+  class="group bg-white dark:bg-gray-900 p-5 rounded-md shadow-sm hover:shadow-md transition-shadow cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative
     {{if this.shouldShowLockIcon 'opacity-50 hover:opacity-100'}}"
   @route={{this.linkToRoute.name}}
   @model={{this.linkToRoute.model}}
@@ -9,7 +9,7 @@
   {{! Logo }}
   <div class="w-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
     {{#if this.isSkeleton}}
-      <div class="bg-gray-100 dark:bg-gray-800 w-8 h-8 rounded-full" />
+      <div class="bg-gray-100 dark:bg-gray-850 w-8 h-8 rounded-full" />
     {{else}}
       <CourseLogo @course={{this.course}} />
     {{/if}}
@@ -18,9 +18,9 @@
   {{! Text }}
   <div class="mb-6">
     <div class="flex items-center mb-3 flex-wrap gap-y-2 pr-10">
-      <div class="text-lg font-semibold text-gray-800 dark:text-gray-200 mr-2" data-test-course-name>
+      <div class="text-lg font-semibold text-gray-850 dark:text-gray-200 mr-2" data-test-course-name>
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-100 dark:bg-gray-800 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+          <span class="inline-block bg-gray-100 dark:bg-gray-850 rounded-sm">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
         {{else}}
           <span>{{this.course.name}}</span>
         {{/if}}
@@ -31,10 +31,10 @@
       {{#if this.isSkeleton}}
         <div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded-sm"></div>
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-850 rounded-sm"></div>
           </div>
           <div class="relative inline-block w-full">{{#each (repeat 15)}}&nbsp;{{/each}}
-            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-800 rounded-sm"></div>
+            <div class="absolute left-0 right-0 top-[2px] bottom-[2px] bg-gray-100 dark:bg-gray-850 rounded-sm"></div>
           </div>
         </div>
       {{else}}
@@ -47,7 +47,7 @@
   <div class="flex items-center justify-between">
     <div class="flex items-center gap-3">
       {{#if this.isSkeleton}}
-        <div class="bg-gray-100 dark:bg-gray-800 rounded-sm h-4 w-24"></div>
+        <div class="bg-gray-100 dark:bg-gray-850 rounded-sm h-4 w-24"></div>
       {{else}}
         {{#if this.lastUsedRepository}}
           <CourseCard::ProgressBar @course={{this.course}} @lastUsedRepository={{this.lastUsedRepository}} class="shrink-0" />
