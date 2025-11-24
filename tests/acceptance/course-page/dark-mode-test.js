@@ -12,7 +12,7 @@ module('Acceptance | course-page | dark-mode', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('free users can view upgrade prompt', async function (assert) {
+  test('free users can toggle dark mode', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
@@ -28,15 +28,10 @@ module('Acceptance | course-page | dark-mode', function (hooks) {
     assert.ok(coursePage.header.darkModeToggle.lightOptionIsSelected, 'light option is selected');
     assert.notOk(coursePage.upgradeModal.isVisible, 'upgrade modal is not present');
 
-    // Clicking on the dark mode toggle should open the upgrade modal
+    // Clicking on the dark mode toggle should enable dark mode
     await coursePage.header.darkModeToggle.clickOnDarkOption();
-    assert.ok(coursePage.upgradeModal.isVisible, 'upgrade modal is present');
-    assert.ok(coursePage.header.darkModeToggle.lightOptionIsSelected, 'light option is selected');
-
-    // Clicking on the backdrop should close the upgrade modal
-    await coursePage.clickOnModalBackdrop();
     assert.notOk(coursePage.upgradeModal.isVisible, 'upgrade modal is not present');
-    assert.ok(coursePage.header.darkModeToggle.lightOptionIsSelected, 'light option is selected');
+    assert.ok(coursePage.header.darkModeToggle.darkOptionIsSelected, 'dark option is selected');
   });
 
   test('paid users can toggle dark mode', async function (assert) {

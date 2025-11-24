@@ -46,7 +46,6 @@ export default class PayController extends Controller {
       { text: 'Turbo tests', link: 'https://codecrafters.io/turbo' },
       { text: 'Code examples', link: 'https://docs.codecrafters.io/code-examples' },
       { text: 'Anonymous mode', link: 'https://docs.codecrafters.io/membership/anonymous-mode' },
-      { text: 'Dark mode', link: 'https://docs.codecrafters.io/membership/dark-mode' },
       { text: 'Over $1000 in perks', link: 'https://codecrafters.io/perks' },
       { text: 'Priority support' },
     ];
