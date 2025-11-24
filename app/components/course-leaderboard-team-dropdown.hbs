@@ -16,34 +16,20 @@
       data-test-leaderboard-team-dropdown-content
     >
       {{#each @teams as |team|}}
-        <div
-          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-900 flex items-center justify-between group"
-          role="button"
+        <CourseLeaderboardTeamDropdown::Item
+          @text={{team.name}}
+          @logo="user-group"
+          @isActive={{eq team @team}}
           {{on "click" (fn this.handleTeamLinkClick team dd.actions)}}
-        >
-          <span class="mr-4 {{if (eq team @team) 'text-teal-500 dark:text-teal-600 font-bold' 'text-gray-700 dark:text-gray-400'}}">
-            {{team.name}}
-          </span>
-          {{svg-jar
-            "user-group"
-            class=(concat "w-5 text-gray-300 group-hover:text-teal-500 dark:text-gray-700" (if (eq team @team) " text-teal-500 dark:text-teal-600"))
-          }}
-        </div>
+        />
       {{/each}}
 
-      <div
-        class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-900 flex items-center justify-between group"
-        role="button"
+      <CourseLeaderboardTeamDropdown::Item
+        @text="Everyone"
+        @logo="globe"
+        @isActive={{not @team}}
         {{on "click" (fn this.handleTeamLinkClick null dd.actions)}}
-      >
-        <span class="mr-4 {{unless @team 'text-teal-500 dark:text-teal-600 font-bold' 'text-gray-700 dark:text-gray-400'}}">
-          Everyone
-        </span>
-        {{svg-jar
-          "globe"
-          class=(concat "w-5 text-gray-300 group-hover:text-teal-500 dark:text-gray-700" (unless @team " text-teal-500 dark:text-teal-600"))
-        }}
-      </div>
+      />
     </div>
   </dd.Content>
 </BasicDropdown>
