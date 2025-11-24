@@ -3,6 +3,6 @@ import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils
 
 export default class NotFoundRoute extends BaseRoute {
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 }
