@@ -23,7 +23,7 @@ export default class DarkModeToggle extends Component<Signature> {
   possiblePreferences: LocalStoragePreference[] = ['system', 'light', 'dark'];
 
   get currentPreference() {
-    return this.darkMode.localStoragePreference || 'light';
+    return this.darkMode.localStoragePreference || 'dark';
   }
 
   @action
