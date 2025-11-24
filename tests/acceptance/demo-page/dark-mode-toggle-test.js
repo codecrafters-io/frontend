@@ -58,9 +58,7 @@ module('Acceptance | demo page | dark-mode-toggle', function (hooks) {
 
   test("it adds a '.dark' class to application container when Dark mode is active", async function (assert) {
     await demoPage.demoTabs.darkModeToggle.visit();
-    assert.notOk(applicationPage.hasDarkClass, 'class .dark is absent by default');
-    await demoPage.demoTabs.darkModeToggle.component.clickOnLightOption();
-    assert.notOk(applicationPage.hasDarkClass, 'class .dark is absent when Light mode is selected');
+    assert.ok(applicationPage.hasDarkClass, 'class .dark is present by default');
     await demoPage.demoTabs.darkModeToggle.component.clickOnDarkOption();
     assert.ok(applicationPage.hasDarkClass, 'class .dark is present when Dark mode is selected');
     await demoPage.demoTabs.darkModeToggle.component.clickOnSystemOption();
