@@ -4,7 +4,7 @@
       {{svg-jar "sparkles" class="w-6 h-6 fill-current text-teal-500"}}
     </div>
     <div class="flex-1">
-      <h3 class="text-lg font-bold text-teal-500 mb-2">
+      <h3 class="text-lg font-bold text-teal-500 dark:text-teal-400 mb-2">
         {{#if @course.isFreeThisMonth}}
           {{@course.name}}
           is free this
@@ -15,7 +15,7 @@
           {{date-format @course.isFreeUntil format="d MMMM yyyy"}}.
         {{/if}}
       </h3>
-      <p class="text-teal-800 text-sm mb-4">
+      <p class="text-teal-800 dark:text-teal-400 text-sm mb-4">
         The core challenge experience is completely free
         {{#if @course.isFreeThisMonth}}
           this month.
