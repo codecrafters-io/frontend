@@ -1,5 +1,27 @@
 {{page-title this.model.course.name}}
 
+<div class="fixed inset-0 flex items-stretch justify-stretch pointer-events-none">
+  <div class="w-full relative overflow-hidden rounded-sm">
+    {{! Left blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-32 -left-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-purple-800"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-red-800"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+
+    {{! Right blurred gradient }}
+    <div class="w-1/2 h-60 absolute -bottom-40 -right-1/4 opacity-50 animate-spin-slow filter blur-[100px]">
+      <div class="relative">
+        <div class="rounded-full h-60 w-full bg-blue-600"></div>
+        <div class="absolute bottom-24 -left-24 rounded-full h-60 w-full bg-blue-700"></div>
+        <div class="absolute top-24 left-24 rounded-full h-60 w-full bg-purple-600"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-6 md:pt-10 pb-10 px-3 md:px-6">
   <CourseOverviewPage::Header @course={{this.model.course}} @language={{this.model.language}} class="mb-6 md:mb-10" />
 
