@@ -67,7 +67,7 @@ Router.map(function () {
   this.route('gifts.buy', { path: '/gifts/buy' });
   this.route('gifts.redeem', { path: '/gifts/redeem/:secret_token' });
   this.route('institution', { path: '/campus/:institution_slug' });
-  this.route('join'); // TODO: Add dark mode support
+  this.route('join');
   this.route('join-course', { path: '/join/:course_slug' });
   this.route('join-track', { path: '/join-track/:track_slug' });
   this.route('leaderboard', { path: '/leaderboards/:language_slug' });
