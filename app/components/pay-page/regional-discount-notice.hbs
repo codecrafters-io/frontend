@@ -1,8 +1,12 @@
-<div class="border rounded-sm flex items-start p-4 border-green-400 bg-green-50" data-test-regional-discount-notice ...attributes>
-  {{svg-jar "globe" class="w-8 h-8 mr-2 shrink-0 text-green-400 transform scale-90"}}
+<div
+  class="border rounded-sm flex items-start p-4 border-green-400 dark:border-green-500/60 bg-green-50 dark:bg-green-900/20"
+  data-test-regional-discount-notice
+  ...attributes
+>
+  {{svg-jar "globe" class="w-8 h-8 mr-2 shrink-0 text-green-400 dark:text-green-500 transform scale-90"}}
 
   <div class="py-1">
-    <div class="text-green-700 text-sm leading-relaxed">
+    <div class="text-green-700 dark:text-green-400 text-sm leading-relaxed">
       Looks like you're from
       <b>{{@regionalDiscount.countryName}}</b>. We've applied a PPP (Purchasing Power Parity) discount of
       <b>{{@regionalDiscount.percentOff}}%</b>

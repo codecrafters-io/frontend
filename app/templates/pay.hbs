@@ -2,10 +2,10 @@
 
 <div class="container mx-auto xl:max-w-(--breakpoint-xl) py-12 md:py-16 px-3 md:px-6">
   <div class="flex flex-col items-center justify-center">
-    <h1 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-2xl text-center text-pretty">
+    <h1 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-2xl text-center text-pretty">
       The highest ROI investment you can make
     </h1>
-    <p class="text-gray-700 max-w-2xl text-center mt-2 text-pretty">
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl text-center mt-2 text-pretty">
       CodeCrafters members routinely unlock promotions and 5-figure salary jumps.
     </p>
 
@@ -59,7 +59,7 @@
       />
     </div>
 
-    <LinkTo @route="refer" class="font-medium mt-16 text-sm text-gray-700 hover:underline">
+    <LinkTo @route="refer" class="font-medium mt-16 text-sm text-gray-700 dark:text-gray-300 hover:underline">
       {{! template-lint-disable no-whitespace-for-layout }}
       🎁&nbsp;&nbsp;Refer friends to get free weeks →
     </LinkTo>
@@ -75,21 +75,21 @@
       {{/each}}
     </div>
 
-    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-16">
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-16">
       CodeCrafters is backed by incredible engineers
     </h2>
 
     {{! Should be mt-8, py-8 ensure shadows aren't cut off at the top/bottom }}
     <PayPage::BackerCardList class="py-8" />
 
-    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-8">
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-8">
       Frequently Asked Questions
     </h2>
 
     <PricingPage::FaqList class="mt-8" />
 
-    <h2 class="text-2xl font-bold text-gray-700 md:text-3xl max-w-3xl text-center text-pretty mt-16">
-      Join over 200k of the world’s best engineers:
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-16">
+      Join over 200k of the world's best engineers:
     </h2>
 
     <TestimonialList class="mt-8" />

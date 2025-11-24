@@ -2,17 +2,19 @@
   <div class="w-full overflow-x-auto touch-pan-x snap-x snap-mandatory px-16" ...attributes>
     <div class="flex gap-6 min-w-min">
       {{#each this.backers as |backer|}}
-        <div class="snap-center flex-none w-60 bg-white rounded-xl border border-gray-200 shadow-xs overflow-hidden">
-          <div class="flex bg-gray-50">
+        <div
+          class="snap-center flex-none w-60 bg-white dark:bg-gray-925 rounded-xl border border-gray-200 dark:border-white/5 shadow-xs overflow-hidden"
+        >
+          <div class="flex bg-gray-50 dark:bg-gray-950">
             <img src={{backer.imageUrl}} alt={{backer.name}} />
           </div>
           <div class="flex flex-col items-center justify-between p-4 gap-8">
             <div>
-              <div class="font-bold text-gray-700 text-center mb-1">{{backer.name}}</div>
-              <div class="text-xs text-gray-500 text-center">{{backer.title}}</div>
+              <div class="font-bold text-gray-700 dark:text-gray-300 text-center mb-1">{{backer.name}}</div>
+              <div class="text-xs text-gray-500 dark:text-gray-400 text-center">{{backer.title}}</div>
             </div>
             <div class="flex items-center justify-center">
-              <img src={{backer.companyLogoUrl}} alt={{backer.companyName}} class="h-6 brightness-0 opacity-20" />
+              <img src={{backer.companyLogoUrl}} alt={{backer.companyName}} class="h-6 brightness-0 opacity-20 dark:invert-100" />
             </div>
           </div>
         </div>
@@ -22,12 +24,12 @@
 
   {{! Left Blur }}
   <div
-    class="pointer-events-none absolute left-0 top-0 h-full w-8 z-10 bg-[linear-gradient(to_right,rgba(248,250,252,1)_0%,rgba(248,250,252,1)_20%,rgba(248,250,252,0)_100%)]"
+    class="pointer-events-none absolute -left-px top-0 h-full w-8 z-10 bg-gradient-to-l from-transparent to-gray-50 dark:from-transparent dark:to-gray-950"
   >
   </div>
   {{! Right Blur }}
   <div
-    class="pointer-events-none absolute right-0 top-0 h-full w-8 z-10 bg-[linear-gradient(to_left,rgba(248,250,252,1)_0%,rgba(248,250,252,1)_20%,rgba(248,250,252,0)_100%)]"
+    class="pointer-events-none absolute -right-px top-0 h-full w-8 z-10 bg-gradient-to-r from-transparent to-gray-50 dark:via-gray-950 dark:to-gray-950"
   >
   </div>
 </div>

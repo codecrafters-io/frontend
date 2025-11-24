@@ -1,5 +1,5 @@
 <a
-  class="flex flex-col lg:flex-row justify-between items-center w-full rounded-lg border border-gray-100 hover:border-gray-200 bg-white lg:h-72 overflow-hidden group/monthly-challenge-banner transition-all"
+  class="flex flex-col lg:flex-row justify-between items-center w-full rounded-lg border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 bg-white dark:bg-gray-925 lg:h-72 overflow-hidden group/monthly-challenge-banner transition-all"
   href={{this.monthlyChallengeBanner.url}}
   target="_blank"
   rel="noopener noreferrer"
@@ -7,11 +7,13 @@
   ...attributes
 >
   <div class="relative text-left sm:text-center lg:text-left z-10 mt-9 mb-9 lg:my-auto px-6 lg:px-10">
-    <div class="py-2 px-4 w-fit sm:mx-auto lg:ml-0 lg:mr-0 font-bold rounded-full text-teal-500 bg-white border-2 border-teal-500">
+    <div class="py-2 px-4 w-fit sm:mx-auto lg:ml-0 lg:mr-0 font-bold rounded-full text-teal-500 bg-white dark:bg-gray-925 border-2 border-teal-500">
       {{this.monthlyChallengeBanner.payPageBannerTitle}}
     </div>
 
-    <div class="font-bold pt-4 pb-8 w-fit text-lg lg:text-2xl text-gray-600 group-hover/monthly-challenge-banner:text-gray-700">
+    <div
+      class="font-bold pt-4 pb-8 w-fit text-lg lg:text-2xl text-gray-600 dark:text-gray-300 group-hover/monthly-challenge-banner:text-gray-700 dark:group-hover/monthly-challenge-banner:text-gray-200"
+    >
       Complete 1 challenge.<br />
       {{this.monthlyChallengeBanner.payPageCta}}
     </div>
