@@ -1,6 +1,9 @@
+import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
-import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import fade from 'ember-animated/transitions/fade';
+import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -13,6 +16,8 @@ interface Signature {
 
 export default class AutofixRequestCard extends Component<Signature> {
   transition = fade;
+
+  @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   @tracked diffWasUnblurred = false;
   @tracked explanationWasUnblurred = false;
@@ -54,6 +59,24 @@ export default class AutofixRequestCard extends Component<Signature> {
     }
 
     return !this.explanationWasUnblurred;
+  }
+
+  @action
+  handleShowExplanationButtonClick() {
+    if (this.explanationIsBlurred) {
+      this.analyticsEventTracker.track('revealed_autofix_explanation', { autofix_request_id: this.args.autofixRequest.id });
+    }
+
+    this.explanationWasUnblurred = true;
+  }
+
+  @action
+  handleShowFixedCodeButtonClick() {
+    if (this.diffIsBlurred) {
+      this.analyticsEventTracker.track('revealed_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
+    }
+
+    this.diffWasUnblurred = true;
   }
 }
 
