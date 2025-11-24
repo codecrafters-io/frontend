@@ -64,7 +64,7 @@ export default class Footer extends Component {
         },
         {
           text: 'Changelog',
-          url: 'https://twitter.com/codecraftersio',
+          url: 'https://forum.codecrafters.io/c/announcements/10',
         },
       ],
     };
