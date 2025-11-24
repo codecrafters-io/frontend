@@ -36,10 +36,6 @@ body {
   mix-blend-mode: lighten;
 }
 
-.copyable-code .border-text-mask {
-  background: linear-gradient(to left, rgb(241 245 249 / 100%) 0%, rgb(241 245 249 / 100%) 20%, rgb(241 245 249 / 0%) 100%);
-}
-
 @keyframes progress-donut {
   from {
     stroke-dashoffset: 56.55;

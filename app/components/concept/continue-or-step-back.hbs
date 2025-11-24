@@ -30,8 +30,11 @@
       {{! @glint-expect-error on-key modifier types aren't right? }}
       {{on-key "Backspace"}}
     >
-      <span>{{svg-jar "arrow-up" class="w-3 fill-current text-gray-400 group-hover:text-gray-700"}}</span>
-      <div class="ml-1 text-gray-500 group-hover:text-gray-900 text-xs hover:underline">
+      <span>{{svg-jar
+          "arrow-up"
+          class="w-3 fill-current text-gray-400 dark:text-gray-500 group-hover:text-gray-700 dark:group-hover:text-gray-300"
+        }}</span>
+      <div class="ml-1 text-gray-500 dark:text-gray-500 group-hover:text-gray-900 dark:group-hover:text-gray-100 text-xs hover:underline">
         Step back
       </div>
 
