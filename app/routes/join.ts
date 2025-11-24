@@ -27,7 +27,7 @@ export default class JoinRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   async model(params: { affiliateLinkSlug: string }) {
