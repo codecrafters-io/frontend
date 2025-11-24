@@ -1,7 +1,9 @@
-<div class="bg-white">
+<div class="bg-white dark:bg-gray-950">
   {{! Mobile !}}
   {{#unless this.hasCompletedConcept}}
-    <div class="block md:hidden px-3 border-b border-gray-200 shrink-0 sticky top-0 backdrop-blur-xs bg-white/80 z-20 w-full">
+    <div
+      class="block md:hidden px-3 border-b border-gray-200 dark:border-white/5 shrink-0 sticky top-0 backdrop-blur-xs bg-white/80 dark:bg-gray-925/80 z-20 w-full"
+    >
       {{#if (gt this.currentProgressPercentage 0)}}
         <div class="py-5">
           <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} />
@@ -29,12 +31,12 @@
         {{/if}}
 
         {{#animated-if this.hasCompletedConcept}}
-          <div class="flex flex-col gap-y-16 border-t border-gray-200 pt-12" {{scroll-into-view block="start" delay=700}}>
+          <div class="flex flex-col gap-y-16 border-t border-gray-200 dark:border-white/5 pt-12" {{scroll-into-view block="start" delay=700}}>
             <div class="flex flex-col items-center justify-center">
               <div class="text-5xl mb-8" {{did-insert this.handleDidInsertConfettiEmoji}}>
                 🎉
               </div>
-              <div class="text-lg text-center text-gray-900 mb-8">
+              <div class="text-lg text-center text-gray-900 dark:text-gray-100 mb-8">
                 You've completed this concept!
               </div>
 
@@ -43,8 +45,8 @@
                   role="button"
                   tabindex="0"
                   class="rounded-sm border
-                    {{if dd.isOpen 'border-gray-600' 'border-gray-200'}}
-                    hover:border-gray-600 transition-colors px-3 py-2 text-sm text-gray-600"
+                    {{if dd.isOpen 'border-gray-600 dark:border-gray-400' 'border-gray-200 dark:border-white/5'}}
+                    hover:border-gray-600 dark:hover:border-gray-400 transition-colors px-3 py-2 text-sm text-gray-600 dark:text-gray-400"
                   {{focus-on-insert}}
                   data-test-feedback-button
                 >
@@ -57,7 +59,7 @@
 
             {{#if this.nextConcept}}
               <div data-test-upcoming-concept>
-                <div class="text-lg text-center text-gray-900 mb-8" data-test-upcoming-concept-title>
+                <div class="text-lg text-center text-gray-900 dark:text-gray-100 mb-8" data-test-upcoming-concept-title>
                   Next up in
                   {{@conceptGroup.title}}:
                 </div>
@@ -70,9 +72,9 @@
       </div>
 
       {{! Desktop !}}
-      <div class="hidden md:block border-l border-gray-200 pl-8 shrink-0 py-2 w-64">
+      <div class="hidden md:block border-l border-gray-200 dark:border-white/5 pl-8 shrink-0 py-2 w-64">
         {{#if (gt this.currentProgressPercentage 0)}}
-          <div class="sticky py-9 top-0 bg-white">
+          <div class="sticky py-9 top-0 bg-white dark:bg-gray-950">
             <ConceptProgress @latestConceptEngagement={{@latestConceptEngagement}} data-test-concept-progress />
           </div>
         {{else}}

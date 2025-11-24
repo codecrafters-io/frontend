@@ -1,13 +1,15 @@
-<div class="py-5 md:py-10 border-b border-gray-200 code-walkthrough-header-background">
+<div class="py-5 md:py-10 border-b border-gray-200 dark:border-white/5 bg-gradient-to-b from-white to-gray-50 dark:from-gray-950 dark:to-gray-925">
   <div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6">
     <div class="flex flex-col items-start">
-      <div class="text-gray-400 uppercase text-xs font-bold tracking-wider mb-1 md:mb-1.5">
+      <div class="text-gray-400 dark:text-gray-500 uppercase text-xs font-bold tracking-wider">
         CONCEPT
       </div>
-      <h1 class="text-gray-900 text-xl md:text-4xl font-bold mb-1 md:mb-2">
+      <h1
+        class="text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 leading-10 md:leading-12 text-xl md:text-4xl font-bold mb-1 md:mb-2"
+      >
         {{@concept.title}}
       </h1>
-      <div class="text-gray-600 max-w-xl leading-relaxed text-sm md:text-base mb-2 md:mb-4">
+      <div class="text-gray-600 dark:text-gray-400 max-w-xl leading-relaxed text-sm md:text-base mb-2 md:mb-4">
         {{markdown-to-html @concept.descriptionMarkdown}}
       </div>
       <a
@@ -19,13 +21,13 @@
         <img
           alt="avatar"
           src={{or @concept.author.avatarUrl "https://github.com/rohitpaulk.png"}}
-          class="w-12 h-12 filter drop-shadow-xs ring-1 ring-white rounded-full shadow-sm brightness-110"
+          class="w-12 h-12 filter drop-shadow-xs ring-1 ring-white dark:ring-white/20 rounded-full shadow-sm brightness-110"
         />
         <div>
-          <div class="text-gray-700 text-xs font-bold mb-0.5">
+          <div class="text-gray-700 dark:text-gray-300 text-xs font-bold mb-0.5">
             {{or @concept.author.username "Paul Kuruvilla"}}
           </div>
-          <div class="text-gray-500 text-xs">
+          <div class="text-gray-500 dark:text-gray-400 text-xs">
             {{#if @concept.author}}
               Concept Author
             {{else}}
