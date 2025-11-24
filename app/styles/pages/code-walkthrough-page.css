@@ -1,7 +1,7 @@
-.code-walkthrough-header-background {
-  background: linear-gradient(180deg, #eff6ff 0%, rgb(239 246 255 / 50%) 100%);
-}
-
 .code-walkthrough-prose pre[class*='language-'] {
   background-color: #f1f5f9;
+}
+
+.code-walkthrough-prose pre[class*='language-']:is(.dark *) {
+  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
 }
