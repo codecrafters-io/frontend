@@ -53,13 +53,13 @@ module('Acceptance | track-page | view-track', function (hooks) {
     await percySnapshot('Track (Generic) - Anonymous User');
   });
 
-  test('it renders in dark mode', async function (assert) {
-    this.owner.lookup('service:dark-mode').isEnabledTemporarily = true;
+  test('it renders in light mode', async function (assert) {
+    this.owner.lookup('service:dark-mode').updateLocalStoragePreference('light');
 
     await visit('/tracks/go');
     assert.strictEqual(1, 1); // dummy assertion
 
-    await percySnapshot('Track - Anonymous User (Dark Mode)');
+    await percySnapshot('Track - Anonymous User (Light Mode)');
   });
 
   test('it renders the correct description for a track', async function (assert) {
