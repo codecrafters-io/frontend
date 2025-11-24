@@ -17,7 +17,7 @@ export interface Signature {
 }
 
 interface Feature {
-  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples' | 'dark-mode';
+  slug: 'content' | 'turbo-test-runs' | 'anonymous-mode' | 'code-examples';
   name: string;
   cta: string;
   isAccessibleByReferringUsers: boolean;
@@ -40,12 +40,6 @@ const features: Feature[] = [
     slug: 'code-examples',
     name: 'Code examples',
     cta: 'Unlock all available examples with a CodeCrafters Membership.',
-    isAccessibleByReferringUsers: false,
-  },
-  {
-    slug: 'dark-mode',
-    name: 'Dark mode',
-    cta: 'Unlock dark mode with a CodeCrafters membership.',
     isAccessibleByReferringUsers: false,
   },
   {
