@@ -40,5 +40,6 @@ export default function createCodeWalkthroughWalkthrough(server, slug) {
     ],
 
     slug: slug,
+    title: 'How Redis binds to a port',
   });
 }

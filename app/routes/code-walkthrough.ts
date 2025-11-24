@@ -10,7 +10,7 @@ export default class CodeWalkthroughRoute extends BaseRoute {
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   async model(params: { code_walkthrough_slug: string }): Promise<ModelType> {
