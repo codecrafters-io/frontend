@@ -1,0 +1,19 @@
+<div class="overflow-y-auto h-32" {{did-insert this.handleDidInsertEventsContainer}} ...attributes>
+  <AnimatedContainer>
+    {{#animated-each this.toolCalls key="tool_call_id" use=this.transition duration=300 as |toolCall|}}
+      <div>
+        {{#animated-if (eq toolCall.status "in_progress") use=this.transition duration=300}}
+          <div class="text-xs text-gray-300">
+            {{toolCall.textComponents.[0]}}
+            {{toolCall.textComponents.[1]}}...
+          </div>
+        {{else}}
+          <div class="text-xs text-gray-500">
+            {{toolCall.textComponents.[0]}}
+            {{toolCall.textComponents.[1]}}
+          </div>
+        {{/animated-if}}
+      </div>
+    {{/animated-each}}
+  </AnimatedContainer>
+</div>
