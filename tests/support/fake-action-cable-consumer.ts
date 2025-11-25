@@ -35,6 +35,10 @@ export default class FakeActionCableConsumer {
     this.#subscriptions[channel] ||= [];
     this.#subscriptions[channel] = [...this.#subscriptions[channel], { id, args, callbacks }];
 
+    if (callbacks.onConnect) {
+      callbacks.onConnect();
+    }
+
     return {
       send: () => {},
       unsubscribe: () => {
