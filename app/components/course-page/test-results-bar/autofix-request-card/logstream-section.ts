@@ -17,14 +17,21 @@ interface Signature {
   };
 }
 
-interface Event {
-  event: 'tool_call_start' | 'tool_call_end';
+interface ToolCallStartEvent {
+  event: 'tool_call_start';
   params: {
     tool_call_id: string;
     tool_name: string;
     tool_arguments: Record<string, unknown>;
   };
 }
+
+interface ToolCallEndEvent {
+  event: 'tool_call_end';
+  params: { tool_call_id: string };
+}
+
+type Event = ToolCallStartEvent | ToolCallEndEvent;
 
 class ToolCall {
   tool_call_id: string;
