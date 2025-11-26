@@ -534,12 +534,17 @@ module.exports = {
           '50%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
+        'text-shimmer': {
+          '0%': { backgroundPosition: '100% center' },
+          '100%': { backgroundPosition: '0% center' },
+        },
       },
       animation: {
         'infinite-slide': 'infinite-slide 30s linear infinite',
         'blink-fast': 'blink 1s step-start infinite',
         'spin-slow': 'spin 16s linear infinite',
         'spin-medium': 'spin 4s linear infinite',
+        'text-shimmer': 'text-shimmer var(--shimmer-duration, 2s) linear infinite',
       },
     },
   },
