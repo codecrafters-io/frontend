@@ -164,11 +164,9 @@ export default class LogstreamSection extends Component<Signature> {
 
     if (result.every((toolCall) => toolCall.isAnalysisAction())) {
       // Show an in-progress analysis action if all tool calls are analysis actions.
-      result.push(new ToolCall('fake-tool-call-id', 'analyze', {}));
+      // Use result.length as the index to keep the ID consistent when transitioning to the else branch.
+      result.push(new ToolCall(`analysis-${result.length}`, 'analyze', {}));
     } else {
-      const analysisToolCall = new ToolCall('fake-tool-call-id', 'analyze', {});
-      analysisToolCall.status = 'completed';
-
       let lastAnalysisActionIndex = -1;
 
       for (let i = result.length - 1; i >= 0; i--) {
@@ -177,6 +175,9 @@ export default class LogstreamSection extends Component<Signature> {
           break;
         }
       }
+
+      const analysisToolCall = new ToolCall(`analysis-${lastAnalysisActionIndex + 1}`, 'analyze', {});
+      analysisToolCall.status = 'completed';
 
       result.splice(lastAnalysisActionIndex + 1, 0, analysisToolCall);
     }
