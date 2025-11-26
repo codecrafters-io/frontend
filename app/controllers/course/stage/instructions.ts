@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -13,6 +14,7 @@ import type Store from '@ember-data/store';
 export default class CourseStageInstructionsController extends Controller {
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare router: RouterService;
   @service declare store: Store;
 
@@ -62,8 +64,7 @@ export default class CourseStageInstructionsController extends Controller {
 
   @action
   handleDidUpdateTestsStatus(_element: HTMLDivElement, [newTestsStatus]: [CourseStageStep['testsStatus']]) {
-    // TODO: Add a feature flag here
-    if (this.authenticator.currentUser?.isStaff) {
+    if (this.featureFlags.canViewAutofixFlow) {
       // For tests passed, let's collapse the test results bar and scroll all the way to the top
       if (newTestsStatus === 'passed') {
         this.coursePageState.testResultsBarIsExpanded = false;
