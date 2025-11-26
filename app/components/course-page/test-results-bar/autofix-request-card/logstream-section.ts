@@ -164,7 +164,8 @@ export default class LogstreamSection extends Component<Signature> {
 
     if (result.every((toolCall) => toolCall.isAnalysisAction())) {
       // Show an in-progress analysis action if all tool calls are analysis actions.
-      result.push(new ToolCall('analysis-0', 'analyze', {}));
+      // Use result.length as the index to keep the ID consistent when transitioning to the else branch.
+      result.push(new ToolCall(`analysis-${result.length}`, 'analyze', {}));
     } else {
       let lastAnalysisActionIndex = -1;
 
