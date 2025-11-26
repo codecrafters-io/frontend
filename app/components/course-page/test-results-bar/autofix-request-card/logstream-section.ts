@@ -1,13 +1,15 @@
 import Component from '@glimmer/component';
 import Logstream from 'codecrafters-frontend/utils/logstream';
+import fade from 'ember-animated/transitions/fade';
+import move from 'ember-animated/motions/move';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
+import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
+import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { next } from '@ember/runloop';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -46,54 +48,65 @@ class ToolCall {
     this.status = 'in_progress';
   }
 
-  get textComponents(): [string, string] {
+  get text(): string {
     switch (this.tool_name) {
       case 'read':
         if (this.status === 'in_progress') {
-          return ['Reading', 'abcd.rb'];
+          return `Reading ${this.tool_arguments['path']!}`;
         } else {
-          return ['Read', 'abcd.rb'];
+          return `Read ${this.tool_arguments['path']!}`;
         }
 
       case 'edit':
         if (this.status === 'in_progress') {
-          return ['Editing', 'abcd.rb'];
+          return `Editing ${this.tool_arguments['path']!}`;
         } else {
-          return ['Edited', 'abcd.rb'];
+          return `Edited ${this.tool_arguments['path']!}`;
+        }
+
+      case 'write':
+        if (this.status === 'in_progress') {
+          return `Creating ${this.tool_arguments['path']!}`;
+        } else {
+          return `Created ${this.tool_arguments['path']!}`;
         }
 
       case 'delete':
         if (this.status === 'in_progress') {
-          return ['Deleting', 'abcd.rb'];
+          return `Deleting ${this.tool_arguments['path']!}`;
         } else {
-          return ['Deleted', 'abcd.rb'];
+          return `Deleted ${this.tool_arguments['path']!}`;
         }
 
       case 'list':
         if (this.status === 'in_progress') {
-          return ['Listing', ''];
+          return 'Listing files';
         } else {
-          return ['Listed', ''];
+          return 'Listed files';
         }
 
       case 'bash':
         if (this.status === 'in_progress') {
-          return ['Running', 'tests'];
+          return 'Running tests';
         } else {
-          return ['Ran', 'tests'];
+          return 'Ran tests';
         }
 
       // This is a fake tool call that we insert for UI display purposes
       case 'analyze':
         if (this.status === 'in_progress') {
-          return ['Analyzing', 'codebase'];
+          return 'Analyzing codebase';
         } else {
-          return ['Analyzed', 'codebase'];
+          return 'Analyzed codebase';
         }
 
       default:
-        return [this.tool_name, ''];
+        return this.tool_name;
     }
+  }
+
+  isAnalysisAction(): boolean {
+    return this.tool_name === 'analyze' || this.tool_name === 'read' || this.tool_name === 'list';
   }
 }
 
@@ -141,10 +154,6 @@ export default class LogstreamSection extends Component<Signature> {
   get toolCalls(): ToolCall[] {
     const result: ToolCall[] = [];
 
-    if (this.events.length === 0) {
-      result.push(new ToolCall('fake-tool-call-id', 'analyze', {}));
-    }
-
     for (const event of this.events) {
       if (event.event === 'tool_call_start') {
         result.push(new ToolCall(event.params.tool_call_id, event.params.tool_name, event.params.tool_arguments || {}));
@@ -153,12 +162,47 @@ export default class LogstreamSection extends Component<Signature> {
       }
     }
 
+    if (result.every((toolCall) => toolCall.isAnalysisAction())) {
+      // Show an in-progress analysis action if all tool calls are analysis actions.
+      result.push(new ToolCall('fake-tool-call-id', 'analyze', {}));
+    } else {
+      const analysisToolCall = new ToolCall('fake-tool-call-id', 'analyze', {});
+      analysisToolCall.status = 'completed';
+
+      let lastAnalysisActionIndex = -1;
+
+      for (let i = result.length - 1; i >= 0; i--) {
+        if (result[i]!.isAnalysisAction()) {
+          lastAnalysisActionIndex = i;
+          break;
+        }
+      }
+
+      result.splice(lastAnalysisActionIndex + 1, 0, analysisToolCall);
+    }
+
     return result;
   }
 
   @action
   handleDidInsertEventsContainer(eventsContainer: HTMLDivElement) {
     this.eventsContainer = eventsContainer;
+  }
+
+  // @ts-expect-error ember-animated not typed
+  // eslint-disable-next-line require-yield
+  *listTransition({ insertedSprites, keptSprites, removedSprites }) {
+    for (const sprite of keptSprites) {
+      move(sprite);
+    }
+
+    for (const sprite of insertedSprites) {
+      fadeIn(sprite);
+    }
+
+    for (const sprite of removedSprites) {
+      fadeOut(sprite);
+    }
   }
 
   willDestroy() {
