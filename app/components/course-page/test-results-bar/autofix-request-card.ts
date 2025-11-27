@@ -76,7 +76,6 @@ export default class AutofixRequestCard extends Component<Signature> {
       this.analyticsEventTracker.track('revealed_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
       this.diffWasUnblurred = true;
     } else {
-      // this.analyticsEventTracker.track('hidden_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
       this.diffWasUnblurred = false;
     }
   }
