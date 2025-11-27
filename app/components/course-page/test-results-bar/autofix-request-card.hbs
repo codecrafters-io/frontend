@@ -29,20 +29,25 @@
         </:content>
 
         <:overlay>
-          {{#if (eq @autofixRequest.status "success")}}
-            <SecondaryButton class="bg-gray-900 mt-10" {{on "click" this.handleShowExplanationButtonClick}}>
-              <div class="flex items-center gap-2">
-                <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
-                Explain more?
-              </div>
-            </SecondaryButton>
-          {{/if}}
+          <SecondaryButton class="bg-gray-900 mt-2" {{on "click" this.handleShowExplanationButtonClick}}>
+            <div class="flex items-center gap-2">
+              <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
+              Explain more?
+            </div>
+          </SecondaryButton>
         </:overlay>
       </BlurredOverlay>
 
       {{#animated-if (not this.explanationIsBlurred) use=this.transition duration=200}}
-        <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-950/20" class="-mx-4 -mb-4">
-          <:content>
+        <div>
+          {{#animated-if this.diffIsBlurred use=this.transition duration=200}}
+            <SecondaryButton class="bg-gray-900" {{on "click" this.handleShowFixedCodeButtonClick}}>
+              <div class="flex items-center gap-2">
+                <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
+                Show fixed code
+              </div>
+            </SecondaryButton>
+          {{else}}
             <div class="p-4 flex flex-col gap-6">
               {{#each this.changedFilesForRender key="filename" as |changedFile|}}
                 <FileDiffCard
@@ -54,18 +59,8 @@
                 />
               {{/each}}
             </div>
-          </:content>
-          <:overlay>
-            {{#if (eq @autofixRequest.status "success")}}
-              <SecondaryButton class="bg-gray-900 mt-10" {{on "click" this.handleShowFixedCodeButtonClick}}>
-                <div class="flex items-center gap-2">
-                  <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
-                  Show fixed code
-                </div>
-              </SecondaryButton>
-            {{/if}}
-          </:overlay>
-        </BlurredOverlay>
+          {{/animated-if}}
+        </div>
       {{/animated-if}}
     {{/animated-if}}
   </AnimatedContainer>
