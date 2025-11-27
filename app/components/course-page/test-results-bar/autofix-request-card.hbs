@@ -32,7 +32,7 @@
 
           <:overlay>
             {{#if (eq @autofixRequest.status "success")}}
-              <SecondaryButton class="bg-gray-900 mt-6" {{on "click" this.handleShowExplanationButtonClick}}>
+              <SecondaryButton @size="small" class="bg-gray-900 mt-6" {{on "click" this.handleShowExplanationButtonClick}}>
                 <div class="flex items-center gap-2">
                   <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
                   Explain more?
@@ -44,7 +44,7 @@
 
         {{#animated-if (not this.explanationIsBlurred) use=this.transition duration=200}}
           <div class="w-full flex items-center justify-center mt-4">
-            <SecondaryButton class="bg-gray-900" {{on "click" this.handleToggleFixedCodeButtonClick}}>
+            <SecondaryButton @size="small" class="bg-gray-900" {{on "click" this.handleToggleFixedCodeButtonClick}}>
               <div class="flex items-center gap-2">
                 <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
 
