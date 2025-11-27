@@ -18,7 +18,8 @@
       {{/if}}
     {{/animated-value}}
 
-    {{#animated-if (eq @autofixRequest.status "in_progress") use=this.transition duration=200}}
+    {{! Investigate issue with animated-if usage here }}
+    {{#if (eq @autofixRequest.status "in_progress")}}
       <CoursePage::TestResultsBar::AutofixRequestCard::LogstreamSection class="mt-3" @autofixRequest={{@autofixRequest}} />
     {{else}}
       <div>
@@ -69,6 +70,6 @@
           </BlurredOverlay>
         {{/animated-if}}
       </div>
-    {{/animated-if}}
+    {{/if}}
   </AnimatedContainer>
 </div>
