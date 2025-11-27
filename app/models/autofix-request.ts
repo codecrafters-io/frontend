@@ -7,7 +7,7 @@ export default class AutofixRequestModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'autofixRequests' }) declare submission: SubmissionModel;
   @belongsTo('repository', { async: false, inverse: 'autofixRequests' }) declare repository: RepositoryModel;
 
-  @attr('string') declare creatorType: 'user' | 'system' | 'staff';
+  @attr('string') declare creatorType: 'user' | 'system' | 'staff' | 'internal';
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;
   @attr('string') declare explanationMarkdown: string;
@@ -21,8 +21,8 @@ export default class AutofixRequestModel extends Model {
     return `${config.x.backendUrl}/admin/autofix_requests/${this.id}`;
   }
 
-  get creatorTypeIsStaff() {
-    return this.creatorType === 'staff';
+  get creatorTypeIsStaffOrInternal() {
+    return this.creatorType === 'staff' || this.creatorType === 'internal';
   }
 
   get logs(): string {

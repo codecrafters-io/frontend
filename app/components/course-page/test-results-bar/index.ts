@@ -50,7 +50,7 @@ export default class TestResultsBar extends Component<Signature> {
 
     return (
       (this.args.repository.lastSubmission?.autofixRequests || [])
-        .filter((request) => !request.creatorTypeIsStaff)
+        .filter((request) => !request.creatorTypeIsStaffOrInternal)
         .filter((request) => request.submission === this.args.repository.lastSubmission)
         .filter((request) => request.submission.courseStage === courseStageStep.courseStage)
         .at(-1) || null
