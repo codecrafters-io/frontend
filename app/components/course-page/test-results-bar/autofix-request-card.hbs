@@ -32,7 +32,7 @@
 
           <:overlay>
             {{#if (eq @autofixRequest.status "success")}}
-              <SecondaryButton class="bg-gray-900 mt-6" {{on "click" this.handleShowExplanationButtonClick}}>
+              <SecondaryButton @size="small" class="bg-gray-900 mt-6" {{on "click" this.handleShowExplanationButtonClick}}>
                 <div class="flex items-center gap-2">
                   <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
                   Explain more?
@@ -43,31 +43,33 @@
         </BlurredOverlay>
 
         {{#animated-if (not this.explanationIsBlurred) use=this.transition duration=200}}
-          <BlurredOverlay @isBlurred={{this.diffIsBlurred}} @overlayClass="bg-gray-950/20" class="-mx-4 -mb-4">
-            <:content>
-              <div class="p-4 flex flex-col gap-6">
-                {{#each this.changedFilesForRender key="filename" as |changedFile|}}
-                  <FileDiffCard
-                    @code={{changedFile.diff}}
-                    @filename={{changedFile.filename}}
-                    @forceDarkTheme={{true}}
-                    {{! @glint-expect-error language can be nullable }}
-                    @language={{@autofixRequest.submission.repository.language.slug}}
-                  />
-                {{/each}}
+          <div class="w-full flex items-center justify-center mt-4">
+            <SecondaryButton @size="small" class="bg-gray-900" {{on "click" this.handleToggleFixedCodeButtonClick}}>
+              <div class="flex items-center gap-2">
+                <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
+
+                {{#if this.diffIsHidden}}
+                  Show fixed code
+                {{else}}
+                  Hide fixed code
+                {{/if}}
               </div>
-            </:content>
-            <:overlay>
-              {{#if (eq @autofixRequest.status "success")}}
-                <SecondaryButton class="bg-gray-900 mt-10" {{on "click" this.handleShowFixedCodeButtonClick}}>
-                  <div class="flex items-center gap-2">
-                    <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
-                    Show fixed code
-                  </div>
-                </SecondaryButton>
-              {{/if}}
-            </:overlay>
-          </BlurredOverlay>
+            </SecondaryButton>
+          </div>
+
+          {{#animated-if (not this.diffIsHidden) use=this.transition duration=200}}
+            <div class="flex flex-col gap-6 pt-4">
+              {{#each this.changedFilesForRender key="filename" as |changedFile|}}
+                <FileDiffCard
+                  @code={{changedFile.diff}}
+                  @filename={{changedFile.filename}}
+                  @forceDarkTheme={{true}}
+                  {{! @glint-expect-error language can be nullable }}
+                  @language={{@autofixRequest.submission.repository.language.slug}}
+                />
+              {{/each}}
+            </div>
+          {{/animated-if}}
         {{/animated-if}}
       </div>
     {{/if}}

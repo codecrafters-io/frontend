@@ -44,7 +44,7 @@ export default class AutofixRequestCard extends Component<Signature> {
     }
   }
 
-  get diffIsBlurred() {
+  get diffIsHidden() {
     // We never show a diff unless the autofix request is successful
     if (this.args.autofixRequest.status !== 'success') {
       return true;
@@ -71,12 +71,13 @@ export default class AutofixRequestCard extends Component<Signature> {
   }
 
   @action
-  handleShowFixedCodeButtonClick() {
-    if (this.diffIsBlurred) {
+  handleToggleFixedCodeButtonClick() {
+    if (this.diffIsHidden) {
       this.analyticsEventTracker.track('revealed_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
+      this.diffWasUnblurred = true;
+    } else {
+      this.diffWasUnblurred = false;
     }
-
-    this.diffWasUnblurred = true;
   }
 }
 
