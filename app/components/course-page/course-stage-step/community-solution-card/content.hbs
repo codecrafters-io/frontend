@@ -17,7 +17,7 @@
         @highlightedFile={{highlightedFile}}
         @onPublishToGithubButtonClick={{this.handlePublishToGithubButtonClick}}
         @solution={{@solution}}
-        class={{if (not-eq index (sub @solution.highlightedFiles.length 1)) "mb-4"}}
+        class={{if (not-eq index (sub (or @solution.highlightedFiles.length 0) 1)) "mb-4"}}
       />
     {{/each}}
   {{else}}
