@@ -10,13 +10,25 @@ import type LanguageModel from './language';
 import type TrustedCommunitySolutionEvaluationModel from './trusted-community-solution-evaluation';
 import type UserModel from './user';
 import type CommunitySolutionExportModel from './community-solution-export';
+import type CommunitySolutionVerificationModel from './community-solution-verification';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { type FileComparison, FileComparisonFromJSON } from 'codecrafters-frontend/utils/file-comparison';
 
 export default class CommunityCourseStageSolutionModel extends Model.extend(ViewableMixin, VotableMixin) {
-  static defaultIncludedResources = ['course-stage', 'current-user-downvotes', 'current-user-upvotes', 'exports', 'language', 'screencasts', 'user'];
+  static defaultIncludedResources = [
+    'course-stage',
+    'current-user-downvotes',
+    'current-user-upvotes',
+    'evaluations',
+    'evaluations.evaluator',
+    'exports',
+    'language',
+    'screencasts',
+    'user',
+    'verifications',
+  ];
 
   @service declare authenticator: AuthenticatorService; // used by VotableMixin
 
@@ -32,6 +44,8 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @hasMany('community-course-stage-solution-comment', { async: false, inverse: 'target' }) declare comments: CourseStageCommentModel[];
   @hasMany('community-solution-export', { async: false, inverse: 'communitySolution' }) declare exports: CommunitySolutionExportModel[];
   @hasMany('course-stage-screencast', { async: false, inverse: null }) declare screencasts: CourseStageScreencastModel[];
+  @hasMany('community-solution-verification', { async: false, inverse: 'communitySolution' })
+  declare verifications: CommunitySolutionVerificationModel[];
 
   // @ts-expect-error empty '' not supported
   @attr('') changedFiles: { diff: string; filename: string }[]; // free-form JSON
