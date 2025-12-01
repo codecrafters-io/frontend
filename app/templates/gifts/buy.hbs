@@ -2,7 +2,9 @@
 
 <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-16 pb-48 px-3 md:px-6">
   <div class="flex flex-col items-center">
-    <h1 class="text-center text-3xl text-gray-700 font-bold tracking-tighter mb-12">Gift a CodeCrafters membership</h1>
+    <h1
+      class="text-center text-3xl leading-9 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold tracking-tighter mb-12"
+    >Gift a CodeCrafters membership</h1>
 
     {{#if false}}
       {{! TODO: Add success step }}
@@ -15,20 +17,15 @@
       />
 
       <AnimatedContainer class="w-full max-w-xl">
-        {{#animated-if (eq this.currentStep 1) use=this.transition duration=200}}
-          <GiftPaymentPage::EnterDetailsStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
-        {{else}}
-          {{#animated-if (eq this.currentStep 2) use=this.transition duration=200}}
+        {{#animated-value this.currentStep use=this.transition duration=200 as |step|}}
+          {{#if (eq step 1)}}
+            <GiftPaymentPage::EnterDetailsStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+          {{else if (eq step 2)}}
             <GiftPaymentPage::ChoosePlanStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
-          {{else}}
-            {{#animated-if (eq this.currentStep 3) use=this.transition duration=200}}
-              <GiftPaymentPage::ConfirmAndPayStepContainer
-                @giftPaymentFlow={{this.model}}
-                @onNavigationItemClick={{this.handleNavigationItemClick}}
-              />
-            {{/animated-if}}
-          {{/animated-if}}
-        {{/animated-if}}
+          {{else if (eq step 3)}}
+            <GiftPaymentPage::ConfirmAndPayStepContainer @giftPaymentFlow={{this.model}} @onNavigationItemClick={{this.handleNavigationItemClick}} />
+          {{/if}}
+        {{/animated-value}}
       </AnimatedContainer>
     {{/if}}
   </div>

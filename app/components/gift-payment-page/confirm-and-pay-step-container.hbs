@@ -1,21 +1,27 @@
 <GiftPaymentPage::StepContainer @title="Confirm & Pay" data-test-confirm-and-pay-step-container>
   <Alert @color="blue" class="mb-3">
     <div>
-      <div class="prose prose-blue prose-xs prose-compact">
-        <h4>
-          Your membership gift details
+      <div class="prose prose-blue prose-xs prose-compact dark:prose-invert">
+        <h4 class="border-b pb-0.5 border-blue-500/60 inline-block">
+          Gift details
         </h4>
 
         <ul>
           <li>
             You are purchasing a
             <b>{{this.selectedPlan.title}} pass</b>
-            gift (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 2)}}>change</button>)
+            gift
+
+            <span class="whitespace-nowrap">
+              (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 2)}}>change</button>)
+            </span>
           </li>
           <li>
             Your payment receipt will be sent to
             <b>{{@giftPaymentFlow.senderEmailAddress}}</b>
-            (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 1)}}>change</button>)
+            <span class="whitespace-nowrap">
+              (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 1)}}>change</button>)
+            </span>
           </li>
         </ul>
       </div>
@@ -23,8 +29,8 @@
   </Alert>
 
   <Alert @color="teal" class="mt-3">
-    <div class="prose prose-xs prose-green prose-compact">
-      <h4>
+    <div class="prose prose-xs prose-green prose-compact dark:prose-invert">
+      <h4 class="border-b pb-0.5 border-green-500/60 inline-block">
         Next steps
       </h4>
 
@@ -40,9 +46,9 @@
     </div>
   </Alert>
 
-  <div class="bg-gray-50/50 rounded-sm border border-gray-200 p-3 mt-3">
-    <div class="prose prose-xs prose-compact">
-      <h4>
+  <div class="bg-gray-50/50 dark:bg-gray-900/50 rounded-sm border border-gray-200 dark:border-white/10 p-3 mt-3">
+    <div class="prose prose-xs prose-compact dark:prose-invert">
+      <h4 class="border-b pb-0.5 border-gray-500/60 inline-block">
         Expiry and refunds
       </h4>
 
@@ -60,15 +66,15 @@
     </div>
   </div>
 
-  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+  <div class="h-px bg-gray-100 dark:bg-white/10 mt-6 mb-6"></div>
 
   <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
     {{#if this.errorMessage}}
-      <div class="text-red-600 text-sm font-semibold">
+      <div class="text-red-600 dark:text-red-400 text-sm font-semibold">
         {{this.errorMessage}}
       </div>
     {{else}}
-      <div class="text-xs text-gray-500 text-center">
+      <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
         Payments are processed securely using Stripe.
       </div>
     {{/if}}
