@@ -53,8 +53,23 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     }
   }
 
+  get formattedVerificationStatus() {
+    const verification = this.verificationAgainstLatestTesterVersion;
+    const latestTesterVersion = this.latestTesterVersion;
+
+    if (verification?.status === 'success') {
+      return `✅ Verified against ${latestTesterVersion?.tagName}`;
+    } else {
+      return `Not verified against ${latestTesterVersion?.tagName ?? 'unknown'}`;
+    }
+  }
+
   get isScored() {
     return this.args.solution.score !== null && this.args.solution.score > 0;
+  }
+
+  get latestTesterVersion() {
+    return this.args.solution.courseStage.course.testerVersions.find((v) => v.isLatest);
   }
 
   get markdownContent() {
@@ -67,10 +82,15 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     }
 
     lines.push(`* ${this.formattedFlakinessCheckStatus}`);
+    lines.push(`* ${this.formattedVerificationStatus}`);
     lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
     lines.push(`* ⚡︎ ${this.args.solution.highlightedLinesCount} lines highlighted`);
 
     return lines.join('\n');
+  }
+
+  get verificationAgainstLatestTesterVersion() {
+    return this.args.solution.verifications.find((v) => v.courseTesterVersion === this.latestTesterVersion) ?? null;
   }
 }
 
