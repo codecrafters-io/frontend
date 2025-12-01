@@ -14,6 +14,11 @@
 @import url('pages/code-walkthrough-page.css');
 @import url('pages/course-stage-solution-page.css');
 
+:root {
+  /* --font-cursive: 'Shadows Into Light Two', cursive; */
+  --font-cursive: 'Indie Flower', cursive;
+}
+
 body {
   font-family: Montserrat, sans-serif; /* Required for fonts to work on Percy */
 }
