@@ -21,6 +21,12 @@ export default class MoreDropdown extends Component<Signature> {
   }
 
   @action
+  async handleCopyIdLinkClick(dropdownActions: { close: () => void }) {
+    await navigator.clipboard.writeText(this.args.solution.id);
+    dropdownActions.close();
+  }
+
+  @action
   handleViewFullDiffLinkClick(dropdownActions: { close: () => void }) {
     this.args.onDiffSourceChange('changed-files');
     dropdownActions.close();
