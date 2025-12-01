@@ -98,6 +98,7 @@ export default function (config) {
           screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
           trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
           user: belongsTo('user', { inverse: null }),
+          verifications: hasMany('community-solution-verification', { inverse: 'communitySolution' }),
         }),
         communityCourseStageSolutionComment: Model.extend({
           user: belongsTo('user', { inverse: null }),
