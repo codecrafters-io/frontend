@@ -10,7 +10,7 @@ export default class GiftsPayRoute extends BaseRoute {
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Light });
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Both });
   }
 
   async model(params: { giftPaymentFlowId?: string }): Promise<ModelType> {

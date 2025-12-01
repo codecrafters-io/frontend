@@ -6,7 +6,7 @@
     {{on "click" (fn @onNavigationItemClick 1)}}
   />
 
-  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 1) 'bg-teal-500' 'bg-gray-200'}} ml-4 mr-4"></div>
+  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 1) 'bg-teal-500' 'bg-gray-200 dark:bg-white/10'}} ml-4 mr-4"></div>
 
   <GiftPaymentPage::NavigationContainerItem
     @isComplete={{includes 2 @completedSteps}}
@@ -15,7 +15,7 @@
     {{on "click" (fn @onNavigationItemClick 2)}}
   />
 
-  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 2) 'bg-teal-500' 'bg-gray-200'}} ml-4 mr-4"></div>
+  <div class="h-0.5 w-16 sm:w-40 {{if (gt @currentStep 2) 'bg-teal-500' 'bg-gray-200 dark:bg-white/10'}} ml-4 mr-4"></div>
 
   <GiftPaymentPage::NavigationContainerItem
     @isComplete={{includes 3 @completedSteps}}
