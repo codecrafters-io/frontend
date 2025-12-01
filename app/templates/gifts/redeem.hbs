@@ -24,15 +24,17 @@
     </div>
 
     <PrimaryButton data-test-redeem-button @isDisabled={{this.redeemButtonIsDisabled}} {{on "click" this.handleRedeemButtonClick}}>
-      {{#if this.currentUserIsAnonymous}}
-        {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
-      {{/if}}
+      <div class="flex items-center gap-2">
+        {{#if this.currentUserIsAnonymous}}
+          {{svg-jar "github" class="fill-current w-5 transform transition-all"}}
+        {{/if}}
 
-      {{#if this.isRedeemingGift}}
-        Redeeming...
-      {{else}}
-        Redeem Gift
-      {{/if}}
+        {{#if this.isRedeemingGift}}
+          Redeeming...
+        {{else}}
+          Redeem Gift
+        {{/if}}
+      </div>
 
       {{#if this.currentUserIsAnonymous}}
         <EmberTooltip @text="Click to login via GitHub" />
