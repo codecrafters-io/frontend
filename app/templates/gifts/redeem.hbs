@@ -1,19 +1,22 @@
 <div class="max-w-2xl mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold mb-6">Claim Your Gift</h1>
+  <h1 class="text-2xl font-bold mb-6 text-gray-950 dark:text-gray-100">Claim Your Gift</h1>
 
-  <div data-test-gift-details-container class="bg-white rounded-lg shadow-md p-6 mb-6">
+  <div
+    data-test-gift-details-container
+    class="bg-white dark:bg-gray-925 rounded-lg shadow-md dark:shadow-none border border-gray-200 dark:border-white/10 p-6 mb-6"
+  >
     <div class="mb-4">
-      <h2 class="text-lg font-semibold">Gift Details</h2>
-      <p class="text-gray-600">You've received a CodeCrafters membership gift!</p>
+      <h2 class="text-lg font-semibold text-gray-950 dark:text-gray-100">Gift Details</h2>
+      <p class="text-gray-600 dark:text-gray-400">You've received a CodeCrafters membership gift!</p>
     </div>
 
     <div class="mb-4">
-      <p class="text-gray-600" data-test-gift-message>{{@model.giftMessage}}</p>
+      <p class="text-gray-600 dark:text-gray-300" data-test-gift-message>{{@model.giftMessage}}</p>
     </div>
 
     <div class="mb-6">
-      <p class="font-medium">Validity Period:</p>
-      <p class="text-gray-600" data-test-validity-period>
+      <p class="font-medium text-gray-950 dark:text-gray-100">Validity Period:</p>
+      <p class="text-gray-600 dark:text-gray-400" data-test-validity-period>
         This gift is valid for
         {{@model.validityInDays}}
         days.
