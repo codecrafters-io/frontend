@@ -43,6 +43,12 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
       selectedLanguage = languages.toSorted(fieldComparator('slug'))[0]!;
     }
 
+    // Needed for rendering verification statuses
+    await this.store.query('course-tester-version', {
+      course_id: course.id,
+      include: ['course', 'activator'].join(','),
+    });
+
     return {
       courseStage: courseStage,
       language: selectedLanguage,
