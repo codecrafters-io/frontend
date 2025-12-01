@@ -1,11 +1,11 @@
-import { inject as service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import Store from '@ember-data/store';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import type CourseModel from 'codecrafters-frontend/models/course';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
-import type CourseModel from 'codecrafters-frontend/models/course';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { inject as service } from '@ember/service';
 
 export type CodeExampleInsightsRouteModel = {
   courseStage: CourseStageModel;
@@ -36,15 +36,11 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
 
     const languages = course.betaOrLiveLanguages;
 
+    let selectedLanguage = params.language_slug ? languages.find((l) => l.slug === params.language_slug) : null;
+
     // Default to the first language in the list
-    let selectedLanguage: LanguageModel = languages.toSorted(fieldComparator('slug'))[0]!;
-
-    if (params.language_slug) {
-      const found = languages.find((l) => l.slug === params.language_slug);
-
-      if (found) {
-        selectedLanguage = found;
-      }
+    if (!selectedLanguage) {
+      selectedLanguage = languages.toSorted(fieldComparator('slug'))[0]!;
     }
 
     return {
@@ -53,7 +49,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
       solutions: (await this.store.query('community-course-stage-solution', {
         course_stage_id: courseStage.id,
         language_id: selectedLanguage.id,
-        include: 'user,evaluations,evaluations.evaluator',
+        include: CommunityCourseStageSolutionModel.defaultIncludedResources.join(','),
         order: params.sort_mode || 'newest',
         adapterOptions: {
           admin: true,
