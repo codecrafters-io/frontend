@@ -19,6 +19,10 @@
       {{/if}}
 
       <DropdownLink @text="Collapse example" @icon="x-circle" {{on "click" (fn this.handleCollapseExampleLinkClick dd.actions)}} />
+
+      {{#if (current-user-is-staff)}}
+        <DropdownLink @text="Copy ID" @icon="clipboard-copy" {{on "click" (fn this.handleCopyIdLinkClick dd.actions)}} data-test-copy-id-link />
+      {{/if}}
     </div>
   </dd.Content>
 </BasicDropdown>
