@@ -14,6 +14,11 @@
 @import url('pages/code-walkthrough-page.css');
 @import url('pages/course-stage-solution-page.css');
 
+:root {
+  /* --font-cursive: 'Shadows Into Light Two', cursive; */
+  --font-cursive: 'Indie Flower', cursive;
+}
+
 body {
   font-family: Montserrat, sans-serif; /* Required for fonts to work on Percy */
 }
@@ -238,4 +243,30 @@ body {
 
 .ember-popover[x-placement^='left'] .ember-popover-arrow {
   border-left-color: #3a3c47;
+}
+
+.gift-card {
+  animation: rotate-in 0.75s ease;
+  transform-origin: center;
+}
+
+@keyframes rotate-in {
+  0% {
+    transform: rotateY(-45deg) scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+.noisy-overlay {
+  background-image: url('/assets/images/bkg-noise.webp');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: normal;
+  opacity: 0.035;
+  pointer-events: none;
 }

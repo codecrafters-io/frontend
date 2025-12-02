@@ -1,0 +1,49 @@
+<div
+  class="relative bg-gradient-to-br from-gray-850 to-gray-950 rounded-lg border border-white/8 mb-6 w-full max-w-2xs flex flex-col justify-center items-center overflow-hidden gift-card"
+>
+  <div class="noisy-overlay absolute top-0 left-0 right-0 bottom-0 pointer-events-none"></div>
+
+  {{! Cutout wide slot !}}
+  <div class="absolute top-0 left-0 right-0 h-10 flex items-end justify-center">
+    <div class="w-20 h-4 bg-gray-950 rounded-full border border-white/10">
+    </div>
+  </div>
+
+  {{! Cutout top circle !}}
+  <div class="absolute top-0 left-0 right-0 h-10 flex items-end justify-center">
+    <div class="w-5 h-5 bg-gray-950 rounded-full border-t border-white/10 mb-px">
+    </div>
+  </div>
+
+  {{! <div class="absolute top-0 right-0 py-4 px-4">
+    <span class="text-2xl text-gradient-to-b from-white to-gray-300 leading-7 font-bold">3</span><span
+      class="text-xl text-gradient-to-b from-white to-gray-300 leading-7 font-bold"
+    >mo</span>
+  </div> }}
+
+  <div class="flex flex-col items-center px-6 pt-18 pb-8 w-full">
+    <img src={{this.logoImage}} alt="CodeCrafters" class="w-16 h-16 mb-2" />
+
+    <span class="text-gradient-to-b from-white to-gray-300 text-2xl leading-9 font-bold mb-2">
+      CodeCrafters
+    </span>
+
+    <span class="text-gradient-to-b from-gray-400 to-gray-500 leading-5 uppercase text-sm font-medium tracking-wide text-center text-balance mb-6">
+      Train your engineering skills like a pro athlete
+    </span>
+
+    <span class="text-gradient-to-b from-white to-gray-300 text-2xl leading-9 font-bold">
+      3 months
+    </span>
+
+    <span class="text-gradient-to-b from-gray-400 to-gray-500 leading-5 uppercase text-xs font-medium tracking-wide text-center text-balance mt-0.5">
+      All-access
+    </span>
+  </div>
+
+  <div class="bg-gray-950 border-t border-white/10 w-full">
+    <div class="text-gray-400 text-xxs font-medium tracking-wide text-center text-balance p-2 uppercase">
+      Expiry: 25 JUL '26
+    </div>
+  </div>
+</div>

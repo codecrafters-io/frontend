@@ -20,9 +20,9 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
-    assert.notOk(redeemGiftPage.giftDetailsContainer.redeemButton.isDisabled, 'Redeem button should be enabled for anonymous users');
+    assert.notOk(redeemGiftPage.redeemButton.isDisabled, 'Redeem button should be enabled for anonymous users');
 
-    await redeemGiftPage.giftDetailsContainer.redeemButton.hover();
+    await redeemGiftPage.redeemButton.hover();
     assertTooltipContent(assert, { contentString: 'Click to login via GitHub' });
   });
 
@@ -40,9 +40,9 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
-    assert.ok(redeemGiftPage.giftDetailsContainer.redeemButton.isDisabled, 'Redeem button should be disabled for users with existing membership');
+    assert.ok(redeemGiftPage.redeemButton.isDisabled, 'Redeem button should be disabled for users with existing membership');
 
-    await redeemGiftPage.giftDetailsContainer.redeemButton.hover();
+    await redeemGiftPage.redeemButton.hover();
 
     assertTooltipContent(assert, {
       contentString: 'You already have full access to CodeCrafters. You can claim this gift once your membership expires.',

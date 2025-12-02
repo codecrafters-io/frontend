@@ -1,12 +1,13 @@
-import Route from '@ember/routing/route';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import MembershipGiftModel from 'codecrafters-frontend/models/membership-gift';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = MembershipGiftModel;
 
-export default class GiftsRedeemRoute extends Route {
+export default class GiftsRedeemRoute extends BaseRoute {
   @service declare store: Store;
   @service declare router: RouterService;
 
@@ -14,6 +15,10 @@ export default class GiftsRedeemRoute extends Route {
     if (!model) {
       this.router.transitionTo('not-found');
     }
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 
   async model(params: { secret_token: string }): Promise<ModelType | undefined> {

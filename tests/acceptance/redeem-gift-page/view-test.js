@@ -14,14 +14,13 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
   test('displays gift details', async function (assert) {
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
-      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.\n\n— Paul',
       validityInDays: 365,
       purchasedAt: new Date(),
       claimedAt: null,
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
-
-    assert.strictEqual(redeemGiftPage.giftDetailsContainer.giftMessage, 'Happy Birthday! Enjoy your CodeCrafters membership.');
+    assert.strictEqual(redeemGiftPage.giftMessageContainer.text, 'Message from sender: Happy Birthday! Enjoy your CodeCrafters membership. — Paul');
   });
 });
