@@ -1,5 +1,4 @@
 import Controller from '@ember/controller';
-import logoImage from '/assets/images/logo/logomark-color.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/gifts/redeem';
@@ -8,8 +7,6 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class GiftsRedeemController extends Controller {
-  logoImage = logoImage;
-
   declare model: ModelType;
 
   @service declare router: RouterService;
