@@ -261,3 +261,12 @@ body {
     opacity: 1;
   }
 }
+
+.noisy-overlay {
+  background-image: url('/assets/images/bkg-noise.webp');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: normal;
+  opacity: 0.025;
+  pointer-events: none;
+}
