@@ -5,7 +5,7 @@
   data-test-track-card
 >
   {{! Logo }}
-  <div class="flex justify-end h-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform absolute top-5 right-5">
+  <div class="flex justify-end h-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform ease-out duration-200 absolute top-5 right-5">
     <LanguageLogo @language={{@language}} @variant="teal" />
   </div>
 
@@ -37,7 +37,7 @@
     {{/if}}
 
     <div class="flex items-center">
-      <span class="font-bold text-teal-500 text-xs mr-2 opacity-0 group-hover:opacity-100 transition-opacity" data-test-action-text>
+      <span class="font-bold text-teal-500 text-xs mr-1 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity_transform] duration-200 ease-out" data-test-action-text>
         {{#if this.currentUserHasStartedTrack}}
           Resume
         {{else}}
@@ -47,7 +47,7 @@
 
       {{svg-jar
         "arrow-right"
-        class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-colors"
+        class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-[colors_transform] duration-200 ease-out translate-x-0 group-hover:translate-x-0.5"
       }}
     </div>
   </div>
