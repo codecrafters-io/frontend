@@ -6,7 +6,7 @@
 
     <div
       data-test-gift-details-container
-      class="relative bg-gradient-to-br from-gray-850 to-gray-950 rounded-lg border border-white/10 mb-6 w-full max-w-2xs flex flex-col justify-center items-center overflow-hidden"
+      class="relative bg-gradient-to-br from-gray-850 to-gray-950 rounded-lg border border-white/8 mb-6 w-full max-w-2xs flex flex-col justify-center items-center overflow-hidden gift-card"
     >
       <div class="flex flex-col items-center px-6 py-12 w-full">
         <img src={{this.logoImage}} alt="CodeCrafters" class="w-16 h-16 mb-2" />
@@ -14,7 +14,9 @@
           CodeCrafters
         </span>
 
-        <span class="text-gray-500 uppercase text-sm font-medium tracking-wide text-center text-balance mb-6">
+        <span
+          class="text-gradient-to-b from-gray-400 to-gray-500 leading-5 uppercase text-sm font-medium tracking-wide text-center text-balance mb-6"
+        >
           Train your engineering skills like a pro athlete
         </span>
 
@@ -22,8 +24,10 @@
           3 months
         </span>
 
-        <span class="text-gray-500 uppercase text-xs font-medium tracking-wide text-center text-balance mt-0.5">
-          Unlimited access
+        <span
+          class="text-gradient-to-b from-gray-400 to-gray-500 leading-5 uppercase text-xs font-medium tracking-wide text-center text-balance mt-0.5"
+        >
+          <TextShimmer @text="All-access" />
         </span>
       </div>
 
