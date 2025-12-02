@@ -244,3 +244,20 @@ body {
 .ember-popover[x-placement^='left'] .ember-popover-arrow {
   border-left-color: #3a3c47;
 }
+
+.gift-card {
+  animation: rotate-in 0.75s ease;
+  transform-origin: center;
+}
+
+@keyframes rotate-in {
+  0% {
+    transform: rotateY(-45deg) scale(0.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
