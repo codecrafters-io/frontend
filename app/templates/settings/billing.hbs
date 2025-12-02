@@ -1,7 +1,7 @@
 <Settings::BillingPage::MembershipSection @user={{@model.user}} />
 <Settings::FormDivider />
 
-{{#if this.model.user.hasActiveSubscription}}
+{{#if @model.user.hasActiveSubscription}}
   <Settings::BillingPage::RenewalSection />
   <Settings::FormDivider />
 {{/if}}
