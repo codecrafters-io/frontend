@@ -19,4 +19,8 @@ export default class LayoutService extends Service {
       return true;
     }
   }
+
+  get shouldShowNoisyOverlay(): boolean {
+    return this.shouldShowHeader; // Same for now
+  }
 }
