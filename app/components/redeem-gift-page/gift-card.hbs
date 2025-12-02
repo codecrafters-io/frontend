@@ -1,8 +1,25 @@
 <div
   class="relative bg-gradient-to-br from-gray-850 to-gray-950 rounded-lg border border-white/8 mb-6 w-full max-w-2xs flex flex-col justify-center items-center overflow-hidden gift-card"
 >
-  <div class="flex flex-col items-center px-6 py-12 w-full">
+  <div class="absolute top-0 left-0 right-0 h-10 flex items-end justify-center">
+    <div class="w-20 h-4 bg-gray-950 rounded-full border border-white/10">
+    </div>
+  </div>
+
+  <div class="absolute top-0 left-0 right-0 h-10 flex items-end justify-center">
+    <div class="w-5 h-5 bg-gray-950 rounded-full border-t border-white/10 mb-px">
+    </div>
+  </div>
+
+  <div class="absolute top-0 right-0 py-4 px-4">
+    <span class="text-2xl text-gradient-to-b from-white to-gray-300 leading-5 font-bold">3</span><span
+      class="text-xl text-gradient-to-b from-white to-gray-300 leading-5 font-bold"
+    >mo</span>
+  </div>
+
+  <div class="flex flex-col items-center px-6 pt-18 pb-8 w-full">
     <img src={{this.logoImage}} alt="CodeCrafters" class="w-16 h-16 mb-2" />
+
     <span class="text-gradient-to-b from-white to-gray-300 text-2xl leading-9 font-bold mb-2">
       CodeCrafters
     </span>
@@ -25,11 +42,4 @@
       Expiry: 25 JUL '26
     </div>
   </div>
-
-  {{!-- <p class="font-medium text-gray-950 dark:text-gray-100">Validity Period:</p>
-  <p class="text-gray-600 dark:text-gray-400" data-test-validity-period>
-    This gift is valid for
-    {{@model.validityInDays}}
-    days.
-  </p> --}}
 </div>
