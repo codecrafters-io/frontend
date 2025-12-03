@@ -7,8 +7,7 @@
     <input id="option-{{preference}}" class="sr-only" type="radio" value="{{preference}}" checked={{eq this.currentPreference preference}} />
     <label
       for="option-{{preference}}"
-      class="flex rounded-full cursor-pointer border group
-        {{if (eq @size 'small') 'p-1' 'p-1.5'}}
+      class="flex rounded-full cursor-pointer border group p-1.5
         {{if (eq preferenceIndex 1) '-mx-1' ''}}
         {{if (eq this.currentPreference preference) 'bg-gray-200 dark:bg-gray-700/70'}}
         {{if (eq this.currentPreference preference) 'border-gray-200 dark:border-gray-900' 'border-transparent'}}"
