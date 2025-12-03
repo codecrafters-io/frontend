@@ -1,4 +1,4 @@
-<h2 class="font-bold text-gray-900 text-lg sm:text-xl mb-8 border-b-2 border-gray-200 inline-flex">
+<h2 class="font-bold text-gray-900 dark:text-gray-100 text-lg sm:text-xl mb-8 border-b-2 border-gray-200 dark:border-white/10 inline-flex">
   {{@title}}
 </h2>
 
@@ -18,7 +18,7 @@
   @value={{@freeFormInput}}
   {{on "input" this.handleFreeFormInputChange}}
   {{on "blur" @onFreeFormInputBlur}}
-  class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs mb-4 w-full"
+  class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 dark:placeholder-gray-700 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 dark:border-gray-800 shadow-xs mb-4 w-full text-gray-950 dark:text-gray-100 bg-white dark:bg-gray-925"
   placeholder="Something else?"
   rows="3"
   id="concept_description"
@@ -35,8 +35,8 @@
 
   <div class="flex items-center gap-3">
     {{#animated-if (not this.continueButtonIsDisabled) use=this.fade}}
-      <div class="text-gray-400 text-xs sm:text-sm flex items-center gap-1.5">
-        {{svg-jar "information-circle" class="w-5 h-5 text-gray-400 shrink-0 hidden sm:flex"}}
+      <div class="text-gray-400 dark:text-gray-500 text-xs sm:text-sm flex items-center gap-1.5">
+        {{svg-jar "information-circle" class="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0 hidden sm:flex"}}
         <span>
           Click "Continue" to proceed
         </span>
