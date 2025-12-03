@@ -7,6 +7,7 @@ import type { ModelType } from 'codecrafters-frontend/routes/gifts/redeem';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { waitFor } from '@ember/test-waiters';
 
 export default class GiftsRedeemController extends Controller {
   BYOXBanner = BYOXBanner;
@@ -33,6 +34,7 @@ export default class GiftsRedeemController extends Controller {
   }
 
   @action
+  @waitFor
   async handleRedeemButtonClick() {
     if (this.currentUserIsAnonymous) {
       this.authenticator.initiateLogin();
@@ -48,7 +50,8 @@ export default class GiftsRedeemController extends Controller {
 
     try {
       await this.model.redeem({});
-      this.router.transitionTo('catalog');
+      await this.authenticator.syncCurrentUser(); // Ensure newly created membership is available immediately
+      this.router.transitionTo('settings.billing');
     } catch (error) {
       // TODO: Handle error appropriately
       this.isRedeemingGift = false;
