@@ -1,19 +1,25 @@
-import { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
-import type RouterService from '@ember/routing/router-service';
-import type { ModelType } from 'codecrafters-frontend/routes/pay';
-import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
-import testimonialsData from 'codecrafters-frontend/utils/testimonials-data';
-import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
+import type MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
 import type { FeatureDescription } from 'codecrafters-frontend/components/pay-page/pricing-plan-card';
+import type { ModelType } from 'codecrafters-frontend/routes/pay';
+import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { waitFor } from '@ember/test-waiters';
+import fade from 'ember-animated/transitions/fade';
 
 export default class PayController extends Controller {
+  fade = fade;
+
   declare model: ModelType;
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
@@ -21,8 +27,10 @@ export default class PayController extends Controller {
   @service declare featureFlags: FeatureFlagsService;
   @service declare monthlyChallengeBanner: MonthlyChallengeBannerService;
   @service declare router: RouterService;
+  @service declare store: Store;
 
   @tracked chooseMembershipPlanModalIsOpen = false;
+  @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
     return this.user?.activeDiscountForYearlyPlan || null;
@@ -67,6 +75,12 @@ export default class PayController extends Controller {
 
   get user() {
     return this.authenticator.currentUser;
+  }
+
+  @action
+  @waitFor
+  async handleDidInsertContainer() {
+    this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
   }
 
   @action
