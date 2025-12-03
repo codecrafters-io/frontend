@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { toLeft, toRight } from 'ember-animated/transitions/move-over';
 
 interface Signature {
   Element: HTMLButtonElement;
@@ -13,18 +12,7 @@ interface Signature {
   };
 }
 
-export default class SelectableItem extends Component<Signature> {
-  toRight = toRight;
-  toLeft = toLeft;
-
-  rules({ newItems }: { newItems: unknown[] }) {
-    if (newItems[0]) {
-      return toRight;
-    } else {
-      return toLeft;
-    }
-  }
-}
+export default class SelectableItem extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
