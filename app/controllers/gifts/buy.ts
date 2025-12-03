@@ -6,6 +6,7 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import type Store from '@ember-data/store';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
 import fade from 'ember-animated/transitions/fade';
+import { task } from 'ember-concurrency';
 
 export default class GiftsBuyController extends Controller {
   transition = fade;
@@ -31,9 +32,18 @@ export default class GiftsBuyController extends Controller {
   }
 
   @action
+  handleGiftPaymentFlowUpdate() {
+    this.saveGiftPaymentFlowTask.perform();
+  }
+
+  @action
   handleNavigationItemClick(step: number) {
     if (step === 1 || this.completedSteps.includes(step - 1)) {
       this.currentStep = step;
     }
   }
+
+  saveGiftPaymentFlowTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await this.model.save();
+  });
 }

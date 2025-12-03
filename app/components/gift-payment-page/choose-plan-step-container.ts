@@ -4,7 +4,6 @@ import type { PricingPlan } from 'codecrafters-frontend/components/pay-page/choo
 import { PRICING_PLANS } from 'codecrafters-frontend/components/pay-page/choose-membership-plan-modal';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
-import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -13,6 +12,7 @@ interface Signature {
   Args: {
     giftPaymentFlow: GiftPaymentFlowModel;
     onContinueButtonClick: () => void;
+    onGiftPaymentFlowUpdate: () => void;
   };
 }
 
@@ -44,19 +44,15 @@ export default class ChoosePlanStepContainer extends Component<Signature> {
   @action
   async handleContinueButtonClick() {
     this.isProcessingContinueButtonClick = true;
-    await this.saveGiftPaymentFlowTask.perform();
+    this.args.onGiftPaymentFlowUpdate();
     this.args.onContinueButtonClick();
   }
 
   @action
   async handlePlanSelect(plan: PricingPlan) {
     this.args.giftPaymentFlow.pricingPlanId = plan.id;
-    await this.saveGiftPaymentFlowTask.perform();
+    this.args.onGiftPaymentFlowUpdate();
   }
-
-  saveGiftPaymentFlowTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.args.giftPaymentFlow.save();
-  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

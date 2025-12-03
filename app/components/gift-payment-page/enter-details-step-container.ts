@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
-import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -10,6 +9,7 @@ interface Signature {
   Args: {
     giftPaymentFlow: GiftPaymentFlowModel;
     onContinueButtonClick: () => void;
+    onGiftPaymentFlowUpdate: () => void;
   };
 }
 
@@ -40,7 +40,7 @@ Hope you enjoy learning with CodeCrafters.`;
 
     if (this.formInputsAreValid) {
       this.isProcessingContinueButtonClick = true;
-      await this.saveGiftPaymentFlowTask.perform();
+      this.args.onGiftPaymentFlowUpdate();
       this.args.onContinueButtonClick();
     }
   }
@@ -50,7 +50,7 @@ Hope you enjoy learning with CodeCrafters.`;
     this.recomputeFormInputsAreValid();
 
     if (this.formInputsAreValid) {
-      this.saveGiftPaymentFlowTask.perform();
+      this.args.onGiftPaymentFlowUpdate();
     }
   }
 
@@ -58,10 +58,6 @@ Hope you enjoy learning with CodeCrafters.`;
   recomputeFormInputsAreValid() {
     this.formInputsAreValid = this.formElement!.checkValidity();
   }
-
-  saveGiftPaymentFlowTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.args.giftPaymentFlow.save();
-  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {
