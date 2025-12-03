@@ -5,6 +5,7 @@ import Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
 import type RouterService from '@ember/routing/router-service';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type ModelType = {
   onboardingSurvey: OnboardingSurveyModel;
@@ -34,6 +35,10 @@ export default class WelcomeRoute extends BaseRoute {
     if (model.onboardingSurvey.status === 'complete') {
       this.router.transitionTo('catalog');
     }
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
 
   async model() {
