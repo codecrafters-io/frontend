@@ -1,18 +1,23 @@
-<TertiaryButton class="pl-2 {{if @isSelected 'border-teal-500 dark:border-teal-700 hover:bg-white dark:hover:bg-gray-900'}}" ...attributes>
+<TertiaryButton
+  class="pl-2 overflow-hidden {{if @isSelected 'border-teal-500 dark:border-teal-700 hover:bg-white dark:hover:bg-gray-900'}}"
+  ...attributes
+>
   <div class="flex items-center text-sm sm:text-base {{if @isSelected 'text-teal-500 dark:text-teal-600' 'text-gray-600 dark:text-gray-300'}}">
-    <AnimatedContainer class="overflow-hidden">
-      {{#animated-if @isSelected rules=this.rules duration=100}}
-        {{! wrapping div is required for animations to work }}
-        <div class="flex">
-          {{svg-jar "check-circle" class="w-4 h-4 mr-1.5 text-teal-500 dark:text-teal-600 shrink-0"}}
-        </div>
-      {{else}}
-        {{! wrapping div is required for animations to work }}
-        <div class="flex">
-          {{svg-jar "check" class="w-4 h-4 mr-1.5 text-gray-400 dark:text-gray-500 shrink-0"}}
-        </div>
-      {{/animated-if}}
-    </AnimatedContainer>
+    <div class="w-4 h-4 relative mr-1.5">
+      <div
+        class="flex absolute transition-[opacity,left] duration-100 ease-out
+          {{if @isSelected 'opacity-100 left-0' 'opacity-0 -left-[calc(100%+0.5rem)]'}}"
+      >
+        {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 dark:text-teal-600 shrink-0"}}
+      </div>
+
+      <div
+        class="flex absolute transition-[opacity,left] duration-100 ease-out
+          {{if @isSelected 'opacity-0 -left-[calc(100%+0.5rem)]' 'opacity-100 left-0'}}"
+      >
+        {{svg-jar "check" class="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0"}}
+      </div>
+    </div>
 
     {{yield}}
   </div>
