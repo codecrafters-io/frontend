@@ -3,18 +3,20 @@
   data-test-onboarding-survey-wizard
 >
   <AnimatedContainer>
-    {{#animated-if (eq this.currentStep 1) use=this.fade}}
-      <WelcomePage::OnboardingSurveyWizard::Step1
-        @onContinueButtonClick={{this.handleContinueButtonClick}}
-        @onSurveyUpdated={{this.handleSurveyUpdated}}
-        @onboardingSurvey={{@onboardingSurvey}}
-      />
-    {{else}}{{#if (eq this.currentStep 2)}}
+    {{#animated-value this.currentStep use=this.fade as |currentStep|}}
+      {{#if (eq currentStep 1)}}
+        <WelcomePage::OnboardingSurveyWizard::Step1
+          @onContinueButtonClick={{this.handleContinueButtonClick}}
+          @onSurveyUpdated={{this.handleSurveyUpdated}}
+          @onboardingSurvey={{@onboardingSurvey}}
+        />
+      {{else if (eq currentStep 2)}}
         <WelcomePage::OnboardingSurveyWizard::Step2
           @onboardingSurvey={{@onboardingSurvey}}
           @onContinueButtonClick={{this.handleContinueButtonClick}}
           @onSurveyUpdated={{this.handleSurveyUpdated}}
         />
-      {{/if}}{{/animated-if}}
+      {{/if}}
+    {{/animated-value}}
   </AnimatedContainer>
 </div>
