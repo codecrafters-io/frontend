@@ -1,9 +1,11 @@
+import billingPage from 'codecrafters-frontend/tests/pages/settings/billing-page';
 import redeemGiftPage from 'codecrafters-frontend/tests/pages/redeem-gift-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { assertTooltipContent } from 'ember-tooltips/test-support';
+import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 module('Acceptance | redeem-gift-page | redeem', function (hooks) {
   setupApplicationTest(hooks);
@@ -47,5 +49,24 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
     assertTooltipContent(assert, {
       contentString: 'You already have full access to CodeCrafters. You can claim this gift once your membership expires.',
     });
+  });
+
+  test('user can redeem a gift', async function (assert) {
+    testScenario(this.server);
+
+    signIn(this.owner, this.server);
+
+    this.server.schema.membershipGifts.create({
+      secretToken: 'xyz',
+      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      validityInDays: 365,
+      purchasedAt: new Date(),
+    });
+
+    await redeemGiftPage.visit({ secret_token: 'xyz' });
+    await redeemGiftPage.redeemButton.click();
+
+    assert.strictEqual(currentURL(), '/settings/billing');
+    assert.contains(billingPage.membershipSection.text, 'Membership active', 'shows membership active');
   });
 });
