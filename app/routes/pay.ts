@@ -1,7 +1,6 @@
 import type Store from '@ember-data/store';
 import { inject as service } from '@ember/service';
 import type CourseModel from 'codecrafters-frontend/models/course';
-import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
@@ -9,7 +8,6 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = {
   courses: CourseModel[];
-  regionalDiscount: RegionalDiscountModel | null;
 };
 
 export default class PayRoute extends BaseRoute {
@@ -35,7 +33,6 @@ export default class PayRoute extends BaseRoute {
 
     return {
       courses: await this.store.findAll('course'), // For testimonials
-      regionalDiscount: await this.store.createRecord('regional-discount').fetchCurrent(),
     };
   }
 }
