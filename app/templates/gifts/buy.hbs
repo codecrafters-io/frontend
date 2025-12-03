@@ -19,9 +19,17 @@
       <AnimatedContainer class="w-full max-w-xl">
         {{#animated-value this.currentStep use=this.transition duration=200 as |step|}}
           {{#if (eq step 1)}}
-            <GiftPaymentPage::EnterDetailsStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+            <GiftPaymentPage::EnterDetailsStepContainer
+              @giftPaymentFlow={{this.model}}
+              @onContinueButtonClick={{this.handleContinueButtonClick}}
+              @onGiftPaymentFlowUpdate={{this.handleGiftPaymentFlowUpdate}}
+            />
           {{else if (eq step 2)}}
-            <GiftPaymentPage::ChoosePlanStepContainer @giftPaymentFlow={{this.model}} @onContinueButtonClick={{this.handleContinueButtonClick}} />
+            <GiftPaymentPage::ChoosePlanStepContainer
+              @giftPaymentFlow={{this.model}}
+              @onContinueButtonClick={{this.handleContinueButtonClick}}
+              @onGiftPaymentFlowUpdate={{this.handleGiftPaymentFlowUpdate}}
+            />
           {{else if (eq step 3)}}
             <GiftPaymentPage::ConfirmAndPayStepContainer @giftPaymentFlow={{this.model}} @onNavigationItemClick={{this.handleNavigationItemClick}} />
           {{/if}}
