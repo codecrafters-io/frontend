@@ -8,7 +8,7 @@ export default class MembershipGiftModel extends Model {
 
   @attr('date') declare claimedAt: Date | null;
   @attr('date') declare purchasedAt: Date;
-  @attr('string') declare giftMessage: string;
+  @attr('string') declare senderMessage: string;
   @attr('number') declare validityInDays: number;
   @attr('string') declare secretToken: string;
 

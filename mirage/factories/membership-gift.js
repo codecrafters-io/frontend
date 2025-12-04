@@ -7,7 +7,7 @@ export default Factory.extend({
     return `mgmt_${Math.random().toString(36).substring(7)}`;
   },
 
-  giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+  senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
 
   purchasedAt() {
     return new Date();
