@@ -14,6 +14,19 @@ export default function (server) {
     }
   });
 
+  server.patch('/membership-gifts/:id', function (schema, request) {
+    const membershipGift = schema.membershipGifts.find(request.params.id);
+
+    if (!membershipGift) {
+      return new Response(404, {}, { error: 'Gift not found' });
+    }
+
+    const attrs = this.normalizedRequestAttrs();
+    membershipGift.update(attrs);
+
+    return membershipGift;
+  });
+
   server.post('/membership-gifts/:id/redeem', function (schema, request) {
     const membershipGift = schema.membershipGifts.find(request.params.id);
 
