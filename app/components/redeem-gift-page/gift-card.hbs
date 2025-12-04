@@ -33,7 +33,7 @@
     </span>
 
     <span class="text-gradient-to-b from-white to-gray-300 text-2xl leading-9 font-bold">
-      3 months
+      {{this.validityPeriodText}}
     </span>
 
     <span class="text-gradient-to-b from-gray-400 to-gray-500 leading-5 uppercase text-xs font-medium tracking-wide text-center text-balance mt-0.5">
@@ -43,7 +43,8 @@
 
   <div class="bg-gray-950 border-t border-white/10 w-full">
     <div class="text-gray-400 text-xxs font-medium tracking-wide text-center text-balance p-2 uppercase">
-      Expiry: 25 JUL '26
+      Expiry:
+      {{this.expiryDateText}}
     </div>
   </div>
 </div>
