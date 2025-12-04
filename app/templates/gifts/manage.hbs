@@ -36,6 +36,16 @@
           class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty"
         >{{@model.senderMessage}}</div>
       </div>
+
+      <TertiaryButton @size="small">
+        <div class="flex items-center gap-1">
+          {{svg-jar "pencil" class="fill-current w-4"}}
+
+          <span>
+            Edit
+          </span>
+        </div>
+      </TertiaryButton>
     {{/if}}
   </div>
 </div>
