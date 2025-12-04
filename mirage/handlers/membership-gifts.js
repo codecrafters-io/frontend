@@ -3,12 +3,15 @@ import CurrentMirageUser from '../utils/current-mirage-user';
 export default function (server) {
   server.get('/membership-gifts', function (schema, request) {
     const secretToken = request.queryParams['secret_token'];
+    const managementToken = request.queryParams['management_token'];
 
-    if (!secretToken) {
-      throw new Error('Secret token is required');
+    if (secretToken) {
+      return schema.membershipGifts.where({ secretToken });
+    } else if (managementToken) {
+      return schema.membershipGifts.where({ managementToken });
+    } else {
+      throw new Error('secret_token or management_token parameter is required');
     }
-
-    return schema.membershipGifts.where({ secretToken });
   });
 
   server.post('/membership-gifts/:id/redeem', function (schema, request) {
