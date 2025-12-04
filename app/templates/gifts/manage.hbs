@@ -33,19 +33,44 @@
         </div>
 
         <div
-          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty"
+          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty outline-none"
+          contenteditable={{if this.isEditing "true" "false"}}
+          {{did-insert this.handleMessageDidInsert}}
         >{{@model.senderMessage}}</div>
       </div>
 
-      <TertiaryButton @size="small">
-        <div class="flex items-center gap-1">
-          {{svg-jar "pencil" class="fill-current w-4"}}
+      {{#if (or this.isEditing this.updateMembershipGiftTask.isRunning)}}
+        <div class="flex gap-2">
+          <TertiaryButton
+            @size="small"
+            {{on "click" this.handleCancelClick}}
+            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+            data-test-cancel-button
+          >
+            Cancel
+          </TertiaryButton>
 
-          <span>
-            Edit
-          </span>
+          <PrimaryButtonWithSpinner
+            @size="small"
+            {{on "click" this.handleSaveClick}}
+            @shouldShowSpinner={{this.updateMembershipGiftTask.isRunning}}
+            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+            data-test-save-button
+          >
+            Save
+          </PrimaryButtonWithSpinner>
         </div>
-      </TertiaryButton>
+      {{else}}
+        <TertiaryButton @size="small" {{on "click" this.handleEditClick}} data-test-edit-button>
+          <div class="flex items-center gap-1">
+            {{svg-jar "pencil" class="fill-current w-4"}}
+
+            <span>
+              Edit
+            </span>
+          </div>
+        </TertiaryButton>
+      {{/if}}
     {{/if}}
   </div>
 </div>
