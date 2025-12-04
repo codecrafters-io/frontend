@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import type { ModelType } from 'codecrafters-frontend/routes/gifts/manage';
 
@@ -24,6 +25,12 @@ export default class GiftsManageController extends Controller {
   @action
   handleEditClick() {
     this.isEditing = true;
+    // Wait for next tick to ensure contenteditable attribute is set
+    next(() => {
+      if (this.messageElement) {
+        this.placeCursorAtEnd(this.messageElement);
+      }
+    });
   }
 
   @action
@@ -47,4 +54,18 @@ export default class GiftsManageController extends Controller {
   updateMembershipGiftTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.model.save();
   });
+
+  private placeCursorAtEnd(element: HTMLElement) {
+    element.focus();
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    if (selection) {
+      // Select all contents and collapse to the end
+      range.selectNodeContents(element);
+      range.collapse(false); // false means collapse to end
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }
 }
