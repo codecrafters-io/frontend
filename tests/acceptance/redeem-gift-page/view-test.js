@@ -14,7 +14,7 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
   test('displays gift details', async function (assert) {
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
-      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.\n\n— Paul',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.\n\n— Paul',
       validityInDays: 365,
       purchasedAt: new Date(),
       claimedAt: null,

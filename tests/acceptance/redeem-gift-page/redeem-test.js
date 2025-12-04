@@ -15,7 +15,7 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
 
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
-      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
       claimedAt: null,
@@ -35,7 +35,7 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
 
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
-      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
       claimedAt: null,
@@ -58,7 +58,7 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
 
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
-      giftMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
     });

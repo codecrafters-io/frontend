@@ -1,3 +1,41 @@
-<h1>
-  Manage Gift
-</h1>
+<div class="container mx-auto lg:max-w-(--breakpoint-xl) px-4 py-16">
+  <div class="flex flex-col justify-center items-center mb-20">
+    <div class="w-20 h-20 mb-2">
+      <RiveAnimation @src="/assets/animations/checkmark_icon.riv" />
+    </div>
+
+    <h1 class="text-3xl sm:text-4xl leading-10 text-gradient-to-b from-white to-gray-300 font-bold mb-12 text-pretty text-center">
+      Gift Purchased!
+    </h1>
+
+    <div
+      class="flex flex-col items-center gap-4 border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs p-10 mb-12"
+      data-test-share-gift-container
+    >
+      <span class="flex gap-2 items-center text-gray-700 dark:text-gray-300">
+        {{!-- {{svg-jar "gift" class="w-5 text-teal-500"}} --}}
+        Here's a link to share with the recipient.
+      </span>
+
+      <CopyableCode @code={{"https://codecrafters.io/gifts/redeem"}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+    </div>
+
+    <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
+      Gift preview:
+    </div>
+
+    <RedeemGiftPage::GiftCard />
+
+    {{#if @model.senderMessage}}
+      <div class="px-4 py-2 mb-6 flex flex-col items-center max-w-3xs sm:max-w-xs" data-test-gift-message-container>
+        <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
+          Message from sender:
+        </div>
+
+        <div
+          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty"
+        >{{@model.senderMessage}}</div>
+      </div>
+    {{/if}}
+  </div>
+</div>
