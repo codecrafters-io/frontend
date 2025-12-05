@@ -1,25 +1,37 @@
-<div class="flex items-stretch w-full copyable-code" ...attributes>
-  <div
-    class="px-3 py-1.5 grow-1 w-full overflow-x-auto border border-gray-300 dark:border-white/10 border-r-0 rounded-l
-      {{if (eq @backgroundColor 'white') 'bg-white dark:bg-gray-950' 'bg-gray-100 dark:bg-gray-900'}}"
-  >
+<div
+  class="relative pr-[calc(4ch+1.5rem)] w-full border border-gray-300 dark:border-white/10 rounded
+    {{if (eq @backgroundColor 'white') 'bg-white dark:bg-gray-950' 'bg-gray-100 dark:bg-gray-900'}}
+    "
+  ...attributes
+>
+  <div class="overflow-x-auto pl-3 pr-4 py-1.5">
     <span class="whitespace-nowrap font-mono text-gray-600 dark:text-gray-400 text-xs">
       {{@code}}
     </span>
   </div>
 
-  <div class="relative flex items-stretch">
+  <div class="absolute -right-px -top-px -bottom-px flex items-stretch">
+    <div
+      class="w-6 my-px bg-gradient-to-l
+        {{if (eq @backgroundColor 'white') 'from-white dark:from-gray-950' 'from-gray-100 dark:from-gray-900'}}
+        {{if (eq @backgroundColor 'white') 'via-white dark:via-gray-950' 'via-gray-100 dark:via-gray-900'}}
+        via-20% to-transparent"
+    >
+    </div>
+
     <button
       type="button"
-      class="bg-teal-600 dark:bg-teal-900 border border-teal-600 dark:border-teal-700 px-3 py-1 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
+      class="bg-teal-600 dark:bg-teal-900 border border-teal-600 dark:border-teal-700 px-3 py-1.5 text-white flex items-center rounded-r rounded-l-none text-sm font-bold"
       {{on "click" this.handleCopyButtonClick}}
       data-test-copy-button
     >
-      {{if this.codeWasCopiedRecently "COPIED" "COPY"}}
+      <AnimatedContainer>
+        {{#animated-if this.codeWasCopiedRecently use=this.fade duration=100}}
+          <span>COPIED</span>
+        {{else}}
+          <span>COPY</span>
+        {{/animated-if}}
+      </AnimatedContainer>
     </button>
-    <div
-      class="absolute top-px bottom-px -left-6 w-6 bg-gradient-to-l from-gray-300 dark:from-gray-950 via-20% via-gray-300 dark:via-gray-950 to-transparent"
-    >
-    </div>
   </div>
 </div>
