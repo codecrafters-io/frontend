@@ -28,6 +28,7 @@ export default class GiftsManageController extends Controller {
   @action
   handleEditClick() {
     this.isEditing = true;
+
     // Wait for next tick to ensure contenteditable attribute is set
     next(() => {
       if (this.messageElement) {
@@ -49,9 +50,14 @@ export default class GiftsManageController extends Controller {
 
     this.isEditing = false;
 
-    const newMessage = (this.messageElement.textContent || '').trim();
+    // Ensure content-editable is set to false before ember updates the node's text content
+    const newMessage = (this.messageElement!.textContent || '').trim();
     this.model.senderMessage = newMessage;
     this.updateMembershipGiftTask.perform();
+
+    next(() => {
+      this.messageElement!.innerHTML = newMessage; // Ensure Ember doesn't conflict with contentEditable
+    });
   }
 
   updateMembershipGiftTask = task({ keepLatest: true }, async (): Promise<void> => {
