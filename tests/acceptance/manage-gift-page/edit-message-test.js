@@ -13,7 +13,7 @@ module('Acceptance | manage-gift-page | edit-message', function (hooks) {
     const membershipGift = this.server.schema.membershipGifts.create({
       managementToken: 'valid-token',
       secretToken: 'xyz',
-      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      senderMessage: 'Happy Birthday!\nEnjoy your CodeCrafters membership.\n\nHave fun coding!',
       validityInDays: 365,
       purchasedAt: new Date(),
       claimedAt: null,
@@ -22,24 +22,33 @@ module('Acceptance | manage-gift-page | edit-message', function (hooks) {
     await giftsManagePage.visit({ management_token: 'valid-token' });
 
     assert.strictEqual(
-      giftsManagePage.giftMessageContainer.messageText,
-      'Happy Birthday! Enjoy your CodeCrafters membership.',
+      document.querySelector('[data-test-gift-message-editable]')?.innerText,
+      'Happy Birthday!\nEnjoy your CodeCrafters membership.\n\nHave fun coding!',
       'Initial message is displayed',
     );
 
     await giftsManagePage.clickOnEditButton();
 
     const editableElement = document.querySelector('[data-test-gift-message-editable]');
-    editableElement.textContent = 'Updated message for the recipient!';
+    editableElement.innerText = 'Updated message\nfor the recipient!\n\nThis is a multi-line message.';
     editableElement.dispatchEvent(new Event('input', { bubbles: true }));
 
     await giftsManagePage.clickOnSaveButton();
     await settled();
 
-    assert.strictEqual(giftsManagePage.giftMessageContainer.messageText, 'Updated message for the recipient!', 'Message is updated after saving');
+    assert.strictEqual(
+      document.querySelector('[data-test-gift-message-editable]')?.innerText,
+      'Updated message\nfor the recipient!\n\nThis is a multi-line message.',
+      'Message is updated after saving',
+    );
 
     const updatedGift = this.server.schema.membershipGifts.find(membershipGift.id);
-    assert.strictEqual(updatedGift.senderMessage, 'Updated message for the recipient!', 'Message is persisted in the database');
+
+    assert.strictEqual(
+      updatedGift.senderMessage,
+      'Updated message\nfor the recipient!\n\nThis is a multi-line message.',
+      'Message is persisted in the database',
+    );
   });
 
   test('can add gift message when none exists', async function (assert) {
