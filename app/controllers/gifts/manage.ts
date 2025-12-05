@@ -14,7 +14,7 @@ export default class GiftsManageController extends Controller {
   @action
   handleCancelClick() {
     if (this.messageElement) {
-      this.messageElement.innerText = this.model.senderMessage || '';
+      this.messageElement.innerText = this.model.gift.senderMessage || '';
     }
 
     this.isEditing = false;
@@ -22,7 +22,7 @@ export default class GiftsManageController extends Controller {
 
   @action
   async handleCopyButtonClick() {
-    await navigator.clipboard.writeText(this.model.redeemUrl);
+    await navigator.clipboard.writeText(this.model.gift.redeemUrl);
   }
 
   @action
@@ -61,7 +61,9 @@ export default class GiftsManageController extends Controller {
   }
 
   updateMembershipGiftTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await this.model.save();
+    const managementToken = this.router.currentRoute.params['management_token'] as string;
+
+    await this.model.save({ adapterOptions: { managementToken } });
   });
 
   private placeCursorAtEnd(element: HTMLElement) {
