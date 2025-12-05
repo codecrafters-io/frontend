@@ -1,9 +1,9 @@
 <div
   class="inline-flex items-center gap-2 rounded-full px-2 py-1 border
-    {{if (eq @color 'green') 'bg-teal-50 border border-teal-500 dark:bg-teal-950 dark:border-teal-400'}}
-    {{if (eq @color 'red') 'bg-red-50 border border-red-500 dark:bg-red-950 dark:border-red-400'}}
-    {{if (eq @color 'yellow') 'bg-yellow-50 border border-yellow-500 dark:bg-yellow-950 dark:border-yellow-400'}}
-    {{if (eq @color 'gray') 'bg-gray-50 border border-gray-300 dark:bg-gray-900 dark:border-gray-600'}}"
+    {{if (eq @color 'green') 'bg-teal-50 border border-teal-500 dark:bg-teal-950 dark:border-teal-400/50'}}
+    {{if (eq @color 'red') 'bg-red-50 border border-red-500 dark:bg-red-950 dark:border-red-400/50'}}
+    {{if (eq @color 'yellow') 'bg-yellow-50 border border-yellow-500 dark:bg-yellow-950 dark:border-yellow-400/50'}}
+    {{if (eq @color 'gray') 'bg-gray-50 border border-gray-300 dark:bg-gray-900 dark:border-gray-400/50'}}"
   ...attributes
 >
   <StaticDot @color={{@color}} @size="large" />
