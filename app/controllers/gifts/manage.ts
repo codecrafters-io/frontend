@@ -14,7 +14,7 @@ export default class GiftsManageController extends Controller {
   @action
   handleCancelClick() {
     if (this.messageElement) {
-      this.messageElement.textContent = this.model.senderMessage || '';
+      this.messageElement.innerText = this.model.senderMessage || '';
     }
 
     this.isEditing = false;
@@ -51,12 +51,12 @@ export default class GiftsManageController extends Controller {
     this.isEditing = false;
 
     // Ensure content-editable is set to false before ember updates the node's text content
-    const newMessage = (this.messageElement!.textContent || '').trim();
+    const newMessage = (this.messageElement!.innerText || '').trim();
     this.model.senderMessage = newMessage;
     this.updateMembershipGiftTask.perform();
 
     next(() => {
-      this.messageElement!.innerHTML = newMessage; // Ensure Ember doesn't conflict with contentEditable
+      this.messageElement!.innerText = newMessage; // Ensure Ember doesn't conflict with contentEditable
     });
   }
 
