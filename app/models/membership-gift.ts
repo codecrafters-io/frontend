@@ -13,6 +13,10 @@ export default class MembershipGiftModel extends Model {
   @attr('string') declare secretToken: string;
 
   declare redeem: (this: MembershipGiftModel, payload: unknown) => Promise<void>;
+
+  get redeemUrl(): string {
+    return `${window.location.origin}/gifts/redeem/${this.secretToken}`;
+  }
 }
 
 MembershipGiftModel.prototype.redeem = memberAction({

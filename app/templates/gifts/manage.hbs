@@ -9,15 +9,14 @@
     </h1>
 
     <div
-      class="flex flex-col items-center gap-4 border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs p-10 mb-12"
+      class="flex flex-col items-center gap-4 w-full max-w-md border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs py-10 px-4 sm:px-10 mb-12"
       data-test-share-gift-container
     >
-      <span class="flex gap-2 items-center text-gray-700 dark:text-gray-300">
-        {{!-- {{svg-jar "gift" class="w-5 text-teal-500"}} --}}
+      <span class="text-gray-700 dark:text-gray-300 text-center text-balance">
         Here's a link to share with the recipient.
       </span>
 
-      <CopyableCode @code={{"https://codecrafters.io/gifts/redeem"}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+      <CopyableCode @code={{@model.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
     </div>
 
     <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
@@ -26,16 +25,56 @@
 
     <RedeemGiftPage::GiftCard @membershipGift={{@model}} />
 
-    {{#if @model.senderMessage}}
+    {{#if (or @model.senderMessage this.isEditing)}}
       <div class="px-4 py-2 mb-6 flex flex-col items-center max-w-3xs sm:max-w-xs" data-test-gift-message-container>
         <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
           Message from sender:
         </div>
 
         <div
-          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty"
+          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty outline-none"
+          contenteditable={{if this.isEditing "true" "false"}}
+          {{did-insert this.handleMessageDidInsert}}
+          data-test-gift-message-editable
         >{{@model.senderMessage}}</div>
       </div>
+
+      {{#if (or this.isEditing this.updateMembershipGiftTask.isRunning)}}
+        <div class="flex gap-2">
+          <TertiaryButton
+            @size="small"
+            {{on "click" this.handleCancelClick}}
+            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+            data-test-cancel-button
+          >
+            Cancel
+          </TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @size="small"
+            {{on "click" this.handleSaveClick}}
+            @shouldShowSpinner={{this.updateMembershipGiftTask.isRunning}}
+            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+            data-test-save-button
+          >
+            Save
+          </PrimaryButtonWithSpinner>
+        </div>
+      {{else}}
+        <TertiaryButton @size="small" {{on "click" this.handleEditClick}} data-test-edit-button>
+          <div class="flex items-center gap-1">
+            {{svg-jar "pencil" class="fill-current w-4"}}
+
+            <span>
+              Edit
+            </span>
+          </div>
+        </TertiaryButton>
+      {{/if}}
+    {{else}}
+      <PrimaryButton @size="small" {{on "click" this.handleEditClick}} data-test-add-gift-message-button>
+        Add gift message
+      </PrimaryButton>
     {{/if}}
   </div>
 </div>
