@@ -52,7 +52,7 @@ export default class GiftsManageController extends Controller {
 
     // Ensure content-editable is set to false before ember updates the node's text content
     const newMessage = (this.messageElement!.innerText || '').trim();
-    this.model.senderMessage = newMessage;
+    this.model.gift.senderMessage = newMessage;
     this.updateMembershipGiftTask.perform();
 
     next(() => {
@@ -61,9 +61,7 @@ export default class GiftsManageController extends Controller {
   }
 
   updateMembershipGiftTask = task({ keepLatest: true }, async (): Promise<void> => {
-    const managementToken = this.router.currentRoute.params['management_token'] as string;
-
-    await this.model.save({ adapterOptions: { managementToken } });
+    await this.model.gift.save({ adapterOptions: { managementToken: this.model.managementToken } });
   });
 
   private placeCursorAtEnd(element: HTMLElement) {
