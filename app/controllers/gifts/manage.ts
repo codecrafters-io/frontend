@@ -13,7 +13,10 @@ export default class GiftsManageController extends Controller {
 
   @action
   handleCancelClick() {
-    this.messageElement!.textContent = this.model.senderMessage;
+    if (this.messageElement) {
+      this.messageElement.textContent = this.model.senderMessage || '';
+    }
+
     this.isEditing = false;
   }
 
@@ -46,7 +49,7 @@ export default class GiftsManageController extends Controller {
 
     this.isEditing = false;
 
-    const newMessage = this.messageElement.textContent || '';
+    const newMessage = (this.messageElement.textContent || '').trim();
     this.model.senderMessage = newMessage;
     this.updateMembershipGiftTask.perform();
   }

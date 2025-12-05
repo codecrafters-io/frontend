@@ -12,4 +12,5 @@ export default createPage({
   clickOnEditButton: clickable('[data-test-edit-button]'),
   clickOnSaveButton: clickable('[data-test-save-button]'),
   clickOnCancelButton: clickable('[data-test-cancel-button]'),
+  clickOnAddGiftMessageButton: clickable('[data-test-add-gift-message-button]'),
 });
