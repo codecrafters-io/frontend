@@ -77,4 +77,11 @@ export default class GiftsManageController extends Controller {
       selection.addRange(range);
     }
   }
+
+  @action
+  resetController(_controller: unknown, isExiting: boolean, _transition: unknown) {
+    if (isExiting) {
+      this.isEditing = false;
+    }
+  }
 }
