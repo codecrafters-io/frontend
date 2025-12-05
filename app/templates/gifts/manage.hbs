@@ -5,7 +5,7 @@
     </div>
 
     <h1 class="text-3xl sm:text-4xl leading-10 text-gradient-to-b from-white to-gray-300 font-bold mb-12 text-pretty text-center">
-      Gift Purchased!
+      Your Gift is Ready!
     </h1>
 
     <div
@@ -16,65 +16,15 @@
         Here's a link to share with the recipient.
       </span>
 
-      <CopyableCode @code={{@model.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+      <CopyableCode @code={{@model.gift.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
     </div>
+
+    <RedeemGiftPage::GiftMessage @membershipGift={{@model.gift}} @managementToken={{@model.managementToken}} @isEditable={{true}} class="mb-12" />
 
     <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
       Gift preview:
     </div>
 
-    <RedeemGiftPage::GiftCard @membershipGift={{@model}} />
-
-    {{#if (or @model.senderMessage this.isEditing)}}
-      <div class="px-4 py-2 mb-6 flex flex-col items-center max-w-3xs sm:max-w-xs" data-test-gift-message-container>
-        <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
-          Message from sender:
-        </div>
-
-        <div
-          class="text-gray-100 font-(family-name:--font-cursive) text-2xl sm:text-3xl whitespace-pre-wrap text-center text-pretty outline-none"
-          contenteditable={{if this.isEditing "true" "false"}}
-          {{did-insert this.handleMessageDidInsert}}
-          data-test-gift-message-editable
-        >{{@model.senderMessage}}</div>
-      </div>
-
-      {{#if (or this.isEditing this.updateMembershipGiftTask.isRunning)}}
-        <div class="flex gap-2">
-          <TertiaryButton
-            @size="small"
-            {{on "click" this.handleCancelClick}}
-            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
-            data-test-cancel-button
-          >
-            Cancel
-          </TertiaryButton>
-
-          <PrimaryButtonWithSpinner
-            @size="small"
-            {{on "click" this.handleSaveClick}}
-            @shouldShowSpinner={{this.updateMembershipGiftTask.isRunning}}
-            @isDisabled={{this.updateMembershipGiftTask.isRunning}}
-            data-test-save-button
-          >
-            Save
-          </PrimaryButtonWithSpinner>
-        </div>
-      {{else}}
-        <TertiaryButton @size="small" {{on "click" this.handleEditClick}} data-test-edit-button>
-          <div class="flex items-center gap-1">
-            {{svg-jar "pencil" class="fill-current w-4"}}
-
-            <span>
-              Edit
-            </span>
-          </div>
-        </TertiaryButton>
-      {{/if}}
-    {{else}}
-      <PrimaryButton @size="small" {{on "click" this.handleEditClick}} data-test-add-gift-message-button>
-        Add gift message
-      </PrimaryButton>
-    {{/if}}
+    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} />
   </div>
 </div>
