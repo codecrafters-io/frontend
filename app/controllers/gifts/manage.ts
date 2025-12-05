@@ -21,8 +21,8 @@ export default class GiftsManageController extends Controller {
   }
 
   @action
-  handleCopyButtonClick() {
-    // Handler for copy button click
+  async handleCopyButtonClick() {
+    await navigator.clipboard.writeText(this.model.redeemUrl);
   }
 
   @action

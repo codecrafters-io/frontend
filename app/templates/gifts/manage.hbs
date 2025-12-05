@@ -9,15 +9,14 @@
     </h1>
 
     <div
-      class="flex flex-col items-center gap-4 border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs p-10 mb-12"
+      class="flex flex-col items-center gap-4 w-full max-w-md border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs py-10 px-4 sm:px-10 mb-12"
       data-test-share-gift-container
     >
-      <span class="flex gap-2 items-center text-gray-700 dark:text-gray-300">
-        {{!-- {{svg-jar "gift" class="w-5 text-teal-500"}} --}}
+      <span class="text-gray-700 dark:text-gray-300 text-center text-balance">
         Here's a link to share with the recipient.
       </span>
 
-      <CopyableCode @code={{"https://codecrafters.io/gifts/redeem"}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+      <CopyableCode @code={{@model.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
     </div>
 
     <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
