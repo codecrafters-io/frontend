@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 import type MembershipGiftModel from 'codecrafters-frontend/models/membership-gift';
+import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -16,6 +17,8 @@ interface Signature {
 }
 
 export default class RedeemGiftPageGiftMessage extends Component<Signature> {
+  fade = fade;
+
   @tracked isEditing = false;
   @tracked messageElement: HTMLElement | null = null;
 
@@ -55,12 +58,11 @@ export default class RedeemGiftPageGiftMessage extends Component<Signature> {
       throw new Error('Message element not found');
     }
 
-    this.isEditing = false;
-
     // Ensure content-editable is set to false before ember updates the node's text content
     const newMessage = (this.messageElement!.innerText || '').trim();
     this.args.membershipGift.senderMessage = newMessage;
     this.updateMembershipGiftTask.perform();
+    this.isEditing = false;
 
     next(() => {
       this.messageElement!.innerText = newMessage; // Ensure Ember doesn't conflict with contentEditable

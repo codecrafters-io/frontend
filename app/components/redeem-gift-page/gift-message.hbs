@@ -13,43 +13,48 @@
 
     {{#if @isEditable}}
       <div class="mt-6">
-        {{#if (or this.isEditing this.updateMembershipGiftTask.isRunning)}}
-          <div class="flex gap-2">
-            <TertiaryButton
-              @size="small"
-              {{on "click" this.handleCancelClick}}
-              @isDisabled={{this.updateMembershipGiftTask.isRunning}}
-              data-test-cancel-button
-            >
-              Cancel
-            </TertiaryButton>
+        <AnimatedContainer>
+          {{#animated-if (or this.isEditing this.updateMembershipGiftTask.isRunning) use=this.fade duration=300}}
+            <div class="flex gap-2">
+              <TertiaryButton
+                @size="small"
+                {{on "click" this.handleCancelClick}}
+                @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+                data-test-cancel-button
+              >
+                Cancel
+              </TertiaryButton>
 
-            <PrimaryButtonWithSpinner
-              @size="small"
-              {{on "click" this.handleSaveClick}}
-              @shouldShowSpinner={{this.updateMembershipGiftTask.isRunning}}
-              @isDisabled={{this.updateMembershipGiftTask.isRunning}}
-              data-test-save-button
-            >
-              Save
-            </PrimaryButtonWithSpinner>
-          </div>
-        {{else}}
-          <TertiaryButton @size="small" {{on "click" this.handleEditClick}} data-test-edit-button>
-            <div class="flex items-center gap-1">
-              {{svg-jar "pencil" class="fill-current w-4"}}
-
-              <span>
-                Edit
-              </span>
+              <PrimaryButtonWithSpinner
+                @size="small"
+                {{on "click" this.handleSaveClick}}
+                @shouldShowSpinner={{this.updateMembershipGiftTask.isRunning}}
+                @isDisabled={{this.updateMembershipGiftTask.isRunning}}
+                data-test-save-button
+              >
+                Save
+              </PrimaryButtonWithSpinner>
             </div>
-          </TertiaryButton>
-        {{/if}}
+          {{else}}
+            <TertiaryButton @size="small" {{on "click" this.handleEditClick}} data-test-edit-button>
+              <div class="flex items-center gap-1">
+                {{svg-jar "pencil" class="fill-current w-4"}}
+
+                <span>
+                  Edit
+                </span>
+              </div>
+            </TertiaryButton>
+          {{/animated-if}}
+        </AnimatedContainer>
       </div>
     {{/if}}
   {{else if @isEditable}}
-    <PrimaryButton @size="small" {{on "click" this.handleEditClick}} data-test-add-gift-message-button>
-      Add gift message
+    <PrimaryButton {{on "click" this.handleEditClick}} data-test-add-gift-message-button>
+      <div class="flex items-center gap-2">
+        {{svg-jar "annotation" class="fill-current w-5"}}
+        <span>Add gift message</span>
+      </div>
     </PrimaryButton>
   {{/if}}
 </div>

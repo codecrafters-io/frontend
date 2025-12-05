@@ -19,11 +19,12 @@
       <CopyableCode @code={{@model.gift.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
     </div>
 
+    <RedeemGiftPage::GiftMessage @membershipGift={{@model.gift}} @managementToken={{@model.managementToken}} @isEditable={{true}} class="mb-12" />
+
     <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
       Gift preview:
     </div>
 
-    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} class="mb-6" />
-    <RedeemGiftPage::GiftMessage @membershipGift={{@model.gift}} @managementToken={{@model.managementToken}} @isEditable={{true}} />
+    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} />
   </div>
 </div>
