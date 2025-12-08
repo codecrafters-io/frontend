@@ -9,7 +9,7 @@
     </h1>
 
     <div
-      class="flex flex-col items-center gap-4 w-full max-w-md border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs py-10 px-4 sm:px-10 mb-12"
+      class="flex flex-col items-center gap-4 w-full max-w-md border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs py-10 px-4 sm:px-10 mb-6"
       data-test-share-gift-container
     >
       <span class="text-gray-700 dark:text-gray-300 text-center text-balance">
@@ -18,6 +18,10 @@
 
       <CopyableCode @code={{@model.gift.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
     </div>
+
+    <PrimaryLinkButton @route="gifts.buy" @shouldOpenInNewTab={{true}} class="mb-12">
+      Buy another gift →
+    </PrimaryLinkButton>
 
     <RedeemGiftPage::GiftMessage @membershipGift={{@model.gift}} @managementToken={{@model.managementToken}} @isEditable={{true}} class="mb-12" />
 
