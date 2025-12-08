@@ -14,7 +14,7 @@
 
     <div class="h-px bg-gray-100 dark:bg-white/10 mt-6 mb-6"></div>
 
-    <GiftPaymentPage::GiftDetailsForm::Section @title="Gift Message" @description="Optional. You can edit this after purchase.">
+    <GiftPaymentPage::GiftDetailsForm::Section @title="Gift Message" @description="Optional. You can edit this later.">
       <Textarea
         @value={{@giftPaymentFlow.giftMessage}}
         {{on "blur" this.handleInputBlur}}
