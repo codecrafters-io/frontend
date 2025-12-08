@@ -16,8 +16,8 @@ export default class GiftPaymentPageFaqList extends Component<Signature> {
 
   faqs: Faq[] = [
     {
-      query: 'How does gifting work?',
-      answerMarkdown: `After completing your purchase, you'll receive a unique gift link via email. You can share this link with the recipient whenever you're ready. When they click the link, they can redeem the gift and start their CodeCrafters membership.`,
+      query: 'What is a CodeCrafters gift membership?',
+      answerMarkdown: `A gift membership grants unlimited access to all CodeCrafters challenges.`,
     },
     {
       query: 'When does the membership start?',
@@ -29,11 +29,11 @@ export default class GiftPaymentPageFaqList extends Component<Signature> {
     },
     {
       query: "What happens if the gift isn't redeemed?",
-      answerMarkdown: `The gift link remains valid until it's redeemed. There's no expiration on when the recipient needs to redeem it, so they can use it whenever they're ready.`,
+      answerMarkdown: `The gift link remains valid for 1 year until it's redeemed. If the gift isn't redeemed within 1 year it'll expire. \n\nOnce redeemed, the membership will remain active for the duration specified in the gift.`,
     },
     {
       query: 'Can I get a refund?',
-      answerMarkdown: `We don't offer refunds for gift purchases. However, if you run into any issues, please reach out to us at [hello@codecrafters.io](mailto:hello@codecrafters.io) and we'll be happy to help.`,
+      answerMarkdown: `We offer refunds for gift purchases within 30 days of purchase as long as the gift hasn't been redeemed. Please reach out to us at [hello@codecrafters.io](mailto:hello@codecrafters.io) and we'll be happy to help.`,
     },
     {
       query: 'What if I need to change the recipient?',
