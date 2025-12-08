@@ -17,7 +17,7 @@ export default class GiftPaymentPageFaqList extends Component<Signature> {
   faqs: Faq[] = [
     {
       query: 'What is a CodeCrafters gift membership?',
-      answerMarkdown: `A gift membership grants unlimited access to all CodeCrafters challenges.`,
+      answerMarkdown: `A gift membership grants the recipient access to all CodeCrafters challenges for a specified period of time.`,
     },
     {
       query: 'When does the membership start?',
@@ -29,7 +29,7 @@ export default class GiftPaymentPageFaqList extends Component<Signature> {
     },
     {
       query: "What happens if the gift isn't redeemed?",
-      answerMarkdown: `The gift link remains valid for 1 year until it's redeemed. If the gift isn't redeemed within 1 year it'll expire. \n\nOnce redeemed, the membership will remain active for the duration specified in the gift.`,
+      answerMarkdown: `The gift link remains valid for 1 year until it's redeemed. If the gift isn't redeemed within 1 year it expires. \n\nOnce redeemed, the membership will remain active for the duration specified in the gift.`,
     },
     {
       query: 'Can I get a refund?',
