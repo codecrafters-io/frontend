@@ -22,6 +22,8 @@ export default class GiftsManageRoute extends BaseRoute {
   afterModel(model: ModelType | undefined) {
     if (!model?.gift) {
       this.router.transitionTo('not-found');
+
+      return;
     }
 
     this.previousMetaImageUrl = this.metaData.imageUrl;

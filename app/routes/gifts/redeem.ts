@@ -19,6 +19,8 @@ export default class GiftsRedeemRoute extends BaseRoute {
   afterModel(model: ModelType | undefined) {
     if (!model) {
       this.router.transitionTo('not-found');
+
+      return;
     }
 
     this.previousMetaImageUrl = this.metaData.imageUrl;
