@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/ember';
 import BYOXBanner from '/assets/images/affiliate-program-features/byox-banner.svg';
 import BYOXBannerMobile from '/assets/images/affiliate-program-features/byox-banner-mobile.svg';
 import Controller from '@ember/controller';
@@ -55,6 +56,7 @@ export default class GiftsRedeemController extends Controller {
       await this.authenticator.syncCurrentUser(); // Ensure newly created membership is available immediately
       this.router.transitionTo('settings.billing');
     } catch (error) {
+      Sentry.captureException(error);
       this.isRedeemingGift = false;
       this.redeemError = 'Failed to redeem gift. Please try again.';
     }
