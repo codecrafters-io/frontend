@@ -24,7 +24,7 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
     assert.strictEqual(redeemGiftPage.giftMessageContainer.text, 'Message from sender: Happy Birthday! Enjoy your CodeCrafters membership. — Paul');
   });
 
-  test('displays gift details if gift is redeemed', async function (assert) {
+  test('redirects to redeemed page if gift is redeemed', async function (assert) {
     this.server.schema.membershipGifts.create({
       secretToken: 'xyz',
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
@@ -34,6 +34,6 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
-    assert.strictEqual(redeemGiftPage.giftRedeemedMessage.text, 'This gift has been redeemed.');
+    assert.strictEqual(currentURL(), '/gifts/redeemed');
   });
 });
