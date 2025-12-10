@@ -29,8 +29,12 @@
       Gift preview:
     </div>
 
-    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} />
+    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} class="mb-12" />
 
-    <ManageGiftPage::FaqList class="mt-12" />
+    <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
+      Frequently asked questions:
+    </div>
+
+    <ManageGiftPage::FaqList />
   </div>
 </div>
