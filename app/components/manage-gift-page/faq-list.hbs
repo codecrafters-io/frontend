@@ -1,0 +1,14 @@
+<div class="w-full max-w-xl" ...attributes>
+  <h2
+    class="text-center text-2xl leading-8 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold tracking-tighter mb-6"
+  >
+    Frequently Asked Questions
+  </h2>
+
+  <div class="flex flex-col gap-2.5">
+    {{#each this.faqs as |faq|}}
+      <FaqCard @faq={{faq}} @onToggle={{this.handleToggle}} @isOpen={{eq faq this.openItem}} />
+    {{/each}}
+  </div>
+</div>
+
