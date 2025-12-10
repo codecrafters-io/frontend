@@ -6,4 +6,3 @@ export default class GiftsRedeemedRoute extends BaseRoute {
     return new RouteInfoMetadata({ allowsAnonymousAccess: true, colorScheme: RouteColorScheme.Dark });
   }
 }
-

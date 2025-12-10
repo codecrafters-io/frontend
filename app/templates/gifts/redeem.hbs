@@ -1,76 +1,76 @@
 <div class="bg-github-green-dot-wall">
   <div class="container mx-auto lg:max-w-(--breakpoint-xl) px-4 py-16">
     <div class="flex flex-col justify-center items-center mb-20">
-        <h1 class="text-3xl sm:text-4xl leading-10 text-gradient-to-b from-white to-gray-300 font-bold mb-12 text-pretty text-center">
-          Redeem Gift Card
-        </h1>
+      <h1 class="text-3xl sm:text-4xl leading-10 text-gradient-to-b from-white to-gray-300 font-bold mb-12 text-pretty text-center">
+        Redeem Gift Card
+      </h1>
 
-        <RedeemGiftPage::GiftCard @membershipGift={{@model}} class="mb-6" />
+      <RedeemGiftPage::GiftCard @membershipGift={{@model}} class="mb-6" />
 
-        {{#if @model.senderMessage}}
-          <RedeemGiftPage::GiftMessage @membershipGift={{@model}} class="mb-6" />
-        {{/if}}
+      {{#if @model.senderMessage}}
+        <RedeemGiftPage::GiftMessage @membershipGift={{@model}} class="mb-6" />
+      {{/if}}
 
-        <PrimaryButton @size="large" data-test-redeem-button @isDisabled={{this.redeemButtonIsDisabled}} {{on "click" this.handleRedeemButtonClick}}>
-          <div class="flex items-center gap-2.5">
-            {{#if this.currentUserIsAnonymous}}
-              {{svg-jar "github" class="fill-current w-6 transform transition-all"}}
-            {{/if}}
-
-            {{#if this.isRedeemingGift}}
-              Redeeming...
-            {{else}}
-              Redeem Gift Card
-            {{/if}}
-          </div>
-
+      <PrimaryButton @size="large" data-test-redeem-button @isDisabled={{this.redeemButtonIsDisabled}} {{on "click" this.handleRedeemButtonClick}}>
+        <div class="flex items-center gap-2.5">
           {{#if this.currentUserIsAnonymous}}
-            <EmberTooltip @text="Click to login via GitHub" />
-          {{else if this.currentUserCanAccessMembershipBenefits}}
-            <EmberTooltip @text="You already have full access to CodeCrafters. You can claim this gift once your membership expires." />
+            {{svg-jar "github" class="fill-current w-6 transform transition-all"}}
           {{/if}}
-        </PrimaryButton>
 
-        <div class="text-xs text-gray-400 text-center text-pretty mt-2">
-          No credit card required.
+          {{#if this.isRedeemingGift}}
+            Redeeming...
+          {{else}}
+            Redeem Gift Card
+          {{/if}}
         </div>
 
-        {{#if this.redeemError}}
-          <AlertWithIcon @type="error" class="mt-3">
-            <p>{{this.redeemError}}</p>
-          </AlertWithIcon>
+        {{#if this.currentUserIsAnonymous}}
+          <EmberTooltip @text="Click to login via GitHub" />
+        {{else if this.currentUserCanAccessMembershipBenefits}}
+          <EmberTooltip @text="You already have full access to CodeCrafters. You can claim this gift once your membership expires." />
         {{/if}}
+      </PrimaryButton>
 
-        <div class="space-y-6 text-center my-8 max-w-[640px] mx-auto">
-          <h2
-            class="text-3xl leading-9 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold"
-          >
-            Trusted by senior engineers at
-            <span class="italic font-extrabold">the world's best companies</span>
-          </h2>
-          <p class="text-sm md:text-lg text-gray-900 dark:text-gray-300">
-            Discover how core contributors to Docker and Next.js practice writing code at the edge of their abilities — as well as senior engineers at
-            companies like Apple, NVIDIA, and Stripe.
-          </p>
-        </div>
+      <div class="text-xs text-gray-400 text-center text-pretty mt-2">
+        No credit card required.
+      </div>
 
-        <h2 class="text-gray-400 dark:text-gray-500 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
-        <AffiliateLinkPage::LogoCloud />
+      {{#if this.redeemError}}
+        <AlertWithIcon @type="error" class="mt-3">
+          <p>{{this.redeemError}}</p>
+        </AlertWithIcon>
+      {{/if}}
 
-        <img src={{this.BYOXBanner}} alt="Build Your Own X GitHub Banner" class="hidden sm:block sm:w-4/5 mx-auto mt-16" />
-        <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
-
+      <div class="space-y-6 text-center my-8 max-w-[640px] mx-auto">
         <h2
-          class="text-2xl leading-10 md:text-3xl text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold text-center mt-16"
+          class="text-3xl leading-9 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold"
         >
-          Hear it from our members
+          Trusted by senior engineers at
+          <span class="italic font-extrabold">the world's best companies</span>
         </h2>
+        <p class="text-sm md:text-lg text-gray-900 dark:text-gray-300">
+          Discover how core contributors to Docker and Next.js practice writing code at the edge of their abilities — as well as senior engineers at
+          companies like Apple, NVIDIA, and Stripe.
+        </p>
+      </div>
 
-        <div class="text-gray-500 dark:text-gray-400 text-sm text-center mt-2">
-          Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
-        </div>
+      <h2 class="text-gray-400 dark:text-gray-500 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
+      <AffiliateLinkPage::LogoCloud />
 
-        <TestimonialList class="mt-10" />
+      <img src={{this.BYOXBanner}} alt="Build Your Own X GitHub Banner" class="hidden sm:block sm:w-4/5 mx-auto mt-16" />
+      <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
+
+      <h2
+        class="text-2xl leading-10 md:text-3xl text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold text-center mt-16"
+      >
+        Hear it from our members
+      </h2>
+
+      <div class="text-gray-500 dark:text-gray-400 text-sm text-center mt-2">
+        Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
+      </div>
+
+      <TestimonialList class="mt-10" />
     </div>
   </div>
 </div>
