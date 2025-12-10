@@ -1,4 +1,5 @@
 import CurrentMirageUser from '../utils/current-mirage-user';
+import { Response } from 'miragejs';
 
 export default function (server) {
   server.get('/membership-gifts', function (schema, request) {
@@ -32,6 +33,10 @@ export default function (server) {
 
     if (!membershipGift) {
       return new Response(404, {}, { error: 'Gift not found' });
+    }
+
+    if (JSON.parse(request.requestBody).secret_token !== membershipGift.secretToken) {
+      return new Response(400, {}, { error: 'Invalid secret token' });
     }
 
     membershipGift.update({ redeemedAt: new Date() });

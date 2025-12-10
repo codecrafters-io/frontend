@@ -52,7 +52,7 @@ export default class GiftsRedeemController extends Controller {
     this.isRedeemingGift = true;
 
     try {
-      await this.model.redeem({});
+      await this.model.redeem({ secret_token: this.model.secretToken });
       await this.authenticator.syncCurrentUser(); // Ensure newly created membership is available immediately
       this.router.transitionTo('settings.billing');
     } catch (error) {
