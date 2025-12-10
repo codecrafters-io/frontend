@@ -61,4 +61,12 @@ export default class GiftsRedeemController extends Controller {
       this.redeemError = 'Failed to redeem gift. Please try again.';
     }
   }
+
+  @action
+  resetController(_controller: unknown, isExiting: boolean, _transition: unknown) {
+    if (isExiting) {
+      this.redeemError = null;
+      this.isRedeemingGift = false;
+    }
+  }
 }
