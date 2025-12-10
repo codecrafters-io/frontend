@@ -34,6 +34,6 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
-    assert.strictEqual(redeemGiftPage.giftAlreadyRedeemedMessage.text, 'This gift has already been redeemed.');
+    assert.strictEqual(redeemGiftPage.giftRedeemedMessage.text, 'This gift has been redeemed.');
   });
 });

@@ -4,7 +4,7 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 export default createPage({
   visit: visitable('/gifts/redeem/:secret_token'),
 
-  giftAlreadyRedeemedMessage: { scope: '[data-test-gift-already-redeemed-message]' },
+  giftRedeemedMessage: { scope: '[data-test-gift-redeemed-message]' },
   giftMessageContainer: { scope: '[data-test-gift-message-container]' },
 
   giftDetailsContainer: {
