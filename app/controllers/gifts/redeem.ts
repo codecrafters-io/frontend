@@ -19,6 +19,7 @@ export default class GiftsRedeemController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   @tracked isRedeemingGift = false;
+  @tracked redeemError: string | null = null;
 
   get currentUserCanAccessMembershipBenefits() {
     return this.authenticator.currentUser && this.authenticator.currentUser.canAccessMembershipBenefits;
@@ -46,6 +47,7 @@ export default class GiftsRedeemController extends Controller {
       return;
     }
 
+    this.redeemError = null;
     this.isRedeemingGift = true;
 
     try {
@@ -53,9 +55,8 @@ export default class GiftsRedeemController extends Controller {
       await this.authenticator.syncCurrentUser(); // Ensure newly created membership is available immediately
       this.router.transitionTo('settings.billing');
     } catch (error) {
-      // TODO: Handle error appropriately
       this.isRedeemingGift = false;
-      throw error;
+      this.redeemError = 'Failed to redeem gift. Please try again.';
     }
   }
 }
