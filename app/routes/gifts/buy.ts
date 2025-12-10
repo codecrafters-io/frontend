@@ -33,6 +33,11 @@ export default class GiftsPayRoute extends BaseRoute {
     if (params.giftPaymentFlowId) {
       return await this.store.findRecord('gift-payment-flow', params.giftPaymentFlowId);
     } else {
+      // Make sure primaryEmailAddress is loaded for current user
+      if (this.authenticator.isAuthenticated) {
+        await this.authenticator.authenticate();
+      }
+
       return this.store.createRecord('gift-payment-flow', {
         pricingPlanId: 'v1-lifetime',
         senderEmailAddress: this.authenticator.currentUser?.primaryEmailAddress,
