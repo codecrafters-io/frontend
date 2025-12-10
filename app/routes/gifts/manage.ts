@@ -26,6 +26,12 @@ export default class GiftsManageRoute extends BaseRoute {
       return;
     }
 
+    if (model.gift.redeemedAt) {
+      this.router.transitionTo('gifts.redeemed');
+
+      return;
+    }
+
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}gift-card.png`;
   }

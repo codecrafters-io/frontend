@@ -40,37 +40,37 @@
           <p>{{this.redeemError}}</p>
         </AlertWithIcon>
       {{/if}}
-    </div>
 
-    <div class="space-y-6 text-center my-8 max-w-[640px] mx-auto">
+      <div class="space-y-6 text-center my-8 max-w-[640px] mx-auto">
+        <h2
+          class="text-3xl leading-9 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold"
+        >
+          Trusted by senior engineers at
+          <span class="italic font-extrabold">the world's best companies</span>
+        </h2>
+        <p class="text-sm md:text-lg text-gray-900 dark:text-gray-300">
+          Discover how core contributors to Docker and Next.js practice writing code at the edge of their abilities — as well as senior engineers at
+          companies like Apple, NVIDIA, and Stripe.
+        </p>
+      </div>
+
+      <h2 class="text-gray-400 dark:text-gray-500 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
+      <AffiliateLinkPage::LogoCloud />
+
+      <img src={{this.BYOXBanner}} alt="Build Your Own X GitHub Banner" class="hidden sm:block sm:w-4/5 mx-auto mt-16" />
+      <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
+
       <h2
-        class="text-3xl leading-9 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold"
+        class="text-2xl leading-10 md:text-3xl text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold text-center mt-16"
       >
-        Trusted by senior engineers at
-        <span class="italic font-extrabold">the world's best companies</span>
+        Hear it from our members
       </h2>
-      <p class="text-sm md:text-lg text-gray-900 dark:text-gray-300">
-        Discover how core contributors to Docker and Next.js practice writing code at the edge of their abilities — as well as senior engineers at
-        companies like Apple, NVIDIA, and Stripe.
-      </p>
+
+      <div class="text-gray-500 dark:text-gray-400 text-sm text-center mt-2">
+        Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
+      </div>
+
+      <TestimonialList class="mt-10" />
     </div>
-
-    <h2 class="text-gray-400 dark:text-gray-500 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
-    <AffiliateLinkPage::LogoCloud />
-
-    <img src={{this.BYOXBanner}} alt="Build Your Own X GitHub Banner" class="hidden sm:block sm:w-4/5 mx-auto mt-16" />
-    <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
-
-    <h2
-      class="text-2xl leading-10 md:text-3xl text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold text-center mt-16"
-    >
-      Hear it from our members
-    </h2>
-
-    <div class="text-gray-500 dark:text-gray-400 text-sm text-center mt-2">
-      Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
-    </div>
-
-    <TestimonialList class="mt-10" />
   </div>
 </div>

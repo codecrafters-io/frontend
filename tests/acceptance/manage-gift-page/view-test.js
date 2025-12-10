@@ -18,10 +18,24 @@ module('Acceptance | manage-gift-page | view', function (hooks) {
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await giftsManagePage.visit({ management_token: 'valid-token' });
     assert.strictEqual(currentURL(), `/gifts/manage/${membershipGift.managementToken}`);
+  });
+
+  test('redirects to redeemed page if gift is redeemed', async function (assert) {
+    this.server.schema.membershipGifts.create({
+      managementToken: 'valid-token',
+      secretToken: 'xyz',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      validityInDays: 365,
+      purchasedAt: new Date(),
+      redeemedAt: new Date(),
+    });
+
+    await giftsManagePage.visit({ management_token: 'valid-token' });
+    assert.strictEqual(currentURL(), '/gifts/redeemed');
   });
 });

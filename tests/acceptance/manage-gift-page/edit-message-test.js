@@ -16,7 +16,7 @@ module('Acceptance | manage-gift-page | edit-message', function (hooks) {
       senderMessage: 'Happy Birthday!\nEnjoy your CodeCrafters membership.\n\nHave fun coding!',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await giftsManagePage.visit({ management_token: 'valid-token' });
@@ -60,7 +60,7 @@ module('Acceptance | manage-gift-page | edit-message', function (hooks) {
       senderMessage: null,
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await giftsManagePage.visit({ management_token: 'valid-token-2' });

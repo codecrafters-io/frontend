@@ -67,6 +67,7 @@ Router.map(function () {
   this.route('gifts.buy', { path: '/gifts/buy' });
   this.route('gifts.manage', { path: '/gifts/manage/:management_token' });
   this.route('gifts.redeem', { path: '/gifts/redeem/:secret_token' });
+  this.route('gifts.redeemed', { path: '/gifts/redeemed' });
   this.route('institution', { path: '/campus/:institution_slug' });
   this.route('join');
   this.route('join-course', { path: '/join/:course_slug' });

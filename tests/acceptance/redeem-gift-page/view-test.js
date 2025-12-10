@@ -17,10 +17,23 @@ module('Acceptance | redeem-gift-page | view', function (hooks) {
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.\n\n— Paul',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
     assert.strictEqual(redeemGiftPage.giftMessageContainer.text, 'Message from sender: Happy Birthday! Enjoy your CodeCrafters membership. — Paul');
+  });
+
+  test('redirects to redeemed page if gift is redeemed', async function (assert) {
+    this.server.schema.membershipGifts.create({
+      secretToken: 'xyz',
+      senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
+      validityInDays: 365,
+      purchasedAt: new Date(),
+      redeemedAt: new Date(),
+    });
+
+    await redeemGiftPage.visit({ secret_token: 'xyz' });
+    assert.strictEqual(currentURL(), '/gifts/redeemed');
   });
 });
