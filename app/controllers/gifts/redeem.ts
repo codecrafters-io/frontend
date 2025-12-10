@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/ember';
 import BYOXBanner from '/assets/images/affiliate-program-features/byox-banner.svg';
 import BYOXBannerMobile from '/assets/images/affiliate-program-features/byox-banner-mobile.svg';
 import Controller from '@ember/controller';
@@ -19,6 +20,7 @@ export default class GiftsRedeemController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   @tracked isRedeemingGift = false;
+  @tracked redeemError: string | null = null;
 
   get currentUserCanAccessMembershipBenefits() {
     return this.authenticator.currentUser && this.authenticator.currentUser.canAccessMembershipBenefits;
@@ -46,16 +48,25 @@ export default class GiftsRedeemController extends Controller {
       return;
     }
 
+    this.redeemError = null;
     this.isRedeemingGift = true;
 
     try {
-      await this.model.redeem({});
+      await this.model.redeem({ secret_token: this.model.secretToken });
       await this.authenticator.syncCurrentUser(); // Ensure newly created membership is available immediately
       this.router.transitionTo('settings.billing');
     } catch (error) {
-      // TODO: Handle error appropriately
+      Sentry.captureException(error);
       this.isRedeemingGift = false;
-      throw error;
+      this.redeemError = 'Failed to redeem gift. Please try again.';
+    }
+  }
+
+  @action
+  resetController(_controller: unknown, isExiting: boolean, _transition: unknown) {
+    if (isExiting) {
+      this.redeemError = null;
+      this.isRedeemingGift = false;
     }
   }
 }
