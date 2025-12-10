@@ -9,8 +9,8 @@ When you're asked to make changes, follow these rules:
   - You can ignore any `pauseTest()` related failures. These are needed for debugging purposes.
 - Once linting is successful, you can try running tests if there are ones that cover the area you changed.
   - Only run tests using the browser tool.
-  - The browser will already be open with a URL like this: `http://localhost:4200/tests/index.html?moduleId=abcd`
-  - Reload the page and you'll see test results there.
+  - Visit `http://localhost:4200/tests?filter=xyz` to run tests in the browser.
+  - You MUST use the filter query param to filter for the tests you want to run. Do NOT run all tests.
   - You can use the console to check for any errors, you'll also see them printed on the page most of the time.
 - Do NOT run `npm run test`, that's super slow.
 - Do NOT run commands like `npm run build` / `npm run start`.
