@@ -44,6 +44,8 @@
     { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
     { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
     { "source": "/users/:user", "destination": "/prerender/users/[user]" },
+    { "source": "/gifts/buy", "destination": "/prerender/gifts/buy" },
+    { "source": "/gifts/redeem/:secret_token", "destination": "/prerender/gifts/redeem/[secret_token]" },
     { "source": "/:path*", "destination": "/_empty.html" }
   ],
   "github": {
