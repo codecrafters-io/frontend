@@ -18,7 +18,7 @@ module('Acceptance | manage-gift-page | view', function (hooks) {
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await giftsManagePage.visit({ management_token: 'valid-token' });

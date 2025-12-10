@@ -6,11 +6,11 @@ export default class MembershipGiftModel extends Model {
   @belongsTo('user', { async: false, inverse: null }) declare claimant: UserModel;
   @belongsTo('user', { async: false, inverse: null }) declare sender: UserModel;
 
-  @attr('date') declare claimedAt: Date | null;
   @attr('date') declare purchasedAt: Date;
+  @attr('date') declare redeemedAt: Date | null;
+  @attr('string') declare secretToken: string;
   @attr('string') declare senderMessage: string;
   @attr('number') declare validityInDays: number;
-  @attr('string') declare secretToken: string;
 
   declare redeem: (this: MembershipGiftModel, payload: unknown) => Promise<void>;
 

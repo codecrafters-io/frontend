@@ -1,7 +1,7 @@
 import { Factory } from 'miragejs';
 
 export default Factory.extend({
-  claimedAt: null,
+  redeemedAt: null,
 
   managementToken: () => {
     return `mgmt_${Math.random().toString(36).substring(7)}`;

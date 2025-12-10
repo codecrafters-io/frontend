@@ -18,7 +18,7 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
@@ -38,7 +38,7 @@ module('Acceptance | redeem-gift-page | redeem', function (hooks) {
       senderMessage: 'Happy Birthday! Enjoy your CodeCrafters membership.',
       validityInDays: 365,
       purchasedAt: new Date(),
-      claimedAt: null,
+      redeemedAt: null,
     });
 
     await redeemGiftPage.visit({ secret_token: 'xyz' });
