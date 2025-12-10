@@ -1,10 +1,11 @@
 import { module, test } from 'qunit';
+import percySnapshot from '@percy/ember';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupWindowMock } from 'ember-window-mock/test-support';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import giftPaymentPage from 'codecrafters-frontend/tests/pages/gift-payment-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import percySnapshot from '@percy/ember';
 import windowMock from 'ember-window-mock';
+import { setupWindowMock } from 'ember-window-mock/test-support';
 
 module('Acceptance | buy-gift-page | purchase', function (hooks) {
   setupApplicationTest(hooks);
@@ -66,5 +67,26 @@ module('Acceptance | buy-gift-page | purchase', function (hooks) {
 
     await giftPaymentPage.confirmAndPayStepContainer.clickOnPayButton();
     assert.strictEqual(windowMock.location.href, 'https://checkout.stripe.com/test-checkout-session', 'should redirect to Stripe checkout');
+  });
+
+  test('email address field is pre-populated with user primary email address', async function (assert) {
+    testScenario(this.server);
+
+    const user = this.server.schema.users.find('63c51e91-e448-4ea9-821b-a80415f266d3');
+    user.update({ primaryEmailAddress: 'user@example.com' });
+    signIn(this.owner, this.server, user);
+
+    // Ensure the user is synced so the store has the updated primaryEmailAddress
+    const authenticator = this.owner.lookup('service:authenticator');
+    await authenticator.syncCurrentUser();
+
+    await giftPaymentPage.visit();
+    assert.ok(giftPaymentPage.enterDetailsStepContainer.isVisible, 'Enter details step is visible');
+
+    assert.strictEqual(
+      giftPaymentPage.enterDetailsStepContainer.senderEmailAddressInputValue,
+      'user@example.com',
+      'Email address is pre-populated with user primary email address',
+    );
   });
 });
