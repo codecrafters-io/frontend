@@ -1,9 +1,11 @@
 <div class="pt-8 pb-16 px-3 md:px-6 lg:px-10" data-test-screencasts-tab>
   <AlertWithIcon class="mb-6">
-    Screencasts are recordings of CodeCrafters users passing this stage. This is a beta feature, please send us
-    <div class="inline-flex">
-      <FeedbackButton @source="screencast" class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
-    </div>.
+    <p>
+      Screencasts are recordings of CodeCrafters users passing this stage. This is a beta feature, please send us
+      <span class="inline-flex">
+        <FeedbackButton @source="screencast" class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
+      </span>.
+    </p>
   </AlertWithIcon>
 
   {{#if this.selectedScreencast}}
