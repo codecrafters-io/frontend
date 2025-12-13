@@ -2,6 +2,8 @@ import Application from 'codecrafters-frontend/app';
 import config from 'codecrafters-frontend/config/environment';
 import * as QUnit from 'qunit';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
+import { loadTests } from 'ember-qunit/test-loader';
+import { setupEmberOnerrorValidation } from 'ember-qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
@@ -17,6 +19,7 @@ setupSinon();
 
 setupQunitDom(QUnit.assert);
 setupQunitAssertionsExtra(QUnit.assert);
+setupEmberOnerrorValidation();
 
 QUnit.testStart(function () {
   stubLocalStorage();
@@ -42,6 +45,7 @@ QUnit.done(async function () {
   await sendCoverage();
 });
 
+loadTests();
 start();
 
 QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
