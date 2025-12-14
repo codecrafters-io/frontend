@@ -6,8 +6,8 @@ import { setupEmberOnerrorValidation } from 'ember-qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
+import { start as startEmberExam } from 'ember-exam/test-support';
 import setupSinon from 'ember-sinon-qunit';
-import start from 'ember-exam/test-support/start';
 import stubLocalStorage from 'codecrafters-frontend/tests/support/stub-local-storage';
 import stubClipboard from 'codecrafters-frontend/tests/support/stub-clipboard';
 import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
@@ -44,6 +44,6 @@ QUnit.done(async function () {
   await sendCoverage();
 });
 
-start();
-
 QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
+
+startEmberExam();
