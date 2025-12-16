@@ -103,7 +103,7 @@
   </div>
 </div>
 
-{{#if this.chooseMembershipPlanModalIsOpen}}
+{{#if (eq this.chooseMembershipPlanModalIsOpen "true")}}
   <ModalBackdrop>
     <PayPage::ChooseMembershipPlanModal
       @onClose={{this.handleChooseMembershipPlanModalClose}}
