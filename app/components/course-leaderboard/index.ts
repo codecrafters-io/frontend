@@ -83,7 +83,7 @@ export default class CourseLeaderboard extends Component<Signature> {
     let entries: CourseLeaderboardEntry[] = [];
 
     if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI.filter((entry) => entry.user !== this.authenticator.currentUser));
+      entries = entries.concat(this.entriesFromAPI.filter((entry) => entry.user.id !== this.authenticator.currentUser?.id));
     } else {
       entries = entries.concat(this.entriesFromAPI);
     }
