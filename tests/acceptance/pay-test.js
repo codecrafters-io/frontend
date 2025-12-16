@@ -234,4 +234,59 @@ module('Acceptance | pay-test', function (hooks) {
 
     assert.strictEqual(currentURL(), '/settings/billing');
   });
+
+  test('navigating to /pay?plans=true opens the membership plan modal', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/pay?plans=true');
+
+    assert.strictEqual(currentURL(), '/pay?plans=true');
+    assert.true(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is visible');
+  });
+
+  test('clicking "View plans" button adds plans query param and opens modal', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+
+    assert.strictEqual(currentURL(), '/pay');
+    assert.false(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is not visible initially');
+
+    await payPage.pricingPlanCards[1].ctaButton.click();
+
+    assert.strictEqual(currentURL(), '/pay?plans=true');
+    assert.true(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is visible after clicking View plans');
+  });
+
+  test('closing modal via backdrop removes plans query param', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/pay?plans=true');
+
+    assert.true(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is visible');
+    assert.strictEqual(currentURL(), '/pay?plans=true');
+
+    await payPage.clickOnModalBackdrop();
+
+    assert.false(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is not visible after closing');
+    assert.strictEqual(currentURL(), '/pay', 'plans query param is removed from URL');
+  });
+
+  test('closing modal via "Back to pricing page" link removes plans query param', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await visit('/pay?plans=true');
+
+    assert.true(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is visible');
+    assert.strictEqual(currentURL(), '/pay?plans=true');
+
+    await payPage.chooseMembershipPlanModal.clickOnBackToPricingPageLink();
+
+    assert.false(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is not visible after closing');
+    assert.strictEqual(currentURL(), '/pay', 'plans query param is removed from URL');
+  });
 });

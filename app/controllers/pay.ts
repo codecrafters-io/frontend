@@ -92,12 +92,12 @@ export default class PayController extends Controller {
 
   @action
   handleMembershipPlanCTAClick() {
-    this.router.transitionTo({ queryParams: { plans: 'true' } });
+    this.router.transitionTo('pay', { queryParams: { plans: 'true' } });
   }
 
   @action
   handleChooseMembershipPlanModalClose() {
-    this.router.transitionTo({ queryParams: { plans: undefined } });
+    this.router.transitionTo('pay', { queryParams: { plans: undefined } });
   }
 
   @action
