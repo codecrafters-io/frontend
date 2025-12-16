@@ -66,7 +66,7 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
   @action
   handleContinueButtonClick() {
     if (!this.authenticator.isAuthenticated) {
-      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay`);
+      this.authenticator.initiateLoginAndRedirectTo(`${window.location.origin}/pay?plans=true`);
 
       return;
     }
