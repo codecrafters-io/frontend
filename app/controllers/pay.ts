@@ -80,6 +80,11 @@ export default class PayController extends Controller {
   }
 
   @action
+  handleChooseMembershipPlanModalClose() {
+    this.router.transitionTo('pay', { queryParams: { plans: undefined } });
+  }
+
+  @action
   @waitFor
   async handleDidInsertContainer() {
     this.regionalDiscount = await this.store.createRecord('regional-discount').fetchCurrent();
@@ -93,11 +98,6 @@ export default class PayController extends Controller {
   @action
   handleMembershipPlanCTAClick() {
     this.router.transitionTo('pay', { queryParams: { plans: 'true' } });
-  }
-
-  @action
-  handleChooseMembershipPlanModalClose() {
-    this.router.transitionTo('pay', { queryParams: { plans: undefined } });
   }
 
   @action
