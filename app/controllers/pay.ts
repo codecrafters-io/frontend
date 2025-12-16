@@ -29,7 +29,9 @@ export default class PayController extends Controller {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  @tracked chooseMembershipPlanModalIsOpen = false;
+  queryParams = [{ chooseMembershipPlanModalIsOpen: 'plans' }];
+
+  @tracked chooseMembershipPlanModalIsOpen: string | undefined = undefined;
   @tracked regionalDiscount: RegionalDiscountModel | null = null;
 
   get activeDiscountForYearlyPlan(): PromotionalDiscountModel | null {
@@ -90,7 +92,12 @@ export default class PayController extends Controller {
 
   @action
   handleMembershipPlanCTAClick() {
-    this.chooseMembershipPlanModalIsOpen = true;
+    this.router.transitionTo({ queryParams: { plans: 'true' } });
+  }
+
+  @action
+  handleChooseMembershipPlanModalClose() {
+    this.router.transitionTo({ queryParams: { plans: undefined } });
   }
 
   @action

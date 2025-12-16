@@ -106,8 +106,7 @@
 {{#if this.chooseMembershipPlanModalIsOpen}}
   <ModalBackdrop>
     <PayPage::ChooseMembershipPlanModal
-      {{! @glint-expect-error mut not ts-ified yet }}
-      @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
+      @onClose={{this.handleChooseMembershipPlanModalClose}}
       @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
       @regionalDiscount={{this.regionalDiscount}}
     />
