@@ -1,15 +1,18 @@
-import { clickable, collection, create, text, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, isVisible, text, visitable } from 'ember-cli-page-object';
 import AccountDropdown from 'codecrafters-frontend/tests/pages/components/account-dropdown';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
 
 export default create({
   accountDropdown: AccountDropdown,
+  clickOnModalBackdrop: clickable('[data-test-modal-backdrop]'),
 
   chooseMembershipPlanModal: {
     scope: '[data-test-choose-membership-plan-modal]',
+    clickOnBackToPricingPageLink: clickable('[data-test-back-to-pricing-page-link]'),
     clickOnChoosePlanButton: clickable('[data-test-choose-plan-button]'),
     clickOnExtraInvoiceDetailsToggle: clickable('[data-test-extra-invoice-details-toggle]'),
     clickOnProceedToCheckoutButton: clickable('[data-test-proceed-to-checkout-button]'),
+    isVisible: isVisible(),
     planCards: collection('[data-test-plan-card]', {
       discountedPriceText: text('[data-test-discounted-price]'),
 

@@ -103,11 +103,10 @@
   </div>
 </div>
 
-{{#if this.chooseMembershipPlanModalIsOpen}}
+{{#if (eq this.chooseMembershipPlanModalIsOpen "true")}}
   <ModalBackdrop>
     <PayPage::ChooseMembershipPlanModal
-      {{! @glint-expect-error mut not ts-ified yet }}
-      @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
+      @onClose={{this.handleChooseMembershipPlanModalClose}}
       @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
       @regionalDiscount={{this.regionalDiscount}}
     />
