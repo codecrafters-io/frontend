@@ -6,6 +6,7 @@ import type Store from '@ember-data/store';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import { inject as service } from '@ember/service';
+import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = GiftPaymentFlowModel;
 
@@ -15,6 +16,10 @@ export default class GiftsPayRoute extends BaseRoute {
   @service declare metaData: MetaDataService;
 
   previousMetaImageUrl: string | undefined;
+
+  activate() {
+    scrollToTop();
+  }
 
   afterModel(): void {
     this.previousMetaImageUrl = this.metaData.imageUrl;
