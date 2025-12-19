@@ -49,7 +49,7 @@ export default class BaseRoute extends Route {
 
     const queryParams = transition.to?.queryParams;
 
-    if (queryParams && queryParams['r'] && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams['r'])) {
+    if (!this.fastboot.isFastBoot && queryParams && queryParams['r'] && /^\d[a-zA-Z][a-zA-Z]$/.test(queryParams['r'])) {
       // @ts-expect-error utmCampaignIdTracker service not typed
       this.utmCampaignIdTracker.setCampaignId(queryParams['r']);
       delete queryParams['r'];
