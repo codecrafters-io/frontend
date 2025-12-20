@@ -5,7 +5,7 @@ require('dotenv').config();
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const config = require('./config/environment')(EmberApp.env());
 const customFilePlugin = require('./lib/custom-file-plugin');
-const fetch = require('node-fetch');
+const nodeFetch = require('node-fetch');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { Webpack } = require('@embroider/webpack');
 const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
@@ -26,7 +26,7 @@ module.exports = function (defaults) {
 
     emberData: {
       deprecations: {
-        DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false, // Remove this after migrating off array prottype extensin usages
+        DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false, // Remove this after migrating off array prototype extensions usages
       },
     },
 
@@ -58,7 +58,7 @@ module.exports = function (defaults) {
         ];
 
         // Get a list of Courses and Languages from the API
-        const apiResponse = await fetch(`${config.x.backendUrl}/api/v1/courses?include=language-configurations.language`);
+        const apiResponse = await nodeFetch(`${config.x.backendUrl}/api/v1/courses?include=language-configurations.language`);
 
         if (apiResponse.status !== 200) {
           throw new Error(`Failed to load Courses and Languages from the API, status: ${apiResponse.status}`);
@@ -77,7 +77,7 @@ module.exports = function (defaults) {
         urls.push('/collections/rust-primer'); // will update if we get more collections
 
         // Get institutions from the API
-        const institutionsResponse = await fetch(`${config.x.backendUrl}/api/v1/institutions`);
+        const institutionsResponse = await nodeFetch(`${config.x.backendUrl}/api/v1/institutions`);
 
         if (institutionsResponse.status !== 200) {
           throw new Error(`Failed to load Institutions from the API, status: ${institutionsResponse.status}`);
