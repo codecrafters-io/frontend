@@ -3,7 +3,7 @@ import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import config from 'codecrafters-frontend/config/environment';
-import 'codecrafters-frontend/config/deprecation-workflow';
+import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import * as Sentry from '@sentry/ember';
 import 'ember-basic-dropdown/styles';
 import 'ember-animated/index';
@@ -21,6 +21,10 @@ if (config.environment === 'development' || config.environment === 'production')
     release: config.x.version,
     tracesSampleRate: 0.01,
   });
+}
+
+if (macroCondition(isDevelopingApp())) {
+  importSync('./deprecation-workflow');
 }
 
 export default class App extends Application {
