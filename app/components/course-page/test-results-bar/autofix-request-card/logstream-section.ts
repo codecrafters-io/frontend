@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import Logstream from 'codecrafters-frontend/utils/logstream';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
@@ -120,7 +121,7 @@ export default class LogstreamSection extends Component<Signature> {
   @tracked logstreamContent = '';
   @tracked eventsContainer: HTMLDivElement | null = null;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.logstream = new Logstream(args.autofixRequest.logstreamId, this.actionCableConsumer, this.store, () => {

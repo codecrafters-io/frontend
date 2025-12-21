@@ -1,5 +1,6 @@
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
@@ -16,7 +17,7 @@ interface Signature {
 export default class RunTestsInstructions extends Component<Signature> {
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.selectedCommandVariant = this.commandVariants[0]!;

@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -21,7 +22,7 @@ export default class ReviewPaymentStepContainer extends Component<Signature> {
   @tracked isLoadingFirstInvoicePreview = true;
   @service declare store: Store;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
     this.loadFirstInvoicePreview();
   }

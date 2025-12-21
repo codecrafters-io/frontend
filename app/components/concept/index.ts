@@ -1,6 +1,7 @@
 import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagement';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import config from 'codecrafters-frontend/config/environment';
@@ -31,7 +32,7 @@ export default class Concept extends Component<Signature> {
   @tracked submittedQuestionSlugs = new TrackedSet([] as string[]);
   @tracked hasFinished = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     // Temporary hack to allow for deep linking to a specific block group. (Only for admins)

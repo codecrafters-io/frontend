@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboard-entry';
 import fade from 'ember-animated/transitions/fade';
@@ -51,7 +52,7 @@ export default class CourseLeaderboard extends Component<Signature> {
   @service declare store: Store;
   @service declare visibility: VisibilityService;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     if (this.leaderboardTeamStorage.lastSelectionWasGlobalLeaderboard) {

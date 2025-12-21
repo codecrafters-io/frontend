@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import logoImage from '/assets/images/logo/logomark-color.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -32,7 +33,7 @@ export default class Header extends Component<Signature> {
   @tracked floatingBarStyle: SafeString = htmlSafe('left: 0px; width: 0px; opacity: 0;');
   @tracked floatingBarContainer: HTMLElement | null = null;
 
-  constructor(owner: unknown, args: object) {
+  constructor(owner: Owner, args: object) {
     super(owner, args);
 
     // This can't be in instance-initializers since it depends on the authenticator service

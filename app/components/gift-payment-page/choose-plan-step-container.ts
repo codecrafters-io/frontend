@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment-flow';
 import type { PricingPlan } from 'codecrafters-frontend/components/pay-page/choose-membership-plan-modal';
 import { PRICING_PLANS } from 'codecrafters-frontend/components/pay-page/choose-membership-plan-modal';
@@ -21,7 +22,7 @@ export default class ChoosePlanStepContainer extends Component<Signature> {
 
   pricingPlans = PRICING_PLANS;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     if (!this.validPricingPlanIds.includes(this.args.giftPaymentFlow.pricingPlanId)) {

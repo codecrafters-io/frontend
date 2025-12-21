@@ -1,5 +1,6 @@
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import config from 'codecrafters-frontend/config/environment';
 import fade from 'ember-animated/transitions/fade';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
@@ -34,7 +35,7 @@ export default class ShareProgressModal extends Component<Signature> {
   @tracked selectedSocialPlatform: SocialPlatform = 'twitter';
   @tracked wasCopiedRecently: boolean = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.copyableText = this.defaultCopyableText;

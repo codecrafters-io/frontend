@@ -1,6 +1,7 @@
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 
 export interface StepDefinition {
@@ -32,7 +33,7 @@ export default class ExpandableStepList extends Component<Signature> {
   @tracked containerElement: HTMLDivElement | null = null;
   @tracked expandedStepId: string | null = null;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     const firstIncompleteStep = this.firstIncompleteStep;

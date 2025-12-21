@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
@@ -26,7 +27,7 @@ export default class CreateRepositoryCard extends Component<Signature> {
   @tracked expandedSectionIndex: number | null = null;
   @tracked repositoryCreationErrorMessage: string | undefined;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     if (this.sectionList.firstIncompleteSection) {

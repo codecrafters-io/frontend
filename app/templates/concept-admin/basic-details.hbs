@@ -133,7 +133,7 @@
         <:content>
           <DangerButton
             @size="small"
-            @isDisabled={{(not this.currentUserCanDeleteConcept)}}
+            @isDisabled={{not this.currentUserCanDeleteConcept}}
             {{on "click" this.handleDeleteConceptButtonClick}}
             data-test-delete-concept-button
           >

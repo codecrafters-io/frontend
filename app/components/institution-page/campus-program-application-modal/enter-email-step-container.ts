@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type InstitutionModel from 'codecrafters-frontend/models/institution';
 import type Store from '@ember-data/store';
 import { SafeString } from 'handlebars';
@@ -26,7 +27,7 @@ export default class EnterEmailStepContainer extends Component<Signature> {
   @tracked input = '';
   @tracked isCreatingInstitutionMembershipGrantApplication = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
     this.input = args.prefilledEmailAddress || '';
   }

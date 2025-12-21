@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import Prism from 'prismjs';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
@@ -37,7 +38,7 @@ export default class CommentForm extends Component<Signature> {
   @tracked activeTab: 'write' | 'preview' = 'write';
   @tracked isEditingComment = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     if (this.args.comment) {

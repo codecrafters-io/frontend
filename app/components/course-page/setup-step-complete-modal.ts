@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -31,7 +32,7 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
 
   @tracked currentScreen: Screen = 'start-workflow-tutorial';
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     // We decide which screen to show based on `FeatureSuggestion` models.

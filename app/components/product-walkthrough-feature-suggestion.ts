@@ -1,6 +1,7 @@
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import type RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
@@ -22,7 +23,7 @@ export default class ProductWalkthroughFeatureSuggestion extends Component<Signa
 
   @tracked currentOrPreviouslyShownFeatureSuggestion: FeatureSuggestionModel | undefined;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     // Cache, since the arg will disappear after we update the dismissedAt value

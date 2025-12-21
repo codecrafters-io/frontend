@@ -3,6 +3,7 @@ import { next } from '@ember/runloop';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import fade from 'ember-animated/transitions/fade';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
@@ -23,7 +24,7 @@ export default class FeedbackPrompt extends Component<Signature> {
   @service declare store: Store;
   transition = fade;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     if (!this.feedbackSubmission) {

@@ -30,9 +30,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)">
       <PayPage::PricingPlanCard
-        @title={{"Free"}}
+        @title="Free"
         @isRecommended={{false}}
-        @subtitle={{"For trialing"}}
+        @subtitle="For trialing"
         @description="No credit card required"
         @featureDescriptions={{this.featureDescriptionsForFreePlan}}
         @ctaText="Continue with free"
@@ -42,9 +42,9 @@
       />
 
       <PayPage::PricingPlanCard
-        @title={{"Membership"}}
+        @title="Membership"
         @isRecommended={{true}}
-        @subtitle={{"For professionals"}}
+        @subtitle="For professionals"
         @description="3mo, 1yr and lifetime plans available"
         @featureDescriptions={{this.featureDescriptionsForMembershipPlan}}
         @ctaText="View plans"
@@ -54,9 +54,9 @@
       />
 
       <PayPage::PricingPlanCard
-        @title={{"Teams"}}
+        @title="Teams"
         @isRecommended={{false}}
-        @subtitle={{"For teams of 5+"}}
+        @subtitle="For teams of 5+"
         @description="Swappable seats, pay annually"
         @featureDescriptions={{this.featureDescriptionsForTeamsPlan}}
         @ctaText="Purchase team plan"

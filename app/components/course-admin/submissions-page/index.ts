@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -26,7 +27,7 @@ export default class AdminCourseSubmissionsPage extends Component<Signature> {
   @tracked requestedLanguage: LanguageModel | null = null;
   @tracked selectedSubmission: SubmissionModel | null = null;
 
-  constructor(owner: object, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.selectedSubmission = this.args.submissions.toSorted(fieldComparator('createdAt')).at(-1) ?? null;
