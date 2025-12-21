@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 // @ts-expect-error not ts-ified yet
 import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import svgJar from 'ember-svg-jar/helpers/svg-jar';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {

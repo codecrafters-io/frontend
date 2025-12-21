@@ -1,5 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class CodeExamplesRoute extends BaseRoute {
   @service store;

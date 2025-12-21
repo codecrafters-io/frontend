@@ -3,7 +3,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import PerkModel from 'codecrafters-frontend/models/perk';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class PerkRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;

@@ -1,4 +1,4 @@
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';

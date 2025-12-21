@@ -2,7 +2,7 @@
 // Usage: <div {{model-did-update this.handleModelDidUpdate model}}></div>
 import Modifier from 'ember-modifier';
 import type Transition from '@ember/routing/transition';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 import type Model from '@ember-data/model';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';

@@ -5,7 +5,7 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import RouterService from '@ember/routing/router-service';
 import type { BaseButtonSignature } from '../base-button';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLButtonElement;

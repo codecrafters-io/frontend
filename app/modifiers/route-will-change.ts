@@ -4,7 +4,7 @@ import Modifier from 'ember-modifier';
 import RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
 
 interface Signature {

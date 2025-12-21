@@ -5,7 +5,7 @@ import config from 'codecrafters-frontend/config/environment';
 import fade from 'ember-animated/transitions/fade';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 

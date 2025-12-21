@@ -5,7 +5,7 @@ import type Owner from '@ember/owner';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import type RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export interface Signature {

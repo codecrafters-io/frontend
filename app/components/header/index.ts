@@ -11,7 +11,7 @@ import type VersionTrackerService from 'codecrafters-frontend/services/version-t
 import type { SafeString } from '@ember/template/-private/handlebars';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 

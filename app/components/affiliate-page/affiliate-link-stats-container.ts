@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import uniqFieldReducer from 'codecrafters-frontend/utils/uniq-field-reducer';
 
 interface Signature {

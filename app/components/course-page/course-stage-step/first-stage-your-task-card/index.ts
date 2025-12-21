@@ -6,7 +6,7 @@ import Store from '@ember-data/store';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

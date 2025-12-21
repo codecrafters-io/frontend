@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';

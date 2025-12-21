@@ -3,7 +3,7 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import Store from '@ember-data/store';
 import UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLButtonElement;

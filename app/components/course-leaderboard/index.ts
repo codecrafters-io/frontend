@@ -7,7 +7,7 @@ import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import move from 'ember-animated/motions/move';
 import { action, get } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';

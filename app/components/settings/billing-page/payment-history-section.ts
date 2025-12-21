@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';

@@ -12,7 +12,7 @@ import type { FeatureDescription } from 'codecrafters-frontend/components/pay-pa
 import type { ModelType } from 'codecrafters-frontend/routes/pay';
 import type { Testimonial } from 'codecrafters-frontend/utils/testimonials-data';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import fade from 'ember-animated/transitions/fade';

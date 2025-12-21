@@ -1,5 +1,5 @@
 import JSONAPISerializer from '@ember-data/serializer/json-api';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export const SERIALIZER_SHOEBOX_IDENTIFIER = 'application-serializer-data';
 

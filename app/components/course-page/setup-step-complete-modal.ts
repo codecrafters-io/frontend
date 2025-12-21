@@ -3,7 +3,7 @@ import type Owner from '@ember/owner';
 import type SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import fade from 'ember-animated/transitions/fade';
 import type RouterService from '@ember/routing/router-service';

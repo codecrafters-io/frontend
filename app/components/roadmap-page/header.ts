@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

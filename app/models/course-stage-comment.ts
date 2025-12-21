@@ -2,7 +2,7 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 /* eslint-disable ember/no-mixins */
 import Model, { attr, belongsTo } from '@ember-data/model';
 import { memberAction } from 'ember-api-actions';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import VotableMixin from '../mixins/votable';
 import IsCommentMixin from '../mixins/is-comment';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';

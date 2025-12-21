@@ -1,5 +1,5 @@
 import type Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
 import type InstitutionModel from 'codecrafters-frontend/models/institution';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';

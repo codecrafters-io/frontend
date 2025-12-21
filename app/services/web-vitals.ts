@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import config from 'codecrafters-frontend/config/environment';

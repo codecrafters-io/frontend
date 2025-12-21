@@ -3,7 +3,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {

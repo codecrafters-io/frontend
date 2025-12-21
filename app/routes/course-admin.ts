@@ -1,7 +1,7 @@
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';

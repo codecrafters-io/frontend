@@ -24,7 +24,7 @@ import redisLogo from '/assets/images/challenge-logos/challenge-logo-redis.svg';
 import shellLogo from '/assets/images/challenge-logos/challenge-logo-shell.svg';
 import sqliteLogo from '/assets/images/challenge-logos/challenge-logo-sqlite.svg';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { isSameDay } from 'date-fns';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';

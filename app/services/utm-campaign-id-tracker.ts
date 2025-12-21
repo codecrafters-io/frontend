@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import config from 'codecrafters-frontend/config/environment';
 import type CookiesService from 'ember-cookies/services/cookies';
 

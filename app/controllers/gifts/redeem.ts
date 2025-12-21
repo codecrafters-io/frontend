@@ -6,7 +6,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type RouterService from '@ember/routing/router-service';
 import type { ModelType } from 'codecrafters-frontend/routes/gifts/redeem';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 

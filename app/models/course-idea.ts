@@ -5,7 +5,7 @@ import Model from '@ember-data/model';
 import { type SyncHasMany, attr, hasMany } from '@ember-data/model';
 import { equal } from '@ember/object/computed'; // eslint-disable-line ember/no-computed-properties-in-native-classes
 import { memberAction } from 'ember-api-actions';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { getSortPositionForRoadmapPage } from 'codecrafters-frontend/utils/roadmap-sorting';
 
 export default class CourseIdeaModel extends Model {

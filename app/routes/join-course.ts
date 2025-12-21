@@ -1,4 +1,4 @@
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import config from 'codecrafters-frontend/config/environment';

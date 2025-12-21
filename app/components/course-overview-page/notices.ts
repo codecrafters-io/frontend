@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

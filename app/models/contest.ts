@@ -1,7 +1,7 @@
 import DateService from 'codecrafters-frontend/services/date';
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type LeaderboardModel from './leaderboard';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class ContestModel extends Model {
   @belongsTo('leaderboard', { async: false, inverse: 'contest' }) declare leaderboard: LeaderboardModel;

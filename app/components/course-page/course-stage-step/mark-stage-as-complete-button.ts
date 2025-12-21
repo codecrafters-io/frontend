@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';

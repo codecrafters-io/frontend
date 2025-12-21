@@ -4,7 +4,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
 import type Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

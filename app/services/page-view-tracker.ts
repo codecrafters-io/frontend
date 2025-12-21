@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { isEqual } from '@ember/utils';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';

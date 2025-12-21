@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import Store from '@ember-data/store';
 import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/block-definitions';
 import { action } from '@ember/object';

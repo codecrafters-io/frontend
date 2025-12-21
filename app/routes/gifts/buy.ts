@@ -5,7 +5,7 @@ import type GiftPaymentFlowModel from 'codecrafters-frontend/models/gift-payment
 import type Store from '@ember-data/store';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = GiftPaymentFlowModel;

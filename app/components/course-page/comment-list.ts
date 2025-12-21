@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';

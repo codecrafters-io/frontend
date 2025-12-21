@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type TeamPaymentFlowModel from 'codecrafters-frontend/models/team-payment-flow';
 import Store from '@ember-data/store';
 import type InvoiceModel from 'codecrafters-frontend/models/invoice';

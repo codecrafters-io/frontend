@@ -1,7 +1,7 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import config from 'codecrafters-frontend/config/environment';
 import type Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import RouterService from '@ember/routing/router-service';
 import MembershipGiftModel from 'codecrafters-frontend/models/membership-gift';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';

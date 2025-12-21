@@ -4,7 +4,7 @@ import type CookiesService from 'ember-cookies/services/cookies';
 import type FastbootService from 'ember-cli-fastboot/services/fastboot';
 import type SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import type VersionTrackerService from 'codecrafters-frontend/services/version-tracker';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { posthog } from 'posthog-js';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {

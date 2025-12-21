@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
 interface Signature {

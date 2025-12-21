@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import ContestModel from 'codecrafters-frontend/models/contest';
 import DateService from 'codecrafters-frontend/services/date';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {

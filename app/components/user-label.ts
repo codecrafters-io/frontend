@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import RouterService from '@ember/routing/router-service';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type UserModel from 'codecrafters-frontend/models/user';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface UserLabelSignature {
   Element: HTMLSpanElement;

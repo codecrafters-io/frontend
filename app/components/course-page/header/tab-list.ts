@@ -3,7 +3,7 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
 import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

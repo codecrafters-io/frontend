@@ -1,5 +1,5 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type { ModelType } from 'codecrafters-frontend/routes/user';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 

@@ -1,6 +1,6 @@
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';

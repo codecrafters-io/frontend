@@ -4,7 +4,7 @@ import RepositoryModel from 'codecrafters-frontend/models/repository';
 import RouterService from '@ember/routing/router-service';
 import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';

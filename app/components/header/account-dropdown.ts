@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';

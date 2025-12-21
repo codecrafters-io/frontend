@@ -1,5 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type Store from '@ember-data/store';
 import type CodeWalkthroughModel from 'codecrafters-frontend/models/code-walkthrough';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';

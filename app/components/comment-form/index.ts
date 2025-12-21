@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import Prism from 'prismjs';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import type CourseStageCommentModel from 'codecrafters-frontend/models/course-stage-comment';

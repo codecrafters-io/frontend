@@ -2,7 +2,7 @@ import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analyti
 import Component from '@glimmer/component';
 import playerjs from 'player.js';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { later } from '@ember/runloop';
 import { tracked } from '@glimmer/tracking';
 

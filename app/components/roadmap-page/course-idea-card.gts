@@ -6,7 +6,7 @@ import svgJar from 'ember-svg-jar/helpers/svg-jar';
 import VoteButton from 'codecrafters-frontend/components/roadmap-page/idea-card/vote-button';
 import { action } from '@ember/object';
 import { eq } from 'ember-truth-helpers';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 // @ts-expect-error not ts-ified yet
 import { on } from '@ember/modifier';
 import { tracked } from '@glimmer/tracking';

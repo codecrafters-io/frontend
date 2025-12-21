@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';

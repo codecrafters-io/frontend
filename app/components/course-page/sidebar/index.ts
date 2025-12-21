@@ -5,7 +5,7 @@ import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthl
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {

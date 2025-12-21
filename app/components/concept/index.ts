@@ -10,7 +10,7 @@ import { ConceptQuestionBlockDefinition } from 'codecrafters-frontend/utils/bloc
 import { TrackedSet } from 'tracked-built-ins';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { next } from '@ember/runloop';
 import { task } from 'ember-concurrency';
 

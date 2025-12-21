@@ -8,7 +8,7 @@ import type Store from '@ember-data/store';
 import TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import type CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';

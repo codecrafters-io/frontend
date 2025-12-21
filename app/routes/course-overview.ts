@@ -8,7 +8,7 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type MetaDataService from 'codecrafters-frontend/services/meta-data';
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 
 export interface ModelType {

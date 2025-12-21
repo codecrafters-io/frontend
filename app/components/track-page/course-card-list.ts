@@ -4,7 +4,7 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import comingSoonImage from '/assets/images/icons/coming-soon.png';
 import logoImage from '/assets/images/logo/outline-color.svg';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {

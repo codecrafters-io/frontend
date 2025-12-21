@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import window from 'ember-window-mock';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { partition } from 'codecrafters-frontend/utils/lodash-utils';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';

@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import Prism from 'prismjs';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';

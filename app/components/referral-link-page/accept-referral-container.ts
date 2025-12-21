@@ -7,7 +7,7 @@ import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { format } from 'date-fns';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {

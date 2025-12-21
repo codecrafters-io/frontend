@@ -3,7 +3,7 @@ import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
