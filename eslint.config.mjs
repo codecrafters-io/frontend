@@ -97,6 +97,8 @@ export default defineConfig([
       'ember/no-array-prototype-extensions': 'error', // Prototype extensions are deprecated since Ember 5.10
       'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
       'ember/no-runloop': 'off', // Run-loop isn't deprecated yet. Switching to ember-concurrency would require a lot of effort. We can use ember-lifeline as a drop-in replacement whenever run-loop becomes deprecated.
+      'ember/no-at-ember-render-modifiers': 'off', // We use `did-insert` & `did-update` render modifiers a lot
+      'ember/no-builtin-form-components': 'off', // We use `Textarea` & `Input` components a lot
     },
   },
 
