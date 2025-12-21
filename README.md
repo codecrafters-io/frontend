@@ -58,6 +58,10 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 - `npm run lint`
 - `npm run lint:fix`
 
+### Inspecting ESLint configuration
+
+- Run `npm run inspect:eslint`
+
 ### Analyzing bundle size
 
 - Run `ANALYZE_BUNDLE=true ember server --environment=production`

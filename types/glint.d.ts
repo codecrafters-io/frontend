@@ -1,4 +1,3 @@
-// eslint-disable-next-line ember/no-at-ember-render-modifiers
 import type RenderModifiersRegistry from '@ember/render-modifiers/template-registry';
 import type EmberAnimatedRegistry from 'ember-animated/template-registry';
 import type EmberBasicDropdownRegistry from 'ember-basic-dropdown/template-registry';

@@ -33,8 +33,6 @@ updates:
         patterns:
           - 'prettier'
           - 'eslint-config-prettier'
-          - 'ember-template-lint-plugin-prettier'
-          - 'stylelint-prettier'
       shikijs:
         patterns:
           - 'shiki'

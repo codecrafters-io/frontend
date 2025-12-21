@@ -7,12 +7,12 @@ type Signature = {
 export default class UnvoteButton extends Component<Signature> {
   <template>
     <button
-      type='button'
-      class='flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 px-2 hover:underline'
+      type="button"
+      class="flex items-center text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 px-2 hover:underline"
       data-test-unvote-button
       ...attributes
     >
-      <span class='text-xs'>
+      <span class="text-xs">
         Cancel
       </span>
     </button>

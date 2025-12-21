@@ -36,21 +36,30 @@ const esmParserOptions = {
 };
 
 export default defineConfig([
-  js.configs.recommended,
+  /**
+   * Global plugins & configs
+   */
+  {
+    name: 'Global plugins & configs',
+    extends: [
+      js.configs.recommended,
 
-  eslintConfigPrettier,
+      eslintConfigPrettier,
 
-  eslintPluginEmberBase,
-  eslintPluginEmberRecommended,
-  eslintPluginEmberGJS,
+      eslintPluginEmberBase,
+      eslintPluginEmberRecommended,
+      eslintPluginEmberGJS,
 
-  importPlugin.flatConfigs.recommended,
+      importPlugin.flatConfigs.recommended,
+    ],
+  },
 
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
+    name: 'Ignore files',
     ignores: ['dist/', 'node_modules/', 'coverage/', '!**/.*'],
   },
 
@@ -58,6 +67,7 @@ export default defineConfig([
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
    */
   {
+    name: 'Linter options',
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
@@ -67,6 +77,7 @@ export default defineConfig([
    * Override default rules
    */
   {
+    name: 'Override default rules',
     rules: {
       'import/order': [
         'error',
@@ -97,6 +108,8 @@ export default defineConfig([
       'ember/no-array-prototype-extensions': 'error', // Prototype extensions are deprecated since Ember 5.10
       'ember/no-empty-glimmer-component-classes': 'off', // It's useful to have empty components since the names are shown in devtools
       'ember/no-runloop': 'off', // Run-loop isn't deprecated yet. Switching to ember-concurrency would require a lot of effort. We can use ember-lifeline as a drop-in replacement whenever run-loop becomes deprecated.
+      'ember/no-at-ember-render-modifiers': 'off', // We use `did-insert` & `did-update` render modifiers a lot
+      'ember/no-builtin-form-components': 'off', // We use `Textarea` & `Input` components a lot
     },
   },
 
@@ -104,12 +117,14 @@ export default defineConfig([
    * JavaScript files
    */
   {
+    name: 'JavaScript parser',
     files: ['**/*.js'],
     languageOptions: {
       parser: babelParser,
     },
   },
   {
+    name: 'JavaScript files',
     files: ['**/*.{js,gjs}'],
     languageOptions: {
       parserOptions: esmParserOptions,
@@ -123,6 +138,7 @@ export default defineConfig([
    * TypeScript files
    */
   {
+    name: 'TypeScript files',
     files: ['**/*.{ts,gts}'],
     extends: [tseslint.configs.recommended, eslintPluginEmberGTS, importPlugin.flatConfigs.typescript],
     rules: {
@@ -145,6 +161,7 @@ export default defineConfig([
    * Test files
    */
   {
+    name: 'Test files',
     files: ['tests/**/*-test.{js,gjs,ts,gts}'],
     extends: [eslintPluginQunitRecommended],
     rules: {
@@ -158,6 +175,7 @@ export default defineConfig([
    * CJS node files
    */
   {
+    name: 'CSJ node files',
     files: [
       '**/*.cjs',
       'config/**/*.js',
@@ -189,6 +207,7 @@ export default defineConfig([
    * ESM node files
    */
   {
+    name: 'ESM node files',
     files: ['**/*.mjs'],
     plugins: {
       n,
