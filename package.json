@@ -15,7 +15,7 @@
     "build:versions": "echo \"npm: $(npm --version)\" && ember --version",
     "build:ember": "ember build --environment=production",
     "install:silent": "npm install --no-fund --no-audit",
-    "format": "prettier . --cache --write",
+    "format": "prettier . --cache --write --log-level warn",
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\" --prefixColors auto",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "npm run lint:css -- --fix",
