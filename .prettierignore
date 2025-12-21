@@ -12,15 +12,8 @@
 ember-cli-update.json
 *.html
 
-# ember-try
-/.node_modules.ember-try/
-
 # ember-cli-mirage
 /mirage/course-fixtures/
 
 # assets
 /public/assets/
-
-# index.html ends up weirdly formatted
-/app/index.html
-/tests/index.html
