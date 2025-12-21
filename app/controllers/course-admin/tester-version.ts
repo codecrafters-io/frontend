@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type { ModelType } from 'codecrafters-frontend/routes/course-admin/tester-version';
 import { tracked } from '@glimmer/tracking';
 import { task } from 'ember-concurrency';

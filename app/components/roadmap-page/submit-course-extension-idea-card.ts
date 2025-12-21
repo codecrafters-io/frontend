@@ -3,7 +3,7 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type CourseModel from 'codecrafters-frontend/models/course';
 import { action } from '@ember/object';
 import { createPopup } from '@typeform/embed';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

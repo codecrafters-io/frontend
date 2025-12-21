@@ -1,7 +1,7 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import ConceptModel from 'codecrafters-frontend/models/concept';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {

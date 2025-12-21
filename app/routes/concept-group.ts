@@ -5,7 +5,7 @@ import config from 'codecrafters-frontend/config/environment';
 import HeadDataService from 'codecrafters-frontend/services/meta-data';
 import Store from '@ember-data/store';
 import RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ConceptGroupRoute extends BaseRoute {

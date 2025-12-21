@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import config from 'codecrafters-frontend/config/environment';
 import * as Sentry from '@sentry/ember';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export default class HelpScoutBeacon extends Component {
   @service fastboot;

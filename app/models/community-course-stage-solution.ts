@@ -12,7 +12,7 @@ import type UserModel from './user';
 import type CommunitySolutionExportModel from './community-solution-export';
 import type CommunitySolutionVerificationModel from './community-solution-verification';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { type FileComparison, FileComparisonFromJSON } from 'codecrafters-frontend/utils/file-comparison';
 

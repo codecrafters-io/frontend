@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 
 interface Signature {

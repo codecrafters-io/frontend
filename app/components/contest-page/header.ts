@@ -3,7 +3,7 @@ import ContestModel from 'codecrafters-frontend/models/contest';
 import DateService from 'codecrafters-frontend/services/date';
 import { formatDistanceStrict } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

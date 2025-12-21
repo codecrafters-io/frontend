@@ -1,6 +1,6 @@
 import Store from '@ember-data/store';
 import RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';

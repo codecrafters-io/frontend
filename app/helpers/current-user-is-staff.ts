@@ -1,6 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Helper from '@ember/component/helper';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 export interface Signature {
   Args: {

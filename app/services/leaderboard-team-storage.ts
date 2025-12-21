@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import LocalStorageService from 'codecrafters-frontend/services/local-storage';
 
 const GLOBAL_LEADERBOARD_ID = 'GLOBAL_LEADERBOARD_ID';

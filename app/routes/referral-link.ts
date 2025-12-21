@@ -5,7 +5,7 @@ import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class ReferralLinkRoute extends BaseRoute {

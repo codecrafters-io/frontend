@@ -5,7 +5,7 @@ import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard
 import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
 import type Store from '@ember-data/store';
 import type { ModelType } from 'codecrafters-frontend/routes/leaderboard';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';

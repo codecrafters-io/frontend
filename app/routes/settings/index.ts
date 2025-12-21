@@ -1,6 +1,6 @@
 import type RouterService from '@ember/routing/router-service';
 import type Transition from '@ember/routing/transition';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 
 export default class SettingsIndexRoute extends BaseRoute {

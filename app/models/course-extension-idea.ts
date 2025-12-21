@@ -1,5 +1,5 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import type CourseModel from './course';
 import type CourseExtensionIdeaVoteModel from './course-extension-idea-vote';

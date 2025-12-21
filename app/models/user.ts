@@ -27,7 +27,7 @@ import TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 import UserProfileEventModel from 'codecrafters-frontend/models/user-profile-event';
 import config from 'codecrafters-frontend/config/environment';
 import { collectionAction, memberAction } from 'ember-api-actions';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 

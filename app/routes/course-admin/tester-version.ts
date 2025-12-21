@@ -1,4 +1,4 @@
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CourseTesterVersionModel from 'codecrafters-frontend/models/course-tester-version';

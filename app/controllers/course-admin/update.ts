@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import CourseDefinitionUpdateModel from 'codecrafters-frontend/models/course-definition-update';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 

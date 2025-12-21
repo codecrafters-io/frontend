@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import confetti from 'canvas-confetti';
 import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import type FocusService from './focus';

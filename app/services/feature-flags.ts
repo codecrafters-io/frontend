@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import AnalyticsEventTrackerService from './analytics-event-tracker';
 import AuthenticatorService from './authenticator';
 import type User from 'codecrafters-frontend/models/user';

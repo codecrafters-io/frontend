@@ -9,7 +9,7 @@ import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type Transition from '@ember/routing/transition';
 import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { next } from '@ember/runloop';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';

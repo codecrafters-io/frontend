@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import type Owner from '@ember/owner';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
@@ -22,7 +23,7 @@ export default class PaymentHistorySection extends Component<Signature> {
   @tracked errorMessage: string | null = null;
   @tracked isLoading = true;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
     this.loadCharges();
   }

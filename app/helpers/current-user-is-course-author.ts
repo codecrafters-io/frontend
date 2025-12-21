@@ -1,7 +1,7 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import CourseModel from 'codecrafters-frontend/models/course';
 import Helper from '@ember/component/helper';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 type Positional = [CourseModel];
 

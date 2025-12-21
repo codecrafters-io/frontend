@@ -4,7 +4,7 @@ import { formatDistanceStrictWithOptions } from 'date-fns/fp';
 import RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 

@@ -2,7 +2,7 @@ import Controller from '@ember/controller';
 import CourseModel from 'codecrafters-frontend/models/course';
 import Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { compare } from '@ember/utils';
 

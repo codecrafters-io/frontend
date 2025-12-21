@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import type UserModel from 'codecrafters-frontend/models/user';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/ember';
 
@@ -17,7 +18,7 @@ export default class EarningsContainer extends Component<Signature> {
   @tracked isCreatingPayout = false;
   @tracked isLoadingPayouts = true;
 
-  constructor(owner: unknown, args: object) {
+  constructor(owner: Owner, args: object) {
     super(owner, args);
     this.loadPayouts();
   }

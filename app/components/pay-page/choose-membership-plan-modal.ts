@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import fade from 'ember-animated/transitions/fade';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import Store from '@ember-data/store';
 import window from 'ember-window-mock';
 import * as Sentry from '@sentry/ember';

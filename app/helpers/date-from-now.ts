@@ -1,5 +1,5 @@
 import { formatDistanceStrictWithOptions } from 'date-fns/fp';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import Helper from '@ember/component/helper';
 import TimeService from 'codecrafters-frontend/services/time';
 

@@ -1,9 +1,10 @@
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { later } from '@ember/runloop';
 import config from 'codecrafters-frontend/config/environment';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
 
@@ -31,7 +32,7 @@ export default class FeedbackButton extends Component<Signature> {
   @tracked wasSaved = false;
   @tracked formElement: HTMLFormElement | null = null;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.feedbackSubmission = this.store.createRecord('site-feedback-submission');

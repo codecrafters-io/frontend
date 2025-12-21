@@ -1,6 +1,6 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 
 interface Signature {

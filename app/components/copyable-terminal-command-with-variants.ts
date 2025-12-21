@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
@@ -20,7 +21,7 @@ interface Signature {
 export default class CopyableTerminalCommandWithVariants extends Component<Signature> {
   @tracked selectedVariantIndex: number;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.selectedVariantIndex = 0;

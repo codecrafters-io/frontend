@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import MonthlyChallengeBannerService from 'codecrafters-frontend/services/monthly-challenge-banner';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLAnchorElement;

@@ -1,6 +1,6 @@
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';

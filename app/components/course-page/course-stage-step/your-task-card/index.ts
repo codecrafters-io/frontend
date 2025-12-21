@@ -3,7 +3,7 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;

@@ -1,6 +1,6 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import config from 'codecrafters-frontend/config/environment';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { loadStripe } from '@stripe/stripe-js';
 import type Store from '@ember-data/store';
 import type TeamsPayController from 'codecrafters-frontend/controllers/teams/pay';

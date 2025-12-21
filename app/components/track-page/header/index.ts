@@ -3,7 +3,7 @@ import LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqFieldReducer from 'codecrafters-frontend/utils/uniq-field-reducer';

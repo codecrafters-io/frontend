@@ -10,7 +10,7 @@ import stripeImage from '/assets/images/company-logos/stripe-company-logo.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class JoinAffiliateProgramContainer extends Component {

@@ -2,7 +2,7 @@ import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { format } from 'date-fns';
 
 interface Signature {

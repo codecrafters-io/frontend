@@ -4,7 +4,7 @@ import CourseModel from 'codecrafters-frontend/models/course';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import type { BaseButtonSignature } from '../base-button';
 
 interface Signature {

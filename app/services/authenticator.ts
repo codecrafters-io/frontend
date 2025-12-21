@@ -1,7 +1,7 @@
 import config from 'codecrafters-frontend/config/environment';
 import CurrentUserCacheStorageService from 'codecrafters-frontend/services/current-user-cache-storage';
 import RouterService from '@ember/routing/router-service';
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import SessionTokenStorageService from 'codecrafters-frontend/services/session-token-storage';
 import Store from '@ember-data/store';
 import window from 'ember-window-mock';

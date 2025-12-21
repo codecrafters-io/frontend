@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 interface Signature {
@@ -22,7 +23,7 @@ export default class PaypalPayoutForm extends Component<Signature> {
   @tracked amountInDollars: number = 100;
   @tracked isCreatingPayout: boolean = false;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.amountInDollars = this.args.withdrawableEarningsAmountInCents / 100;

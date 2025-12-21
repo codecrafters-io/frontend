@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import fade from 'ember-animated/transitions/fade';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
@@ -25,7 +26,7 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
 
   @tracked userRankCalculation: LeaderboardRankCalculationModel | null = null;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.loadUserRankCalculationTask.perform();

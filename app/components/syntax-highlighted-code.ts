@@ -1,6 +1,7 @@
 import * as shiki from 'shiki';
 import { action } from '@ember/object';
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import getOrCreateCachedHighlighterPromise from 'codecrafters-frontend/utils/highlighter-cache';
 import { tracked } from '@glimmer/tracking';
 import { transformerCompactLineOptions } from '@shikijs/transformers';
@@ -22,7 +23,7 @@ export default class SyntaxHighlightedCode extends Component<Signature> {
   @tracked asyncHighlightedCode: string | null = null;
   @tracked asyncHighlightedHTML: string | null = null;
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.highlightCode.perform();

@@ -1,9 +1,10 @@
 import Component from '@glimmer/component';
+import type Owner from '@ember/owner';
 import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
@@ -20,7 +21,7 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   @service declare store: Store;
   @tracked allCourseExtensionIdeas: CourseExtensionIdeaModel[] = [];
 
-  constructor(owner: unknown, args: Signature['Args']) {
+  constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
     this.loadAllCourseExtensionIdeas();
   }

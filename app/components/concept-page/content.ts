@@ -5,7 +5,7 @@ import ConceptEngagementModel from 'codecrafters-frontend/models/concept-engagem
 import ConceptGroupModel from 'codecrafters-frontend/models/concept-group';
 import ConceptModel from 'codecrafters-frontend/models/concept';
 import Store from '@ember-data/store';
-import { inject as service } from '@ember/service';
+import { service } from '@ember/service';
 import { action } from '@ember/object';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
 
