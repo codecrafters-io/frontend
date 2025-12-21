@@ -36,21 +36,30 @@ const esmParserOptions = {
 };
 
 export default defineConfig([
-  js.configs.recommended,
+  /**
+   * Global plugins & configs
+   */
+  {
+    name: 'Global plugins & configs',
+    extends: [
+      js.configs.recommended,
 
-  eslintConfigPrettier,
+      eslintConfigPrettier,
 
-  eslintPluginEmberBase,
-  eslintPluginEmberRecommended,
-  eslintPluginEmberGJS,
+      eslintPluginEmberBase,
+      eslintPluginEmberRecommended,
+      eslintPluginEmberGJS,
 
-  importPlugin.flatConfigs.recommended,
+      importPlugin.flatConfigs.recommended,
+    ],
+  },
 
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
    */
   {
+    name: 'Ignore files',
     ignores: ['dist/', 'node_modules/', 'coverage/', '!**/.*'],
   },
 
@@ -58,6 +67,7 @@ export default defineConfig([
    * https://eslint.org/docs/latest/use/configure/configuration-files#configuring-linter-options
    */
   {
+    name: 'Linter options',
     linterOptions: {
       reportUnusedDisableDirectives: 'error',
     },
@@ -67,6 +77,7 @@ export default defineConfig([
    * Override default rules
    */
   {
+    name: 'Override default rules',
     rules: {
       'import/order': [
         'error',
@@ -106,12 +117,14 @@ export default defineConfig([
    * JavaScript files
    */
   {
+    name: 'JavaScript parser',
     files: ['**/*.js'],
     languageOptions: {
       parser: babelParser,
     },
   },
   {
+    name: 'JavaScript files',
     files: ['**/*.{js,gjs}'],
     languageOptions: {
       parserOptions: esmParserOptions,
@@ -125,6 +138,7 @@ export default defineConfig([
    * TypeScript files
    */
   {
+    name: 'TypeScript files',
     files: ['**/*.{ts,gts}'],
     extends: [tseslint.configs.recommended, eslintPluginEmberGTS, importPlugin.flatConfigs.typescript],
     rules: {
@@ -147,6 +161,7 @@ export default defineConfig([
    * Test files
    */
   {
+    name: 'Test files',
     files: ['tests/**/*-test.{js,gjs,ts,gts}'],
     extends: [eslintPluginQunitRecommended],
     rules: {
@@ -160,6 +175,7 @@ export default defineConfig([
    * CJS node files
    */
   {
+    name: 'CSJ node files',
     files: [
       '**/*.cjs',
       'config/**/*.js',
@@ -191,6 +207,7 @@ export default defineConfig([
    * ESM node files
    */
   {
+    name: 'ESM node files',
     files: ['**/*.mjs'],
     plugins: {
       n,
