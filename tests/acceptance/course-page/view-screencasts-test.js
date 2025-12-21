@@ -1,4 +1,3 @@
-/* eslint-disable qunit/require-expect */
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import screencastsPage from 'codecrafters-frontend/tests/pages/screencasts-page';
@@ -25,7 +24,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
 
     try {
       await visit('/courses/redis/stages/rg2/screencasts');
-    } catch (e) {
+    } catch {
       assert.strictEqual(1, 1);
     }
 
