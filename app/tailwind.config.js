@@ -1,5 +1,5 @@
-/*global module*/
-/*global require*/
+/* global module */
+/* global require */
 
 const colors = require('tailwindcss/colors');
 

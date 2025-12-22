@@ -16,6 +16,7 @@ import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import stylistic from '@stylistic/eslint-plugin';
 import eslintPluginEmberBase from 'eslint-plugin-ember/configs/base';
 import eslintPluginEmberRecommended from 'eslint-plugin-ember/configs/recommended';
 import eslintPluginEmberGJS from 'eslint-plugin-ember/configs/recommended-gjs';
@@ -43,6 +44,7 @@ export default defineConfig([
     name: 'Global plugins & configs',
     extends: [
       js.configs.recommended,
+      stylistic.configs.recommended,
 
       eslintConfigPrettier,
 
