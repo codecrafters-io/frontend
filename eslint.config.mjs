@@ -17,10 +17,10 @@ import globals from 'globals';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import stylistic from '@stylistic/eslint-plugin';
-import eslintPluginEmberBase from 'eslint-plugin-ember/configs/base';
-import eslintPluginEmberRecommended from 'eslint-plugin-ember/configs/recommended';
-import eslintPluginEmberGJS from 'eslint-plugin-ember/configs/recommended-gjs';
-import eslintPluginEmberGTS from 'eslint-plugin-ember/configs/recommended-gts';
+import eslintConfigEmberBase from 'eslint-plugin-ember/configs/base';
+import eslintConfigEmberRecommended from 'eslint-plugin-ember/configs/recommended';
+import eslintConfigEmberGJS from 'eslint-plugin-ember/configs/recommended-gjs';
+import eslintConfigEmberGTS from 'eslint-plugin-ember/configs/recommended-gts';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginQunitRecommended from 'eslint-plugin-qunit/configs/recommended';
 import n from 'eslint-plugin-n';
@@ -48,9 +48,9 @@ export default defineConfig([
 
       eslintConfigPrettier,
 
-      eslintPluginEmberBase,
-      eslintPluginEmberRecommended,
-      eslintPluginEmberGJS,
+      eslintConfigEmberBase,
+      eslintConfigEmberRecommended,
+      eslintConfigEmberGJS,
 
       importPlugin.flatConfigs.recommended,
     ],
@@ -142,7 +142,7 @@ export default defineConfig([
   {
     name: 'TypeScript files',
     files: ['**/*.{ts,gts}'],
-    extends: [tseslint.configs.recommended, eslintPluginEmberGTS, importPlugin.flatConfigs.typescript],
+    extends: [tseslint.configs.recommended, eslintConfigEmberGTS, importPlugin.flatConfigs.typescript],
     rules: {
       'no-constant-condition': ['error', { checkLoops: false }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
