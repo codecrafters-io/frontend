@@ -62,6 +62,11 @@ Router.map(function () {
     this.route('completed');
   });
 
+  // Experimental, testing a new UI
+  this.route('course-next', { path: '/courses-next/:course_slug' }, function () {
+    // Add extra routes here are required
+  });
+
   this.route('course-overview', { path: '/courses/:course_slug/overview' }); // TODO: Add dark mode support
   this.route('debug');
   this.route('gifts.buy', { path: '/gifts/buy' });
