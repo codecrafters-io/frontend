@@ -2,6 +2,12 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "npm: inspect:eslint",
+      "type": "npm",
+      "script": "inspect:eslint",
+      "problemMatcher": [],
+    },
+    {
       "label": "npm: lint:js",
       "type": "npm",
       "script": "lint:js",
