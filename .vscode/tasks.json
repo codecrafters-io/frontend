@@ -21,5 +21,11 @@
       "script": "start",
       "problemMatcher": [],
     },
+    {
+      "label": "npm: start:fastboot",
+      "type": "npm",
+      "script": "start:fastboot",
+      "problemMatcher": [],
+    },
   ]
 }
