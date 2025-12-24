@@ -8,6 +8,12 @@
       "problemMatcher": [
         "$eslint-stylish"
       ]
-    }
+    },
+    {
+      "label": "npm: start",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": [],
+    },
   ]
 }
