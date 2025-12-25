@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-const formatNumber = helper(function formatNumber([number]: [number] /*, named*/) {
+const formatNumber = helper(function formatNumber([number]: [number] /* , named */) {
   return number.toLocaleString();
 });
 

@@ -16,10 +16,11 @@ import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import eslintPluginEmberBase from 'eslint-plugin-ember/configs/base';
-import eslintPluginEmberRecommended from 'eslint-plugin-ember/configs/recommended';
-import eslintPluginEmberGJS from 'eslint-plugin-ember/configs/recommended-gjs';
-import eslintPluginEmberGTS from 'eslint-plugin-ember/configs/recommended-gts';
+import stylistic from '@stylistic/eslint-plugin';
+import eslintConfigEmberBase from 'eslint-plugin-ember/configs/base';
+import eslintConfigEmberRecommended from 'eslint-plugin-ember/configs/recommended';
+import eslintConfigEmberGJS from 'eslint-plugin-ember/configs/recommended-gjs';
+import eslintConfigEmberGTS from 'eslint-plugin-ember/configs/recommended-gts';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginQunitRecommended from 'eslint-plugin-qunit/configs/recommended';
 import n from 'eslint-plugin-n';
@@ -43,12 +44,13 @@ export default defineConfig([
     name: 'Global plugins & configs',
     extends: [
       js.configs.recommended,
+      stylistic.configs.recommended,
 
       eslintConfigPrettier,
 
-      eslintPluginEmberBase,
-      eslintPluginEmberRecommended,
-      eslintPluginEmberGJS,
+      eslintConfigEmberBase,
+      eslintConfigEmberRecommended,
+      eslintConfigEmberGJS,
 
       importPlugin.flatConfigs.recommended,
     ],
@@ -91,13 +93,13 @@ export default defineConfig([
       ],
       'import/no-unresolved': 'off',
 
-      'padding-line-between-statements': [
+      '@stylistic/padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'return' },
         { blankLine: 'always', prev: '*', next: 'multiline-block-like' },
         { blankLine: 'always', prev: 'multiline-block-like', next: '*' },
       ],
-      'lines-between-class-members': [
+      '@stylistic/lines-between-class-members': [
         'error',
         'always',
         {
@@ -140,7 +142,7 @@ export default defineConfig([
   {
     name: 'TypeScript files',
     files: ['**/*.{ts,gts}'],
-    extends: [tseslint.configs.recommended, eslintPluginEmberGTS, importPlugin.flatConfigs.typescript],
+    extends: [tseslint.configs.recommended, eslintConfigEmberGTS, importPlugin.flatConfigs.typescript],
     rules: {
       'no-constant-condition': ['error', { checkLoops: false }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
