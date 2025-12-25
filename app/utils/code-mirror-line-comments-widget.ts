@@ -1,6 +1,8 @@
 import { Decoration, EditorView, WidgetType, type DecorationSet } from '@codemirror/view';
 import { Line, /* StateEffect, */ StateField } from '@codemirror/state';
-import { lineDataFacet /*, expandedLineNumbersFacet, expandedLineNumbersCompartment */ } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+import {
+  lineDataFacet /* , expandedLineNumbersFacet, expandedLineNumbersCompartment */,
+} from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 class LineCommentsWidget extends WidgetType {
   constructor(readonly line: Line /* , readonly isExpanded: boolean = false */) {
