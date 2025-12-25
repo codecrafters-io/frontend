@@ -1,6 +1,12 @@
 {
-	"version": "2.0.0",
-	"tasks": [
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: inspect:eslint",
+      "type": "npm",
+      "script": "inspect:eslint",
+      "problemMatcher": [],
+    },
     {
       "label": "npm: lint:js",
       "type": "npm",
@@ -8,6 +14,18 @@
       "problemMatcher": [
         "$eslint-stylish"
       ]
-    }
+    },
+    {
+      "label": "npm: start",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": [],
+    },
+    {
+      "label": "npm: start:fastboot",
+      "type": "npm",
+      "script": "start:fastboot",
+      "problemMatcher": [],
+    },
   ]
 }
