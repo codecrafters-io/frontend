@@ -48,7 +48,11 @@ function lineCommentsGutterLineMarker(view: EditorView, line: BlockInfo) {
 function lineCommentsGutterClickHandler(view: EditorView, line: BlockInfo) {
   const lineNumber = view.state.doc.lineAt(line.from).number;
   const expandedLines = view.state.facet(expandedLineNumbersFacet)[0] || [];
-  const newExpandedLines = expandedLines.includes(lineNumber) ? expandedLines.without(lineNumber) : [...expandedLines, lineNumber];
+  const newExpandedLines = expandedLines.includes(lineNumber)
+    ? expandedLines.indexOf(lineNumber) > -1
+      ? expandedLines.filter((item) => item !== lineNumber)
+      : expandedLines
+    : [...expandedLines, lineNumber];
 
   view.dispatch({
     effects: [expandedLineNumbersCompartment.reconfigure(expandedLineNumbersFacet.of(newExpandedLines))],
