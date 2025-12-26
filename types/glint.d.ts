@@ -26,7 +26,6 @@ declare module '@glint/environment-ember-loose/registry' {
       Blocks: { default?: [] };
     }>;
     includes: HelperLike<{ Args: { Positional: [unknown, unknown] }; Return: boolean }>;
-    'html-safe': HelperLike<{ Return: string; Args: { Positional: [string | undefined] } }>;
     join: HelperLike<{ Return: string; Args: { Positional: [string, string[]] } }>;
     'on-click-outside': ModifierLike<{ Args: { Positional: [(event: MouseEvent) => void] } }>;
     'on-key': HelperLike<{ Args: { Positional: [key: string, onKey: () => void] }; Return: '' }>;
