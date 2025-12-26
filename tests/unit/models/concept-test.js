@@ -6,7 +6,6 @@ module('Unit | Model | concept', function (hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  // Replace this with your real tests.
   test('changedAttributes works', async function (assert) {
     let store = this.owner.lookup('service:store');
     let concept = store.createRecord('concept', {});

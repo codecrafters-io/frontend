@@ -169,7 +169,7 @@ export default defineConfig([
     rules: {
       'qunit/no-commented-tests': 'error',
       'qunit/require-expect': 'off',
-      'ember/no-replace-test-comments': 'off',
+      'ember/no-replace-test-comments': 'error',
     },
   },
 
