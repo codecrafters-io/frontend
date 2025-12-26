@@ -59,7 +59,7 @@
     "@glint/core": "^1.5.2",
     "@glint/environment-ember-loose": "^1.5.2",
     "@glint/environment-ember-template-imports": "^1.5.2",
-    "@glint/template": "^1.2.1",
+    "@glint/template": "^1.7.3",
     "@percy/cli": "^1.31.5",
     "@percy/ember": "^5.0.0",
     "@sentry/ember": "^10.5.0",
