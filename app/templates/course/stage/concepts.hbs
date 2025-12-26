@@ -1,15 +1,17 @@
 <div class="pt-8 pb-32 px-3 md:px-6 lg:px-10" data-test-concepts-tab>
   <AlertWithIcon class="mb-6">
-    Concepts are interactive tutorials that teach you fundamental concepts related to this challenge.
-    <br />
+    <p>
+      Concepts are interactive tutorials that teach you fundamental concepts related to this challenge.
+      <br />
 
-    This is a beta feature, please send us
-    <div class="inline-flex">
-      <FeedbackButton
-        @source="stage-concepts-index"
-        class="font-blue-500 hover:font-blue-600 dark:hover:font-blue-400 font-semibold underline"
-      >feedback</FeedbackButton>
-    </div>.
+      This is a beta feature, please send us
+      <span class="inline-flex">
+        <FeedbackButton
+          @source="stage-concepts-index"
+          class="font-blue-500 hover:font-blue-600 dark:hover:font-blue-400 font-semibold underline"
+        >feedback</FeedbackButton>
+      </span>.
+    </p>
   </AlertWithIcon>
 
   {{#if (gt this.model.courseStage.concepts.length 0)}}
