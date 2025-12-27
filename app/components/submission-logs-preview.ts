@@ -15,6 +15,8 @@ interface Signature {
 export default class SubmissionLogsPreview extends Component<Signature> {
   @tracked isLoadingLogs = false;
 
+  #lastRenderedLogFileContents: string | null | undefined;
+
   get evaluation() {
     return this.args.submission.evaluations[0];
   }
@@ -49,8 +51,12 @@ export default class SubmissionLogsPreview extends Component<Signature> {
     }
   }
 
+  @action
   handleDidUpdateLogs(element: HTMLElement) {
-    element.scrollTop = element.scrollHeight;
+    if (this.#lastRenderedLogFileContents !== this.evaluation?.logsFileContents) {
+      this.#lastRenderedLogFileContents = this.evaluation?.logsFileContents;
+      element.scrollTop = element.scrollHeight;
+    }
   }
 }
 
