@@ -59,7 +59,14 @@ jobs:
       - run: npx ember --version
       - run: npx percy --version
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name | tee test-results.xml
+      - run: npx ember build --environment=test
+        env:
+          COVERAGE: true
+          PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
+          PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
+          STRIPE_PUBLISHABLE_KEY: "dummy"
+
+      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name --path dist | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
