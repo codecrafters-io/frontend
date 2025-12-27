@@ -186,7 +186,7 @@
     "prismjs": "^1.30.0",
     "qunit": "^2.24.1",
     "qunit-assertions-extra": "^1.0",
-    "qunit-dom": "^3.4.0",
+    "qunit-dom": "^3.5.0",
     "shiki": "^3.7.0",
     "sinon": "^21.0.0",
     "stylelint": "^16.23.1",
