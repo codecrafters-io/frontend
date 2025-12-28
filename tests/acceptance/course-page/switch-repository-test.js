@@ -42,20 +42,37 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
-    const expectedRequests = [
+    let expectedRequests = [
       '/api/v1/repositories', // fetch repositories (catalog page)
       '/api/v1/courses', // fetch courses (catalog page)
       '/api/v1/languages', // fetch languages (catalog page)
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after visiting catalog page');
+
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    expectedRequests = [
+      ...expectedRequests,
       '/api/v1/courses', // fetch course details (course overview page)
-      '/api/v1/repositories', // fetch repositories (course page)
-      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/repositories', // fetch repositories (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course overview page)
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after visiting course overview page');
+
+    await courseOverviewPage.clickOnStartCourse();
+
+    expectedRequests = [
+      ...expectedRequests,
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/repositories', // fetch repositories (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
       '/api/v1/repositories', // poll repositories (course page)
       '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
     ];
