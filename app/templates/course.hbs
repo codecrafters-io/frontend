@@ -20,10 +20,6 @@
     this.coursePageState.currentStep.type
   }}
 >
-  {{#if this.isDevelopmentOrTest}}
-    <FakeDataToolbar @repository={{@model.activeRepository}} class="absolute top-4 left-4 hidden" />
-  {{/if}}
-
   {{#if this.sidebarIsExpandedOnDesktop}}
     <CoursePage::Sidebar
       @course={{@model.course}}

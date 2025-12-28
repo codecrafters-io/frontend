@@ -5,7 +5,6 @@ import { tracked } from '@glimmer/tracking';
 import type ConfettiService from 'codecrafters-frontend/services/confetti';
 import Controller from '@ember/controller';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import config from 'codecrafters-frontend/config/environment';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type Store from '@ember-data/store';
@@ -52,10 +51,6 @@ export default class CourseController extends Controller {
 
   get currentUser() {
     return this.authenticator.currentUser;
-  }
-
-  get isDevelopmentOrTest() {
-    return config.environment !== 'production';
   }
 
   get selectedRepositoryId() {
