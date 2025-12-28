@@ -29,18 +29,14 @@ export default class LeaderboardEntriesCache {
     this.isLoaded = false;
   }
 
-  get _entriesForFirstSection(): LeaderboardEntryModel[] {
+  get _sortedEntriesForFirstSection(): LeaderboardEntryModel[] {
     const entries = [...this._topEntries];
 
     if (this._surroundingEntriesOverlapsTopEntries) {
       entries.push(...this._surroundingEntries);
     }
 
-    return entries;
-  }
-
-  get _sortedEntriesForFirstSection(): LeaderboardEntryModel[] {
-    return this._entriesForFirstSection.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+    return entries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
   }
 
   get _sortedEntriesForSecondSection(): LeaderboardEntryModel[] {
