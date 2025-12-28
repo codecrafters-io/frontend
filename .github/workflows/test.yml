@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: depot-ubuntu-24.04-16
+    runs-on: depot-ubuntu-24.04-32
     # Use cheaper machines for dependabot if we're low on namespace credits
     # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
     permissions: write-all
@@ -66,7 +66,7 @@ jobs:
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
           STRIPE_PUBLISHABLE_KEY: "dummy"
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name --path dist | tee test-results.xml
+      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=32 --load-balance --preserve-test-name --path dist | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
