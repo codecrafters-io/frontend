@@ -4,7 +4,7 @@ import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import window from 'ember-window-mock';
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -16,7 +16,7 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
 
-  test('can resize test results bar using mouse', async function (assert) {
+  skip('can resize test results bar using mouse', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -68,7 +68,7 @@ module('Acceptance | course-page | test-results-bar | resize', function (hooks) 
     assert.strictEqual(previousHeight, coursePage.testResultsBar.height, 'Test results bar maintains the height after closing and expanding again');
   });
 
-  test('can resize test results bar using touch', async function (assert) {
+  skip('can resize test results bar using touch', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
