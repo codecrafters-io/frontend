@@ -1,7 +1,8 @@
 import Component from '@glimmer/component';
 import type UserModel from 'codecrafters-frontend/models/user';
-import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-reducer';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { compare } from '@ember/utils';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,41 +14,30 @@ interface Signature {
 
 export default class CourseProgressList extends Component<Signature> {
   get courseParticipationGroups() {
-    const participationsGroupedByCourse: CourseParticipationModel[][] = Object.values(
+    return Object.values(
       this.args.user.courseParticipations
-        .filter(
-          (participation) =>
-            !participation.course.releaseStatusIsDeprecated &&
-            !participation.course.visibilityIsPrivate &&
-            !participation.course.releaseStatusIsAlpha,
-        )
+        .filter(({ course }) => !course.releaseStatusIsDeprecated && !course.visibilityIsPrivate && !course.releaseStatusIsAlpha)
         .reduce(
-          groupByFieldReducer((participation) => participation.course.id),
+          groupByFieldReducer(({ course: { id } }) => id),
           {},
         ),
-    );
+    )
+      .map((group) => group.toSorted(fieldComparator('lastSubmissionAt')))
+      .sort((groupA, groupB) => {
+        const groupAHasCompleted = groupA.some(({ isCompleted }) => isCompleted);
+        const groupBHasCompleted = groupB.some(({ isCompleted }) => isCompleted);
 
-    const sortedParticipationsGroupedByCourse = participationsGroupedByCourse.map((group) =>
-      group.sort((a, b) => new Date(a.lastSubmissionAt).getTime() - new Date(b.lastSubmissionAt).getTime()),
-    );
+        if (groupAHasCompleted && !groupBHasCompleted) {
+          return -1;
+        }
 
-    sortedParticipationsGroupedByCourse.sort((groupA: CourseParticipationModel[], groupB: CourseParticipationModel[]) => {
-      const groupAHasCompleted = groupA.some((participation) => participation.isCompleted);
-      const groupBHasCompleted = groupB.some((participation) => participation.isCompleted);
+        if (!groupAHasCompleted && groupBHasCompleted) {
+          return 1;
+        }
 
-      if (groupAHasCompleted && !groupBHasCompleted) {
-        return -1;
-      } else if (!groupAHasCompleted && groupBHasCompleted) {
-        return 1;
-      } else {
-        // If both groups have completed participations or both don't, sort by the lastSubmissionAt of the last participation in the group
-        const lastSubmissionA = new Date(groupA[groupA.length - 1]!.lastSubmissionAt);
-        const lastSubmissionB = new Date(groupB[groupB.length - 1]!.lastSubmissionAt);
-
-        return lastSubmissionA.getTime() - lastSubmissionB.getTime();
-      }
-    });
-
-    return sortedParticipationsGroupedByCourse;
+        // If both groups have completed participations or both don't, sort
+        // by the `lastSubmissionAt` of the last participation in the group
+        return compare(groupA.at(-1)?.lastSubmissionAt, groupB.at(-1)?.lastSubmissionAt);
+      });
   }
 }
