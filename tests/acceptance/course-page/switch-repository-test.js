@@ -73,8 +73,8 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
-      '/api/v1/repositories', // poll repositories (course page)
-      '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
+      '/api/v1/repositories', // fetch repositories after subscribed (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
     ];
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
