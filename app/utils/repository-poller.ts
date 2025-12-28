@@ -5,19 +5,18 @@ export default class RepositoryPoller extends Poller {
   declare model: RepositoryModel;
 
   static defaultIncludedResources = [
-    'language',
-    'language.leaderboard',
-    'extension-activations',
-    'extension-activations.extension',
-    'extension-activations.repository',
     'course',
-    'course.extensions',
-    'user',
     'course-stage-completions',
     'course-stage-completions.course-stage',
     'course-stage-feedback-submissions',
     'course-stage-feedback-submissions.course-stage',
+    'course.extensions',
+    'extension-activations',
+    'extension-activations.extension',
+    'extension-activations.repository',
     'github-repository-sync-configurations',
+    'language',
+    'language.leaderboard',
     'last-submission',
     'last-submission.autofix-requests',
     // 'last-submission.autofix-requests.submission', // Hardcoded on backend to be included, doesn't seem to make a difference?
@@ -27,10 +26,11 @@ export default class RepositoryPoller extends Poller {
     'stage-list',
     'stage-list.items',
     'stage-list.items.stage',
+    'user',
   ].join(',');
 
   async doPoll() {
-    return await this.store.query('repository', {
+    await this.store.query('repository', {
       course_id: this.model.course.id,
       include: RepositoryPoller.defaultIncludedResources,
     });
