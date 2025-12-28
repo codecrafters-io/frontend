@@ -97,7 +97,7 @@ export default class LeaderboardEntriesCache {
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];
 
-    if (this.authenticator.isAuthenticated || !this._userIsInTopLeaderboardEntries) {
+    if (this.authenticator.isAuthenticated && !this._userIsInTopLeaderboardEntries) {
       this._surroundingEntries = (await this.store.query('leaderboard-entry', {
         include: 'affiliate-link,affiliate-link.user,leaderboard,user',
         leaderboard_id: this.leaderboard.id,
