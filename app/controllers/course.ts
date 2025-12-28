@@ -10,27 +10,23 @@ import type CoursePageStateService from 'codecrafters-frontend/services/course-p
 import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
-import type VisibilityService from 'codecrafters-frontend/services/visibility';
-import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type { ModelType } from 'codecrafters-frontend/routes/course';
 import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { task } from 'ember-concurrency';
 
 export default class CourseController extends Controller {
   declare model: ModelType;
 
-  repositoryPoller: RepositoryPoller | null = null;
-
   queryParams = ['action', 'track', 'repo'];
 
-  @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare authenticator: AuthenticatorService;
   @service declare confetti: ConfettiService;
   @service declare coursePageState: CoursePageStateService;
+  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
   @service declare router: RouterService;
-  @service declare visibility: VisibilityService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   // query params
@@ -38,7 +34,6 @@ export default class CourseController extends Controller {
   @tracked repo: string | undefined = undefined;
   @tracked track: string | undefined = undefined;
 
-  @tracked polledRepository: RepositoryModel | null = null;
   @tracked configureGithubIntegrationModalIsOpen = false;
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
@@ -87,7 +82,6 @@ export default class CourseController extends Controller {
   @action
   handleDidInsertContainer() {
     this.setupRouteChangeListeners();
-    this.startRepositoryPoller();
 
     if (this.action === 'github_app_installation_completed') {
       this.configureGithubIntegrationModalIsOpen = true;
@@ -96,16 +90,6 @@ export default class CourseController extends Controller {
         this.router.transitionTo({ queryParams: { action: null } }); // reset param
       });
     }
-  }
-
-  @action
-  handleDidUpdateActiveRepositoryId() {
-    if (this.polledRepository && this.polledRepository?.id === this.model.activeRepository?.id) {
-      return;
-    }
-
-    this.stopRepositoryPoller();
-    this.startRepositoryPoller();
   }
 
   @action
@@ -137,10 +121,20 @@ export default class CourseController extends Controller {
   }
 
   @action
+  async handleVisibilityChange(isVisible: boolean) {
+    if (isVisible) {
+      await this.pollRepositoryTask.perform();
+    }
+  }
+
+  @action
   async handleWillDestroyContainer() {
     this.teardownRouteChangeListeners();
-    this.stopRepositoryPoller();
   }
+
+  pollRepositoryTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await new RepositoryPoller(this.model.activeRepository).doPoll();
+  });
 
   @action
   resetController(_controller: unknown, isExiting: boolean, _transition: unknown) {
@@ -174,34 +168,6 @@ export default class CourseController extends Controller {
   @action
   setupRouteChangeListeners() {
     this.router.on('routeDidChange', this.handleRouteChanged);
-  }
-
-  startRepositoryPoller() {
-    if (!this.model.activeRepository || !this.model.activeRepository.id) {
-      return;
-    }
-
-    this.stopRepositoryPoller();
-
-    this.repositoryPoller = new RepositoryPoller({
-      store: this.store,
-      visibilityService: this.visibility,
-      actionCableConsumerService: this.actionCableConsumer,
-    });
-
-    this.repositoryPoller.start(this.model.activeRepository, this.handlePoll, 'RepositoryChannel', {
-      repository_id: this.model.activeRepository.id,
-    });
-
-    this.polledRepository = this.model.activeRepository;
-  }
-
-  stopRepositoryPoller() {
-    if (this.repositoryPoller) {
-      this.repositoryPoller.stop();
-    }
-
-    this.polledRepository = null;
   }
 
   @action
