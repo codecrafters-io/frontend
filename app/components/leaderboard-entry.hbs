@@ -8,7 +8,7 @@
   <div class="flex items-center min-w-0">
     <div class="{{unless @isCollapsed 'mr-2'}} shrink-0">
       {{#if this.isSkeleton}}
-        <div class="w-8 h-8 bg-gray-200 dark:bg-gray-900 rounded-sm"></div>
+        <LoadingSkeleton class="size-8" />
       {{else}}
         {{! additional if clause to satisfy glint }}
         {{#if @user}}
@@ -22,7 +22,7 @@
 
     {{#unless @isCollapsed}}
       {{#if this.isSkeleton}}
-        <span class="text-xs inline-block rounded-sm bg-gray-200 dark:bg-gray-900 mr-2">{{#each (repeat 30)}}&nbsp;{{/each}}</span>
+        <LoadingSkeleton class="w-[12ch] text-xs mr-2" />
       {{else}}
         <span
           class="text-xs text-gray-600 dark:text-gray-400 group-hover/leaderboard-entry:underline mr-2 shrink truncate"
@@ -43,7 +43,7 @@
         data-test-progress-text
       >
         {{#if this.isSkeleton}}
-          <span class="inline-block bg-gray-200 dark:bg-gray-900">{{#each (repeat 6)}}&nbsp;{{/each}}</span>
+          <LoadingSkeleton class="w-[6ch] text-xs" />
         {{else}}
           {{@progressNumerator}}
           /
@@ -51,7 +51,7 @@
         {{/if}}
       </span>
       {{#if this.isSkeleton}}
-        <div class="w-12 h-3.5 rounded-sm bg-gray-200 dark:bg-gray-900" />
+        <LoadingSkeleton class="w-12 h-3.5" />
       {{else}}
         <div
           class="w-12 h-3.5 rounded-sm flex overflow-hidden border group-hover/leaderboard-entry:bg-white dark:group-hover/leaderboard-entry:bg-gray-900 transition-all
