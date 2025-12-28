@@ -4,7 +4,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';

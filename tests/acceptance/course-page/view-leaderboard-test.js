@@ -5,7 +5,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
-import { currentURL, settled } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';

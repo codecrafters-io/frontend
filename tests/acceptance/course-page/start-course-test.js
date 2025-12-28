@@ -1,11 +1,12 @@
-import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import trackPage from 'codecrafters-frontend/tests/pages/track-page';
 import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import trackPage from 'codecrafters-frontend/tests/pages/track-page';
+import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
@@ -177,6 +178,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
   test('can start course with workflow tutorial', async function (assert) {
     testScenario(this.server, ['dummy']);
     const user = signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     this.server.create('feature-suggestion', { user: user, featureSlug: 'repository-workflow-tutorial' });
 
