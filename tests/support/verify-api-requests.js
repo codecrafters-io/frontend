@@ -4,6 +4,10 @@ export default class ApiRequestsVerifier {
     this.lastCheckedRequestIndex = 0;
   }
 
+  clearPreviousRequests() {
+    this.lastCheckedRequestIndex = this.server.pretender.handledRequests.length;
+  }
+
   verify(expectedPaths) {
     const requests = this.server.pretender.handledRequests.slice(this.lastCheckedRequestIndex);
 

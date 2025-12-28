@@ -51,32 +51,51 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     const apiRequestsVerifier = new ApiRequestsVerifier(this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Dummy');
-    await courseOverviewPage.clickOnStartCourse();
-
-    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // fetch repositories (catalog page)
         '/api/v1/courses', // fetch courses (catalog page)
         '/api/v1/languages', // fetch languages (catalog page)
+      ]),
+      'API requests match expected sequence after visiting catalog page',
+    );
+
+    await catalogPage.clickOnCourse('Build your own Dummy');
+
+    assert.ok(
+      apiRequestsVerifier.verify([
         '/api/v1/courses', // fetch course details (course overview page)
-        '/api/v1/repositories', // fetch repositories (course page)
+        '/api/v1/repositories', // fetch repositories (course overview page)
         '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course overview page)
+      ]),
+      'API requests match expected sequence on course overview page',
+    );
+
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
+
+    assert.ok(
+      apiRequestsVerifier.verify([
         '/api/v1/courses', // refresh course (course page)
         '/api/v1/repositories', // fetch repositories (course page)
         '/api/v1/course-language-requests', // fetch language requests (course page)
         '/api/v1/languages', // fetch languages (course page)
         '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
       ]),
-      'API requests match expected sequence',
+      'API requests match expected sequence on course page',
     );
 
     await percySnapshot('Start Course - Select Language');
@@ -90,9 +109,12 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // create repository (after language selection)
+        '/api/v1/repositories', // poll repository (after language selection)
         '/api/v1/courses', // refresh course (after language selection)
-        '/api/v1/repositories', // update repositories (after language selection)
-        '/api/v1/course-leaderboard-entries', // update leaderboard (after language selection)
+        '/api/v1/repositories', // refresh repositories (after language selection)
+        '/api/v1/course-leaderboard-entries', // refresh leaderboard (after language selection)
+        '/api/v1/repositories', // refresh repositories after subscribed (after language selection)
+        '/api/v1/course-leaderboard-entries', // refresh leaderboard after subscribed (after language selection)
       ]),
       'API requests match expected sequence after language selection',
     );
@@ -100,7 +122,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(
@@ -147,7 +170,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(

@@ -19,13 +19,15 @@ export default class FakeActionCableConsumer {
     return !!(this.#subscriptions[channel] && this.#subscriptions[channel].length > 0);
   }
 
-  sendData(channel: string, data: string): void {
+  sendData(channel: string, data: Record<string, string>): void {
     if (!this.#subscriptions[channel]) {
       throw new Error(`No subscription for channel ${channel}`);
     }
 
+    const jsonData = JSON.stringify(data);
+
     for (const subscription of this.#subscriptions[channel] || []) {
-      subscription.callbacks.onData?.(data);
+      subscription.callbacks.onData?.(jsonData);
     }
   }
 
