@@ -1,44 +1,51 @@
 <div data-test-track-leaderboard {{did-insert this.handleDidInsert}} ...attributes>
   <div class="flex items-center justify-between mb-2 pl-4">
     <div class="flex items-center">
-      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">RECENT ACTIVITY</span>
-
-      <span
-        class="text-white dark:text-teal-400 bg-teal-500 dark:bg-teal-900 border border-teal-500 dark:border-teal-700 text-xs font-bold rounded-sm px-1.5 py-0.5 ml-2
-          {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
-          transition-all"
-      >
-        {{this.sortedEntries.length}}
-      </span>
-    </div>
-    <div>
-      {{! Add team dropdown if needed }}
+      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">LEADERBOARD</span>
     </div>
   </div>
 
-  {{#if this.isLoadingEntries}}
-    <div>
-      {{#each (repeat 15)}}
-        <TrackLeaderboardEntry />
-      {{/each}}
-    </div>
-  {{else}}
-    <div>
-      <AnimatedContainer>
-        {{#animated-each this.sortedEntries key="userId" use=this.listTransition as |entry|}}
-          <TrackLeaderboardEntry @entry={{entry}} />
-        {{/animated-each}}
-      </AnimatedContainer>
+  {{#if this.entriesCache.isLoaded}}
+    <div class="pl-2">
+      {{#if this.entriesCache.hasEntries}}
+        <AnimatedContainer>
+          {{#animated-each this.truncatedEntriesForFirstSectionWithRanks key="entry.id" use=this.listTransition as |entryWithRank|}}
+            <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
+          {{/animated-each}}
+        </AnimatedContainer>
 
-      {{#animated-if (eq this.sortedEntries.length 0)}}
+        {{#if (gt this.entriesCache.entriesForSecondSectionWithRanks.length 0)}}
+          <div class="relative flex items-center justify-center py-2 text-xs">
+            <div class="w-full h-[1px] bg-gray-200 dark:bg-white/5 mx-4" />
+
+            <span class="flex-shrink-0 text-gray-400 dark:text-gray-500">
+              other users
+            </span>
+
+            <div class="w-full h-[1px] bg-gray-200 dark:bg-white/5 mx-4" />
+          </div>
+
+          <AnimatedContainer>
+            {{#animated-each this.entriesCache.entriesForSecondSectionWithRanks key="entry.id" use=this.listTransition as |entryWithRank|}}
+              <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
+            {{/animated-each}}
+          </AnimatedContainer>
+        {{/if}}
+      {{else}}
         <div class="flex px-4 py-2 items-center">
-          <div class="text-sm text-gray-500">
+          <div class="text-sm text-gray-500 dark:text-gray-400">
             <p class="mb-2">
-              No one has tried this Track recently.
+              No one has completed any stages yet.
             </p>
           </div>
         </div>
-      {{/animated-if}}
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="space-y-1">
+      {{#each (repeat 15)}}
+        <TrackLeaderboard::SkeletonRow />
+      {{/each}}
     </div>
   {{/if}}
 </div>

@@ -46,7 +46,7 @@ export default class TrackRoute extends BaseRoute {
     })) as unknown as CourseModel[];
 
     (await this.store.findAll('language', {
-      include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+      include: 'leaderboard,primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
     })) as unknown as LanguageModel[];
 
     const language = this.store.peekAll('language').find((language) => language.slug === params.track_slug)!;

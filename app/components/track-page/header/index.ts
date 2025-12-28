@@ -2,11 +2,11 @@ import Component from '@glimmer/component';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type Store from '@ember-data/store';
-import { service } from '@ember/service';
 import type UserModel from 'codecrafters-frontend/models/user';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqFieldReducer from 'codecrafters-frontend/utils/uniq-field-reducer';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -30,14 +30,19 @@ export default class TrackPageHeader extends Component<Signature> {
   }
 
   get topParticipants(): UserModel[] {
-    return this.store
-      .peekAll('track-leaderboard-entry')
-      .filter((item) => item.language === this.args.language)
-      .sort(fieldComparator('completedStagesCount'))
-      .reverse()
+    const leaderboard = this.args.language.leaderboard;
+
+    if (!leaderboard) {
+      return [];
+    }
+
+    return (this.store.peekAll('leaderboard-entry') as unknown as LeaderboardEntryModel[])
+      .filter((entry) => entry.leaderboard?.id === leaderboard.id)
+      .filter((entry) => !entry.isBanned)
+      .sort((a, b) => b.score - a.score)
       .reduce(uniqFieldReducer('user'), [])
       .slice(0, 3)
-      .map((item) => item.user);
+      .map((entry) => entry.user);
   }
 }
 
