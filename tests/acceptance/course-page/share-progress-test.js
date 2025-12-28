@@ -7,6 +7,8 @@ import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpe
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | share-progress', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +17,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
   test('share progress button is visible after completing the second stage', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -35,8 +40,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
     await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
@@ -48,6 +54,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -67,8 +76,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     assert.notOk(coursePage.shareProgressModal.isVisible, 'progress banner modal is not visible');
 
@@ -103,6 +113,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -122,8 +135,9 @@ module('Acceptance | course-page | share-progress', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
     await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();

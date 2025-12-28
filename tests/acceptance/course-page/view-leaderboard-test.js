@@ -10,6 +10,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsTeamMember } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 
 module('Acceptance | course-page | view-leaderboard', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +19,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   test('can view leaderboard when no recent players are present', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     await catalogPage.visit();
     await catalogPage.clickOnCourse('Build your own Redis');
@@ -37,21 +41,24 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     this.server.schema.submissions.find(1).update({ status: 'failed' });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle once submission is done evaluating');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 55', 'progress text must still be 0 if first stage is not completed');
 
     repository.update({ lastSubmission: this.server.create('submission', { repository, status: 'evaluating' }) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsActive, 'leaderboard entry should be active if new submission is present evaluating');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '0 / 55', 'progress text must still be 0 if first stage is not completed');
@@ -63,8 +70,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       courseStage: repository.course.stages.models.find((x) => x.position === 1),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     assert.ok(coursePage.leaderboard.entries[0].statusIsIdle, 'leaderboard entry should be idle after completing a stage');
     assert.strictEqual(coursePage.leaderboard.entries[0].progressText, '1 / 55', 'progress text must still be 0 if first stage is not completed');
@@ -73,6 +81,9 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
   test('can view leaderboard on overview page when other recent players are present', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -118,7 +129,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       }),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition
@@ -132,7 +144,8 @@ module('Acceptance | course-page | view-leaderboard', function (hooks) {
       completedAt: new Date(),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     await new Promise((resolve) => setTimeout(resolve, 101)); // Wait for transition

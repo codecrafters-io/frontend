@@ -199,7 +199,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.setupStepCompleteModal.isVisible, 'setup step complete modal is visible');

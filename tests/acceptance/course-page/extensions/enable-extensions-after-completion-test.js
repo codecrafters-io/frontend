@@ -9,6 +9,8 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | extensions | enable-extensions-after-completion', function (hooks) {
   setupApplicationTest(hooks);
@@ -17,6 +19,9 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
   test('can enable extensions after completing base stages', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -51,8 +56,9 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     });
 
     // await new Promise((resolve) => setTimeout(resolve, 1000)); // Temp
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     // URL should still be stage 2
     assert.strictEqual(currentURL(), '/courses/dummy/stages/lr7', 'current URL is course page URL');
@@ -94,6 +100,9 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
     let course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -126,8 +135,9 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
       }
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await settled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     // Now go back to catalog page and click on the course again
     await catalogPage.visit();

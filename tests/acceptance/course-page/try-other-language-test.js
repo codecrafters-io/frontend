@@ -8,6 +8,8 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +18,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   test('can try other language', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -98,7 +103,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [
@@ -114,7 +121,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [

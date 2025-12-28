@@ -10,6 +10,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createCourseStageSolution from 'codecrafters-frontend/mirage/utils/create-course-stage-solution';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 
 module('Acceptance | course-page | complete-second-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +19,9 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   test('can complete second stage when hints & solution are present', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -100,7 +104,8 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -116,6 +121,9 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   test('can complete second stage when solution & hints are not present', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -151,7 +159,8 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -167,6 +176,9 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
   test('cannot complete second stage if tests passed via CLI', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -190,7 +202,8 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -208,7 +221,8 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: course.stages.models.find((stage) => stage.position === 2),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
@@ -224,6 +238,9 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     testScenario(this.server);
     // The discount timer is currently behind a feature flag
     const user = signInAsStaff(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -248,8 +265,9 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
-    await animationsSettled();
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     this.server.schema.promotionalDiscounts.create({
       user: user,
