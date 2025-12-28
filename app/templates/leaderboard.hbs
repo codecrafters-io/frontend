@@ -10,10 +10,6 @@
   </RoadmapInfoAlert> }}
 
   <div class="flex items-start gap-8">
-    <LeaderboardPage::EntriesTable
-      @entriesCache={{this.leaderboardEntriesCache}}
-      @language={{@model.language}}
-      class="flex-grow"
-    />
+    <LeaderboardPage::EntriesTable @entriesCache={{this.leaderboardEntriesCache}} @language={{@model.language}} class="flex-grow" />
   </div>
 </div>
