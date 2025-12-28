@@ -41,6 +41,8 @@ export default class OnActionCableMessageModifier extends Modifier<Signature> {
       return;
     }
 
+    cleanup(this);
+
     this.actionCableSubscription = this.actionCableConsumer.subscribe(channel, args, {
       onData: () => {
         this.callback?.();
