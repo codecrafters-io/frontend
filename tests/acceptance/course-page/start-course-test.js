@@ -6,7 +6,7 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import trackPage from 'codecrafters-frontend/tests/pages/track-page';
-import verifyApiRequests from 'codecrafters-frontend/tests/support/verify-api-requests';
+import ApiRequestsVerifier from 'codecrafters-frontend/tests/support/verify-api-requests';
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
@@ -51,6 +51,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
+    const apiRequestsVerifier = new ApiRequestsVerifier(this.server);
+
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
     course.update({ releaseStatus: 'live' });
 
@@ -60,21 +62,22 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
-    let expectedRequests = [
-      '/api/v1/repositories', // fetch repositories (catalog page)
-      '/api/v1/courses', // fetch courses (catalog page)
-      '/api/v1/languages', // fetch languages (catalog page)
-      '/api/v1/courses', // fetch course details (course overview page)
-      '/api/v1/repositories', // fetch repositories (course page)
-      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
-      '/api/v1/courses', // refresh course (course page)
-      '/api/v1/repositories', // fetch repositories (course page)
-      '/api/v1/course-language-requests', // fetch language requests (course page)
-      '/api/v1/languages', // fetch languages (course page)
-      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-    ];
-
-    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence');
+    assert.ok(
+      apiRequestsVerifier.verify([
+        '/api/v1/repositories', // fetch repositories (catalog page)
+        '/api/v1/courses', // fetch courses (catalog page)
+        '/api/v1/languages', // fetch languages (catalog page)
+        '/api/v1/courses', // fetch course details (course overview page)
+        '/api/v1/repositories', // fetch repositories (course page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+        '/api/v1/courses', // refresh course (course page)
+        '/api/v1/repositories', // fetch repositories (course page)
+        '/api/v1/course-language-requests', // fetch language requests (course page)
+        '/api/v1/languages', // fetch languages (course page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      ]),
+      'API requests match expected sequence',
+    );
 
     await percySnapshot('Start Course - Select Language');
 
@@ -84,14 +87,15 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
 
-    expectedRequests = [
-      '/api/v1/repositories', // create repository (after language selection)
-      '/api/v1/courses', // refresh course (after language selection)
-      '/api/v1/repositories', // update repositories (after language selection)
-      '/api/v1/course-leaderboard-entries', // update leaderboard (after language selection)
-    ];
-
-    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after language selection');
+    assert.ok(
+      apiRequestsVerifier.verify([
+        '/api/v1/repositories', // create repository (after language selection)
+        '/api/v1/courses', // refresh course (after language selection)
+        '/api/v1/repositories', // update repositories (after language selection)
+        '/api/v1/course-leaderboard-entries', // update leaderboard (after language selection)
+      ]),
+      'API requests match expected sequence after language selection',
+    );
 
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
@@ -99,12 +103,13 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    expectedRequests = [
-      '/api/v1/repositories', // poll repositories (course page)
-      '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
-    ];
-
-    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
+    assert.ok(
+      apiRequestsVerifier.verify([
+        '/api/v1/repositories', // poll repositories (course page)
+        '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
+      ]),
+      'API requests match expected sequence after polling',
+    );
 
     assert.notOk(coursePage.createRepositoryCard.continueButton.isVisible, 'continue button is not visible');
 
@@ -145,15 +150,16 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
     await finishRender();
 
-    expectedRequests = [
-      '/api/v1/repositories/1', // poll repository status (course page)
-      '/api/v1/repositories/1', // poll repository updates (course page)
-      '/api/v1/repositories/1', // poll repository changes (course page)
-      '/api/v1/repositories', // update repositories (after status change)
-      '/api/v1/course-leaderboard-entries', // update leaderboard (after status change)
-    ];
-
-    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
+    assert.ok(
+      apiRequestsVerifier.verify([
+        '/api/v1/repositories/1', // poll repository status (course page)
+        '/api/v1/repositories/1', // poll repository updates (course page)
+        '/api/v1/repositories/1', // poll repository changes (course page)
+        '/api/v1/repositories', // update repositories (after status change)
+        '/api/v1/course-leaderboard-entries', // update leaderboard (after status change)
+      ]),
+      'API requests match expected sequence after polling',
+    );
 
     assert.ok(coursePage.repositorySetupCard.continueButton.isVisible, 'continue button is visible');
 
