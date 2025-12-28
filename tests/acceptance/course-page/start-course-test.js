@@ -51,6 +51,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     const apiRequestsVerifier = new ApiRequestsVerifier(this.server);
 
     const course = this.server.schema.courses.findBy({ slug: 'dummy' });
@@ -100,7 +103,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Language Proficiency', 'current section title is language proficiency');
     await percySnapshot('Start Course - Select Language Proficiency');
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(
@@ -147,7 +151,8 @@ module('Acceptance | course-page | start-course', function (hooks) {
     let repository = this.server.schema.repositories.find(1);
     this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(

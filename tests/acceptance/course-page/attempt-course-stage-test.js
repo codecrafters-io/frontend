@@ -10,6 +10,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -18,6 +19,9 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   test('can fail course stage', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     const apiRequestsVerifier = new ApiRequestsVerifier(this.server);
 
@@ -61,7 +65,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
 
     await percySnapshot('Course Page - Second stage failed');
@@ -75,6 +80,9 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   test('can pass course stage', async function (assert) {
     testScenario(this.server);
     const currentUser = signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     // TODO: Remove this once leaderboard isn't behind a feature flag
     currentUser.update({ featureFlags: { 'should-see-leaderboard': 'test' } });
@@ -100,7 +108,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await animationsSettled();
 
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
@@ -112,6 +121,9 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   test('can pass tests using CLI', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
@@ -136,7 +148,8 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await animationsSettled();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'test runner card is not visible');
