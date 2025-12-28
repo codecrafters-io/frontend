@@ -8,21 +8,74 @@ import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-export default class LeaderboardEntriesCache {
-  @service declare store: Store;
-  @service declare authenticator: AuthenticatorService;
+export interface LeaderboardEntryWithRank {
+  entry: LeaderboardEntryModel;
+  rank: number;
+}
 
-  @tracked declare leaderboard: LeaderboardModel;
+export default class LeaderboardEntriesCache {
+  @service declare private store: Store;
+  @service declare private authenticator: AuthenticatorService;
+
+  @tracked declare private leaderboard: LeaderboardModel;
   @tracked isLoaded: boolean = false;
-  @tracked surroundingEntries: LeaderboardEntryModel[] = [];
-  @tracked topEntries: LeaderboardEntryModel[] = [];
-  @tracked userRankCalculation: LeaderboardRankCalculationModel | null = null;
+  @tracked private surroundingEntries: LeaderboardEntryModel[] = [];
+  @tracked private topEntries: LeaderboardEntryModel[] = [];
+  @tracked private userRankCalculation: LeaderboardRankCalculationModel | null = null;
 
   constructor(leaderboard: LeaderboardModel) {
     this.leaderboard = leaderboard;
   }
 
-  get userIsInTopLeaderboardEntries(): boolean {
+  private get entriesForFirstSection(): LeaderboardEntryModel[] {
+    const entries = [...this.topEntries];
+
+    if (this.surroundingEntriesOverlapsTopEntries) {
+      entries.push(...this.surroundingEntries);
+    }
+
+    return entries;
+  }
+
+  get entriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
+    return this.sortedEntriesForFirstSection.map((entry, index) => ({
+      entry: entry,
+      rank: index + 1,
+    }));
+  }
+
+  get entriesForSecondSectionWithRanks(): LeaderboardEntryWithRank[] {
+    return this.sortedEntriesForSecondSection.map((entry, index) => ({
+      entry: entry,
+      rank: this.userRankCalculation!.rank + (index - this.userEntryIndexInSecondSection),
+    }));
+  }
+
+  get hasEntries(): boolean {
+    return this.topEntries.length > 0;
+  }
+
+  private get sortedEntriesForFirstSection(): LeaderboardEntryModel[] {
+    return this.entriesForFirstSection.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  private get sortedEntriesForSecondSection(): LeaderboardEntryModel[] {
+    if (this.surroundingEntriesOverlapsTopEntries) {
+      return [];
+    }
+
+    return this.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  private get surroundingEntriesOverlapsTopEntries(): boolean {
+    return this.surroundingEntries.some((entry) => this.topEntries.map((e) => e.user.id).includes(entry.user.id));
+  }
+
+  private get userEntryIndexInSecondSection(): number {
+    return this.sortedEntriesForSecondSection.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
+  }
+
+  private get userIsInTopLeaderboardEntries(): boolean {
     if (!this.authenticator.isAuthenticated) {
       return false;
     }
@@ -35,7 +88,7 @@ export default class LeaderboardEntriesCache {
     await this.loadEntriesTask.perform();
   }
 
-  loadEntriesTask = task({ restartable: true }, async () => {
+  private loadEntriesTask = task({ restartable: true }, async () => {
     this.topEntries = (await this.store.query('leaderboard-entry', {
       include: 'affiliate-link,affiliate-link.user,leaderboard,user',
       leaderboard_id: this.leaderboard.id,

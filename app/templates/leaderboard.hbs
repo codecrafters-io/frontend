@@ -11,11 +11,8 @@
 
   <div class="flex items-start gap-8">
     <LeaderboardPage::EntriesTable
-      @isLoadingEntries={{not this.leaderboardEntriesCache.isLoaded}}
+      @entriesCache={{this.leaderboardEntriesCache}}
       @language={{@model.language}}
-      @surroundingEntries={{this.leaderboardEntriesCache.surroundingEntries}}
-      @topEntries={{this.leaderboardEntriesCache.topEntries}}
-      @userRankCalculation={{this.leaderboardEntriesCache.userRankCalculation}}
       class="flex-grow"
     />
   </div>
