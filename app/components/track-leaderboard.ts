@@ -38,11 +38,12 @@ export default class TrackLeaderboard extends Component<Signature> {
     return this.args.language.leaderboard!;
   }
 
+  // entriesCache stores 15 entries, we only have space for 10 in the UI
   get truncatedEntriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
     if (this.entriesCache.entriesForSecondSectionWithRanks.length > 0) {
       return this.entriesCache.entriesForFirstSectionWithRanks.slice(0, 5);
     } else {
-      return this.entriesCache.entriesForFirstSectionWithRanks;
+      return this.entriesCache.entriesForFirstSectionWithRanks.slice(0, 10);
     }
   }
 
