@@ -1,5 +1,6 @@
 // Invokes a callback when the document visibility changes (tab becomes hidden/visible).
 // Usage: <div {{on-visibility-change this.handleVisibilityChange}}></div>
+// Usage with filter: <div {{on-visibility-change this.handleVisibilityChange if="visible"}}></div>
 import Modifier from 'ember-modifier';
 import { service } from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
@@ -8,6 +9,9 @@ import type VisibilityService from 'codecrafters-frontend/services/visibility';
 interface Signature {
   Args: {
     Positional: [(isVisible: boolean) => void];
+    Named: {
+      if?: 'visible' | 'hidden';
+    };
   };
 }
 
@@ -22,9 +26,25 @@ export default class OnVisibilityChangeModifier extends Modifier<Signature> {
 
   @service declare visibility: VisibilityService;
 
-  modify(_element: Element, [callback]: [(isVisible: boolean) => void]) {
+  modify(_element: Element, [callback]: [(isVisible: boolean) => void], named: Signature['Args']['Named']) {
     cleanup(this); // Ensure we remove the previous callback if present
-    this.callbackId = this.visibility.registerCallback(callback);
+
+    const { if: condition } = named;
+
+    // Create a wrapper callback that filters based on the condition
+    const wrappedCallback = (isVisible: boolean) => {
+      if (condition === 'visible' && !isVisible) {
+        return;
+      }
+
+      if (condition === 'hidden' && isVisible) {
+        return;
+      }
+
+      callback(isVisible);
+    };
+
+    this.callbackId = this.visibility.registerCallback(wrappedCallback);
     registerDestructor(this, cleanup);
   }
 }
