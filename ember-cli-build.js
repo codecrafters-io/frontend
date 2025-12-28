@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const config = require('./config/environment')(EmberApp.env());
