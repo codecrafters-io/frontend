@@ -42,7 +42,7 @@ export default class CatalogRoute extends BaseRoute {
 
     // Resources required by the track page
     modelPromises._languages = this.store.findAll('language', {
-      include: 'primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
+      include: 'leaderboard,primer-concept-group,primer-concept-group.author,primer-concept-group.concepts,primer-concept-group.concepts.author',
     }) as unknown as Promise<LanguageModel[]>;
 
     return RSVPHash(modelPromises) as Promise<ModelType>;
