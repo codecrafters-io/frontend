@@ -8,10 +8,31 @@ interface Signature {
   Args: {
     total: number;
     completed: number;
+    color?: 'blue' | 'teal' | 'gray';
   };
 }
 
 export default class ProgressDonut extends Component<Signature> {
+  get color(): 'blue' | 'teal' | 'gray' {
+    return this.args.color ?? 'blue';
+  }
+
+  get colorClassesForBaseCircle(): string {
+    return {
+      blue: 'stroke-blue-100 dark:stroke-blue-900',
+      teal: 'stroke-teal-100 dark:stroke-teal-900',
+      gray: 'stroke-gray-100 dark:stroke-gray-900',
+    }[this.color];
+  }
+
+  get colorClassesForProgressCircle(): string {
+    return {
+      blue: 'stroke-blue-500',
+      teal: 'stroke-teal-500',
+      gray: 'stroke-gray-500',
+    }[this.color];
+  }
+
   get isComplete(): boolean {
     return this.args.total > 0 && this.args.completed >= this.args.total;
   }

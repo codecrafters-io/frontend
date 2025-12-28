@@ -1,9 +1,18 @@
-<div class="flex items-center gap-1.5" data-test-course-progress ...attributes>
-  <div class="w-5 h-5">
-    <ProgressDonut @total={{@course.stages.length}} @completed={{or @lastUsedRepository.completedStages.length 0}} data-test-course-progress-donut />
-  </div>
+<div class="flex items-center" data-test-course-progress ...attributes>
+  {{#if @lastUsedRepository.allStagesAreComplete}}
+    {{svg-jar "check-circle" class="size-5 text-teal-500 mr-1"}}
+  {{else}}
+    <div class="size-5 mr-1.5">
+      <ProgressDonut
+        @total={{@course.stages.length}}
+        @completed={{or @lastUsedRepository.completedStages.length 0}}
+        @color="teal"
+        data-test-course-progress-donut
+      />
+    </div>
+  {{/if}}
 
-  <div class="text-xs {{if @lastUsedRepository.allStagesAreComplete 'text-teal-500' 'text-blue-500'}} mr-3" data-test-course-progress-text>
+  <div class="text-xs text-teal-500 mr-3" data-test-course-progress-text>
     <b class="font-bold">{{@lastUsedRepository.completedStages.length}}/{{@course.stages.length}}</b>
     stages
   </div>
