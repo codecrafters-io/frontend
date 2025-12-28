@@ -17,9 +17,18 @@ interface Signature {
   };
 }
 
+function cleanup(instance: OnActionCableMessageModifier) {
+  if (instance.actionCableSubscription) {
+    console.log(`unsubscribing from ${instance.subscribedChannel}`);
+    instance.actionCableSubscription.unsubscribe();
+  }
+}
+
 export default class OnActionCableMessageModifier extends Modifier<Signature> {
   actionCableSubscription?: ActionCableSubscription;
   callback?: () => void;
+  subscribedArgs?: Record<string, string>;
+  subscribedChannel?: string;
 
   @service declare actionCableConsumer: ActionCableConsumerService;
 
@@ -27,6 +36,10 @@ export default class OnActionCableMessageModifier extends Modifier<Signature> {
     this.callback = callback;
 
     const { channel, args } = named;
+
+    if (channel === this.subscribedChannel && JSON.stringify(args) === JSON.stringify(this.subscribedArgs)) {
+      return;
+    }
 
     this.actionCableSubscription = this.actionCableConsumer.subscribe(channel, args, {
       onData: () => {
@@ -46,10 +59,10 @@ export default class OnActionCableMessageModifier extends Modifier<Signature> {
       },
     });
 
-    registerDestructor(this, () => {
-      console.log(`unsubscribing from ${channel}`);
-      this.actionCableSubscription?.unsubscribe();
-    });
+    this.subscribedChannel = channel;
+    this.subscribedArgs = args;
+
+    registerDestructor(this, cleanup);
   }
 }
 
