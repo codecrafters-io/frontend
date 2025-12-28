@@ -43,7 +43,13 @@
     </ul>
 
     {{#each this.sortedTesterVersions as |courseTesterVersion|}}
-      <div {{on-action-cable-message this.handleCourseTesterVersionDidUpdate channel=courseTesterVersion.actionCableChannelName args=courseTesterVersion.actionCableChannelArgs}}></div>
+      <div
+        {{on-action-cable-message
+          this.handleCourseTesterVersionDidUpdate
+          channel=courseTesterVersion.actionCableChannelName
+          args=courseTesterVersion.actionCableChannelArgs
+        }}
+      ></div>
     {{/each}}
   </div>
 </div>
