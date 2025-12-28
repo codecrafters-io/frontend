@@ -1,7 +1,7 @@
 <div
   class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 py-6 md:py-10 pb-32 md:pb-32"
-  {{did-insert this.loadEntriesTask.perform}}
-  {{did-update this.loadEntriesTask.perform this.leaderboard.id}}
+  {{did-insert this.leaderboardEntriesCache.loadOrRefresh}}
+  {{did-update this.leaderboardEntriesCache.loadOrRefresh this.leaderboard.id}}
 >
   <LeaderboardPage::Header @selectedLanguage={{@model.language}} class="mb-6" />
 
@@ -10,13 +10,6 @@
   </RoadmapInfoAlert> }}
 
   <div class="flex items-start gap-8">
-    <LeaderboardPage::EntriesTable
-      @isLoadingEntries={{this.isLoadingEntries}}
-      @language={{@model.language}}
-      @surroundingEntries={{this.surroundingEntries}}
-      @topEntries={{this.topEntries}}
-      @userRankCalculation={{this.userRankCalculation}}
-      class="flex-grow"
-    />
+    <LeaderboardPage::EntriesTable @entriesCache={{this.leaderboardEntriesCache}} @language={{@model.language}} class="flex-grow" />
   </div>
 </div>

@@ -1,27 +1,27 @@
 <div ...attributes>
-  {{#if (or this.hasEntries @isLoadingEntries)}}
+  {{#if (or @entriesCache.hasEntries (not @entriesCache.isLoaded))}}
     <div>
       <table class="min-w-full bg-white dark:bg-gray-925">
         <thead>
           <LeaderboardPage::EntriesTable::HeaderRow @language={{@language}} />
         </thead>
         <tbody>
-          {{#if @isLoadingEntries}}
-            {{#each (range 1 16) as |rank|}}
-              <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
-            {{/each}}
-          {{else}}
-            {{#each this.sortedEntriesForFirstSection as |entry index|}}
-              <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{concat "#" (add index 1)}} />
+          {{#if @entriesCache.isLoaded}}
+            {{#each @entriesCache.entriesForFirstSectionWithRanks as |entryWithRank|}}
+              <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
             {{/each}}
 
-            {{#if (gt this.sortedEntriesForSecondSectionWithRanks.length 0)}}
+            {{#if (gt @entriesCache.entriesForSecondSectionWithRanks.length 0)}}
               <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
 
-              {{#each this.sortedEntriesForSecondSectionWithRanks as |entryWithRank|}}
+              {{#each @entriesCache.entriesForSecondSectionWithRanks as |entryWithRank|}}
                 <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
               {{/each}}
             {{/if}}
+          {{else}}
+            {{#each (range 1 16) as |rank|}}
+              <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
+            {{/each}}
           {{/if}}
         </tbody>
       </table>
