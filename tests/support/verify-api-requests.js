@@ -1,5 +1,7 @@
+let lastCheckedRequestIndex = 0;
+
 export default function verifyApiRequests(server, expectedPaths) {
-  const requests = server.pretender.handledRequests;
+  const requests = server.pretender.handledRequests.slice(lastCheckedRequestIndex);
 
   // Filter out analytics and current user requests
   const filteredRequests = requests.filter((request) => {
@@ -40,6 +42,10 @@ export default function verifyApiRequests(server, expectedPaths) {
       throw new Error(lines.join('\n'));
     }
   }
+
+  // Update index to point to the end of all requests (including filtered ones)
+  // This ensures we check incrementally on subsequent calls
+  lastCheckedRequestIndex = server.pretender.handledRequests.length;
 
   return true;
 }
