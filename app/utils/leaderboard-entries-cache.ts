@@ -55,14 +55,6 @@ export default class LeaderboardEntriesCache {
     return this._sortedEntriesForSecondSection.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
   }
 
-  get _userIsInTopLeaderboardEntries(): boolean {
-    if (!this.authenticator.isAuthenticated) {
-      return false;
-    }
-
-    return this._topEntries.some((entry) => entry.user.id === this.authenticator.currentUserId);
-  }
-
   get entriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
     return this._sortedEntriesForFirstSection.map((entry, index) => ({
       entry: entry,
@@ -87,14 +79,19 @@ export default class LeaderboardEntriesCache {
   }
 
   _loadEntriesTask = task({ restartable: true }, async () => {
-    this._topEntries = (await this.store.query('leaderboard-entry', {
+    const topEntries = (await this.store.query('leaderboard-entry', {
       include: 'affiliate-link,affiliate-link.user,leaderboard,user',
       leaderboard_id: this.leaderboard.id,
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];
 
-    if (this.authenticator.isAuthenticated && !this._userIsInTopLeaderboardEntries) {
-      this._surroundingEntries = (await this.store.query('leaderboard-entry', {
+    let surroundingEntries: LeaderboardEntryModel[] = [];
+    let userRankCalculation: LeaderboardRankCalculationModel | null = null;
+
+    const userIsInTopLeaderboardEntries = topEntries.some((entry) => entry.user.id === this.authenticator.currentUserId);
+
+    if (this.authenticator.isAuthenticated && !userIsInTopLeaderboardEntries) {
+      surroundingEntries = (await this.store.query('leaderboard-entry', {
         include: 'affiliate-link,affiliate-link.user,leaderboard,user',
         leaderboard_id: this.leaderboard.id,
         user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
@@ -102,18 +99,18 @@ export default class LeaderboardEntriesCache {
       })) as unknown as LeaderboardEntryModel[];
     }
 
-    if (this._surroundingEntries.length > 0) {
+    if (surroundingEntries.length > 0) {
       const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
         include: 'user',
         leaderboard_id: this.leaderboard!.id,
         user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
       })) as unknown as LeaderboardRankCalculationModel[];
 
-      this._userRankCalculation = userRankCalculations[0] || null;
+      userRankCalculation = userRankCalculations[0] || null;
 
       // TODO: Also look at "outdated" user rank calculations?
-      if (!this._userRankCalculation) {
-        this._userRankCalculation = await this.store
+      if (!userRankCalculation) {
+        userRankCalculation = await this.store
           .createRecord('leaderboard-rank-calculation', {
             leaderboard: this.leaderboard!,
             user: this.authenticator.currentUser!,
@@ -122,6 +119,9 @@ export default class LeaderboardEntriesCache {
       }
     }
 
+    this._topEntries = topEntries;
+    this._surroundingEntries = surroundingEntries;
+    this._userRankCalculation = userRankCalculation;
     this.isLoaded = true;
   });
 }
