@@ -8,6 +8,8 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | submit-course-stage-feedback', function (hooks) {
   setupApplicationTest(hooks);
@@ -88,6 +90,9 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     let currentUser = this.server.schema.users.first();
     let go = this.server.schema.languages.findBy({ slug: 'go' });
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -122,7 +127,9 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
         courseStage: redis.stages.models.toSorted(fieldComparator('position'))[stageNumber - 1], // Stage #3
       });
 
-      await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+      fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+      fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+      await finishRender();
     };
 
     await completeStage(3);

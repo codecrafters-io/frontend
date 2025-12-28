@@ -8,6 +8,8 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | try-other-language', function (hooks) {
   setupApplicationTest(hooks);
@@ -16,6 +18,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
   test('can try other language', async function (assert) {
     testScenario(this.server, ['dummy']);
     signInAsSubscriber(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
     let python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -35,12 +40,15 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       '/api/v1/courses', // fetch courses (catalog page)
       '/api/v1/languages', // fetch languages (catalog page)
       '/api/v1/courses', // fetch course details (course overview page)
-      '/api/v1/repositories', // fetch repositories (catalog page)
+      '/api/v1/repositories', // fetch repositories (course overview page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course overview page)
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/repositories', // fetch repositories after subscribed (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
     ];
 
     await catalogPage.visit();
@@ -62,6 +70,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
       '/api/v1/course-language-requests', // fetch language requests (after try different language)
       '/api/v1/languages', // fetch languages (after try different language)
       '/api/v1/course-leaderboard-entries', // update leaderboard (after try different language)
+      '/api/v1/course-leaderboard-entries', // update leaderboard after subscribed (after try different language)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after clicking try different language');
@@ -74,9 +83,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     expectedRequests = [
       ...expectedRequests,
       '/api/v1/repositories', // create repository (after selecting Go)
+      '/api/v1/repositories', // update repositories (after selecting Go)
       '/api/v1/courses', // refresh course (after selecting Go)
       '/api/v1/repositories', // update repositories (after selecting Go)
       '/api/v1/course-leaderboard-entries', // update leaderboard (after selecting Go)
+      '/api/v1/repositories', // update repositories after subscribed (after selecting Go)
+      '/api/v1/course-leaderboard-entries', // update leaderboard after subscribed (after selecting Go)
     ];
 
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after selecting Go language');
@@ -98,7 +110,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     let repository = this.server.schema.repositories.find(2);
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [
@@ -114,7 +128,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
 
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [

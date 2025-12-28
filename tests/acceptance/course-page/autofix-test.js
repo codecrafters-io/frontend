@@ -3,13 +3,13 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import window from 'ember-window-mock';
 import { module, skip } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import { waitUntil } from '@ember/test-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
@@ -58,12 +58,14 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     logstream.update({ chunks: ['Running tests...\n\n'] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await finishRender();
 
     await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
 
     const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
     logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await finishRender();
 
     const testResultsBarHeight = coursePage.testResultsBar.height;
     const testResultsBarContentsHeight = coursePage.testResultsBar.contents.height;
@@ -103,6 +105,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     logstream.update({ isTerminated: true });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await finishRender();
     await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
     await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
@@ -150,6 +153,7 @@ module('Acceptance | course-page | autofix', function (hooks) {
 
     logstream.update({ isTerminated: true });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await finishRender();
 
     await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
@@ -191,7 +195,9 @@ module('Acceptance | course-page | autofix', function (hooks) {
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
   });
 });

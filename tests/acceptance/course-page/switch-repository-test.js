@@ -7,6 +7,8 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | switch-repository', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +17,9 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
   test('can switch repository', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     let currentUser = this.server.schema.users.first();
 
@@ -37,28 +42,47 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
 
-    const expectedRequests = [
+    let expectedRequests = [
       '/api/v1/repositories', // fetch repositories (catalog page)
       '/api/v1/courses', // fetch courses (catalog page)
       '/api/v1/languages', // fetch languages (catalog page)
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after visiting catalog page');
+
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    expectedRequests = [
+      ...expectedRequests,
       '/api/v1/courses', // fetch course details (course overview page)
-      '/api/v1/repositories', // fetch repositories (course page)
-      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      '/api/v1/repositories', // fetch repositories (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course overview page)
+    ];
+
+    assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after visiting course overview page');
+
+    await courseOverviewPage.clickOnStartCourse();
+
+    expectedRequests = [
+      ...expectedRequests,
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-      '/api/v1/repositories', // poll repositories (course page)
-      '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
+      '/api/v1/repositories', // fetch repositories (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
+      '/api/v1/repositories', // fetch repositories after subscribed (course page)
+      '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
     ];
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, goRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.header.stepName, 'Bind to a port');
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
     assert.ok(verifyApiRequests(this.server, expectedRequests), 'API requests match expected sequence after polling');
 
     await coursePage.repositoryDropdown.click();
