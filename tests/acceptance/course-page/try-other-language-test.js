@@ -64,7 +64,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/courses', // refresh course (after try different language)
       '/api/v1/repositories', // update repositories (after try different language)
       '/api/v1/course-language-requests', // fetch language requests (after try different language)
@@ -81,7 +80,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await animationsSettled();
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories', // create repository (after selecting Go)
       '/api/v1/repositories', // update repositories (after selecting Go)
       '/api/v1/courses', // refresh course (after selecting Go)
@@ -116,7 +114,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories/2', // poll repository status (course page)
       '/api/v1/repositories/2', // poll repository updates (course page)
       '/api/v1/repositories/2', // poll repository changes (course page)
@@ -134,7 +131,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories', // poll repositories (course page)
       '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
     ];

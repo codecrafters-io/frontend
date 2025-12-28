@@ -54,7 +54,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Redis');
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/courses', // fetch course details (course overview page)
       '/api/v1/repositories', // fetch repositories (course overview page)
       '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
@@ -66,7 +65,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/courses', // refresh course (course page)
       '/api/v1/repositories', // fetch repositories (course page)
       '/api/v1/course-stage-comments', // fetch stage comments (course page)

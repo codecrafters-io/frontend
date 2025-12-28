@@ -85,7 +85,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories', // create repository (after language selection)
       '/api/v1/courses', // refresh course (after language selection)
       '/api/v1/repositories', // update repositories (after language selection)
@@ -101,7 +100,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories', // poll repositories (course page)
       '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
     ];
@@ -148,7 +146,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await finishRender();
 
     expectedRequests = [
-      ...expectedRequests,
       '/api/v1/repositories/1', // poll repository status (course page)
       '/api/v1/repositories/1', // poll repository updates (course page)
       '/api/v1/repositories/1', // poll repository changes (course page)
