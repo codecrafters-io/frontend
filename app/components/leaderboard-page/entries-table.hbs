@@ -11,14 +11,14 @@
               <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
             {{/each}}
           {{else}}
-            {{#each this.sortedTopEntries as |entry index|}}
+            {{#each this.sortedEntriesForFirstSection as |entry index|}}
               <LeaderboardPage::EntriesTable::Row @entry={{entry}} @rankText={{concat "#" (add index 1)}} />
             {{/each}}
 
-            {{#if this.shouldShowSurroundingEntries}}
+            {{#if (gt this.sortedEntriesForSecondSectionWithRanks.length 0)}}
               <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
 
-              {{#each this.sortedSurroundingEntriesWithRanks as |entryWithRank|}}
+              {{#each this.sortedEntriesForSecondSectionWithRanks as |entryWithRank|}}
                 <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
               {{/each}}
             {{/if}}
