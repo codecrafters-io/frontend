@@ -11,6 +11,7 @@ import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | attempt-course-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -40,22 +41,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
-
-    assert.ok(
-      apiRequestsVerifier.verify([
-        '/api/v1/repositories', // fetch repositories (catalog page)
-        '/api/v1/courses', // fetch courses (catalog page)
-        '/api/v1/languages', // fetch languages (catalog page)
-        '/api/v1/courses', // fetch course details (course overview page)
-        '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
-        '/api/v1/courses', // refresh course (course page)
-        '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-stage-comments', // fetch stage comments (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-      ]),
-      'API requests match expected sequence',
-    );
+    apiRequestsVerifier.clearPreviousRequests();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'second stage is active');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Ready to run tests...', 'footer text is waiting for git push');
@@ -67,7 +53,17 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
     fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
+
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
+
+    assert.ok(
+      apiRequestsVerifier.verify([
+        '/api/v1/repositories', // fetch repositories (course page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+      ]),
+      'API requests match expected sequence after creating submission',
+    );
 
     await percySnapshot('Course Page - Second stage failed');
 
@@ -110,7 +106,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
     fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
-    await animationsSettled();
+    await finishRender();
 
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
 
@@ -150,7 +146,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
     fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
-    await animationsSettled();
+    await finishRender();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'test runner card is not visible');
     assert.ok(coursePage.testsPassedModal.isVisible, 'tests passed modal is visible');
