@@ -26,13 +26,15 @@ export default function verifyApiRequests(server, expectedPaths) {
       let lines = [];
 
       for (let j = 0; j < i; j++) {
-        lines.push(`✔ [${j}] ${expectedPaths[j]}`);
+        lines.push(`✔ [${j + 1}] ${expectedPaths[j]}`);
       }
 
-      lines.push(`✗ [${i}] Expected: ${expectedPath ? expectedPath : '<none>'} | Actual: ${actualPath ? actualPath : '<none>'}`);
+      lines.push(`✗ [${i + 1}] Expected: ${expectedPath ? expectedPath : '<none>'} | Actual: ${actualPath ? actualPath : '<none>'}`);
 
       for (let j = i + 1; j < Math.max(filteredRequests.length, expectedPaths.length); j++) {
-        lines.push(`   [${j}] Expected: ${expectedPaths[j] ? expectedPaths[j] : '<none>'} | Actual: ${actualPaths[j] ? actualPaths[j] : '<none>'}`);
+        lines.push(
+          `   [${j + 1}] Expected: ${expectedPaths[j] ? expectedPaths[j] : '<none>'} | Actual: ${actualPaths[j] ? actualPaths[j] : '<none>'}`,
+        );
       }
 
       throw new Error(lines.join('\n'));
