@@ -18,6 +18,16 @@ export default class CourseTesterVersionModel extends Model {
   declare activate: (this: Model, payload: unknown) => Promise<void>;
   declare deprovision: (this: Model, payload: unknown) => Promise<void>;
 
+  get actionCableChannelArgs() {
+    return {
+      course_tester_version_id: this.id,
+    };
+  }
+
+  get actionCableChannelName() {
+    return 'CourseTesterVersionChannel';
+  }
+
   get viewReleaseLink() {
     return `https://github.com/codecrafters-io/${this.course.slug}-tester/releases/tag/${this.tagName}`;
   }

@@ -1,6 +1,6 @@
 <div
   class="bg-white min-h-screen"
-  {{model-did-update this.handleCourseTesterVersionDidUpdate @model.testerVersion}}
+  {{on-action-cable-message this.handleCourseTesterVersionDidUpdate channel=@model.testerVersion.actionCableChannelName args=@model.testerVersion.actionCableChannelArgs}}
   {{will-destroy this.handleWillDestroyContainer}}
 >
   <div class="container mx-auto pt-4 pb-10 px-6">
