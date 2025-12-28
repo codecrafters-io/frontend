@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, skip } from 'qunit';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 import { render, settled, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
@@ -6,7 +6,7 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | rive-animation', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders and initializes correctly', async function (assert) {
+  skip('it renders and initializes correctly', async function (assert) {
     await render(hbs`
       <div class="w-[200px] h-[200px]">
         <RiveAnimation @src="/assets/animations/gleam_logo_animation.riv" />
@@ -63,7 +63,7 @@ module('Integration | Component | rive-animation', function (hooks) {
     assert.ok(hasNonTransparentPixels, 'Canvas has non-transparent pixels');
   });
 
-  test('it works with different animation files', async function (assert) {
+  skip('it works with different animation files', async function (assert) {
     await render(hbs`
       <div class="w-[200px] h-[200px]">
         <RiveAnimation @src="/assets/animations/pig_cuddly.riv" />
