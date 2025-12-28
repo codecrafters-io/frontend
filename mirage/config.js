@@ -64,7 +64,6 @@ import teamPaymentFlows from './handlers/team-payment-flows';
 import teamPaymentMethodUpdateRequests from './handlers/team-payment-method-update-requests';
 import teamSubscriptions from './handlers/team-subscriptions';
 import teams from './handlers/teams';
-import trackLeaderboardEntries from './handlers/track-leaderboard-entries';
 import trustedCommunitySolutionEvaluations from './handlers/trusted-community-solution-evaluations';
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
@@ -206,7 +205,6 @@ function routes() {
   teamPaymentMethodUpdateRequests(this);
   teamSubscriptions(this);
   teams(this);
-  trackLeaderboardEntries(this);
   trustedCommunitySolutionEvaluations(this);
   upvotes(this);
   users(this);

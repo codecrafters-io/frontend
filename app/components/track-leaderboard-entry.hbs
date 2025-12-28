@@ -1,9 +1,0 @@
-<LeaderboardEntry
-  @route="user"
-  @routeModel={{unless this.isSkeleton @entry.user.username}}
-  @isForCurrentUser={{this.isForCurrentUser}}
-  @user={{unless this.isSkeleton @entry.user}}
-  @progressNumerator={{unless this.isSkeleton this.progressNumerator}}
-  @progressDenominator={{unless this.isSkeleton this.progressDenominator}}
-  @status="idle"
-/>
