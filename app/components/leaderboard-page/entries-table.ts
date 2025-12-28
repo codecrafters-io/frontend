@@ -22,31 +22,45 @@ export default class LeaderboardPageEntriesTable extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
 
+  get entriesForFirstSection() {
+    const entries = [...this.args.topEntries];
+
+    if (this.surroundingEntriesOverlapsTopEntries) {
+      entries.push(...this.args.surroundingEntries);
+    }
+
+    return entries;
+  }
+
   get hasEntries() {
     return this.args.topEntries.length > 0;
   }
 
-  get shouldShowSurroundingEntries(): boolean {
-    return !this.userIsInTopLeaderboardEntries && this.args.surroundingEntries.length > 0;
+  get sortedEntriesForFirstSection() {
+    return this.entriesForFirstSection.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
   }
 
-  get sortedSurroundingEntries() {
+  get sortedEntriesForSecondSection() {
+    if (this.surroundingEntriesOverlapsTopEntries) {
+      return [];
+    }
+
     return this.args.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
   }
 
-  get sortedSurroundingEntriesWithRanks() {
-    return this.sortedSurroundingEntries.map((entry, index) => ({
+  get sortedEntriesForSecondSectionWithRanks() {
+    return this.sortedEntriesForSecondSection.map((entry, index) => ({
       entry: entry,
-      rank: this.args.userRankCalculation!.rank + (index - this.userEntryIndexInSurroundingEntries),
+      rank: this.args.userRankCalculation!.rank + (index - this.userEntryIndexInSecondSection),
     }));
   }
 
-  get sortedTopEntries() {
-    return this.args.topEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  get surroundingEntriesOverlapsTopEntries(): boolean {
+    return this.args.surroundingEntries.some((entry) => this.args.topEntries.map((e) => e.user.id).includes(entry.user.id));
   }
 
-  get userEntryIndexInSurroundingEntries() {
-    return this.sortedSurroundingEntries.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
+  get userEntryIndexInSecondSection() {
+    return this.sortedEntriesForSecondSection.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
   }
 
   get userIsInTopLeaderboardEntries(): boolean {
