@@ -14,89 +14,91 @@ export interface LeaderboardEntryWithRank {
 }
 
 export default class LeaderboardEntriesCache {
-  @service declare private store: Store;
-  @service declare private authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare authenticator: AuthenticatorService;
 
-  @tracked declare private leaderboard: LeaderboardModel;
-  @tracked isLoaded: boolean = false;
-  @tracked private surroundingEntries: LeaderboardEntryModel[] = [];
-  @tracked private topEntries: LeaderboardEntryModel[] = [];
-  @tracked private userRankCalculation: LeaderboardRankCalculationModel | null = null;
+  @tracked declare leaderboard: LeaderboardModel;
+  @tracked declare isLoaded: boolean;
+
+  @tracked _surroundingEntries: LeaderboardEntryModel[] = [];
+  @tracked _topEntries: LeaderboardEntryModel[] = [];
+  @tracked _userRankCalculation: LeaderboardRankCalculationModel | null = null;
 
   constructor(leaderboard: LeaderboardModel) {
     this.leaderboard = leaderboard;
+    this.isLoaded = false;
   }
 
-  private get entriesForFirstSection(): LeaderboardEntryModel[] {
-    const entries = [...this.topEntries];
+  get _entriesForFirstSection(): LeaderboardEntryModel[] {
+    const entries = [...this._topEntries];
 
-    if (this.surroundingEntriesOverlapsTopEntries) {
-      entries.push(...this.surroundingEntries);
+    if (this._surroundingEntriesOverlapsTopEntries) {
+      entries.push(...this._surroundingEntries);
     }
 
     return entries;
   }
 
+  get _sortedEntriesForFirstSection(): LeaderboardEntryModel[] {
+    return this._entriesForFirstSection.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  get _sortedEntriesForSecondSection(): LeaderboardEntryModel[] {
+    if (this._surroundingEntriesOverlapsTopEntries) {
+      return [];
+    }
+
+    return this._surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
+  }
+
+  get _surroundingEntriesOverlapsTopEntries(): boolean {
+    return this._surroundingEntries.some((entry) => this._topEntries.map((e) => e.user.id).includes(entry.user.id));
+  }
+
+  get _userEntryIndexInSecondSection(): number {
+    return this._sortedEntriesForSecondSection.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
+  }
+
+  get _userIsInTopLeaderboardEntries(): boolean {
+    if (!this.authenticator.isAuthenticated) {
+      return false;
+    }
+
+    return this._topEntries.some((entry) => entry.user.id === this.authenticator.currentUserId);
+  }
+
   get entriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
-    return this.sortedEntriesForFirstSection.map((entry, index) => ({
+    return this._sortedEntriesForFirstSection.map((entry, index) => ({
       entry: entry,
       rank: index + 1,
     }));
   }
 
   get entriesForSecondSectionWithRanks(): LeaderboardEntryWithRank[] {
-    return this.sortedEntriesForSecondSection.map((entry, index) => ({
+    return this._sortedEntriesForSecondSection.map((entry, index) => ({
       entry: entry,
-      rank: this.userRankCalculation!.rank + (index - this.userEntryIndexInSecondSection),
+      rank: this._userRankCalculation!.rank + (index - this._userEntryIndexInSecondSection),
     }));
   }
 
   get hasEntries(): boolean {
-    return this.topEntries.length > 0;
-  }
-
-  private get sortedEntriesForFirstSection(): LeaderboardEntryModel[] {
-    return this.entriesForFirstSection.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
-  }
-
-  private get sortedEntriesForSecondSection(): LeaderboardEntryModel[] {
-    if (this.surroundingEntriesOverlapsTopEntries) {
-      return [];
-    }
-
-    return this.surroundingEntries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);
-  }
-
-  private get surroundingEntriesOverlapsTopEntries(): boolean {
-    return this.surroundingEntries.some((entry) => this.topEntries.map((e) => e.user.id).includes(entry.user.id));
-  }
-
-  private get userEntryIndexInSecondSection(): number {
-    return this.sortedEntriesForSecondSection.findIndex((entry) => entry.user.id === this.authenticator.currentUserId);
-  }
-
-  private get userIsInTopLeaderboardEntries(): boolean {
-    if (!this.authenticator.isAuthenticated) {
-      return false;
-    }
-
-    return this.topEntries.some((entry) => entry.user.id === this.authenticator.currentUserId);
+    return this.entriesForFirstSectionWithRanks.length > 0;
   }
 
   @action
   async loadOrRefresh() {
-    await this.loadEntriesTask.perform();
+    await this._loadEntriesTask.perform();
   }
 
-  private loadEntriesTask = task({ restartable: true }, async () => {
-    this.topEntries = (await this.store.query('leaderboard-entry', {
+  _loadEntriesTask = task({ restartable: true }, async () => {
+    this._topEntries = (await this.store.query('leaderboard-entry', {
       include: 'affiliate-link,affiliate-link.user,leaderboard,user',
       leaderboard_id: this.leaderboard.id,
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];
 
-    if (this.authenticator.isAuthenticated || !this.userIsInTopLeaderboardEntries) {
-      this.surroundingEntries = (await this.store.query('leaderboard-entry', {
+    if (this.authenticator.isAuthenticated || !this._userIsInTopLeaderboardEntries) {
+      this._surroundingEntries = (await this.store.query('leaderboard-entry', {
         include: 'affiliate-link,affiliate-link.user,leaderboard,user',
         leaderboard_id: this.leaderboard.id,
         user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
@@ -104,18 +106,18 @@ export default class LeaderboardEntriesCache {
       })) as unknown as LeaderboardEntryModel[];
     }
 
-    if (this.surroundingEntries.length > 0) {
+    if (this._surroundingEntries.length > 0) {
       const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
         include: 'user',
         leaderboard_id: this.leaderboard!.id,
         user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
       })) as unknown as LeaderboardRankCalculationModel[];
 
-      this.userRankCalculation = userRankCalculations[0] || null;
+      this._userRankCalculation = userRankCalculations[0] || null;
 
       // TODO: Also look at "outdated" user rank calculations?
-      if (!this.userRankCalculation) {
-        this.userRankCalculation = await this.store
+      if (!this._userRankCalculation) {
+        this._userRankCalculation = await this.store
           .createRecord('leaderboard-rank-calculation', {
             leaderboard: this.leaderboard!,
             user: this.authenticator.currentUser!,
