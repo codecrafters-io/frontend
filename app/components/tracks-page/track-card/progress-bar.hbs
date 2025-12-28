@@ -3,12 +3,7 @@
     {{svg-jar "check-circle" class="size-5 text-teal-500 mr-1"}}
   {{else}}
     <div class="size-5 mr-1.5">
-      <ProgressDonut
-        @total={{@stagesCount}}
-        @completed={{@completedStagesCount}}
-        @color="teal"
-        data-test-track-progress-donut
-      />
+      <ProgressDonut @total={{@stagesCount}} @completed={{@completedStagesCount}} @color="teal" data-test-track-progress-donut />
     </div>
   {{/if}}
 
