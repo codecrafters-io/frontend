@@ -1,0 +1,28 @@
+<div class="group {{if @isExpanded 'w-64 xl:w-80'}}" ...attributes>
+  <div class="sticky top-16 z-11 {{if @isExpanded 'px-6' 'px-4'}}">
+    <div
+      class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5 z-10"
+      {{on "click" (if @isExpanded @onCollapseButtonClick @onExpandButtonClick)}}
+      role="button"
+    >
+      {{#if @isExpanded}}
+        <CoursePage::CollapseLeaderboardButton data-test-collapse-leaderboard-button />
+      {{else}}
+        <CoursePage::ExpandLeaderboardButton data-test-expand-leaderboard-button />
+      {{/if}}
+    </div>
+
+    <CourseLeaderboard
+      class={{if @isExpanded "-ml-6" "-ml-4"}}
+      @course={{@course}}
+      @activeRepository={{@activeRepository}}
+      @repositories={{@repositories}}
+      @isCollapsed={{not @isExpanded}}
+    />
+
+    {{#if (and @isExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
+      {{! @glint-expect-error: not ts-ified yet }}
+      <PrivateLeaderboardFeatureSuggestion @featureSuggestion={{this.visiblePrivateLeaderboardFeatureSuggestion}} class="mt-6" />
+    {{/if}}
+  </div>
+</div>
