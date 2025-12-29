@@ -1,18 +1,15 @@
 import Component from '@glimmer/component';
-import TrackLeaderboardEntry from 'codecrafters-frontend/utils/track-leaderboard-entry';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type Store from '@ember-data/store';
-import TrackLeaderboardEntryModel from 'codecrafters-frontend/models/track-leaderboard-entry';
+import type LeaderboardEntriesCache from 'codecrafters-frontend/utils/leaderboard-entries-cache';
+import type { LeaderboardEntryWithRank } from 'codecrafters-frontend/utils/leaderboard-entries-cache';
+import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/services/leaderboard-entries-cache-registry';
+import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
-import type CourseStageCompletionModel from 'codecrafters-frontend/models/course-stage-completion';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import uniqFieldReducer from 'codecrafters-frontend/utils/uniq-field-reducer';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -24,70 +21,37 @@ interface Signature {
 
 export default class TrackLeaderboard extends Component<Signature> {
   transition = fade;
-  @tracked isLoadingEntries = true;
-  @tracked entriesFromAPI?: TrackLeaderboardEntryModel[];
   @service declare authenticator: AuthenticatorService;
-  @service declare store: Store;
+  @service declare leaderboardEntriesCacheRegistry: LeaderboardEntriesCacheRegistryService;
 
-  get currentUser() {
-    return this.authenticator.currentUser;
-  }
-
-  get entries() {
-    if (this.isLoadingEntries) {
+  get entriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
+    if (!this.leaderboardEntriesCache.isLoaded) {
       return [];
     }
 
-    let entries: TrackLeaderboardEntryModel[] = [];
-
-    if (this.entriesFromCurrentUser.length > 0) {
-      entries = entries.concat(this.entriesFromAPI!.filter((entry) => entry.user !== this.currentUser));
+    // We have space for ~10 entries in total. Either 10 in the first section, or 5 in first, 5 in second.
+    if (this.leaderboardEntriesCache.entriesForSecondSectionWithRanks.length > 0) {
+      return this.leaderboardEntriesCache.entriesForFirstSectionWithRanks.slice(0, 5);
     } else {
-      entries = entries.concat(this.entriesFromAPI!);
+      return this.leaderboardEntriesCache.entriesForFirstSectionWithRanks.slice(0, 10);
     }
-
-    return entries.concat(this.entriesFromCurrentUser);
   }
 
-  get entriesFromCurrentUser() {
-    if (!this.currentUser) {
-      return [];
-    }
-
-    const currentUserRepositories = this.currentUser.repositories
-      .filter((item) => item.language === this.args.language)
-      .filter((item) => item.firstSubmissionCreated);
-
-    if (currentUserRepositories.length === 0) {
-      return [];
-    }
-
-    const completedStagesCount = currentUserRepositories.reduce((result, repository) => {
-      return result.concat(repository.courseStageCompletions).reduce(uniqFieldReducer('courseStage'), []);
-    }, [] as CourseStageCompletionModel[]).length;
-
-    return [
-      // TODO: Move to generic interface that handles TrackLeaderboardEntry & TrackLeaderboardEntryModel
-      new TrackLeaderboardEntry({
-        completedStagesCount: completedStagesCount,
-        language: this.args.language,
-        user: this.currentUser,
-      }) as unknown as TrackLeaderboardEntryModel,
-    ];
+  get entriesForSecondSectionWithRanks(): LeaderboardEntryWithRank[] {
+    return this.leaderboardEntriesCache.entriesForSecondSectionWithRanks;
   }
 
-  get sortedEntries() {
-    return this.entries.toSorted(fieldComparator('completedStagesCount')).reverse();
+  get leaderboard(): LeaderboardModel {
+    return this.args.language.leaderboard!;
+  }
+
+  get leaderboardEntriesCache(): LeaderboardEntriesCache {
+    return this.leaderboardEntriesCacheRegistry.getOrCreate(this.leaderboard);
   }
 
   @action
   async handleDidInsert() {
-    this.entriesFromAPI = (await this.store.query('track-leaderboard-entry', {
-      language_id: this.args.language.id,
-      include: 'language,user',
-    })) as unknown as TrackLeaderboardEntryModel[];
-
-    this.isLoadingEntries = false;
+    await this.leaderboardEntriesCache.loadOrRefresh();
   }
 
   // eslint-disable-next-line require-yield
