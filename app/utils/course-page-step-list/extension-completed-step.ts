@@ -46,6 +46,12 @@ export default class ExtensionCompletedStep extends StepDefinition {
   }
 
   get status() {
+    // If the entire course (base stages + all extension stages) is complete, the user is past all
+    // extension-completed steps. Mark them as complete so the "active step" becomes CourseCompletedStep.
+    if (this.repository.allStagesAreComplete) {
+      return 'complete';
+    }
+
     if (this.repository.currentStage && !this.repository.stageIsComplete(this.repository.currentStage)) {
       return 'complete'; // If there's an incomplete stage ahead of us, the extension is complete.
     } else {

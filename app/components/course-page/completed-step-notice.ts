@@ -47,7 +47,17 @@ export default class CompletedStepNotice extends Component<Signature> {
   }
 
   get stepForNextOrActiveStepButton() {
-    return this.nextStep?.type === 'BaseStagesCompletedStep' ? this.nextStep : this.activeStep;
+    if (!this.nextStep) {
+      return this.activeStep;
+    }
+
+    // Special-case completion "milestones" so the call-to-action takes users to the celebration screen,
+    // even if the active step ends up being something else (e.g. extension-completed steps).
+    if (this.nextStep.type === 'BaseStagesCompletedStep' || this.nextStep.type === 'CourseCompletedStep') {
+      return this.nextStep;
+    }
+
+    return this.activeStep;
   }
 
   @action

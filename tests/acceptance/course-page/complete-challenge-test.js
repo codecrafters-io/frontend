@@ -118,4 +118,27 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     await coursePage.completedStepNotice.nextOrActiveStepButton.click();
     assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
+
+  test('next step button in completed step modal redirects to course completed if the next step is course completed', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const dummy = this.server.schema.courses.findBy({ slug: 'dummy' });
+    dummy.update('releaseStatus', 'live');
+
+    const repository = this.server.create('repository', 'withAllStagesCompleted', {
+      course: dummy,
+      language: python,
+      user: currentUser,
+    });
+
+    await visit(`/courses/dummy/stages/um4?repo=${repository.id}`);
+
+    assert.contains(coursePage.currentStepCompleteModal.nextOrActiveStepButton.text, 'View next step');
+    await coursePage.currentStepCompleteModal.clickOnNextOrActiveStepButton();
+
+    assert.strictEqual(currentURL(), '/courses/dummy/completed', 'URL is /completed');
+  });
 });
