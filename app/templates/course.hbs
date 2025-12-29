@@ -4,7 +4,6 @@
   class="flex h-screen w-full relative"
   {{did-insert this.handleDidInsertContainer}}
   {{will-destroy this.handleWillDestroyContainer}}
-  {{did-update this.handleDidUpdateActiveRepositoryId @model.activeRepository.id}}
   {{did-insert
     this.setOrUpdateCurrentStepValues
     this.coursePageState.currentStep
@@ -20,6 +19,14 @@
     this.coursePageState.currentStep.type
   }}
 >
+  {{#if @model.activeRepository.id}}
+    <div
+      class="hidden"
+      {{on-action-cable-message this.pollRepositoryTask.perform channel="RepositoryChannel" args=(hash repository_id=@model.activeRepository.id)}}
+      {{on-visibility-change this.pollRepositoryTask.perform if="visible"}}
+    />
+  {{/if}}
+
   {{#if this.sidebarIsExpandedOnDesktop}}
     <CoursePage::Sidebar
       @course={{@model.course}}

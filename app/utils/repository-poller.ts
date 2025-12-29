@@ -1,8 +1,7 @@
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import Poller from 'codecrafters-frontend/utils/poller';
 
-export default class RepositoryPoller extends Poller {
-  declare model: RepositoryModel;
+export default class RepositoryPoller {
+  declare repository: RepositoryModel;
 
   static defaultIncludedResources = [
     'course',
@@ -29,9 +28,13 @@ export default class RepositoryPoller extends Poller {
     'user',
   ].join(',');
 
+  constructor(repository: RepositoryModel) {
+    this.repository = repository;
+  }
+
   async doPoll() {
-    await this.store.query('repository', {
-      course_id: this.model.course.id,
+    await this.repository.store.query('repository', {
+      course_id: this.repository.course.id,
       include: RepositoryPoller.defaultIncludedResources,
     });
   }
