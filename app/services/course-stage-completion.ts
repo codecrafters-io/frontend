@@ -19,8 +19,13 @@ export default class CourseStageCompletionService extends Service {
       })
       .save();
 
-    await repository.refreshStateFromServer();
-    await this.authenticator.syncCurrentUser();
+    await Promise.all([
+      // Ensure repository state is up to date
+      repository.refreshStateFromServer(),
+
+      // Ensure things like promotional discounts are updated
+      this.authenticator.syncCurrentUser(),
+    ]);
   });
 }
 

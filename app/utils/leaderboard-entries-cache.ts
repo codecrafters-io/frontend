@@ -73,6 +73,10 @@ export default class LeaderboardEntriesCache {
     return this.entriesForFirstSectionWithRanks.length > 0;
   }
 
+  get userRankCalculation(): LeaderboardRankCalculationModel | null {
+    return this._userRankCalculation;
+  }
+
   @action
   async loadOrRefresh() {
     await this._loadEntriesTask.perform();
