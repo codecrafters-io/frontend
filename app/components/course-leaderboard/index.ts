@@ -5,9 +5,11 @@ import CourseLeaderboardEntry from 'codecrafters-frontend/utils/course-leaderboa
 import fade from 'ember-animated/transitions/fade';
 import LeaderboardPoller from 'codecrafters-frontend/utils/leaderboard-poller';
 import move from 'ember-animated/motions/move';
+import config from 'codecrafters-frontend/config/environment';
 import { action, get } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
@@ -34,16 +36,6 @@ interface Signature {
 }
 
 export default class CourseLeaderboard extends Component<Signature> {
-  transition = fade;
-
-  leaderboardPoller: LeaderboardPoller | null = null;
-
-  @tracked isLoadingEntries = true;
-  @tracked isReloadingEntries = false;
-  @tracked entriesFromAPI: CourseLeaderboardEntry[] = [];
-  @tracked polledCourse?: CourseModel;
-  @tracked team: TeamModel | null = null;
-
   @service declare actionCableConsumer: ActionCableConsumerService;
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare authenticator: AuthenticatorService;
@@ -51,6 +43,13 @@ export default class CourseLeaderboard extends Component<Signature> {
   @service declare router: RouterService;
   @service declare store: Store;
   @service declare visibility: VisibilityService;
+
+  @tracked entriesFromAPI: CourseLeaderboardEntry[] = [];
+  @tracked isLoadingEntries = true;
+  @tracked isReloadingEntries = false;
+  @tracked team: TeamModel | null = null;
+
+  transition = fade;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
@@ -154,25 +153,22 @@ export default class CourseLeaderboard extends Component<Signature> {
     return result.sort(fieldComparator('completedStagesCount', 'lastAttemptAt')).reverse();
   }
 
-  @action
-  async handleDidInsert() {
-    if (this.team) {
-      this.entriesFromAPI = (await this.store.query('course-leaderboard-entry', {
-        course_id: this.args.course.id,
-        team_id: this.team.id,
-        include: 'language,current-course-stage,user',
-      })) as unknown as CourseLeaderboardEntry[];
-    } else {
-      this.entriesFromAPI = (await this.store.query('course-leaderboard-entry', {
-        course_id: this.args.course.id,
-        include: 'language,current-course-stage,user',
-      })) as unknown as CourseLeaderboardEntry[];
+  pollLeaderboardTask = task({ keepLatest: true }, async (): Promise<void> => {
+    if (!this.isLoadingEntries) {
+      // Aside from initial loads, avoid thundering herd by waiting for a random amount of time (up to 1 second)
+      const maxJitterMs = 1000;
+      const delayMs = Math.floor(Math.random() * maxJitterMs);
+
+      // In tests, running this with a low value like 10ms doesn't work, it ends up waiting for ~300ms.
+      if (config.environment !== 'test') {
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
     }
 
+    this.entriesFromAPI = await new LeaderboardPoller(this.args.course, this.team || undefined).doPoll();
     this.isLoadingEntries = false;
     this.isReloadingEntries = false;
-    this.startLeaderboardPoller();
-  }
+  });
 
   @action
   handleInviteButtonClick() {
@@ -192,26 +188,12 @@ export default class CourseLeaderboard extends Component<Signature> {
   }
 
   @action
-  async handlePoll(entriesFromAPI: CourseLeaderboardEntry[]) {
-    this.entriesFromAPI = entriesFromAPI;
-  }
-
-  @action
   async handleTeamChange(team: TeamModel | null) {
-    this.stopLeaderboardPoller();
-
     this.team = team;
     this.leaderboardTeamStorage.setlastSelectedTeamId(team?.id ?? null);
 
-    // this.entriesFromAPI = [];
     this.isReloadingEntries = true;
-
-    this.handleDidInsert(); // start all over again
-  }
-
-  @action
-  async handleWillDestroy() {
-    this.stopLeaderboardPoller();
+    this.pollLeaderboardTask.perform(); // start all over again
   }
 
   // @ts-expect-error ember-animated not typed
@@ -228,33 +210,6 @@ export default class CourseLeaderboard extends Component<Signature> {
     for (const sprite of removedSprites) {
       fadeOut(sprite);
     }
-  }
-
-  startLeaderboardPoller() {
-    this.stopLeaderboardPoller();
-
-    if (this.authenticator.isAnonymous) {
-      return;
-    }
-
-    this.leaderboardPoller = new LeaderboardPoller({
-      store: this.store,
-      visibilityService: this.visibility,
-      actionCableConsumerService: this.actionCableConsumer,
-    });
-
-    this.leaderboardPoller.team = this.team || undefined;
-    // @ts-expect-error poll handler not typed
-    this.leaderboardPoller.start(this.args.course, this.handlePoll, 'CourseLeaderboardChannel', { course_id: this.args.course.id });
-    this.polledCourse = this.args.course;
-  }
-
-  stopLeaderboardPoller() {
-    if (this.leaderboardPoller) {
-      this.leaderboardPoller.stop();
-    }
-
-    this.polledCourse = undefined;
   }
 }
 

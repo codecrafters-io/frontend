@@ -1,4 +1,12 @@
-<div {{did-insert this.handleDidInsert}} {{will-destroy this.handleWillDestroy}} data-test-leaderboard ...attributes>
+<div {{did-insert this.pollLeaderboardTask.perform}} data-test-leaderboard ...attributes>
+  {{#unless this.authenticator.isAnonymous}}
+    <div
+      class="hidden"
+      {{on-action-cable-message this.pollLeaderboardTask.perform channel="CourseLeaderboardChannel" args=(hash course_id=@course.id)}}
+      {{on-visibility-change this.pollLeaderboardTask.perform if="visible"}}
+    />
+  {{/unless}}
+
   {{#if @isCollapsed}}
     <div class="pl-4 mb-3 h-6 flex justify-center items-center">
       {{svg-jar (if this.team "user-group" "globe") class="fill-current text-gray-600 w-5"}}
