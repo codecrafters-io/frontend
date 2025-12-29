@@ -3,8 +3,10 @@
   @models={{@step.routeParams.models}}
   class="flex items-start gap-x-2 py-1.5
     {{if @isCurrent 'bg-gray-300/50 dark:bg-gray-900' 'hover:bg-gray-300/50 dark:hover:bg-gray-900'}}
-    px-3 rounded-sm"
+    px-3 rounded-sm scroll-mt-20"
   data-test-step-list-item
+  {{! @glint-expect-error modifier helper types aren't right? }}
+  {{(if @isCurrent (modifier "scroll-into-view" block="start"))}}
 >
   {{#if (eq @step.status "complete")}}
     <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500 dark:bg-teal-500/40">
