@@ -47,9 +47,7 @@ export default class CompletedStepNotice extends Component<Signature> {
   }
 
   get stepForNextOrActiveStepButton() {
-    return this.nextStep?.type === 'BaseStagesCompletedStep' || this.nextStep?.type === 'CourseCompletedStep'
-      ? this.nextStep
-      : this.activeStep;
+    return this.nextStep?.type === 'BaseStagesCompletedStep' || this.nextStep?.type === 'CourseCompletedStep' ? this.nextStep : this.activeStep;
   }
 
   @action
