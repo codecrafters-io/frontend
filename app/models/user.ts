@@ -16,7 +16,8 @@ import GitHubAppInstallationModel from 'codecrafters-frontend/models/github-app-
 import InstitutionMembershipGrantApplicationModel from 'codecrafters-frontend/models/institution-membership-grant-application';
 import InstitutionMembershipGrantModel from 'codecrafters-frontend/models/institution-membership-grant';
 import InvoiceModel from 'codecrafters-frontend/models/invoice';
-import LeaderboardRankCalculationModel from './leaderboard-rank-calculation';
+import LanguageModel from 'codecrafters-frontend/models/language';
+import LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
 import Model, { attr, hasMany } from '@ember-data/model';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import ReferralActivationModel from 'codecrafters-frontend/models/referral-activation';
@@ -239,6 +240,15 @@ export default class UserModel extends Model {
 
   hasStartedCourse(course: CourseModel) {
     return this.repositories.filter((item) => !item.isNew).filter((item) => item.course === course).length > 0;
+  }
+
+  hasStartedCourseUsingLanguage(course: CourseModel, language: LanguageModel) {
+    return (
+      this.repositories
+        .filter((item) => !item.isNew)
+        .filter((item) => item.course === course)
+        .filter((item) => item.language === language).length > 0
+    );
   }
 
   isCourseAuthor(course: CourseModel) {

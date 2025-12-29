@@ -19,7 +19,15 @@ export default class CourseOverviewStartCourseButton extends Component<Signature
   @service declare authenticator: AuthenticatorService;
 
   get currentUserHasStartedCourse() {
-    return this.authenticator.currentUser && this.authenticator.currentUser.hasStartedCourse(this.args.course);
+    if (!this.authenticator.currentUser) {
+      return false;
+    }
+
+    if (this.args.language) {
+      return this.authenticator.currentUser.hasStartedCourseUsingLanguage(this.args.course, this.args.language);
+    } else {
+      return this.authenticator.currentUser.hasStartedCourse(this.args.course);
+    }
   }
 
   get currentUserIsAnonymous() {
