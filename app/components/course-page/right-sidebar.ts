@@ -1,10 +1,13 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import RepositoryModel from 'codecrafters-frontend/models/repository';
-import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
-import { service } from '@ember/service';
 import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import PreferredLanguageLeaderboardService from 'codecrafters-frontend/services/preferred-language-leaderboard';
+import RepositoryModel from 'codecrafters-frontend/models/repository';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
+import type LanguageModel from 'codecrafters-frontend/models/language';
+import type Store from '@ember-data/store';
+import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,6 +16,7 @@ interface Signature {
     course: CourseModel;
     activeRepository: RepositoryModel;
     repositories: RepositoryModel[];
+    track?: string;
     isExpanded: boolean;
     onCollapseButtonClick: () => void;
     onExpandButtonClick: () => void;
@@ -21,10 +25,36 @@ interface Signature {
 
 export default class CoursePageRightSidebar extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare preferredLanguageLeaderboard: PreferredLanguageLeaderboardService;
+  @service declare store: Store;
   @service declare featureFlags: FeatureFlagsService;
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get languageForTrackLeaderboard(): LanguageModel {
+    if (this.args.activeRepository.language) {
+      return this.args.activeRepository.language;
+    }
+
+    if (this.args.track) {
+      const language = this.store.peekAll('language').find((language) => language.slug === this.args.track);
+
+      if (language) {
+        return language;
+      }
+    }
+
+    for (const preferredLanguageSlug of this.preferredLanguageLeaderboard.preferredLanguageSlugs) {
+      const language = this.store.peekAll('language').find((language) => language.slug === preferredLanguageSlug);
+
+      if (language) {
+        return language;
+      }
+    }
+
+    return this.args.course.betaOrLiveLanguages[0]!;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion(): FeatureSuggestionModel | null {

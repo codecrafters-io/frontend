@@ -33,7 +33,8 @@ export default class LeaderboardEntriesCache {
     const entries = [...this._topEntries];
 
     if (this._surroundingEntriesOverlapsTopEntries) {
-      entries.push(...this._surroundingEntries);
+      const topUserIds = new Set(this._topEntries.map((e) => e.user.id));
+      entries.push(...this._surroundingEntries.filter((e) => !topUserIds.has(e.user.id)));
     }
 
     return entries.filter((entry) => !entry.isBanned).sort((a, b) => b.score - a.score);

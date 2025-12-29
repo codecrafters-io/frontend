@@ -12,13 +12,17 @@
       {{/if}}
     </div>
 
-    <CourseLeaderboard
-      class={{if @isExpanded "-ml-6" "-ml-4"}}
-      @course={{@course}}
-      @activeRepository={{@activeRepository}}
-      @repositories={{@repositories}}
-      @isCollapsed={{not @isExpanded}}
-    />
+    {{#if this.featureFlags.canViewTrackLeaderboardOnCoursePage}}
+      <TrackLeaderboard @language={{this.languageForTrackLeaderboard}} />
+    {{else}}
+      <CourseLeaderboard
+        class={{if @isExpanded "-ml-6" "-ml-4"}}
+        @course={{@course}}
+        @activeRepository={{@activeRepository}}
+        @repositories={{@repositories}}
+        @isCollapsed={{not @isExpanded}}
+      />
+    {{/if}}
 
     {{#if (and @isExpanded this.visiblePrivateLeaderboardFeatureSuggestion)}}
       {{! @glint-expect-error: not ts-ified yet }}
