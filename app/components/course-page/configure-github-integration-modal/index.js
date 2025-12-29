@@ -56,8 +56,12 @@ export default class ConfigureGithubIntegrationModal extends Component {
     return this.args.repository.githubRepositorySyncConfiguration;
   }
 
+  get recommendedRepositorySlug() {
+    return `codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+  }
+
   get recommendedRepositoryName() {
-    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+    return `${this.authenticator.currentUser.githubUsername}/${this.recommendedRepositorySlug}`;
   }
 
   @action
