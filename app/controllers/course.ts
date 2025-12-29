@@ -52,14 +52,6 @@ export default class CourseController extends Controller {
     return this.repo;
   }
 
-  get visiblePrivateLeaderboardFeatureSuggestion() {
-    if (!this.currentUser || this.currentUser.isTeamMember) {
-      return null;
-    }
-
-    return this.currentUser.featureSuggestions.filter((item) => item.featureIsPrivateLeaderboard).filter((item) => !item.isDismissed)[0];
-  }
-
   @action
   handleCollapseLeaderboardButtonClick() {
     this.leaderboardIsExpanded = !this.leaderboardIsExpanded;
