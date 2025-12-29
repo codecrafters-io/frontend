@@ -37,7 +37,7 @@ export default class CatalogRoute extends BaseRoute {
     }
 
     modelPromises.courses = this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language.leaderboard',
     }) as unknown as Promise<CourseModel[]>;
 
     // Resources required by the track page

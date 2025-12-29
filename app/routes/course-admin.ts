@@ -28,7 +28,7 @@ export default class CourseAdminRoute extends BaseRoute {
 
   async model(params: { course_slug: string }): Promise<ModelType> {
     const courses = await this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language.leaderboard',
     });
 
     return {

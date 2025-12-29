@@ -51,7 +51,7 @@ export default class JoinCourseRoute extends BaseRoute {
     const affiliateLink = affiliateLinks[0]!; // afterModel handles the case where this is undefined
 
     const courses = await this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language.leaderboard',
     });
 
     const course = courses.find((item) => item.slug === params.course_slug);

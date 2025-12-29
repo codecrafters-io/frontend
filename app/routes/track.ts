@@ -42,7 +42,7 @@ export default class TrackRoute extends BaseRoute {
   // TODO: Handle missing language?
   async model(params: { track_slug: string }): Promise<ModelType> {
     const courses = (await this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language.leaderboard',
     })) as unknown as CourseModel[];
 
     (await this.store.findAll('language', {
