@@ -1,14 +1,13 @@
 import Component from '@glimmer/component';
-import type Owner from '@ember/owner';
 import fade from 'ember-animated/transitions/fade';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
+import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/services/leaderboard-entries-cache-registry';
+import type LeaderboardEntriesCache from 'codecrafters-frontend/utils/leaderboard-entries-cache';
+import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
-import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,15 +20,21 @@ interface Signature {
 export default class LanguageLeaderboardRankSection extends Component<Signature> {
   transition = fade;
 
-  @service declare store: Store;
+  @service declare leaderboardEntriesCacheRegistry: LeaderboardEntriesCacheRegistryService;
   @service declare router: RouterService;
-
-  @tracked userRankCalculation: LeaderboardRankCalculationModel | null = null;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
-    this.loadUserRankCalculationTask.perform();
+    this.refreshRankTask.perform();
+  }
+
+  get leaderboardEntriesCache(): LeaderboardEntriesCache {
+    return this.leaderboardEntriesCacheRegistry.getOrCreate(this.args.language.leaderboard!);
+  }
+
+  get userRank(): number | undefined {
+    return this.leaderboardEntriesCache.userRankCalculation?.rank;
   }
 
   @action
@@ -37,12 +42,8 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
     window.open(this.router.urlFor('leaderboard', this.args.language.slug), '_blank');
   }
 
-  loadUserRankCalculationTask = task({ restartable: true }, async () => {
-    this.userRankCalculation = await this.store
-      .createRecord('leaderboard-rank-calculation', {
-        leaderboard: this.args.language.leaderboard!,
-      })
-      .save();
+  refreshRankTask = task({ restartable: true }, async () => {
+    await this.leaderboardEntriesCacheRegistry.getOrCreate(this.args.language.leaderboard!).loadOrRefresh();
   });
 }
 

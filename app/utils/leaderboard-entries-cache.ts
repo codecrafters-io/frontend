@@ -73,6 +73,10 @@ export default class LeaderboardEntriesCache {
     return this.entriesForFirstSectionWithRanks.length > 0;
   }
 
+  get userRankCalculation(): LeaderboardRankCalculationModel | null {
+    return this._userRankCalculation;
+  }
+
   @action
   async _fetchSurroundingEntries(): Promise<LeaderboardEntryModel[]> {
     if (!this.authenticator.isAuthenticated) {
