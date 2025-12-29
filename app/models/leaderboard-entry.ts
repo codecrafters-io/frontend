@@ -1,12 +1,14 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 import type AffiliateLinkModel from './affiliate-link';
 import type LeaderboardModel from './leaderboard';
+import type LeaderboardScoreUpdateModel from './leaderboard-score-update';
 import type UserModel from './user';
 import CourseModel from './course';
 
 export default class LeaderboardEntryModel extends Model {
   @belongsTo('affiliate-link', { async: false, inverse: null }) declare affiliateLink: AffiliateLinkModel | null;
   @belongsTo('leaderboard', { async: false, inverse: 'entries' }) declare leaderboard: LeaderboardModel;
+  @belongsTo('leaderboard-score-update', { async: false, inverse: null }) declare latestScoreUpdate: LeaderboardScoreUpdateModel | null;
   @belongsTo('user', { async: false, inverse: null }) declare user: UserModel;
 
   @attr('boolean') declare isBanned: boolean;
