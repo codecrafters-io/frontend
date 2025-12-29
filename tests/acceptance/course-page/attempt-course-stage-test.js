@@ -80,9 +80,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
-    // TODO: Remove this once leaderboard isn't behind a feature flag
-    currentUser.update({ featureFlags: { 'should-see-leaderboard': 'test' } });
-
     const go = this.server.schema.languages.findBy({ slug: 'go' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
