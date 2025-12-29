@@ -74,50 +74,66 @@ export default class LeaderboardEntriesCache {
   }
 
   @action
+  async _fetchSurroundingEntries(): Promise<LeaderboardEntryModel[]> {
+    if (!this.authenticator.isAuthenticated) {
+      return [];
+    }
+
+    return (await this.store.query('leaderboard-entry', {
+      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
+      leaderboard_id: this.leaderboard.id,
+      user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
+      filter_type: 'around_me',
+    })) as unknown as LeaderboardEntryModel[];
+  }
+
+  @action
+  async _fetchTopEntries(): Promise<LeaderboardEntryModel[]> {
+    return (await this.store.query('leaderboard-entry', {
+      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
+      leaderboard_id: this.leaderboard.id,
+      filter_type: 'top',
+    })) as unknown as LeaderboardEntryModel[];
+  }
+
+  @action
+  async _fetchUserRankCalculation(): Promise<LeaderboardRankCalculationModel | null> {
+    if (!this.authenticator.isAuthenticated) {
+      return null;
+    }
+
+    const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
+      include: 'user',
+      leaderboard_id: this.leaderboard!.id,
+      user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
+    })) as unknown as LeaderboardRankCalculationModel[];
+
+    let userRankCalculation = userRankCalculations[0] || null;
+
+    // TODO: Also look at "outdated" user rank calculations?
+    if (!userRankCalculation) {
+      userRankCalculation = await this.store
+        .createRecord('leaderboard-rank-calculation', {
+          leaderboard: this.leaderboard!,
+          user: this.authenticator.currentUser!,
+        })
+        .save();
+    }
+
+    return userRankCalculation;
+  }
+
+  @action
   async loadOrRefresh() {
     await this._loadEntriesTask.perform();
   }
 
   _loadEntriesTask = task({ restartable: true }, async () => {
-    const topEntries = (await this.store.query('leaderboard-entry', {
-      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
-      leaderboard_id: this.leaderboard.id,
-      filter_type: 'top',
-    })) as unknown as LeaderboardEntryModel[];
-
-    let surroundingEntries: LeaderboardEntryModel[] = [];
-    let userRankCalculation: LeaderboardRankCalculationModel | null = null;
-
-    const userIsInTopLeaderboardEntries = topEntries.some((entry) => entry.user.id === this.authenticator.currentUserId);
-
-    if (this.authenticator.isAuthenticated && !userIsInTopLeaderboardEntries) {
-      surroundingEntries = (await this.store.query('leaderboard-entry', {
-        include: 'affiliate-link,affiliate-link.user,leaderboard,user',
-        leaderboard_id: this.leaderboard.id,
-        user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
-        filter_type: 'around_me',
-      })) as unknown as LeaderboardEntryModel[];
-    }
-
-    if (surroundingEntries.length > 0) {
-      const userRankCalculations = (await this.store.query('leaderboard-rank-calculation', {
-        include: 'user',
-        leaderboard_id: this.leaderboard!.id,
-        user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
-      })) as unknown as LeaderboardRankCalculationModel[];
-
-      userRankCalculation = userRankCalculations[0] || null;
-
-      // TODO: Also look at "outdated" user rank calculations?
-      if (!userRankCalculation) {
-        userRankCalculation = await this.store
-          .createRecord('leaderboard-rank-calculation', {
-            leaderboard: this.leaderboard!,
-            user: this.authenticator.currentUser!,
-          })
-          .save();
-      }
-    }
+    const [topEntries, surroundingEntries, userRankCalculation] = await Promise.all([
+      this._fetchTopEntries(),
+      this._fetchSurroundingEntries(),
+      this._fetchUserRankCalculation(),
+    ]);
 
     this._topEntries = topEntries;
     this._surroundingEntries = surroundingEntries;
