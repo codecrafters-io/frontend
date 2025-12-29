@@ -164,7 +164,7 @@
     "ember-source": "~6.4.0",
     "ember-svg-jar": "^2.6.3",
     "ember-template-imports": "^4.3.0",
-    "ember-template-lint": "^6.1.0",
+    "ember-template-lint": "^7.9.3",
     "ember-tooltips": "^4.0.0",
     "ember-truth-helpers": "^4.0.3",
     "ember-window-mock": "^1.0.2",
