@@ -52,7 +52,7 @@ export default class CourseOverviewRoute extends BaseRoute {
   async #findCourse(slug: string) {
     return (
       await this.store.findAll('course', {
-        include: 'extensions,stages,language-configurations.language',
+        include: 'extensions,stages,language-configurations.language.leaderboard',
       })
     ).find((item) => item.slug === slug);
   }

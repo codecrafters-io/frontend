@@ -25,7 +25,7 @@ export default class LeaderboardRoute extends BaseRoute {
 
   async model(params: { language_slug: string }): Promise<ModelType> {
     (await this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
+      include: 'extensions,stages,language-configurations.language.leaderboard',
     })) as unknown as CourseModel[];
 
     const languages = (await this.store.findAll('language', {
