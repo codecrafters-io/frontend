@@ -89,12 +89,13 @@
       </div>
 
       <CoursePage::RightSidebar
-        @course={{@model.course}}
         @activeRepository={{@model.activeRepository}}
-        @repositories={{@model.repositories}}
+        @course={{@model.course}}
         @isExpanded={{this.leaderboardIsExpanded}}
         @onCollapseButtonClick={{this.handleCollapseLeaderboardButtonClick}}
         @onExpandButtonClick={{this.handleExpandLeaderboardButtonClick}}
+        @repositories={{@model.repositories}}
+        @track={{@model.track}}
         class="pt-6 shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-950 hidden md:block"
       />
     </div>
