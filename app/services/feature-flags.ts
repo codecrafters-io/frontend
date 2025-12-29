@@ -18,6 +18,10 @@ export default class FeatureFlagsService extends Service {
     return !!(this.getFeatureFlagValue('can-view-autofix-flow') === 'test' || this.currentUser?.isStaff);
   }
 
+  get canViewTrackLeaderboardOnCoursePage(): boolean {
+    return !!(this.getFeatureFlagValue('can-view-track-leaderboard-on-course-page') === 'test' || this.currentUser?.isStaff);
+  }
+
   get currentUser(): User | null {
     return this.authenticator.currentUser;
   }

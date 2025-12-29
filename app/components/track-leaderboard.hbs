@@ -1,7 +1,7 @@
 <div data-test-track-leaderboard {{did-insert this.handleDidInsert}} ...attributes>
   <div class="flex items-center justify-between mb-2">
     <div class="flex items-center">
-      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">{{@language.name}} LEADERBOARD</span>
+      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold" data-test-leaderboard-title>{{@language.name}} LEADERBOARD</span>
     </div>
     <div>
       {{! Add team dropdown if needed }}

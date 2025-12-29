@@ -13,6 +13,7 @@ import SecondStageYourTaskCard from 'codecrafters-frontend/tests/pages/component
 import SetupStepCompleteModal from 'codecrafters-frontend/tests/pages/components/course-page/setup-step-complete-modal';
 import Sidebar from 'codecrafters-frontend/tests/pages/components/course-page/sidebar';
 import TestResultsBar from 'codecrafters-frontend/tests/pages/components/course-page/test-results-bar';
+import TrackLeaderboard from 'codecrafters-frontend/tests/pages/components/track-leaderboard';
 import YourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/your-task-card';
 import { clickOnText, clickable, collection, create, isVisible, text, triggerable, visitable } from 'ember-cli-page-object';
 
@@ -162,6 +163,7 @@ export default create({
   repositorySetupCard: RepositorySetupCard,
   sidebar: Sidebar,
   testResultsBar: TestResultsBar,
+  trackLeaderboard: TrackLeaderboard,
 
   testRunnerCard: {
     async clickOnMarkStageAsCompleteButton() {
