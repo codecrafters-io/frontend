@@ -133,14 +133,12 @@ export default class LeaderboardEntriesCache {
   }
 
   _loadEntriesTask = task({ restartable: true }, async () => {
-    const [topEntries, surroundingEntries, userRankCalculation] = await Promise.all([
-      this._fetchTopEntries(),
-      this._fetchSurroundingEntries(),
-      this._fetchUserRankCalculation(),
-    ]);
+    // Fetch user rank calculation first since it syncs leaderboard entries for current user
+    const userRankCalculation = await this._fetchUserRankCalculation();
+    const [topEntries, surroundingEntries] = await Promise.all([this._fetchTopEntries(), this._fetchSurroundingEntries()]);
 
-    this._topEntries = topEntries;
     this._surroundingEntries = surroundingEntries;
+    this._topEntries = topEntries;
     this._userRankCalculation = userRankCalculation;
     this.isLoaded = true;
   });
