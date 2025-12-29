@@ -38,7 +38,7 @@ module('Acceptance | track-page | view-track', function (hooks) {
 
   test('it renders for anonymous user', async function (assert) {
     await visit('/tracks/go');
-    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should be visible');
+    assert.false(trackPage.primerConceptGroupSection.isVisible, 'primer concept group section should not be visible');
 
     await percySnapshot('Track - Anonymous User');
 
