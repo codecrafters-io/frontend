@@ -7,6 +7,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
 
 module('Acceptance | course-page | complete-first-stage', function (hooks) {
   setupApplicationTest(hooks);
@@ -15,6 +16,9 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
   test('can complete first stage', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);
+
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
     const currentUser = this.server.schema.users.first();
     const python = this.server.schema.languages.findBy({ name: 'Python' });
@@ -49,7 +53,8 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
       courseStage: course.stages.models.find((stage) => stage.position === 1),
     });
 
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.firstStageYourTaskCard.steps[0].isComplete, 'First step is complete');

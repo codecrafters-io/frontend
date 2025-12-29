@@ -1,32 +1,28 @@
-import Poller from 'codecrafters-frontend/utils/poller';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type TeamModel from 'codecrafters-frontend/models/team';
-import config from 'codecrafters-frontend/config/environment';
+import type CourseLeaderboardEntry from 'codecrafters-frontend/models/course-leaderboard-entry';
 
-export default class LeaderboardPoller extends Poller {
+export default class LeaderboardPoller {
+  declare course: CourseModel;
   team?: TeamModel;
 
-  async doPoll() {
-    // Avoid thundering herd by waiting for a random amount of time (up to 1 second)
-    const maxJitterMs = 1000;
-    const delayMs = Math.floor(Math.random() * maxJitterMs);
+  constructor(course: CourseModel, team?: TeamModel) {
+    this.course = course;
+    this.team = team;
+  }
 
-    // In tests, running this with a low value like 10ms doesn't work, it ends up waiting for ~300ms.
-    if (config.environment !== 'test') {
-      await new Promise((resolve) => setTimeout(resolve, delayMs));
-    }
-
+  async doPoll(): Promise<CourseLeaderboardEntry[]> {
     if (this.team) {
-      return await this.store.query('course-leaderboard-entry', {
-        course_id: (this.model as CourseModel).id,
+      return (await this.course.store.query('course-leaderboard-entry', {
+        course_id: this.course.id,
         team_id: this.team.id,
         include: 'language,current-course-stage,user',
-      });
+      })) as unknown as CourseLeaderboardEntry[];
     } else {
-      return await this.store.query('course-leaderboard-entry', {
-        course_id: (this.model as CourseModel).id,
+      return (await this.course.store.query('course-leaderboard-entry', {
+        course_id: this.course.id,
         include: 'language,current-course-stage,user',
-      });
+      })) as unknown as CourseLeaderboardEntry[];
     }
   }
 }

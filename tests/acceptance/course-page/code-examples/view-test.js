@@ -10,6 +10,8 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import FakeActionCableConsumer from 'codecrafters-frontend/tests/support/fake-action-cable-consumer';
+import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 
 module('Acceptance | course-page | code-examples | view', function (hooks) {
   setupApplicationTest(hooks);
@@ -536,6 +538,9 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
+    const fakeActionCableConsumer = new FakeActionCableConsumer();
+    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
+
     let currentUser = this.server.schema.users.first();
 
     let redis = this.server.schema.courses.findBy({ slug: 'redis' });
@@ -578,7 +583,9 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after dismissing modal');
 
     this.server.schema.courseStages.findBy({ name: 'Respond to multiple PINGs' }).update({ marketingMarkdown: 'Updated marketing markdown' });
-    await Promise.all(window.pollerInstances.map((poller) => poller.forcePoll()));
+    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
+    await finishRender();
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after updating course stage');
   });

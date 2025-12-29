@@ -44,13 +44,13 @@ export default class OnActionCableMessageModifier extends Modifier<Signature> {
     cleanup(this);
 
     this.actionCableSubscription = this.actionCableConsumer.subscribe(channel, args, {
+      onConnect: () => {
+        this.callback?.();
+        console.log(`${channel} connected`);
+      },
       onData: () => {
         this.callback?.();
         console.log(`${channel} data`);
-      },
-      onInitialize: () => {
-        this.callback?.();
-        console.log(`${channel} initialized`);
       },
       onDisconnect: () => {
         console.log(`${channel} disconnected`);
