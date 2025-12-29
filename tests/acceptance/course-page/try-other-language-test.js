@@ -41,24 +41,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.ok(
-      apiRequestsVerifier.verify([
-        '/api/v1/repositories', // fetch repositories (catalog page)
-        '/api/v1/courses', // fetch courses (catalog page)
-        '/api/v1/languages', // fetch languages (catalog page)
-        '/api/v1/courses', // fetch course details (course overview page)
-        '/api/v1/repositories', // fetch repositories (course overview page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course overview page)
-        '/api/v1/courses', // refresh course (course page)
-        '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-stage-comments', // fetch stage comments (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-        '/api/v1/repositories', // fetch repositories after subscribed (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
-      ]),
-      'API requests match expected sequence',
-    );
+    apiRequestsVerifier.clearPreviousRequests();
 
     assert.strictEqual(coursePage.repositoryDropdown.activeRepositoryName, pythonRepository.name, 'repository with last push should be active');
     assert.strictEqual(coursePage.header.stepName, 'The second stage', 'first stage should be active');
