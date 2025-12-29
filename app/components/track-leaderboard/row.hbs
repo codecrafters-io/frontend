@@ -1,0 +1,42 @@
+<LinkTo
+  @route="leaderboard"
+  @model={{@entry.leaderboard.language.slug}}
+  class="flex items-center justify-between py-1.5 px-2 -mx-2 rounded-sm group/row cursor-pointer border
+    {{if
+      this.isCurrentUser
+      'border-teal-500 dark:border-teal-600 bg-teal-50/50 dark:bg-teal-900/20'
+      'border-transparent hover:bg-gray-50 dark:hover:bg-gray-800/50'
+    }}"
+  data-test-leaderboard-row
+  ...attributes
+>
+  <div class="flex items-center gap-2 min-w-0">
+    <AvatarImage @user={{@entry.user}} class="size-8 border border-gray-300 dark:border-gray-700 rounded-sm shrink-0" />
+    <span
+      class="text-xs truncate group-hover/row:underline
+        {{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-600 dark:text-gray-400'}}"
+      data-test-username
+    >
+      {{@entry.user.username}}
+    </span>
+  </div>
+
+  {{! 8ch can fit 6-digit ranks (#100000), and 5-digit scores (10000 pts) }}
+  <div class="relative h-4 w-[8ch]">
+    <span
+      class="absolute top-0 right-0 w-fit text-xs font-medium shrink-0
+        {{if this.isCurrentUser 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}}
+        translate-y-0 opacity-100 group-hover/row:opacity-0 group-hover/row:translate-y-[-0.5em] transition-all ease-out duration-300"
+      data-test-rank
+    >
+      #{{@rank}}
+    </span>
+
+    <span
+      class="absolute top-0 right-0 w-fit text-xs font-medium shrink-0 text-teal-600 dark:text-teal-400 translate-y-[0.5em] opacity-0 group-hover/row:opacity-100 group-hover/row:translate-y-0 transition-all ease-out duration-300"
+      data-test-score
+    >
+      {{@entry.score}}&nbsp;pts
+    </span>
+  </div>
+</LinkTo>

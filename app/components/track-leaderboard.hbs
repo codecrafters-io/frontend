@@ -1,37 +1,36 @@
 <div data-test-track-leaderboard {{did-insert this.handleDidInsert}} ...attributes>
-  <div class="flex items-center justify-between mb-2 pl-4">
+  <div class="flex items-center justify-between mb-2">
     <div class="flex items-center">
-      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">RECENT ACTIVITY</span>
-
-      <span
-        class="text-white dark:text-teal-400 bg-teal-500 dark:bg-teal-900 border border-teal-500 dark:border-teal-700 text-xs font-bold rounded-sm px-1.5 py-0.5 ml-2
-          {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
-          transition-all"
-      >
-        {{this.sortedEntries.length}}
-      </span>
+      <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">{{@language.name}} LEADERBOARD</span>
     </div>
     <div>
       {{! Add team dropdown if needed }}
     </div>
   </div>
 
-  {{#if this.isLoadingEntries}}
-    <div>
-      {{#each (repeat 15)}}
-        <TrackLeaderboardEntry />
-      {{/each}}
-    </div>
-  {{else}}
+  {{#if this.leaderboardEntriesCache.isLoaded}}
     <div>
       <AnimatedContainer>
-        {{#animated-each this.sortedEntries key="userId" use=this.listTransition as |entry|}}
-          <TrackLeaderboardEntry @entry={{entry}} />
+        {{#animated-each this.entriesForFirstSectionWithRanks key="entry.user.id" use=this.listTransition as |entryWithRank|}}
+          <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
         {{/animated-each}}
+
+        {{#if (gt this.leaderboardEntriesCache.entriesForSecondSectionWithRanks.length 0)}}
+          {{! --- other users --- divider }}
+          <div class="flex items-center py-1">
+            <div class="w-full h-px bg-gray-200 dark:bg-white/5" />
+            <span class="text-xs text-gray-400 dark:text-gray-500 inline-flex px-4 shrink-0">other&nbsp;users</span>
+            <div class="w-full h-px bg-gray-200 dark:bg-white/5" />
+          </div>
+
+          {{#animated-each this.entriesForSecondSectionWithRanks key="entry.user.id" use=this.listTransition as |entryWithRank|}}
+            <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
+          {{/animated-each}}
+        {{/if}}
       </AnimatedContainer>
 
-      {{#animated-if (eq this.sortedEntries.length 0)}}
-        <div class="flex px-4 py-2 items-center">
+      {{#animated-if (not this.leaderboardEntriesCache.hasEntries)}}
+        <div class="flex py-2 items-center">
           <div class="text-sm text-gray-500">
             <p class="mb-2">
               No one has tried this Track recently.
@@ -39,6 +38,12 @@
           </div>
         </div>
       {{/animated-if}}
+    </div>
+  {{else}}
+    <div>
+      {{#each (repeat 10)}}
+        <TrackLeaderboard::SkeletonRow />
+      {{/each}}
     </div>
   {{/if}}
 </div>
