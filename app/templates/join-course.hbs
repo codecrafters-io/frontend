@@ -21,6 +21,12 @@
     <div class="grow">
       <CourseOverviewPage::Notices @course={{this.model.course}} class="mb-4" />
       <CourseOverviewPage::IntroductionAndStages @course={{this.model.course}} class="w-full" />
+
+      {{#if (or (current-user-is-course-author this.model.course) (current-user-is-staff))}}
+        <CourseOverviewPage::AdminSection @course={{this.model.course}} class="mb-4 mt-4" />
+      {{/if}}
+
+      <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full mt-4" />
     </div>
 
     <div class="hidden lg:block sticky top-4 w-80 shrink-0 ml-2">
@@ -43,20 +49,6 @@
           @shouldShowLanguageIconsWithoutHover={{true}}
         />
       {{/if}}
-    </div>
-  </div>
-
-  <div class="flex items-start flex-row">
-    <div class="w-full">
-      {{#if (or (current-user-is-course-author this.model.course) (current-user-is-staff))}}
-        <CourseOverviewPage::AdminSection @course={{this.model.course}} class="mb-4" />
-      {{/if}}
-
-      <CourseOverviewPage::TestimonialList @course={{this.model.course}} class="w-full" />
-    </div>
-
-    {{! Placeholder for sidebar }}
-    <div class="hidden lg:block w-80 shrink-0 ml-2">
     </div>
   </div>
 
