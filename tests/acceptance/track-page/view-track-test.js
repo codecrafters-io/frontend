@@ -1,4 +1,4 @@
-import createTrackLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-track-leaderboard-entries';
+import createLanguageLeaderboardEntries from 'codecrafters-frontend/mirage/utils/create-language-leaderboard-entries';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -17,8 +17,8 @@ module('Acceptance | track-page | view-track', function (hooks) {
   hooks.beforeEach(function () {
     testScenario(this.server);
 
-    createTrackLeaderboardEntries(this.server, 'go', 'redis');
-    createTrackLeaderboardEntries(this.server, 'rust', 'redis');
+    createLanguageLeaderboardEntries(this.server, 'go', 'redis');
+    createLanguageLeaderboardEntries(this.server, 'rust', 'redis');
 
     const tcpOverviewConcept = createConceptFromFixture(this.server, tcpOverview);
     const networkProtocolsConcept = createConceptFromFixture(this.server, networkProtocols);
