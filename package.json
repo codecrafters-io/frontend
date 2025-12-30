@@ -188,7 +188,7 @@
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.5.0",
     "shiki": "^3.7.0",
-    "sinon": "^21.0.0",
+    "sinon": "^21.0.1",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.0",
     "tailwindcss": "^4.1.12",
