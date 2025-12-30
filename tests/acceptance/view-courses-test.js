@@ -64,9 +64,9 @@ module('Acceptance | view-courses', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present (deprecated courses are hidden)');
 
-    assert.ok(catalogPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
+    assert.ok(catalogPage.courseCardByName('Build your own Dummy').hasAlphaLabel, 'alpha challenges should have alpha label');
   });
 
   test('it renders with progress if user has started a course', async function (assert) {

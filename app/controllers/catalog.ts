@@ -13,10 +13,6 @@ export default class CatalogController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get courses() {
-    if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
-      return this.model.courses;
-    }
-
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
 
