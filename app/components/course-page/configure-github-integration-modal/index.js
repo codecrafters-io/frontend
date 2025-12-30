@@ -57,7 +57,11 @@ export default class ConfigureGithubIntegrationModal extends Component {
   }
 
   get recommendedRepositoryName() {
-    return `${this.authenticator.currentUser.githubUsername}/codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
+    return `${this.authenticator.currentUser.githubUsername}/${this.recommendedRepositoryNameWithoutOwner}`;
+  }
+
+  get recommendedRepositoryNameWithoutOwner() {
+    return `codecrafters-${this.args.repository.course.slug}-${this.args.repository.language.slug}`;
   }
 
   @action
