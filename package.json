@@ -214,7 +214,7 @@
     "array-to-sentence": "^2.0.0",
     "dompurify": "^3.2.6",
     "fuse.js": "^7.0.0",
-    "lottie-web": "^5.12.2",
+    "lottie-web": "^5.13.0",
     "mustache": "^4.2.0",
     "node-html-parser": "^7.0.1",
     "player.js": "^0.1.0",
