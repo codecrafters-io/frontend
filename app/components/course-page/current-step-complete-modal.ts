@@ -30,7 +30,11 @@ export default class CurrentStepCompleteModal extends Component<Signature> {
   }
 
   get stepForNextOrActiveStepButton() {
-    return this.nextStep?.type === 'BaseStagesCompletedStep' ? this.nextStep : this.args.activeStep;
+    if (this.nextStep?.type === 'BaseStagesCompletedStep' || this.nextStep?.type === 'CourseCompletedStep') {
+      return this.nextStep;
+    }
+
+    return this.args.activeStep;
   }
 }
 
