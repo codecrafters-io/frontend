@@ -27,18 +27,18 @@
         <TrackPage::CourseCardList @language={{@model.language}} @courses={{this.sortedCourses}} class="w-full mb-4" />
       </div>
 
-      <div class="hidden lg:block w-80 shrink-0 sticky top-4 ml-2">
+      <div class="hidden lg:block w-80 shrink-0 sticky top-6 ml-6">
         <AffiliateLinkPage::AcceptReferralContainer
           @affiliateLink={{this.model.affiliateLink}}
           @language={{this.model.language}}
           @verticalSize="compact"
-          class="mb-6 ml-2 w-full bg-github-green-dot-wall"
+          class="mb-6 w-full bg-github-green-dot-wall"
         />
 
         <TrackLeaderboard class="mb-6" @language={{@model.language}} />
 
         {{! TODO: Show testimonials for track instead of courses? }}
-        <div class="ml-4 mr-4">
+        <div>
           {{#each this.testimonials as |testimonial|}}
             <CourseOverviewPage::TestimonialListItem @testimonial={{testimonial}} />
           {{/each}}
