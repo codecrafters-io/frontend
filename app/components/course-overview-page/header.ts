@@ -15,7 +15,21 @@ interface Signature {
   };
 }
 
-export default class CourseOverviewPageHeader extends Component<Signature> {}
+export default class CourseOverviewPageHeader extends Component<Signature> {
+  get orderedSupportedLanguages(): LanguageModel[] {
+    return this.args.course.betaOrLiveLanguages.sort((a, b) => {
+      if (a.slug === this.args.language?.slug) {
+        return -1;
+      }
+
+      if (b.slug === this.args.language?.slug) {
+        return 1;
+      }
+
+      return a.name.localeCompare(b.name);
+    });
+  }
+}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
