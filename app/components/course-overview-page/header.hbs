@@ -23,10 +23,9 @@
         {{/if}}
 
         <div class="flex items-center flex-wrap gap-2 grow">
-          {{#each @course.betaOrLiveLanguages as |supportedLanguage|}}
+          {{#each this.orderedSupportedLanguages as |supportedLanguage|}}
             <div class="flex">
-              <img alt="{{@course.slug}}" src={{supportedLanguage.tealLogoUrl}} class="h-6 dark:opacity-90" />
-
+              <LanguageLogo @language={{supportedLanguage}} @variant="gray" class="h-6 dark:brightness-90" />
               <EmberTooltip @text={{supportedLanguage.name}} />
             </div>
           {{/each}}
