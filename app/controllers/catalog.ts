@@ -13,10 +13,6 @@ export default class CatalogController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get courses() {
-    if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
-      return this.model.courses;
-    }
-
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
 
@@ -119,8 +115,12 @@ export default class CatalogController extends Controller {
     const userHasRepository =
       this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
 
-    if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
+    if (course.releaseStatusIsDeprecated) {
       return userHasRepository;
+    }
+
+    if (course.visibilityIsPrivate) {
+      return userIsStaffOrCourseAuthor || userHasRepository;
     }
 
     if (course.releaseStatusIsAlpha) {
