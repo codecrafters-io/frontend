@@ -85,7 +85,7 @@ export default class LeaderboardEntriesCache {
     }
 
     return (await this.store.query('leaderboard-entry', {
-      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
+      include: 'affiliate-link,affiliate-link.user,leaderboard,latest-score-update,user',
       leaderboard_id: this.leaderboard.id,
       user_id: this.authenticator.currentUserId, // Only used in tests since mirage doesn't have auth context
       filter_type: 'around_me',
@@ -95,7 +95,7 @@ export default class LeaderboardEntriesCache {
   @action
   async _fetchTopEntries(): Promise<LeaderboardEntryModel[]> {
     return (await this.store.query('leaderboard-entry', {
-      include: 'affiliate-link,affiliate-link.user,leaderboard,user',
+      include: 'affiliate-link,affiliate-link.user,leaderboard,latest-score-update,user',
       leaderboard_id: this.leaderboard.id,
       filter_type: 'top',
     })) as unknown as LeaderboardEntryModel[];

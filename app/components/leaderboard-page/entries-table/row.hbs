@@ -80,11 +80,11 @@
 
   <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-end">
-      {{!-- {{#if (eq @entry.score 142)}}
+      {{#if @entry.latestScoreUpdate.wasTriggeredInPastMonth}}
         <span class="inline-block align-middle text-teal-500 triangle-up mr-1.5" aria-hidden="true">
-          <EmberTooltip @text="Increased from 139 to 142 in the past month" />
+          <EmberTooltip @text="Increased in the past month" />
         </span>
-      {{/if}} --}}
+      {{/if}}
 
       {{!-- {{#if (eq @entry.score 99)}}
         <span class="inline-block align-middle text-red-500 triangle-down mr-1.5" aria-hidden="true">
