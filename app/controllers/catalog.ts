@@ -13,15 +13,19 @@ export default class CatalogController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get courses() {
-    if (this.authenticator.currentUser && this.authenticator.currentUser.isStaff) {
-      return this.model.courses;
+    const currentUser = this.authenticator.currentUser;
+
+    // Staff can see alpha courses in the catalog, but deprecated courses should only be visible
+    // if the user has already started them (i.e. has a repository).
+    if (currentUser?.isStaff) {
+      return this.model.courses.filter((course) => !course.releaseStatusIsDeprecated || this.userHasRepositoryForCourse(course));
     }
 
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
 
   get languages() {
-    return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).reduce(uniqReducer(), []);
+    return this.courses.flatMap((course) => course.betaOrLiveLanguages).reduce(uniqReducer(), []);
   }
 
   get orderedCourses() {
@@ -116,8 +120,7 @@ export default class CatalogController extends Controller {
   shouldDisplayCourse(course: CourseModel) {
     const userIsStaffOrCourseAuthor =
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
-    const userHasRepository =
-      this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
+    const userHasRepository = this.userHasRepositoryForCourse(course);
 
     if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
       return userHasRepository;
@@ -128,5 +131,9 @@ export default class CatalogController extends Controller {
     }
 
     return true;
+  }
+
+  userHasRepositoryForCourse(course: CourseModel) {
+    return !!(this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0);
   }
 }

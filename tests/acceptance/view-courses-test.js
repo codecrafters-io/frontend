@@ -64,9 +64,13 @@ module('Acceptance | view-courses', function (hooks) {
     signInAsStaff(this.owner, this.server);
 
     await catalogPage.visit();
-    assert.strictEqual(catalogPage.courseCards.length, 6, 'expected 6 course cards to be present');
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
 
     assert.ok(catalogPage.courseCards[4].hasAlphaLabel, 'alpha challenges should have alpha label');
+    assert.notOk(
+      catalogPage.courseCards.map((item) => item.name).includes('Build your own Docker'),
+      'deprecated courses should not be shown to staff if user has no progress',
+    );
   });
 
   test('it renders with progress if user has started a course', async function (assert) {
@@ -313,6 +317,26 @@ module('Acceptance | view-courses', function (hooks) {
     await catalogPage.visit();
 
     assert.strictEqual(catalogPage.courseCards[0].name, 'Build your own Docker');
+  });
+
+  test('it should show deprecated courses if staff user already has progress', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    this.server.create('repository', {
+      course: docker,
+      language: python,
+      user: currentUser,
+    });
+
+    await catalogPage.visit();
+
+    assert.ok(catalogPage.courseCards.map((item) => item.name).includes('Build your own Docker'), 'docker should be included');
   });
 
   test('it should not show deprecated courses if user has no progress', async function (assert) {
