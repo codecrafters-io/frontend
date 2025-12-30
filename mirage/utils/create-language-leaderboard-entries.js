@@ -6,7 +6,7 @@ function findOrCreateUser(server, username, attrs = {}) {
   );
 }
 
-export default function createTrackLeaderboardEntries(server, languageSlug) {
+export default function createLanguageLeaderboardEntries(server, languageSlug) {
   // eslint-disable-next-line ember/no-array-prototype-extensions
   const language = server.schema.languages.findBy({ slug: languageSlug });
   const leaderboard = language.leaderboard || server.create('leaderboard', { language });
