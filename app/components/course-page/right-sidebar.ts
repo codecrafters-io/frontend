@@ -74,10 +74,13 @@ export default class CoursePageRightSidebar extends Component<Signature> {
       return [];
     }
 
-    return this.coursePageState.stepList
-      .visibleStepsAfter(this.coursePageState.currentStep)
-      .filter((step) => step.type === 'CourseStageStep')
-      .map((step) => (step as CourseStageStep).courseStage);
+    return [
+      this.coursePageState.currentStepAsCourseStageStep.courseStage,
+      ...this.coursePageState.stepList
+        .visibleStepsAfter(this.coursePageState.currentStep)
+        .filter((step) => step.type === 'CourseStageStep')
+        .map((step) => (step as CourseStageStep).courseStage),
+    ];
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion(): FeatureSuggestionModel | null {
