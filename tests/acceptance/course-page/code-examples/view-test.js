@@ -340,23 +340,18 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     createCommunityCourseStageSolution(this.server, redis, 3, python);
 
-    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+    let pythonRepository = this.server.create('repository', 'withSecondStageCompleted', {
       course: redis,
       language: python,
       name: 'Python #1',
       user: currentUser,
     });
 
-    let secondStage = redis.stages.models.toSorted(fieldComparator('position'))[1];
     let thirdStage = redis.stages.models.toSorted(fieldComparator('position'))[2];
 
-    this.server.create('course-stage-completion', {
-      repository: pythonRepository,
-      courseStage: secondStage,
-      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
-    });
-
-    this.server.create('submission', 'withStageCompletion', {
+    // Important: we want tests to be marked "passed" for the current stage,
+    // without creating a course-stage-completion record.
+    this.server.create('submission', 'withSuccessStatus', {
       repository: pythonRepository,
       courseStage: thirdStage,
       createdAt: new Date(pythonRepository.createdAt.getTime() + 10000), // 10s
