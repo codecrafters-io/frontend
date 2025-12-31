@@ -1,5 +1,5 @@
 <div data-test-track-leaderboard {{did-insert this.handleDidInsert}} ...attributes>
-  <div class="flex items-center justify-between mb-2">
+  <div class="items-center justify-between mb-2 ease-out transition-all duration-300 {{if @isCollapsed 'hidden' 'flex'}} ">
     <div class="flex items-center">
       <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold" data-test-leaderboard-title>{{@language.name}} LEADERBOARD</span>
     </div>
@@ -12,24 +12,24 @@
     <div>
       <AnimatedContainer>
         {{#animated-each this.entriesForFirstSectionWithRanks key="entry.user.id" use=this.listTransition as |entryWithRank|}}
-          <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
+          <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} @isCollapsed={{@isCollapsed}} />
         {{/animated-each}}
 
         {{#if (gt this.leaderboardEntriesCache.entriesForSecondSectionWithRanks.length 0)}}
           {{! --- other users --- divider }}
           <div class="flex items-center py-1">
             <div class="w-full h-px bg-gray-200 dark:bg-white/5" />
-            <span class="text-xs text-gray-400 dark:text-gray-500 inline-flex px-4 shrink-0">other&nbsp;users</span>
+            <span class="text-xs text-gray-400 dark:text-gray-500 px-4 shrink-0 {{if @isCollapsed 'hidden' 'inline-flex'}}">other&nbsp;users</span>
             <div class="w-full h-px bg-gray-200 dark:bg-white/5" />
           </div>
 
           {{#animated-each this.entriesForSecondSectionWithRanks key="entry.user.id" use=this.listTransition as |entryWithRank|}}
-            <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} />
+            <TrackLeaderboard::Row @entry={{entryWithRank.entry}} @rank={{entryWithRank.rank}} @isCollapsed={{@isCollapsed}} />
           {{/animated-each}}
         {{/if}}
       </AnimatedContainer>
 
-      {{#animated-if (not this.leaderboardEntriesCache.hasEntries)}}
+      {{#animated-if (and (not @isCollapsed) (not this.leaderboardEntriesCache.hasEntries))}}
         <div class="flex py-2 items-center mb-2">
           <div class="text-sm text-gray-500">
             <p>
@@ -39,7 +39,7 @@
         </div>
       {{/animated-if}}
 
-      {{#if this.ctaText}}
+      {{#if (and this.ctaText (not @isCollapsed))}}
         <div class="flex items-center justify-center mt-4">
           <div class="flex items-start gap-1">
             {{svg-jar "information-circle-outline" class="size-5 text-teal-600 dark:text-teal-500"}}
@@ -54,7 +54,7 @@
   {{else}}
     <div>
       {{#each (repeat 10)}}
-        <TrackLeaderboard::SkeletonRow />
+        <TrackLeaderboard::SkeletonRow @isCollapsed={{@isCollapsed}} />
       {{/each}}
     </div>
   {{/if}}
