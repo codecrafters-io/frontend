@@ -8,7 +8,14 @@
   {{! @glint-expect-error modifier helper types aren't right? }}
   {{(if @isCurrent (modifier "scroll-into-view" block="start"))}}
 >
-  {{#if (eq @step.status "complete")}}
+  {{#if
+    (or
+      (eq @step.status "complete")
+      (eq @step.type "BaseStagesCompletedStep")
+      (eq @step.type "ExtensionCompletedStep")
+      (eq @step.type "CourseCompletedStep")
+    )
+  }}
     <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500 dark:bg-teal-500/40">
       {{svg-jar "check" class="w-4 h-4 fill-current text-white dark:text-teal-400"}}
     </div>
@@ -27,18 +34,6 @@
   {{else if (eq @step.type "SetupStep")}}
     <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-white dark:bg-gray-925 border-teal-500 shadow-xs">
       {{svg-jar "dots-horizontal" class="w-4 h-4 fill-current text-teal-500"}}
-    </div>
-  {{else if (eq @step.type "CourseCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
-      {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
-    </div>
-  {{else if (eq @step.type "BaseStagesCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
-      {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
-    </div>
-  {{else if (eq @step.type "ExtensionCompletedStep")}}
-    <div class="rounded-full w-6 h-6 border flex items-center justify-center shrink-0 bg-teal-500 border-teal-500">
-      {{svg-jar "check" class="w-4 h-4 fill-current text-white"}}
     </div>
   {{/if}}
 
