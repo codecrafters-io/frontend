@@ -63,7 +63,8 @@ export default class CommunitySolutionsList extends Component<Signature> {
       !(this.coursePageState.currentStep as CourseStageStep).courseStage.isFirst &&
       !(this.coursePageState.currentStep as CourseStageStep).courseStage.isSecond &&
       this.args.solutions.length > 0 &&
-      this.coursePageState.currentStep.status !== 'complete'
+      this.coursePageState.currentStep.status !== 'complete' &&
+      (this.coursePageState.currentStep as CourseStageStep).testsStatus !== 'passed'
     );
   }
 
