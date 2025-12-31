@@ -172,6 +172,7 @@ body {
 .metabase-iframe {
   margin-left: -1rem;
   margin-right: -1rem;
+  background-color: transparent;
 }
 
 @media screen and (width >= 80em) {
