@@ -3,7 +3,7 @@ import { htmlSafe } from '@ember/template';
 import type { SafeString } from '@ember/template/-private/handlebars';
 
 interface Signature {
-  Element: SVGElement;
+  Element: Element;
 
   Args: {
     total: number;
