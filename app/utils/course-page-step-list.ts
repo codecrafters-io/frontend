@@ -128,14 +128,36 @@ export class StepListDefinition {
   }
 
   nextVisibleStepFor(step: StepDefinition): StepDefinition | null {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) + 1] || null;
+    const stepIndex = this.visibleSteps.indexOf(step);
+
+    if (stepIndex === -1) {
+      throw new Error(`Step ${step.type} not found in step list`);
+    }
+
+    return this.visibleSteps[stepIndex + 1] || null;
   }
 
   previousVisibleStepFor(step: StepDefinition): StepDefinition | null {
-    return this.visibleSteps[this.visibleSteps.indexOf(step) - 1] || null;
+    const stepIndex = this.visibleSteps.indexOf(step);
+
+    if (stepIndex === -1) {
+      throw new Error(`Step ${step.type} not found in step list`);
+    }
+
+    return this.visibleSteps[stepIndex - 1] || null;
   }
 
   visibleStepByType(type: StepDefinition['type']): StepDefinition | null {
     return this.visibleSteps.find((step) => step.type === type) || null;
+  }
+
+  visibleStepsAfter(step: StepDefinition): StepDefinition[] {
+    const stepIndex = this.visibleSteps.indexOf(step);
+
+    if (stepIndex === -1) {
+      throw new Error(`Step ${step.type} not found in step list`);
+    }
+
+    return this.visibleSteps.slice(stepIndex + 1);
   }
 }

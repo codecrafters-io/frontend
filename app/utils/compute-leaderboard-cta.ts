@@ -12,6 +12,10 @@ export default function computeLeaderboardCTA(
     return null;
   }
 
+  if (!rankCalculation.nextRanksWithScores) {
+    return null;
+  }
+
   return (
     computeCTAUsingNextStagesInContext(leaderboardEntry, rankCalculation, nextStagesInContext) ||
     computeCTAUsingStagesWithDifficulty(leaderboardEntry, rankCalculation, 'easy') ||
@@ -37,7 +41,7 @@ function computeCTAUsingNextStagesInContext(
 
   const validNextRanksWithScores = filterValidNextRanksWithScores(leaderboardEntry, rankCalculation);
 
-  for (let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= Math.min(nextStagesInContext.length, 5); i++) {
     const scoreDelta = nextStagesInContext.slice(0, i).reduce((acc, stage) => acc + CourseStageModel.scoreForDifficulty(stage.difficulty), 0);
     const scoreAfterCompletingStages = leaderboardEntry.score + scoreDelta;
     const highestNextRank = findHighestNextRank(scoreAfterCompletingStages, validNextRanksWithScores);
@@ -78,7 +82,11 @@ function computeCTAUsingStagesWithDifficulty(
       continue;
     }
 
-    return `Complete ${i} ${difficulty} stages to hit #${highestNextRank}`;
+    if (i === 1) {
+      return `Complete 1 ${difficulty} stage to hit #${highestNextRank}`;
+    } else {
+      return `Complete ${i} ${difficulty} stages to hit #${highestNextRank}`;
+    }
   }
 
   return null;
@@ -94,7 +102,7 @@ function filterValidNextRanksWithScores(
 ): { rank: number; score: number }[] {
   const validNextRanksWithScores: { rank: number; score: number }[] = [];
 
-  for (const nextRankWithScore of rankCalculation.nextRanksWithScores) {
+  for (const nextRankWithScore of rankCalculation.nextRanksWithScores!) {
     if (nextRankWithScore.rank >= rankCalculation.rank) {
       Sentry.captureMessage(`nextRanksWithScores contains invalid rank`, {
         extra: { invalidRank: nextRankWithScore.rank, rankCalculationId: rankCalculation.id, currentRank: rankCalculation.rank },

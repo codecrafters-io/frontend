@@ -30,14 +30,26 @@
       </AnimatedContainer>
 
       {{#animated-if (not this.leaderboardEntriesCache.hasEntries)}}
-        <div class="flex py-2 items-center">
+        <div class="flex py-2 items-center mb-2">
           <div class="text-sm text-gray-500">
-            <p class="mb-2">
+            <p>
               No one has tried this Track recently.
             </p>
           </div>
         </div>
       {{/animated-if}}
+
+      {{#if this.ctaText}}
+        <div class="flex items-center justify-center mt-4">
+          <div class="flex items-start gap-1">
+            {{svg-jar "information-circle-outline" class="size-5 text-teal-600 dark:text-teal-500"}}
+
+            <div class="text-xs text-teal-600 dark:text-teal-500 leading-5">
+              {{this.ctaText}}
+            </div>
+          </div>
+        </div>
+      {{/if}}
     </div>
   {{else}}
     <div>

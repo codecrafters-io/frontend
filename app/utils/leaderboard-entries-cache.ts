@@ -74,6 +74,14 @@ export default class LeaderboardEntriesCache {
     return this.entriesForFirstSectionWithRanks.length > 0;
   }
 
+  get userEntry(): LeaderboardEntryModel | null {
+    return (
+      this._topEntries.find((entry) => entry.user.id === this.authenticator.currentUserId) ||
+      this._surroundingEntries.find((entry) => entry.user.id === this.authenticator.currentUserId) ||
+      null
+    );
+  }
+
   get userRankCalculation(): LeaderboardRankCalculationModel | null {
     return this._userRankCalculation;
   }

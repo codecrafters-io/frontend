@@ -13,7 +13,7 @@
     </div>
 
     {{#if this.featureFlags.canViewTrackLeaderboardOnCoursePage}}
-      <TrackLeaderboard @language={{this.languageForTrackLeaderboard}} />
+      <TrackLeaderboard @language={{this.languageForTrackLeaderboard}} @nextStagesInContext={{this.nextStagesInContextForTrackLeaderboard}} />
     {{else}}
       <CourseLeaderboard
         class={{if @isExpanded "-ml-6" "-ml-4"}}

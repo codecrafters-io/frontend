@@ -8,6 +8,6 @@ export default class LeaderboardRankCalculationModel extends Model {
 
   @attr('date') declare calculatedAt: Date;
   // @ts-expect-error: empty transform not supported
-  @attr('') declare nextRanksWithScores: { rank: number; score: number }[];
+  @attr('') declare nextRanksWithScores?: { rank: number; score: number }[];
   @attr('number') declare rank: number;
 }
