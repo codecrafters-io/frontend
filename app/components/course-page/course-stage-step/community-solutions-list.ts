@@ -57,13 +57,19 @@ export default class CommunitySolutionsList extends Component<Signature> {
   }
 
   get shouldShowStageIncompleteModal() {
+    if (this.coursePageState.currentStep.type !== 'CourseStageStep') {
+      return false;
+    }
+
+    const currentStep = this.coursePageState.currentStep as CourseStageStep;
+
     return (
       !this.args.stageIncompleteModalWasDismissed &&
-      this.coursePageState.currentStep.type === 'CourseStageStep' &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isFirst &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isSecond &&
+      !currentStep.courseStage.isFirst &&
+      !currentStep.courseStage.isSecond &&
       this.args.solutions.length > 0 &&
-      this.coursePageState.currentStep.status !== 'complete'
+      this.coursePageState.currentStep.status !== 'complete' &&
+      currentStep.testsStatus !== 'passed'
     );
   }
 
