@@ -1,12 +1,14 @@
 import Component from '@glimmer/component';
+import computeLeaderboardCTA from 'codecrafters-frontend/utils/compute-leaderboard-cta';
 import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntriesCache from 'codecrafters-frontend/utils/leaderboard-entries-cache';
-import type { LeaderboardEntryWithRank } from 'codecrafters-frontend/utils/leaderboard-entries-cache';
 import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/services/leaderboard-entries-cache-registry';
 import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
+import type { LeaderboardEntryWithRank } from 'codecrafters-frontend/utils/leaderboard-entries-cache';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { service } from '@ember/service';
@@ -16,6 +18,7 @@ interface Signature {
 
   Args: {
     language: LanguageModel;
+    nextStagesInContext?: CourseStageModel[];
   };
 }
 
@@ -23,6 +26,18 @@ export default class TrackLeaderboard extends Component<Signature> {
   transition = fade;
   @service declare authenticator: AuthenticatorService;
   @service declare leaderboardEntriesCacheRegistry: LeaderboardEntriesCacheRegistryService;
+
+  get ctaText(): string | null {
+    if (!this.leaderboardEntriesCache.isLoaded || !this.leaderboardEntriesCache.userEntry || !this.leaderboardEntriesCache.userRankCalculation) {
+      return null;
+    }
+
+    return computeLeaderboardCTA(
+      this.leaderboardEntriesCache.userEntry,
+      this.leaderboardEntriesCache.userRankCalculation,
+      this.args.nextStagesInContext || [],
+    );
+  }
 
   get entriesForFirstSectionWithRanks(): LeaderboardEntryWithRank[] {
     if (!this.leaderboardEntriesCache.isLoaded) {

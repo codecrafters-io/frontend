@@ -160,7 +160,7 @@ module('Unit | Utility | compute-leaderboard-cta', function () {
     const result = computeLeaderboardCTA(leaderboardEntry, rankCalculation, []);
 
     // Should show the highest rank (#42) since 1 easy stage achieves all three
-    assert.strictEqual(result, 'Complete 1 easy stages to hit #42');
+    assert.strictEqual(result, 'Complete 1 easy stage to hit #42');
   });
 
   test('ignores ranks below current user rank in nextRanksWithScores', function (assert) {
