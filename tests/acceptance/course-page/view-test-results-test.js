@@ -6,7 +6,7 @@ import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { waitUntil } from '@ember/test-helpers';
+import { triggerKeyEvent, waitUntil } from '@ember/test-helpers';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
@@ -117,5 +117,22 @@ module('Acceptance | course-page | view-test-results', function (hooks) {
     assert.strictEqual(coursePage.testResultsBar.logsPreview.logs, '[stage-1] passed\n[stage-2] passed');
 
     await percySnapshot('Course Page - View test results - Success');
+  });
+
+  test('can toggle test results bar using keyboard shortcut', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.notOk(coursePage.testResultsBar.logsPreview.isPresent);
+
+    await triggerKeyEvent(document, 'keydown', 'j', { metaKey: true });
+    assert.ok(coursePage.testResultsBar.logsPreview.isPresent);
+
+    await triggerKeyEvent(document, 'keydown', 'j', { metaKey: true });
+    assert.notOk(coursePage.testResultsBar.logsPreview.isPresent);
   });
 });

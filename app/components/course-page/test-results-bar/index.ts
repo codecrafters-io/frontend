@@ -41,6 +41,16 @@ export default class TestResultsBar extends Component<Signature> {
   @tracked expandedContainerHeight = '75vh';
   @tracked isResizing = false;
 
+  constructor(owner: unknown, args: Signature['Args']) {
+    super(owner, args);
+    window.addEventListener('keydown', this.handleWindowKeyDown);
+  }
+
+  willDestroy() {
+    window.removeEventListener('keydown', this.handleWindowKeyDown);
+    super.willDestroy();
+  }
+
   get autofixRequestForActiveStep(): AutofixRequestModel | null {
     if (this.args.activeStep.type !== 'CourseStageStep') {
       return null;
@@ -135,6 +145,14 @@ export default class TestResultsBar extends Component<Signature> {
     const touch = event.touches[0] as Touch;
     const newHeight = window.innerHeight - touch.clientY - (this.bottomSectionElement?.offsetHeight || 0);
     this.expandedContainerHeight = `max(200px, min(calc(100vh - 50px), ${newHeight}px))`;
+  }
+
+  @action
+  handleWindowKeyDown(event: KeyboardEvent) {
+    if (event.key === 'j' && (event.metaKey || event.ctrlKey)) {
+      event.preventDefault();
+      this.coursePageState.testResultsBarIsExpanded = !this.coursePageState.testResultsBarIsExpanded;
+    }
   }
 
   @action
