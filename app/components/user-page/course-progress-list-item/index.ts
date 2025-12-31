@@ -50,6 +50,10 @@ export default class CourseProgressListItem extends Component<Signature> {
     return this.args.courseParticipations.toSorted(fieldComparator('isCompleted', 'lastSubmissionAt')).reverse();
   }
 
+  get trimmedCourseParticipations() {
+    return this.sortedCourseParticipations.slice(0, 5);
+  }
+
   @action
   navigateToCourse() {
     this.router.transitionTo('course-overview', this.course.slug);

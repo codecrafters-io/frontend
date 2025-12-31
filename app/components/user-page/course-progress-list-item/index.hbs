@@ -45,7 +45,7 @@
     {{/if}}
 
     <div class="flex items-center space-x-1.5">
-      {{#each this.sortedCourseParticipations as |courseParticipation|}}
+      {{#each this.trimmedCourseParticipations as |courseParticipation|}}
         <LanguageLogo
           @language={{courseParticipation.language}}
           @variant={{if courseParticipation.isCompleted "teal" "gray"}}
