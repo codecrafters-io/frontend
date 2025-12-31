@@ -169,6 +169,21 @@ export default class RepositoryModel extends Model {
     return RepositoryModel.languageProficiencyLevelMappings;
   }
 
+  get lastActivatedCourseExtensionByStageListOrder(): CourseExtensionModel | null {
+    if (this.stageList) {
+      // Find the last extension stage in the stage list and return its extension
+      const lastExtensionStage = this.stageList.items
+        .toSorted(fieldComparator('position'))
+        .filter((item) => !item.isBaseStage)
+        .at(-1);
+
+      return lastExtensionStage?.stage.primaryExtension || null;
+    } else {
+      // Fall back to the last extension in sortedExtensions
+      return this.course.sortedExtensions.at(-1) || null;
+    }
+  }
+
   get lastActivityAt() {
     return this.lastSubmissionAt || this.createdAt;
   }

@@ -20,16 +20,11 @@ export default class ExtensionCompletedStep extends StepDefinition {
       return true; // If the extension isn't complete, we don't want to show this step.
     }
 
-    // If all stages are complete, we hide this and show the course completed step instead.
-    if (this.repository.allStagesAreComplete) {
-      return true;
-    }
-
-    const isLastExtension = this.repository.activatedCourseExtensions.at(-1) === this.extension;
+    const isLastExtensionInStageList = this.repository.lastActivatedCourseExtensionByStageListOrder === this.extension;
     const allExtensionsAreActivated = this.repository.activatedCourseExtensions.length === this.repository.course.sortedExtensions.length;
 
-    // If the extension is complete and it is the last extension, we don't want to show this step either.
-    if (isLastExtension && allExtensionsAreActivated) {
+    // If the extension is complete and it is the last extension in the stage list, we don't want to show this step either.
+    if (isLastExtensionInStageList && allExtensionsAreActivated) {
       return true; // If the extension is complete and it is the last extension, we hide this and show the course completed step instead.
     }
 
