@@ -57,14 +57,27 @@ export default class CommunitySolutionsList extends Component<Signature> {
   }
 
   get shouldShowStageIncompleteModal() {
-    return (
-      !this.args.stageIncompleteModalWasDismissed &&
-      this.coursePageState.currentStep.type === 'CourseStageStep' &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isFirst &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isSecond &&
-      this.args.solutions.length > 0 &&
-      this.coursePageState.currentStep.status !== 'complete'
-    );
+    if (this.args.stageIncompleteModalWasDismissed) {
+      return false;
+    }
+
+    if (this.coursePageState.currentStep.type !== 'CourseStageStep') {
+      return false;
+    }
+
+    const step = this.coursePageState.currentStep as CourseStageStep;
+
+    if (step.courseStage.isFirst || step.courseStage.isSecond) {
+      return false;
+    }
+
+    if (this.args.solutions.length === 0) {
+      return false;
+    }
+
+    // If tests are passed, allow viewing code examples without the warning modal.
+    // We also suppress the modal for completed stages (even if testsStatus isn't "passed" for some reason).
+    return step.status !== 'complete' && step.testsStatus !== 'passed';
   }
 
   @action

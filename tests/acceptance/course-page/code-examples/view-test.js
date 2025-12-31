@@ -282,6 +282,50 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
+  test('stage incomplete modal does not show up if tests are passed (even if stage is not completed)', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    // Stage 3 has solutions, but is not completed by the current user.
+    createCommunityCourseStageSolution(this.server, redis, 3, python);
+
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    // Mark stage 2 as complete so stage 3 becomes the current stage.
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
+    });
+
+    // Tests have passed for stage 3, but the stage isn't completed.
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
+    await animationsSettled();
+
+    await coursePage.clickOnHeaderTabLink('Code Examples');
+
+    assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
+  });
+
   test('stage incomplete model does not show up if stage is completed', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
