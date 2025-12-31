@@ -4,16 +4,16 @@ require('dotenv').config({ quiet: true });
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const config = require('./config/environment')(EmberApp.env());
-const customFilePlugin = require('./lib/custom-file-plugin');
+// const customFilePlugin = require('./lib/custom-file-plugin');
 const nodeFetch = require('node-fetch');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { Webpack } = require('@embroider/webpack');
-const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { buildOnce } = require('@embroider/vite');
+// const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
 const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
-const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
+// const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
 
-const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
-const shouldUploadSentrySourcemaps = !!process.env.CI && !process.env.VERCEL;
+// const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
+// const shouldUploadSentrySourcemaps = !!process.env.CI && !process.env.VERCEL;
 
 module.exports = function (defaults) {
   const appOptions = {
@@ -95,12 +95,15 @@ module.exports = function (defaults) {
 
   let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
 
-  const compiledApp = require('@embroider/compat').compatBuild(app, Webpack, {
-    staticAddonTestSupportTrees: true,
-    staticAddonTrees: true,
-    staticEmberSource: true,
+  const compiledApp = require('@embroider/compat').compatBuild(app, buildOnce, {
+    // staticAddonTestSupportTrees: true,
+    // staticAddonTrees: true,
+    // staticEmberSource: true,
     staticInvokables: true,
     splitAtRoutes: ['badges', 'concept', 'code-walkthrough', 'course', 'course-admin', 'concept-admin', 'demo'], // can also be a RegExp
+    useAddonConfigModule: false,
+    useAddonAppBoot: false,
+    /*
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
@@ -144,6 +147,7 @@ module.exports = function (defaults) {
         },
       },
     },
+    */
   });
 
   return require('prember').prerender(app, compiledApp);
