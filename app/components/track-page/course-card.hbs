@@ -47,23 +47,29 @@
     </:afterTitle>
 
     <:default>
-      <div class="h-80 overflow-hidden">
-        {{#if @activeRepository}}
-          <div class="mb-4">
-            <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+      {{#if @activeRepository.allStagesAreComplete}}
+        <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+      {{else}}
+        <div class="h-80 overflow-hidden">
+          {{#if @activeRepository}}
+            <div class="mb-4">
+              <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+            </div>
+          {{/if}}
+
+          <div class="leading-6 prose dark:prose-invert mb-4 pr-8">
+            {{markdown-to-html this.introductionMarkdown}}
           </div>
-        {{/if}}
 
-        <div class="leading-6 prose dark:prose-invert mb-4 pr-8">
-          {{markdown-to-html this.introductionMarkdown}}
+          <TrackPage::CourseCard::StageList @completedStages={{this.completedStages}} @course={{@course}} />
+
+          <div
+            class="absolute top-20 bottom-0 left-0 right-0 vertical-mask dark:vertical-mask-gray-925 rounded-b-md p-4 flex items-end justify-center"
+          >
+            <TrackPage::CourseCard::VisitCourseOverviewButton @course={{@course}} @language={{@language}} />
+          </div>
         </div>
-
-        <TrackPage::CourseCard::StageList @completedStages={{this.completedStages}} @course={{@course}} />
-
-        <div class="absolute top-20 bottom-0 left-0 right-0 vertical-mask dark:vertical-mask-gray-925 rounded-b-md p-4 flex items-end justify-center">
-          <TrackPage::CourseCard::VisitCourseOverviewButton @course={{@course}} @language={{@language}} />
-        </div>
-      </div>
+      {{/if}}
     </:default>
   </TrackPage::Card>
 {{/if}}
