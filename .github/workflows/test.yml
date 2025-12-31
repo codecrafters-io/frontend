@@ -27,17 +27,21 @@ jobs:
         with:
           node-version: '22'
 
-      # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Caching node_modules is faster than using setup-node's cache
       - id: cache
         name: Cache dependencies
         uses: actions/cache@v4
         with:
           path: ./node_modules
-          key: modules-v2-${{ hashFiles('package-lock.json') }}
+          key: modules-v3-${{ hashFiles('bun.lock') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
+        run: bun install --frozen-lockfile
 
       - run: git fetch origin ${{ github.event.pull_request.head.sha }}
 

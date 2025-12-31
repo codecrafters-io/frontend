@@ -18,9 +18,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
-      - run: npm ci --prefer-offline --ignore-scripts --no-audit --no-fund
-      - run: npm run build
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+      - run: bun run build
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
