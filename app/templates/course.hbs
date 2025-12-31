@@ -18,6 +18,8 @@
     this.coursePageState.currentStep.status
     this.coursePageState.currentStep.type
   }}
+  {{! @glint-expect-error on-key modifier types aren't right? }}
+  {{on-key "cmd+KeyJ" this.handleToggleTestResultsBar}}
 >
   {{#if @model.activeRepository.id}}
     <div

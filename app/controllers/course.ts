@@ -113,6 +113,11 @@ export default class CourseController extends Controller {
   }
 
   @action
+  handleToggleTestResultsBar() {
+    this.coursePageState.testResultsBarIsExpanded = !this.coursePageState.testResultsBarIsExpanded;
+  }
+
+  @action
   async handleWillDestroyContainer() {
     this.teardownRouteChangeListeners();
   }
