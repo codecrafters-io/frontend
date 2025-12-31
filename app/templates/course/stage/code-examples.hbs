@@ -1,10 +1,8 @@
 <div
   {{! 50vh gives enough space to scroll the last example card to the top when expanded }}
   class="pt-8 pb-[50vh] px-3 md:px-6 lg:px-10"
-  {{did-update (fn (mut this.stageIncompleteModalWasDismissed) false) this.courseStage}}
   {{did-update this.loadSolutions this.courseStage}}
   {{did-insert this.loadSolutions}}
-  {{will-destroy (fn (mut this.stageIncompleteModalWasDismissed) false)}}
   data-test-code-examples-page
 >
   <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-200 dark:border-white/5">
@@ -69,7 +67,6 @@
         @courseStage={{@model.courseStage}}
         @solutions={{this.sortedSolutions}}
         @repository={{@model.activeRepository}}
-        @stageIncompleteModalWasDismissed={{this.stageIncompleteModalWasDismissed}}
       />
     {{else}}
       <div class="flex py-16 justify-center items-center w-full">

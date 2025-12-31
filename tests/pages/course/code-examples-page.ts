@@ -72,11 +72,5 @@ export default createPage({
     },
   }),
 
-  stageIncompleteModal: {
-    clickOnInstructionsButton: clickable('[data-test-instructions-button]'),
-    clickOnShowCodeButton: clickable('[data-test-show-code-button]'),
-    scope: '[data-test-stage-incomplete-modal]',
-  },
-
   visit: visitable('/courses/:course_slug/stages/:stage_slug/code-examples'),
 });

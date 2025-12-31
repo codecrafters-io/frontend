@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
-import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import rippleSpinnerImage from '/assets/images/icons/ripple-spinner.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
-import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import { action } from '@ember/object';
@@ -17,7 +15,6 @@ interface Signature {
   Args: {
     courseStage: CourseStageModel;
     solutions: CommunityCourseStageSolutionModel[];
-    stageIncompleteModalWasDismissed: boolean;
     repository: RepositoryModel;
   };
 }
@@ -26,7 +23,6 @@ export default class CommunitySolutionsList extends Component<Signature> {
   rippleSpinnerImage = rippleSpinnerImage;
 
   @service declare authenticator: AuthenticatorService;
-  @service declare coursePageState: CoursePageStateService;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
@@ -53,17 +49,6 @@ export default class CommunitySolutionsList extends Component<Signature> {
       !this.authenticator.currentUser.canAccessMembershipBenefits &&
       this.args.solutions.length >= 5 &&
       this.args.courseStage.positionWithinCourse > 2 // Don't interfere with stage 1 & 2 onboarding
-    );
-  }
-
-  get shouldShowStageIncompleteModal() {
-    return (
-      !this.args.stageIncompleteModalWasDismissed &&
-      this.coursePageState.currentStep.type === 'CourseStageStep' &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isFirst &&
-      !(this.coursePageState.currentStep as CourseStageStep).courseStage.isSecond &&
-      this.args.solutions.length > 0 &&
-      this.coursePageState.currentStep.status !== 'complete'
     );
   }
 

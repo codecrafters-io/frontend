@@ -25,7 +25,6 @@ export default class CodeExamplesController extends Controller {
   @tracked isLoading = true;
   @tracked requestedLanguage: LanguageModel | null = null; // This shouldn't be state on the controller, see if we can move it to a query param or so?
   @tracked solutions: CommunityCourseStageSolutionModel[] = [];
-  @tracked stageIncompleteModalWasDismissed = false;
 
   get communitySolutionsAreAvailableForCurrentLanguage() {
     return this.currentLanguage && this.courseStage.hasCommunitySolutionsForLanguage(this.currentLanguage);
