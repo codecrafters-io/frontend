@@ -1,6 +1,6 @@
 {
   "buildCommand": "scripts/build-vercel-output.sh",
-  "installCommand": "npm run install:silent",
+  "installCommand": "bun install --frozen-lockfile --ignore-scripts",
   "redirects": [
     { "source": "/_empty.html", "destination": "/404" },
     { "source": "/_empty_notags.html", "destination": "/404" },

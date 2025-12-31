@@ -27,17 +27,21 @@ jobs:
         with:
           node-version: '22'
 
-      # Caching node_modules is faster than using setup-node's cache: 'npm' (https://www.voorhoede.nl/en/blog/super-fast-npm-install-on-github-actions/)
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.5'
+
+      # Caching node_modules is faster than using setup-node's cache
       - id: cache
         name: Cache dependencies
         uses: actions/cache@v4
         with:
           path: ./node_modules
-          key: modules-v2-${{ hashFiles('package-lock.json') }}
+          key: modules-v2-${{ hashFiles('bun.lock') }}
 
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
+        run: bun install --frozen-lockfile --ignore-scripts
 
       - run: git fetch origin ${{ github.event.pull_request.head.sha }}
 
@@ -56,17 +60,17 @@ jobs:
         run: echo "::set-output name=percy_enable::true"
         if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
 
-      - run: npx ember --version
-      - run: npx percy --version
+      - run: bunx ember --version
+      - run: bunx percy --version
 
-      - run: npx ember build --environment=test
+      - run: bunx ember build --environment=test
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
           PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
           STRIPE_PUBLISHABLE_KEY: "dummy"
 
-      - run: npx percy exec --quiet -- npx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name --path dist | tee test-results.xml
+      - run: bunx percy exec --quiet -- bunx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name --path dist | tee test-results.xml
         env:
           COVERAGE: true
           PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}

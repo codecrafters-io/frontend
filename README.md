@@ -7,7 +7,8 @@ The frontend app that powers [app.codecrafters.io](https://app.codecrafters.io).
 You will need the following things installed on your computer:
 
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (with npm)
+- [Node.js](https://nodejs.org/)
+- [Bun](https://bun.sh/)
 - [Ember CLI](https://cli.emberjs.com/release/)
 - [Google Chrome](https://google.com/chrome/)
 
@@ -19,7 +20,7 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 - `git clone <repository-url>` this repository
 - `cd frontend`
-- `npm install`
+- `bun install`
 - Copy `.env.example` to `.env` and fill in the values
 
 ## Running / Development
@@ -31,7 +32,7 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running against staging
 
-- Run `BACKEND_URL="https://backend-staging.codecrafters.io" npm run start`
+- Run `BACKEND_URL="https://backend-staging.codecrafters.io" bun run start`
 - View your app at http://localhost:4200
 
 ## Running with or without FastBoot
@@ -43,8 +44,8 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
   - Alternatively, append `?fastboot=false` query parameter to each request URL
 - Add `FASTBOOT_DISABLED=true` to your local `.env` file to disable FastBoot completely
   - You can override it by passing `FASTBOOT_DISABLED=""` in the command line
-- NPM task `start` runs with FastBoot **disabled**
-- NPM task `start:fastboot` runs with FastBoot **enabled**
+- Script `start` runs with FastBoot **disabled**
+- Script `start:fastboot` runs with FastBoot **enabled**
 
 ## Running tests
 
@@ -55,12 +56,12 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ### Linting
 
-- `npm run lint`
-- `npm run lint:fix`
+- `bun run lint`
+- `bun run lint:fix`
 
 ### Inspecting ESLint configuration
 
-- Run `npm run inspect:eslint`
+- Run `bun run inspect:eslint`
 
 ### Analyzing bundle size
 
@@ -68,8 +69,8 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ### Building
 
-- `npm exec ember build` (development)
-- `npm run build` (production)
+- `bunx ember build` (development)
+- `bun run build` (production)
 
 ### Deploying
 

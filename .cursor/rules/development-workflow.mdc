@@ -5,13 +5,13 @@ alwaysApply: true
 When you're asked to make changes, follow these rules:
 
 - Say consistent with the rest of our codebase. Read other files to understand what our patterns are.
-- Run `npm run lint:fix` after making changes.
+- Run `bun run lint:fix` after making changes.
   - You can ignore any `pauseTest()` related failures. These are needed for debugging purposes.
 - Once linting is successful, you can try running tests if there are ones that cover the area you changed.
   - Only run tests using the browser tool.
   - Visit `http://localhost:4200/tests?filter=xyz` to run tests in the browser.
   - You MUST use the filter query param to filter for the tests you want to run. Do NOT run all tests.
   - You can use the console to check for any errors, you'll also see them printed on the page most of the time.
-- Do NOT run `npm run test`, that's super slow.
-- Do NOT run commands like `npm run build` / `npm run start`.
+ - Do NOT run `bun run test`, that's super slow.
+ - Do NOT run commands like `bun run build` / `bun run start`.
 
