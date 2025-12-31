@@ -7,8 +7,8 @@ set -o pipefail
 LOG_FILENAME="build-output.log"
 VERCEL_FUNCTIONS_DESTINATION="/vercel/output/functions"
 
-# Run `npm run build` and capture the output into build output log
-npm run build 2>&1 | tee -a "${LOG_FILENAME}"
+# Run `bun run build` and capture the output into build output log
+bun run build 2>&1 | tee -a "${LOG_FILENAME}"
 
 # If there are errors in build output log - exit with error status code
 if cat "${LOG_FILENAME}" | grep -qi "error"; then
@@ -27,8 +27,8 @@ find "${VERCEL_FUNCTIONS_DESTINATION}" -type d -name "*.func" | while read -r FU
   echo "Copying dist folder to ${FUNCTION_DIR}"
   cp -a dist/ "${FUNCTION_DIR}/dist/"
 
-  echo "Running npm install in ${FUNCTION_DIR}"
-  (cd "${FUNCTION_DIR}" && npm install --no-fund --no-audit)
+  echo "Running bun install in ${FUNCTION_DIR}"
+  (cd "${FUNCTION_DIR}" && bun install)
 done
 
 # Exit with success status code
