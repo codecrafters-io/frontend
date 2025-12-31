@@ -3,12 +3,22 @@ import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
+import type RouterService from '@ember/routing/router-service';
+import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 
-export default class CourseProgressListItem extends Component {
-  @service router;
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    courseParticipations: CourseParticipationModel[];
+  };
+}
+
+export default class CourseProgressListItem extends Component<Signature> {
+  @service declare router: RouterService;
 
   get completedAt() {
-    return this.hasCompletedCourseUsingAnyLanguage ? this.completedCourseParticipations[0].completedAt : null;
+    return this.completedCourseParticipations[0]?.completedAt || null;
   }
 
   get completedCourseParticipations() {
@@ -20,11 +30,11 @@ export default class CourseProgressListItem extends Component {
   }
 
   get course() {
-    return this.args.courseParticipations[0].course;
+    return this.args.courseParticipations[0]!.course;
   }
 
   get hasCompletedCourseUsingAnyLanguage() {
-    return this.completedCourseParticipations[0];
+    return this.completedCourseParticipations.length > 0;
   }
 
   get languagesText() {
@@ -38,5 +48,11 @@ export default class CourseProgressListItem extends Component {
   @action
   navigateToCourse() {
     this.router.transitionTo('course-overview', this.course.slug);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'UserPage::CourseProgressListItem': typeof CourseProgressListItem;
   }
 }
