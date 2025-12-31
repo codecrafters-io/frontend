@@ -209,4 +209,19 @@ invalid_command: command not found
 
     return Mustache.render(this.prerequisiteInstructionsMarkdownTemplate, variables);
   }
+
+  static scoreForDifficulty(difficulty: CourseStageModel['difficulty']): number {
+    const score = {
+      very_easy: 5,
+      easy: 15,
+      medium: 30,
+      hard: 50,
+    }[difficulty];
+
+    if (!score) {
+      throw new Error(`Unknown difficulty: ${difficulty}`);
+    }
+
+    return score;
+  }
 }
