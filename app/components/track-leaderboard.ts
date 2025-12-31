@@ -17,6 +17,7 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    isCollapsed: boolean;
     language: LanguageModel;
     nextStagesInContext?: CourseStageModel[];
   };

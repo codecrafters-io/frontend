@@ -2,6 +2,10 @@ import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLDivElement;
+
+  Args: {
+    isCollapsed?: boolean;
+  };
 }
 
 export default class TrackLeaderboardSkeletonRow extends Component<Signature> {}

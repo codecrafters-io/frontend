@@ -1,8 +1,13 @@
 <div class="flex items-center justify-between py-1.5 px-2 -mx-2" ...attributes>
   <div class="flex items-center gap-2">
     <LoadingSkeleton class="size-8 flex-shrink-0" />
-    <LoadingSkeleton class="w-[16ch] text-xs" />
+
+    {{#unless @isCollapsed}}
+      <LoadingSkeleton class="w-[16ch] text-xs" />
+    {{/unless}}
   </div>
 
-  <LoadingSkeleton class="w-[4ch] text-xs" />
+  {{#unless @isCollapsed}}
+    <LoadingSkeleton class="w-[4ch] text-xs" />
+  {{/unless}}
 </div>

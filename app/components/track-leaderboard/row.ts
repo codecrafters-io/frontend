@@ -8,6 +8,7 @@ interface Signature {
 
   Args: {
     entry: LeaderboardEntryModel;
+    isCollapsed?: boolean;
     rank: number;
   };
 }
