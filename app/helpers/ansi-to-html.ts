@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
 import { htmlSafe } from '@ember/template';
-import { SafeString } from '@ember/template/-private/handlebars';
+import type { SafeString } from '@ember/template/-private/handlebars';
 import { AnsiUp } from 'ansi_up';
 
 export interface Signature {

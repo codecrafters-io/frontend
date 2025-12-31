@@ -2,7 +2,7 @@ import DOMPurify from 'dompurify';
 import Helper from '@ember/component/helper';
 import showdown from 'showdown';
 import { htmlSafe } from '@ember/template';
-import { SafeString } from '@ember/template/-private/handlebars';
+import type { SafeString } from '@ember/template/-private/handlebars';
 import { service } from '@ember/service';
 import type FastBoot from 'ember-cli-fastboot/services/fastboot';
 

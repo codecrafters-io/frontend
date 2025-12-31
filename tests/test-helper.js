@@ -2,48 +2,49 @@ import Application from 'codecrafters-frontend/app';
 import config from 'codecrafters-frontend/config/environment';
 import * as QUnit from 'qunit';
 import { forceModulesToBeLoaded, sendCoverage } from 'ember-cli-code-coverage/test-support';
-import { setupEmberOnerrorValidation } from 'ember-qunit';
+import { setupEmberOnerrorValidation, start as qunitStart } from 'ember-qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup as setupQunitDom } from 'qunit-dom';
 import { setup as setupQunitAssertionsExtra } from 'qunit-assertions-extra';
-import { start as startEmberExam } from 'ember-exam/test-support';
 import setupSinon from 'ember-sinon-qunit';
 import stubLocalStorage from 'codecrafters-frontend/tests/support/stub-local-storage';
 import stubClipboard from 'codecrafters-frontend/tests/support/stub-clipboard';
 import CurrentMirageUser from 'codecrafters-frontend/mirage/utils/current-mirage-user';
 
-setApplication(Application.create(config.APP));
+export function start() {
+  setApplication(Application.create(config.APP));
 
-setupSinon();
+  setupSinon();
 
-setupQunitDom(QUnit.assert);
-setupQunitAssertionsExtra(QUnit.assert);
-setupEmberOnerrorValidation();
+  setupQunitDom(QUnit.assert);
+  setupQunitAssertionsExtra(QUnit.assert);
+  setupEmberOnerrorValidation();
 
-QUnit.testStart(function () {
-  stubLocalStorage();
-  stubClipboard();
-  CurrentMirageUser.onTestStart();
-});
-
-QUnit.done(async function () {
-  forceModulesToBeLoaded((type, moduleName) => {
-    if (moduleName === 'codecrafters-frontend/tailwind.config') {
-      return false;
-    }
-
-    if (moduleName.startsWith('codecrafters-frontend/tests')) {
-      return false;
-    } else if (moduleName.startsWith('codecrafters-frontend')) {
-      return true;
-    } else {
-      return false;
-    }
+  QUnit.testStart(function () {
+    stubLocalStorage();
+    stubClipboard();
+    CurrentMirageUser.onTestStart();
   });
 
-  await sendCoverage();
-});
+  QUnit.done(async function () {
+    forceModulesToBeLoaded((type, moduleName) => {
+      if (moduleName === 'codecrafters-frontend/tailwind.config') {
+        return false;
+      }
 
-QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
+      if (moduleName.startsWith('codecrafters-frontend/tests')) {
+        return false;
+      } else if (moduleName.startsWith('codecrafters-frontend')) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 
-startEmberExam();
+    await sendCoverage();
+  });
+
+  QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
+
+  qunitStart();
+}

@@ -16,7 +16,7 @@
 
     <link integrity="" rel="stylesheet" href="/@embroider/virtual/vendor.css">
     <link integrity="" rel="stylesheet" href="/@embroider/virtual/app.css">
-    <link rel="icon" href="{{rootURL}}assets/favicon.ico">
+    <link rel="icon" href="/assets/favicon.ico">
 
     {{content-for "head-footer"}}
 
@@ -340,7 +340,7 @@
 
     {{content-for "body"}}
 
-    <script src="/@embroider/virtual/vendor.js"></script>
+    <script type="module" src="/@embroider/virtual/vendor.js"></script>
     <script type="module">
       import Application from './app/app';
       import environment from './app/config/environment';

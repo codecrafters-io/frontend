@@ -1,14 +1,14 @@
 import Application from '@ember/application';
+import compatModules from '@embroider/virtual/compat-modules';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
-import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
-import config from 'codecrafters-frontend/config/environment';
+import config from './config/environment';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import * as Sentry from '@sentry/ember';
 import 'ember-basic-dropdown/styles';
 import 'ember-animated/index';
 import '@typeform/embed/build/css/popup.css';
-import 'codecrafters-frontend/tailwind.css';
+import './tailwind.css';
 
 const sentryDSN = 'https://478cca7283ca40209deae5160b54ee4f@o294739.ingest.sentry.io/5922961';
 
@@ -30,8 +30,7 @@ if (macroCondition(isDevelopingApp())) {
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
   podModulePrefix = config.podModulePrefix;
-  Resolver = Resolver;
-  inspector = setupInspector(this);
+  Resolver = Resolver.withModules(compatModules);
 }
 
-loadInitializers(App, config.modulePrefix);
+loadInitializers(App, config.modulePrefix, compatModules);
