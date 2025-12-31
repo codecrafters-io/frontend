@@ -3,6 +3,7 @@ import arrayToSentence from 'array-to-sentence';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type RouterService from '@ember/routing/router-service';
 import type CourseParticipationModel from 'codecrafters-frontend/models/course-participation';
 
@@ -43,6 +44,10 @@ export default class CourseProgressListItem extends Component<Signature> {
     } else {
       return `using ${arrayToSentence(this.args.courseParticipations.map((item) => item.language.name).reduce(uniqReducer(), []))}`;
     }
+  }
+
+  get sortedCourseParticipations() {
+    return this.args.courseParticipations.toSorted(fieldComparator('isCompleted', 'lastSubmissionAt')).reverse();
   }
 
   @action

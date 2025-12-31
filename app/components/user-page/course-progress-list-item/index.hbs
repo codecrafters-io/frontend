@@ -45,12 +45,12 @@
     {{/if}}
 
     <div class="flex items-center space-x-1.5">
-      {{#each @courseParticipations as |courseParticipation|}}
-        {{#if courseParticipation.isCompleted}}
-          <LanguageLogo @language={{courseParticipation.language}} @variant="teal" class="h-4" />
-        {{else}}
-          <LanguageLogo @language={{courseParticipation.language}} @variant="gray" class="h-4 opacity-50" />
-        {{/if}}
+      {{#each this.sortedCourseParticipations as |courseParticipation|}}
+        <LanguageLogo
+          @language={{courseParticipation.language}}
+          @variant={{if courseParticipation.isCompleted "teal" "gray"}}
+          class="h-4 {{unless courseParticipation.isCompleted 'opacity-50'}}"
+        />
       {{/each}}
     </div>
   </div>
