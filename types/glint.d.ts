@@ -8,7 +8,8 @@ import type { ModifierLike, HelperLike, ComponentLike } from '@glint/template';
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
-    extends RenderModifiersRegistry,
+    extends
+      RenderModifiersRegistry,
       EmberAnimatedRegistry,
       EmberBasicDropdownRegistry,
       EmberConcurrencyRegistry,

@@ -10,16 +10,16 @@
         @prefilledEmailAddress={{this.prefilledEmailAddress}}
         @onSubmit={{this.handleEnterEmailStepSubmitted}}
       />
-    {{else}}{{#if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
-        <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
-          {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
-          @application={{this.latestSavedGrantApplication}}
-          @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
-        />
-      {{else if (eq this.latestSavedGrantApplication.status "rejected")}}
-        <InstitutionPage::CampusProgramApplicationModal::ApplicationRejectedStepContainer
-          @onChangeEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
-        />
-      {{/if}}{{/animated-if}}
+    {{else if (eq this.latestSavedGrantApplication.status "awaiting_verification")}}
+      <InstitutionPage::CampusProgramApplicationModal::VerifyEmailStepContainer
+        {{! @glint-expect-error this.latestSavedGrantApplication is nullable}}
+        @application={{this.latestSavedGrantApplication}}
+        @onChangeOrResendEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+      />
+    {{else if (eq this.latestSavedGrantApplication.status "rejected")}}
+      <InstitutionPage::CampusProgramApplicationModal::ApplicationRejectedStepContainer
+        @onChangeEmailButtonClick={{this.handleChangeOrResendEmailButtonClick}}
+      />
+    {{/animated-if}}
   </AnimatedContainer>
 </ModalBody>
