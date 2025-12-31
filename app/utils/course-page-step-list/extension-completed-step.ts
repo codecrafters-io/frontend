@@ -48,7 +48,10 @@ export default class ExtensionCompletedStep extends StepDefinition {
   get status() {
     if (this.repository.currentStage && !this.repository.stageIsComplete(this.repository.currentStage)) {
       return 'complete'; // If there's an incomplete stage ahead of us, the extension is complete.
+    } else if (this.repository.allStagesAreComplete) {
+      return 'complete';
     } else {
+      // All stages aren't complete, and there's no incomplete stage ahead of us. i.e. some extensions aren't activated yet.
       return 'not_started';
     }
   }
