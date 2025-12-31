@@ -329,6 +329,50 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
+  test('stage incomplete modal does not show up if tests have passed', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    createCommunityCourseStageSolution(this.server, redis, 2, python);
+    createCommunityCourseStageSolution(this.server, redis, 3, python);
+
+    let pythonRepository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    this.server.create('course-stage-completion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+      completedAt: new Date(new Date().getTime() - 5 * 86400000), // 5 days ago
+    });
+
+    this.server.create('submission', 'withStageCompletion', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+    });
+
+    // Create a successful submission for stage 3 (tests passed) without completing the stage
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: pythonRepository,
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[2],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.clickOnHeaderTabLink('Code Examples');
+
+    assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible when tests have passed');
+  });
+
   test('back to instructions button in stage incomplete modal redirects to instructions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
