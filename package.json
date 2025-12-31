@@ -70,6 +70,7 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.16",
     "@tsconfig/ember": "^3.0.12",
+    "@types/array-to-sentence": "^2.0.0",
     "@types/canvas-confetti": "^1.9.0",
     "@types/culori": "^4.0.1",
     "@types/dompurify": "^3.2.0",
