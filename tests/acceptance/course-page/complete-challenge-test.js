@@ -56,12 +56,10 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     });
 
     await catalogPage.visit();
-
-    // This opens in the extension completed page
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
-    await visit('/courses/dummy/completed');
 
+    assert.strictEqual(currentURL(), '/courses/dummy/completed', 'URL is /courses/dummy/completed');
     assert.contains(coursePage.courseCompletedCard.instructionsText, 'Congratulations!');
   });
 
