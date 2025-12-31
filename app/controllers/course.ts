@@ -15,6 +15,7 @@ import type { ModelType } from 'codecrafters-frontend/routes/course';
 import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
 import { task } from 'ember-concurrency';
+import window from 'ember-window-mock';
 
 export default class CourseController extends Controller {
   declare model: ModelType;
@@ -74,6 +75,7 @@ export default class CourseController extends Controller {
   @action
   handleDidInsertContainer() {
     this.setupRouteChangeListeners();
+    this.setupKeyboardShortcutListeners();
 
     if (this.action === 'github_app_installation_completed') {
       this.configureGithubIntegrationModalIsOpen = true;
@@ -103,6 +105,17 @@ export default class CourseController extends Controller {
   }
 
   @action
+  handleKeyDown(event: KeyboardEvent) {
+    // Cmd+J is a browser shortcut in some environments. We only intercept it on the course page.
+    if (!this.shouldHandleTestResultsBarShortcut(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    this.coursePageState.testResultsBarIsExpanded = !this.coursePageState.testResultsBarIsExpanded;
+  }
+
+  @action
   async handlePoll() {
     // Nothing to do at the moment
   }
@@ -115,6 +128,7 @@ export default class CourseController extends Controller {
   @action
   async handleWillDestroyContainer() {
     this.teardownRouteChangeListeners();
+    this.teardownKeyboardShortcutListeners();
   }
 
   pollRepositoryTask = task({ keepLatest: true }, async (): Promise<void> => {
@@ -151,8 +165,55 @@ export default class CourseController extends Controller {
   }
 
   @action
+  setupKeyboardShortcutListeners() {
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  @action
   setupRouteChangeListeners() {
     this.router.on('routeDidChange', this.handleRouteChanged);
+  }
+
+  private shouldHandleTestResultsBarShortcut(event: KeyboardEvent): boolean {
+    if (event.repeat) {
+      return false;
+    }
+
+    // Ignore keystrokes while typing in form fields.
+    const target = event.target;
+
+    if (target instanceof HTMLElement) {
+      const tagName = target.tagName.toLowerCase();
+      const isEditable =
+        target.isContentEditable ||
+        tagName === 'input' ||
+        tagName === 'textarea' ||
+        tagName === 'select' ||
+        target.getAttribute('role') === 'textbox';
+
+      if (isEditable) {
+        return false;
+      }
+    }
+
+    // Only relevant for stage steps (that's when the "Show logs / Hide logs" affordance exists).
+    if (this.coursePageState.currentStep?.type !== 'CourseStageStep') {
+      return false;
+    }
+
+    // Cmd+J on macOS, Ctrl+J elsewhere.
+    const modifierPressed = event.metaKey || event.ctrlKey;
+
+    if (!modifierPressed || event.altKey) {
+      return false;
+    }
+
+    return (event.key || '').toLowerCase() === 'j';
+  }
+
+  @action
+  teardownKeyboardShortcutListeners() {
+    window.removeEventListener('keydown', this.handleKeyDown);
   }
 
   @action
