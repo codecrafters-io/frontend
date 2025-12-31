@@ -1,0 +1,43 @@
+diff --git a/node_modules/ember-cli-htmlbars/lib/colocated-broccoli-plugin.js b/node_modules/ember-cli-htmlbars/lib/colocated-broccoli-plugin.js
+index 2d740cf..d0c2916 100644
+--- a/node_modules/ember-cli-htmlbars/lib/colocated-broccoli-plugin.js
++++ b/node_modules/ember-cli-htmlbars/lib/colocated-broccoli-plugin.js
+@@ -7,6 +7,17 @@ const Plugin = require('broccoli-plugin');
+ const logger = require('heimdalljs-logger')('ember-cli-htmlbars:colocated-broccoli-plugin');
+ const FSTree = require('fs-tree-diff');
+ 
++function unlinkIfExists(filePath) {
++  try {
++    fs.unlinkSync(filePath);
++  } catch (e) {
++    if (typeof e === 'object' && e !== null && e.code === 'ENOENT') {
++      return;
++    }
++    throw e;
++  }
++}
++
+ module.exports = class ColocatedTemplateProcessor extends Plugin {
+   constructor(tree) {
+     super([tree], {
+@@ -120,6 +131,20 @@ module.exports = class ColocatedTemplateProcessor extends Plugin {
+       let jsContents = null;
+       let prefix = '';
+ 
++      // If this file previously existed as a template-only component, we will have
++      // synthesized a `.js` backing file in the output tree. When a real backing
++      // class gets added later (often as `.ts`), we must remove the old synthesized
++      // file; otherwise it can "win" in later stages and require a server restart.
++      //
++      // Similarly, when a backing class gets removed and we switch back to a
++      // template-only component, we need to remove any stale `.ts`/`.coffee`.
++      let possibleBackingFiles = [basePath + '.js', basePath + '.ts', basePath + '.coffee'];
++      for (let candidate of possibleBackingFiles) {
++        if (candidate !== backingClassPath) {
++          unlinkIfExists(path.join(this.outputPath, candidate));
++        }
++      }
++
+       if (hasTemplate) {
+         let templatePath = path.join(this.inputPaths[0], basePath + '.hbs');
+         let templateContents = fs.readFileSync(templatePath, { encoding: 'utf8' });
