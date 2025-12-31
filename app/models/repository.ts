@@ -81,7 +81,9 @@ export default class RepositoryModel extends Model {
 
   // TODO[Extensions]: Make sure start course, resume track, course progress bar, leaderboard etc. work with extensions
   get allStagesAreComplete() {
-    return this.course.stages.every((stage) => this.stageIsComplete(stage));
+    return (
+      this.baseStagesAreComplete && this.activatedCourseExtensions.every((extension) => this.extensionStagesAreComplete(extension))
+    );
   }
 
   get baseStagesAreComplete() {
