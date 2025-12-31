@@ -4,6 +4,7 @@ import loadInitializers from 'ember-load-initializers';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
 import config from 'codecrafters-frontend/config/environment';
 import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
+import { setConfig as setEmberBasicDropdownConfig } from 'ember-basic-dropdown/config';
 import * as Sentry from '@sentry/ember';
 import 'ember-basic-dropdown/styles';
 import 'ember-animated/index';
@@ -26,6 +27,10 @@ if (config.environment === 'development' || config.environment === 'production')
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');
 }
+
+setEmberBasicDropdownConfig({
+  rootElement: config.APP.rootElement,
+});
 
 export default class App extends Application {
   modulePrefix = config.modulePrefix;
