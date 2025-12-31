@@ -4,16 +4,8 @@ require('dotenv').config({ quiet: true });
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const config = require('./config/environment')(EmberApp.env());
-const customFilePlugin = require('./lib/custom-file-plugin');
 const nodeFetch = require('node-fetch');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const { Webpack } = require('@embroider/webpack');
-const { codecovWebpackPlugin } = require('@codecov/webpack-plugin');
-const { createEmberCLIConfig } = require('ember-cli-bundle-analyzer/create-config');
-const { sentryWebpackPlugin } = require('@sentry/webpack-plugin');
-
-const shouldSpawnBundleAnalyzer = process.env.ANALYZE_BUNDLE === 'true';
-const shouldUploadSentrySourcemaps = !!process.env.CI && !process.env.VERCEL;
+const { buildOnce } = require('@embroider/vite');
 
 module.exports = function (defaults) {
   const appOptions = {
@@ -93,58 +85,22 @@ module.exports = function (defaults) {
     },
   };
 
-  let app = new EmberApp(defaults, { ...appOptions, ...createEmberCLIConfig() });
+  let app = new EmberApp(defaults, { ...appOptions });
 
-  const compiledApp = require('@embroider/compat').compatBuild(app, Webpack, {
+  const compiledApp = require('@embroider/compat').compatBuild(app, buildOnce, {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
     staticEmberSource: true,
     staticInvokables: true,
     splitAtRoutes: ['badges', 'concept', 'code-walkthrough', 'course', 'course-admin', 'concept-admin', 'demo'], // can also be a RegExp
-    packagerOptions: {
-      publicAssetURL: '/',
-      webpackConfig: {
-        plugins: [
-          customFilePlugin('version.txt', config.x.version),
-
-          codecovWebpackPlugin({
-            enableBundleAnalysis: process.env.CODECOV_TOKEN !== undefined,
-            bundleName: 'client',
-            uploadToken: process.env.CODECOV_TOKEN,
-          }),
-
-          shouldUploadSentrySourcemaps
-            ? sentryWebpackPlugin({
-                org: 'codecrafters',
-                project: 'frontend',
-                authToken: process.env.SENTRY_AUTH_TOKEN,
-                release: {
-                  name: config.x.version,
-                },
-              })
-            : null,
-
-          shouldSpawnBundleAnalyzer ? new BundleAnalyzerPlugin() : null,
-        ],
-        devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
-        module: {
-          rules: [
-            {
-              test: /\.css$/i,
-              use: ['postcss-loader'],
-            },
-            {
-              test: /\.(glb|css|png|jpg|jpeg|gif|svg|ico|lottie\.json)$/,
-              type: 'asset/resource',
-              generator: {
-                filename: 'assets/[hash][ext][query]',
-              },
-            },
-          ],
-        },
-      },
-    },
   });
+
+  // When EMBROIDER_PREBUILD is set, this build is being invoked by the Vite adapter
+  // to generate the "compat-prebuild" output. In that mode we should *not* run prember,
+  // because prember is meant to operate on the final, bundled browser build output.
+  if (process.env.EMBROIDER_PREBUILD) {
+    return compiledApp;
+  }
 
   return require('prember').prerender(app, compiledApp);
 };
