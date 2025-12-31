@@ -127,6 +127,20 @@ module.exports = function (defaults) {
           shouldSpawnBundleAnalyzer ? new BundleAnalyzerPlugin() : null,
         ],
         devtool: EmberApp.env() === 'development' ? 'eval-source-map' : 'source-map',
+
+        // Fix for component file caching issue: when a .hbs file is created first
+        // and a .ts file is added later, webpack's snapshot cache may not detect
+        // the new file. This configuration ensures webpack checks for file existence
+        // changes in the app directory during development.
+        snapshot:
+          EmberApp.env() === 'development'
+            ? {
+                // Empty managedPaths means webpack won't assume any paths are "managed"
+                // (i.e., immutable), so it will properly detect new files in the app directory
+                managedPaths: [],
+              }
+            : undefined,
+
         module: {
           rules: [
             {
