@@ -3,6 +3,7 @@ import RouterService from '@ember/routing/router-service';
 import { StepDefinition, StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { tracked } from '@glimmer/tracking';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import ExtensionCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/extension-completed-step';
 
 export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
@@ -45,6 +46,19 @@ export default class CoursePageStateService extends Service {
       return this.stepList!.visibleStepByType('CourseCompletedStep') || null;
     } else if (this.router.currentRouteName === 'course.base-stages-completed') {
       return this.stepList!.visibleStepByType('BaseStagesCompletedStep') || null;
+    } else if (this.router.currentRouteName === 'course.extension-completed') {
+      const extensionCompletedRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.extension-completed');
+
+      const routeParams = extensionCompletedRoute!.params as { extension_slug: string };
+
+      return (
+        this.stepList!.steps.find(
+          (step) =>
+            step.type === 'ExtensionCompletedStep' &&
+            // `ExtensionCompletedStep#extension` isn't typed right now.
+            (step as ExtensionCompletedStep).extension.slug === routeParams.extension_slug,
+        ) || null
+      );
     } else if (this.router.currentRouteName && this.router.currentRouteName.startsWith('course.stage')) {
       const courseStageRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage');
 

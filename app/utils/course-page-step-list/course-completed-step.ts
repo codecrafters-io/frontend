@@ -13,7 +13,8 @@ export default class CourseCompletedStep extends StepDefinition {
   }
 
   get isHidden() {
-    return !this.repository.allStagesAreComplete;
+    // "Course completed" is based on completing the base stages (extensions are optional).
+    return !this.repository.baseStagesAreComplete;
   }
 
   get progressIndicator(): ProgressIndicator {

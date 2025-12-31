@@ -138,10 +138,17 @@ export default class CourseRoute extends BaseRoute {
 
   redirect(_model: ModelType, transition: Transition) {
     if (transition.to?.name === 'course.index') {
-      const activeStep = this.coursePageState.stepListAsStepListDefinition.activeStep;
+      const stepList = this.coursePageState.stepListAsStepListDefinition;
+      const activeStep = stepList.activeStep;
+
+      // If the course is completed and the active step is an "extension completed" interstitial,
+      // default to showing the course completion page instead when navigating to /courses/:slug.
+      // Users can still navigate to the extension completed page via the step list.
+      const courseCompletedStep = stepList.visibleStepByType('CourseCompletedStep');
+      const stepToNavigateTo = activeStep?.type === 'ExtensionCompletedStep' && courseCompletedStep ? courseCompletedStep : activeStep;
 
       // @ts-expect-error activeStep might be null
-      this.router.replaceWith(activeStep.routeParams.route, ...activeStep.routeParams.models);
+      this.router.replaceWith(stepToNavigateTo.routeParams.route, ...stepToNavigateTo.routeParams.models);
     }
 
     // Schedule this to run in the next runloop, so that we aren't operating on a loading state

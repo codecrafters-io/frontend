@@ -144,7 +144,7 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is extension completed page');
+    assert.strictEqual(currentURL(), '/courses/dummy/completed', 'current URL is course completed page');
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
