@@ -329,6 +329,42 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
   });
 
+  test('stage incomplete modal does not show up if tests have passed (even if stage is not marked complete)', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    let python = this.server.schema.languages.findBy({ slug: 'python' });
+
+    createCommunityCourseStageSolution(this.server, redis, 3, python);
+
+    let pythonRepository = this.server.create('repository', 'withSecondStageCompleted', {
+      course: redis,
+      language: python,
+      name: 'Python #1',
+      user: currentUser,
+    });
+
+    let thirdStage = redis.stages.models.toSorted(fieldComparator('position'))[2];
+
+    // Important: we want tests to be marked "passed" for the current stage,
+    // without creating a course-stage-completion record.
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: pythonRepository,
+      courseStage: thirdStage,
+      createdAt: new Date(pythonRepository.createdAt.getTime() + 10000), // 10s
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+    await coursePage.clickOnHeaderTabLink('Code Examples');
+
+    assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible');
+  });
+
   test('back to instructions button in stage incomplete modal redirects to instructions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
