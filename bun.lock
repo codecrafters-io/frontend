@@ -174,7 +174,7 @@
         "prettier": "^3.6.2",
         "prettier-plugin-ember-template-tag": "^2.1.0",
         "prismjs": "^1.30.0",
-        "qunit": "^2.24.3",
+        "qunit": "^2.25.0",
         "qunit-assertions-extra": "^1.0",
         "qunit-dom": "^3.5.0",
         "shiki": "^3.7.0",
@@ -2945,7 +2945,7 @@
 
     "quick-temp": ["quick-temp@0.1.8", "", { "dependencies": { "mktemp": "~0.4.0", "rimraf": "^2.5.4", "underscore.string": "~3.3.4" } }, "sha512-YsmIFfD9j2zaFwJkzI6eMG7y0lQP7YeWzgtFgNl38pGWZBSXJooZbOWwkcRot7Vt0Fg9L23pX0tqWU3VvLDsiA=="],
 
-    "qunit": ["qunit@2.24.3", "", { "dependencies": { "commander": "7.2.0", "node-watch": "0.7.3", "tiny-glob": "0.2.9" }, "bin": "bin/qunit.js" }, "sha512-JTHwSfHf2Cw8TqusZo2tT4F9d+XA/pp/veoxUDiPNHtB1Wc1VPctiHHIv6HA3vrXNOBu9LSzFM7YU2OV9Gz4vQ=="],
+    "qunit": ["qunit@2.25.0", "", { "dependencies": { "commander": "7.2.0", "node-watch": "0.7.3", "tiny-glob": "0.2.9" }, "bin": { "qunit": "bin/qunit.js" } }, "sha512-MONPKgjavgTqArCwZOEz8nEMbA19zNXIp5ZOW9rPYj5cbgQp0fiI36c9dPTSzTRRzx+KcfB5eggYB/ENqxi0+w=="],
 
     "qunit-assertions-extra": ["qunit-assertions-extra@1.0.3", "", { "peerDependencies": { "qunit": "^2.0.0" } }, "sha512-IuDqYG7F/phASiLcmEq3ArtQgXZeywUwF5SbXtDilrqrWRgD1DYUCKPesBaJxrHzJRMzu6CTcq2MZN8xpiAJHg=="],
 
