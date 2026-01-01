@@ -40,7 +40,7 @@
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@codecov/webpack-plugin": "^1.9.1",
     "@codemirror/language-data": "^6.5.2",
-    "@codemirror/merge": "^6.10.2",
+    "@codemirror/merge": "^6.11.2",
     "@codemirror/view": "^6.38.2",
     "@ember/optional-features": "^2.3.0",
     "@ember/render-modifiers": "^3.0.0",
