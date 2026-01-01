@@ -1,10 +1,12 @@
 import * as Sentry from '@sentry/ember';
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import Service, { service } from '@ember/service';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class VisibilityService extends Service {
+  @service declare fastboot: FastBootService;
   @service declare store: Store;
   @tracked isVisible;
   callbacks: Record<string, (isVisible: boolean) => void> = {};
@@ -46,6 +48,11 @@ export default class VisibilityService extends Service {
   }
 
   setupVisibilityChangeEventHandlers() {
+    // Skip in fastboot context
+    if (this.fastboot.isFastBoot) {
+      return;
+    }
+
     document.addEventListener('visibilitychange', () => {
       this.isVisible = !document.hidden;
       this.fireCallbacks();

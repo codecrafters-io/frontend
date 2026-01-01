@@ -3,6 +3,8 @@ import { isEqual } from '@ember/utils';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from './analytics-event-tracker';
+import type DateService from './date';
+import type VisibilityService from './visibility';
 import type Transition from '@ember/routing/-private/transition';
 
 interface RouteInfo {
@@ -13,7 +15,12 @@ interface RouteInfo {
 
 export default class PageViewTracker extends Service {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
+  @service declare date: DateService;
   @service declare router: RouterService;
+  @service declare visibility: VisibilityService;
+
+  lastHiddenAt: number | null = null;
+  visibilityCallbackId: string | null = null;
 
   @action
   handleRouteChange(transition: Transition): void {
@@ -24,8 +31,19 @@ export default class PageViewTracker extends Service {
     this.analyticsEventTracker.track('viewed_page', {});
   }
 
+  @action
+  handleVisibilityChange(isVisible: boolean): void {
+    if (!isVisible) {
+      this.lastHiddenAt = this.date.now();
+    } else if (this.lastHiddenAt && this.date.now() - this.lastHiddenAt > 5 * 60 * 1000) {
+      this.analyticsEventTracker.track('viewed_page', {});
+      this.lastHiddenAt = null;
+    }
+  }
+
   setupListener(): void {
     this.router.on('routeDidChange', this.handleRouteChange);
+    this.visibilityCallbackId = this.visibility.registerCallback(this.handleVisibilityChange);
   }
 
   #shouldIgnoreEventForTransition(transition: { from: RouteInfo | null; to: RouteInfo | null }): boolean {
@@ -60,5 +78,10 @@ export default class PageViewTracker extends Service {
 
   willDestroy(): void {
     this.router.off('routeDidChange', this.handleRouteChange);
+
+    if (this.visibilityCallbackId) {
+      this.visibility.deregisterCallback(this.visibilityCallbackId);
+      this.visibilityCallbackId = null;
+    }
   }
 }
