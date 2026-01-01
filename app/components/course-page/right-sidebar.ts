@@ -10,7 +10,6 @@ import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-su
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type Store from '@ember-data/store';
 import { service } from '@ember/service';
-import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -32,6 +31,22 @@ export default class CoursePageRightSidebar extends Component<Signature> {
   @service declare preferredLanguageLeaderboard: PreferredLanguageLeaderboardService;
   @service declare store: Store;
   @service declare featureFlags: FeatureFlagsService;
+
+  get currentCourseStageForTrackLeaderboard(): CourseStageModel | undefined {
+    if (!this.coursePageState.stepList) {
+      return undefined;
+    }
+
+    if (this.coursePageState.currentStep.type !== 'CourseStageStep') {
+      return undefined;
+    }
+
+    if (this.coursePageState.currentStep !== this.coursePageState.activeStep) {
+      return undefined;
+    }
+
+    return this.coursePageState.currentStepAsCourseStageStep.courseStage;
+  }
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -59,28 +74,6 @@ export default class CoursePageRightSidebar extends Component<Signature> {
     }
 
     return this.args.course.betaOrLiveLanguages[0]!;
-  }
-
-  get nextStagesInContextForTrackLeaderboard(): CourseStageModel[] {
-    if (!this.coursePageState.stepList) {
-      return [];
-    }
-
-    if (this.coursePageState.currentStep.type !== 'CourseStageStep') {
-      return [];
-    }
-
-    if (this.coursePageState.currentStep !== this.coursePageState.activeStep) {
-      return [];
-    }
-
-    return [
-      this.coursePageState.currentStepAsCourseStageStep.courseStage,
-      ...this.coursePageState.stepList
-        .visibleStepsAfter(this.coursePageState.currentStep)
-        .filter((step) => step.type === 'CourseStageStep')
-        .map((step) => (step as CourseStageStep).courseStage),
-    ];
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion(): FeatureSuggestionModel | null {

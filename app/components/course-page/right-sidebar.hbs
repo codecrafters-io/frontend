@@ -14,9 +14,10 @@
 
     {{#if this.featureFlags.canViewTrackLeaderboardOnCoursePage}}
       <TrackLeaderboard
+        @currentCourseStage={{this.currentCourseStageForTrackLeaderboard}}
         @isCollapsed={{not @isExpanded}}
         @language={{this.languageForTrackLeaderboard}}
-        @nextStagesInContext={{this.nextStagesInContextForTrackLeaderboard}}
+        @repository={{@activeRepository}}
       />
     {{else}}
       <CourseLeaderboard

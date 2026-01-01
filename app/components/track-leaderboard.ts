@@ -8,6 +8,7 @@ import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntriesCache from 'codecrafters-frontend/utils/leaderboard-entries-cache';
 import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/services/leaderboard-entries-cache-registry';
 import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { LeaderboardEntryWithRank } from 'codecrafters-frontend/utils/leaderboard-entries-cache';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
@@ -17,9 +18,10 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    currentCourseStage?: CourseStageModel;
     isCollapsed: boolean;
     language: LanguageModel;
-    nextStagesInContext?: CourseStageModel[];
+    repository?: RepositoryModel;
   };
 }
 
@@ -36,7 +38,8 @@ export default class TrackLeaderboard extends Component<Signature> {
     return computeLeaderboardCTA(
       this.leaderboardEntriesCache.userEntry,
       this.leaderboardEntriesCache.userRankCalculation,
-      this.args.nextStagesInContext || [],
+      this.args.repository,
+      this.args.currentCourseStage,
     );
   }
 
