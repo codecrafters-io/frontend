@@ -1,12 +1,14 @@
 import type LeaderboardEntryModel from 'codecrafters-frontend/models/leaderboard-entry';
 import type LeaderboardRankCalculationModel from 'codecrafters-frontend/models/leaderboard-rank-calculation';
 import CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import * as Sentry from '@sentry/ember';
 
 export default function computeLeaderboardCTA(
   leaderboardEntry: LeaderboardEntryModel,
   rankCalculation: LeaderboardRankCalculationModel,
-  nextStagesInContext: CourseStageModel[],
+  currentRepository?: RepositoryModel,
+  currentCourseStage?: CourseStageModel,
 ): string | null {
   if (rankCalculation.rank === 1) {
     return null;
@@ -17,7 +19,7 @@ export default function computeLeaderboardCTA(
   }
 
   return (
-    computeCTAUsingNextStagesInContext(leaderboardEntry, rankCalculation, nextStagesInContext) ||
+    computeCTAUsingCurrentRepository(leaderboardEntry, rankCalculation, currentRepository, currentCourseStage) ||
     computeCTAUsingStagesWithDifficulty(leaderboardEntry, rankCalculation, 'easy') ||
     computeCTAUsingStagesWithDifficulty(leaderboardEntry, rankCalculation, 'medium') ||
     computeCTAUsingStagesWithDifficulty(leaderboardEntry, rankCalculation, 'hard')
@@ -30,19 +32,26 @@ export default function computeLeaderboardCTA(
 // - Complete 5 stages to hit #100
 //
 // We never return a string if it requires more than 5 such stages.
-function computeCTAUsingNextStagesInContext(
+function computeCTAUsingCurrentRepository(
   leaderboardEntry: LeaderboardEntryModel,
   rankCalculation: LeaderboardRankCalculationModel,
-  nextStagesInContext: CourseStageModel[],
+  currentRepository?: RepositoryModel,
+  currentCourseStage?: CourseStageModel,
 ): string | null {
-  if (nextStagesInContext.length === 0) {
+  if (!currentRepository || !currentCourseStage) {
     return null;
   }
 
+  const currentStageItem = currentRepository.stageList.items.find((item) => item.stage === currentCourseStage)!;
+
+  const incompleteStages = currentRepository.stageList.items
+    .filter((item) => item.position >= currentStageItem.position && !item.isCompleted)
+    .map((item) => item.stage);
+
   const validNextRanksWithScores = filterValidNextRanksWithScores(leaderboardEntry, rankCalculation);
 
-  for (let i = 1; i <= Math.min(nextStagesInContext.length, 5); i++) {
-    const scoreDelta = nextStagesInContext.slice(0, i).reduce((acc, stage) => acc + CourseStageModel.scoreForDifficulty(stage.difficulty), 0);
+  for (let i = 1; i <= Math.min(incompleteStages.length, 5); i++) {
+    const scoreDelta = incompleteStages.slice(0, i).reduce((acc, stage) => acc + CourseStageModel.scoreForDifficulty(stage.difficulty), 0);
     const scoreAfterCompletingStages = leaderboardEntry.score + scoreDelta;
     const highestNextRank = findHighestNextRank(scoreAfterCompletingStages, validNextRanksWithScores);
 
@@ -51,7 +60,11 @@ function computeCTAUsingNextStagesInContext(
     }
 
     if (i === 1) {
-      return `Complete this stage to hit #${highestNextRank}`;
+      if (incompleteStages[0]! === currentCourseStage) {
+        return `Complete this stage to hit #${highestNextRank}`;
+      } else {
+        return `Complete next stage to hit #${highestNextRank}`;
+      }
     } else {
       return `Complete ${i} stages to hit #${highestNextRank}`;
     }
