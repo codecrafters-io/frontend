@@ -34,7 +34,7 @@ jobs:
       # Caching node_modules is faster than using setup-node's cache
       - id: cache
         name: Cache dependencies
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ./node_modules
           key: modules-v2-${{ hashFiles('bun.lock') }}
