@@ -8,7 +8,7 @@ bump_version:
 	@echo "Version bumped from $(CURRENT_VERSION) to $(NEXT_VERSION) in config/environment.js"
 
 lint:
-	npm run lint:fix
+	bun run lint:fix
 
 refresh_concept_fixtures:
 	curl https://backend.codecrafters.io/api/v1/concepts/network-protocols\?include\=questions > mirage/concept-fixtures/network-protocols.js
@@ -56,4 +56,4 @@ refresh_course_fixtures:
 	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
 
 serve:
-	npm run start
+	bun run start

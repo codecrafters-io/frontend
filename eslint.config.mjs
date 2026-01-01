@@ -5,11 +5,11 @@
  *
  *   Print a file's calculated configuration
  *
- *     npx eslint --print-config path/to/file.js
+ *     bunx eslint --print-config path/to/file.js
  *
  *   Inspecting the config
  *
- *     npx eslint --inspect-config
+ *     bunx eslint --inspect-config
  *
  */
 import { defineConfig } from 'eslint/config';

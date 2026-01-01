@@ -2,30 +2,30 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "npm: inspect:eslint",
-      "type": "npm",
-      "script": "inspect:eslint",
-      "problemMatcher": [],
+      "label": "bun: inspect:eslint",
+      "type": "shell",
+      "command": "bun run inspect:eslint",
+      "problemMatcher": []
     },
     {
-      "label": "npm: lint:js",
-      "type": "npm",
-      "script": "lint:js",
+      "label": "bun: lint:js",
+      "type": "shell",
+      "command": "bun run lint:js",
       "problemMatcher": [
         "$eslint-stylish"
       ]
     },
     {
-      "label": "npm: start",
-      "type": "npm",
-      "script": "start",
-      "problemMatcher": [],
+      "label": "bun: start",
+      "type": "shell",
+      "command": "bun run start",
+      "problemMatcher": []
     },
     {
-      "label": "npm: start:fastboot",
-      "type": "npm",
-      "script": "start:fastboot",
-      "problemMatcher": [],
-    },
+      "label": "bun: start:fastboot",
+      "type": "shell",
+      "command": "bun run start:fastboot",
+      "problemMatcher": []
+    }
   ]
 }
