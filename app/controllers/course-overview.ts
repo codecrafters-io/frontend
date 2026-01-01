@@ -11,15 +11,23 @@ export default class CourseOverviewController extends Controller {
   @service declare authenticator: AuthenticatorService;
 
   get activeRepository(): RepositoryModel | null {
-    return this.userRepositories.toSorted(fieldComparator('lastSubmissionAt')).reverse()[0] || null;
+    return this.repositoriesForTrack.toSorted(fieldComparator('lastSubmissionAt')).reverse()[0] || null;
   }
 
   get completedStages() {
-    return this.userRepositories.flatMap((repository) => repository.completedStages);
+    return this.repositoriesForTrack.flatMap((repository) => repository.completedStages);
   }
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get repositoriesForTrack() {
+    if (this.model.language) {
+      return this.userRepositories.filter((repository) => repository.language === this.model.language);
+    }
+
+    return this.userRepositories;
   }
 
   get userRepositories() {
