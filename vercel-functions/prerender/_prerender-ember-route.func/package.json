@@ -3,7 +3,7 @@
   "dependencies": {
     "abortcontroller-polyfill": "^1.7.8",
     "fastboot": "^4.1.5",
-    "node-fetch": "^2.6.12"
+    "node-fetch": "^2.6.12" // When upgrading, make sure /concepts/xyz works on Vercel preview.
   },
   "type": "module"
 }
