@@ -1,11 +1,10 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "codecrafters-frontend",
       "dependencies": {
-        "@rails/actioncable": "^8.0.201",
+        "@rails/actioncable": "^8.1.100",
         "@rive-app/canvas": "^2.27.0",
         "@stripe/stripe-js": "^8.6.0",
         "@typeform/embed": "^5.10.0",
@@ -823,7 +822,7 @@
 
     "@posthog/core": ["@posthog/core@1.9.0", "", { "dependencies": { "cross-spawn": "^7.0.6" } }, "sha512-j7KSWxJTUtNyKynLt/p0hfip/3I46dWU2dk+pt7dKRoz2l5CYueHuHK4EO7Wlgno5yo1HO4sc4s30MXMTICHJw=="],
 
-    "@rails/actioncable": ["@rails/actioncable@8.0.201", "", {}, "sha512-WiXZodvnK7u+wlu72DZydfV75x14HhzXI84sto9xcdsW1DMOHK+jYwQuuE/Wh/hKH5yajFIw/3DUP6MHDeGrbA=="],
+    "@rails/actioncable": ["@rails/actioncable@8.1.100", "", {}, "sha512-j4vJQqz51CDVYv2UafKRu4jiZi5/gTnm7NkyL+VMIgEw3s8jtVtmzu9uItUaZccUg9NJ6o05yVyBAHxNfTuCRA=="],
 
     "@rive-app/canvas": ["@rive-app/canvas@2.27.0", "", {}, "sha512-wXGYCjXO+UpqesRPVSy7YmTnKSelhJVEu6kCWNWzwFD5IfwaM7rF9oG6WsubZ/D2Aacl9snaJUWjos7Em8mUSg=="],
 
