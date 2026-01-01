@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "codecrafters-frontend",
@@ -97,7 +98,7 @@
         "@types/seedrandom": "^3.0.8",
         "@types/showdown": "^2.0.2",
         "@types/three": "^0.172.0",
-        "@uiw/codemirror-theme-github": "^4.25.1",
+        "@uiw/codemirror-theme-github": "^4.25.4",
         "autoprefixer": "^10.4.21",
         "broccoli-asset-rev": "^3.0.0",
         "canvas-confetti": "^1.9.4",
@@ -1134,9 +1135,9 @@
 
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@8.50.0", "", { "dependencies": { "@typescript-eslint/types": "8.50.0", "eslint-visitor-keys": "^4.2.1" } }, "sha512-Xzmnb58+Db78gT/CCj/PVCvK+zxbnsw6F+O1oheYszJbBSdEjVhQi3C/Xttzxgi/GLmpvOggRs1RFpiJ8+c34Q=="],
 
-    "@uiw/codemirror-theme-github": ["@uiw/codemirror-theme-github@4.25.1", "", { "dependencies": { "@uiw/codemirror-themes": "4.25.1" } }, "sha512-l70gUrYAxHlpMWmG8A/I4PN5h5zzPxV+c9pRtsw+VtdmdgVWMh3JaSsuFZlf6h311s+/WB2FMZKdFw5SwrFWaA=="],
+    "@uiw/codemirror-theme-github": ["@uiw/codemirror-theme-github@4.25.4", "", { "dependencies": { "@uiw/codemirror-themes": "4.25.4" } }, "sha512-M5zRT2vIpNsuKN0Lz+DwLnmhHW8Eddp1M9zC0hm3V+bvffmaSn/pUDey1eqGIv5xNNmjhqvDAz0a90xLYCzvSw=="],
 
-    "@uiw/codemirror-themes": ["@uiw/codemirror-themes@4.25.1", "", { "dependencies": { "@codemirror/language": "^6.0.0", "@codemirror/state": "^6.0.0", "@codemirror/view": "^6.0.0" }, "peerDependencies": { "@codemirror/language": ">=6.0.0", "@codemirror/state": ">=6.0.0", "@codemirror/view": ">=6.0.0" } }, "sha512-6o8tQ8bdq14RuVFpZ7l9u8KnuPq824uG3U1VV933Uhv8mfaxaoaOQSjv6T2bQUPhjH6ZlEu5+tAMkOfIL21eIQ=="],
+    "@uiw/codemirror-themes": ["@uiw/codemirror-themes@4.25.4", "", { "dependencies": { "@codemirror/language": "^6.0.0", "@codemirror/state": "^6.0.0", "@codemirror/view": "^6.0.0" } }, "sha512-2SLktItgcZC4p0+PfFusEbAHwbuAWe3bOOntCevVgHtrWGtGZX3IPv2k8IKZMgOXtAHyGKpJvT9/nspPn/uCQg=="],
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.2.0", "", {}, "sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ=="],
 
