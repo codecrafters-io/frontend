@@ -50,6 +50,6 @@ module('Acceptance | track-viewed-page-events-test', function (hooks) {
     visibilityService.isVisible = true;
     visibilityService.fireCallbacks();
 
-    waitUntil(() => getViewedPageEvents().length === 2);
+    await waitUntil(() => getViewedPageEvents().length === 2);
   });
 });
