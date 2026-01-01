@@ -10,7 +10,7 @@
 >
   <div class="flex items-start gap-2">
     <div
-      class="flex-shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5
+      class="shrink-0 flex items-center justify-center w-4 h-4 border rounded-full mt-0.5
         {{if @isSelected 'border-teal-500 dark:border-teal-700' 'border-gray-400 dark:border-gray-600'}}"
     >
       {{#if @isSelected}}
@@ -74,7 +74,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col items-end pl-4 flex-shrink-0">
+  <div class="flex flex-col items-end pl-4 shrink-0">
     {{#if this.discountedPriceInDollars}}
       <div class="flex items-center gap-x-1">
         <span class="text-gray-400 dark:text-gray-500 font-bold line-through text-lg">${{@plan.priceInDollars}}</span>
@@ -88,7 +88,7 @@
       </div>
     {{/if}}
 
-    <div class="text-gray-500 dark:text-gray-400 text-xxs flex-shrink-0 text-right mt-0.5">
+    <div class="text-gray-500 dark:text-gray-400 text-xxs shrink-0 text-right mt-0.5">
       {{#if this.amortizedMonthlyPriceInDollars}}
         Effectively ${{this.amortizedMonthlyPriceInDollars}}/mo
       {{else}}

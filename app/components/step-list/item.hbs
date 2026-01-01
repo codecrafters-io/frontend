@@ -2,13 +2,13 @@
   <div class="flex flex-col items-center gap-2">
     {{#if @step.isComplete}}
       {{! Checkmark }}
-      <div class="flex w-7 h-7 items-center justify-center flex-shrink-0" data-test-step-complete-icon>
+      <div class="flex w-7 h-7 items-center justify-center shrink-0" data-test-step-complete-icon>
         {{svg-jar "check-circle" class="w-full text-teal-500"}}
       </div>
     {{else}}
       {{! Step number }}
       <div
-        class="h-7 w-7 flex-shrink-0 rounded-full bg-gray-100 dark:bg-gray-900 text-xs text-gray-900 dark:text-gray-200 font-semibold flex items-center justify-center"
+        class="h-7 w-7 shrink-0 rounded-full bg-gray-100 dark:bg-gray-900 text-xs text-gray-900 dark:text-gray-200 font-semibold flex items-center justify-center"
       >
         {{add @stepIndex 1}}
       </div>

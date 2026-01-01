@@ -16,7 +16,7 @@
   <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-between gap-x-6">
       <div class="flex items-center gap-1.5">
-        <div class="flex-shrink-0 h-6 w-6">
+        <div class="shrink-0 h-6 w-6">
           <AvatarImage @user={{@entry.user}} class="h-6 w-6 rounded-full border border-gray-300 dark:border-gray-600" />
         </div>
         <div
@@ -48,7 +48,7 @@
           </a>
         {{/if}}
       </div>
-      <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 {{unless this.isCurrentUser 'opacity-25 group-hover/table-row:opacity-100'}}">
+      <div class="hidden md:flex items-center gap-1.5 shrink-0 {{unless this.isCurrentUser 'opacity-25 group-hover/table-row:opacity-100'}}">
         {{#if (gt this.hiddenCourses.length 0)}}
           <div class="text-gray-500 dark:text-gray-400">
             ...
