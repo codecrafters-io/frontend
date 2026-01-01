@@ -112,7 +112,7 @@
     "@uiw/codemirror-theme-github": "^4.25.1",
     "autoprefixer": "^10.4.21",
     "broccoli-asset-rev": "^3.0.0",
-    "canvas-confetti": "^1.9.3",
+    "canvas-confetti": "^1.9.4",
     "codemirror": "^6.0.2",
     "concurrently": "^9.2.0",
     "culori": "^4.0.2",

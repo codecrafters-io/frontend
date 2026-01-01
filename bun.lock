@@ -101,7 +101,7 @@
         "@uiw/codemirror-theme-github": "^4.25.1",
         "autoprefixer": "^10.4.21",
         "broccoli-asset-rev": "^3.0.0",
-        "canvas-confetti": "^1.9.3",
+        "canvas-confetti": "^1.9.4",
         "codemirror": "^6.0.2",
         "concurrently": "^9.2.0",
         "culori": "^4.0.2",
@@ -1477,7 +1477,7 @@
 
     "caniuse-lite": ["caniuse-lite@1.0.30001762", "", {}, "sha512-PxZwGNvH7Ak8WX5iXzoK1KPZttBXNPuaOvI2ZYU7NrlM+d9Ov+TUvlLOBNGzVXAntMSMMlJPd+jY6ovrVjSmUw=="],
 
-    "canvas-confetti": ["canvas-confetti@1.9.3", "", {}, "sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g=="],
+    "canvas-confetti": ["canvas-confetti@1.9.4", "", {}, "sha512-yxQbJkAVrFXWNbTUjPqjF7G+g6pDotOUHGbkZq2NELZUMDpiJ85rIEazVb8GTaAptNW2miJAXbs1BtioA251Pw=="],
 
     "capture-exit": ["capture-exit@2.0.0", "", { "dependencies": { "rsvp": "^4.8.4" } }, "sha512-PiT/hQmTonHhl/HFGN+Lx3JJUznrVYJ3+AQsnthneZbvW7x+f08Tk7yLJTLEOUvBTbduLeeBkxEaYXUOUrRq6g=="],
 
