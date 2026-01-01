@@ -7,13 +7,20 @@ import type Owner from '@ember/owner';
 import type RouterService from '@ember/routing/router-service';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import computeLeaderboardCTA from 'codecrafters-frontend/utils/compute-leaderboard-cta';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    currentCourseStage: CourseStageModel;
     language: LanguageModel;
+    repository: RepositoryModel;
+    shouldShowCTA: boolean;
   };
 }
 
@@ -23,10 +30,26 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
   @service declare leaderboardEntriesCacheRegistry: LeaderboardEntriesCacheRegistryService;
   @service declare router: RouterService;
 
+  @tracked isLoadingRank: boolean = true;
+  @tracked ctaText: string = 'Loading...';
+
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.refreshRankTask.perform();
+  }
+
+  get computedCtaText(): string | null {
+    if (!this.leaderboardEntriesCache.userEntry || !this.leaderboardEntriesCache.userRankCalculation) {
+      return null;
+    }
+
+    return computeLeaderboardCTA(
+      this.leaderboardEntriesCache.userEntry,
+      this.leaderboardEntriesCache.userRankCalculation,
+      this.args.repository,
+      this.args.currentCourseStage,
+    );
   }
 
   get leaderboardEntriesCache(): LeaderboardEntriesCache {
@@ -43,7 +66,22 @@ export default class LanguageLeaderboardRankSection extends Component<Signature>
   }
 
   refreshRankTask = task({ restartable: true }, async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await this.leaderboardEntriesCacheRegistry.getOrCreate(this.args.language.leaderboard!).loadOrRefresh();
+
+    this.isLoadingRank = false;
+    this.ctaText = ' '; // No break space
+
+    await timeout(500);
+    this.ctaText = 'Nice work!';
+
+    if (this.computedCtaText) {
+      await timeout(2500);
+      this.ctaText = ' '; // No break space
+
+      await timeout(500);
+      this.ctaText = this.computedCtaText;
+    }
   });
 }
 
