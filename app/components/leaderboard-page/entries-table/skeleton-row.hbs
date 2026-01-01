@@ -8,12 +8,12 @@
   <LeaderboardPage::EntriesTable::RowCell>
     <div class="flex items-center justify-between gap-x-6">
       <div class="flex items-center gap-1.5">
-        <LoadingSkeleton @isCircle={{true}} class="size-6 flex-shrink-0" />
+        <LoadingSkeleton @isCircle={{true}} class="size-6 shrink-0" />
         <LoadingSkeleton class="w-[12ch] sm:w-[16ch] text-xs" />
       </div>
-      <div class="hidden md:flex items-center gap-1.5 flex-shrink-0 opacity-25 group-hover/table-row:opacity-100">
+      <div class="hidden md:flex items-center gap-1.5 shrink-0 opacity-25 group-hover/table-row:opacity-100">
         {{#each (repeat 6)}}
-          <LoadingSkeleton class="w-4 flex-shrink-0" />
+          <LoadingSkeleton class="w-4 shrink-0" />
         {{/each}}
       </div>
     </div>
