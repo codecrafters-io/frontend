@@ -24,9 +24,16 @@ export default class CourseOverviewController extends Controller {
 
   get userRepositories() {
     if (this.authenticator.currentUser) {
-      return this.authenticator.currentUser.repositories
+      let repositories = this.authenticator.currentUser.repositories
         .filter((item) => item.course === this.model.course)
         .filter((item) => item.firstSubmissionCreated);
+
+      // Filter by track/language if specified
+      if (this.model.language) {
+        repositories = repositories.filter((item) => item.language === this.model.language);
+      }
+
+      return repositories;
     } else {
       return [];
     }
