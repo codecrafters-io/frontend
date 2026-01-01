@@ -41,10 +41,6 @@ export default class CoursePageRightSidebar extends Component<Signature> {
       return undefined;
     }
 
-    if (this.coursePageState.currentStep !== this.coursePageState.activeStep) {
-      return undefined;
-    }
-
     return this.coursePageState.currentStepAsCourseStageStep.courseStage;
   }
 
