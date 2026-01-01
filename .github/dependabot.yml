@@ -5,8 +5,48 @@
 
 version: 2
 updates:
-  # Dependabot doesn't currently support Bun's `bun.lock` lockfile format.
-  # If you want automated dependency updates, consider adding Renovate instead.
+  - package-ecosystem: 'bun'
+    open-pull-requests-limit: 10 # Default is 5
+    directory: '/' # Location of package manifests
+    schedule:
+      interval: 'daily'
+    ignore:
+      - dependency-name: 'ember-source'
+      - dependency-name: 'ember-data'
+      - dependency-name: 'ember-cli'
+    groups:
+      embroider:
+        patterns:
+          - '@embroider/*'
+      ember-types:
+        patterns:
+          - '@types/ember'
+          - '@types/ember*'
+      eslint:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+      glint:
+        patterns:
+          - '@glint/*'
+      prettier:
+        patterns:
+          - 'prettier'
+          - 'eslint-config-prettier'
+      shikijs:
+        patterns:
+          - 'shiki'
+          - '@shikijs/*'
+      typescript-eslint:
+        patterns:
+          - '@typescript-eslint/*'
+
+  - package-ecosystem: 'bun'
+    open-pull-requests-limit: 10
+    directory: '/vercel-functions/prerender/_prerender-ember-route.func'
+    schedule:
+      interval: 'daily'
+
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
