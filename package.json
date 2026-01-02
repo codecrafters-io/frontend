@@ -104,7 +104,7 @@
     "@types/mustache": "^4.2.6",
     "@types/prismjs": "^1.26.5",
     "@types/qunit": "^2.19.13",
-    "@types/rails__actioncable": "^6.1.11",
+    "@types/rails__actioncable": "^8.0.3",
     "@types/rsvp": "^4.0.9",
     "@types/seedrandom": "^3.0.8",
     "@types/showdown": "^2.0.2",
