@@ -163,7 +163,7 @@
     "ember-sinon-qunit": "^7.5.0",
     "ember-sortable": "^5.3.3",
     "ember-source": "~6.4.0",
-    "ember-svg-jar": "^2.6.3",
+    "ember-svg-jar": "^2.7.1",
     "ember-template-imports": "^4.4.0",
     "ember-template-lint": "^7.9.3",
     "ember-tooltips": "^4.0.0",
