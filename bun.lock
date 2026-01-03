@@ -93,7 +93,7 @@
         "@types/mustache": "^4.2.6",
         "@types/prismjs": "^1.26.5",
         "@types/qunit": "^2.19.13",
-        "@types/rails__actioncable": "^6.1.11",
+        "@types/rails__actioncable": "^8.0.3",
         "@types/rsvp": "^4.0.9",
         "@types/seedrandom": "^3.0.8",
         "@types/showdown": "^2.0.2",
@@ -1073,7 +1073,7 @@
 
     "@types/qunit": ["@types/qunit@2.19.13", "", {}, "sha512-N4xp3v4s7f0jb2Oij6+6xw5QhH7/IgHCoGIFLCWtbEWoPkGYp8Te4mIwIP21qaurr6ed5JiPMiy2/ZoiGPkLIw=="],
 
-    "@types/rails__actioncable": ["@types/rails__actioncable@6.1.11", "", {}, "sha512-L6A3Rg6sGsv2cqalOgdOmyFvL1Pw69Mg0WuG6NtY9chzabhtkiSFY5fczo72mqRGezrMvl0Jy80v+N719CW+Tg=="],
+    "@types/rails__actioncable": ["@types/rails__actioncable@8.0.3", "", {}, "sha512-y46MOTYorVQVwlHUyaZYbrh3nIkXsRYNuPna32lb3RngLVBlndNbIPvAUywFfhivftNhYg+vW5sZKWYCVIX2lA=="],
 
     "@types/range-parser": ["@types/range-parser@1.2.7", "", {}, "sha512-hKormJbkJqzQGhziax5PItDUTMAM9uE2XXQmM37dyd4hVM+5aVl7oVxMVUiVQn2oCQFN/LKCZdvSM0pFRqbSmQ=="],
 
