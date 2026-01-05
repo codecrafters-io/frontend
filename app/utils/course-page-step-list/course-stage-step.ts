@@ -118,6 +118,10 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
     }
   }
 
+  get requiresMembershipToAttempt(): boolean {
+    return this.courseStage.isPaid && !this.repository.user.canAttemptCourseStage(this.courseStage);
+  }
+
   get routeParams() {
     return {
       route: 'course.stage.instructions',

@@ -68,6 +68,10 @@ export default class StepDefinition {
     return this.progressIndicator as ProgressIndicatorWithDot;
   }
 
+  get requiresMembershipToAttempt(): boolean {
+    return false;
+  }
+
   get routeParams(): { route: string; models: string[] } {
     throw new Error('Subclasses of Step must implement a routeParams getter');
   }

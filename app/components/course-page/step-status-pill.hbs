@@ -18,6 +18,6 @@
     class="inline-flex border rounded-full pl-1.5 pr-2.5 text-sm font-semibold text-yellow-700 bg-yellow-100 border-yellow-300 dark:text-yellow-400 dark:bg-yellow-950 dark:border-yellow-400/20"
     ...attributes
   >
-    In-progress
+    {{if @step.requiresMembershipToAttempt "Membership required" "In-progress"}}
   </div>
 {{/if}}
