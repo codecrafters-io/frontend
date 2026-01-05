@@ -6,7 +6,7 @@ FSL-1.1-MIT
 
 ## Notice
 
-Copyright 2021-2025 CodeCrafters, Inc.
+Copyright 2021-2026 CodeCrafters, Inc.
 
 ## Terms and Conditions
 
