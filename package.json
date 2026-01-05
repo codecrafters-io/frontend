@@ -175,7 +175,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.17.0",
     "eslint-plugin-qunit": "^8.2.5",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "html-entities": "^2.6.0",
     "loader.js": "^4.7.0",
     "node-fetch": "^2.6.12",
