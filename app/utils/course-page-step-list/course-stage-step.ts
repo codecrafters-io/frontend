@@ -139,6 +139,10 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
     if (this.completedAt) {
       return 'complete';
     } else if (this.repository.currentStage === this.courseStage) {
+      if (!this.repository.user.canAttemptCourseStage(this.courseStage)) {
+        return 'membership_required';
+      }
+
       return 'in_progress';
     } else {
       return 'locked';

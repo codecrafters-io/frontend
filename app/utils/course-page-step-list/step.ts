@@ -15,7 +15,7 @@ export type StepType =
 // - not_started: the step hasn't been started yet
 // - in_progress: the step is in progress
 // - locked: the step isn't ready to be worked on (it might depend on other steps)
-export type StepStatus = 'complete' | 'not_started' | 'in_progress' | 'locked';
+export type StepStatus = 'complete' | 'not_started' | 'in_progress' | 'locked' | 'membership_required';
 
 export default class StepDefinition {
   declare globalPosition: number; // Set soon after construction
