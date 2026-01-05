@@ -106,8 +106,11 @@
 {{#if (eq this.chooseMembershipPlanModalIsOpen "true")}}
   <ModalBackdrop>
     <PayPage::ChooseMembershipPlanModal
-      @onClose={{this.handleChooseMembershipPlanModalClose}}
       @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
+      @checkoutSessionCancelPath="/pay"
+      @checkoutSessionSuccessPath="/settings/billing"
+      @closeModalCTAText="Back to pricing page"
+      @onClose={{this.handleChooseMembershipPlanModalClose}}
       @regionalDiscount={{this.regionalDiscount}}
     />
   </ModalBackdrop>

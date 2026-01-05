@@ -19,7 +19,8 @@
     {{#animated-if (eq this.currentStep "plan-selection") use=this.transition duration=200}}
       <PayPage::ChooseMembershipPlanModal::PlanSelectionStep
         @activeDiscountForYearlyPlan={{@activeDiscountForYearlyPlan}}
-        @onBackToPricingPageLinkClick={{@onClose}}
+        @closeModalCTAText={{@closeModalCTAText}}
+        @onCloseModalCTAClick={{@onClose}}
         @onChoosePlanButtonClick={{this.handleContinueButtonClick}}
         @onPlanSelect={{this.handlePlanSelect}}
         @pricingPlans={{this.pricingPlans}}

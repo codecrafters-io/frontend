@@ -8,7 +8,8 @@ interface Signature {
 
   Args: {
     activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
-    onBackToPricingPageLinkClick: () => void;
+    closeModalCTAText: string;
+    onCloseModalCTAClick: () => void;
     onChoosePlanButtonClick: () => void;
     onPlanSelect: (plan: PricingPlan) => void;
     pricingPlans: PricingPlan[];
