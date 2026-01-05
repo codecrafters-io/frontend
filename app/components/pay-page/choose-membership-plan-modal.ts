@@ -1,14 +1,14 @@
-import Component from '@glimmer/component';
-import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
-import { service } from '@ember/service';
-import Store from '@ember-data/store';
-import window from 'ember-window-mock';
 import * as Sentry from '@sentry/ember';
-import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
-import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import Component from '@glimmer/component';
+import Store from '@ember-data/store';
+import fade from 'ember-animated/transitions/fade';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
+import type RegionalDiscountModel from 'codecrafters-frontend/models/regional-discount';
+import window from 'ember-window-mock';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export interface PricingPlan {
   id: 'v1-3mo' | 'v1-1yr' | 'v1-lifetime';
@@ -29,6 +29,9 @@ interface Signature {
 
   Args: {
     activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
+    checkoutSessionCancelPath: string;
+    checkoutSessionSuccessPath: string;
+    closeModalCTAText: string;
     onClose: () => void;
     regionalDiscount: RegionalDiscountModel | null;
   };
@@ -89,12 +92,12 @@ export default class ChooseMembershipPlanModal extends Component<Signature> {
     this.isCreatingCheckoutSession = true;
 
     const checkoutSession = this.store.createRecord('individual-checkout-session', {
-      cancelUrl: `${window.location.origin}/pay`,
+      cancelUrl: window.location.origin + this.args.checkoutSessionCancelPath,
       extraInvoiceDetailsRequested: this.extraInvoiceDetailsRequested,
       pricingPlanId: this.selectedPlanId,
       promotionalDiscount: this.selectedPlanId === 'v1-1yr' ? this.args.activeDiscountForYearlyPlan : null,
       regionalDiscount: this.args.regionalDiscount || null,
-      successUrl: `${window.location.origin}/catalog`,
+      successUrl: window.location.origin + this.args.checkoutSessionSuccessPath,
     });
 
     await checkoutSession.save();

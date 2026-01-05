@@ -283,7 +283,7 @@ module('Acceptance | pay-test', function (hooks) {
     assert.true(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is visible');
     assert.strictEqual(currentURL(), '/pay?plans=true');
 
-    await payPage.chooseMembershipPlanModal.clickOnBackToPricingPageLink();
+    await payPage.chooseMembershipPlanModal.clickOnCloseModalCTA();
 
     assert.false(payPage.chooseMembershipPlanModal.isVisible, 'membership plan modal is not visible after closing');
     assert.strictEqual(currentURL(), '/pay', 'plans query param is removed from URL');
