@@ -18,7 +18,7 @@
         "mustache": "^4.2.0",
         "node-html-parser": "^7.0.1",
         "player.js": "^0.1.0",
-        "posthog-js": "^1.312.0",
+        "posthog-js": "^1.313.0",
         "seedrandom": "^3.0.5",
         "showdown": "^2.1.0",
         "three": "^0.172.0",
@@ -2889,7 +2889,7 @@
 
     "postcss-value-parser": ["postcss-value-parser@4.2.0", "", {}, "sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ=="],
 
-    "posthog-js": ["posthog-js@1.312.0", "", { "dependencies": { "@posthog/core": "1.9.0", "core-js": "^3.38.1", "fflate": "^0.4.8", "preact": "^10.19.3", "web-vitals": "^4.2.4" } }, "sha512-rdXprhuRzhutU8powMJpIfC0uRtI3OyuYktmLhZRMsD4DQaO3fnudKNq4zxtNmqMPFCSTfmlBH8ByLNOppm2tg=="],
+    "posthog-js": ["posthog-js@1.313.0", "", { "dependencies": { "@posthog/core": "1.9.0", "core-js": "^3.38.1", "fflate": "^0.4.8", "preact": "^10.19.3", "web-vitals": "^4.2.4" } }, "sha512-CL8RkC7m9BTZrix86w0fdnSCVqC/gxrfs6c4Wfkz/CldFD7f2912S2KqnWFmwRVDGIwm9IR82YhublQ88gdDKw=="],
 
     "preact": ["preact@10.20.2", "", {}, "sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg=="],
 
