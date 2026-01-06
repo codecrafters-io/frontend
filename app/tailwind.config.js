@@ -345,6 +345,7 @@ module.exports = {
             },
             '.prose :where(ul):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
               marginTop: '0.6em',
+              marginBottom: '0.6em',
             },
             '.prose :where(li):not(:where([class~="not-prose"],[class~="not-prose"] *))': {
               marginTop: '0.3em',
