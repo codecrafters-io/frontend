@@ -21,7 +21,10 @@ export default class ApiRequestsVerifier {
         // Triggered on application boot
         pathname !== '/api/v1/users/current' &&
         // Triggered when header is rendered
-        !pathname.match(/^\/api\/v1\/users\/[^/]+\/top-language-leaderboard-slugs$/)
+        !pathname.match(/^\/api\/v1\/users\/[^/]+\/top-language-leaderboard-slugs$/) &&
+        // Ignore track leaderboard requests (implementation details vary)
+        pathname !== '/api/v1/leaderboard-entries' &&
+        pathname !== '/api/v1/leaderboard-rank-calculations'
       );
     });
 

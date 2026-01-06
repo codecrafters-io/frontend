@@ -72,7 +72,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(coursePage.header.stepName, 'Bind to a port');
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     assert.ok(
       apiRequestsVerifier.verify([

@@ -97,7 +97,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -115,7 +114,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 

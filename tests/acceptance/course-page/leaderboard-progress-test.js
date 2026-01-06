@@ -18,9 +18,6 @@ module('Acceptance | course-page | leaderboard-progress', function (hooks) {
     testScenario(this.server, ['dummy']);
     const currentUser = signIn(this.owner, this.server);
 
-    // TODO: Remove this once track leaderboard is always enabled
-    currentUser.update({ featureFlags: { 'can-view-track-leaderboard-on-course-page': 'test' } });
-
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
@@ -54,7 +51,6 @@ module('Acceptance | course-page | leaderboard-progress', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     await coursePage.setupStepCompleteModal.clickOnNextButton();

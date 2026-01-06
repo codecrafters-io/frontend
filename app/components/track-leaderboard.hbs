@@ -1,4 +1,4 @@
-<div data-test-track-leaderboard {{did-insert this.handleDidInsert}} ...attributes>
+<div data-test-track-leaderboard {{did-insert this.handleDidInsert}} {{did-update this.handleDidInsert @language}} ...attributes>
   <div class="items-center justify-between mb-2 ease-out transition-all duration-300 {{if @isCollapsed 'hidden' 'flex'}} ">
     <LinkTo
       @route="leaderboard"

@@ -92,8 +92,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
         '/api/v1/repositories', // fetch repositories (course page)
         '/api/v1/course-language-requests', // fetch language requests (course page)
         '/api/v1/languages', // fetch languages (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
       ]),
       'API requests match expected sequence on course page',
     );
@@ -112,9 +110,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
         '/api/v1/repositories', // poll repository (after language selection)
         '/api/v1/courses', // refresh course (after language selection)
         '/api/v1/repositories', // refresh repositories (after language selection)
-        '/api/v1/course-leaderboard-entries', // refresh leaderboard (after language selection)
         '/api/v1/repositories', // refresh repositories after subscribed (after language selection)
-        '/api/v1/course-leaderboard-entries', // refresh leaderboard after subscribed (after language selection)
       ]),
       'API requests match expected sequence after language selection',
     );
@@ -123,13 +119,11 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Select Language Proficiency');
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // poll repositories (course page)
-        '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
       ]),
       'API requests match expected sequence after polling',
     );
@@ -171,7 +165,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(
@@ -180,7 +173,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
         '/api/v1/repositories/1', // poll repository updates (course page)
         '/api/v1/repositories/1', // poll repository changes (course page)
         '/api/v1/repositories', // update repositories (after status change)
-        '/api/v1/course-leaderboard-entries', // update leaderboard (after status change)
       ]),
       'API requests match expected sequence after polling',
     );
@@ -231,7 +223,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
     this.server.create('submission', { repository, courseStage: repository.course.stages.models.find((stage) => stage.position === 1) });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.setupStepCompleteModal.isVisible, 'setup step complete modal is visible');

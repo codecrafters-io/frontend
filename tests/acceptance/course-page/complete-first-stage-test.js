@@ -54,7 +54,6 @@ module('Acceptance | course-page | complete-first-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.firstStageYourTaskCard.steps[0].isComplete, 'First step is complete');

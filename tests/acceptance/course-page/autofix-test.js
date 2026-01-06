@@ -196,7 +196,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
   });
