@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { service } from '@ember/service';
 
 interface Signature {

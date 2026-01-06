@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
-import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
+import type { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 
 interface Signature {
