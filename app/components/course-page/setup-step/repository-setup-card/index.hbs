@@ -16,16 +16,32 @@
 
     <StepList @steps={{this.steps}} data-test-repository-setup-step-list as |context|>
       {{#if (eq context.step.id "clone-repository")}}
-        <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep @repository={{@repository}} />
+        <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
       {{else if (eq context.step.id "push-empty-commit")}}
-        <CoursePage::SetupStep::RepositorySetupCard::PushEmptyCommitStep @repository={{@repository}} />
+        <CoursePage::SetupStep::RepositorySetupCard::PushEmptyCommitStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
+      {{else if (eq context.step.id "test-cli-connection")}}
+        <CoursePage::SetupStep::RepositorySetupCard::TestCliConnectionStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
       {{/if}}
     </StepList>
 
     {{#if this.isComplete}}
       <div class="mt-4 prose dark:prose-invert">
         <span class="text-xl mr-1">🎉</span>
-        Git push received! The first stage is now activated.
+
+        {{#if this.featureFlags.canViewCLIPingFlow}}
+          The first stage is now activated.
+        {{else}}
+          Git push received! The first stage is now activated.
+        {{/if}}
       </div>
 
       <PrimaryLinkButton
@@ -41,28 +57,12 @@
       <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 inline-flex rounded-sm border border-gray-200 dark:border-white/10 shadow-xs mt-4">
         <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
       </div>
-
-      <div class="mt-6 prose prose-compact prose-sm dark:prose-invert">
-        <p>Need help?</p>
-        <ul>
-          <li>
-            <a
-              data-test-run-git-commands-link
-              href="https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Not sure how to run git commands</a>
-          </li>
-          <li>
-            <a
-              data-test-git-clone-issues-link
-              href="https://docs.codecrafters.io/troubleshooting/fix-clone-errors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >Running into issues with the git clone step</a>
-          </li>
-        </ul>
-      </div>
     {{/if}}
   </:content>
 </CoursePage::InstructionsCard>
+
+{{#if this.isTroubleshootingModalOpen}}
+  <ModalBackdrop>
+    <CoursePage::SetupStep::RepositorySetupCard::TroubleshootingModal @onClose={{this.handleTroubleshootingModalClose}} />
+  </ModalBackdrop>
+{{/if}}

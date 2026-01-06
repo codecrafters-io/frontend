@@ -49,7 +49,10 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
   test('can start course', async function (assert) {
     testScenario(this.server, ['dummy']);
-    signIn(this.owner, this.server);
+    const user = signIn(this.owner, this.server);
+
+    // TODO: Change this once can-view-cli-ping-flow feature flag is the default
+    user.update({ featureFlags: { 'can-view-cli-ping-flow': 'test' } });
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
@@ -157,14 +160,11 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
     assert.strictEqual(coursePage.header.stepName, 'Repository Setup', 'step name is repository setup');
-    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for a git push...', 'progress text is listening for a git push');
+    assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for ping...', 'progress text is listening for ping');
 
-    assert.strictEqual(coursePage.repositorySetupCard.gitCloneIssuesLink.text, 'Running into issues with the git clone step');
-    assert.strictEqual(coursePage.repositorySetupCard.gitCloneIssuesLink.href, 'https://docs.codecrafters.io/troubleshooting/fix-clone-errors');
-    assert.strictEqual(coursePage.repositorySetupCard.runGitCommandsLink.text, 'Not sure how to run git commands');
     assert.strictEqual(
-      coursePage.repositorySetupCard.runGitCommandsLink.href,
-      'https://docs.codecrafters.io/challenges/how-challenges-work#how-to-run-git-commands',
+      coursePage.repositorySetupCard.cloneRepositoryStep.copyableTerminalCommand,
+      'git clone https://git.codecrafters.io/a-long-test-string.git codecrafters-dummy-python cd codecrafters-dummy-python',
     );
 
     await percySnapshot('Start Course - Listening for Git push');
@@ -205,6 +205,9 @@ module('Acceptance | course-page | start-course', function (hooks) {
   test('can start course with workflow tutorial', async function (assert) {
     testScenario(this.server, ['dummy']);
     const user = signIn(this.owner, this.server);
+
+    // TODO: Change this once can-view-cli-ping-flow feature flag is the default
+    user.update({ featureFlags: { 'can-view-cli-ping-flow': 'test' } });
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });

@@ -6,6 +6,7 @@ export interface Signature {
 
   Args: {
     repository: RepositoryModel;
+    onTroubleshootingLinkClick: () => void;
   };
 }
 

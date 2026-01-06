@@ -1,5 +1,5 @@
-<div data-test-push-empty-commit-step>
-  <CopyableTerminalCommand @commands={{array "git commit --allow-empty -m 'test'" "git push origin master"}} class="mb-1.5" />
+<div data-test-test-cli-connection-step>
+  <CopyableTerminalCommand @commands={{array "curl https://codecrafters.io/install.sh | sh" "codecrafters ping"}} class="mb-1.5" />
 
   <a href="#" {{on "click" @onTroubleshootingLinkClick}} class="flex items-center gap-0.5 pl-0.5">
     {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}

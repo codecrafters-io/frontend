@@ -1,4 +1,4 @@
-<div>
+<div data-test-clone-repository-step>
   {{! @glint-expect-error isNew is not typed? }}
   {{#if @repository.isNew}}
     <div class="prose dark:prose-invert">
@@ -10,7 +10,15 @@
   {{else}}
     <CopyableTerminalCommand
       @commands={{array (concat "git clone " @repository.cloneUrl " " @repository.cloneDirectory) (concat "cd " @repository.cloneDirectory)}}
-      data-test-copyable-repository-clone-instructions
+      class="mb-1.5"
     />
+
+    <a href="#" class="flex items-center gap-0.5 pl-0.5" data-test-troubleshoot-link {{on "click" @onTroubleshootingLinkClick}}>
+      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
+
+      <span class="text-blue-500 text-xs underline font-medium">
+        Troubleshoot
+      </span>
+    </a>
   {{/if}}
 </div>
