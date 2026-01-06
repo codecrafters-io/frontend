@@ -1,17 +1,19 @@
-import { attribute, text } from 'ember-cli-page-object';
+import { text } from 'ember-cli-page-object';
 
 export default {
   continueButton: { scope: '[data-test-continue-button]' },
-  copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
   description: text('[data-test-course-description]'),
   footerText: text('[data-test-footer]'),
-  gitCloneIssuesLink: {
-    text: text('[data-test-git-clone-issues-link]'),
-    href: attribute('href', '[data-test-git-clone-issues-link]'),
+
+  cloneRepositoryStep: {
+    copyableTerminalCommand: text('[data-test-copyable-terminal-command] pre code'),
+    troubleshootLink: { scope: '[data-test-troubleshoot-link]' },
+    scope: '[data-test-clone-repository-step]',
   },
-  runGitCommandsLink: {
-    text: text('[data-test-run-git-commands-link]'),
-    href: attribute('href', '[data-test-run-git-commands-link]'),
+
+  testCliConnectionStep: {
+    troubleshootLink: { scope: '[data-test-troubleshoot-link]' },
+    scope: '[data-test-test-cli-connection-step]',
   },
 
   scope: '[data-test-repository-setup-card]',
