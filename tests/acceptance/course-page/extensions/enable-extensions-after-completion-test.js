@@ -57,7 +57,6 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
 
     // await new Promise((resolve) => setTimeout(resolve, 1000)); // Temp
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     // URL should still be stage 2
@@ -136,7 +135,6 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     // Now go back to catalog page and click on the course again

@@ -4,7 +4,6 @@ import fade from 'ember-animated/transitions/fade';
 import move from 'ember-animated/motions/move';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type LanguageModel from 'codecrafters-frontend/models/language';
 import type LeaderboardEntriesCache from 'codecrafters-frontend/utils/leaderboard-entries-cache';
 import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/services/leaderboard-entries-cache-registry';
 import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
@@ -20,7 +19,7 @@ interface Signature {
   Args: {
     currentCourseStage?: CourseStageModel;
     isCollapsed: boolean;
-    language: LanguageModel;
+    leaderboard: LeaderboardModel;
     repository?: RepositoryModel;
   };
 }
@@ -60,12 +59,8 @@ export default class TrackLeaderboard extends Component<Signature> {
     return this.leaderboardEntriesCache.entriesForSecondSectionWithRanks;
   }
 
-  get leaderboard(): LeaderboardModel {
-    return this.args.language.leaderboard!;
-  }
-
   get leaderboardEntriesCache(): LeaderboardEntriesCache {
-    return this.leaderboardEntriesCacheRegistry.getOrCreate(this.leaderboard);
+    return this.leaderboardEntriesCacheRegistry.getOrCreate(this.args.leaderboard);
   }
 
   @action

@@ -55,8 +55,9 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
         '/api/v1/repositories', // update repositories (after try different language)
         '/api/v1/course-language-requests', // fetch language requests (after try different language)
         '/api/v1/languages', // fetch languages (after try different language)
-        '/api/v1/course-leaderboard-entries', // update leaderboard (after try different language)
-        '/api/v1/course-leaderboard-entries', // update leaderboard after subscribed (after try different language)
+        '/api/v1/leaderboard-rank-calculations', // update leaderboard rank calculation (after try different language)
+        '/api/v1/leaderboard-entries', // update leaderboard entries (after try different language)
+        '/api/v1/leaderboard-entries', // update leaderboard entries (after try different language)
       ]),
       'API requests match expected sequence after clicking try different language',
     );
@@ -72,9 +73,11 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
         '/api/v1/repositories', // update repositories (after selecting Go)
         '/api/v1/courses', // refresh course (after selecting Go)
         '/api/v1/repositories', // update repositories (after selecting Go)
-        '/api/v1/course-leaderboard-entries', // update leaderboard (after selecting Go)
+        '/api/v1/leaderboard-rank-calculations', // update leaderboard rank calculation (after selecting Go)
         '/api/v1/repositories', // update repositories after subscribed (after selecting Go)
-        '/api/v1/course-leaderboard-entries', // update leaderboard after subscribed (after selecting Go)
+        '/api/v1/leaderboard-rank-calculations', // update leaderboard rank calculation (after selecting Go)
+        '/api/v1/leaderboard-entries', // update leaderboard entries (after selecting Go)
+        '/api/v1/leaderboard-entries', // update leaderboard entries (after selecting Go)
       ]),
       'API requests match expected sequence after selecting Go language',
     );
@@ -97,7 +100,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     repository.update({ lastSubmission: this.server.create('submission', { repository }) });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -107,7 +109,6 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
         '/api/v1/repositories/2', // poll repository updates (course page)
         '/api/v1/repositories/2', // poll repository changes (course page)
         '/api/v1/repositories', // update repositories (after status change)
-        '/api/v1/course-leaderboard-entries', // update leaderboard (after status change)
       ]),
       'API requests match expected sequence after first poll',
     );
@@ -115,14 +116,12 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     assert.ok(coursePage.repositorySetupCard.statusIsComplete, 'current status is complete');
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // poll repositories (course page)
-        '/api/v1/course-leaderboard-entries', // poll leaderboard (course page)
       ]),
       'API requests match expected sequence after second poll',
     );

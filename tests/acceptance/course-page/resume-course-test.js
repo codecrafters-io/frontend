@@ -29,23 +29,40 @@ module('Acceptance | course-page | resume-course-test', function (hooks) {
     });
 
     await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-
-    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
 
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // fetch repositories (catalog page)
         '/api/v1/courses', // fetch courses (catalog page)
         '/api/v1/languages', // fetch languages (catalog page)
+      ]),
+      'API requests match expected sequence',
+    );
+
+    await catalogPage.clickOnCourse('Build your own Redis');
+
+    assert.ok(
+      apiRequestsVerifier.verify([
         '/api/v1/courses', // fetch course details (course overview page)
-        '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+        '/api/v1/repositories', // fetch repositories (course overview page)
+        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course overview page)
+      ]),
+      'API requests match expected sequence',
+    );
+
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(currentURL(), '/courses/redis/stages/rg2', 'current URL is course page URL');
+
+    assert.ok(
+      apiRequestsVerifier.verify([
         '/api/v1/courses', // refresh course (course page)
         '/api/v1/repositories', // fetch repositories (course page)
         '/api/v1/course-stage-comments', // fetch stage comments (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
+        '/api/v1/leaderboard-rank-calculations', // fetch leaderboard rank calculation (course page)
+        '/api/v1/leaderboard-rank-calculations', // fetch leaderboard rank calculation (course page)
+        '/api/v1/leaderboard-entries', // fetch leaderboard entries (course page)
+        '/api/v1/leaderboard-entries', // fetch leaderboard entries (course page)
       ]),
       'API requests match expected sequence',
     );

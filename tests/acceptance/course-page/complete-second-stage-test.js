@@ -105,7 +105,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -160,7 +159,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -203,7 +201,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.secondStageYourTaskCard.steps[0].isComplete, 'First step is complete');
@@ -222,7 +219,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
@@ -266,7 +262,6 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     this.server.schema.promotionalDiscounts.create({

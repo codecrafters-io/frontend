@@ -35,7 +35,9 @@
           class="mb-6 w-full bg-github-green-dot-wall"
         />
 
-        <TrackLeaderboard class="mb-6" @isCollapsed={{false}} @language={{@model.language}} />
+        {{#if @model.language.leaderboard}}
+          <TrackLeaderboard class="mb-6" @isCollapsed={{false}} @leaderboard={{@model.language.leaderboard}} />
+        {{/if}}
 
         {{! TODO: Show testimonials for track instead of courses? }}
         <div>
