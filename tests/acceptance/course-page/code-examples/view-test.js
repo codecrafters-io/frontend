@@ -620,7 +620,6 @@ module('Acceptance | course-page | code-examples | view', function (hooks) {
 
     this.server.schema.courseStages.findBy({ name: 'Respond to multiple PINGs' }).update({ marketingMarkdown: 'Updated marketing markdown' });
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.notOk(codeExamplesPage.stageIncompleteModal.isVisible, 'stage incomplete modal is not visible after updating course stage');

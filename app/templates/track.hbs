@@ -37,7 +37,9 @@
       </div>
 
       <div class="hidden lg:block w-80 shrink-0 sticky top-6 ml-6">
-        <TrackLeaderboard class="mb-6" @isCollapsed={{false}} @language={{@model.language}} />
+        {{#if @model.language.leaderboard}}
+          <TrackLeaderboard class="mb-6" @isCollapsed={{false}} @leaderboard={{@model.language.leaderboard}} />
+        {{/if}}
 
         {{! TODO: Show testimonials for track instead of courses? }}
         <div>

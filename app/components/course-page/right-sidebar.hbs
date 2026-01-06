@@ -12,20 +12,12 @@
       {{/if}}
     </div>
 
-    {{#if this.featureFlags.canViewTrackLeaderboardOnCoursePage}}
+    {{#if this.languageForTrackLeaderboard.leaderboard}}
       <TrackLeaderboard
         @currentCourseStage={{this.currentCourseStageForTrackLeaderboard}}
         @isCollapsed={{not @isExpanded}}
-        @language={{this.languageForTrackLeaderboard}}
+        @leaderboard={{this.languageForTrackLeaderboard.leaderboard}}
         @repository={{@activeRepository}}
-      />
-    {{else}}
-      <CourseLeaderboard
-        class={{if @isExpanded "-ml-6" "-ml-4"}}
-        @course={{@course}}
-        @activeRepository={{@activeRepository}}
-        @repositories={{@repositories}}
-        @isCollapsed={{not @isExpanded}}
       />
     {{/if}}
 

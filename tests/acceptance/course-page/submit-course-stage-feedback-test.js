@@ -128,7 +128,6 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
       });
 
       fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-      fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
       await finishRender();
     };
 

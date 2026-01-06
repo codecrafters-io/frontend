@@ -72,7 +72,6 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
     assert.strictEqual(coursePage.header.stepName, 'Bind to a port');
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
     assert.ok(
       apiRequestsVerifier.verify([
@@ -80,10 +79,11 @@ module('Acceptance | course-page | switch-repository', function (hooks) {
         '/api/v1/repositories', // fetch repositories (course page)
         '/api/v1/course-stage-comments', // fetch stage comments (course page)
         '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
+        '/api/v1/leaderboard-rank-calculations', // fetch leaderboard rank calculation (course page)
+        '/api/v1/leaderboard-rank-calculations', // fetch leaderboard rank calculation (course page)
+        '/api/v1/leaderboard-entries', // fetch leaderboard entries (course page)
+        '/api/v1/leaderboard-entries', // fetch leaderboard entries (course page)
         '/api/v1/repositories', // fetch repositories after subscribed (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries after subscribed (course page)
       ]),
       'API requests match expected sequence after polling',
     );

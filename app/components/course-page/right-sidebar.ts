@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import PreferredLanguageLeaderboardService from 'codecrafters-frontend/services/preferred-language-leaderboard';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -30,7 +29,6 @@ export default class CoursePageRightSidebar extends Component<Signature> {
   @service declare coursePageState: CoursePageStateService;
   @service declare preferredLanguageLeaderboard: PreferredLanguageLeaderboardService;
   @service declare store: Store;
-  @service declare featureFlags: FeatureFlagsService;
 
   get currentCourseStageForTrackLeaderboard(): CourseStageModel | undefined {
     if (!this.coursePageState.stepList) {

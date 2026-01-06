@@ -41,7 +41,6 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
@@ -77,7 +76,6 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.notOk(coursePage.shareProgressModal.isVisible, 'progress banner modal is not visible');
@@ -136,7 +134,6 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?

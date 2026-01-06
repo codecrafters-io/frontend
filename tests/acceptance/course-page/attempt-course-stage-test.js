@@ -52,7 +52,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Tests failed.', 'footer text is tests failed');
@@ -60,7 +59,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.ok(
       apiRequestsVerifier.verify([
         '/api/v1/repositories', // fetch repositories (course page)
-        '/api/v1/course-leaderboard-entries', // fetch leaderboard entries (course page)
       ]),
       'API requests match expected sequence after creating submission',
     );
@@ -102,7 +100,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
@@ -142,7 +139,6 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     });
 
     fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
-    fakeActionCableConsumer.sendData('CourseLeaderboardChannel', { event: 'updated' });
     await finishRender();
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'test runner card is not visible');
