@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
-import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
-import { action } from '@ember/object';
-import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import { tracked } from '@glimmer/tracking';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
+import type { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 interface Signature {
   Element: HTMLDivElement;
