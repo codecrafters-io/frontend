@@ -1,0 +1,13 @@
+{
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile"
+  },
+  "install": "bun install",
+  "terminals": [
+    {
+      "name": "make serve",
+      "command": "make serve"
+    }
+  ]
+}
