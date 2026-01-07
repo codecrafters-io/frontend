@@ -12,7 +12,8 @@ export default class LayoutService extends Service {
     if (
       this.router.currentRouteName === 'course' ||
       this.router.currentRouteName.startsWith('course.') ||
-      this.router.currentRouteName.startsWith('course-admin')
+      this.router.currentRouteName.startsWith('course-admin') ||
+      this.router.currentRouteName.startsWith('course-next')
     ) {
       return false;
     } else {
