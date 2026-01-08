@@ -18,6 +18,8 @@ import groupByFieldReducer from 'codecrafters-frontend/utils/group-by-field-redu
  */
 const DELAY_BETWEEN_HIGHLIGHT_CODE_TASKS_IN_MS: number = 100;
 
+type DiffLineType = 'added' | 'removed' | 'unchanged';
+
 interface Signature {
   Element: HTMLDivElement;
 
@@ -66,13 +68,17 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
     const preCodeElement = parsedHtml.querySelector('pre code');
     const highlightedLineNodes = preCodeElement ? Array.from(preCodeElement.children) : [];
 
-    const lines = zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
+    const zippedLines = zip(this.codeLinesWithTypes, highlightedLineNodes);
+
+    const lines = zippedLines.map(([codeLineWithType, node], index) => {
+      const lineType = codeLineWithType?.[1] ?? 'unchanged';
+
       return {
         isFirstLineOfFile: index === 0,
-        isLastLineOfFile: index === this.codeLinesWithTypes.length - 1,
+        isLastLineOfFile: index === zippedLines.length - 1,
         isTargetedByComments: this.targetingCommentsForLine(index + 1).length > 0,
         isTargetedByExpandedComments: this.expandedComments.some((comment) => this.commentTargetsLine(comment, index + 1)),
-        html: htmlSafe(`${node.outerHTML}`),
+        html: htmlSafe(`${node?.outerHTML ?? ''}`),
         type: lineType,
         number: index + 1,
         comments: this.topLevelCommentsGroupedByLine[index + 1] || [],
@@ -89,21 +95,21 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
     );
   }
 
-  get codeLinesWithTypes() {
+  get codeLinesWithTypes(): Array<[string, DiffLineType]> {
     return this.args.code
       .trim()
       .split('\n')
       .filter((line) => !line.startsWith('@@'))
       .map((line) => {
         if (line.startsWith('+')) {
-          return [line.substring(1), 'added'];
+          return [line.substring(1), 'added'] as [string, DiffLineType];
         } else if (line.startsWith('-')) {
-          return [line.substring(1), 'removed'];
+          return [line.substring(1), 'removed'] as [string, DiffLineType];
         } else if (line.startsWith(' ')) {
-          return [line.substring(1), 'unchanged'];
+          return [line.substring(1), 'unchanged'] as [string, DiffLineType];
         } else {
           // shouldn't happen?
-          return [line, 'unchanged'];
+          return [line, 'unchanged'] as [string, DiffLineType];
         }
       });
   }
