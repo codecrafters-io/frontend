@@ -1,12 +1,14 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import { service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Transition from '@ember/routing/transition';
 
 export default class LoginRoute extends BaseRoute {
-  @service authenticator;
+  @service declare authenticator: AuthenticatorService;
 
-  beforeModel(transition) {
-    if (transition.to.queryParams.next) {
-      this.authenticator.initiateLoginAndRedirectTo(transition.to.queryParams.next);
+  beforeModel(transition: Transition) {
+    if (transition.to?.queryParams['next']) {
+      this.authenticator.initiateLoginAndRedirectTo(transition.to.queryParams['next']);
     } else {
       this.authenticator.initiateLogin();
     }
