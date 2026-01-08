@@ -109,8 +109,8 @@ export default class CourseLeaderboard extends Component<Signature> {
       return new CourseLeaderboardEntry({
         status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
         completedStageSlugs: repository.completedStageSlugs,
-        currentCourseStage: repository.currentStage || repository.course.firstStage,
-        language: repository.language,
+        currentCourseStage: (repository.currentStage || repository.course.firstStage)!,
+        language: repository.language!,
         user: repository.user,
         lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
       });
