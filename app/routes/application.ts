@@ -1,10 +1,12 @@
+import FastBootService from 'ember-cli-fastboot/services/fastboot';
 import Route from '@ember/routing/route';
-import { service } from '@ember/service';
+import Store from '@ember-data/store';
 import { SERIALIZER_SHOEBOX_IDENTIFIER } from 'codecrafters-frontend/serializers/application';
+import { service } from '@ember/service';
 
 export default class ApplicationRoute extends Route {
-  @service store;
-  @service fastboot;
+  @service declare fastboot: FastBootService;
+  @service declare store: Store;
 
   async beforeModel() {
     if (!this.fastboot.isFastBoot) {
