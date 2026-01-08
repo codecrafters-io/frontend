@@ -1,6 +1,8 @@
 import config from 'codecrafters-frontend/config/environment';
 
-export default function scrollToTop(element = window) {
+type ScrollableElement = Window | Element;
+
+export default function scrollToTop(element: ScrollableElement = window): void {
   if (element && typeof element.scrollTo === 'function') {
     element.scrollTo({ top: 0 });
 
