@@ -1,0 +1,113 @@
+{{! template-lint-disable no-invalid-interactive }}
+{{#if this.isEditing}}
+  <div
+    class="border rounded-sm relative
+      {{if this.isEditing 'border-gray-300' 'border-gray-200 hover:bg-gray-50 hover:border-gray-300'}}
+      overflow-hidden"
+    data-test-editable-block
+    ...attributes
+  >
+    <div class="absolute right-0 top-0 p-3 flex items-center gap-3">
+      {{#if @wasDeleted}}
+        <Pill @color="red">Deleted</Pill>
+      {{else if @wasAdded}}
+        <Pill @color="green">Added</Pill>
+      {{else if (or @wasChanged this.mutableBlockHasChanges)}}
+        <Pill @color="yellow">Changed</Pill>
+      {{/if}}
+    </div>
+
+    {{#if this.isEditing}}
+      <div class="bg-gray-50 p-3 border-b border-gray-200">
+        <div class="font-semibold text-gray-900 text-sm underline mb-4">
+          Editor
+        </div>
+
+        {{#if this.mutableBlock}}
+          {{#if (eq this.mutableBlock.type "markdown")}}
+            <ConceptAdmin::BlocksPage::MarkdownBlockEditor @model={{this.mutableBlockAsMarkdownBlockDefinition}} />
+          {{else if (eq this.mutableBlock.type "click_to_continue")}}
+            <ConceptAdmin::BlocksPage::ClickToContinueBlockEditor @model={{this.mutableBlockAsClickToContinueBlockDefinition}} />
+          {{else if (eq this.mutableBlock.type "concept_question")}}
+            <ConceptAdmin::BlocksPage::ConceptQuestionBlockEditor
+              @model={{this.mutableBlockAsConceptQuestionBlockDefinition}}
+              @concept={{@concept}}
+            />
+          {{else}}
+            <div class="text-red-500 font-bold py-4">
+              Unknown block type:
+              {{this.mutableBlock.type}}
+            </div>
+          {{/if}}
+        {{/if}}
+
+        <div class="flex items-center justify-between gap-3 pt-2">
+          <div class="flex items-center gap-3">
+            {{#if @wasDeleted}}
+              <PrimaryButton @size="small" {{on "click" this.handleUndeleteButtonClicked}} data-test-undelete-button>Restore Block</PrimaryButton>
+            {{else}}
+              <PrimaryButton @size="small" {{on "click" this.handleSaveButtonClicked}} data-test-save-button>Save</PrimaryButton>
+            {{/if}}
+
+            {{#if this.shouldShowDiscardChangesButton}}
+              <span
+                class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+                role="button"
+                {{on "click" this.handleDiscardChangesButtonClicked}}
+              >Discard changes</span>
+            {{else}}
+              <span
+                class="text-xs text-gray-400 hover:underline hover:text-gray-500"
+                role="button"
+                {{on "click" this.handleCancelButtonClicked}}
+              >Cancel</span>
+            {{/if}}
+          </div>
+
+          {{#unless @wasDeleted}}
+            <TertiaryButton @size="small" {{on "click" this.handleDeleteButtonClicked}} data-test-delete-button>Delete Block</TertiaryButton>
+          {{/unless}}
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="p-3">
+      {{#if this.isEditing}}
+        <div class="font-semibold text-gray-900 text-sm underline mb-4">
+          Preview
+        </div>
+      {{/if}}
+
+      <ConceptAdmin::BlocksPage::BlockPreview @model={{this.blockOrMutableBlock}} data-test-editable-block-preview />
+    </div>
+
+    {{! This needs to be rendered to avoid ember-sortable trying to make the whole block draggable }}
+    <div class="absolute top-0 -left-4 w-4 opacity-0">
+      {{yield to="dragHandler"}}
+    </div>
+  </div>
+{{else}}
+  <div class="group/editable-block-preview relative" data-test-editable-block ...attributes>
+    <div
+      role="button"
+      class="border-l-2 pl-2 hover:bg-gray-50 {{this.previewBorderColorClasses}}"
+      {{on "click" this.handleCollapsedBlockClicked}}
+      data-test-clickable-area
+    >
+      {{#if @wasDeleted}}
+        <div class="text-gray-400" data-test-editable-block-preview>
+          <span class="line-through">Deleted Block</span>
+          (click to restore)
+        </div>
+      {{else}}
+        <ConceptAdmin::BlocksPage::BlockPreview @model={{@conceptBlock}} data-test-editable-block-preview />
+      {{/if}}
+    </div>
+
+    {{#unless @wasDeleted}}
+      <div class="absolute top-0 -left-4 w-4 flex items-center opacity-0 group-hover/editable-block-preview:opacity-100">
+        {{yield to="dragHandler"}}
+      </div>
+    {{/unless}}
+  </div>
+{{/if}}

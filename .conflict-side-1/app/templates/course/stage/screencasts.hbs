@@ -1,0 +1,57 @@
+<div class="pt-8 pb-16 px-3 md:px-6 lg:px-10" data-test-screencasts-tab>
+  <AlertWithIcon class="mb-6">
+    Screencasts are recordings of CodeCrafters users passing this stage. This is a beta feature, please send us
+    <div class="inline-flex">
+      <FeedbackButton @source="screencast" class="font-blue-500 hover:font-blue-600 font-semibold underline">feedback</FeedbackButton>
+    </div>.
+  </AlertWithIcon>
+
+  {{#if this.selectedScreencast}}
+    <div class="border-b border-gray-200 dark:border-white/5 mb-8 scroll-mt-16" {{did-insert this.handleDidInsertScreencastPlayer}}>
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPlayer @screencast={{this.selectedScreencast}} />
+
+      <div class="py-8">
+        <Pill @color="green">
+          {{this.selectedScreencast.language.name}}
+        </Pill>
+        <div class="font-semibold text-gray-900 dark:text-gray-100 text-xl mt-2" data-test-screencasts-previews-title>
+          {{this.selectedScreencast.title}}
+        </div>
+        <div class="flex items-center gap-3 mt-3">
+          <div class="flex items-center gap-1">
+            <img src={{this.selectedScreencast.sourceIconUrl}} class="h-5" alt="source" />
+            <div class="text-gray-600 dark:text-gray-400 text-xs">{{this.selectedScreencast.authorName}}</div>
+          </div>
+          <div class="w-px h-3 bg-gray-200 dark:bg-white/5"></div>
+          <div class="flex items-center">
+            {{svg-jar "calendar" class="w-4 text-gray-300 dark:text-gray-700 mr-1.5"}}
+            <div class="text-gray-600 dark:text-gray-400 text-xs">{{date-from-now this.selectedScreencast.publishedAt}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  <div class="grid grid-cols-1 gap-6 pb-16">
+    {{#each this.activeRepositoryLanguageScreencastsForList as |screencast|}}
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
+    {{/each}}
+
+    {{#each this.remainingLanguageScreencastsForList as |screencast|}}
+      {{! @glint-expect-error: not typesafe yet }}
+      <CourseStageScreencastPreview @screencast={{screencast}} {{on "click" (fn this.handleScreencastClicked screencast)}} />
+    {{/each}}
+
+    {{#if (eq this.screencasts.length 0)}}
+      <div class="text-center text-gray-500 py-16 text-sm">
+        No screencasts found for this stage.
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="flex items-center justify-center">
+    <TertiaryButton {{on "click" this.handleSubmitScreencastButtonClicked}}>Submit a screencast</TertiaryButton>
+  </div>
+</div>

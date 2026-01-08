@@ -1,0 +1,20 @@
+{{! Template for showing a notice when tests have passed }}
+<div
+  class="py-3.5 border-b border-green-200 dark:border-green-900/40 bg-linear-to-b from-0% to-100% from-green-50 to-green-100 dark:from-green-900/40 dark:to-green-900/60 flex"
+  data-test-tests-passed-notice
+  ...attributes
+>
+  <div class="flex items-center flex-wrap gap-4">
+    <div class="flex items-center gap-2">
+      {{svg-jar "check-circle" class="w-8 h-8 fill-teal-500"}}
+
+      <div class="prose prose-sm prose-green dark:prose-invert">
+        <p>All tests passed!</p>
+      </div>
+    </div>
+
+    <PrimaryButton @size="small" data-test-proceed-to-next-step-button>
+      Proceed to next step →
+    </PrimaryButton>
+  </div>
+</div>

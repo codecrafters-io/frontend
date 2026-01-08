@@ -1,0 +1,59 @@
+{{! scroll-mt-12 accounts for the height of the sticky header }}
+<div
+  class="bg-gray-50 dark:bg-gray-900 rounded-md w-full scroll-mt-12"
+  ...attributes
+  {{did-update this.handleContentIdentifierDidUpdate @contentIdentifier}}
+>
+  <div
+    class="bg-white dark:bg-gray-925 border border-gray-300 dark:border-white/10 relative
+      {{if (has-block 'footer') 'rounded-t border-b-0' 'rounded-sm'}}"
+  >
+    <div class="p-4 pt-3 sm:p-6 sm:pt-5 {{if (has-block 'footer') 'pb-4'}}">
+      {{#if (has-block "header")}}
+        {{yield to="header"}}
+      {{else}}
+        <h2 class="font-semibold border-b border-gray-200 dark:border-white/5 pb-2 mb-5 text-lg text-gray-700 dark:text-gray-200">{{@title}}</h2>
+      {{/if}}
+
+      <div class="{{if this.isCollapsed 'h-60 overflow-hidden'}}">
+        {{yield to="content"}}
+      </div>
+
+      {{#if this.isCollapsed}}
+        <div
+          role="button"
+          class="absolute rounded-sm inset-0 vertical-mask dark:vertical-mask-gray-925 p-4 flex items-end justify-center group z-10"
+          data-test-expand-button
+          {{on "click" this.handleExpandButtonClick}}
+        >
+          <InstructionsCard::ExpandOrCollapseButton
+            @icon="arrow-down"
+            @text="Expand"
+            class="group-hover:bg-gray-100 dark:group-hover:bg-gray-900 group-hover:border-gray-300 dark:group-hover:border-white/10"
+            {{on "click" this.handleExpandButtonClick}}
+          />
+        </div>
+      {{else if @isCollapsedByDefault}}
+        <InstructionsCard::ExpandOrCollapseButton
+          class="mt-4"
+          @icon="arrow-up"
+          @text="Collapse"
+          data-test-collapse-button
+          {{on "click" this.handleCollapseButtonClick}}
+        />
+      {{/if}}
+    </div>
+  </div>
+
+  {{#if (has-block "footer")}}
+    <div class="border border-gray-300 rounded-b relative" data-test-footer>
+      <div class="h-px w-full bg-gray-200/50 absolute -top-px"></div>
+
+      <div class="px-6 min-h-[40px] flex items-center">
+        <div class="w-full">
+          {{yield to="footer"}}
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</div>

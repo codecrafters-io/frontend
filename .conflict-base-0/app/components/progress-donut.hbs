@@ -1,0 +1,15 @@
+<svg viewBox="0 0 24 24" class="w-full h-full transform -rotate-90">
+  {{! Base circle (background) }}
+  <circle cx="12" cy="12" r="9" fill="none" stroke-width="5" class={{this.colorClassesForBaseCircle}} />
+  {{! Progress circle }}
+  <circle
+    cx="12"
+    cy="12"
+    r="9"
+    fill="none"
+    stroke-width="5"
+    class="progress-donut-circle {{this.colorClassesForProgressCircle}}"
+    style={{this.progressStyle}}
+    ...attributes
+  />
+</svg>

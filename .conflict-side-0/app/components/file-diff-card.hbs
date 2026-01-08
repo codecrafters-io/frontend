@@ -1,0 +1,38 @@
+<div class="bg-white dark:bg-gray-925 shadow-xs rounded-sm border border-gray-300 dark:border-gray-700 overflow-y-hidden" ...attributes>
+  <div class="bg-gray-50 dark:bg-gray-900 rounded-t py-1 px-4 border-b border-gray-200 dark:border-gray-700">
+    <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{@filename}}</span>
+  </div>
+
+  {{#if @useCodeMirror}}
+    {{#let (diff-to-document @code) as |document|}}
+      <CodeMirror
+        @allowMultipleSelections={{true}}
+        @bracketMatching={{true}}
+        @collapsedRanges={{@collapsedRanges}}
+        @collapseUnchanged={{true}}
+        @crosshairCursor={{true}}
+        @document={{document.current}}
+        @drawSelection={{true}}
+        @filename={{@filename}}
+        @highlightedRanges={{@highlightedRanges}}
+        @highlightSelectionMatches={{true}}
+        @highlightSpecialChars={{true}}
+        @language={{@language}}
+        @originalDocument={{document.original}}
+        @readOnly={{true}}
+        @rectangularSelection={{true}}
+        @theme={{this.codeMirrorTheme}}
+        class="block text-sm"
+      />
+    {{/let}}
+  {{else}}
+    <div class="text-sm leading-6">
+      <SyntaxHighlightedDiff
+        @code={{or @code ""}}
+        @language={{@language}}
+        @shouldCollapseUnchangedLines={{true}}
+        @forceDarkTheme={{@forceDarkTheme}}
+      />
+    </div>
+  {{/if}}
+</div>

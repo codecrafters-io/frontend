@@ -1,0 +1,34 @@
+<div
+  class="bg-gray-900 dark:bg-gray-900 border border-gray-700 p-4 text-white font-mono text-xs leading-relaxed rounded-sm overflow-y-auto"
+  {{did-insert this.handleDidInsert}}
+  {{did-update this.handleDidUpdateLogs this.evaluation.logsFileContents}}
+  {{did-update this.handleDidUpdateEvaluation this.evaluation.id}}
+  data-test-submission-logs-preview
+  ...attributes
+>
+  {{#if @submission.statusIsEvaluating}}
+    <div class="flex items-center">
+      <BlinkingDot class="mr-2" @color="yellow" />
+
+      {{#if @submission.clientTypeIsCli}}
+        Running tests... (view `codecrafters test` output for live logs)
+      {{else}}
+        Running tests... (view `git push` output for live logs)
+      {{/if}}
+    </div>
+  {{else if this.evaluation}}
+    {{#if this.isLoadingLogs}}
+      <div>Loading logs...</div>
+    {{else}}
+      {{#each this.logLines key="@index" as |logLine index|}}
+        <div class="flex items-start">
+          <div class="text-gray-500 dark:text-gray-600 w-4 text-right mr-3 shrink-0 select-none">{{add index 1}}</div>
+          <div data-test-log-line class="whitespace-pre">{{html-safe logLine}}</div>
+        </div>
+      {{/each}}
+    {{/if}}
+  {{else}}
+    <div>Hmm, we weren't able to find any logs for this submission.</div>
+    <div>Please contact us at hello@codecrafters.io if this error persists.</div>
+  {{/if}}
+</div>

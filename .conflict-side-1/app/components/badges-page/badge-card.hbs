@@ -1,0 +1,41 @@
+<div
+  class="border rounded-sm border-black p-4 sm:p-8 flex flex-col items-center hover:border-[#3F3F3F] bg-linear-to-br from-black to-black hover:from-[#181818] hover:to-black from-0% to-50%"
+  role="{{if this.userHasBadgeAward 'button'}}"
+  data-test-badge-card
+  ...attributes
+>
+  {{#if this.userHasBadgeAward}}
+    <BadgesPage::EarnedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+  {{else}}
+    {{! @glint-expect-error: not ts-ified yet }}
+    <BadgesPage::LockedBadgePreview @badge={{@badge}} class="mb-3 lg:mb-6" />
+  {{/if}}
+
+  {{#if @badge}}
+    <div class="font-semibold text-sm sm:text-base text-gray-300 mb-1 text-center" data-test-badge-name>
+      {{#if this.userHasBadgeAward}}
+        The
+        {{@badge.name}}
+        Badge
+      {{else}}
+        Locked Badge
+      {{/if}}
+    </div>
+
+    <div class="text-xs sm:text-sm text-gray-400 text-center" data-test-badge-description>
+      {{@badge.shortDescription}}
+    </div>
+  {{else}}
+    <div class="text-sm sm:text-base font-semibold text-gray-300 mt-1 text-center" data-test-badge-name>
+      Locked Badge
+    </div>
+  {{/if}}
+
+  {{!-- <div>
+    {{#if this.userHasBadgeAward}}
+      <span class="text-teal-600 font-semibold">You have earned this badge.</span>
+    {{else}}
+      <span class="text-gray-500">You haven't earned this badge.</span>
+    {{/if}}
+  </div> --}}
+</div>

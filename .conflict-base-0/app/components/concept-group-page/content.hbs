@@ -1,0 +1,9 @@
+<div class="bg-white dark:bg-gray-950">
+  <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+    <div class="grid grid-cols-1 gap-3 md:gap-6 md:grid-cols-2">
+      {{#each this.sortedConcepts as |concept|}}
+        <ConceptsPage::ConceptCard @concept={{concept}} />
+      {{/each}}
+    </div>
+  </div>
+</div>

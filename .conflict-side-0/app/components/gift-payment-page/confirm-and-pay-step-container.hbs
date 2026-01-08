@@ -1,0 +1,55 @@
+<GiftPaymentPage::StepContainer @title="Confirm & Pay" data-test-confirm-and-pay-step-container>
+  <div class="prose prose-sm dark:prose-invert">
+    <ul>
+      <li>
+        You are purchasing a
+        <b class="text-teal-500 dark:text-teal-500">{{this.selectedPlan.title}} pass</b>
+        gift
+
+        <span class="whitespace-nowrap">
+          (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 2)}}>change</button>)
+        </span>
+      </li>
+      <li>
+        Your payment receipt will be sent to
+        <b class="text-teal-500 dark:text-teal-500">{{@giftPaymentFlow.senderEmailAddress}}</b>
+        <span class="whitespace-nowrap">
+          (<button type="button" class="underline cursor-pointer" {{on "click" (fn @onNavigationItemClick 1)}}>change</button>)
+        </span>
+      </li>
+      <li>
+        Once payment is complete, we'll send you a gift link. You can share this link with the recipient at the time of your choosing.
+      </li>
+    </ul>
+  </div>
+
+  <div class="h-px bg-gray-100 dark:bg-white/5 mt-6 mb-6"></div>
+
+  <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+    {{#if this.errorMessage}}
+      <div class="text-red-600 dark:text-red-400 text-sm font-semibold">
+        {{this.errorMessage}}
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500 dark:text-gray-400 text-center">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isProcessingPayButtonClick}}
+      @shouldShowSpinner={{this.isProcessingPayButtonClick}}
+      @size="large"
+      {{on "click" this.handlePaymentButtonClick}}
+      class="w-full sm:w-auto justify-center"
+      data-test-pay-button
+    >
+      {{#if this.isProcessingPayButtonClick}}
+        Saving...
+      {{else}}
+        Pay ${{this.totalAmount}}
+        →
+      {{/if}}
+    </PrimaryButtonWithSpinner>
+  </div>
+</GiftPaymentPage::StepContainer>

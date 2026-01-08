@@ -1,0 +1,5 @@
+<div {{did-insert this.handleDidInsertContainerElement}}>
+  {{#each this.sortedConcepts as |concept|}}
+    <TrackPage::PrimerConceptGroupSection::ConceptListItem @concept={{concept}} />
+  {{/each}}
+</div>

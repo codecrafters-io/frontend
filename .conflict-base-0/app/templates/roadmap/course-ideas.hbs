@@ -1,0 +1,21 @@
+<div class="flex flex-col md:flex-row-reverse gap-3">
+  <div class="w-full md:w-60 shrink-0">
+    <div class="md:sticky md:top-4 flex flex-col gap-3">
+
+      <LatestReleasesCard @courseExtensionIdeas={{@model.courseExtensionIdeas}} @courseIdeas={{@model.courseIdeas}} />
+    </div>
+  </div>
+  <div class="flex-grow flex flex-col gap-3">
+    <RoadmapInfoAlert @heading="What are challenges?">
+      Challenges are step-by-step coding exercises where you build projects from scratch. Vote and help us decide which challenges to build.
+    </RoadmapInfoAlert>
+
+    {{#each this.orderedCourseIdeas as |courseIdea|}}
+      <RoadmapPage::CourseIdeaCard @courseIdea={{courseIdea}} />
+    {{/each}}
+
+    {{#if this.authenticator.isAuthenticated}}
+      <RoadmapPage::SubmitCourseIdeaCard />
+    {{/if}}
+  </div>
+</div>

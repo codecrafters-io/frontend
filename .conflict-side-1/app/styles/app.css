@@ -1,0 +1,286 @@
+/* Overrides for Tailwind & others */
+@import url('overrides.css');
+
+/* Useful modules */
+@import url('utilities.css');
+@import url('modals.css');
+
+/* Prism styles */
+@import url('prism-light-theme.css');
+@import url('prism-dark-theme.css');
+
+/* Custom styles for individual pages */
+@import url('pages/affiliate-link-page.css');
+@import url('pages/code-walkthrough-page.css');
+@import url('pages/course-stage-solution-page.css');
+
+:root {
+  /* --font-cursive: 'Shadows Into Light Two', cursive; */
+  --font-cursive: 'Indie Flower', cursive;
+}
+
+body {
+  font-family: Montserrat, sans-serif; /* Required for fonts to work on Percy */
+}
+
+.ember-basic-dropdown-trigger {
+  outline: none !important;
+}
+
+.ember-basic-dropdown-content {
+  background: none !important;
+}
+
+.top-to-bottom-scroll-mask {
+  background: linear-gradient(to bottom, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 100%) 20%, rgb(255 255 255 / 0%) 100%);
+  mix-blend-mode: lighten;
+}
+
+.bottom-to-top-scroll-mask {
+  background: linear-gradient(to top, rgb(255 255 255 / 100%) 0%, rgb(255 255 255 / 100%) 20%, rgb(255 255 255 / 0%) 100%);
+  mix-blend-mode: lighten;
+}
+
+@keyframes progress-donut {
+  from {
+    stroke-dashoffset: 56.55;
+  }
+
+  to {
+    stroke-dashoffset: var(--target-offset);
+  }
+}
+
+.progress-donut-circle {
+  stroke-dasharray: 56.55 56.55;
+  stroke-dashoffset: 56.55;
+  animation: progress-donut 400ms ease-out forwards;
+}
+
+.top-50-percent {
+  top: 50%;
+}
+
+.prose code {
+  overflow-wrap: break-word;
+  text-wrap: auto;
+}
+
+.prose pre code {
+  white-space: pre;
+}
+
+.vertical-mask {
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0%) 0%,
+    rgb(255 255 255 / 0%) 30%,
+    rgb(255 255 255 / 100%) 80%,
+    rgb(255 255 255 / 100%) 100%
+  );
+}
+
+.dark\:vertical-mask-gray-925:is(.dark *) {
+  background: linear-gradient(to bottom, rgb(8 15 29 / 0%) 0%, rgb(8 15 29 / 0%) 30%, rgb(8 15 29 / 100%) 80%, rgb(8 15 29 / 100%) 100%);
+}
+
+.syntax-highlighted-code pre {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  overflow-x: scroll;
+  white-space: pre;
+}
+
+.syntax-highlighted-code pre code {
+  min-width: 100%;
+}
+
+.syntax-highlighted-code.with-line-numbers pre code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+.syntax-highlighted-code.with-line-numbers pre code .line::before {
+  content: counter(step);
+  counter-increment: step;
+  width: 1rem;
+  margin-right: 1rem;
+  display: inline-block;
+  text-align: right;
+  color: #94a3b8;
+  font-size: 0.875em;
+}
+
+.syntax-highlighted-code pre code .line {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.syntax-highlighted-code pre code .line.highlighted {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.code-walkthrough-prose h1 {
+  margin-top: 1em !important;
+}
+
+.diff-highlight .removed-marker {
+  color: rgb(186 0 103);
+}
+
+.diff-highlight .inserted-marker {
+  color: #690;
+}
+
+.diff-highlight .removed-line {
+  background-color: rgb(255 0 0 / 10%);
+  user-select: none;
+}
+
+.dark .diff-highlight .removed-line {
+  background-color: rgb(255 0 0 / 15%);
+}
+
+.diff-highlight .added-line {
+  background-color: rgb(0 255 0 / 15%);
+}
+
+.number-input-with-no-controls::-webkit-outer-spin-button,
+.number-input-with-no-controls::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.number-input-with-no-controls {
+  appearance: textfield;
+}
+
+.blurred-overlay {
+  filter: blur(4px);
+}
+
+.badge-earned-modal-prose b {
+  /* medium */
+  font-weight: 500;
+}
+
+.markdown-list ul {
+  list-style-type: disc;
+  padding-left: 1.5em;
+}
+
+.metabase-iframe {
+  margin-left: -1rem;
+  margin-right: -1rem;
+  background-color: transparent;
+}
+
+@media screen and (width >= 80em) {
+  .metabase-iframe {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+}
+
+.has-prism-highlighting pre[class*='language-'] {
+  background-color: #f1f5f9; /* slate-100 */
+}
+
+/* Override prism's 1em font-size */
+.prose pre[class*='language-'] {
+  font-size: 0.875em !important;
+}
+
+.prose.prose-sm pre[class*='language-'] {
+  font-size: 1em !important;
+}
+
+.has-prism-highlighting pre[class*='language-']:is(.dark *) {
+  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
+}
+
+.sortable-item {
+  transition: all 0.06s;
+}
+
+.sortable-item.is-dragging {
+  transition-duration: 0s;
+  z-index: 10;
+}
+
+.sortable-item.is-dragging .highlight-while-dragging {
+  background: #f8fafc;
+}
+
+.sortable-item.is-dropping .highlight-while-dragging {
+  background: #f1f5f9;
+  z-index: 10;
+}
+
+.ember-tooltip,
+.ember-popover {
+  z-index: 1000;
+}
+
+.ember-popover {
+  background: #3a3c47;
+  color: #fff;
+  padding: 6px 10px;
+  border: none;
+  max-width: 200px; /* match tooltip for now */
+}
+
+.ember-popover[x-placement^='top'] .ember-popover-arrow {
+  border-top-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='right'] .ember-popover-arrow {
+  border-right-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='bottom'] .ember-popover-arrow {
+  border-bottom-color: #3a3c47;
+}
+
+.ember-popover[x-placement^='left'] .ember-popover-arrow {
+  border-left-color: #3a3c47;
+}
+
+.gift-card {
+  animation: rotate-in 1.2s;
+  transform-origin: top center;
+
+  /* Float (https://www.easing.dev/bouyant) */
+  /* stylelint-disable */
+  /* prettier-ignore */
+  animation-timing-function: linear(0 0%, 0.007064 1%, 0.027471 2%, 0.059973 3%, 0.103243 4%, 0.155898 5%, 0.216526 6%, 0.283705 7%, 0.356025 8%, 0.432103 9%, 0.510609 10%, 0.59027 11%, 0.669892 12%, 0.748366 13%, 0.824682 14%, 0.897929 15%, 0.967308 16%, 1.03213 17%, 1.091819 18%, 1.145915 19%, 1.194066 20%, 1.23603 21%, 1.271669 22%, 1.300942 23%, 1.3239 24%, 1.340681 25%, 1.351496 26%, 1.356625 27%, 1.356407 28%, 1.351232 29%, 1.341531 30%, 1.327765 31%, 1.310421 32%, 1.289999 33%, 1.267006 34%, 1.241949 35%, 1.215327 36%, 1.187624 37%, 1.159304 38%, 1.130809 39%, 1.102547 40%, 1.074896 41%, 1.048199 42%, 1.022758 43%, 0.998837 44%, 0.976662 45%, 0.956414 46%, 0.938238 47%, 0.922236 48%, 0.908476 49%, 0.896987 50%, 0.887766 51%, 0.880777 52%, 0.875956 53%, 0.873214 54%, 0.87244 55%, 0.873501 56%, 0.876251 57%, 0.880528 58%, 0.886164 59%, 0.89298 60%, 0.900798 61%, 0.909434 62%, 0.91871 63%, 0.92845 64%, 0.938485 65%, 0.948653 66%, 0.958802 67%, 0.968793 68%, 0.978498 69%, 0.987801 70%, 0.996603 71%, 1.004815 72%, 1.012368 73%, 1.019201 74%, 1.025274 75%, 1.030554 76%, 1.035027 77%, 1.038688 78%, 1.041545 79%, 1.043616 80%, 1.044928 81%, 1.045519 82%, 1.045432 83%, 1.044717 84%, 1.04343 85%, 1.04163 86%, 1.039379 87%, 1.036742 88%, 1.033782 89%, 1.030565 90%, 1.027154 91%, 1.02361 92%, 1.019993 93%, 1.016359 94%, 1.012759 95%, 1.009241 96%, 1.005848 97%, 1.002619 98%, 0.999586 99%, 0.996779 100%);
+  /* stylelint-enable */
+}
+
+@keyframes rotate-in {
+  0% {
+    transform: rotateY(-45deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+.noisy-overlay {
+  background-image: url('/assets/images/bkg-noise.webp');
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: normal;
+  opacity: 0.035;
+  pointer-events: none;
+}
+
+.ease-fling {
+  /* stylelint-disable */
+  /* prettier-ignore */
+  transition-timing-function: linear(0 0%, 0.00935 1%, 0.034933 2%, 0.073343 3%, 0.121559 4%, 0.176933 5%, 0.237164 6%, 0.300282 7%, 0.364621 8%, 0.428795 9%, 0.491674 10%, 0.552354 11%, 0.610135 12%, 0.664498 13%, 0.715078 14%, 0.761645 15%, 0.804085 16%, 0.842377 17%, 0.87658 18%, 0.906817 19%, 0.933259 20%, 0.956116 21%, 0.975624 22%, 0.992037 23%, 1.005618 24%, 1.016636 25%, 1.025356 26%, 1.032036 27%, 1.036926 28%, 1.040261 29%, 1.042263 30%, 1.043137 31%, 1.043072 32%, 1.04224 33%, 1.040793 34%, 1.038871 35%, 1.036594 36%, 1.034067 37%, 1.031382 38%, 1.028616 39%, 1.025833 40%, 1.023087 41%, 1.020422 42%, 1.017869 43%, 1.015456 44%, 1.013201 45%, 1.011116 46%, 1.009207 47%, 1.007478 48%, 1.005927 49%, 1.00455 50%, 1.00334 51%, 1.002289 52%, 1.001387 53%, 1.000624 54%, 0.999987 55%);
+  /* stylelint-enable */
+}

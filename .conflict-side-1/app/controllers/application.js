@@ -1,0 +1,12 @@
+import Controller from '@ember/controller';
+import { service } from '@ember/service';
+import config from 'codecrafters-frontend/config/environment';
+
+export default class ApplicationController extends Controller {
+  @service beacon;
+  @service layout;
+  @service metaData;
+  @service darkMode;
+
+  metaDataDefaults = config.x.defaultMetaTags;
+}

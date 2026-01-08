@@ -1,0 +1,39 @@
+<div class="flex items-start justify-between gap-3" data-test-course-page-header ...attributes>
+  <div class="flex items-center gap-x-3 mt-0.5 min-w-0">
+    <div class="flex items-center gap-3 min-w-0">
+      <div class="flex items-center gap-3 flex-wrap lg:hidden">
+        <button class="flex items-center py-1" type="button" {{on "click" @onMobileSidebarButtonClick}}>
+          {{svg-jar "menu" class="w-6 h-6 text-gray-500"}}
+        </button>
+      </div>
+
+      <div class="text-lg sm:text-xl xl:text-2xl shrink truncate">
+        {{#if (eq @currentStep.type "CourseStageStep")}}
+          <span class="font-bold text-gray-700 dark:text-gray-300" data-test-step-name>{{this.currentStepAsCourseStageStep.courseStage.name}}</span>
+          <span class="font-mono text-base sm:text-lg xl:text-xl">
+            <span class="text-gray-300 dark:text-gray-700">#</span><span
+              class="font-mono text-gray-400 dark:text-gray-600 uppercase"
+            >{{this.currentStepAsCourseStageStep.courseStage.slug}}</span>
+          </span>
+        {{else}}
+          <span class="font-bold text-gray-700 dark:text-gray-200" data-test-step-name>{{@currentStep.title}}</span>
+        {{/if}}
+      </div>
+
+      <div class="hidden lg:flex">
+        <CoursePage::StepStatusPill @step={{@currentStep}} />
+      </div>
+    </div>
+  </div>
+
+  <CoursePage::Header::TopRightSection
+    @activeRepository={{@activeRepository}}
+    @activeStep={{@activeStep}}
+    @course={{@course}}
+    @currentStep={{@currentStep}}
+    @nextStep={{@nextStep}}
+    @stepList={{@stepList}}
+    @track={{@track}}
+    class="shrink-0"
+  />
+</div>

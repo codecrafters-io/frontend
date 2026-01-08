@@ -1,0 +1,3 @@
+ancestorEntries = ["bun.lock"]
+ourEntries = ["bun.lock"]
+theirEntries = ["bun.lock"]

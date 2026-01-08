@@ -1,0 +1,8 @@
+{{! template-lint-disable no-inline-styles }}
+<span
+  class="inline-block bg-clip-text text-transparent animate-text-shimmer [background-size:250%_100%] [background-repeat:no-repeat,padding-box] [background-image:linear-gradient(90deg,transparent_calc(50%-var(--shimmer-spread)),#000,transparent_calc(50%+var(--shimmer-spread))),linear-gradient(#a1a1aa,#a1a1aa)] dark:[background-image:linear-gradient(90deg,transparent_calc(50%-var(--shimmer-spread)),#fff,transparent_calc(50%+var(--shimmer-spread))),linear-gradient(#71717a,#71717a)]"
+  style={{this.style}}
+  ...attributes
+>
+  {{@text}}
+</span>

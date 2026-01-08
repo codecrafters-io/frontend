@@ -1,0 +1,9 @@
+{{#if (eq @color "gray")}}
+  <div class="flex bg-gray-400 rounded-full opacity-75 {{this.sizeClasses}}" ...attributes></div>
+{{else if (eq @color "green")}}
+  <div class="flex bg-teal-500 rounded-full {{this.sizeClasses}}" ...attributes></div>
+{{else if (eq @color "red")}}
+  <div class="flex bg-red-600 rounded-full {{this.sizeClasses}}" ...attributes></div>
+{{else if (eq @color "yellow")}}
+  <div class="flex bg-yellow-500 rounded-full {{this.sizeClasses}}" ...attributes></div>
+{{/if}}

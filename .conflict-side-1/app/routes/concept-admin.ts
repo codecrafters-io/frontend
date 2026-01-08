@@ -1,0 +1,37 @@
+import Store from '@ember-data/store';
+import RouterService from '@ember/routing/router-service';
+import { service } from '@ember/service';
+import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import ConceptModel from 'codecrafters-frontend/models/concept';
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+
+export default class CourseAdminRoute extends BaseRoute {
+  @service declare authenticator: AuthenticatorService;
+  @service declare router: RouterService;
+  @service declare store: Store;
+
+  afterModel(model: { concept: ConceptModel }) {
+    if (this.router.currentRouteName === 'concept-admin.index') {
+      this.router.transitionTo('concept-admin.blocks', model.concept.slug);
+    }
+  }
+
+  async beforeModel(...args: unknown[]) {
+    // @ts-expect-error super.beforeModel not typed with spread args
+    await super.beforeModel(...args);
+
+    await this.authenticator.authenticate();
+
+    if (!this.authenticator.currentUser!.isStaff && !this.authenticator.currentUser!.isConceptAuthor) {
+      this.router.transitionTo('catalog');
+    }
+  }
+
+  async model(params: { concept_slug: string }) {
+    const allConcepts = (await this.store.findAll('concept', { include: 'author,questions' })) as unknown as ConceptModel[];
+
+    return {
+      concept: allConcepts.find((concept) => concept.slug === params.concept_slug),
+    };
+  }
+}

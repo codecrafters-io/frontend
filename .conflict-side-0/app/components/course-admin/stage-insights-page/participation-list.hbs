@@ -1,0 +1,27 @@
+<div ...attributes>
+  {{#if (eq @participations.length 0)}}
+    <p class="py-12 text-sm text-gray-500 text-center">No records found.</p>
+  {{else}}
+    <ul role="list" class="divide-y divide-gray-100">
+      {{#each this.visibleParticipations as |participation|}}
+        <div>
+          <CourseAdmin::StageInsightsPage::ParticipationListItem @participation={{participation}} />
+        </div>
+      {{/each}}
+    </ul>
+
+    <div class="flex items-center justify-center gap-2 mt-6">
+      {{#if this.hasMoreParticipations}}
+        <PrimaryButton {{on "click" this.handleShowMoreButtonClick}} @size="small">
+          ↓ Show more
+        </PrimaryButton>
+      {{/if}}
+
+      {{#if this.isCollapsible}}
+        <TertiaryButton {{on "click" this.handleCollapseButtonClick}} @size="small">
+          ↑ Collapse
+        </TertiaryButton>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>

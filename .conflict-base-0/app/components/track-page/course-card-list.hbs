@@ -1,0 +1,9 @@
+{{#each this.coursesWithProgress as |courseWithProgress|}}
+  <TrackPage::CourseCard
+    @activeRepository={{courseWithProgress.repositoryWithMostProgress}}
+    @course={{courseWithProgress.course}}
+    @language={{@language}}
+  />
+{{/each}}
+
+<TrackPage::UpcomingCoursesCard @logoImageUrl={{this.comingSoonImage}} @logoImageAltText="coming soon" />

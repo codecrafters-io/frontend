@@ -1,0 +1,8 @@
+<div
+  class="leading-7 prose dark:prose-invert max-w-none has-prism-highlighting"
+  {{did-insert this.handleDidInsertHTML}}
+  {{did-update this.handleDidUpdateHTML @model.markdown}}
+  ...attributes
+>
+  {{markdown-to-html (or @model.markdown "**_(!! empty markdown block !!)_**")}}
+</div>

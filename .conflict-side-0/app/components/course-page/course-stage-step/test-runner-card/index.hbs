@@ -1,0 +1,26 @@
+<div
+  class="rounded-sm border px-3 {{this.borderColorClasses}} {{this.backgroundColorClasses}} {{if this.isCollapsed 'cursor-pointer'}} scroll-mt-20"
+  role={{if this.isCollapsed "button" "presentation"}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+  data-test-test-runner-card
+  ...attributes
+>
+  <CoursePage::CourseStageStep::TestRunnerCard::Header
+    @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+    @isCollapsible={{@isCollapsible}}
+    @isExpanded={{this.isExpanded}}
+    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    @textColorClasses={{this.headerTextColorClasses}}
+    class={{if this.isExpanded "border-b border-gray-200 dark:border-white/5" ""}}
+  />
+
+  {{#if this.isExpanded}}
+    <div class="py-3" data-test-expanded-content>
+      <CoursePage::CourseStageStep::TestRunnerCard::RunTestsInstructions
+        @currentStep={{this.coursePageState.currentStepAsCourseStageStep}}
+        @onViewLogsButtonClick={{this.handleViewLogsButtonClick}}
+      />
+    </div>
+  {{/if}}
+</div>

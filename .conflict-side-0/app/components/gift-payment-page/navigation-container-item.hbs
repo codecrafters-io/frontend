@@ -1,0 +1,20 @@
+<div class="relative hover:opacity-100 {{unless (or @isComplete @isCurrent) 'cursor-not-allowed'}}" role="button" ...attributes>
+  <div
+    class="h-4 w-4
+      {{if (or @isComplete @isCurrent) 'bg-teal-500' 'bg-gray-300 dark:bg-gray-700'}}
+      border-2
+      {{if (or @isComplete @isCurrent) 'border-teal-500' 'border-gray-300 dark:border-gray-700'}}
+      rounded-full"
+  >
+    {{#if @isComplete}}
+      {{svg-jar "check" class="h-3 w-3 text-white"}}
+    {{/if}}
+  </div>
+
+  <div
+    class="absolute -left-20 -right-20 top-6 text-center uppercase font-semibold text-xs sm:text-base
+      {{if (or @isComplete @isCurrent) 'text-teal-500 dark:text-teal-400' 'text-gray-300 dark:text-gray-600'}}"
+  >
+    {{@name}}
+  </div>
+</div>

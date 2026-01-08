@@ -1,0 +1,14 @@
+<div class="flex items-center" data-test-track-progress ...attributes>
+  {{#if (eq @stagesCount @completedStagesCount)}}
+    {{svg-jar "check-circle" class="size-5 text-teal-500 mr-1"}}
+  {{else}}
+    <div class="size-5 mr-1.5">
+      <ProgressDonut @total={{@stagesCount}} @completed={{@completedStagesCount}} @color="teal" data-test-track-progress-donut />
+    </div>
+  {{/if}}
+
+  <div class="text-xs text-teal-500 mr-3" data-test-track-progress-text>
+    <b class="font-bold">{{@completedStagesCount}}/{{@stagesCount}}</b>
+    stages
+  </div>
+</div>

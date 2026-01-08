@@ -1,0 +1,60 @@
+{
+  "buildCommand": "scripts/build-vercel-output.sh",
+  "installCommand": "bun install --frozen-lockfile --ignore-scripts",
+  "redirects": [
+    { "source": "/_empty.html", "destination": "/404" },
+    { "source": "/_empty_notags.html", "destination": "/404" },
+    { "source": "/package.json", "destination": "/404" },
+    { "source": "/prerender/:path*", "destination": "/404" },
+    { "source": "/", "destination": "/catalog" },
+    { "source": "/join_team", "destination": "https://backend.codecrafters.io/join_team" },
+    { "source": "/setup_team", "destination": "https://backend.codecrafters.io/setup_team" },
+    { "source": "/r/famous-wombat-417894", "destination": "/join?via=gnomezgrave" },
+    {
+      "source": "/vote/challenge-ideas",
+      "destination": "/roadmap/challenges",
+      "permanent": true
+    },
+    {
+      "source": "/vote/challenge-extension-ideas",
+      "destination": "/roadmap/challenge-extensions",
+      "permanent": true
+    },
+    {
+      "source": "/vote",
+      "destination": "/roadmap",
+      "permanent": true
+    },
+    {
+      "source": "/vote/:path*",
+      "destination": "/roadmap/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/membership",
+      "destination": "/settings/billing",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/campus/:institution_slug", "destination": "/prerender/campus/[institution_slug]" },
+    { "source": "/concepts/:concept", "destination": "/prerender/concepts/[concept]" },
+    { "source": "/contests/:contest", "destination": "/prerender/contests/[contest]" },
+    { "source": "/progress/:match*", "destination": "https://backend.codecrafters.io/progress/:match*" },
+    { "source": "/submissions", "destination": "https://backend.codecrafters.io/submissions" },
+    { "source": "/submissions/:match*", "destination": "https://backend.codecrafters.io/submissions/:match*" },
+    { "source": "/users/:user", "destination": "/prerender/users/[user]" },
+    { "source": "/gifts/buy", "destination": "/prerender/gifts/buy" },
+    { "source": "/gifts/redeem/:secret_token", "destination": "/prerender/gifts/redeem/[secret_token]" },
+    { "source": "/:path*", "destination": "/_empty.html" }
+  ],
+  "github": {
+    "silent": true
+  },
+  "headers": [
+    {
+      "source": "/assets/([a-fA-F0-9]{20}).(svg|jpg|png)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31556952, immutable" }]
+    }
+  ]
+}

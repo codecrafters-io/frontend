@@ -1,0 +1,85 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6 course-admin-updates-diff-container">
+    <div class="pt-3 pb-6 border-b border-gray-200 mb-6">
+      <TertiaryLinkButton @route="course-admin.updates" @models={{array @model.update.course.slug}} @size="small" class="pl-1.5 mb-3">
+        <div class="flex items-center">
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+
+          <span>
+            Back
+          </span>
+        </div>
+      </TertiaryLinkButton>
+
+      <div class="flex items-start justify-between">
+        <div>
+          <h3 class="text-lg font-bold text-gray-900 mb-2">
+            {{@model.update.summary}}
+          </h3>
+
+          <div class="prose prose-sm" data-test-description>
+            {{#if @model.update.description}}
+              {{markdown-to-html @model.update.description}}
+            {{/if}}
+          </div>
+          {{#if (eq @model.update.status "pending")}}
+            <div class="flex items-center mt-6 gap-x-3">
+              <PrimaryButtonWithSpinner
+                @shouldShowSpinner={{this.isApplyingUpdate}}
+                @size="small"
+                {{on "click" this.handleApplyUpdateButtonClick}}
+                data-test-apply-update-button
+              >
+                Apply Update
+              </PrimaryButtonWithSpinner>
+
+              <TertiaryButtonWithSpinner
+                @size="small"
+                @shouldShowSpinner={{this.isSyncingWithGitHub}}
+                {{on "click" this.handleSyncWithGitHubButtonClick}}
+                data-test-sync-with-github-button
+              >
+                Sync with GitHub
+              </TertiaryButtonWithSpinner>
+            </div>
+          {{else if (eq @model.update.status "applied")}}
+            <div class="flex items-center mt-6 gap-x-1">
+              {{svg-jar "check-circle" class="w-6 fill-current text-teal-500"}}
+              <span class="text-gray-600 text-sm">Applied</span>
+            </div>
+          {{/if}}
+        </div>
+        <div class="flex flex-col items-end">
+          <a
+            href={{this.viewDiffLink}}
+            class="text-gray-400 flex items-center hover:text-gray-600"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-test-view-diff-link
+          >
+            {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+            <span class="text-xs underline font-medium">View diff</span>
+          </a>
+        </div>
+      </div>
+
+      {{#if @model.update.lastErrorMessage}}
+        <div class="border rounded-sm p-4 border-red-300 bg-red-50 mt-6" data-test-error-message>
+          <div class="text-red-600 font-semibold mb-2">We encountered an error when applying this update:</div>
+          <div class="border-l-2 border-red-400 pl-6 py-4">
+            <pre class="text-sm text-red-600"><code>{{@model.update.lastErrorMessage}}</code></pre>
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <FileDiffCard
+      @code={{@model.update.definitionFileContentsDiff}}
+      @filename="course-definition.yml"
+      @language="yaml"
+      @useCodeMirror={{true}}
+      data-test-file-contents-diff
+      class="mb-4"
+    />
+  </div>
+</div>

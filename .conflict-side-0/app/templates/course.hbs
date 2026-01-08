@@ -1,0 +1,123 @@
+{{page-title @model.course.name}}
+
+<div
+  class="flex h-screen w-full relative"
+  {{did-insert this.handleDidInsertContainer}}
+  {{will-destroy this.handleWillDestroyContainer}}
+  {{did-insert
+    this.setOrUpdateCurrentStepValues
+    this.coursePageState.currentStep
+    this.coursePageState.currentStep.id
+    this.coursePageState.currentStep.status
+    this.coursePageState.currentStep.type
+  }}
+  {{did-update
+    this.setOrUpdateCurrentStepValues
+    this.coursePageState.currentStep
+    this.coursePageState.currentStep.id
+    this.coursePageState.currentStep.status
+    this.coursePageState.currentStep.type
+  }}
+  {{! @glint-expect-error on-key modifier types aren't right? }}
+  {{on-key "cmd+KeyJ" this.handleToggleTestResultsBar}}
+>
+  {{#if @model.activeRepository.id}}
+    <div
+      class="hidden"
+      {{on-action-cable-message this.pollRepositoryTask.perform channel="RepositoryChannel" args=(hash repository_id=@model.activeRepository.id)}}
+      {{on-visibility-change this.pollRepositoryTask.perform if="visible"}}
+    />
+  {{/if}}
+
+  {{#if this.sidebarIsExpandedOnDesktop}}
+    <CoursePage::Sidebar
+      @course={{@model.course}}
+      @repositories={{@model.repositories}}
+      @activeRepository={{@model.activeRepository}}
+      @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+      {{! pb-12 accounts for the test results bar at the bottom !}}
+      class="group relative pb-12 w-full max-w-[18em] shrink-0 h-screen hidden lg:flex"
+    />
+  {{/if}}
+
+  {{#if this.sidebarIsExpandedOnMobile}}
+    <CoursePage::Sidebar::MobileBackdrop>
+      <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
+        {{! @glint-expect-error: fn/mut not ts-ified yet}}
+        <CoursePage::Sidebar::MobileCloseButton {{on "click" (fn (mut this.sidebarIsExpandedOnMobile) false)}} />
+      </div>
+
+      <CoursePage::Sidebar
+        @course={{@model.course}}
+        @repositories={{@model.repositories}}
+        @activeRepository={{@model.activeRepository}}
+        @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+        class="group relative w-full max-w-[18em] shrink-0 h-screen lg:hidden"
+      />
+    </CoursePage::Sidebar::MobileBackdrop>
+  {{/if}}
+
+  <div class="flex flex-col max-h-screen overflow-y-auto grow relative" id="course-page-scrollable-area">
+    {{! For collapse/expand on desktop }}
+    <CoursePage::ExpandSidebarButton
+      class="hidden {{unless this.sidebarIsExpandedOnDesktop 'lg:block'}} absolute top-6 left-0"
+      {{on "click" this.handleExpandSidebarButtonClick}}
+      data-test-expand-sidebar-button
+    />
+
+    <CoursePage::Header::MainSection
+      @activeRepository={{@model.activeRepository}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @course={{@model.course}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      @onMobileSidebarButtonClick={{fn (mut this.sidebarIsExpandedOnMobile) true}}
+      @stepList={{this.coursePageState.stepListAsStepListDefinition}}
+      @track={{@model.track}}
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-950 pt-6 pb-2"
+    />
+
+    <CoursePage::Header::StickySection
+      @course={{@model.course}}
+      @stepList={{this.coursePageState.stepListAsStepListDefinition}}
+      @currentStep={{this.coursePageState.currentStep}}
+      @activeStep={{this.coursePageState.activeStep}}
+      @nextStep={{this.coursePageState.nextStep}}
+      class="px-3 md:px-6 lg:pl-10 bg-gray-50 dark:bg-gray-950"
+    />
+    <div class="flex grow bg-white dark:bg-gray-950">
+      <div class="grow shrink min-w-0">
+        {{outlet}}
+      </div>
+
+      <CoursePage::RightSidebar
+        @activeRepository={{@model.activeRepository}}
+        @course={{@model.course}}
+        @isExpanded={{this.leaderboardIsExpanded}}
+        @onCollapseButtonClick={{this.handleCollapseLeaderboardButtonClick}}
+        @onExpandButtonClick={{this.handleExpandLeaderboardButtonClick}}
+        @repositories={{@model.repositories}}
+        @track={{@model.track}}
+        class="pt-6 shrink-0 border-l border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-950 hidden md:block"
+      />
+    </div>
+  </div>
+
+  <CoursePage::TestResultsBar
+    @activeStep={{this.coursePageState.activeStep}}
+    @currentStep={{this.coursePageState.currentStep}}
+    @repository={{@model.activeRepository}}
+    class="absolute bottom-0 left-0 right-0 z-20"
+  />
+</div>
+
+{{#if this.configureGithubIntegrationModalIsOpen}}
+  <ModalBackdrop>
+    {{! @glint-expect-error: not ts-ified yet }}
+    <CoursePage::ConfigureGithubIntegrationModal
+      @repository={{@model.activeRepository}}
+      {{! @glint-expect-error: mut not ts-ified yet }}
+      @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
+    />
+  </ModalBackdrop>
+{{/if}}

@@ -1,0 +1,51 @@
+<div class="flex flex-col items-center gap-2" ...attributes>
+  <AnimatedContainer class="w-full">
+    <div class="text-sm text-gray-700 dark:text-gray-300 text-center w-full">
+      {{#animated-if this.flashSuccessMessageTask.isRunning use=this.transition duration=200}}
+        <p class="text-teal-500 font-medium">
+          Thanks for your feedback!
+        </p>
+      {{else}}
+        <p>
+          Was this example helpful?
+        </p>
+      {{/animated-if}}
+    </div>
+  </AnimatedContainer>
+
+  <div class="flex items-center gap-1.5 flex-wrap">
+    <TertiaryButton
+      {{on "click" (fn this.handleClick "upvote")}}
+      class={{if this.optimisticValueForUserActionIsDownvote "opacity-50 hover:opacity-100 transition-opacity duration-200"}}
+      data-test-solution-card-upvote-button
+    >
+      <div class="flex items-center gap-1">
+        {{svg-jar "thumb-up" class=(concat "w-5 " (if this.optimisticValueForUserActionIsUpvote "text-teal-500" "text-gray-400 dark:text-gray-600"))}}
+
+        <span class={{if this.optimisticValueForUserActionIsUpvote "text-teal-500" "text-gray-500"}}>
+          Helpful
+        </span>
+      </div>
+
+      <EmberTooltip @text="Your feedback helps us surface better examples." @side="bottom" @delay={{250}} />
+    </TertiaryButton>
+    <TertiaryButton
+      {{on "click" (fn this.handleClick "downvote")}}
+      class={{if this.optimisticValueForUserActionIsUpvote "opacity-50 hover:opacity-100 transition-opacity duration-100"}}
+      data-test-solution-card-downvote-button
+    >
+      <div class="flex items-center gap-1">
+        {{svg-jar
+          "thumb-down"
+          class=(concat "w-5 " (if this.optimisticValueForUserActionIsDownvote "text-red-600" "text-gray-400 dark:text-gray-600"))
+        }}
+
+        <span class={{if this.optimisticValueForUserActionIsDownvote "text-red-600" "text-gray-500"}}>
+          Not helpful
+        </span>
+      </div>
+
+      <EmberTooltip @text="Your feedback helps us identify examples that need review." @side="bottom" @delay={{250}} />
+    </TertiaryButton>
+  </div>
+</div>

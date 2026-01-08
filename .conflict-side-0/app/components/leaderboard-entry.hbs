@@ -1,0 +1,81 @@
+<LinkTo
+  @route={{@route}}
+  @model={{or @routeModel "dummy"}}
+  class="flex items-center justify-between py-1.5 group/leaderboard-entry cursor-pointer pl-4 border-l-2
+    {{if @isForCurrentUser 'border-teal-500 dark:border-teal-600' 'border-transparent'}}"
+  data-test-leaderboard-entry
+>
+  <div class="flex items-center min-w-0">
+    <div class="{{unless @isCollapsed 'mr-2'}} shrink-0">
+      {{#if this.isSkeleton}}
+        <LoadingSkeleton class="size-8" />
+      {{else}}
+        {{! additional if clause to satisfy glint }}
+        {{#if @user}}
+          <AvatarImage
+            @user={{@user}}
+            class="w-8 h-8 border border-gray-300 dark:border-gray-700 rounded-sm shadow-xs group-hover/leaderboard-entry:shadow-sm transition-shadow dark:opacity-90"
+          />
+        {{/if}}
+      {{/if}}
+    </div>
+
+    {{#unless @isCollapsed}}
+      {{#if this.isSkeleton}}
+        <LoadingSkeleton class="w-[12ch] text-xs mr-2" />
+      {{else}}
+        <span
+          class="text-xs text-gray-600 dark:text-gray-400 group-hover/leaderboard-entry:underline mr-2 shrink truncate"
+          data-test-username
+        >{{@user.username}}</span>
+      {{/if}}
+
+      {{yield to="afterUsername"}}
+    {{/unless}}
+  </div>
+  {{#unless @isCollapsed}}
+    <div class="flex items-center shrink-0">
+      <span
+        class="mr-2 text-xs font-bold
+          {{if (eq @status 'evaluating') 'text-yellow-500 dark:text-yellow-600' 'text-teal-500 dark:text-teal-600'}}
+          {{if @isForCurrentUser 'opacity-100' 'opacity-0'}}
+          group-hover/leaderboard-entry:opacity-100 transition-opacity"
+        data-test-progress-text
+      >
+        {{#if this.isSkeleton}}
+          <LoadingSkeleton class="w-[6ch] text-xs" />
+        {{else}}
+          {{@progressNumerator}}
+          /
+          {{@progressDenominator}}
+        {{/if}}
+      </span>
+      {{#if this.isSkeleton}}
+        <LoadingSkeleton class="w-12 h-3.5" />
+      {{else}}
+        <div
+          class="w-12 h-3.5 rounded-sm flex overflow-hidden border group-hover/leaderboard-entry:bg-white dark:group-hover/leaderboard-entry:bg-gray-900 transition-all
+            {{if
+              (eq @status 'evaluating')
+              'bg-yellow-50 dark:bg-yellow-900/80 border-yellow-500 dark:border-yellow-700 animate-pulse'
+              'bg-teal-50 dark:bg-teal-900/40 border-teal-500 dark:border-teal-700 group-hover/leaderboard-entry:shadow-xs'
+            }}"
+          data-test-progress-bar-container
+        >
+          {{!s Look like a tailwind 3.3.0 bug, from-0% and to-100% are required to make the gradient work }}
+          <div
+            class="bg-linear-to-r from-0% to-100%
+              {{if
+                (eq @status 'evaluating')
+                'from-yellow-500 dark:from-yellow-600 to-yellow-400 dark:to-yellow-500'
+                'from-teal-500 dark:from-teal-600 to-teal-400 dark:to-teal-600'
+              }}
+              transition-all"
+            style={{this.progressBarWidthStyle}}
+          >
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  {{/unless}}
+</LinkTo>

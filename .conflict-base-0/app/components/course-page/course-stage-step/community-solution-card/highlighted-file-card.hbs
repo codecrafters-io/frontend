@@ -1,0 +1,37 @@
+<div
+  class="bg-white dark:bg-gray-925 shadow-xs rounded-sm border border-gray-300 dark:border-white/10"
+  data-test-community-solution-highlighted-file-card
+  ...attributes
+>
+  <div
+    class="bg-gray-100 dark:bg-gray-900 rounded-t py-2 px-4 border-b border-gray-200 dark:border-white/5 shadow-xs flex items-center justify-between sticky top-10 z-10"
+  >
+    <span class="font-mono text-xs text-gray-600 dark:text-gray-300 bold">{{@highlightedFile.filename}}</span>
+    <CoursePage::CourseStageStep::CommunitySolutionCard::GithubFileActions
+      @filename={{@highlightedFile.filename}}
+      @onPublishToGithubButtonClick={{@onPublishToGithubButtonClick}}
+      @solution={{@solution}}
+    />
+  </div>
+
+  <CodeMirror
+    @allowMultipleSelections={{true}}
+    @bracketMatching={{true}}
+    @collapsedRanges={{this.collapsedRangesForCodeMirror}}
+    @crosshairCursor={{true}}
+    @document={{@highlightedFile.contents}}
+    @drawSelection={{true}}
+    @editable={{false}}
+    @filename={{@highlightedFile.filename}}
+    @highlightActiveLine={{false}}
+    @highlightedRanges={{this.highlightedRangesForCodeMirror}}
+    @highlightSelectionMatches={{true}}
+    @highlightSpecialChars={{true}}
+    @highlightTrailingWhitespace={{false}}
+    @language={{@solution.language.slug}}
+    @lineNumbers={{true}}
+    @readOnly={{true}}
+    @rectangularSelection={{true}}
+    @theme={{this.codeMirrorTheme}}
+  />
+</div>

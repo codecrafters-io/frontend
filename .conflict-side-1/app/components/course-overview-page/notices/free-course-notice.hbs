@@ -1,0 +1,40 @@
+<Alert @color="teal" @size="large" data-test-free-course-notice ...attributes>
+  <div class="flex items-start gap-2">
+    <div class="mt-1 shrink-0 hidden sm:block">
+      {{svg-jar "sparkles" class="w-6 h-6 fill-current text-teal-500"}}
+    </div>
+    <div class="flex-1">
+      <h3 class="text-lg font-bold text-teal-500 dark:text-teal-400 mb-2">
+        {{#if @course.isFreeThisMonth}}
+          {{@course.name}}
+          is free this
+          {{date-format this.time.currentTime format="MMMM"}}.
+        {{else}}
+          {{@course.name}}
+          is free until
+          {{date-format @course.isFreeUntil format="d MMMM yyyy"}}.
+        {{/if}}
+      </h3>
+      <p class="text-teal-800 dark:text-teal-400 text-sm mb-4">
+        The core challenge experience is completely free
+        {{#if @course.isFreeThisMonth}}
+          this month.
+        {{else}}
+          until
+          {{date-format @course.isFreeUntil format="d MMMM yyyy"}}.
+        {{/if}}
+
+        If you'd like to enjoy advanced features such as running turbo tests or unlimited code examples, you'll need a membership.
+      </p>
+      <div class="flex items-center flex-wrap flex-col sm:flex-row gap-4">
+        <PrimaryLinkButton @route="course" @model={{@course.slug}} class="w-full sm:w-auto text-center" data-test-start-challenge-button>
+          Start free challenge →
+        </PrimaryLinkButton>
+
+        <LinkTo @route="pay" class="text-teal-500 hover:text-teal-600 font-bold text-sm" data-test-view-membership-plans-button>
+          View Membership Plans →
+        </LinkTo>
+      </div>
+    </div>
+  </div>
+</Alert>

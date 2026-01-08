@@ -1,0 +1,64 @@
+<div data-test-comment-list {{did-update this.loadComments @courseStage}}>
+  <CoursePage::CommentTimelineItem @author={{this.currentUser}}>
+    <div class="shadow-xs rounded-sm border border-gray-300 dark:border-white/10 w-full min-w-0 mb-4">
+      {{! TODO: Pass in language here so that users can choose whether their comment is language-specific }}
+      <CommentForm @target={{@courseStage}} @commentModelType="course-stage-comment" class="rounded-sm" />
+    </div>
+  </CoursePage::CommentTimelineItem>
+
+  {{#if this.isLoading}}
+    <div class="flex justify-center items-center py-32 w-full">
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+      <span class="ml-3 text-gray-700">Loading...</span>
+    </div>
+  {{else}}
+    {{#each this.sortedComments key="id" as |comment|}}
+      <CoursePage::CommentTimelineItem @author={{comment.user}}>
+        <div class="shadow-xs rounded-sm border border-gray-300 dark:border-white/10 w-full min-w-0 mb-4">
+          {{! @glint-expect-error Not ts-ified yet }}
+          <CommentCard @comment={{comment}} />
+        </div>
+      </CoursePage::CommentTimelineItem>
+    {{/each}}
+
+    {{#if (and this.currentUser.isStaff (gt this.rejectedComments.length 0))}}
+      <div class="flex flex-col items-center">
+        <div class="h-px mt-4 mb-4 bg-gray-200 dark:bg-white/5 w-full" />
+        {{#if this.rejectedCommentsAreExpanded}}
+          <TertiaryButton
+            @size="small"
+            {{! @glint-expect-error mut helper not typed yet}}
+            {{on "click" (fn (mut this.rejectedCommentsAreExpanded) false)}}
+            class="mb-4"
+            data-test-toggle-rejected-comments-button
+          >
+            Hide rejected comments
+          </TertiaryButton>
+        {{else}}
+          <TertiaryButton
+            @size="small"
+            {{! @glint-expect-error mut helper not typed yet}}
+            {{on "click" (fn (mut this.rejectedCommentsAreExpanded) true)}}
+            class="mb-4"
+            data-test-toggle-rejected-comments-button
+          >
+            Show
+            {{this.rejectedComments.length}}
+            rejected comments
+          </TertiaryButton>
+        {{/if}}
+      </div>
+
+      {{#if this.rejectedCommentsAreExpanded}}
+        {{#each this.rejectedComments key="id" as |comment|}}
+          <CoursePage::CommentTimelineItem @author={{comment.user}}>
+            <div class="shadow-xs rounded-sm border border-gray-300 dark:border-white/10 w-full min-w-0 mb-4">
+              {{! @glint-expect-error Not ts-ified yet }}
+              <CommentCard @comment={{comment}} />
+            </div>
+          </CoursePage::CommentTimelineItem>
+        {{/each}}
+      {{/if}}
+    {{/if}}
+  {{/if}}
+</div>

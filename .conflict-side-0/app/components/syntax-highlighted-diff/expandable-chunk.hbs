@@ -1,0 +1,72 @@
+{{#if this.isCollapsed}}
+  <div
+    class="flex group items-center bg-sky-50 hover:bg-sky-100 text-sky-700 hover:text-sky-800 dark:bg-sky-900/40 dark:hover:bg-sky-800/40 dark:text-sky-400 dark:hover:text-sky-300 h-7 px-3 border-sky-100 dark:border-white/5
+      {{if @chunk.isCollapsedAtTop 'mt-0' 'mt-1 border-t'}}
+      {{if @chunk.isCollapsedAtBottom 'mb-0' 'mb-1 border-b'}}"
+    role="button"
+    {{on "click" this.handleClick}}
+  >
+    <span class="flex flex-col justify-center h-full pr-2">
+      {{#if @chunk.isCollapsedAtTop}}
+        {{svg-jar "upload" class="w-3 h-3"}}
+      {{else if @chunk.isCollapsedAtBottom}}
+        {{svg-jar "download" class="w-3 h-3"}}
+      {{else}}
+        {{svg-jar "selector" class="w-3 h-3"}}
+      {{/if}}
+    </span>
+    <span class="text-xs">Expand {{@chunk.lines.length}} lines</span>
+  </div>
+{{else}}
+  {{#each @chunk.lines key="number" as |line|}}
+    <div
+      class="relative min-w-fit
+        {{if (and (not this.isCollapsed) line.isFirstLineOfFile) 'mt-4' ''}}
+        {{if (and (not this.isCollapsed) line.isLastLineOfFile) 'mb-4' ''}}"
+    >
+      {{#if line.hasComments}}
+        <div class="absolute right-2 -top-2">
+          <SyntaxHighlightedDiff::ToggleCommentsButton
+            @commentsAreExpanded={{line.commentsAreExpanded}}
+            class="select-none"
+            {{on "click" (fn @handleToggleCommentsButtonClick line.number)}}
+          />
+        </div>
+      {{/if}}
+      {{#if line.isTargetedByComments}}
+        <div class="absolute right-0 top-0 bottom-0 w-0.5 {{if line.isTargetedByExpandedComments 'bg-teal-500' 'bg-gray-300 dark:bg-gray-700'}}">
+        </div>
+      {{/if}}
+
+      {{! prettier-ignore }}
+      <pre class="shiki github-light min-w-fit">{{!
+      }}<code class="block diff-highlight min-w-fit">{{!
+        }}<div class="px-2 {{line.type}}-line min-w-fit">{{!
+          }}{{#if (eq line.type "added")}}{{!
+              }}<span class="inserted-marker select-none">+ </span>{{!
+            }}{{else if (eq line.type "removed")}}{{!
+              }}<span class="removed-marker select-none">- </span>{{!
+            }}{{else}}{{!
+              }}<span class="unchanged-marker select-none">  </span>{{!
+            }}{{/if}}{{!
+          }}{{line.html}}{{!
+        }}</div>{{!
+      }}</code>{{!
+    }}</pre>
+    </div>
+
+    {{#if (and line.commentsAreExpanded line.hasComments)}}
+      <div class="py-2 mt-4 mb-4 border-t border-b border-gray-200 dark:border-white/10 bg-white dark:bg-gray-950/25 space-y-4 px-4">
+        {{#if line.commentsAreExpanded}}
+          {{#each line.comments key="id" as |comment|}}
+            <CoursePage::CommentTimelineItem @author={{comment.user}}>
+              <div class="shadow-xs rounded-sm border border-gray-300 dark:border-white/10 w-full">
+                <CommentCard @comment={{comment}} />
+              </div>
+            </CoursePage::CommentTimelineItem>
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/if}}
+  {{/each}}
+{{/if}}

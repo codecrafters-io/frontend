@@ -1,0 +1,39 @@
+<Alert
+  @color="teal"
+  @isInteractive={{true}}
+  class="w-full p-5 pb-6"
+  role="button"
+  {{on "click" this.handleClick}}
+  ...attributes
+  data-test-language-leaderboard-rank-section
+>
+  <div class="flex flex-col items-center w-full">
+    {{svg-jar "presentation-chart-line" class="w-8 h-8 fill-current text-teal-500/90 mb-2"}}
+
+    <span class="text-teal-700 dark:text-teal-400 text-xs mb-0.5 text-center">
+      Your
+      {{@language.name}}
+      leaderboard rank is
+    </span>
+
+    <AnimatedContainer>
+      <div class="flex items-center w-full justify-center" data-test-rank>
+        {{#animated-if this.refreshRankTask.isRunning use=this.transition duration=300}}
+          <b
+            class="text-2xl text-teal-600 dark:text-teal-400 border-b border-teal-600 dark:border-teal-400 group-hover:text-teal-500 border-dashed animate-pulse"
+          >
+            # ⋯
+          </b>
+        {{else}}
+          {{#if this.userRank}}
+            <b
+              class="text-2xl text-teal-600 dark:text-teal-400 border-b border-teal-600 dark:border-teal-400 group-hover:text-teal-500 border-dashed"
+            >
+              #{{format-number this.userRank}}
+            </b>
+          {{/if}}
+        {{/animated-if}}
+      </div>
+    </AnimatedContainer>
+  </div>
+</Alert>

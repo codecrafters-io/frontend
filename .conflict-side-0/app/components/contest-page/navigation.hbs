@@ -1,0 +1,29 @@
+<div class="flex text-xs text-gray-200" ...attributes>
+  <div class="{{if this.isPreviousContestDisabled 'cursor-not-allowed'}}">
+    <LinkTo
+      @route="contest"
+      @model={{this.previousContest.slug}}
+      @disabled={{this.isPreviousContestDisabled}}
+      class="flex items-center rounded-l-md border border-r-[0.5px] border-white/15 hover:border-white/20 hover:bg-white/5 pl-1.5 pr-2 py-1.5
+        {{if this.isPreviousContestDisabled 'pointer-events-none opacity-50'}}"
+      data-test-previous-contest-button
+    >
+      {{svg-jar "chevron-left" class="w-4 fill-current"}}
+      Prev
+    </LinkTo>
+  </div>
+
+  <div class="{{if this.isNextContestDisabled 'cursor-not-allowed'}}">
+    <LinkTo
+      @route="contest"
+      @model={{this.nextContest.slug}}
+      @disabled={{this.isNextContestDisabled}}
+      class="flex items-center rounded-r-md border border-l-[0.5px] border-white/15 hover:border-white/20 hover:bg-white/5 pl-2 pr-1.5 py-1.5
+        {{if this.isNextContestDisabled 'pointer-events-none opacity-50'}}"
+      data-test-next-contest-button
+    >
+      Next
+      {{svg-jar "chevron-right" class="w-4 fill-current"}}
+    </LinkTo>
+  </div>
+</div>

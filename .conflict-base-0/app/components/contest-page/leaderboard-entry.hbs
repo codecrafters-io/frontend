@@ -1,0 +1,33 @@
+<a
+  href="/users/{{@entry.user.username}}"
+  target="_blank"
+  class="rounded-md w-full border border-gray-200
+    {{this.colorClasses}}
+    dark:hover:bg-gray-700/40 p-2.5 flex items-center justify-between group/leaderboard-entry"
+  ...attributes
+  rel="noopener noreferrer"
+>
+  <div class="flex items-center gap-3">
+    <AvatarImage @user={{@entry.user}} class="w-8 h-8 border border-gray-600 rounded-sm" />
+    <span class="text-white font-semibold">
+      {{@entry.user.username}}
+    </span>
+
+    {{#if (gt this.languagesForEntry.length 0)}}
+      <div class="flex items-center space-x-1.5">
+        {{#each this.languagesForEntry as |language|}}
+          <LanguageLogo @language={{language}} @variant="teal" class="h-6" />
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="text-green-500 px-2 py-0.5 text-sm">
+    <span class="font-semibold font-mono">{{@entry.score}}</span>
+    pts
+  </div>
+
+  {{#if (and this.isCurrentUserEntry @entry.isBanned)}}
+    <EmberTooltip @text="You are not eligible for this contest. If you think this is a mistake, please contact us at hello@codecrafters.io." />
+  {{/if}}
+</a>

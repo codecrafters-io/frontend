@@ -1,0 +1,86 @@
+<div class="w-full" data-test-comment-form ...attributes {{will-destroy this.handleWillDestroy}}>
+  <div class="bg-gray-50 dark:bg-gray-925 pr-2 border-b border-gray-300 dark:border-white/10 flex items-center {{if this.isReplying '' 'rounded-t'}}">
+    <div class="-mt-px -ml-px -mb-px flex">
+      {{! @glint-expect-error Not ts-ified yet}}
+      <CommentForm::TabHeader @text="Write" @isActive={{eq this.activeTab "write"}} {{on "click" (fn this.setActiveTab "write")}} />
+
+      {{! @glint-expect-error Not ts-ified yet}}
+      <CommentForm::TabHeader @text="Preview" @isActive={{eq this.activeTab "preview"}} {{on "click" (fn this.setActiveTab "preview")}} />
+    </div>
+  </div>
+
+  <form class="px-2 py-2" {{on "submit" this.handleFormSubmit}}>
+    <div>
+      {{#if (eq this.activeTab "write")}}
+        {{! template-lint-disable require-input-label }}
+        <Textarea
+          {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
+          @value={{this.comment.bodyMarkdown}}
+          class="text-black dark:text-white leading-relaxed border border-gray-300 dark:border-white/10 rounded-sm w-full p-2 text-sm placeholder-gray-500 dark:placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-teal-600"
+          placeholder={{this.placeholderText}}
+          rows="5"
+          required="true"
+          {{markdown-input}}
+          data-test-comment-input
+        />
+      {{else if (eq this.activeTab "preview")}}
+        {{! template-lint-disable no-inline-styles }}
+        <div class="px-2 py-2 border-b-2 border-gray-200 dark:border-white/5 mb-2" style="min-height: 135px;">
+          <div
+            class="leading-relaxed prose-sm prose dark:prose-invert max-w-none break-words comment-body"
+            {{did-insert this.handleDidInsertBodyHTML}}
+          >
+            {{! @glint-expect-error commentMarkdown is typed as a computed prop?}}
+            {{markdown-to-html this.commentMarkdown}}
+          </div>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="flex justify-between items-center mt-1 {{if this.isReplying 'flex-row-reverse'}}">
+      <div class="flex items-center">
+        {{svg-jar "markdown" class="fill-current w-5 mr-1 text-gray-400 dark:text-gray-600"}}
+
+        <div class="text-xs text-gray-500">
+          Markdown supported.
+        </div>
+      </div>
+
+      {{#if this.isEditingComment}}
+        <div class="flex items-center">
+          <TertiaryButton @size="small" data-test-cancel-button {{on "click" this.handleEditCancelButtonClick}}>Cancel</TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @isDisabled={{this.submitButtonIsDisabled}}
+            @shouldShowSpinner={{this.isSaving}}
+            @size="small"
+            type="submit"
+            class="ml-2"
+            data-test-update-comment-button
+          >Update Comment</PrimaryButtonWithSpinner>
+        </div>
+      {{else if this.isReplying}}
+        <div class="flex items-center">
+          <TertiaryButton @size="small" data-test-cancel-button {{on "click" this.handleCancelReplyButtonClick}}>Cancel</TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @isDisabled={{this.submitButtonIsDisabled}}
+            @shouldShowSpinner={{this.isSaving}}
+            @size="small"
+            type="submit"
+            class="ml-2"
+            data-test-post-reply-button
+          >Reply</PrimaryButtonWithSpinner>
+        </div>
+      {{else}}
+        <PrimaryButtonWithSpinner
+          @isDisabled={{this.submitButtonIsDisabled}}
+          @shouldShowSpinner={{this.isSaving}}
+          @size="small"
+          type="submit"
+          data-test-submit-button
+        >Comment</PrimaryButtonWithSpinner>
+      {{/if}}
+    </div>
+  </form>
+</div>

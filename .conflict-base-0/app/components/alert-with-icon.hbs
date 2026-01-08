@@ -1,0 +1,10 @@
+<Alert @color={{this.color}} ...attributes>
+  <div class="flex">
+    <div class="mr-3 mt-0.5">
+      {{svg-jar this.icon class=(concat "w-6 fill-current " this.iconColorClasses)}}
+    </div>
+    <div class="prose dark:prose-invert prose-compact leading-6 text-sm max-w-none {{this.proseColorClasses}}">
+      {{yield}}
+    </div>
+  </div>
+</Alert>

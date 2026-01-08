@@ -1,0 +1,113 @@
+import { action } from '@ember/object';
+import { next } from '@ember/runloop';
+import { service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
+
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    isCollapsible: boolean;
+    onExpand?: () => void; // Overrides the default expand action if passed in
+    repository: RepositoryModel;
+    stage: CourseStageModel;
+  };
+}
+
+export default class TestRunnerCard extends Component<Signature> {
+  @service declare coursePageState: CoursePageStateService;
+
+  @tracked wasExpandedByUser = false;
+
+  get backgroundColorClasses() {
+    if (this.isExpanded) {
+      return {
+        passed: 'bg-teal-50 dark:bg-teal-900/10',
+        failed: 'bg-white dark:bg-gray-925/10',
+        evaluating: 'bg-yellow-50 dark:bg-yellow-900/10',
+        error_or_not_run: 'bg-white dark:bg-gray-925/10',
+      }[this.testsStatus];
+    } else {
+      return (
+        {
+          passed: 'bg-linear-to-b from-white to-teal-50 hover:from-teal-50 hover:to-teal-100',
+          failed:
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-900/40 dark:hover:to-gray-900/50',
+          evaluating: 'bg-linear-to-b from-white to-yellow-50 dark:from-yellow-900/10 dark:to-yellow-900/20 hover:from-yellow-50 hover:to-yellow-100',
+          error_or_not_run:
+            'bg-linear-to-b from-white to-gray-50 dark:from-gray-950/10 dark:to-gray-950/20 hover:from-gray-50 hover:to-gray-100 dark:hover:from-gray-900/40 dark:hover:to-gray-900/50',
+        }[this.testsStatus] || ''
+      );
+    }
+  }
+
+  get borderColorClasses() {
+    return (
+      {
+        passed: 'border-teal-500 dark:border-teal-700/60',
+        failed: 'border-gray-300 dark:border-gray-700/60',
+        evaluating: 'border-yellow-500 dark:border-yellow-700/60',
+        error_or_not_run: 'border-gray-300 dark:border-gray-700/60',
+      }[this.testsStatus] || ''
+    );
+  }
+
+  get headerTextColorClasses() {
+    return (
+      {
+        passed: 'text-teal-500 dark:text-teal-600',
+        failed: 'text-gray-400 dark:text-gray-500',
+        evaluating: 'text-yellow-500 dark:text-yellow-600',
+        error_or_not_run: 'text-gray-400 dark:text-gray-500',
+      }[this.testsStatus] || ''
+    );
+  }
+
+  get isCollapsed() {
+    return !this.isExpanded;
+  }
+
+  get isExpanded() {
+    return this.wasExpandedByUser || !this.args.isCollapsible;
+  }
+
+  get testsStatus() {
+    return this.coursePageState.currentStepAsCourseStageStep.testsStatus || 'unknown';
+  }
+
+  @action
+  handleCollapseButtonClick() {
+    next(() => {
+      this.wasExpandedByUser = false;
+    });
+  }
+
+  @action
+  handleExpandButtonClick() {
+    // If onExpand is passed in, bypass the default
+    if (this.args.onExpand) {
+      this.args.onExpand();
+
+      return;
+    }
+
+    next(() => {
+      this.wasExpandedByUser = true;
+    });
+  }
+
+  @action
+  handleViewLogsButtonClick() {
+    this.coursePageState.testResultsBarIsExpanded = true;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::CourseStageStep::TestRunnerCard': typeof TestRunnerCard;
+  }
+}

@@ -1,0 +1,34 @@
+<div class="course-admin-submission-autofix-container" ...attributes>
+  {{#if this.latestAutofixRequest}}
+    <div class="prose prose-sm prose-compact dark:prose-invert mb-4">
+      <a class="flex items-center gap-1" href={{this.latestAutofixRequest.adminUrl}} target="_blank" rel="noopener noreferrer">
+        <span>Admin Panel</span>
+        {{svg-jar "external-link" class="w-4 h-4"}}
+      </a>
+    </div>
+
+    <div class="dark">
+      <CoursePage::TestResultsBar::AutofixRequestCard @autofixRequest={{this.latestAutofixRequest}} class="mb-4" />
+    </div>
+  {{else}}
+    <div class="bg-gray-900 p-4 text-white font-mono text-xs leading-relaxed rounded-sm mb-4">
+      This submission doesn't have any autofix requests.
+    </div>
+  {{/if}}
+
+  <PrimaryButtonWithSpinner @shouldShowSpinner={{this.createAutofixRequestTask.isRunning}} {{on "click" this.handleCreateAutofixButtonClick}}>
+    {{#if this.latestAutofixRequest}}
+      Retry Autofix Request
+    {{else}}
+      Create Autofix Request
+    {{/if}}
+  </PrimaryButtonWithSpinner>
+
+  {{#if this.autofixCreationError}}
+    <AlertWithIcon @type="error" class="mt-3">
+      <p>
+        {{this.autofixCreationError}}
+      </p>
+    </AlertWithIcon>
+  {{/if}}
+</div>

@@ -1,0 +1,57 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <CourseAdmin::StageInsightsPage::Header @stage={{@model.stage}} class="py-3 border-b border-gray-200 mb-6" />
+
+    {{#if (lt this.participationAnalysis.participationsCount 100)}}
+      <AlertWithIcon @type="error">
+        This stage has less than 100 data points, so the statistics below may not be reliable.
+      </AlertWithIcon>
+    {{/if}}
+
+    <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.completionRateStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.medianAttemptsToCompletionStatistic}} />
+      <CourseAdmin::StageInsightsPage::StatisticCard @statistic={{this.participationAnalysis.attemptRateStatistic}} />
+    </div>
+
+    <div class="border-b border-gray-200 pb-1 flex items-center gap-2 mt-6">
+      <h1 class="text-2xl text-gray-700 font-bold tracking-tighter">Data Points Summary</h1>
+
+      <div>
+        {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-200 hover:text-gray-300"}}
+        <EmberTooltip @text="These are the data points used to calculate the statistics above." />
+      </div>
+    </div>
+
+    <div class="prose mt-4">
+      <ul>
+        <li>Total: {{this.participationAnalysis.participationsCount}}</li>
+        <ul>
+          <li>Complete:
+            {{this.participationAnalysis.completeParticipationsCount}}
+            ({{this.participationAnalysis.completeParticipationsPercentage}}%)</li>
+          <li>Dropped off after attempt:
+            {{this.participationAnalysis.droppedOffAfterAttemptParticipationsCount}}
+            ({{this.participationAnalysis.droppedOffAfterAttemptParticipationsPercentage}}%)</li>
+          <li>Did not attempt:
+            {{this.participationAnalysis.droppedOffBeforeAttemptParticipationsCount}}
+            ({{this.participationAnalysis.droppedOffBeforeAttemptParticipationsPercentage}}%)</li>
+        </ul>
+      </ul>
+    </div>
+
+    <CourseAdmin::StageInsightsPage::ParticipationListSection
+      @title="Dropped Off"
+      @tooltipText="These are users who attempted this stage at least once but didn't complete it."
+      @participations={{this.sortedDroppedOffAfterAttemptParticipations}}
+      class="mt-6"
+    />
+
+    <CourseAdmin::StageInsightsPage::ParticipationListSection
+      @title="Complete"
+      @tooltipText="These are users who completed this stage."
+      @participations={{this.sortedCompleteParticipations}}
+      class="mt-6"
+    />
+  </div>
+</div>

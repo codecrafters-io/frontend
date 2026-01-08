@@ -1,0 +1,68 @@
+<CoursePage::InstructionsCard data-test-repository-setup-card ...attributes>
+  <:header>
+    <div class="flex items-center gap-x-3 w-full border-b border-gray-200 dark:border-white/10 pb-2 mb-5">
+      <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Repository Setup</h2>
+      <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
+    </div>
+  </:header>
+  <:content>
+    <div class="prose dark:prose-invert mb-5">
+      <p>
+        We've prepared a starter repository with some
+        {{@repository.language.name}}
+        code for you.
+      </p>
+    </div>
+
+    <StepList @steps={{this.steps}} data-test-repository-setup-step-list as |context|>
+      {{#if (eq context.step.id "clone-repository")}}
+        <CoursePage::SetupStep::RepositorySetupCard::CloneRepositoryStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
+      {{else if (eq context.step.id "push-empty-commit")}}
+        <CoursePage::SetupStep::RepositorySetupCard::PushEmptyCommitStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
+      {{else if (eq context.step.id "test-cli-connection")}}
+        <CoursePage::SetupStep::RepositorySetupCard::TestCliConnectionStep
+          @repository={{@repository}}
+          @onTroubleshootingLinkClick={{fn (mut this.isTroubleshootingModalOpen) true}}
+        />
+      {{/if}}
+    </StepList>
+
+    {{#if this.isComplete}}
+      <div class="mt-4 prose dark:prose-invert">
+        <span class="text-xl mr-1">🎉</span>
+
+        {{#if this.featureFlags.canViewCLIPingFlow}}
+          The first stage is now activated.
+        {{else}}
+          Git push received! The first stage is now activated.
+        {{/if}}
+      </div>
+
+      <PrimaryLinkButton
+        class="mt-4"
+        @size="large"
+        @route={{this.coursePageState.activeStep.routeParams.route}}
+        @models={{this.coursePageState.activeStep.routeParams.models}}
+        data-test-continue-button
+      >
+        Continue →
+      </PrimaryLinkButton>
+    {{else}}
+      <div class="px-4 py-3 bg-gray-50 dark:bg-gray-900 inline-flex rounded-sm border border-gray-200 dark:border-white/10 shadow-xs mt-4">
+        <CoursePage::StepProgressIndicator @step={{this.coursePageState.currentStep}} @size="large" />
+      </div>
+    {{/if}}
+  </:content>
+</CoursePage::InstructionsCard>
+
+{{#if this.isTroubleshootingModalOpen}}
+  <ModalBackdrop>
+    <CoursePage::SetupStep::RepositorySetupCard::TroubleshootingModal @onClose={{this.handleTroubleshootingModalClose}} />
+  </ModalBackdrop>
+{{/if}}

@@ -1,0 +1,97 @@
+import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import Component from '@glimmer/component';
+import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
+import logoImage from '/assets/images/logo/logomark-color.svg';
+import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
+import RouterService from '@ember/routing/router-service';
+import Store from '@ember-data/store';
+import { action } from '@ember/object';
+import { format } from 'date-fns';
+import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    acceptedReferralOfferFreeUsageGrant: FreeUsageGrantModel | null;
+    referralLink: ReferralLinkModel;
+  };
+}
+
+export default class AcceptReferralContainer extends Component<Signature> {
+  logoImage = logoImage;
+
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
+  @service declare router: RouterService;
+
+  @tracked isAccepted: boolean = this.args.acceptedReferralOfferFreeUsageGrant ? true : false;
+  @tracked isCreatingReferralActivation: boolean = false;
+  @tracked freeUsageGrantExpiresAt: string = this.args.acceptedReferralOfferFreeUsageGrant
+    ? format(this.args.acceptedReferralOfferFreeUsageGrant.expiresAt, 'dd MMM yyyy')
+    : '';
+
+  get acceptOfferButtonIsEnabled() {
+    return (
+      !this.isCreatingReferralActivation &&
+      !this.currentUserIsReferrer &&
+      !this.currentUserAcceptedReferralOfferIsExpired &&
+      !this.currentUser?.canAccessPaidContent
+    );
+  }
+
+  get currentUser() {
+    return this.authenticator.currentUser;
+  }
+
+  get currentUserAcceptedReferralOfferIsExpired() {
+    return this.currentUser?.hasActiveFreeUsageGrantsValueIsOutdated;
+  }
+
+  get currentUserAlreadyAcceptedReferralOffer() {
+    return !this.currentUserIsReferrer && this.isAccepted && !this.currentUserAcceptedReferralOfferIsExpired;
+  }
+
+  get currentUserIsAnonymous() {
+    return this.authenticator.isAnonymous;
+  }
+
+  get currentUserIsReferrer() {
+    if (this.authenticator.isAnonymous) {
+      return false;
+    } else {
+      return this.args.referralLink.user === this.authenticator.currentUser;
+    }
+  }
+
+  @action
+  async handleAcceptOfferButtonClick() {
+    if (this.currentUserIsAnonymous) {
+      this.authenticator.initiateLogin();
+    } else if (this.acceptOfferButtonIsEnabled) {
+      this.isCreatingReferralActivation = true;
+
+      await this.store
+        .createRecord('referral-activation', {
+          referralLink: this.args.referralLink,
+          customer: this.authenticator.currentUser,
+          referrer: this.args.referralLink.user,
+        })
+        .save();
+
+      const freeUsageGrant = (await this.store.query('free-usage-grant', {
+        user_id: this.currentUser?.id,
+      })) as unknown as FreeUsageGrantModel[];
+
+      this.freeUsageGrantExpiresAt = format(freeUsageGrant[0]?.expiresAt as Date, 'dd MMM yyyy');
+      this.isAccepted = true;
+    }
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'ReferralLinkPage::AcceptReferralContainer': typeof AcceptReferralContainer;
+  }
+}

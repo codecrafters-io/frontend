@@ -1,0 +1,6 @@
+{{#in-element this.headElement insertBefore=null}}
+  {{! template-lint-disable no-forbidden-elements }}
+  <meta name="ember-cli-head-start" content="" />
+  <HeadContent @metaData={{@metaData}} @defaults={{@defaults}} />
+  <meta name="ember-cli-head-end" content="" />
+{{/in-element}}

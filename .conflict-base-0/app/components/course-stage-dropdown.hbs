@@ -1,0 +1,84 @@
+<div data-test-course-stage-dropdown ...attributes>
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="inline-flex justify-center w-full rounded-md border border-gray-300
+          {{if dd.isOpen 'bg-gray-50' 'bg-white'}}
+          shadow-xs px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 focus:outline-hidden"
+        data-test-course-stage-dropdown-trigger
+      >
+        <span class="mr-1" data-test-current-course-stage-name>
+          {{#if this.isAllCourseStagesOptionSelected}}
+            All Stages
+          {{else}}
+            {{@selectedCourseStage.name}}
+          {{/if}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div
+        class="bg-white rounded-lg shadow-lg max-h-96 overflow-y-auto border border-gray-200 py-2 mt-1 mb-1 w-56"
+        data-test-course-stage-dropdown-content
+      >
+        {{#unless this.shouldHideAllCourseStagesOption}}
+          <div
+            class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+            role="button"
+            data-test-course-stage-link
+            {{on "click" (fn this.handleAllCourseStagesDropdownLinkClick dd.actions.close)}}
+          >
+            <span class="text-gray-600 text-sm">
+              All Stages
+            </span>
+          </div>
+        {{/unless}}
+
+        <div class="w-full flex items-center px-4 py-2 gap-2">
+          <span class="border-b border-gray-200 h-px w-full"></span>
+          <span class="text-gray-400 text-xs text-nowrap">
+            Base Stages
+          </span>
+        </div>
+
+        {{#each @course.sortedBaseStages as |stage|}}
+          <div
+            class="flex justify-between items-center py-2 px-4 group hover:bg-gray-50 cursor-pointer"
+            role="button"
+            data-test-course-stage-link
+            {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
+          >
+            <span class="text-gray-600 text-sm">
+              {{stage.name}}
+            </span>
+          </div>
+        {{/each}}
+
+        {{#each @course.sortedExtensions as |extension|}}
+          <div class="w-full flex items-center px-4 py-2 gap-2">
+            <span class="border-b border-gray-200 h-px w-full"></span>
+            <span class="text-gray-400 text-xs text-nowrap">
+              {{extension.name}}
+            </span>
+          </div>
+
+          {{#each extension.sortedStages as |stage|}}
+            <div
+              class="flex items-center py-2 px-4 hover:bg-gray-50 cursor-pointer"
+              role="button"
+              data-test-course-stage-link
+              {{on "click" (fn this.handleStageDropdownLinkClick stage dd.actions.close)}}
+            >
+              <span class="text-gray-600 text-sm">
+                {{stage.name}}
+              </span>
+            </div>
+          {{/each}}
+        {{/each}}
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>

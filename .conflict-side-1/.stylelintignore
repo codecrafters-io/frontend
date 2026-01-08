@@ -1,0 +1,9 @@
+# unconventional files
+/blueprints/*/files/
+
+# compiled output
+/dist/
+
+# additional files
+/app/styles/prism-*.css
+/coverage

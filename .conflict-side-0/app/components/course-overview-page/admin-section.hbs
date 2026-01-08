@@ -1,0 +1,11 @@
+<PageSection @title="Admin Options" data-test-admin-panel ...attributes>
+  <div class="mb-4">
+    <TertiaryLinkButton @size="small" @route="course-admin.submissions" @model={{@course.slug}}>
+      Admin Panel
+    </TertiaryLinkButton>
+  </div>
+
+  <div>
+    <CourseOverviewPage::StartCourseButton @size="regular" @course={{@course}} />
+  </div>
+</PageSection>

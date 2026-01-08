@@ -1,0 +1,27 @@
+<a
+  class="relative px-2 py-4 rounded-sm border border-gray-200 hover:border-gray-300 bg-white overflow-hidden group/monthly-challenge-banner transition-all"
+  href={{this.monthlyChallengeBanner.url}}
+  target="_blank"
+  rel="noopener noreferrer"
+  {{on "click" this.handleClick}}
+  data-test-monthly-challenge-banner
+  ...attributes
+>
+  <div class="flex items-center justify-center">
+    <div class="flex transform scale-100 group-hover/monthly-challenge-banner:scale-105 transition-transform w-12 mr-3">
+      <img alt={{this.monthlyChallengeBanner.imageAltText}} src={{this.monthlyChallengeBanner.largeImage}} />
+    </div>
+
+    <div class="relative z-10">
+      <div class="font-medium text-xs mb-1 text-gray-700">
+        {{this.monthlyChallengeBanner.sidebarBannerTitle}}
+      </div>
+
+      <div
+        class="font-semibold text-xs text-gray-600 group-hover/monthly-challenge-banner:underline group-hover/monthly-challenge-banner:text-gray-700"
+      >
+        {{this.monthlyChallengeBanner.sidebarCta}}
+      </div>
+    </div>
+  </div>
+</a>

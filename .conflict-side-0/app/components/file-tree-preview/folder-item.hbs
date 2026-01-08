@@ -1,0 +1,32 @@
+<div ...attributes>
+  <div class="flex items-center gap-2 text-gray-950 dark:text-gray-100 {{if @item.isGrayedOut 'opacity-25'}}">
+    {{svg-jar "folder-open-outline" class="w-5 h-5"}}
+    <span class="font-mono text-xs">{{@item.name}}</span>
+  </div>
+
+  {{#if @item.children}}
+    <div class="relative ml-2.5 pt-2">
+      {{#each @item.children as |child childIndex|}}
+        {{#let (eq childIndex (sub @item.children.length 1)) as |isLast|}}
+          <div class="flex items-stretch">
+            {{! Vertical line connecting all children }}
+            <div class="w-px {{if isLast 'h-[calc(0.625em+1px)]' ''}} bg-gray-300 dark:bg-gray-600"></div>
+
+            <div class="relative flex items-start gap-0.5 {{if isLast '' 'pb-2'}}">
+              {{! Horizontal line }}
+              <div class="w-3 mt-2.5 h-px bg-gray-300 dark:bg-gray-600"></div>
+
+              {{#if (eq child.type "file")}}
+                {{! @glint-expect-error: type narrowing }}
+                <FileTreePreview::FileItem @item={{child}} />
+              {{else if (eq child.type "folder")}}
+                {{! @glint-expect-error: type narrowing }}
+                <FileTreePreview::FolderItem @item={{child}} />
+              {{/if}}
+            </div>
+          </div>
+        {{/let}}
+      {{/each}}
+    </div>
+  {{/if}}
+</div>

@@ -1,0 +1,129 @@
+<TeamPaymentPage::StepContainer @title="Team Details" data-test-team-details-step-container>
+  <form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}}>
+    <TeamPaymentPage::TeamDetailsForm::Section @title="Team Name" @description="This is the name your team members will see.">
+      <Input
+        @value={{@teamPaymentFlow.teamName}}
+        {{on "blur" this.handleValueUpdated}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 w-full"
+        id="team_name_input"
+        placeholder="Microsoft"
+        required
+      />
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    <TeamPaymentPage::TeamDetailsForm::Section @title="Contact Email" @description="We'll use this to send you a team setup link.">
+      <Input
+        @value={{@teamPaymentFlow.contactEmailAddress}}
+        @type="email"
+        {{on "blur" this.handleValueUpdated}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 w-full"
+        id="contact_email_input"
+        placeholder="bill@microsoft.com"
+        required
+      />
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    <TeamPaymentPage::TeamDetailsForm::Section @title="Coupon Code" @description="Optional, if you have one">
+      <Input
+        @value={{@teamPaymentFlow.couponCode}}
+        {{on "blur" this.handleValueUpdated}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 w-full"
+        id="coupon_code"
+        placeholder="SECRET_COUPON"
+      />
+      {{#if @teamPaymentFlow.isSaving}}
+        {{#if @teamPaymentFlow.hasCouponCode}}
+          <div class="text-gray-500 font-semibold text-sm mt-2">Validating...</div>
+        {{/if}}
+      {{else}}
+        {{#if @teamPaymentFlow.couponCodeIsValid}}
+          <div class="text-teal-500 font-semibold text-sm mt-2">Coupon code applied!</div>
+        {{else if @teamPaymentFlow.couponCodeIsInvalid}}
+          <div class="text-red-500 font-semibold text-sm mt-2">This coupon code is invalid. Please contact us at hello@codecrafters.io if you think
+            this is a mistake.</div>
+        {{/if}}
+      {{/if}}
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    {{!-- <TeamPaymentPage::TeamDetailsForm::Section @title="Pricing Plan" @description="Seat-based pricing allows you to re-assign seats anytime.">
+      <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
+        @name="Monthly"
+        @description="$79/seat/month, minimum 5 seats"
+        class="mb-4"
+        @selected={{eq @teamPaymentFlow.pricingPlanType "monthly"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "monthly"}}
+      />
+
+      <TeamPaymentPage::TeamDetailsForm::PricingPlanOption
+        @name="Yearly"
+        @description="$39/seat/month, minimum 5 seats (billed annually)"
+        @selected={{eq @teamPaymentFlow.pricingPlanType "yearly"}}
+        @onSelect={{fn this.handlePricingPlanTypeOptionSelected "yearly"}}
+      />
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div> --}}
+
+    <TeamPaymentPage::TeamDetailsForm::Section @title="Number of Seats" @description="You can add more users anytime.">
+      <div class="flex items-center">
+        <div
+          class="w-6 h-6 bg-gray-300 rounded-full hover:bg-gray-400 font-mono flex items-center justify-center mr-3"
+          role="button"
+          {{on "mouseup" this.suppressEvent}}
+          {{on "click" this.handleDecrementSeatsButtonClick}}
+        >
+          {{svg-jar "minus" class="w-4 h-4 text-gray-700"}}
+        </div>
+
+        {{! template-lint-disable require-input-label }}
+        <Input
+          @type="number"
+          min="5"
+          size="5"
+          @value={{@teamPaymentFlow.numberOfSeats}}
+          class="number-input-with-no-controls text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 text-center w-16"
+          {{on "change" this.handleValueUpdated}}
+        />
+
+        <div
+          class="w-6 h-6 bg-gray-300 rounded-full hover:bg-gray-400 font-mono flex items-center justify-center ml-3"
+          role="button"
+          {{on "mouseup" this.suppressEvent}}
+          {{on "click" this.handleIncrementSeatsButtonClick}}
+        >
+          {{svg-jar "plus" class="w-4 h-4 text-gray-700"}}
+        </div>
+      </div>
+    </TeamPaymentPage::TeamDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+    <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+      <div class="text-xs text-gray-500">
+        Payment amount will be shown in the next step.
+      </div>
+      <div>
+        <PrimaryButtonWithSpinner
+          @isDisabled={{not @isComplete}}
+          @shouldShowSpinner={{@teamPaymentFlow.isSaving}}
+          {{on "click" @onContinueButtonClick}}
+          type="submit"
+          class="w-full justify-center sm:w-auto"
+          data-test-continue-button
+        >
+          Continue
+        </PrimaryButtonWithSpinner>
+
+        {{#unless @isComplete}}
+          <EmberTooltip @text="Enter details above to continue" />
+        {{/unless}}
+      </div>
+    </div>
+  </form>
+</TeamPaymentPage::StepContainer>

@@ -1,0 +1,66 @@
+{{page-title "Demo"}}
+
+<div>
+  <div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-6 md:pt-10 pb-10 md:pb-48 px-3 md:px-6">
+    <h1 class="text-3xl text-gray-700 dark:text-gray-200 font-bold tracking-tighter mb-3">Demo</h1>
+
+    <p class="text-gray-500 dark:text-gray-100 mb-6">
+      Demo zone for complex components.
+    </p>
+
+    <div class="flex mb-8 border-b border-gray-200 overflow-x-auto dark:border-gray-700" data-test-demo-tab-switcher>
+      <LinkTo
+        @route="demo.code-mirror"
+        role="button"
+        class="flex shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.code-mirror') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.code-mirror") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >CodeMirror</span>
+      </LinkTo>
+      <LinkTo
+        @route="demo.file-contents-card"
+        role="button"
+        class="flex shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.file-contents-card') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.file-contents-card") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >FileContentsCard</span>
+      </LinkTo>
+      <LinkTo
+        @route="demo.file-diff-card"
+        role="button"
+        class="flex shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.file-diff-card') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.file-diff-card") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >FileDiffCard</span>
+      </LinkTo>
+      <LinkTo
+        @route="demo.dark-mode-toggle"
+        role="button"
+        class="flex shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.dark-mode-toggle') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.dark-mode-toggle") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >DarkModeToggle</span>
+      </LinkTo>
+      <LinkTo
+        @route="demo.rive-animation"
+        role="button"
+        class="flex shrink-0 items-center px-3 py-2 mr-2 border-b-2 text-sm
+          {{if (eq this.router.currentRouteName 'demo.rive-animation') 'border-teal-500' 'border-gray-100 dark:border-gray-700'}}"
+      >
+        <span
+          class={{if (eq this.router.currentRouteName "demo.rive-animation") "font-medium text-teal-500" "text-gray-600 dark:text-gray-200"}}
+        >RiveAnimation</span>
+      </LinkTo>
+    </div>
+
+    {{outlet}}
+  </div>
+</div>

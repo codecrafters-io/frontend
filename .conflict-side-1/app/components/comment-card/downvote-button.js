@@ -1,0 +1,20 @@
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+
+export default class DownvoteButton extends Component {
+  @service store;
+
+  get currentUserHasDownvoted() {
+    return this.args.comment.currentUserDownvotes.length > 0;
+  }
+
+  @action
+  handleClick() {
+    if (this.currentUserHasDownvoted) {
+      this.args.comment.unvote();
+    } else {
+      this.args.comment.downvote();
+    }
+  }
+}

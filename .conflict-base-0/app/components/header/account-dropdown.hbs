@@ -1,0 +1,83 @@
+<BasicDropdown @horizontalPosition="right" @destination="application-container" as |dd|>
+  <dd.Trigger>
+    <div
+      class="flex items-center justify-between py-3 outline-hidden w-full sm:w-auto
+        {{if dd.isOpen 'text-gray-950 dark:text-gray-100' 'text-gray-600 dark:text-gray-400 hover:text-gray-950 dark:hover:text-gray-100'}}"
+      data-test-account-dropdown-trigger
+    >
+      <span class="mr-0.5 text-sm md:text-xs">
+        {{this.authenticator.currentUsername}}
+      </span>
+
+      {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform " (if dd.isOpen "text-teal-500" ""))}}
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <div
+      class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm max-w-xl bg-white dark:bg-gray-925"
+      data-test-account-dropdown-content
+    >
+      {{#if this.currentUser.hasActiveSubscription}}
+        <DropdownLink @text="Manage Membership" @icon="credit-card" {{on "click" (fn this.handleManageSubscriptionClick dd.actions)}} />
+      {{else}}
+        <DropdownLink @text="Subscribe" @icon="credit-card" {{on "click" (fn this.handleSubscribeClick dd.actions)}} />
+      {{/if}}
+
+      <DropdownLink @text="Your Profile" @icon="user" {{on "click" (fn this.handleViewProfileClick dd.actions)}} />
+
+      {{#if this.currentUser.isTeamAdmin}}
+        <DropdownLink
+          @text="Manage Team"
+          @icon="users"
+          {{! @glint-expect-error get currentUser.teams 0 doesn't return a valid type}}
+          {{on "click" (fn this.handleManageTeamClick dd.actions (get this.currentUser.managedTeams "0"))}}
+        />
+      {{else if this.currentUser.isTeamMember}}
+        <DropdownLink
+          @text="View Team"
+          @icon="users"
+          {{! @glint-expect-error get currentUser.teams 0 doesn't return a valid type}}
+          {{on "click" (fn this.handleViewTeamClick dd.actions (get this.currentUser.teams "0"))}}
+        />
+      {{else}}
+        <DropdownLink @text="Invite Your Team" @icon="users" {{on "click" (fn this.handleCreateTeamClick dd.actions)}} />
+      {{/if}}
+
+      {{#if this.currentUser.isAffiliate}}
+        <DropdownLink @text="Partner Dashboard" @icon="gift" {{on "click" (fn this.handlePartnerDashboardClick dd.actions)}} />
+      {{/if}}
+
+      <DropdownLink @text="Referrals" @icon="gift" {{on "click" (fn this.handleReferralsLinkClick dd.actions)}} />
+      <DropdownLink @text="Perks" @icon="star" {{on "click" (fn this.handlePerksLinkClick dd.actions)}} />
+      <DropdownLink @text="Forum" @icon="chat-alt-2" {{on "click" (fn this.handleForumLinkClick dd.actions)}} />
+      <DropdownLink @text="Get Help" @icon="question-mark-circle" {{on "click" (fn this.handleGetHelpClick dd.actions)}} />
+      <DropdownLink @text="Settings" @icon="cog" {{on "click" (fn this.handleSettingsLinkClick dd.actions)}} />
+
+      <div class="flex items-center justify-between gap-8 px-3 py-1.5">
+        <div class="flex items-center gap-1">
+          <span class="prose dark:prose-invert prose-sm">
+            Theme
+          </span>
+
+          {{#unless this.darkMode.currentRouteSupportsDarkMode}}
+            <div class="flex">
+              {{svg-jar "exclamation" class="w-5 h-5 text-yellow-500"}}
+              <EmberTooltip @text="This page does not support dark mode yet." />
+            </div>
+          {{/unless}}
+        </div>
+
+        <DarkModeToggle @size="small" />
+      </div>
+
+      {{#if this.currentUser.isAdmin}}
+        <div class="h-px mt-2 mb-2 ml-3 mr-3 bg-gray-200 dark:bg-white/5" />
+        <DropdownLink @text="Admin Panel" @icon="cog" {{on "click" (fn this.handleAdminPanelLinkClick dd.actions)}} />
+      {{/if}}
+
+      <div class="h-px mt-2 mb-2 ml-3 mr-3 bg-gray-200 dark:bg-white/5" />
+
+      <DropdownLink @text="Logout" @icon="logout" {{on "click" this.handleLogoutClick}} />
+    </div>
+  </dd.Content>
+</BasicDropdown>
