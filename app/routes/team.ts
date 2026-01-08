@@ -1,11 +1,13 @@
 import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
 
 export default class TeamRoute extends BaseRoute {
-  @service authenticator;
-  @service store;
+  @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
-  async model(params) {
+  async model(params: { team_id: string }) {
     // reload true ensures that team memberships are loaded when a new team is created.
     const teams = await this.store.findAll('team', {
       include:

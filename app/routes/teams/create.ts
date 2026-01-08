@@ -1,9 +1,10 @@
 import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
+import type Store from '@ember-data/store';
 
 export default class TeamsCreateRoute extends BaseRoute {
-  @service store;
+  @service declare store: Store;
 
   activate() {
     scrollToTop();
