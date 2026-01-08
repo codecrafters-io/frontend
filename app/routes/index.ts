@@ -1,8 +1,9 @@
 import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import type RouterService from '@ember/routing/router-service';
 
-export default class CoursesRoute extends BaseRoute {
-  @service router;
+export default class IndexRoute extends BaseRoute {
+  @service declare router: RouterService;
 
   beforeModel() {
     this.router.transitionTo('catalog');
