@@ -41,7 +41,7 @@
     "@codecov/webpack-plugin": "^1.9.1",
     "@codemirror/language-data": "^6.5.2",
     "@codemirror/merge": "^6.11.2",
-    "@codemirror/view": "^6.38.2",
+    "@codemirror/view": "^6.39.9",
     "@ember/optional-features": "^2.3.0",
     "@ember/render-modifiers": "^3.0.0",
     "@ember/string": "^3.1.1",
