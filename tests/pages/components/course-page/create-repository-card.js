@@ -8,11 +8,9 @@ export default {
   clickOnOptionButton: clickOnText('button'),
   clickOnRequestLanguageButton: clickable('.ember-basic-dropdown-trigger'),
   continueButton: { scope: '[data-test-continue-button]' },
-  copyableCloneRepositoryInstructions: text('[data-test-copyable-repository-clone-instructions] .font-mono'),
-  description: text('[data-test-course-description]'),
   expandedSectionTitle: text('[data-test-expanded-section-title]'),
-  footerText: text('[data-test-footer]'),
   hasRequestedLanguagesPrompt: isVisible('[data-test-requested-languages-prompt]'),
+
   languageButtons: collection('[data-test-language-button]', {
     text: text('[data-test-language-button-text]'),
   }),
@@ -25,14 +23,4 @@ export default {
   requestLanguageDropdown: requestLanguageDropdown,
   scope: '[data-test-create-repository-card]',
   showOtherLanguagesButton: { scope: '[data-test-show-other-languages-button]' },
-
-  get statusIsInProgress() {
-    return this.statusText === 'In-progress';
-  },
-
-  get statusIsComplete() {
-    return this.statusText === 'Completed';
-  },
-
-  statusText: text('[data-test-status-text]'),
 };
