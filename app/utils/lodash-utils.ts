@@ -1,4 +1,4 @@
-export function partition(collection, predicate) {
+export function partition<T>(collection: T[], predicate: (item: T) => boolean): [T[], T[]] {
   return collection.reduce(
     (acc, item) => {
       if (predicate(item)) {
@@ -9,37 +9,40 @@ export function partition(collection, predicate) {
 
       return acc;
     },
-    [[], []],
+    [[], []] as [T[], T[]],
   );
 }
 
 // Break down collection in multiple chunks of size `chunkSize` and return them.
-export function chunk(collection, chunkSize) {
+export function chunk<T>(collection: T[], chunkSize: number): T[][] {
   return collection.reduce((acc, item, index) => {
     if (index % chunkSize === 0) {
       acc.push([]);
     }
 
-    acc[acc.length - 1].push(item);
+    acc[acc.length - 1]!.push(item);
 
     return acc;
-  }, []);
+  }, [] as T[][]);
 }
 
 // Break down collection into N (numberOfChunks) chunks of equal size and return them.
-export function split(collection, numberOfChunks) {
-  let chunkSize = Math.ceil(collection.length / numberOfChunks);
+export function split<T>(collection: T[], numberOfChunks: number): T[][] {
+  const chunkSize = Math.ceil(collection.length / numberOfChunks);
 
   return chunk(collection, chunkSize);
 }
 
 // Same as Python's zip
-export function zip(...arrays) {
+export function zip<T1, T2>(a1: readonly T1[], a2: readonly T2[]): [T1, T2][];
+export function zip<T>(...arrays: (readonly T[])[]): T[][];
+export function zip(...arrays: any[][]): any[][];
+export function zip(...arrays: any[][]): any[][] {
   return unzip(arrays);
 }
 
-export function unzip(array) {
-  if (!(array != null && array.length)) {
+export function unzip<T>(array: (readonly T[])[]): T[][] {
+  if (!(array !== null && array.length)) {
     return [];
   }
 
@@ -55,7 +58,7 @@ export function unzip(array) {
   return result;
 }
 
-const htmlEscapes = {
+const htmlEscapes: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -63,6 +66,6 @@ const htmlEscapes = {
   "'": '&#39;',
 };
 
-export function escapeHtml(html) {
-  return html.replace(/[&<>"']/g, (chr) => htmlEscapes[chr]);
+export function escapeHtml(html: string): string {
+  return html.replace(/[&<>"']/g, (chr) => htmlEscapes[chr]!);
 }

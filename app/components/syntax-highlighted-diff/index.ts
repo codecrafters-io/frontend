@@ -66,7 +66,7 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
     const preCodeElement = parsedHtml.querySelector('pre code');
     const highlightedLineNodes = preCodeElement ? Array.from(preCodeElement.children) : [];
 
-    const lines = zip(this.codeLinesWithTypes, highlightedLineNodes).map(([[, lineType], node], index) => {
+    const lines = zip(this.codeLinesWithTypes as any[], highlightedLineNodes as any[]).map(([[, lineType], node], index) => {
       return {
         isFirstLineOfFile: index === 0,
         isLastLineOfFile: index === this.codeLinesWithTypes.length - 1,
@@ -137,7 +137,7 @@ export default class SyntaxHighlightedDiff extends Component<Signature> {
   }
 
   get temporaryHTML() {
-    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line)}</span>`).join('');
+    const linesHTML = this.codeLinesWithTypes.map(([line]) => `<span>${escapeHtml(line || '')}</span>`).join('');
 
     return `<pre><code>${linesHTML}</code></pre>`;
   }
