@@ -104,7 +104,7 @@ export default class UserModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions
-      .toSorted(fieldComparator('startDate'))
+      .toSorted(fieldComparator('startedAt'))
       .reverse()
       .find((item) => item.isActive);
   }
@@ -141,7 +141,7 @@ export default class UserModel extends Model {
       return null;
     } else {
       return this.subscriptions
-        .toSorted(fieldComparator('startDate'))
+        .toSorted(fieldComparator('startedAt'))
         .reverse()
         .find((item) => item.isInactive);
     }

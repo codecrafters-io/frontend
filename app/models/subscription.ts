@@ -5,7 +5,7 @@ import type InstitutionMembershipGrantModel from './institution-membership-grant
 export default class SubscriptionModel extends Model {
   @attr('date') declare cancelAt: Date;
   @attr('date') declare endedAt: Date | null;
-  @attr('date') declare startDate: Date;
+  @attr('date') declare startedAt: Date;
 
   // TODO(CC-1888): Add other sources
   @belongsTo('subscription-source', { async: false, inverse: null, polymorphic: true }) declare source: InstitutionMembershipGrantModel;
