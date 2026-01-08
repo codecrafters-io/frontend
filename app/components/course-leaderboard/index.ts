@@ -105,16 +105,28 @@ export default class CourseLeaderboard extends Component<Signature> {
       allRepositories.push(this.args.activeRepository);
     }
 
-    return allRepositories.reduce(uniqReducer(), []).map((repository) => {
-      return new CourseLeaderboardEntry({
-        status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
-        completedStageSlugs: repository.completedStageSlugs,
-        currentCourseStage: repository.currentStage || repository.course.firstStage,
-        language: repository.language,
-        user: repository.user,
-        lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
-      });
-    });
+    return allRepositories
+      .reduce(uniqReducer(), [])
+      .map((repository) => {
+        const currentCourseStage = repository.currentStage ?? repository.course.firstStage;
+        const language = repository.language;
+
+        // Some old/incomplete repositories might not have language/stage loaded.
+        // Skip those instead of creating invalid leaderboard entries.
+        if (!currentCourseStage || !language) {
+          return null;
+        }
+
+        return new CourseLeaderboardEntry({
+          status: repository.lastSubmissionIsEvaluating ? 'evaluating' : repository.allStagesAreComplete ? 'completed' : 'idle',
+          completedStageSlugs: repository.completedStageSlugs,
+          currentCourseStage,
+          language,
+          user: repository.user,
+          lastAttemptAt: repository.lastSubmissionAt || repository.createdAt,
+        });
+      })
+      .filter((entry): entry is CourseLeaderboardEntry => entry !== null);
   }
 
   get inviteButtonText() {
