@@ -34,7 +34,7 @@ export default class TeamModel extends Model {
 
   get activeSubscription() {
     return this.subscriptions
-      .toSorted(fieldComparator('startDate'))
+      .toSorted(fieldComparator('startedAt'))
       .reverse()
       .find((item) => item.isActive);
   }

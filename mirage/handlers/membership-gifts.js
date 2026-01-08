@@ -44,7 +44,7 @@ export default function (server) {
     schema.subscriptions.create({
       user: schema.users.find(CurrentMirageUser.currentUserId),
       source: membershipGift,
-      startDate: membershipGift.redeemedAt.toISOString(),
+      startedAt: membershipGift.redeemedAt.toISOString(),
       cancelAt: new Date(membershipGift.redeemedAt.getTime() + membershipGift.validityInDays * 24 * 60 * 60 * 1000).toISOString(),
     });
 
