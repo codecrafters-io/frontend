@@ -2,9 +2,15 @@ import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import { hash as RSVPHash } from 'rsvp';
+import type Store from '@ember-data/store';
+import type ConceptModel from 'codecrafters-frontend/models/concept';
+
+export type ConceptsRouteModel = {
+  concepts: ConceptModel[];
+};
 
 export default class ConceptsRoute extends BaseRoute {
-  @service store;
+  @service declare store: Store;
 
   buildRouteInfoMetadata() {
     return new RouteInfoMetadata({
@@ -14,7 +20,7 @@ export default class ConceptsRoute extends BaseRoute {
     });
   }
 
-  async model() {
+  async model(): Promise<ConceptsRouteModel> {
     if (this.authenticator.isAuthenticated) {
       await this.store.findAll('concept-engagement', {
         include: 'concept,user',
@@ -24,7 +30,7 @@ export default class ConceptsRoute extends BaseRoute {
     return RSVPHash({
       concepts: this.store.findAll('concept', {
         include: 'author,questions',
-      }),
+      }) as unknown as Promise<ConceptModel[]>,
     });
   }
 }
