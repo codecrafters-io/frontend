@@ -2,9 +2,10 @@ import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import { hash as RSVPHash } from 'rsvp';
+import type Store from '@ember-data/store';
 
 export default class ConceptsRoute extends BaseRoute {
-  @service store;
+  @service declare store: Store;
 
   buildRouteInfoMetadata() {
     return new RouteInfoMetadata({
