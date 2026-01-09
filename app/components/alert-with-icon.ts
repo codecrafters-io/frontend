@@ -6,6 +6,8 @@ interface Signature {
   Args: {
     type?: 'success' | 'info' | 'error' | 'warning';
     icon?: string;
+    isDismissable?: boolean;
+    onDismiss?: () => void;
   };
 
   Blocks: {
