@@ -79,7 +79,8 @@ test('can create concept', async function (assert) {
 - Use `createPage` function to wrap the page object definition
 - Use `visitable` for URL patterns
 - Use `collection` for repeated elements
-- Use `clickable`, `text`, `isPresent`, etc. for element interactions
+- Use `clickable`, `text`, etc. for element interactions
+- `isVisible` is available by default on all page objects with a `scope`, so don't add `isVisible: isPresent()` explicitly
 
 Example:
 
