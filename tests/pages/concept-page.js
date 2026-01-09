@@ -20,7 +20,6 @@ export default createPage({
 
   conceptCompletedModal: {
     clickOnSignInButton: clickable('[data-test-concept-completed-modal-sign-in-button]'),
-    isVisible: isPresent(),
     scope: '[data-test-concept-completed-modal]',
     text: text(),
   },
