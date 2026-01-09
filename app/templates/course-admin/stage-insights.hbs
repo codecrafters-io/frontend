@@ -4,7 +4,9 @@
 
     {{#if (lt this.participationAnalysis.participationsCount 100)}}
       <AlertWithIcon @type="error">
-        This stage has less than 100 data points, so the statistics below may not be reliable.
+        <p>
+          This stage has less than 100 data points, so the statistics below may not be reliable.
+        </p>
       </AlertWithIcon>
     {{/if}}
 
