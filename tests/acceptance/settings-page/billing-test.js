@@ -35,6 +35,25 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     await percySnapshot('Billing Page - Active Subscription');
   });
 
+  test('membership section shows rollover days when subscription has rollover validity', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+    const subscription = this.server.schema.subscriptions.first();
+    subscription.update('cancelAt', new Date('2035-07-31T01:00:00Z'));
+    subscription.update('rolloverValidityInDays', 15);
+
+    await billingPage.visit();
+
+    assert.ok(billingPage.membershipSection.isVisible, 'membership section is visible');
+    assert.ok(billingPage.membershipSection.text.includes('Membership active'), 'shows active plan');
+    assert.ok(
+      billingPage.membershipSection.text.includes('This includes 15 days rolled over from a previous membership'),
+      'shows rollover days message',
+    );
+
+    await percySnapshot('Billing Page - Active Subscription with Rollover Days');
+  });
+
   test('membership section shows correct plan for subscriber with institution membership', async function (assert) {
     testScenario(this.server);
     createInstitution(this.server, 'nus');

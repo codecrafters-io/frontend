@@ -30,6 +30,12 @@
           <p>
             You have access to all CodeCrafters content, valid until
             <strong>{{date-format @user.activeSubscription.cancelAt format="PPPp"}}</strong>.
+            {{#if @user.activeSubscription.hasRolloverValidity}}
+              This includes
+              {{@user.activeSubscription.rolloverValidityInDays}}
+              {{pluralize "day" count=@user.activeSubscription.rolloverValidityInDays}}
+              rolled over from a previous membership.
+            {{/if}}
           </p>
         {{/if}}
       </div>
