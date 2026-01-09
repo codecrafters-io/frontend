@@ -24,7 +24,9 @@
       <AnimatedContainer class="w-full">
         {{#animated-if this.feedbackAlertMarkdown use=this.transition duration=300}}
           <AlertWithIcon @type="info">
-            {{markdown-to-html this.feedbackAlertMarkdown}}
+            <p>
+              {{markdown-to-html this.feedbackAlertMarkdown}}
+            </p>
           </AlertWithIcon>
         {{/animated-if}}
       </AnimatedContainer>
