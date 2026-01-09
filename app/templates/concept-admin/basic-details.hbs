@@ -25,10 +25,12 @@
 
     {{#if (gt @model.concept.errors.length 0)}}
       <AlertWithIcon @type="error" class="mt-4">
-        Found
-        {{! @glint-expect-error length isn't seen as a string? }}
-        {{@model.concept.errors.length}}
-        error(s) while saving:
+        <p>
+          Found
+          {{! @glint-expect-error length isn't seen as a string? }}
+          {{@model.concept.errors.length}}
+          error(s) while saving:
+        </p>
 
         <ul>
           {{#each @model.concept.errors as |error|}}

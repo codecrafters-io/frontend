@@ -51,7 +51,9 @@
 
   {{#if this.accountDeletionErrorMessage}}
     <AlertWithIcon @type="error" class="mt-4">
-      {{this.accountDeletionErrorMessage}}
+      <p>
+        {{this.accountDeletionErrorMessage}}
+      </p>
     </AlertWithIcon>
   {{/if}}
 </ModalBody>
