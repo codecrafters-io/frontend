@@ -1,4 +1,4 @@
-<Alert @color={{this.color}} ...attributes>
+<Alert @color={{this.color}} @isDismissable={{@isDismissable}} @onDismiss={{@onDismiss}} ...attributes>
   <div class="flex">
     <div class="mr-3 mt-0.5">
       {{svg-jar this.icon class=(concat "w-6 fill-current " this.iconColorClasses)}}

@@ -7,5 +7,20 @@
     "
   ...attributes
 >
-  {{yield}}
+  <div class="flex-1">
+    {{yield}}
+  </div>
+
+  {{#if @isDismissable}}
+    <div class="flex items-center justify-center ml-3">
+      <button
+        class="border p-1 rounded-sm {{this.dismissButtonColorClasses}}"
+        type="button"
+        {{on "click" this.handleDismissButtonClick}}
+        data-test-dismiss-button
+      >
+        {{svg-jar "x" class="w-5 h-5 fill-current"}}
+      </button>
+    </div>
+  {{/if}}
 </div>
