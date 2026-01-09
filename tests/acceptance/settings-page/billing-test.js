@@ -1,3 +1,4 @@
+import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import {
@@ -231,5 +232,37 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
     assert.strictEqual(billingPage.paymentHistorySection.charges[1].refundText, '($60 refunded)', 'shows refund text for second charge');
 
     await percySnapshot('Billing Page - Payment History with Refunded Charges');
+  });
+
+  test('membership extended notice is shown when visiting with action query param', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await visit('/settings/billing?action=membership_extended');
+
+    assert.true(billingPage.membershipExtendedNotice.isVisible, 'membership extended notice is visible');
+    assert.strictEqual(currentURL(), '/settings/billing', 'query param is cleared from URL');
+  });
+
+  test('membership extended notice can be dismissed', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await visit('/settings/billing?action=membership_extended');
+
+    assert.true(billingPage.membershipExtendedNotice.isVisible, 'membership extended notice is visible');
+
+    await billingPage.membershipExtendedNotice.clickDismissButton();
+
+    assert.false(billingPage.membershipExtendedNotice.isVisible, 'membership extended notice is dismissed');
+  });
+
+  test('membership extended notice is not shown on normal page visit', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    await billingPage.visit();
+
+    assert.false(billingPage.membershipExtendedNotice.isVisible, 'membership extended notice is not visible');
   });
 });
