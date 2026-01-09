@@ -53,7 +53,7 @@
     </div>
     {{#if (gt @concept.errors.length 0)}}
       <AlertWithIcon @type="error" class="mt-4">
-        <p>
+        <div>
           Found
           {{! @glint-expect-error length isn't seen as a string? }}
           {{@model.concept.errors.length}}
@@ -64,7 +64,7 @@
               <li>{{error.message}}</li>
             {{/each}}
           </ul>
-        </p>
+        </div>
       </AlertWithIcon>
     {{/if}}
     <div class="flex flex-col" {{sortable-group onChange=this.handleSortableItemsReordered}}>
