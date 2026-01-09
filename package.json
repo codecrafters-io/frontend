@@ -139,7 +139,7 @@
     "ember-cli-mirage": "^3.0.4",
     "ember-cli-page-object": "^2.3.2",
     "ember-cli-sri": "^2.1.1",
-    "ember-cli-string-helpers": "^6.1.0",
+    "ember-cli-string-helpers": "^8.0.1",
     "ember-cli-terser": "^4.0.2",
     "ember-click-outside": "^6.1.1",
     "ember-composable-helpers": "^5.0.0",
