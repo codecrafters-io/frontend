@@ -30,12 +30,12 @@ export default class BillingController extends Controller {
     this.chooseMembershipPlanModalIsOpen = false;
     this.shouldShowMembershipExtendedNotice = false;
 
-    await this.loadRegionalDiscountTask.perform();
-
     if (this.action === 'membership_extended') {
       this.shouldShowMembershipExtendedNotice = true;
       this.router.transitionTo({ queryParams: { action: null } });
     }
+
+    await this.loadRegionalDiscountTask.perform();
   }
 
   @action
