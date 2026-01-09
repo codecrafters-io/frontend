@@ -27,6 +27,7 @@ export default class BillingController extends Controller {
 
   @action
   async handleDidInsert() {
+    this.chooseMembershipPlanModalIsOpen = false;
     this.shouldShowMembershipExtendedNotice = false;
 
     await this.loadRegionalDiscountTask.perform();
