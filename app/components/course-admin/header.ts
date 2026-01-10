@@ -66,14 +66,6 @@ export default class CourseAdminHeader extends Component<Signature> {
         isActive: ['course-admin.buildpacks', 'course-admin.buildpack'].includes(this.router.currentRouteName),
       },
       {
-        icon: 'chart-bar',
-        name: 'Insights',
-        slug: 'insights',
-        route: 'course-admin.insights',
-        models: [this.args.course.slug],
-        isActive: this.router.currentRouteName === 'course-admin.insights',
-      },
-      {
         icon: 'presentation-chart-bar',
         name: 'Stage Insights',
         slug: 'stage-insights',
