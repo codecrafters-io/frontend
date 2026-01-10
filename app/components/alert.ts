@@ -53,11 +53,11 @@ export default class Alert extends Component<Signature> {
 
   get dismissButtonColorClasses(): string {
     return {
-      green: 'border-green-300 dark:border-green-700 hover:bg-green-200 dark:hover:bg-green-800/50 text-green-500',
-      blue: 'border-blue-300 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-800/50 text-blue-500',
-      red: 'border-red-300 dark:border-red-700 hover:bg-red-200 dark:hover:bg-red-800/50 text-red-500',
-      teal: 'border-teal-300 dark:border-teal-700 hover:bg-teal-200 dark:hover:bg-teal-800/50 text-teal-500',
-      yellow: 'border-yellow-300 dark:border-yellow-700 hover:bg-yellow-200 dark:hover:bg-yellow-800/50 text-yellow-500',
+      green: 'border-green-300 dark:border-green-700/50 hover:bg-green-200 dark:hover:bg-green-800/50 text-green-500',
+      blue: 'border-blue-300 dark:border-blue-700/50 hover:bg-blue-200 dark:hover:bg-blue-800/50 text-blue-500',
+      red: 'border-red-300 dark:border-red-700/50 hover:bg-red-200 dark:hover:bg-red-800/50 text-red-500',
+      teal: 'border-teal-300 dark:border-teal-700/50 hover:bg-teal-200 dark:hover:bg-teal-800/50 text-teal-500',
+      yellow: 'border-yellow-300 dark:border-yellow-700/50 hover:bg-yellow-200 dark:hover:bg-yellow-800/50 text-yellow-500',
     }[this.args.color];
   }
 
