@@ -1,8 +1,18 @@
-<Settings::FormSection @title="Renewal" @description="Details of your upcoming payment">
+<Settings::FormSection @title="Renewal" @description="Details on renewing your membership" data-test-renewal-section>
   <Settings::BillingPage::StatusPill @color="gray" class="mb-3">
-    Auto-renew disabled
+    Auto-renew off
   </Settings::BillingPage::StatusPill>
-  <div class="prose prose-sm prose-compact dark:prose-invert">
-    Your membership does not renew automatically. Once your membership expires, you'll be able to make a new one-time payment.
+
+  <div class="prose prose-sm prose-compact dark:prose-invert mb-4" data-test-explanation-text>
+    <p>
+      Your membership does not renew automatically.
+    </p>
+    <p>
+      If you extend your membership before expiry, unused time will be added to your new membership.
+    </p>
   </div>
+
+  <PrimaryButton @size="small" {{on "click" @onExtendMembershipButtonClick}} data-test-extend-membership-button>
+    Extend membership →
+  </PrimaryButton>
 </Settings::FormSection>
