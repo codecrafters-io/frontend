@@ -64,6 +64,22 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     }
   }
 
+  get formattedVoteCounts(): string | null {
+    // @ts-expect-error Model mixin methods/properties are not recognized
+    const upvotes = this.args.solution.upvotesCount as number;
+    // @ts-expect-error Model mixin methods/properties are not recognized
+    const downvotes = this.args.solution.downvotesCount as number;
+
+    if (upvotes === 0 && downvotes === 0) {
+      return null;
+    }
+
+    const upvoteText = upvotes === 1 ? '1 upvote' : `${upvotes} upvotes`;
+    const downvoteText = downvotes === 1 ? '1 downvote' : `${downvotes} downvotes`;
+
+    return `${upvoteText}, ${downvoteText}`;
+  }
+
   get isScored() {
     return this.args.solution.score !== null && this.args.solution.score > 0;
   }
@@ -85,6 +101,10 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     lines.push(`* ${this.formattedVerificationStatus}`);
     lines.push(`* ± ${this.args.solution.changedLinesCount} lines changed`);
     lines.push(`* ⚡︎ ${this.args.solution.highlightedLinesCount} lines highlighted`);
+
+    if (this.formattedVoteCounts) {
+      lines.push(`* ${this.formattedVoteCounts}`);
+    }
 
     return lines.join('\n');
   }
