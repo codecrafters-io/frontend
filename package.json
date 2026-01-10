@@ -193,7 +193,7 @@
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^4.1.12",
-    "tracked-built-ins": "^4.0.0",
+    "tracked-built-ins": "^4.1.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.52.0",
     "webpack": "^5.104.1",
