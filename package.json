@@ -108,7 +108,7 @@
     "@types/rsvp": "^4.0.9",
     "@types/seedrandom": "^3.0.8",
     "@types/showdown": "^2.0.2",
-    "@types/three": "^0.172.0",
+    "@types/three": "^0.182.0",
     "@uiw/codemirror-theme-github": "^4.25.4",
     "autoprefixer": "^10.4.21",
     "broccoli-asset-rev": "^3.0.0",
@@ -222,7 +222,7 @@
     "posthog-js": "^1.313.0",
     "seedrandom": "^3.0.5",
     "showdown": "^2.1.0",
-    "three": "^0.172.0",
+    "three": "^0.182.0",
     "web-vitals": "^5.1.0"
   },
   "fastbootDependencies": [
