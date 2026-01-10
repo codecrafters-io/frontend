@@ -35,7 +35,6 @@ Router.map(function () {
     this.route('code-example-insights', { path: '/code-examples/stage/:stage_slug' });
     this.route('code-example-insights-index', { path: '/code-examples' });
     this.route('feedback');
-    this.route('insights');
     this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
     this.route('stage-insights-index', { path: '/stage-insights' });
     this.route('submissions');
