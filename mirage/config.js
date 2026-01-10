@@ -1,3 +1,5 @@
+import { Model, belongsTo, createServer, hasMany } from 'miragejs';
+import config from 'codecrafters-frontend/config/environment';
 import affiliateEarningsPayouts from './handlers/affiliate-earnings-payouts';
 import affiliateLinks from './handlers/affiliate-links';
 import affiliateReferrals from './handlers/affiliate-referrals';
@@ -16,7 +18,6 @@ import conceptEngagements from './handlers/concept-engagements';
 import conceptGroups from './handlers/concept-groups';
 import conceptQuestions from './handlers/concept-questions';
 import concepts from './handlers/concepts';
-import config from 'codecrafters-frontend/config/environment';
 import contests from './handlers/contests';
 import courseDefinitionUpdates from './handlers/course-definition-updates';
 import courseExtensionActivations from './handlers/course-extension-activations';
@@ -68,54 +69,62 @@ import trustedCommunitySolutionEvaluations from './handlers/trusted-community-so
 import upvotes from './handlers/upvotes';
 import users from './handlers/users';
 import views from './handlers/views';
-import { Model, belongsTo, createServer, hasMany } from 'miragejs';
-import { applyEmberDataSerializers, discoverEmberDataModels } from 'ember-cli-mirage';
 
-export default function (config) {
-  let finalConfig = {
-    ...config,
-    models: {
-      ...discoverEmberDataModels(config.store),
-      ...config.models,
-      ...{
-        courseStageComment: Model.extend({
-          user: belongsTo('user', { inverse: null }),
-          target: belongsTo('course-stage', { inverse: 'comments' }),
-          language: belongsTo('language', { inverse: null }),
-          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
-          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
-          parentComment: belongsTo('course-stage-comment', { inverse: null }),
-        }),
-        communityCourseStageSolution: Model.extend({
-          comments: hasMany('community-course-stage-solution-comment', { inverse: 'target' }),
-          courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
-          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
-          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
-          evaluations: hasMany('community-solution-evaluation', { inverse: 'communitySolution' }),
-          exports: hasMany('community-solution-export', { inverse: 'communitySolution' }),
-          language: belongsTo('language', { inverse: null }),
-          screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
-          trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
-          user: belongsTo('user', { inverse: null }),
-          verifications: hasMany('community-solution-verification', { inverse: 'communitySolution' }),
-        }),
-        communityCourseStageSolutionComment: Model.extend({
-          user: belongsTo('user', { inverse: null }),
-          target: belongsTo('community-course-stage-solution', { inverse: 'comments' }),
-          language: belongsTo('language', { inverse: null }),
-          currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
-          currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
-          parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
-        }),
-        fakeLogstream: Model.extend({}),
+export default async function () {
+  if (typeof FastBoot !== 'undefined') {
+    return;
+  }
+
+  // This import MUST NOT happen under FastBoot, otherwise it'll cause major
+  // errors when running `npm run start:fastboot`
+  const { applyEmberDataSerializers, discoverEmberDataModels } = await import('ember-cli-mirage');
+
+  return function (config) {
+    const finalConfig = {
+      ...config,
+      models: {
+        ...discoverEmberDataModels(config.store),
+        ...config.models,
+        ...{
+          courseStageComment: Model.extend({
+            user: belongsTo('user', { inverse: null }),
+            target: belongsTo('course-stage', { inverse: 'comments' }),
+            language: belongsTo('language', { inverse: null }),
+            currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+            currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+            parentComment: belongsTo('course-stage-comment', { inverse: null }),
+          }),
+          communityCourseStageSolution: Model.extend({
+            comments: hasMany('community-course-stage-solution-comment', { inverse: 'target' }),
+            courseStage: belongsTo('course-stage', { inverse: 'communitySolutions' }),
+            currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+            currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+            evaluations: hasMany('community-solution-evaluation', { inverse: 'communitySolution' }),
+            exports: hasMany('community-solution-export', { inverse: 'communitySolution' }),
+            language: belongsTo('language', { inverse: null }),
+            screencasts: hasMany('course-stage-screencast', { inverse: 'solution' }),
+            trustedEvaluations: hasMany('trusted-community-solution-evaluation', { inverse: 'communitySolution' }),
+            user: belongsTo('user', { inverse: null }),
+            verifications: hasMany('community-solution-verification', { inverse: 'communitySolution' }),
+          }),
+          communityCourseStageSolutionComment: Model.extend({
+            user: belongsTo('user', { inverse: null }),
+            target: belongsTo('community-course-stage-solution', { inverse: 'comments' }),
+            language: belongsTo('language', { inverse: null }),
+            currentUserDownvotes: hasMany('downvote', { inverse: 'downvotable' }),
+            currentUserUpvotes: hasMany('upvote', { inverse: 'upvotable' }),
+            parentComment: belongsTo('community-course-stage-solution-comment', { inverse: null }),
+          }),
+          fakeLogstream: Model.extend({}),
+        },
       },
-    },
-    serializers: applyEmberDataSerializers(config.serializers),
-    routes,
-    trackRequests: config.environment === 'test',
-  };
+      serializers: applyEmberDataSerializers(config.serializers),
+      routes,
+      trackRequests: config.environment === 'test',
+    };
 
-  return createServer(finalConfig);
+    return createServer(finalConfig);
+  };
 }
 
 function routes() {
