@@ -185,9 +185,9 @@ module('Acceptance | view-course-overview', function (hooks) {
     const grep = this.server.schema.courses.findBy({ slug: 'grep' });
     const grepLastBaseStageIndex = grep.stages.models.filter((item) => !item.primaryExtensionSlug).length - 1;
 
-    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 1].text.includes('Single Backreference'));
-    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Multiple Backreferences'));
-    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 3].text.includes('Nested Backreferences'));
+    // First extension is "Printing Matches"
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 1].text.includes('Print a single matching line'));
+    assert.ok(courseOverviewPage.stageListItems[grepLastBaseStageIndex + 2].text.includes('Print multiple matching lines'));
   });
 
   test('redirects to not found if course slug is invalid', async function (assert) {
