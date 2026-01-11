@@ -45,20 +45,6 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     }
   }
 
-  get formattedVotes(): string | null {
-    const upvotesCount = this.args.solution.upvotesCount ?? 0;
-    const downvotesCount = this.args.solution.downvotesCount ?? 0;
-
-    if (upvotesCount === 0 && downvotesCount === 0) {
-      return null;
-    }
-
-    const upvoteWord = upvotesCount === 1 ? 'upvote' : 'upvotes';
-    const downvoteWord = downvotesCount === 1 ? 'downvote' : 'downvotes';
-
-    return `${upvotesCount} ${upvoteWord}, ${downvotesCount} ${downvoteWord}`;
-  }
-
   get formattedScoreReason() {
     if (this.isScored && this.args.solution.scoreReason) {
       return '⭐' + ' ' + capitalize(this.args.solution.scoreReason);
@@ -76,6 +62,20 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     } else {
       return `Not verified against ${latestTesterVersion?.tagName ?? 'unknown'}`;
     }
+  }
+
+  get formattedVotes(): string | null {
+    const upvotesCount = this.args.solution.upvotesCount ?? 0;
+    const downvotesCount = this.args.solution.downvotesCount ?? 0;
+
+    if (upvotesCount === 0 && downvotesCount === 0) {
+      return null;
+    }
+
+    const upvoteWord = upvotesCount === 1 ? 'upvote' : 'upvotes';
+    const downvoteWord = downvotesCount === 1 ? 'downvote' : 'downvotes';
+
+    return `${upvotesCount} ${upvoteWord}, ${downvotesCount} ${downvoteWord}`;
   }
 
   get isScored() {
