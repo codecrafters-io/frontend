@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupMirage } from 'codecrafters-frontend/tests/test-support/mirage';
 
 module('Unit | Model | concept', function (hooks) {
   setupTest(hooks);

@@ -21,5 +21,5 @@ module.exports = {
     },
   },
   parallel: -1,
-  src_files: ['tests/**/*.js', 'app/**/*.js', 'app/**/*.hbs', 'mirage/**/*.js'],
+  src_files: ['tests/**/*.js', 'app/**/*.js', 'app/**/*.hbs'],
 };
