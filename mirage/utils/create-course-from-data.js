@@ -99,7 +99,7 @@ function courseStageAttributesFromData(courseStageData, positionWithinCourse, po
     positionWithinCourse: positionWithinCourse,
     positionWithinExtension: positionWithinExtension,
     slug: courseStageData.slug,
-    descriptionMarkdownTemplate: courseStageData.description_md,
+    descriptionMarkdownTemplate: courseStageData.description_md || '',
     difficulty: courseStageData.difficulty,
     testerSourceCodeUrl: courseStageData.tester_source_code_url,
     isPaid: positionWithinCourse >= 3,

@@ -14,6 +14,7 @@ export default function createLanguages(server) {
   server.create('language', { name: 'Kotlin', slug: 'kotlin', trackStatus: 'beta' });
   server.create('language', { name: 'Nim', slug: 'nim', trackStatus: 'beta' });
   server.create('language', { name: 'OCaml', slug: 'ocaml', trackStatus: 'beta' });
+  server.create('language', { name: 'Odin', slug: 'odin', trackStatus: 'beta' });
   server.create('language', { name: 'PHP', slug: 'php', trackStatus: 'beta' });
   server.create('language', { name: 'Python', slug: 'python', trackStatus: 'live' });
   server.create('language', { name: 'Ruby', slug: 'ruby', trackStatus: 'beta' });
