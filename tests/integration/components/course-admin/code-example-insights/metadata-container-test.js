@@ -3,8 +3,6 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupRenderingTest } from 'codecrafters-frontend/tests/helpers';
 
-import 'codecrafters-frontend/models/community-course-stage-solution';
-
 module('Integration | Component | course-admin/code-example-insights/metadata-container', function (hooks) {
   setupRenderingTest(hooks);
 
