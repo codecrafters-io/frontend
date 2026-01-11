@@ -89,6 +89,7 @@ module.exports = function (environment) {
 
     ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
     ENV.x.isCI = !!process.env.CI;
+    ENV.x.stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || 'dummy';
   }
 
   return ENV;
