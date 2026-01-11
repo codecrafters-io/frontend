@@ -55,6 +55,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
 
   @attr('number') declare addedLinesCount: number;
   @attr('number') declare approvedCommentsCount: number;
+  @attr('number') declare downvotesCount: number;
   @attr('string') declare explanationMarkdown: string;
   @attr('string') declare commitSha: string;
   @attr('string') declare flakinessCheckStatus: 'pending' | 'success' | 'failure' | 'error';
@@ -67,6 +68,7 @@ export default class CommunityCourseStageSolutionModel extends Model.extend(View
   @attr('number') declare score: number | null;
   @attr('string') declare scoreReason: 'concise' | 'pinned' | null;
   @attr('date') declare submittedAt: Date;
+  @attr('number') declare upvotesCount: number;
   @attr('boolean') declare isRestrictedToTeam: boolean; // if true, only fellow team members can see this solution
 
   get changedFilesFromHighlightedFiles() {

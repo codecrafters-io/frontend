@@ -64,6 +64,20 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     }
   }
 
+  get formattedVotes(): string | null {
+    const upvotesCount = this.args.solution.upvotesCount ?? 0;
+    const downvotesCount = this.args.solution.downvotesCount ?? 0;
+
+    if (upvotesCount === 0 && downvotesCount === 0) {
+      return null;
+    }
+
+    const upvoteWord = upvotesCount === 1 ? 'upvote' : 'upvotes';
+    const downvoteWord = downvotesCount === 1 ? 'downvote' : 'downvotes';
+
+    return `${upvotesCount} ${upvoteWord}, ${downvotesCount} ${downvoteWord}`;
+  }
+
   get isScored() {
     return this.args.solution.score !== null && this.args.solution.score > 0;
   }
@@ -76,6 +90,10 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
     const lines = [];
 
     lines.push(`* ${this.formattedScoreReason}`);
+
+    if (this.formattedVotes) {
+      lines.push(`* ${this.formattedVotes}`);
+    }
 
     for (const evaluation of this.formattedEvaluationResults) {
       lines.push(`* ${evaluation}`);
