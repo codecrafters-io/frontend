@@ -47,7 +47,7 @@ module('Acceptance | view-tracks', function (hooks) {
     assert.strictEqual(catalogPage.trackCards[3].actionText, 'Start', 'expected fourth track to have start action');
 
     assert.true(catalogPage.trackCards[0].hasProgressDonut, 'expected first track to have progress donut');
-    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/86 stages');
+    assert.strictEqual(catalogPage.trackCards[0].progressText, '1/146 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {
@@ -210,6 +210,6 @@ module('Acceptance | view-tracks', function (hooks) {
     await catalogPage.visit();
 
     assert.ok(catalogPage.trackCards[0].hasPopularLabel, 'go should have popular label');
-    assert.ok(catalogPage.trackCards[0].text.includes('86 stages'), 'number of stages should not include deprecated stages count');
+    assert.ok(catalogPage.trackCards[0].text.includes('146 stages'), 'number of stages should not include deprecated stages count');
   });
 });

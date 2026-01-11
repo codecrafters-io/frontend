@@ -93,7 +93,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.true(catalogPage.courseCards[0].hasProgressDonut);
     assert.false(catalogPage.courseCards[0].hasDifficultyLabel);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/55 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '1/97 stages');
   });
 
   test('it renders with progress if user has created a repository', async function (assert) {
@@ -114,7 +114,7 @@ module('Acceptance | view-courses', function (hooks) {
 
     assert.strictEqual(catalogPage.courseCards[0].actionText, 'Resume');
     assert.true(catalogPage.courseCards[0].hasProgressDonut);
-    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/55 stages');
+    assert.strictEqual(catalogPage.courseCards[0].progressText, '0/97 stages');
   });
 
   test('it sorts course cards based on last push', async function (assert) {

@@ -99,7 +99,9 @@ function courseStageAttributesFromData(courseStageData, positionWithinCourse, po
     positionWithinCourse: positionWithinCourse,
     positionWithinExtension: positionWithinExtension,
     slug: courseStageData.slug,
-    descriptionMarkdownTemplate: courseStageData.description_md,
+    // Newer course-definition.yml fixtures no longer include `description_md` for stages.
+    // Fall back to `marketing_md` so stage pages continue to have non-empty content.
+    descriptionMarkdownTemplate: courseStageData.description_md || courseStageData.marketing_md || null,
     difficulty: courseStageData.difficulty,
     testerSourceCodeUrl: courseStageData.tester_source_code_url,
     isPaid: positionWithinCourse >= 3,
