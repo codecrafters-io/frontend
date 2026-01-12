@@ -15,13 +15,24 @@ export interface Signature {
   };
 }
 
+const POWERSHELL_VARIANT: CopyableTerminalCommandVariant = {
+  label: 'PowerShell',
+  commands: ['irm https://codecrafters.io/install.ps1 | iex', 'codecrafters ping'],
+};
+
+const POSIX_VARIANT: CopyableTerminalCommandVariant = {
+  label: 'POSIX',
+  commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
+};
+
 export default class TestCliConnectionStep extends Component<Signature> {
-  @tracked commandVariants: CopyableTerminalCommandVariant[] = [];
+  // Default to Shell first; reordered after OS detection completes
+  @tracked commandVariants: CopyableTerminalCommandVariant[] = [POSIX_VARIANT, POWERSHELL_VARIANT];
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant | null = null;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
-    this.loadCommandVariants();
+    this.reorderVariantsForOS();
   }
 
   @action
@@ -29,21 +40,9 @@ export default class TestCliConnectionStep extends Component<Signature> {
     this.selectedCommandVariant = variant;
   }
 
-  async loadCommandVariants() {
-    const powershellVariant: CopyableTerminalCommandVariant = {
-      label: 'PowerShell',
-      commands: ['irm https://codecrafters.io/install.ps1 | iex', 'codecrafters ping'],
-    };
-
-    const posixVariant: CopyableTerminalCommandVariant = {
-      label: 'Shell',
-      commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
-    };
-
+  async reorderVariantsForOS() {
     if ((await detectOperatingSystem()) === 'Windows') {
-      this.commandVariants = [powershellVariant, posixVariant];
-    } else {
-      this.commandVariants = [posixVariant, powershellVariant];
+      this.commandVariants = [POWERSHELL_VARIANT, POSIX_VARIANT];
     }
   }
 }
