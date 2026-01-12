@@ -1,5 +1,5 @@
 <div data-test-test-cli-connection-step>
-  <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
+  <CopyableTerminalCommandWithVariants @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} class="mb-1.5" />
 
   <a href="#" {{on "click" @onTroubleshootingLinkClick}} class="flex items-center gap-0.5 pl-0.5">
     {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
