@@ -207,7 +207,7 @@
   },
   "dependencies": {
     "@rails/actioncable": "^8.1.100",
-    "@rive-app/canvas": "^2.33.1",
+    "@rive-app/canvas": "^2.33.3",
     "@stripe/stripe-js": "^8.6.0",
     "@typeform/embed": "^5.10.0",
     "@vimeo/player": "^2.30.1",
