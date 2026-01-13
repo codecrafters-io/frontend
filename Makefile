@@ -11,49 +11,49 @@ lint:
 	bun run lint:fix
 
 refresh_concept_fixtures:
-	curl https://backend.codecrafters.io/api/v1/concepts/network-protocols\?include\=questions > mirage/concept-fixtures/network-protocols.js
-	curl https://backend.codecrafters.io/api/v1/concepts/tcp-overview\?include\=questions > mirage/concept-fixtures/tcp-overview.js
-	curl https://backend.codecrafters.io/api/v1/concepts/dummy\?include\=questions > mirage/concept-fixtures/dummy.js
-	gsed -i '1s/^/export default /' mirage/concept-fixtures/*.js
+	curl https://backend.codecrafters.io/api/v1/concepts/network-protocols\?include\=questions > app/mirage/concept-fixtures/network-protocols.js
+	curl https://backend.codecrafters.io/api/v1/concepts/tcp-overview\?include\=questions > app/mirage/concept-fixtures/tcp-overview.js
+	curl https://backend.codecrafters.io/api/v1/concepts/dummy\?include\=questions > app/mirage/concept-fixtures/dummy.js
+	gsed -i '1s/^/export default /' app/mirage/concept-fixtures/*.js
 
 refresh_course_fixtures:
 	gh api repos/codecrafters-io/build-your-own-redis/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/redis.js
+		> app/mirage/course-fixtures/redis.js
 
 	gh api repos/codecrafters-io/build-your-own-docker/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/docker.js
+		> app/mirage/course-fixtures/docker.js
 
 	gh api repos/codecrafters-io/build-your-own-git/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/git.js
+		> app/mirage/course-fixtures/git.js
 
 	gh api repos/codecrafters-io/build-your-own-sqlite/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/sqlite.js
+		> app/mirage/course-fixtures/sqlite.js
 
 	gh api repos/codecrafters-io/build-your-own-grep/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/grep.js
+		> app/mirage/course-fixtures/grep.js
 
 	gh api repos/codecrafters-io/build-your-own-dummy/contents/course-definition.yml \
 		| jq -r .content \
 		| base64 -d \
 		| yq -o json eval \
-		> mirage/course-fixtures/dummy.js
+		> app/mirage/course-fixtures/dummy.js
 
-	gsed -i '1s/^/export default /' mirage/course-fixtures/*.js
+	gsed -i '1s/^/export default /' app/mirage/course-fixtures/*.js
 
 serve:
 	bun run start

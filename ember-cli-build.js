@@ -98,6 +98,7 @@ module.exports = function (defaults) {
   const compiledApp = require('@embroider/compat').compatBuild(app, Webpack, {
     staticAddonTestSupportTrees: true,
     staticAddonTrees: true,
+    staticAppPaths: ['mirage'],
     staticEmberSource: true,
     staticInvokables: true,
     splitAtRoutes: ['badges', 'concept', 'code-walkthrough', 'course', 'course-admin', 'concept-admin', 'demo'], // can also be a RegExp
