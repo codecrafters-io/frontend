@@ -13,25 +13,25 @@ export interface Signature {
   };
 }
 
-const POWERSHELL_VARIANT: CopyableTerminalCommandVariant = {
-  label: 'PowerShell',
-  commands: ['irm https://codecrafters.io/install.ps1 | iex', 'codecrafters ping'],
-};
-
-const POSIX_VARIANT: CopyableTerminalCommandVariant = {
-  label: 'Linux / macOS',
-  commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
-};
-
 export default class TestCliConnectionStep extends Component<Signature> {
   @service declare userAgent: UserAgentService;
 
   get commandVariants(): CopyableTerminalCommandVariant[] {
+    const linuxMacOSVariant = {
+      label: 'Linux / macOS',
+      commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
+    };
+
+    const powershellVariant = {
+      label: 'PowerShell',
+      commands: ['irm https://codecrafters.io/install.ps1 | iex', 'codecrafters ping'],
+    };
+
     if (this.userAgent.isWindows) {
-      return [POWERSHELL_VARIANT, POSIX_VARIANT];
+      return [powershellVariant, linuxMacOSVariant];
     }
 
-    return [POSIX_VARIANT, POWERSHELL_VARIANT];
+    return [linuxMacOSVariant, powershellVariant];
   }
 }
 
