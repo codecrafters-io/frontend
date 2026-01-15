@@ -1,8 +1,10 @@
-import Service from '@ember/service';
+import Service, { service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 import { UAParser, type IResult } from 'ua-parser-js';
+import type FastBootService from 'ember-cli-fastboot/services/fastboot';
 
 export default class UserAgentService extends Service {
+  @service declare fastboot: FastBootService;
   get isWindows(): boolean {
     return this.operatingSystem?.toLowerCase().includes('windows') ?? false;
   }
@@ -13,6 +15,10 @@ export default class UserAgentService extends Service {
 
   @cached
   get parsed(): IResult {
+    if (this.fastboot.isFastBoot) {
+      return UAParser('');
+    }
+
     return UAParser(navigator.userAgent);
   }
 }
