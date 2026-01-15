@@ -1,10 +1,8 @@
-import { action } from '@ember/object';
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import type Owner from '@ember/owner';
+import { service } from '@ember/service';
 import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import detectOperatingSystem from 'codecrafters-frontend/utils/detect-operating-system';
+import type UserAgentService from 'codecrafters-frontend/services/user-agent';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -21,29 +19,19 @@ const POWERSHELL_VARIANT: CopyableTerminalCommandVariant = {
 };
 
 const POSIX_VARIANT: CopyableTerminalCommandVariant = {
-  label: 'POSIX',
+  label: 'Linux / macOS',
   commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
 };
 
 export default class TestCliConnectionStep extends Component<Signature> {
-  // Default to Shell first; reordered after OS detection completes
-  @tracked commandVariants: CopyableTerminalCommandVariant[] = [POSIX_VARIANT, POWERSHELL_VARIANT];
-  @tracked selectedCommandVariant: CopyableTerminalCommandVariant | null = null;
+  @service declare userAgent: UserAgentService;
 
-  constructor(owner: Owner, args: Signature['Args']) {
-    super(owner, args);
-    this.reorderVariantsForOS();
-  }
-
-  @action
-  handleVariantSelect(variant: CopyableTerminalCommandVariant) {
-    this.selectedCommandVariant = variant;
-  }
-
-  async reorderVariantsForOS() {
-    if ((await detectOperatingSystem()) === 'Windows') {
-      this.commandVariants = [POWERSHELL_VARIANT, POSIX_VARIANT];
+  get commandVariants(): CopyableTerminalCommandVariant[] {
+    if (this.userAgent.isWindows) {
+      return [POWERSHELL_VARIANT, POSIX_VARIANT];
     }
+
+    return [POSIX_VARIANT, POWERSHELL_VARIANT];
   }
 }
 
