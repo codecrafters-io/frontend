@@ -172,7 +172,7 @@
         "postcss": "^8.5.6",
         "postcss-loader": "^8.1.1",
         "prember": "^2.1.0",
-        "prettier": "^3.6.2",
+        "prettier": "^3.8.0",
         "prettier-plugin-ember-template-tag": "^2.1.0",
         "prismjs": "^1.30.0",
         "qunit": "^2.25.0",
@@ -2908,7 +2908,7 @@
 
     "pretender": ["pretender@3.4.7", "", { "dependencies": { "fake-xml-http-request": "^2.1.2", "route-recognizer": "^0.3.3" } }, "sha512-jkPAvt1BfRi0RKamweJdEcnjkeu7Es8yix3bJ+KgBC5VpG/Ln4JE3hYN6vJym4qprm8Xo5adhWpm3HCoft1dOw=="],
 
-    "prettier": ["prettier@3.7.4", "", { "bin": "bin/prettier.cjs" }, "sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA=="],
+    "prettier": ["prettier@3.8.0", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA=="],
 
     "prettier-plugin-ember-template-tag": ["prettier-plugin-ember-template-tag@2.1.2", "", { "dependencies": { "@babel/core": "^7.27.4", "content-tag": "^4.0.0" }, "peerDependencies": { "prettier": ">= 3.0.0" } }, "sha512-SZqbv8qfqJ7AnAaNhyeHOzsq1kvlkHdVrCAZDVBjUeWuW8xF2AK7LfKRkn9MPEUsbEO7BSkLsjkb5++eoWjtGw=="],
 
