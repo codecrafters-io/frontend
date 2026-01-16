@@ -173,7 +173,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-ember": "^12.7.5",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-n": "^17.17.0",
+    "eslint-plugin-n": "^17.23.2",
     "eslint-plugin-qunit": "^8.2.5",
     "globals": "^17.0.0",
     "html-entities": "^2.6.0",
