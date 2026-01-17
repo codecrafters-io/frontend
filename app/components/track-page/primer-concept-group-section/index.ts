@@ -39,7 +39,7 @@ export default class TrackPagePrimerConceptGroupSection extends Component<Signat
     if (this.authenticator.isAuthenticated) {
       this.conceptListIsExpanded = true;
     } else {
-      this.router.transitionTo('concept', this.args.conceptGroup.conceptSlugs[0]!);
+      window.open(this.router.urlFor('concept', this.args.conceptGroup.conceptSlugs[0]!), '_blank');
     }
   }
 }
