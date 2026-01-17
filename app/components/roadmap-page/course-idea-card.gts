@@ -92,7 +92,7 @@ export default class CourseIdeaCard extends Component<Signature> {
                   {{svgJar "check-circle" class="w-3 fill-current"}}
                   Released
                 </div>
-                <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." />
+                <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." @popperContainer="#application-container" />
               </Pill>
             {{else if @courseIdea.developmentStatusIsInProgress}}
               <Pill @color="yellow" data-test-development-status-pill>
