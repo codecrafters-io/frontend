@@ -63,7 +63,7 @@ module('Acceptance | roadmap-page | course-ideas', function (hooks) {
 
     await roadmapPage.visit();
 
-    let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own Regex Parser');
+    let courseIdeaCard = roadmapPage.findCourseIdeaCard('Build your own React');
     assert.strictEqual(courseIdeaCard.voteCountText, '0 votes', 'expected vote button to say 0 votes');
 
     await courseIdeaCard.clickOnVoteButton();

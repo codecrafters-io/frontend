@@ -50,6 +50,10 @@ export default class CourseIdeaCard extends Component<Signature> {
 
   @action
   async handleVoteButtonClick() {
+    if (this.args.courseIdea.developmentStatusIsReleased) {
+      return;
+    }
+
     if (this.authenticator.isAnonymous) {
       this.authenticator.initiateLogin();
 
@@ -92,7 +96,7 @@ export default class CourseIdeaCard extends Component<Signature> {
                   {{svgJar "check-circle" class="w-3 fill-current"}}
                   Released
                 </div>
-                <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." />
+                <EmberTooltip @text="This challenge is now available! Visit the catalog to try it out." @popperContainer="#application-container" />
               </Pill>
             {{else if @courseIdea.developmentStatusIsInProgress}}
               <Pill @color="yellow" data-test-development-status-pill>
@@ -128,7 +132,12 @@ export default class CourseIdeaCard extends Component<Signature> {
         </div>
 
         <div class="flex flex-col gap-2 items-end shrink-0">
-          <VoteButton @idea={{@courseIdea}} @userHasVoted={{this.userHasVoted}} {{on "click" this.handleVoteButtonClick}} />
+          <VoteButton
+            @idea={{@courseIdea}}
+            @userHasVoted={{this.userHasVoted}}
+            @isDisabled={{@courseIdea.developmentStatusIsReleased}}
+            {{on "click" this.handleVoteButtonClick}}
+          />
 
           <div class="flex items-center gap-1">
             <div class="{{if this.userHasVoted 'text-teal-600 dark:text-teal-400' 'text-gray-400 dark:text-gray-500'}} text-xs" data-test-vote-count>

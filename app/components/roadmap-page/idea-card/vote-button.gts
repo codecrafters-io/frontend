@@ -13,6 +13,7 @@ export type Signature = {
   Args: {
     idea: CourseIdeaModel | CourseExtensionIdeaModel;
     userHasVoted: boolean;
+    isDisabled?: boolean;
   };
 };
 
@@ -28,15 +29,21 @@ export default class VoteButton extends Component<Signature> {
       type="button"
       class="px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-950
         {{if @userHasVoted 'border-teal-500' 'border-gray-300 dark:border-gray-700'}}
+        {{if @isDisabled 'cursor-default' 'cursor-pointer'}}
         transition-all duration-75 group/vote-button"
       data-test-vote-button
+      disabled={{@isDisabled}}
       ...attributes
     >
       <span
         class={{if
           @userHasVoted
-          "text-teal-500 group-hover/vote-button:text-teal-600"
-          "text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400"
+          (if @isDisabled "text-teal-500" "text-teal-500 group-hover/vote-button:text-teal-600")
+          (if
+            @isDisabled
+            "text-gray-400 dark:text-gray-500"
+            "text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400"
+          )
         }}
       >
         {{svgJar "thumb-up" class="w-5 fill-current"}}
