@@ -1,5 +1,6 @@
 import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
+import { visit } from '@ember/test-helpers';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
 
@@ -64,7 +65,12 @@ export default createPage({
         scope: '[data-test-concept-title]',
       },
 
+      href: attribute('href'),
       scope: '[data-test-concept-card]',
+
+      async click() {
+        await visit(this.href);
+      },
     },
 
     title: {
