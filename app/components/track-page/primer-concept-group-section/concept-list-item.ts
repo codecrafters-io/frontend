@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ConceptModel from 'codecrafters-frontend/models/concept';
 import { service } from '@ember/service';
+import { action } from '@ember/object';
 
 interface Signature {
   Element: HTMLAnchorElement;
@@ -22,6 +23,11 @@ export default class ConceptListItem extends Component<Signature> {
     return this.authenticator.currentUser.conceptEngagements.some(
       (engagement) => engagement.concept.slug === this.args.concept.slug && engagement.isCompleted,
     );
+  }
+
+  @action
+  handleClick(event: Event) {
+    event.stopPropagation();
   }
 }
 
