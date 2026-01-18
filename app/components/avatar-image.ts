@@ -15,11 +15,11 @@ export default class AvatarImage extends Component<Signature> {
   @tracked avatarImageFailedToLoad = false;
 
   get imageUrl() {
-    if (this.avatarImageFailedToLoad) {
+    if (this.avatarImageFailedToLoad || !this.args.user) {
       return 'https://codecrafters.io/images/sample-avatar-3.png';
-    } else {
-      return this.args.user.avatarUrl;
     }
+
+    return this.args.user.avatarUrl;
   }
 
   @action
