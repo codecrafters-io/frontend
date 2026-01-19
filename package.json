@@ -36,7 +36,7 @@
     "test:ember": "ember test"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
+    "@babel/core": "^7.28.6",
     "@babel/plugin-proposal-decorators": "^7.28.0",
     "@codecov/webpack-plugin": "^1.9.1",
     "@codemirror/language-data": "^6.5.2",
