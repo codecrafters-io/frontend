@@ -1,0 +1,59 @@
+<div
+  class="flex flex-col items-stretch rounded-sm bg-white dark:bg-gray-925 w-full max-w-2xl border border-gray-300 dark:border-white/10 overflow-y-hidden"
+  ...attributes
+  data-test-copyable-terminal-command
+>
+  <div class="border-b border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-gray-900/50 rounded-t pl-3 pr-1 py-1 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      {{#if (gt @variantLabels.length 1)}}
+        <div class="flex items-center gap-1">
+          {{#each @variantLabels as |variantLabel|}}
+            <button
+              type="button"
+              class="text-xs rounded-sm px-1.5 py-0.5
+                {{if (eq variantLabel @selectedVariantLabel) 'text-white bg-teal-500 dark:bg-teal-500/60'}}
+                {{if (not-eq variantLabel @selectedVariantLabel) 'text-gray-900 bg-gray-200 dark:text-gray-200 dark:bg-white/10'}}
+                "
+              {{! @glint-expect-error @onVariantSelect is nullable}}
+              {{on "click" (fn @onVariantLabelClick variantLabel)}}
+              data-test-variant-button
+            >
+              {{variantLabel}}
+            </button>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="flex items-center gap-1">
+          {{svg-jar "terminal" class="h-4 w-4 text-gray-400 dark:text-gray-500"}}
+          <span class="text-gray-500 dark:text-gray-400 text-xs">command line</span>
+        </div>
+      {{/if}}
+    </div>
+
+    <TertiaryButton @size="extra-small" {{on "click" this.handleCopyButtonClick}}>
+      <AnimatedContainer>
+        {{#animated-if this.wasCopiedRecently use=this.transition duration=200}}
+          <div class="flex items-center gap-1">
+            {{svg-jar "clipboard-check" class="h-4 w-4 text-teal-500"}}
+            <span class="text-xs text-teal-500">copied!</span>
+          </div>
+        {{else}}
+          <div class="flex items-center gap-1">
+            {{svg-jar "clipboard-copy" class="h-4 w-4"}}
+            <span class="text-xs">copy</span>
+          </div>
+        {{/animated-if}}
+      </AnimatedContainer>
+    </TertiaryButton>
+  </div>
+
+  <div class="w-full text-xs overflow-x-auto" data-test-copyable-text>
+    <SyntaxHighlightedCode
+      @code={{this.codeForHighlighting}}
+      @language="shellscript"
+      @theme={{if this.darkMode.isEnabled "github-dark-default" "github-light"}}
+      @shouldDisplayLineNumbers={{false}}
+      {{on "copy" this.handleCopyEvent}}
+    />
+  </div>
+</div>

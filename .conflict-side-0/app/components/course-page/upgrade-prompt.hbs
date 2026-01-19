@@ -1,0 +1,56 @@
+<div
+  class="py-6 px-5 rounded-sm bg-teal-50 dark:bg-teal-950 border border-teal-600 dark:border-teal-800 @container"
+  {{did-insert this.handleDidInsert}}
+  data-test-upgrade-prompt
+  ...attributes
+>
+  <div class="flex justify-between flex-col @[640px]:flex-row @[640px]:items-center gap-6">
+    <div>
+      <div class="font-bold text-gray-900 dark:text-gray-100 text-xl @[640px]:text-2xl">
+        {{this.featureToHighlight.cta}}
+      </div>
+
+      <div class="prose dark:prose-invert prose-compact prose-sm @[640px]:prose-base py-3" data-test-upgrade-prompt-secondary-copy>
+        {{#if this.isLoadingDiscounts}}
+          <p>
+            Plans start at $30/month when billed annually.
+          </p>
+        {{else}}
+          {{markdown-to-html this.secondaryCopyMarkdown}}
+        {{/if}}
+
+        {{#if this.featureToHighlight.isAccessibleByReferringUsers}}
+          <p>
+            Want CodeCrafters for free? You might be eligible to
+            <a href="https://codecrafters.io/expense" target="_blank" rel="noopener noreferrer">claim the membership fees</a>
+            back from your employer. Or you can
+            <LinkTo @route="refer">refer friends</LinkTo>
+            to earn free weeks.
+          </p>
+        {{/if}}
+      </div>
+
+      <PrimaryButton class="w-full @[640px]:w-fit">
+        <LinkTo @route="pay">
+          View Membership Plans →
+        </LinkTo>
+      </PrimaryButton>
+    </div>
+
+    <div class="flex flex-col gap-2 grow-0 shrink-0">
+      {{#each this.sortedFeatureList as |feature|}}
+        <div class="flex gap-1 items-stretch">
+          <div class="flex border border-transparent">
+            {{svg-jar "check" class="w-8 h-8 p-1 fill-current rounded-sm bg-teal-500 dark:bg-teal-600 text-white grow-0 shrink-0 shadow-sm"}}
+          </div>
+
+          <div
+            class="rounded-sm shadow-xs bg-white dark:bg-gray-925 border border-gray-300 dark:border-gray-700 px-2 text-gray-900 dark:text-gray-200 flex items-center w-fit grow-0 shrink-0"
+          >
+            {{feature.name}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

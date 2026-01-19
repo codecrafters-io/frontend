@@ -1,0 +1,80 @@
+<div
+  class="bg-gray-950 border-t border-gray-900 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
+  data-test-test-results-bar
+  ...attributes
+>
+  {{#if this.isExpanded}}
+    {{! template-lint-disable no-pointer-down-event-binding }}
+    <div
+      class="group/resize-handler h-3 bg-transparent absolute top-0 left-0 right-0 flex items-center justify-center cursor-ns-resize z-10"
+      role="button"
+      {{on "mousedown" this.startMouseResize}}
+      {{on "touchstart" this.startTouchResize}}
+      data-test-resize-handler
+    >
+      <div class="bg-gray-700 group-hover/resize-handler:bg-gray-500 h-0.5 rounded-sm w-16">
+      </div>
+    </div>
+  {{/if}}
+
+  <div
+    class="relative w-full flex flex-col grow {{unless this.isResizing 'transition-[height] duration-200 ease-out'}}"
+    style={{this.expandedContainerStyle}}
+    data-test-contents
+  >
+    {{#if this.isExpanded}}
+      {{! min-h-0 ensures div doesn't outgrow container !}}
+      <div class="flex grow border-b border-gray-900 px-6 min-h-0">
+        <CoursePage::TestResultsBar::Pane
+          @activeTabSlug={{this.activeTabSlugForLeftPane}}
+          @onActiveTabSlugChange={{fn (mut this.activeTabSlugForLeftPane)}}
+          @availableTabSlugs={{this.availableTabSlugsForLeftPane}}
+          class="transition-width duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2' 'w-full'}} grow"
+        >
+          {{#if (eq this.activeTabSlugForLeftPane "logs")}}
+            <CoursePage::TestResultsBar::LogsSection
+              @activeStep={{@activeStep}}
+              @currentStep={{@currentStep}}
+              @repository={{@repository}}
+              class="grow min-h-0"
+            />
+          {{else if (eq this.activeTabSlugForLeftPane "autofix")}}
+            {{! Extra if convinces glint that autofixRequest is not null }}
+            {{#if this.autofixRequestForActiveStep}}
+              <CoursePage::TestResultsBar::AutofixSection @autofixRequest={{this.autofixRequestForActiveStep}} class="grow min-h-0" />
+            {{/if}}
+          {{/if}}
+        </CoursePage::TestResultsBar::Pane>
+
+        <CoursePage::TestResultsBar::Pane
+          @activeTabSlug={{this.activeTabSlugForRightPane}}
+          @onActiveTabSlugChange={{fn (mut this.activeTabSlugForRightPane)}}
+          @availableTabSlugs={{this.availableTabSlugsForRightPane}}
+          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2 pl-6 opacity-100' 'w-[0] opacity-0'}} grow"
+        >
+          {{! Extra if convinces glint that autofixRequest is not null }}
+          {{#if this.autofixRequestForActiveStep}}
+            <CoursePage::TestResultsBar::AutofixSection @autofixRequest={{this.autofixRequestForActiveStep}} class="grow min-h-0" />
+          {{/if}}
+        </CoursePage::TestResultsBar::Pane>
+      </div>
+
+      <div
+        class="absolute top-0 right-0 flex px-6 py-5 items-center justify-center text-gray-500 hover:text-gray-400"
+        {{on "click" this.handleCollapseButtonClick}}
+        role="button"
+      >
+        {{svg-jar "x" class="w-5 h-5 fill-current"}}
+      </div>
+    {{/if}}
+  </div>
+
+  <CoursePage::TestResultsBar::BottomSection
+    @activeStep={{@activeStep}}
+    @barIsExpanded={{this.isExpanded}}
+    @onCollapseButtonClick={{this.handleCollapseButtonClick}}
+    @onExpandButtonClick={{this.handleExpandButtonClick}}
+    class="px-6 w-full"
+    {{did-insert this.handleDidInsertBottomSectionElement}}
+  />
+</div>

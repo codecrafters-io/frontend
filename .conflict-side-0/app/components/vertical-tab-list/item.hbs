@@ -1,0 +1,8 @@
+<LinkTo
+  @route={{@route}}
+  class="flex group/vertical-tab-list-item border rounded
+    {{if this.isActive 'bg-white border-gray-200' 'border-transparent hover:bg-white hover:border-gray-200'}}
+    p-2"
+>
+  <span class="{{if this.isActive 'font-semibold text-teal-500' 'font-medium text-gray-600'}}">{{@label}}</span>
+</LinkTo>

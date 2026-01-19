@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "bun: inspect:eslint",
+      "type": "shell",
+      "command": "bun run inspect:eslint",
+      "problemMatcher": []
+    },
+    {
+      "label": "bun: lint:js",
+      "type": "shell",
+      "command": "bun run lint:js",
+      "problemMatcher": [
+        "$eslint-stylish"
+      ]
+    },
+    {
+      "label": "bun: start",
+      "type": "shell",
+      "command": "bun run start",
+      "problemMatcher": []
+    },
+    {
+      "label": "bun: start:fastboot",
+      "type": "shell",
+      "command": "bun run start:fastboot",
+      "problemMatcher": []
+    }
+  ]
+}

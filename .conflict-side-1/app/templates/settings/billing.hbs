@@ -1,0 +1,43 @@
+{{! ChooseMembershipPlanModal needs this, make sure it's loaded !}}
+<div {{did-insert this.handleDidInsert}} />
+
+{{#if this.shouldShowMembershipExtendedNotice}}
+  <AlertWithIcon @type="success" @isDismissable={{true}} @onDismiss={{this.handleDismissNotice}} class="mb-6" data-test-membership-extended-notice>
+    Your membership has been extended!
+  </AlertWithIcon>
+{{/if}}
+
+<Settings::BillingPage::MembershipSection @user={{@model.user}} />
+
+{{#if @model.user.activeSubscription}}
+  {{#unless @model.user.activeSubscription.isLifetimeMembership}}
+    <Settings::FormDivider />
+
+    <Settings::BillingPage::RenewalSection
+      @onExtendMembershipButtonClick={{fn (mut this.chooseMembershipPlanModalIsOpen) true}}
+      @subscription={{@model.user.activeSubscription}}
+    />
+  {{/unless}}
+{{/if}}
+
+<Settings::FormDivider />
+<Settings::BillingPage::SupportSection @user={{@model.user}} />
+
+<Settings::FormDivider />
+<Settings::BillingPage::PaymentHistorySection @user={{@model.user}} />
+
+{{#if this.chooseMembershipPlanModalIsOpen}}
+  <ModalBackdrop>
+    <PayPage::ChooseMembershipPlanModal
+      {{! @glint-expect-error mut types are broken  }}
+      @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
+      {{! we don't support discounts on extensions yet !}}
+      @activeDiscountForYearlyPlan={{null}}
+      @checkoutSessionCancelPath="/settings/billing"
+      @checkoutSessionSuccessPath="/settings/billing?action=membership_extended"
+      @closeModalCTAText="Back to billing page"
+      {{! we're expecting this to be loaded by the time someone clicks on the extend membership button }}
+      @regionalDiscount={{this.regionalDiscount}}
+    />
+  </ModalBackdrop>
+{{/if}}

@@ -1,0 +1,26 @@
+<div
+  class="flex border rounded-sm shadow-xs
+    {{this.containerColorClasses}}
+    {{this.containerInteractivityClasses}}
+    {{if this.sizeIsLarge 'px-5 py-4'}}
+    {{if this.sizeIsRegular 'p-3'}}
+    "
+  ...attributes
+>
+  <div class="flex-1">
+    {{yield}}
+  </div>
+
+  {{#if @isDismissable}}
+    <div class="flex items-center justify-center ml-3">
+      <button
+        class="border p-0.5 rounded-sm {{this.dismissButtonColorClasses}}"
+        type="button"
+        {{on "click" this.handleDismissButtonClick}}
+        data-test-dismiss-button
+      >
+        {{svg-jar "x" class="w-4 h-4 fill-current"}}
+      </button>
+    </div>
+  {{/if}}
+</div>

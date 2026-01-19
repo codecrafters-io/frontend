@@ -1,0 +1,63 @@
+{{#if this.currentUserIsAnonymous}}
+  <TrackPage::Card
+    @isComplete={{false}}
+    @logoImageAltText={{@course.name}}
+    @logoImageUrl={{@course.logoUrl}}
+    @title="{{@course.name}}"
+    @recentParticipants={{this.recentParticipants}}
+    class="mb-4"
+  >
+    <:afterTitle>
+      {{#if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
+        <FreeCourseLabel @course={{@course}} />
+      {{/if}}
+    </:afterTitle>
+
+    <:default>
+      <div class="leading-6 prose dark:prose-invert mb-6">
+        {{markdown-to-html this.introductionMarkdown}}
+      </div>
+
+      {{! Contents are masked, hence the fixed height }}
+      <div class="h-60 overflow-hidden">
+        <TrackPage::CourseCard::StageList @completedStages={{(array)}} @course={{@course}} />
+
+        <div class="absolute top-20 bottom-0 left-0 right-0 vertical-mask dark:vertical-mask-gray-925 p-4 flex items-end justify-center">
+          <TrackPage::CourseCard::SignupToPreviewButton />
+        </div>
+      </div>
+    </:default>
+  </TrackPage::Card>
+{{else}}
+  <TrackPage::Card
+    @isComplete={{bool @activeRepository.allStagesAreComplete}}
+    @isNavigatingToOtherPage={{true}}
+    @logoImageAltText={{@course.name}}
+    @logoImageUrl={{@course.logoUrl}}
+    @recentParticipants={{this.recentParticipants}}
+    @title="{{@course.name}}"
+    role="button"
+    class="mb-4"
+    {{on "click" this.handleClick}}
+  >
+    <:afterTitle>
+      {{#if (and @course.isFree (not this.currentUser.canAccessMembershipBenefits))}}
+        <FreeCourseLabel @course={{@course}} />
+      {{/if}}
+    </:afterTitle>
+
+    <:default>
+      {{#if @activeRepository}}
+        <div class="mb-4">
+          <TrackPage::CourseCard::ProgressBar @course={{@course}} @lastPushedRepository={{@activeRepository}} />
+        </div>
+      {{/if}}
+
+      <div class="leading-6 prose dark:prose-invert mb-6 pr-8 md:pr-12">
+        {{markdown-to-html this.introductionMarkdown}}
+      </div>
+
+      <TrackPage::CourseCard::StageList @completedStages={{this.completedStages}} @course={{@course}} />
+    </:default>
+  </TrackPage::Card>
+{{/if}}

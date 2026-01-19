@@ -1,0 +1,12 @@
+<div
+  class="flex flex-col items-start gap-4 border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs p-4"
+  data-test-share-concept-container
+  ...attributes
+>
+  <span class="flex gap-2 items-center text-gray-700 dark:text-gray-300 text-sm">
+    {{svg-jar "gift" class="w-5 text-teal-500"}}
+    Learnt something new? Share it with a friend.
+  </span>
+
+  <CopyableCode @code={{@concept.url}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+</div>

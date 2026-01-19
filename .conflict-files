@@ -1,0 +1,3 @@
+ancestorEntries = ["app/components/course-page/setup-step/repository-setup-card/test-cli-connection-step.hbs"]
+ourEntries = ["app/components/course-page/setup-step/repository-setup-card/test-cli-connection-step.hbs"]
+theirEntries = ["app/components/course-page/setup-step/repository-setup-card/test-cli-connection-step.hbs"]

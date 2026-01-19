@@ -1,0 +1,215 @@
+{{#if this.featureFlags.canViewCLIPingFlow}}
+  <div>
+    <CopyableTerminalCommand @commands={{array "codecrafters test"}} class="mb-1.5" />
+
+    <div class="flex items-center gap-0.5 pl-0.5">
+      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
+
+      {{! TODO: Change troubleshooting link }}
+      <span class="text-blue-500 text-xs underline font-medium">
+        <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
+      </span>
+    </div>
+  </div>
+{{else}}
+  <div class="mb-3">
+    <div class="prose prose-compact dark:prose-invert mb-3">
+      First, run this command to commit your changes:
+    </div>
+
+    <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-1.5" />
+
+    <div class="flex items-center gap-0.5 pl-0.5">
+      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
+
+      <span class="text-blue-500 text-xs underline font-medium">
+        <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
+      </span>
+    </div>
+  </div>
+
+  <div>
+    <div class="prose prose-compact dark:prose-invert mb-3">
+      Next, run this command to push your changes:
+    </div>
+
+    <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-1.5" />
+
+    <div class="flex items-center gap-0.5 pl-0.5">
+      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
+
+      <span class="text-blue-500 text-xs underline font-medium">
+        <a href="#" {{on "click" (fn (mut this.isPushModalOpen) true)}}>Troubleshoot</a>
+      </span>
+    </div>
+  </div>
+{{/if}}
+
+{{!-- <div class="prose dark:prose-invert">
+  <p class={{if @isComplete "line-through"}}>
+    Once you run the commands above, the
+    <code class="font-semibold text-red-700 bg-red-100 border border-red-200">Tests failed</code>
+    message below this card will change to
+    <code class="font-semibold text-green-700 bg-green-100 border border-green-200">Tests passed</code>.
+  </p>
+
+  {{#if @isComplete}}
+    <p>
+      🎉
+      <b class="text-teal-500 ml-1">Tests passed!</b>
+    </p>
+  {{/if}}
+</div>
+
+{{#unless @isComplete}}
+  <p class="prose dark:prose-invert prose-sm mt-3">
+    <b>Note:</b>
+    If you're still seeing "Tests failed" after completing the steps above,
+    <a href="#" {{on "click" this.handleViewLogsButtonClick}}>view logs</a>
+    to troubleshoot.
+  </p>
+{{/unless}} --}}
+
+{{#if this.isCommitModalOpen}}
+  <ModalBackdrop class="cursor-pointer">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handleCommitModalClose}} class="w-fit cursor-default max-w-(--breakpoint-lg)">
+      <div class="mb-6 font-semibold text-2xl text-gray-900 dark:text-gray-200 mr-8">
+        Commit changes
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        Run this command to
+        <span class="font-semibold">commit your changes</span>:
+      </div>
+
+      <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="w-full mb-3" />
+
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting mb-3">
+        <p>
+          The output of the command should look like this:
+        </p>
+
+        <pre class="max-w-2xl"><code class="text-xs">[master 8bc0189] [any message]<br />1 file changed, 1 insertion(+), 1 deletion(-)</code></pre>
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert has-prism-highlighting mt-6">
+        <h3>Nothing to commit</h3>
+        <p>
+          If you see output like this instead:
+        </p>
+        <pre class="language-bash max-full max-w-2xl"><code class="text-xs">On branch master<br />Your branch is up to date with 'origin/master'.<br
+            /><br />nothing to commit, working tree clean</code></pre>
+        <ol class="space-y-4">
+          <li>
+            <p>Double-check if you’ve saved the changes.</p>
+            <p>Then run <code>git commit -am "[saved]"</code> again.</p>
+          </li>
+          <li>
+            <p>
+              Check the file content in the latest commit:
+            </p>
+            <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+          </li>
+          <li>
+            <p>
+              If the file content looks correct, make an empty commit:
+            </p>
+            <code>git commit --allow-empty -m 'empty'</code>
+          </li>
+        </ol>
+      </div>
+
+      {{#if this.currentCourse.visibilityIsPublic}}
+        <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
+          <p>
+            Need help?
+            <a
+              href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Post your issue</a>
+            on the forum —
+            <img
+              alt="avatar"
+              src="https://avatars.githubusercontent.com/u/1450947"
+              class="inline-block ml-1 mr-1.5 mt-0 mb-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-xs ring-1 ring-white dark:ring-white/5 shadow-sm"
+            />Andy usually replies within 6 hours.
+          </p>
+        </div>
+      {{/if}}
+    </ModalBody>
+  </ModalBackdrop>
+{{/if}}
+
+{{#if this.isPushModalOpen}}
+  <ModalBackdrop class="cursor-pointer">
+    <ModalBody @allowManualClose={{true}} @onClose={{this.handlePushModalClose}} class="w-fit cursor-default max-w-(--breakpoint-lg)">
+      <div class="mb-6 font-semibold text-2xl text-gray-900 dark:text-gray-200 mr-8">
+        Push changes
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        Run this command to
+        <span class="font-semibold">push your changes</span>:
+      </div>
+
+      <CopyableTerminalCommand @commands={{array "git push origin master"}} class="w-full mb-3" />
+
+      <div class="prose prose-compact dark:prose-invert mb-3">
+        <p>
+          The output of the command should look like this:
+        </p>
+
+        <pre class="max-w-2xl"><code class="text-xs">remote: Welcome to CodeCrafters! Your commit was received successfully.</code></pre>
+      </div>
+
+      <div class="prose prose-compact dark:prose-invert mt-6">
+        <h3>Everything up-to-date</h3>
+        <p>
+          If you see output like this instead:
+        </p>
+        <pre class="language-bash max-full max-w-2xl"><code class="text-xs">Everything up-to-date</code></pre>
+        <ol class="space-y-4">
+          <li>
+            <p>
+              Check the file content in the latest commit:
+            </p>
+            <code>git show HEAD:{{@filename}}{{unless @filename "path-to-your-file"}}</code>
+          </li>
+          <li>
+            <p>
+              If the file content looks correct, make an empty commit:
+            </p>
+            <code>git commit --allow-empty -m 'empty'</code>
+          </li>
+          <li>
+            Run
+            <code>git push origin master</code>
+            again.
+          </li>
+        </ol>
+      </div>
+
+      {{#if this.currentCourse.visibilityIsPublic}}
+        <div class="prose dark:prose-invert prose-sm prose-compact mt-10">
+          <p>
+            Need help?
+            <a
+              href="https://forum.codecrafters.io/new-topic?category=Challenges&tags=challenge%3A{{this.currentCourse.slug}}&title=%5B{{this.currentCourse.shortName}}%5D%20How%20to%20pass%20the%20first%20stage%3F&body=Checklist%3A%0A%0A1.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20uncommented%20the%20code.%0A2.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20saved%20the%20changes.%0A3.%20%E2%9C%85%20or%20%E2%9D%8C%3A%20I%27ve%20run%20the%20git%20commands%3A%0A%0A%60%60%60%0Agit%20commit%20-am%20%22%5Bseeking%20help%20on%20forum%5D%22%0Agit%20push%20origin%20master%0A%60%60%60%0A%0A---%0A%0AHere%E2%80%99s%20a%20screenshot%20showing%20the%20output%20from%20running%20the%20Git%20commands%3A%0A%0A%5BAttach%20screenshot%20here%5D%0A%0A%5BShare%20other%20details%20here%5D"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Post your issue</a>
+            on the forum —
+            <img
+              alt="avatar"
+              src="https://avatars.githubusercontent.com/u/1450947"
+              class="inline-block ml-1 mr-1.5 mt-0 mb-0 -translate-y-px overflow-hidden rounded-full size-4 filter drop-shadow-xs ring-1 ring-white dark:ring-white/5 shadow-sm"
+            />Andy usually replies within 6 hours.
+          </p>
+        </div>
+      {{/if}}
+    </ModalBody>
+  </ModalBackdrop>
+{{/if}}

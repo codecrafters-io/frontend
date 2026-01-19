@@ -1,0 +1,39 @@
+<div class="flex flex-col items-center gap-8 pt-8" ...attributes data-test-verify-email-step-container>
+  {{svg-jar "inbox-in" class="w-16 h-16 text-teal-600"}}
+
+  <div class="prose prose-sm text-center">
+    <p>
+      We've sent a verification email to
+      <b class="font-semibold" data-test-email-address>{{@application.normalizedEmailAddress}}</b>.
+    </p>
+    <p>
+      Click on the link in your email to proceed.
+    </p>
+  </div>
+
+  <div class="flex items-center justify-center gap-2">
+    <button
+      type="button"
+      class="text-xs text-gray-500 underline hover:text-gray-700"
+      data-test-change-email-button
+      {{on "click" @onChangeOrResendEmailButtonClick}}
+    >
+      Change email
+    </button>
+    <span class="text-xs text-gray-500">
+      •
+    </span>
+    <button
+      type="button"
+      class="text-xs text-gray-500 underline hover:text-gray-700"
+      data-test-resend-email-button
+      {{on "click" @onChangeOrResendEmailButtonClick}}
+    >
+      Resend email
+    </button>
+  </div>
+  <div class="text-xs text-gray-500">
+    Need help?
+    <a href="mailto:hello@codecrafters.io" class="underline">hello@codecrafters.io</a>
+  </div>
+</div>

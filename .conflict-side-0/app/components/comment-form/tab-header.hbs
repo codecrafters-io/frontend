@@ -1,0 +1,15 @@
+{{! @glint-nocheck: not typesafe yet }}
+<div
+  class="py-2.5 px-4 border border-b-0
+    {{if
+      @isActive
+      'bg-white dark:bg-gray-950 border-gray-300 dark:border-white/10 text-gray-900 dark:text-gray-50'
+      'border-transparent text-gray-600 dark:text-gray-300'
+    }}
+    rounded-t text-sm"
+  role="button"
+  data-test-tab-header
+  ...attributes
+>
+  {{@text}}
+</div>

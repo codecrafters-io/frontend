@@ -1,0 +1,59 @@
+<div data-test-language-dropdown ...attributes>
+  <BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" @registerAPI={{@onDidInsertDropdown}} as |dd|>
+    <dd.Trigger>
+      <button
+        type="button"
+        class="group inline-flex justify-center items-center w-full gap-x-1 rounded-md border border-gray-300 dark:border-white/10
+          {{if dd.isOpen 'bg-gray-50 dark:bg-gray-900' 'bg-white dark:bg-gray-950'}}
+          shadow-xs py-2
+          {{if @selectedLanguage 'pl-2 pr-3' 'px-3'}}
+          text-sm font-medium text-gray-900 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 focus:outline-hidden"
+        data-test-language-dropdown-trigger
+      >
+        {{#if @selectedLanguage}}
+          <img src={{@selectedLanguage.grayLogoUrl}} alt={{@selectedLanguage.name}} class="w-6 h-6 block group-hover:hidden mr-0.5" />
+          <img src={{@selectedLanguage.tealLogoUrl}} alt={{@selectedLanguage.name}} class="w-6 h-6 hidden group-hover:block mr-0.5" />
+        {{/if}}
+
+        <span data-test-current-language-name>
+          {{#if this.isAllLanguagesOptionSelected}}
+            All Languages
+          {{else}}
+            {{@selectedLanguage.name}}
+          {{/if}}
+        </span>
+
+        {{svg-jar "chevron-down" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+      </button>
+    </dd.Trigger>
+    <dd.Content>
+      <div
+        class="bg-white dark:bg-gray-925 rounded-lg shadow-lg border border-gray-200 dark:border-white/10 py-2 mt-1 mb-1 w-56 overflow-y-auto max-h-[min(400px,50vh)]"
+        data-test-language-dropdown-content
+        {{on "scroll" this.handleDropdownContentScroll}}
+      >
+        {{#if @shouldShowAllLanguagesOption}}
+          <AllLanguagesDropdownLink
+            @isSelected={{this.isAllLanguagesOptionSelected}}
+            @onClick={{fn this.handleAllLanguagesDropdownLinkClick dd.actions.close}}
+          />
+        {{/if}}
+
+        {{#each @languages as |language|}}
+          <LanguageDropdownLink
+            @language={{language}}
+            @isEnabled={{true}}
+            @isSelected={{eq language.slug @selectedLanguage.slug}}
+            @isRequested={{eq language @requestedLanguage}}
+            @onClick={{fn this.handleLanguageDropdownLinkClick language dd.actions.close}}
+          />
+        {{/each}}
+
+        <shadow-overlay
+          class="block absolute left-px right-px bottom-1 mb-px h-10 rounded-b-lg pointer-events-none bg-linear-to-t from-white/95 via-white/80 dark:from-gray-925/95 dark:via-gray-925/80 via-60% to-transparent"
+          style={{this.shadowOverlayStyle}}
+        ></shadow-overlay>
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>

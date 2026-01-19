@@ -1,0 +1,6 @@
+{{#if this.label}}
+  <Pill @color="gray" data-test-user-label ...attributes>
+    {{this.label.text}}
+    <EmberTooltip @text={{this.label.tooltipText}} />
+  </Pill>
+{{/if}}

@@ -1,0 +1,116 @@
+name: Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: depot-ubuntu-24.04-16
+    # Use cheaper machines for dependabot if we're low on namespace credits
+    # runs-on: ${{ github.actor == 'dependabot[bot]' && 'namespace-profile-frontend-light' || 'namespace-profile-frontend' }}
+    permissions: write-all
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.5'
+
+      # Caching node_modules directory for faster installs
+      - id: cache
+        name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ./node_modules
+          key: modules-v2-${{ hashFiles('bun.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: bun install --frozen-lockfile --ignore-scripts
+
+      - run: git fetch origin ${{ github.event.pull_request.head.sha }}
+
+      - id: get_head_commit_message
+        run: echo "MESSAGE=$(git show -s --format=%s ${{github.event.pull_request.head.sha}})" >> "$GITHUB_OUTPUT"
+
+      - id: compute_percy_enable_for_branch
+        run: echo "::set-output name=percy_enable::true"
+        if: "github.event_name == 'schedule' && github.ref == 'refs/heads/main'"
+
+      - id: compute_percy_enable_for_commit
+        run: echo "::set-output name=percy_enable::true"
+        if: "contains(steps.get_head_commit_message.outputs.MESSAGE, '[percy]')"
+
+      - id: compute_percy_enable
+        run: echo "::set-output name=percy_enable::true"
+        if: steps.compute_percy_enable_for_branch.outputs.percy_enable == 'true' || steps.compute_percy_enable_for_commit.outputs.percy_enable == 'true'
+
+      - run: bunx ember --version
+      - run: bunx percy --version
+
+      - run: bunx ember build --environment=test
+        env:
+          COVERAGE: true
+          PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
+          PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
+          STRIPE_PUBLISHABLE_KEY: "dummy"
+
+      - run: bunx percy exec --quiet -- bunx ember exam --silent --reporter=xunit --parallel=16 --load-balance --preserve-test-name --path dist | tee test-results.xml
+        env:
+          COVERAGE: true
+          PERCY_ENABLE: ${{steps.compute_percy_enable.outputs.percy_enable || '0'}}
+          PERCY_TOKEN: ${{secrets.PERCY_TOKEN}}
+          STRIPE_PUBLISHABLE_KEY: "dummy"
+
+      - run: cat test-results.xml
+        if: always()
+
+      - name: 'Upload coverage to Codecov'
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: test-results.xml
+
+      - name: Publish Buildkite analytics
+        continue-on-error: true
+        run: |-
+          curl -XPOST --fail \
+            -H "Authorization: Token token=\"$BUILDKITE_ANALYTICS_TOKEN\"" \
+            -F "data=@test-results.xml" \
+            -F "format=junit" \
+            -F "run_env[CI]=github_actions" \
+            -F "run_env[key]=$GITHUB_ACTION-$GITHUB_RUN_NUMBER-$GITHUB_RUN_ATTEMPT" \
+            -F "run_env[number]=$GITHUB_RUN_NUMBER" \
+            -F "run_env[branch]=$GITHUB_REF" \
+            -F "run_env[commit_sha]=$GITHUB_SHA" \
+            -F "run_env[url]=https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            https://analytics-api.buildkite.com/v1/uploads
+        if: always()
+        env:
+          BUILDKITE_ANALYTICS_TOKEN: ${{ secrets.BUILDKITE_ANALYTICS_TOKEN }}
+
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: test-results.xml
+          seconds_between_github_writes: 0.01
+          seconds_between_github_reads: 0.01

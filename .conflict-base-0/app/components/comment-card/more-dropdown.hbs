@@ -1,0 +1,57 @@
+<BasicDropdown @renderInPlace={{true}} @horizontalPosition="auto-right" @verticalPosition="below" as |dd|>
+  <dd.Trigger>
+    <div class="text-gray-400 dark:text-gray-500" data-test-more-dropdown-toggle>
+      {{svg-jar "dots-horizontal" class=(concat "fill-current w-5 transform transition-all " (if dd.isOpen "text-teal-500" ""))}}
+    </div>
+  </dd.Trigger>
+  <dd.Content>
+    <div
+      class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm text-sm text-gray-600 dark:text-gray-300 min-w-[150px] max-w-xl bg-white dark:bg-gray-925"
+      data-test-more-dropdown-content
+    >
+      {{#if (eq this.currentUser @comment.user)}}
+        <div
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
+          role="button"
+          {{on "click" (fn this.handleEditButtonClick dd.actions)}}
+        >
+          Edit
+        </div>
+
+        <div
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group text-red-600"
+          role="button"
+          {{on "click" (fn this.handleDeleteButtonClick dd.actions)}}
+        >
+          Delete
+        </div>
+      {{/if}}
+
+      {{#if this.currentUser.isStaff}}
+        <a
+          href={{@comment.adminPanelEditUrl}}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
+        >
+          Edit as admin
+        </a>
+
+        {{#if @rejectedChildComments.length}}
+          <div
+            class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group"
+            role="button"
+            {{on "click" (fn this.handleToggleRejectedChildCommentsButtonClick dd.actions)}}
+          >
+            {{concat (if @rejectedChildCommentsAreExpanded "Hide" "Show") " " @rejectedChildComments.length " " "rejected replies"}}
+          </div>
+        {{/if}}
+      {{/if}}
+
+      <div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 flex items-center justify-between group">
+        Score:
+        <span class="font-mono">{{round @comment.score}}</span>
+      </div>
+    </div>
+  </dd.Content>
+</BasicDropdown>

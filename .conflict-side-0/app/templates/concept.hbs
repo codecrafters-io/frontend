@@ -1,0 +1,10 @@
+{{page-title @model.concept.title}}
+
+<ConceptPage::Header @concept={{@model.concept}} />
+
+<ConceptPage::Content
+  @allConcepts={{@model.allConcepts}}
+  @concept={{@model.concept}}
+  @latestConceptEngagement={{this.latestConceptEngagement}}
+  @conceptGroup={{@model.conceptGroup}}
+/>

@@ -1,0 +1,7 @@
+.code-walkthrough-prose pre[class*='language-'] {
+  background-color: #f1f5f9;
+}
+
+.code-walkthrough-prose pre[class*='language-']:is(.dark *) {
+  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
+}

@@ -1,0 +1,83 @@
+<div {{did-insert this.pollLeaderboardTask.perform}} data-test-leaderboard ...attributes>
+  {{#unless this.authenticator.isAnonymous}}
+    <div
+      class="hidden"
+      {{on-action-cable-message this.pollLeaderboardTask.perform channel="CourseLeaderboardChannel" args=(hash course_id=@course.id)}}
+      {{on-visibility-change this.pollLeaderboardTask.perform if="visible"}}
+    />
+  {{/unless}}
+
+  {{#if @isCollapsed}}
+    <div class="pl-4 mb-3 h-6 flex justify-center items-center">
+      {{svg-jar (if this.team "user-group" "globe") class="fill-current text-gray-600 w-5"}}
+    </div>
+  {{else}}
+    <div class="flex items-center justify-between mb-2 pl-4">
+      <div class="flex items-center">
+        <span class="uppercase text-teal-500 dark:text-teal-600 text-xs font-bold">RECENT ATTEMPTS</span>
+
+        <span
+          class="text-white dark:text-teal-400 bg-teal-500 dark:bg-teal-900 border border-teal-500 dark:border-teal-700 text-xs font-bold rounded-sm px-1.5 py-0.5 ml-2
+            {{if this.isLoadingEntries 'opacity-0' 'opacity-100'}}
+            transition-all"
+        >
+          {{this.mergedEntries.length}}
+        </span>
+      </div>
+
+      <div>
+        {{#if (gt this.currentUserTeams.length 0)}}
+          <CourseLeaderboardTeamDropdown @team={{this.team}} @teams={{this.currentUserTeams}} @onChange={{this.handleTeamChange}} />
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+
+  <AnimatedContainer>
+    {{#if this.isLoadingEntries}}
+      {{#each (repeat 12)}}
+        {{! @glint-expect-error not ts-ified yet !}}
+        <CourseLeaderboardEntry @isCollapsed={{@isCollapsed}} />
+      {{/each}}
+    {{else}}
+      <div>
+        {{#animated-each this.mergedEntries key="userId" use=this.listTransition duration=300 as |entry|}}
+          {{! @glint-expect-error not ts-ified yet !}}
+          <CourseLeaderboardEntry
+            @entry={{entry}}
+            @shouldShowLanguageIconsWithoutHover={{@shouldShowLanguageIconsWithoutHover}}
+            @isCollapsed={{@isCollapsed}}
+          />
+        {{/animated-each}}
+
+        {{#animated-if (eq this.mergedEntries.length 0)}}
+          <div class="flex pl-4 py-2 items-center">
+            {{#if @isCollapsed}}
+              <div class="text-sm text-gray-600 dark:text-gray-400 text-center w-full">
+                -
+              </div>
+            {{else}}
+              <div class="text-sm text-gray-600 dark:text-gray-500">
+                <p class="mb-2">
+                  {{#if this.team}}
+                    No one from
+                    {{this.team.name}}
+                    has attempted this challenge recently.
+                  {{else}}
+                    No one has attempted this challenge recently.
+                  {{/if}}
+                </p>
+              </div>
+            {{/if}}
+          </div>
+        {{/animated-if}}
+
+        <CourseLeaderboard::InviteButtonEntry
+          @isCollapsed={{@isCollapsed}}
+          @text={{this.inviteButtonText}}
+          {{on "click" this.handleInviteButtonClick}}
+        />
+      </div>
+    {{/if}}
+  </AnimatedContainer>
+</div>

@@ -1,0 +1,59 @@
+<div
+  class="group bg-white dark:bg-gray-925 p-5 rounded-md shadow-xs hover:shadow-sm transition-shadow cursor-pointer flex flex-col justify-between border border-gray-200 dark:border-white/5 relative"
+  role="button"
+  {{on "click" this.navigateToTrack}}
+  data-test-track-card
+>
+  {{! Logo }}
+  <div
+    class="flex justify-end h-8 transform scale-100 group-hover:scale-105 shrink-0 transition-transform ease-out duration-200 absolute top-5 right-5"
+  >
+    <LanguageLogo @language={{@language}} @variant="gray" />
+  </div>
+
+  {{! Text }}
+  <div class="mb-8">
+    <div class="flex items-center flex-wrap gap-y-2 pr-16">
+      <div class="text-gray-900 dark:text-gray-200 mr-2" data-test-track-name>
+        {{@language.name}}
+      </div>
+
+      {{#if (eq @language.trackStatus "live")}}
+        <Pill @color="green" data-test-popular-track-label>
+          Popular
+          <EmberTooltip @text="This track is a favourite among our learners." />
+        </Pill>
+      {{/if}}
+    </div>
+  </div>
+
+  {{! Footer }}
+  <div class="flex items-center justify-between">
+    {{#if this.currentUserHasStartedTrack}}
+      <TracksPage::TrackCard::ProgressBar @completedStagesCount={{this.completedStagesCount}} @stagesCount={{@language.liveOrBetaStagesCount}} />
+    {{else}}
+      <div class="flex items-center">
+        {{svg-jar "academic-cap" class="w-4 mr-1 fill-current text-gray-400 dark:text-gray-600"}}
+        <span class="text-xs text-gray-500">{{@language.liveOrBetaStagesCount}} stages</span>
+      </div>
+    {{/if}}
+
+    <div class="flex items-center">
+      <span
+        class="font-bold text-teal-500 text-xs mr-1 -translate-x-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity_transform] duration-200 ease-out"
+        data-test-action-text
+      >
+        {{#if this.currentUserHasStartedTrack}}
+          Resume
+        {{else}}
+          Start
+        {{/if}}
+      </span>
+
+      {{svg-jar
+        "arrow-right"
+        class="w-4 fill-current text-gray-300 dark:text-gray-700 group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-[colors_transform] duration-200 ease-out translate-x-0 group-hover:translate-x-0.5"
+      }}
+    </div>
+  </div>
+</div>

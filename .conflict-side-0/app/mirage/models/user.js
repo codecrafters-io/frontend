@@ -1,0 +1,28 @@
+import { Model, hasMany } from 'miragejs';
+
+export default Model.extend({
+  affiliateLinks: hasMany('affiliate-link', { inverse: 'user' }),
+  affiliateReferralsAsCustomer: hasMany('affiliate-referral', { inverse: 'customer' }),
+  affiliateReferralsAsReferrer: hasMany('affiliate-referral', { inverse: 'referrer' }),
+  badgeAwards: hasMany('badge-award', { inverse: 'user' }),
+  conceptEngagements: hasMany('concept-engagement', { inverse: 'user' }),
+  courseLanguageRequests: hasMany('course-language-request', { inverse: 'user' }),
+  emailAddresses: hasMany('email-address', { inverse: 'user' }),
+  courseExtensionIdeaVotes: hasMany('course-extension-idea-vote', { inverse: 'user' }),
+  courseIdeaVotes: hasMany('course-idea-vote', { inverse: 'user' }),
+  courseParticipations: hasMany('course-participation', { inverse: 'user' }),
+  featureSuggestions: hasMany('feature-suggestion', { inverse: 'user' }),
+  githubAppInstallations: hasMany('github-app-installation', { inverse: 'user' }),
+  institutionMembershipGrantApplications: hasMany('institution-membership-grant-application', { inverse: 'user' }),
+  institutionMembershipGrants: hasMany('institution-membership-grant', { inverse: 'user' }),
+  leaderboardRankCalculations: hasMany('leaderboard-rank-calculation', { inverse: 'user' }),
+  referralActivationsAsCustomer: hasMany('referral-activation', { inverse: 'customer' }),
+  referralActivationsAsReferrer: hasMany('referral-activation', { inverse: 'referrer' }),
+  affiliateEarningsPayouts: hasMany('affiliate-earnings-payout', { inverse: 'user' }),
+  referralLinks: hasMany('referral-link', { inverse: 'user' }),
+  repositories: hasMany('repository', { inverse: 'user' }),
+  promotionalDiscounts: hasMany('promotional-discount', { inverse: 'user' }),
+  subscriptions: hasMany('subscription', { inverse: 'user' }),
+  teamMemberships: hasMany('team-membership', { inverse: 'user' }),
+  profileEvents: hasMany('user-profile-event', { inverse: 'user' }),
+});

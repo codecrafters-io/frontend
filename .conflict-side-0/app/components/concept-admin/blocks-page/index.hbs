@@ -1,0 +1,114 @@
+<div class="bg-white min-h-screen" {{route-will-change this.handleRouteWillChange}}>
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 mb-2 border-b border-gray-200 flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 mb-1">
+          Blocks
+        </h3>
+        <div class="text-xs text-gray-400">
+          The content of a concept is made up of blocks.
+        </div>
+      </div>
+
+      <div class="flex flex-col items-end gap-2">
+        <div class="flex items-center gap-3">
+          <TertiaryButton
+            @size="small"
+            @isDisabled={{not this.mutationsArePresent}}
+            {{on "click" this.handleDiscardChangesButtonClicked}}
+            data-test-discard-changes-button
+          >
+            Discard Changes
+          </TertiaryButton>
+
+          <PrimaryButtonWithSpinner
+            @size="small"
+            @isDisabled={{or this.isSaving (not this.mutationsArePresent)}}
+            @shouldShowSpinner={{this.isSaving}}
+            {{on "click" this.handlePublishButtonClicked}}
+            data-test-publish-changes-button
+          >
+            Publish Changes
+          </PrimaryButtonWithSpinner>
+        </div>
+
+        {{#if this.mutationsArePresent}}
+          <div class="flex items-center gap-3">
+            {{#if (gt this.numberOfBlockChanges 0)}}
+              <Pill @color="yellow">{{this.numberOfBlockChanges}} changed</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockDeletions 0)}}
+              <Pill @color="red">{{this.numberOfBlockDeletions}} deleted</Pill>
+            {{/if}}
+            {{#if (gt this.numberOfBlockAdditions 0)}}
+              <Pill @color="green">{{this.numberOfBlockAdditions}} added</Pill>
+            {{/if}}
+          </div>
+        {{else}}
+          <div class="text-xs text-gray-400">
+            No changes to save
+          </div>
+        {{/if}}
+      </div>
+    </div>
+    {{#if (gt @concept.errors.length 0)}}
+      <AlertWithIcon @type="error" class="mt-4">
+        <div>
+          Found
+          {{! @glint-expect-error length isn't seen as a string? }}
+          {{@model.concept.errors.length}}
+          error(s) while saving:
+
+          <ul>
+            {{#each @concept.errors as |error|}}
+              <li>{{error.message}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </AlertWithIcon>
+    {{/if}}
+    <div class="flex flex-col" {{sortable-group onChange=this.handleSortableItemsReordered}}>
+      <ConceptAdmin::BlocksPage::InsertBlockMarker
+        {{sortable-item model="insert-block-marker"}}
+        @onBlockAdded={{fn this.handleBlockAdded -1 0}}
+        @isVisibleWithoutHover={{eq this.blocksWithMetadata.length 0}}
+      />
+
+      {{#each this.blocksWithMetadata key="id" as |item itemIndex|}}
+        <div {{sortable-item model=item}} data-test-sortable-item data-test-sortable-item-id={{item.id}}>
+          <ConceptAdmin::BlocksPage::EditableBlock
+            @concept={{@concept}}
+            @conceptBlock={{item.block}}
+            @wasAdded={{item.wasAdded}}
+            @wasChanged={{item.wasChanged}}
+            @wasDeleted={{item.wasDeleted}}
+            @onBlockChanged={{if
+              item.wasAdded
+              (fn this.handleAddedBlockChanged item.anchorBlockIndex item.addedBlockIndex)
+              (fn this.handleBlockChanged item.anchorBlockIndex)
+            }}
+            @onBlockDeleted={{if
+              item.wasAdded
+              (fn this.handleAddedBlockDeleted item.anchorBlockIndex item.addedBlockIndex)
+              (fn this.handleBlockDeleted item.anchorBlockIndex)
+            }}
+            @onBlockChangeDiscarded={{fn this.handleBlockChangeDiscarded item.anchorBlockIndex}}
+            @onBlockDeletionDiscarded={{fn this.handleBlockDeletionDiscarded item.anchorBlockIndex}}
+            class="highlight-while-dragging"
+          >
+            <:dragHandler>
+              <div class="flex items-center text-gray-300 hover:text-gray-600" {{sortable-handle}} data-test-sortable-item-drag-handle>
+                &varr;
+              </div>
+            </:dragHandler>
+          </ConceptAdmin::BlocksPage::EditableBlock>
+
+          <ConceptAdmin::BlocksPage::InsertBlockMarker
+            @onBlockAdded={{fn this.handleBlockAdded item.anchorBlockIndex (add item.addedBlockIndex 1)}}
+            @isVisibleWithoutHover={{eq (add itemIndex 1) this.blocksWithMetadata.length}}
+          />
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

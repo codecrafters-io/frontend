@@ -1,0 +1,5 @@
+{
+  "expiration": 86400,
+  "allowQuery": ["user"],
+  "passQuery": true
+}

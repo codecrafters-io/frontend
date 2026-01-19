@@ -1,0 +1,41 @@
+<div
+  class="bg-white dark:bg-gray-925 rounded-md shadow-xs border border-gray-200 dark:border-white/5 relative w-full group"
+  data-test-track-page-card
+  ...attributes
+>
+  <div class="p-4 md:p-6">
+    <div class="flex items-center justify-between gap-3 mb-4">
+      <div class="flex items-center flex-wrap gap-3">
+        <div
+          class="text-xl font-semibold text-gray-900 dark:text-gray-200 flex items-center
+            {{if @isNavigatingToOtherPage 'group-hover:text-teal-500 dark:group-hover:text-teal-500 transition-colors'}}"
+          data-test-track-page-card-title
+        >
+          {{this.titleForDisplay}}
+        </div>
+
+        {{#if (gt @recentParticipants.length 0)}}
+          <div class="flex -space-x-3 hover:space-x-1 items-center">
+            {{#each @recentParticipants as |user|}}
+              {{! @glint-nocheck not ts-ified yet }}
+              <TrackPage::Header::TopParticipantAvatar @user={{user}} />
+            {{/each}}
+          </div>
+        {{/if}}
+
+        {{#if (has-block "afterTitle")}}
+          {{yield to="afterTitle"}}
+        {{/if}}
+      </div>
+      <div class="pl-4 shrink-0">
+        {{#if @isComplete}}
+          {{svg-jar "check-circle" class="w-8 h-8 fill-current text-teal-500"}}
+        {{else if (and @logoImageUrl @logoImageAltText)}}
+          <img src={{@logoImageUrl}} alt={{@logoImageAltText}} class="w-8 transform scale-100 group-hover:scale-105 transition-all" />
+        {{/if}}
+      </div>
+    </div>
+
+    {{yield}}
+  </div>
+</div>

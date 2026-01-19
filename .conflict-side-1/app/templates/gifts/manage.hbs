@@ -1,0 +1,40 @@
+<div class="container mx-auto lg:max-w-(--breakpoint-xl) px-4 py-16">
+  <div class="flex flex-col justify-center items-center mb-20">
+    <div class="w-20 h-20 mb-2">
+      <RiveAnimation @src="/assets/animations/checkmark_icon.riv" />
+    </div>
+
+    <h1 class="text-3xl sm:text-4xl leading-10 text-gradient-to-b from-white to-gray-300 font-bold mb-12 text-pretty text-center">
+      Your Gift is Ready!
+    </h1>
+
+    <div
+      class="flex flex-col items-center gap-4 w-full max-w-md border border-teal-500 dark:border-teal-500/50 bg-teal-50 dark:bg-teal-950/30 rounded-sm shadow-xs py-10 px-4 sm:px-10 mb-6"
+      data-test-share-gift-container
+    >
+      <span class="text-gray-700 dark:text-gray-300 text-center text-balance">
+        Here's a link to share with the recipient.
+      </span>
+
+      <CopyableCode @code={{@model.gift.redeemUrl}} @onCopyButtonClick={{this.handleCopyButtonClick}} @backgroundColor="white" />
+    </div>
+
+    <PrimaryLinkButton @route="gifts.buy" @shouldOpenInNewTab={{true}} class="mb-12">
+      Buy another gift →
+    </PrimaryLinkButton>
+
+    <RedeemGiftPage::GiftMessage @membershipGift={{@model.gift}} @managementToken={{@model.managementToken}} @isEditable={{true}} class="mb-12" />
+
+    <div class="text-gray-500 uppercase text-xs font-medium tracking-wide mb-6 text-center">
+      Gift preview:
+    </div>
+
+    <RedeemGiftPage::GiftCard @membershipGift={{@model.gift}} class="mb-12" />
+
+    <div class="text-gray-400 text-lg font-medium tracking-wide mb-8 text-center border-b-2 border-white/10">
+      Frequently asked questions
+    </div>
+
+    <ManageGiftPage::FaqList />
+  </div>
+</div>

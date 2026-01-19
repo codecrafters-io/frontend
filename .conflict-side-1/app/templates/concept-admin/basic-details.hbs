@@ -1,0 +1,159 @@
+<div class="bg-white min-h-screen">
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b border-gray-200 flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 mb-1">
+          Basic Details
+        </h3>
+        <div class="text-xs text-gray-400">
+          Edit the basic details of this concept.
+        </div>
+      </div>
+      <div>
+        {{#animated-if this.updateConceptDetails.isRunning}}
+          <div class="flex items-center">
+            <span class="text-teal-500 font-semibold text-sm">Saving...</span>
+          </div>
+        {{else if this.wasSavedRecently}}
+          <div class="flex items-center">
+            {{svg-jar "check-circle" class="w-4 h-4 text-teal-500 mr-1"}}
+            <span class="text-sm text-teal-500 font-semibold">Saved</span>
+          </div>
+        {{/animated-if}}
+      </div>
+    </div>
+
+    {{#if (gt @model.concept.errors.length 0)}}
+      <AlertWithIcon @type="error" class="mt-4">
+        <div>
+          Found
+          {{! @glint-expect-error length isn't seen as a string? }}
+          {{@model.concept.errors.length}}
+          error(s) while saving:
+
+          <ul>
+            {{#each @model.concept.errors as |error|}}
+              <li>{{error.message}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      </AlertWithIcon>
+    {{/if}}
+
+    <div class="divide-y divide-gray-100" data-test-basic-details-form>
+      <ConceptAdmin::FormSection @title="Title">
+        <:description>
+          <label for="concept_title">
+            Displayed in the header, and in the page's title.
+          </label>
+        </:description>
+
+        <:content>
+          <Input
+            @value={{@model.concept.title}}
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
+            placeholder="Network Protocols"
+            size="40"
+            id="concept_title"
+            data-test-basic-details-input-field
+            required
+          />
+        </:content>
+      </ConceptAdmin::FormSection>
+
+      <ConceptAdmin::FormSection @title="Slug">
+        <:description>
+          <label for="concept_slug">
+            Changing this will break all previous links, be careful.
+          </label>
+        </:description>
+
+        <:content>
+          <Input
+            @value={{@model.concept.slug}}
+            size="40"
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
+            placeholder="network-protocols"
+            id="concept_slug"
+            required
+            data-test-basic-details-input-field
+          />
+        </:content>
+      </ConceptAdmin::FormSection>
+
+      <ConceptAdmin::FormSection @title="Description">
+        <:description>
+          <label for="concept_description">
+            Shown in the header. Markdown supported.
+          </label>
+        </:description>
+
+        <:content>
+          <Textarea
+            @value={{@model.concept.descriptionMarkdown}}
+            {{on "blur" this.handleValueUpdated}}
+            class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs"
+            placeholder="Learn about various network protocols and the TCP/IP model."
+            rows="3"
+            cols="80"
+            id="concept_description"
+            data-test-basic-details-input-field
+            required
+            {{markdown-input}}
+          />
+        </:content>
+      </ConceptAdmin::FormSection>
+
+      <ConceptAdmin::FormSection @title="Publish">
+        <:description>
+          <label for="concept_published">
+            Unpublished concepts aren't visible to other users.
+          </label>
+        </:description>
+
+        <:content>
+          <Toggle
+            @isOn={{@model.concept.statusIsPublished}}
+            {{on "click" this.handlePublishConceptToggled}}
+            class="mt-1"
+            data-test-publish-concept-toggle
+          />
+
+          <div class="text-gray-400 text-xs mt-0.5" data-test-publish-concept-toggle-description>
+            {{#if @model.concept.statusIsPublished}}
+              This concept is published
+            {{else}}
+              This concept is currently in draft mode
+            {{/if}}
+          </div>
+        </:content>
+      </ConceptAdmin::FormSection>
+
+      <ConceptAdmin::FormSection @title="Danger Zone">
+        <:content>
+          <DangerButton
+            @size="small"
+            @isDisabled={{not this.currentUserCanDeleteConcept}}
+            {{on "click" this.handleDeleteConceptButtonClick}}
+            data-test-delete-concept-button
+          >
+            Delete concept
+
+            {{#unless this.currentUserCanDeleteConcept}}
+              <EmberTooltip @text="This concept was created by {{@model.concept.author.username}}, only they have permissions to delete it." />
+            {{/unless}}
+          </DangerButton>
+
+          {{#if this.deleteConceptModalIsOpen}}
+            <ModalBackdrop>
+              {{! @glint-expect-error: mut not ts-ified yet }}
+              <ConceptAdmin::DeleteConceptModal @concept={{@model.concept}} @onClose={{fn (mut this.deleteConceptModalIsOpen) false}} />
+            </ModalBackdrop>
+          {{/if}}
+        </:content>
+      </ConceptAdmin::FormSection>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+---
+alwaysApply: true
+---
+# Naming Conventions
+
+## Boolean Variables
+
+Boolean variables and properties should use descriptive prefixes that indicate their boolean nature:
+
+- `is` - current state (e.g., `isLoading`, `isVisible`, `isAuthenticated`)
+- `was` - past state (e.g., `wasClicked`, `wasSubmitted`)
+- `should` - conditional/intended behavior (e.g., `shouldShowNotice`, `shouldRefresh`)
+- `has` - possession/existence (e.g., `hasErrors`, `hasSubscription`)
+- `can` - capability/permission (e.g., `canEdit`, `canAccessPaidContent`)
+
+Bad examples:
+- `loading` (use `isLoading`)
+- `showNotice` (use `shouldShowNotice`)
+- `visible` (use `isVisible`)

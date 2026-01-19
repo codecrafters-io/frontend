@@ -1,0 +1,37 @@
+{{! @glint-expect-error: not ts-ified yet }}
+<TeamPaymentPage::StepContainer @title="Review Payment" data-test-review-payment-step-container>
+  <div class="text-gray-600 leading-7">
+    <p class="mb-4">
+      {{! @glint-expect-error: not ts-ified yet }}
+      <TeamPaymentPage::PaymentPreview @teamPaymentFlow={{@teamPaymentFlow}}>
+        Once payment is complete, we'll send you a team setup link.
+      </TeamPaymentPage::PaymentPreview>
+    </p>
+    <p>
+      Click "Continue" below to proceed.
+    </p>
+  </div>
+
+  <div class="h-px bg-gray-100 mt-6 mb-6"></div>
+
+  <div class="flex justify-between items-center">
+    {{#if this.errorMessage}}
+      <div id="error-message" class="text-red-600 text-sm font-semibold">
+        {{this.errorMessage}}
+      </div>
+    {{else}}
+      <div class="text-xs text-gray-500">
+        Payments are processed securely using Stripe.
+      </div>
+    {{/if}}
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isAttemptingPayment}}
+      @shouldShowSpinner={{this.isAttemptingPayment}}
+      @size="regular"
+      {{on "click" this.handleContinueButtonClick}}
+    >
+      Continue
+    </PrimaryButtonWithSpinner>
+  </div>
+</TeamPaymentPage::StepContainer>

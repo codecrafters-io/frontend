@@ -1,0 +1,7 @@
+{{#if (eq @variant "color")}}
+  <img alt={{@language.name}} src="{{@language.colorLogoUrl}}" ...attributes />
+{{else if (eq @variant "gray")}}
+  <img alt={{@language.name}} src="{{@language.grayLogoUrl}}" ...attributes />
+{{else}}
+  <img alt={{@language.name}} src="{{@language.tealLogoUrl}}" ...attributes />
+{{/if}}

@@ -1,0 +1,36 @@
+<div ...attributes>
+  {{#if (or @entriesCache.hasEntries (not @entriesCache.isLoaded))}}
+    <div>
+      <table class="min-w-full bg-white dark:bg-gray-925">
+        <thead>
+          <LeaderboardPage::EntriesTable::HeaderRow @language={{@language}} />
+        </thead>
+        <tbody>
+          {{#if @entriesCache.isLoaded}}
+            {{#each @entriesCache.entriesForFirstSectionWithRanks as |entryWithRank|}}
+              <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
+            {{/each}}
+
+            {{#if (gt @entriesCache.entriesForSecondSectionWithRanks.length 0)}}
+              <LeaderboardPage::EntriesTable::FillerRow @text="... other users ..." />
+
+              {{#each @entriesCache.entriesForSecondSectionWithRanks as |entryWithRank|}}
+                <LeaderboardPage::EntriesTable::Row @entry={{entryWithRank.entry}} @rankText={{concat "#" entryWithRank.rank}} />
+              {{/each}}
+            {{/if}}
+          {{else}}
+            {{#each (range 1 16) as |rank|}}
+              <LeaderboardPage::EntriesTable::SkeletonRow @rankText={{concat "#" rank}} />
+            {{/each}}
+          {{/if}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <div class="text-center py-12">
+      <div class="text-gray-500 dark:text-gray-400 text-sm">
+        No entries found for this leaderboard.
+      </div>
+    </div>
+  {{/if}}
+</div>

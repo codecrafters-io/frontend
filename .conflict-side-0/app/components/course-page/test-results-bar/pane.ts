@@ -1,0 +1,46 @@
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
+
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    activeTabSlug: string;
+    availableTabSlugs: string[];
+    onActiveTabSlugChange: (slug: string) => void;
+  };
+
+  Blocks: {
+    default: [];
+  };
+}
+
+export default class Pane extends Component<Signature> {
+  get tabs() {
+    const allTabs = [
+      {
+        slug: 'logs',
+        title: 'Logs',
+        icon: 'terminal',
+      },
+      {
+        slug: 'autofix',
+        title: 'Custom Hints',
+        icon: 'sparkles',
+      },
+    ];
+
+    return allTabs.filter((tab) => this.args.availableTabSlugs.includes(tab.slug));
+  }
+
+  @action
+  handleTabClick(tab: { slug: string }) {
+    this.args.onActiveTabSlugChange(tab.slug);
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::TestResultsBar::Pane': typeof Pane;
+  }
+}

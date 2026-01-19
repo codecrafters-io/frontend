@@ -1,0 +1,56 @@
+<code-mirror
+  {{did-insert this.renderEditor}}
+  {{did-update this.documentDidChange @document}}
+  {{did-update this.optionDidChange "allowMultipleSelections" @allowMultipleSelections}}
+  {{did-update this.optionDidChange "autocompletion" @autocompletion}}
+  {{did-update this.optionDidChange "bracketMatching" @bracketMatching}}
+  {{did-update this.optionDidChange "closeBrackets" @closeBrackets}}
+  {{did-update this.optionDidChange "collapsedRanges" @collapsedRanges}}
+  {{did-update this.optionDidChange "crosshairCursor" @crosshairCursor}}
+  {{did-update this.optionDidChange "drawSelection" @drawSelection}}
+  {{did-update this.optionDidChange "dropCursor" @dropCursor}}
+  {{did-update this.optionDidChange "editable" @editable}}
+  {{did-update this.optionDidChange "foldGutter" @foldGutter}}
+  {{did-update this.optionDidChange "highlightActiveLine" @highlightActiveLine}}
+  {{did-update this.optionDidChange "highlightedRanges" @highlightedRanges}}
+  {{did-update this.optionDidChange "highlightNewlines" @highlightNewlines}}
+  {{did-update this.optionDidChange "highlightSelectionMatches" @highlightSelectionMatches}}
+  {{did-update this.optionDidChange "highlightSpecialChars" @highlightSpecialChars}}
+  {{did-update this.optionDidChange "highlightTrailingWhitespace" @highlightTrailingWhitespace}}
+  {{did-update this.optionDidChange "highlightWhitespace" @highlightWhitespace}}
+  {{did-update this.optionDidChange "history" @history}}
+  {{did-update this.optionDidChange "indentOnInput" @indentOnInput}}
+  {{did-update this.optionDidChange "indentUnit" @indentUnit}}
+  {{did-update this.optionDidChange "indentWithTab" @indentWithTab}}
+  {{did-update this.optionDidChange "languageOrFilename" @filename}}
+  {{did-update this.optionDidChange "languageOrFilename" @language}}
+  {{did-update this.optionDidChange "lineNumbers" @lineNumbers}}
+  {{did-update this.optionDidChange "lineSeparator" @lineSeparator}}
+  {{did-update this.optionDidChange "lineWrapping" @lineWrapping}}
+  {{did-update
+    this.optionDidChange
+    "originalDocumentOrDiffRelatedOption"
+    (array
+      @originalDocument
+      @mergeControls
+      @collapsedRanges
+      @collapseUnchanged
+      @highlightChanges
+      @syntaxHighlightDeletions
+      @unchangedMargin
+      @unchangedMinSize
+      @allowInlineDiffs
+    )
+  }}
+  {{did-update this.optionDidChange "placeholder" @placeholder}}
+  {{did-update this.optionDidChange "readOnly" @readOnly}}
+  {{did-update this.optionDidChange "rectangularSelection" @rectangularSelection}}
+  {{did-update this.optionDidChange "scrollPastEnd" @scrollPastEnd}}
+  {{did-update this.optionDidChange "syntaxHighlighting" @syntaxHighlighting}}
+  {{did-update this.optionDidChange "tabSize" @tabSize}}
+  {{did-update this.optionDidChange "theme" @theme}}
+  data-test-code-mirror-component
+  ...attributes
+>
+  {{yield}}
+</code-mirror>

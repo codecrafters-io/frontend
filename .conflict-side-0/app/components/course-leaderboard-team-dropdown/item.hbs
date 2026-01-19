@@ -1,0 +1,6 @@
+<div class="px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-900 flex items-center justify-between group" role="button" ...attributes>
+  <span class="mr-4 {{if @isActive 'text-teal-500 dark:text-teal-600 font-bold' 'text-gray-700 dark:text-gray-400'}}">
+    {{@text}}
+  </span>
+  {{svg-jar @logo class=(concat "w-5 text-gray-300 group-hover:text-teal-500 dark:text-gray-700" (if @isActive " text-teal-500 dark:text-teal-600"))}}
+</div>

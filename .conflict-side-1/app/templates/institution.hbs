@@ -1,0 +1,72 @@
+{{page-title (concat @model.institution.shortName " Campus Program")}}
+
+<div class="bg-white dark:bg-gray-950 bg-github-green-dot-wall">
+  <div class="container mx-auto lg:max-w-(--breakpoint-xl) pt-8 sm:pt-16 pb-48 px-3 md:px-6">
+    <div class="space-y-6 text-center max-w-[580px] mx-auto mb-8">
+      <h1
+        class="text-3xl leading-10 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold mb-6 text-balance"
+      >
+        Become a
+        <span class="font-extrabold">better, confident</span>
+        programmer.
+      </h1>
+
+      <p class="text-gray-700 dark:text-gray-300 text-balance text-sm leading-relaxed sm:text-lg sm:leading-relaxed">
+        Stop letting advanced programming projects intimidate you. Start approaching them with the calm and confidence of a craftsman who has seen it
+        before.
+      </p>
+    </div>
+
+    <div class="flex justify-center items-center mb-20">
+      <InstitutionPage::ClaimOfferCard @institution={{@model.institution}} @onClaimOfferButtonClick={{this.handleClaimOfferButtonClick}} />
+    </div>
+
+    <div class="space-y-6 text-center mt-8 mb-8 max-w-[640px] mx-auto">
+      <h2
+        class="text-3xl leading-9 md:text-4xl md:leading-10 text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 font-bold"
+      >
+        Trusted by senior engineers at
+        <span class="italic font-extrabold">the world's best companies</span>
+      </h2>
+      <p class="text-sm md:text-lg text-gray-900 dark:text-gray-200">
+        Discover how core contributors to Docker and Next.js practice writing code at the edge of their abilities — as well as senior engineers at
+        companies like Apple, NVIDIA, and Stripe.
+      </p>
+    </div>
+
+    {{! We're re-using the affiliate link page's logo cloud for now }}
+    <h2 class="text-gray-400 dark:text-gray-500 uppercase text-center text-xs mb-5">Trusted by engineers at top companies</h2>
+    <AffiliateLinkPage::LogoCloud />
+
+    <img src={{this.BYOXBanner}} alt="Build Your Own X GitHub Banner" class="hidden sm:block sm:w-4/5 mx-auto mt-16" />
+    <img src={{this.BYOXBannerMobile}} alt="Build Your Own X GitHub Banner" class="block sm:hidden w-full mt-20" />
+
+    <div class="flex flex-col gap-4 justify-center items-center mt-16">
+      <InstitutionPage::ClaimOfferButton @onClick={{this.handleClaimOfferButtonClick}} />
+      <div class="text-xs text-gray-700 dark:text-gray-400 text-center">Get a free 1 year membership</div>
+    </div>
+
+    <h2
+      class="text-2xl leading-9 md:text-3xl md:leading-10 font-bold text-gradient-to-b from-gray-950 to-gray-700 dark:from-white dark:to-gray-300 text-center mt-16"
+    >
+      Hear it from our members
+    </h2>
+
+    <div class="text-gray-500 dark:text-gray-400 text-sm text-center mt-2">
+      Engineers at top teams love The CodeCrafters Way<sup>TM</sup>.
+    </div>
+
+    <TestimonialList class="mt-10" />
+
+    <div class="flex flex-col gap-4 justify-center items-center mt-16">
+      <InstitutionPage::ClaimOfferButton @onClick={{this.handleClaimOfferButtonClick}} />
+      <div class="text-xs text-gray-700 dark:text-gray-400 text-center">Get a free 1 year membership</div>
+    </div>
+  </div>
+</div>
+
+{{#if this.campusProgramApplicationModalIsOpen}}
+  <ModalBackdrop>
+    <InstitutionPage::CampusProgramApplicationModal @institution={{@model.institution}} @onClose={{this.handleCampusProgramApplicationModalClose}} />
+  </ModalBackdrop>
+{{/if}}

@@ -1,0 +1,64 @@
+<li
+  class="flex items-center justify-between gap-x-6 py-5 group/version-list-item hover:bg-gray-50 px-1"
+  data-test-version-list-item
+  {{on "click" this.handleClick}}
+  role="button"
+>
+  <div class="min-w-0">
+    <div class="flex items-start gap-x-3">
+      <p class="text-sm font-semibold leading-6 text-gray-950">{{@courseTesterVersion.tagName}}</p>
+
+      {{#if @courseTesterVersion.isActive}}
+        <Pill @color="green">Active</Pill>
+      {{else if @courseTesterVersion.isLatest}}
+        <Pill @color="yellow">Latest</Pill>
+      {{/if}}
+    </div>
+    <div class="mt-1.5 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+      {{#if (and @courseTesterVersion.isActive @courseTesterVersion.lastActivatedAt)}}
+        <p class="whitespace-nowrap">
+          Activated on
+          {{date-format @courseTesterVersion.lastActivatedAt format="PPP"}}
+        </p>
+
+        {{#if @courseTesterVersion.activator}}
+          <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+            <circle cx="1" cy="1" r="1" />
+          </svg>
+          <p class="truncate">by {{@courseTesterVersion.activator.username}}</p>
+        {{/if}}
+      {{else if @courseTesterVersion.createdAt}}
+        <p class="whitespace-nowrap">
+          Created
+          {{date-from-now @courseTesterVersion.createdAt}}
+        </p>
+      {{/if}}
+
+      {{#if (gt @courseTesterVersion.provisionedTestRunnersCount 0)}}
+        <div class="flex items-center gap-x-2">
+          <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+            <circle cx="1" cy="1" r="1" />
+          </svg>
+
+          <div class="flex items-center gap-x-1 text-teal-500" data-test-provisioned-test-runners-count>
+            {{svg-jar "command-line-outline" class="h-4 w-4"}}
+            <span class="font-semibold">
+              {{@courseTesterVersion.provisionedTestRunnersCount}}
+            </span>
+            <EmberTooltip @text={{this.provisionedTestRunnersCountTooltipCopy}} />
+          </div>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="flex flex-none items-center gap-x-4">
+    <TertiaryLinkButton
+      @size="small"
+      @route="course-admin.tester-version"
+      @models={{array @courseTesterVersion.id}}
+      data-test-view-tester-version-button
+    >
+      View Tester Version
+    </TertiaryLinkButton>
+  </div>
+</li>

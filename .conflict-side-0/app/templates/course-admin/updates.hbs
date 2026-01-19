@@ -1,0 +1,43 @@
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b border-gray-200 flex items-start justify-between">
+      <div>
+        <h3 class="text-lg font-bold text-gray-900 mb-1">
+          Updates
+        </h3>
+        <div class="text-xs text-gray-400">
+          These updates are synced from your course's GitHub repository. They need to be applied to take effect.
+        </div>
+      </div>
+      <div class="text-right">
+        <a
+          href={{@model.course.definitionRepositoryLink}}
+          class="text-gray-400 flex items-center hover:text-gray-600"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-test-definition-repository-link
+        >
+          {{svg-jar "github" class="inline-flex w-4 mr-1 fill-current"}}
+          <span class="text-xs underline font-medium">{{@model.course.definitionRepositoryFullName}}</span>
+        </a>
+        <TertiaryButtonWithSpinner
+          @size="small"
+          @shouldShowSpinner={{this.isSyncingWithGitHub}}
+          {{on "click" this.handleSyncWithGitHubButtonClick}}
+          class="mt-4"
+          data-test-sync-with-github-button
+        >Sync with GitHub</TertiaryButtonWithSpinner>
+      </div>
+    </div>
+
+    <ul role="list" class="divide-y divide-gray-100">
+      {{#each this.sortedDefinitionUpdates as |courseDefinitionUpdate|}}
+        <CourseAdmin::UpdatesPage::UpdateListItem @update={{courseDefinitionUpdate}} />
+      {{else}}
+        <div class="text-gray-400 py-32 flex items-center justify-center">
+          No updates found.
+        </div>
+      {{/each}}
+    </ul>
+  </div>
+</div>

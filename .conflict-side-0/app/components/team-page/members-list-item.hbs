@@ -1,0 +1,70 @@
+<div
+  class="flex items-center justify-between group p-2 pr-3 hover:bg-gray-50 border border-gray-200 rounded-sm mb-2
+    {{if @membership.isAdmin 'cursor-not-allowed'}}"
+  data-test-members-list-item-container
+>
+  <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center hover:underline" target="_blank" rel="noopener noreferrer">
+    <AvatarImage
+      @user={{@membership.user}}
+      class="w-8 h-8 border border-gray-300 rounded-sm shadow-xs group-hover:shadow-sm mr-2 transition-shadow rounded-md"
+    />
+
+    <div>
+      <div class="text-gray-700 text-sm">
+        {{#if @membership.user.githubName}}
+          <span class="font-semibold" data-test-github-name>{{@membership.user.githubName}}</span>
+        {{else}}
+          <span class="font-semibold" data-test-username>{{@membership.user.username}}</span>
+        {{/if}}
+
+        {{#if @membership.isAdmin}}
+          <span class="text-gray-400"> (admin)</span>
+        {{/if}}
+      </div>
+      <div class="text-gray-700 text-sm hidden sm:block lg:hidden">
+        <span class="text-gray-400 text-xs">joined {{date-from-now @membership.createdAt}}</span>
+      </div>
+    </div>
+  </a>
+  <div class="flex items-center">
+    <div class="flex items-center ml-2 mr-2">
+      {{#each this.sortedCourses as |course|}}
+        <CourseLogo @course={{course}} class="w-5 mr-2" alt="This user started the {{course.name}} challenge." />
+      {{/each}}
+    </div>
+    {{#unless @membership.isSoleAdmin}}
+      {{#if this.isRemoving}}
+        <svg class="animate-spin mr-4 w-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        {{#if (eq @membership.user this.currentUser)}}
+          <button
+            type="button"
+            class="pr-4 pl-2 py-2 text-gray-900 hover:text-red-600 underline font-bold flex items-center text-xs"
+            {{on "click" (fn this.handleLeaveTeamButtonClick @membership)}}
+            data-test-leave-team-button
+          >
+            leave team
+          </button>
+        {{else if this.currentUserIsTeamAdmin}}
+          <button
+            type="button"
+            class="pr-4 pl-2 py-2 text-gray-900 hover:text-red-600 underline font-bold flex items-center text-xs"
+            {{on "click" (fn this.handleRemoveButtonClick @membership)}}
+            data-test-remove-button
+          >
+            remove
+          </button>
+        {{/if}}
+      {{/if}}
+    {{/unless}}
+
+    <span class="text-gray-400 text-xs hidden lg:block">joined {{date-from-now @membership.createdAt}}</span>
+  </div>
+</div>

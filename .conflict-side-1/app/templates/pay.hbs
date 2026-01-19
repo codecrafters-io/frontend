@@ -1,0 +1,117 @@
+{{page-title "Pay"}}
+
+<div class="container mx-auto xl:max-w-(--breakpoint-xl) py-12 md:py-16 px-3 md:px-6" {{did-insert this.handleDidInsertContainer}}>
+  <div class="flex flex-col items-center justify-center">
+    <h1 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-2xl text-center text-balance">
+      The highest ROI investment you can make
+    </h1>
+    <p class="text-gray-700 dark:text-gray-300 max-w-2xl text-center mt-2 text-balance">
+      CodeCrafters members routinely unlock promotions and 5-figure salary jumps.
+    </p>
+
+    {{#if this.activeDiscountForYearlyPlan.isFromSignup}}
+      <PayPage::SignupDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+    {{else if this.activeDiscountForYearlyPlan.isFromAffiliateReferral}}
+      <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+    {{else if this.activeDiscountForYearlyPlan.isFromStage2Completion}}
+      <PayPage::Stage2CompletionDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+    {{/if}}
+
+    <AnimatedContainer>
+      {{#animated-if this.regionalDiscount use=this.fade duration=300}}
+        {{! Extra if convinces typescript that this.regionalDiscount is not null }}
+        {{#if this.regionalDiscount}}
+          <PayPage::RegionalDiscountNotice @regionalDiscount={{this.regionalDiscount}} class="mt-8" />
+        {{/if}}
+      {{else}}
+        <div class="w-full" />
+      {{/animated-if}}
+    </AnimatedContainer>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-x-8 gap-y-8 mt-12 w-full max-w-(--breakpoint-lg)">
+      <PayPage::PricingPlanCard
+        @title="Free"
+        @isRecommended={{false}}
+        @subtitle="For trialing"
+        @description="No credit card required"
+        @featureDescriptions={{this.featureDescriptionsForFreePlan}}
+        @ctaText="Continue with free"
+        @onCtaClick={{this.handleFreePlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
+      />
+
+      <PayPage::PricingPlanCard
+        @title="Membership"
+        @isRecommended={{true}}
+        @subtitle="For professionals"
+        @description="3mo, 1yr and lifetime plans available"
+        @featureDescriptions={{this.featureDescriptionsForMembershipPlan}}
+        @ctaText="View plans"
+        @onCtaClick={{this.handleMembershipPlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
+      />
+
+      <PayPage::PricingPlanCard
+        @title="Teams"
+        @isRecommended={{false}}
+        @subtitle="For teams of 5+"
+        @description="Swappable seats, pay annually"
+        @featureDescriptions={{this.featureDescriptionsForTeamsPlan}}
+        @ctaText="Purchase team plan"
+        @onCtaClick={{this.handleTeamsPlanCTAClick}}
+        class="lg:max-w-sm"
+        data-test-pricing-plan-card
+      />
+    </div>
+
+    <LinkTo @route="gifts.buy" class="font-medium mt-16 text-sm text-gray-700 dark:text-gray-300 hover:underline">
+      {{! template-lint-disable no-whitespace-for-layout }}
+      🎁&nbsp;&nbsp;Gift a membership →
+    </LinkTo>
+
+    {{#unless this.monthlyChallengeBanner.isOutdated}}
+      {{! @glint-expect-error not ts-ified yet }}
+      <PayPage::MonthlyChallengeBanner class="max-w-[972.53px] mt-12" />
+    {{/unless}}
+
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6 max-w-5xl mx-auto">
+      {{#each this.testimonialsForCards as |testimonial|}}
+        <TestimonialCard @testimonial={{testimonial}} />
+      {{/each}}
+    </div>
+
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-16">
+      CodeCrafters is backed by incredible engineers
+    </h2>
+
+    {{! Should be mt-8, py-8 ensure shadows aren't cut off at the top/bottom }}
+    <PayPage::BackerCardList class="py-8" />
+
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-8">
+      Frequently Asked Questions
+    </h2>
+
+    <PricingPage::FaqList class="mt-8" />
+
+    <h2 class="text-2xl font-bold text-gray-700 dark:text-gray-300 md:text-3xl max-w-3xl text-center text-pretty mt-16">
+      Join over 200k of the world's best engineers:
+    </h2>
+
+    <TestimonialList class="mt-8" />
+  </div>
+</div>
+
+{{#if (eq this.chooseMembershipPlanModalIsOpen "true")}}
+  <ModalBackdrop>
+    <PayPage::ChooseMembershipPlanModal
+      @activeDiscountForYearlyPlan={{this.activeDiscountForYearlyPlan}}
+      @checkoutSessionCancelPath="/pay"
+      @checkoutSessionSuccessPath="/settings/billing"
+      @closeModalCTAText="Back to pricing page"
+      @onClose={{this.handleChooseMembershipPlanModalClose}}
+      @regionalDiscount={{this.regionalDiscount}}
+    />
+  </ModalBackdrop>
+{{/if}}

@@ -1,0 +1,43 @@
+<BlurredOverlay
+  @isBlurred={{this.shouldShowModal}}
+  {{did-update this.handleStepStatusUpdated @currentStep.status}}
+  @overlayClass="bg-gray-200/20 dark:bg-gray-900/20"
+  ...attributes
+>
+  <:content>
+    <AnimatedContainer>
+      {{#animated-if this.modalWasDismissed duration=150 use=this.transition}}
+        <CoursePage::CompletedStepNotice
+          {{! @glint-expect-error repository is nullable according to coursePageState }}
+          @repository={{this.coursePageState.stepList.repository}}
+          @step={{@currentStep}}
+          class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
+          {{! Ensure this is visible when modal is dismissed }}
+          {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+        />
+      {{/animated-if}}
+    </AnimatedContainer>
+
+    {{yield}}
+  </:content>
+  <:overlay>
+    {{#if (eq @currentStep.type "SetupStep")}}
+      <CoursePage::SetupStepCompleteModal
+        {{! Ensure this is visible on insert in case confetti is fired }}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+        class="mt-8 mx-3 md:mx-6"
+        @onClose={{this.handleModalDismissed}}
+        {{! @glint-expect-error currentStep is guaranteed to be a SetupStep here }}
+        @step={{@currentStep}}
+      />
+    {{else}}
+      <CoursePage::CurrentStepCompleteModal
+        {{! Ensure this is visible on insert in case confetti is fired }}
+        {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
+        class="mt-8 mx-3 md:mx-6"
+        @onClose={{this.handleModalDismissed}}
+        @activeStep={{this.coursePageState.activeStep}}
+      />
+    {{/if}}
+  </:overlay>
+</BlurredOverlay>

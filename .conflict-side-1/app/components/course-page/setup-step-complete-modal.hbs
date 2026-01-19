@@ -1,0 +1,45 @@
+<ModalBody @allowManualClose={{false}} @onClose={{@onClose}} data-test-setup-step-complete-modal class="px-0! py-0! max-w-xl" ...attributes>
+  <AnimatedContainer>
+    <div class="flex flex-col items-center py-8 px-4 sm:px-8" {{did-insert this.handleDidInsert}}>
+      {{#animated-value this.currentScreen use=this.transition duration=500 as |currentScreen|}}
+        {{#if (eq currentScreen "start-workflow-tutorial")}}
+          <CoursePage::SetupStepCompleteModal::StartWorkflowTutorialScreen
+            @step={{@step}}
+            @onNextButtonClick={{this.handleNextButtonClick}}
+            @onViewInstructionsButtonClick={{@onClose}}
+            class="w-full max-w-3xs"
+          />
+        {{else if (eq currentScreen "workflow-tutorial-step-1")}}
+          <CoursePage::SetupStepCompleteModal::WorkflowTutorialStep1Screen
+            @step={{@step}}
+            @onNextButtonClick={{this.handleNextButtonClick}}
+            @onStepSelect={{this.handleStepSelect}}
+            class="w-full max-w-xs"
+          />
+        {{else if (eq currentScreen "workflow-tutorial-step-2")}}
+          <CoursePage::SetupStepCompleteModal::WorkflowTutorialStep2Screen
+            @step={{@step}}
+            @onNextButtonClick={{this.handleNextButtonClick}}
+            @onStepSelect={{this.handleStepSelect}}
+            class="w-full max-w-xs"
+          />
+        {{else if (eq currentScreen "workflow-tutorial-completed")}}
+          <CoursePage::SetupStepCompleteModal::WorkflowTutorialCompletedScreen
+            @step={{@step}}
+            @onNextButtonClick={{this.handleNextButtonClick}}
+            @onBackToReviewButtonClick={{this.handleBackToReviewButtonClick}}
+            class="w-full max-w-60"
+          />
+        {{else if (eq currentScreen "step-previously-completed")}}
+          <CoursePage::SetupStepCompleteModal::StepPreviouslyCompletedScreen
+            @step={{@step}}
+            @onViewInstructionsButtonClick={{@onClose}}
+            class="w-full max-w-60"
+          />
+        {{else}}
+          <div>Not implemented: {{currentScreen}}</div>
+        {{/if}}
+      {{/animated-value}}
+    </div>
+  </AnimatedContainer>
+</ModalBody>

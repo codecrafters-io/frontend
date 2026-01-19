@@ -1,0 +1,35 @@
+<CoursePage::InstructionsCard
+  @contentIdentifier={{@courseStage.id}}
+  id="your-task-card"
+  data-test-your-task-card
+  class="group/your-task-card"
+  ...attributes
+>
+  <:header>
+    <CoursePage::CourseStageStep::YourTaskCard::Header @currentStep={{this.coursePageState.currentStepAsCourseStageStep}} class="mb-5 w-full" />
+  </:header>
+
+  <:content>
+    <div class="prose dark:prose-invert has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
+      {{markdown-to-html this.instructionsMarkdown}}
+    </div>
+
+    <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList @courseStage={{@courseStage}} @repository={{@repository}} class="mt-3" />
+
+    {{#if (eq this.coursePageState.nextStep this.coursePageState.activeStep)}}
+      <div class="mt-4 flex">
+        <PrimaryLinkButton
+          @route={{this.coursePageState.activeStep.routeParams.route}}
+          @models={{this.coursePageState.activeStep.routeParams.models}}
+          data-test-continue-button
+        >
+          {{#if (eq this.coursePageState.activeStep.type "CourseStageStep")}}
+            View Next Stage →
+          {{else}}
+            View Next Step →
+          {{/if}}
+        </PrimaryLinkButton>
+      </div>
+    {{/if}}
+  </:content>
+</CoursePage::InstructionsCard>

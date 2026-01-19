@@ -1,0 +1,59 @@
+<div
+  class="w-60 border border-teal-500 dark:border-teal-400 shadow-sm rounded-sm bg-white dark:bg-gray-925 overflow-hidden mb-2"
+  data-test-request-language-dropdown
+>
+  <div class="flex items-center px-3 text-gray-700 dark:text-gray-300 text-xs">
+    {{! template-lint-disable require-input-label }}
+    <Input
+      @value={{this.searchQuery}}
+      placeholder={{if (gt this.requestedLanguages.length 0) "Change requested languages..." "Request languages..."}}
+      class="py-2 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 text-xs outline-hidden w-full"
+      {{did-insert this.handleInputDidInsert}}
+    />
+
+    <div>
+      <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4 {{if this.isSyncing 'opacity-100' 'opacity-0'}}" />
+    </div>
+  </div>
+
+  {{on-key "ArrowDown" this.handleArrowDown}}
+  {{on-key "ArrowUp" this.handleArrowUp}}
+  {{on-key "Escape" @onClose}}
+  {{on-key "Enter" this.handleEnter}}
+
+  <div class="w-full h-px bg-gray-100 dark:bg-white/10"></div>
+
+  <div class="text-xs overflow-y-auto h-28" {{did-insert this.handleSuggestionListDidInsert}}>
+    {{#each this.languageSuggestions as |languageSuggestion index|}}
+      <div
+        role="button"
+        class="flex items-center justify-between px-3 py-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700
+          {{if (eq index this.selectedSuggestionIndex) 'bg-gray-50 dark:bg-gray-700'}}"
+        {{on "mouseenter" (fn (mut this.selectedSuggestionIndex) index)}}
+        {{on "click" (fn this.toggleLanguageSelection languageSuggestion.language)}}
+        data-test-language-suggestion
+      >
+        <div>
+          {{languageSuggestion.language.name}}
+        </div>
+        <div>
+          {{#if languageSuggestion.isSelected}}
+            {{svg-jar "check" class="w-3 fill-current text-teal-500"}}
+          {{/if}}
+        </div>
+      </div>
+    {{else}}
+      <div class="px-3 py-3 text-gray-600 dark:text-gray-400">
+        <div class="mb-3 flex items-center">
+          {{svg-jar "exclamation" class="w-4 h-4 mr-2 fill-current text-yellow-500"}}
+          <div>No languages found.</div>
+        </div>
+
+        <div>
+          Can't find the language you're looking for?
+          <a href="mailto:hello@codecrafters.io" class="font-bold underline text-teal-600 dark:text-teal-400">Let us know!</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,31 @@
+{{#if @course.releaseStatusIsBeta}}
+  <AlertWithIcon @type="success" data-test-course-beta-notice ...attributes>
+    <p>
+      This challenge is free to try when it's in beta. We keep challenges in beta for a few weeks to gather feedback.
+    </p>
+  </AlertWithIcon>
+{{else if @course.releaseStatusIsAlpha}}
+  <AlertWithIcon @type="info" data-test-course-alpha-notice ...attributes>
+    <p>
+      This is a preview of a CodeCrafters challenge that is launching soon.
+    </p>
+    <p>
+      Follow us on
+      <a target="_blank" href="https://twitter.com/@CodeCraftersIo" class="font-bold" rel="noopener noreferrer">Twitter</a>
+      to be notified when this challenge is available.
+    </p>
+  </AlertWithIcon>
+{{else if @course.releaseStatusIsDeprecated}}
+  <AlertWithIcon @type="info" data-test-course-deprecated-notice ...attributes>
+    <p>
+      This challenge is deprecated.<br />
+      {{#if this.authenticator.currentUser.canAccessMembershipBenefits}}
+        Since you're a member, you can still access the challenge if you'd like.
+      {{/if}}
+    </p>
+  </AlertWithIcon>
+{{else if (and @course.isFree (not this.authenticator.currentUser.canAccessPaidContent))}}
+  <CourseOverviewPage::Notices::FreeCourseNotice @course={{@course}} ...attributes />
+{{else if (and @course.releaseStatusIsLive (not this.authenticator.currentUser.canAccessPaidContent))}}
+  <CourseOverviewPage::Notices::PaidCourseNotice @course={{@course}} ...attributes />
+{{/if}}

@@ -1,0 +1,34 @@
+<ModalBody @allowManualClose={{true}} @onClose={{@onClose}} class="w-full max-w-(--breakpoint-lg)" data-test-configure-extensions-modal>
+  <div class="mb-6 font-semibold text-2xl text-gray-900 dark:text-gray-50 mr-8">
+    Configure Extensions
+  </div>
+
+  <AlertWithIcon class="mb-4">
+    <p>
+      Extensions are sets of additional stages that can be added to your repository. You can add &amp; remove extensions at any time.
+    </p>
+  </AlertWithIcon>
+
+  <div class="grid grid-cols-1 gap-4 mb-6">
+    {{#each @repository.course.sortedExtensions as |extension|}}
+      <CoursePage::ConfigureExtensionsModal::ExtensionCard @extension={{extension}} @repository={{@repository}} />
+    {{/each}}
+  </div>
+
+  <div class="border-b border-gray-200 dark:border-white/5 pb-1 mb-6 flex items-center gap-2">
+    <h1 class="text-2xl text-gray-900 dark:text-gray-50 font-bold tracking-tighter">Vote on future extensions</h1>
+
+    <div>
+      {{svg-jar "information-circle" class="w-4 h-4 fill-current text-gray-300 dark:text-gray-700 hover:text-gray-400 dark:hover:text-gray-600"}}
+      <EmberTooltip @text="These are ideas for extensions we'll build in the future. Vote to let us know which ones you're interested in!" />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 mb-8">
+    <RoadmapPage::SubmitCourseExtensionIdeaCard @course={{@repository.course}} />
+
+    {{#each this.orderedCourseExtensionIdeas as |courseExtensionIdea|}}
+      <RoadmapPage::CourseExtensionIdeaCard @courseExtensionIdea={{courseExtensionIdea}} />
+    {{/each}}
+  </div>
+</ModalBody>

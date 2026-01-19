@@ -1,0 +1,28 @@
+<BasicDropdown @horizontalPosition="right" as |dd|>
+  <dd.Trigger>
+    <TertiaryButton @size="extra-small" ...attributes data-test-more-dropdown-toggle>
+      {{svg-jar "dots-horizontal" class=(concat "w-4 transform transition-all " (if dd.isOpen "text-teal-500" "text-gray-500"))}}
+    </TertiaryButton>
+  </dd.Trigger>
+  <dd.Content>
+    <div class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm bg-white dark:bg-gray-925" data-test-more-dropdown-content>
+      {{#if (gt @solution.highlightedFiles.length 0)}}
+        {{#if (eq @diffSource "highlighted-files")}}
+          <DropdownLink @text="View full diff" @icon="switch-horizontal" {{on "click" (fn this.handleViewFullDiffLinkClick dd.actions)}} />
+        {{else}}
+          <DropdownLink
+            @text="View highlighted files"
+            @icon="switch-horizontal"
+            {{on "click" (fn this.handleViewHighlightedFilesLinkClick dd.actions)}}
+          />
+        {{/if}}
+      {{/if}}
+
+      <DropdownLink @text="Collapse example" @icon="x-circle" {{on "click" (fn this.handleCollapseExampleLinkClick dd.actions)}} />
+
+      {{#if (current-user-is-staff)}}
+        <DropdownLink @text="Copy ID" @icon="clipboard-copy" {{on "click" (fn this.handleCopyIdLinkClick dd.actions)}} data-test-copy-id-link />
+      {{/if}}
+    </div>
+  </dd.Content>
+</BasicDropdown>

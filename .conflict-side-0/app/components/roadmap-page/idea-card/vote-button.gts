@@ -1,0 +1,63 @@
+import Component from '@glimmer/component';
+// @ts-expect-error not ts-ified yet
+import EmberTooltip from 'ember-tooltips/components/ember-tooltip';
+import { service } from '@ember/service';
+import svgJar from 'ember-svg-jar/helpers/svg-jar';
+import type CourseIdeaModel from 'codecrafters-frontend/models/course-idea';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
+
+export type Signature = {
+  Element: HTMLButtonElement;
+
+  Args: {
+    idea: CourseIdeaModel | CourseExtensionIdeaModel;
+    userHasVoted: boolean;
+    isDisabled?: boolean;
+  };
+};
+
+export default class VoteButton extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
+
+  get renderedVotesCount() {
+    return this.args.idea.votesCount;
+  }
+
+  <template>
+    <button
+      type="button"
+      class="px-1.5 py-1 rounded-sm shadow-xs flex items-center border bg-white dark:bg-gray-950
+        {{if @userHasVoted 'border-teal-500' 'border-gray-300 dark:border-gray-700'}}
+        {{if @isDisabled 'cursor-default' 'cursor-pointer'}}
+        transition-all duration-75 group/vote-button"
+      data-test-vote-button
+      disabled={{@isDisabled}}
+      ...attributes
+    >
+      <span
+        class={{if
+          @userHasVoted
+          (if @isDisabled "text-teal-500" "text-teal-500 group-hover/vote-button:text-teal-600")
+          (if
+            @isDisabled
+            "text-gray-400 dark:text-gray-500"
+            "text-gray-400 dark:text-gray-500 group-hover/vote-button:text-gray-500 dark:group-hover/vote-button:text-gray-400"
+          )
+        }}
+      >
+        {{svgJar "thumb-up" class="w-5 fill-current"}}
+      </span>
+
+      {{#if this.authenticator.isAnonymous}}
+        <EmberTooltip @text="Click to login via GitHub" />
+      {{/if}}
+    </button>
+  </template>
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'RoadmapPage::IdeaCard::VoteButton': typeof VoteButton;
+  }
+}

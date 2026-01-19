@@ -1,0 +1,11 @@
+<WelcomePage::OnboardingSurveyWizard::Step
+  @title="How do you plan to use CodeCrafters?"
+  @options={{this.options}}
+  @selectedOptions={{@onboardingSurvey.selectedOptionsForUsagePurpose}}
+  @onContinueButtonClick={{@onContinueButtonClick}}
+  @onSelectedOptionsChange={{this.handleSelectedOptionsChange}}
+  @freeFormInput={{@onboardingSurvey.freeFormAnswerForUsagePurpose}}
+  @onFreeFormInputChange={{this.handleFreeFormInputChange}}
+  @onFreeFormInputBlur={{this.handleFreeFormInputBlur}}
+  ...attributes
+/>

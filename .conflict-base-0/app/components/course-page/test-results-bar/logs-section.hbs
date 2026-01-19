@@ -1,0 +1,49 @@
+<div class="pb-3 flex flex-col" ...attributes>
+  {{#if this.lastSubmission}}
+    <SubmissionLogsPreview @submission={{this.lastSubmission}} />
+
+    <div class="flex items-center justify-between">
+      <div class="text-gray-400 text-xs mt-2">
+        {{#if this.lastSubmission.statusIsSuccess}}
+          All tests passed! Commit and push your code to move to the next stage.
+        {{else}}
+          Read our article on
+          <a
+            href={{this.debuggingArticleLink}}
+            class="font-semibold underline text-sky-500 hover:text-sky-400"
+            target="_blank"
+            rel="noopener noreferrer"
+          >debugging test failures</a>.
+        {{/if}}
+      </div>
+
+      {{! Only show to staff until https://linear.app/codecrafters/issue/CC-1142/update-dates-in-real-time is done }}
+      {{#if (current-user-is-staff)}}
+        <div class="text-gray-400 text-xs mt-2">
+          Submitted
+          {{date-from-now this.lastSubmission.createdAt}}
+        </div>
+      {{/if}}
+    </div>
+  {{else}}
+    <div class="py-16 flex items-center justify-center grow">
+      <div class="text-gray-500 text-sm">
+        {{#if (eq @activeStep.type "CourseStageStep")}}
+          {{#if (eq @activeStep @currentStep)}}
+            When you run tests for this stage, you'll see logs here.
+          {{else}}
+            When you run tests for the
+            <LinkTo
+              class="font-semibold text-gray-400 underline hover:text-gray-300"
+              @route={{@activeStep.routeParams.route}}
+              @models={{@activeStep.routeParams.models}}
+            >{{@activeStep.title}}</LinkTo>
+            stage, you'll see logs here.
+          {{/if}}
+        {{else}}
+          When you run tests on your code, you'll see logs here.
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>

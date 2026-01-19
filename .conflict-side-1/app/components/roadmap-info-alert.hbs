@@ -1,0 +1,15 @@
+<Alert @color="blue" class="p-5" ...attributes>
+  <div class="prose prose-sm dark:prose-invert prose-blue prose-compact">
+    <h4>
+      <div class="flex items-center gap-1">
+        {{svg-jar "information-circle" class="w-5 h-5 fill-current text-blue-500/80"}}
+        <span>
+          {{@heading}}
+        </span>
+      </div>
+    </h4>
+    <p>
+      {{yield}}
+    </p>
+  </div>
+</Alert>

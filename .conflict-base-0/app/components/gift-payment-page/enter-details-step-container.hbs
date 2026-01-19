@@ -1,0 +1,57 @@
+<GiftPaymentPage::StepContainer @title="Gift Details" data-test-enter-details-step-container>
+  <form {{on "submit" this.handleFormSubmit}} {{did-insert this.handleDidInsertFormElement}}>
+    <GiftPaymentPage::GiftDetailsForm::Section @title="Your Email" @description="We'll send a payment receipt to this email address.">
+      <Input
+        @value={{@giftPaymentFlow.senderEmailAddress}}
+        @type="email"
+        {{on "blur" this.handleInputBlur}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 dark:placeholder-gray-700 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 dark:border-white/10 w-full text-gray-950 dark:text-gray-100 bg-white dark:bg-gray-925"
+        id="sender_email_address_input"
+        placeholder="john@example.com"
+        required
+      />
+    </GiftPaymentPage::GiftDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 dark:bg-white/5 mt-6 mb-6"></div>
+
+    <GiftPaymentPage::GiftDetailsForm::Section @title="Gift Message" @description="Optional. You can edit this later.">
+      <Textarea
+        @value={{@giftPaymentFlow.giftMessage}}
+        {{on "blur" this.handleInputBlur}}
+        class="text-sm rounded-sm px-3 py-2 placeholder-gray-300 dark:placeholder-gray-700 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-200 dark:border-white/10 w-full text-gray-950 dark:text-gray-100 bg-white dark:bg-gray-925"
+        id="gift_message_input"
+        placeholder={{this.giftMessageInputPlaceholder}}
+        rows="5"
+      />
+    </GiftPaymentPage::GiftDetailsForm::Section>
+
+    <div class="h-px bg-gray-100 dark:bg-white/5 mt-6 mb-6"></div>
+
+    <div class="flex gap-4 justify-between items-stretch sm:items-center flex-col-reverse sm:flex-row">
+      <div class="text-xs text-gray-500 dark:text-gray-400">
+        You'll receive a gift link that you can send to the recipient.
+      </div>
+      <div>
+        {{! We don't use on "click" here because it's handled by the form submit event }}
+        <PrimaryButtonWithSpinner
+          @isDisabled={{or (not this.formInputsAreValid) this.isProcessingContinueButtonClick}}
+          @shouldShowSpinner={{this.isProcessingContinueButtonClick}}
+          @size="large"
+          type="submit"
+          class="w-full sm:w-auto justify-center"
+          data-test-continue-button
+        >
+          {{#if this.isProcessingContinueButtonClick}}
+            Saving...
+          {{else}}
+            Continue
+          {{/if}}
+        </PrimaryButtonWithSpinner>
+
+        {{#unless this.formInputsAreValid}}
+          <EmberTooltip @text="Enter details above to continue" />
+        {{/unless}}
+      </div>
+    </div>
+  </form>
+</GiftPaymentPage::StepContainer>

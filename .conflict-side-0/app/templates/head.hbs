@@ -1,0 +1,27 @@
+{{!
+  Add content you wish automatically added to the documents head
+  here. The 'model' available in this template can be populated by
+  setting values on the 'head-data' service.
+}}
+
+{{! @glint-nocheck: not typesafe yet }}
+
+{{! template-lint-disable no-forbidden-elements }}
+
+<meta name="description" content={{or @metaData.description @defaults.description}} />
+
+<meta property="og:type" content={{or @metaData.type @defaults.type}} />
+<meta property="og:site_name" content={{or @metaData.siteName @defaults.siteName}} />
+<meta property="og:title" content={{or @metaData.title @defaults.title}} />
+<meta property="og:description" content={{or @metaData.description @defaults.description}} />
+<meta property="og:image" content={{or @metaData.imageUrl @defaults.imageUrl}} />
+
+<meta name="twitter:card" content={{or @metaData.twitterCard @defaults.twitterCard}} />
+<meta name="twitter:site" content={{or @metaData.twitterSite @defaults.twitterSite}} />
+<meta name="twitter:title" content={{or @metaData.title @defaults.title}} />
+<meta name="twitter:description" content={{or @metaData.description @defaults.description}} />
+<meta name="twitter:image" content={{or @metaData.imageUrl @defaults.imageUrl}} />
+
+{{#if @metaData.shouldRenderNoIndexTag}}
+  <meta name="robots" content="noindex" />
+{{/if}}

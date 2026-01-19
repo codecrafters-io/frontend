@@ -1,0 +1,24 @@
+<PrimaryButtonWithSpinner
+  @size="large"
+  @shouldShowSpinner={{this.isCreatingAffiliateReferral}}
+  @isDisabled={{not this.acceptOfferButtonIsEnabled}}
+  {{on "click" this.handleAcceptOfferButtonClick}}
+  data-test-accept-referral-button
+  ...attributes
+>
+  {{#if this.currentUserIsAnonymous}}
+    {{svg-jar "github" class="fill-current w-6 transform transition-all mr-3"}}
+  {{/if}}
+
+  Accept offer →
+
+  {{#if this.currentUserIsAnonymous}}
+    <EmberTooltip @text="Click to login via GitHub" />
+  {{else if this.currentUserIsReferrer}}
+    <EmberTooltip @text="You can't accept your own referral offer." />
+  {{else if this.currentUserHasActiveDiscountFromAffiliateReferral}}
+    <EmberTooltip @text="You've already accepted {{this.currentUser.currentAffiliateReferral.affiliateLink.affiliateName}}'s referral offer." />
+  {{else if this.currentUserCanAccessMembershipBenefits}}
+    <EmberTooltip @text="As a CodeCrafters member, you already have full access." />
+  {{/if}}
+</PrimaryButtonWithSpinner>
