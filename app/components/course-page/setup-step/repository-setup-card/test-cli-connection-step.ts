@@ -19,7 +19,7 @@ export default class TestCliConnectionStep extends Component<Signature> {
   get commandVariants(): CopyableTerminalCommandVariant[] {
     const linuxMacOSVariant = {
       label: 'Linux / macOS',
-      commands: ['curl https://codecrafters.io/install.sh | sh', 'codecrafters ping'],
+      commands: ['curl -fsSL https://codecrafters.io/install.sh | bash', 'codecrafters ping'],
     };
 
     const powershellVariant = {
