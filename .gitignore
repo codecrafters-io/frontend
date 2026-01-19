@@ -1,0 +1,31 @@
+# compiled output
+/dist/
+/declarations/
+
+# dependencies
+/node_modules/
+
+# misc
+/.env
+/.pnp*
+/.eslintcache
+/coverage/
+/npm-debug.log*
+/testem.log
+/yarn-error.log
+/.history/
+/.lh/
+/.idea/
+
+# broccoli-debug
+/DEBUG/
+
+.aider*
+.claude/
+.machtiani.ignore
+
+# GitButler merge conflict artifacts
+.conflict-base-*/
+.conflict-side-*/
+.auto-resolution/
+.conflict-files

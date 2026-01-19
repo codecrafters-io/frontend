@@ -1,5 +1,0 @@
-{
-  "expiration": 86400,
-  "allowQuery": ["institution_slug"],
-  "passQuery": true
-}

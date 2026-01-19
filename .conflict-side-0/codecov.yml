@@ -1,9 +1,0 @@
-coverage:
-  status:
-    patch:
-      default:
-        target: 100%
-    project:
-      default:
-        # project coverage is noisy, so let's allow a 5% drop
-        threshold: 5
