@@ -192,7 +192,7 @@
     "shiki": "^3.21.0",
     "sinon": "^21.0.1",
     "stylelint": "^17.0.0",
-    "stylelint-config-standard": "^39.0.1",
+    "stylelint-config-standard": "^40.0.0",
     "tailwindcss": "^4.1.12",
     "tracked-built-ins": "^4.0.0",
     "typescript": "^5.9.3",
