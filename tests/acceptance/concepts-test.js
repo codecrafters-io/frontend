@@ -12,7 +12,7 @@ import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { setupAnimationTest, animationsSettled } from 'ember-animated/test-support';
 import windowMock from 'ember-window-mock';
 import config from 'codecrafters-frontend/config/environment';
 
@@ -184,11 +184,15 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.visit();
 
     await conceptsPage.clickOnConceptCard('Network Protocols');
+    await animationsSettled();
 
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
+
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     // Question 1
     assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
