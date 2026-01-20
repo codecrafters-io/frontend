@@ -77,9 +77,7 @@ export default class CourseIdeaCard extends Component<Signature> {
 
   <template>
     <div
-      class="group bg-white dark:bg-gray-925 p-5 rounded-md shadow-xs border
-        {{if this.userHasVoted 'border-gray-300 dark:border-gray-700' 'border-gray-200 dark:border-white/5'}}
-        relative
+      class="group bg-white dark:bg-gray-925 p-5 rounded-md shadow-xs border border-gray-200 dark:border-white/5 relative
         {{if @courseIdea.developmentStatusIsReleased 'opacity-50'}}"
       data-test-course-idea-card
     >
