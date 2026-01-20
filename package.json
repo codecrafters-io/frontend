@@ -207,7 +207,7 @@
     "edition": "octane"
   },
   "dependencies": {
-    "@rails/actioncable": "^8.1.100",
+    "@rails/actioncable": "^8.1.200",
     "@rive-app/canvas": "^2.34.1",
     "@stripe/stripe-js": "^8.6.0",
     "@typeform/embed": "^5.10.0",
