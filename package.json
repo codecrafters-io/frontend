@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.6",
-    "@babel/plugin-proposal-decorators": "^7.28.0",
+    "@babel/plugin-proposal-decorators": "^7.28.6",
     "@codecov/webpack-plugin": "^1.9.1",
     "@codemirror/language-data": "^6.5.2",
     "@codemirror/merge": "^6.11.2",
