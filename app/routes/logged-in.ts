@@ -7,11 +7,13 @@ export default class LoggedInRoute extends BaseRoute {
   @service declare sessionTokenStorage: SessionTokenStorageService;
 
   beforeModel(transition: Transition) {
-    const redirectUri = transition.to?.queryParams['next'] as string;
-    const sessionToken = transition.to?.queryParams['session_token'] as string;
+    const redirectUri = transition.to?.queryParams['next'] as string | undefined;
+    const sessionToken = transition.to?.queryParams['session_token'] as string | undefined;
 
-    this.sessionTokenStorage.setToken(sessionToken);
-    window.location.href = redirectUri;
+    if (redirectUri && sessionToken) {
+      this.sessionTokenStorage.setToken(sessionToken);
+      window.location.href = redirectUri;
+    }
   }
 
   // Show loading screen as we redirect the user
