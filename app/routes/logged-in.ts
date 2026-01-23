@@ -13,6 +13,9 @@ export default class LoggedInRoute extends BaseRoute {
     if (redirectUri && sessionToken) {
       this.sessionTokenStorage.setToken(sessionToken);
       window.location.href = redirectUri;
+    } else {
+      // If required parameters are missing, redirect to home page to avoid leaving user stuck
+      window.location.href = '/';
     }
   }
 
