@@ -1,27 +1,40 @@
 import { action } from '@ember/object';
+import type Owner from '@ember/owner';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import window from 'ember-window-mock';
 import Component from '@glimmer/component';
+import type Store from '@ember-data/store';
+import type TeamModel from 'codecrafters-frontend/models/team';
+import type InvoiceModel from 'codecrafters-frontend/models/invoice';
 
-export default class SetupSubscriptionContainer extends Component {
-  @service store;
+interface Signature {
+  Element: HTMLDivElement;
+
+  Args: {
+    team: TeamModel;
+  };
+}
+
+export default class TeamPageSetupSubscriptionContainer extends Component<Signature> {
+  @service declare store: Store;
+
   @tracked isCreatingSubscription = false;
   @tracked isCreatingPaymentMethodUpdateRequest = false;
   @tracked isLoadingFirstInvoicePreview = true;
-  @tracked firstInvoicePreview;
+  @tracked firstInvoicePreview: InvoiceModel | null = null;
 
-  constructor() {
-    super(...arguments);
+  constructor(owner: Owner, args: Signature['Args']) {
+    super(owner, args);
     this.loadFirstInvoicePreview();
   }
 
   get perUnitAmountInDollarsInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
+    return this.firstInvoicePreview!.lineItems[0]!.amount_after_discounts / this.subscriptionQuantityInFirstInvoicePreview / 100;
   }
 
   get subscriptionQuantityInFirstInvoicePreview() {
-    return this.firstInvoicePreview.lineItems[0].quantity;
+    return this.firstInvoicePreview!.lineItems[0]!.quantity;
   }
 
   @action
@@ -40,7 +53,13 @@ export default class SetupSubscriptionContainer extends Component {
 
   @action
   async loadFirstInvoicePreview() {
-    this.firstInvoicePreview = await this.args.team.fetchFirstInvoicePreview();
+    this.firstInvoicePreview = await this.args.team.fetchFirstInvoicePreview({});
     this.isLoadingFirstInvoicePreview = false;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'TeamPage::SetupSubscriptionContainer': typeof TeamPageSetupSubscriptionContainer;
   }
 }

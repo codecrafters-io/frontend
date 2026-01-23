@@ -3,7 +3,11 @@ import privateLeaderboardImage from '/assets/images/team-features/private-leader
 import slackIntegrationImage from '/assets/images/team-features/slack-integration.png';
 import teamBillingImage from '/assets/images/team-features/team-billing.png';
 
-export default class FeaturesList extends Component {
+interface Signature {
+  Element: HTMLDivElement;
+}
+
+export default class CreateTeamPageFeaturesList extends Component<Signature> {
   get features() {
     return [
       {
@@ -22,5 +26,11 @@ export default class FeaturesList extends Component {
         image: slackIntegrationImage,
       },
     ];
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CreateTeamPage::FeaturesList': typeof CreateTeamPageFeaturesList;
   }
 }
