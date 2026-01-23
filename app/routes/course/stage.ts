@@ -14,8 +14,8 @@ export default class CourseStageRoute extends BaseRoute {
   @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
-  constructor(properties: object) {
-    super(properties);
+  constructor(...args: object[]) {
+    super(...args);
 
     this.router.on('routeDidChange', () => {
       const element = document.querySelector('#course-page-scrollable-area');
