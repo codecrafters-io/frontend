@@ -264,8 +264,8 @@ module('Acceptance | view-user-profile', function (hooks) {
     await userPage.visit({ username: 'rohitpaulk' });
 
     assert.strictEqual(userPage.courseProgressListItems.length, 2, 'two course progress list items should be shown');
-    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the first course progress list item should be for grep');
-    assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own Docker', 'the second course progress list item should be for docker');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker', 'completed course should be listed first');
+    assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep', 'incomplete course should be listed second');
   });
 
   test('it does not show private courses in user profile', async function (assert) {
