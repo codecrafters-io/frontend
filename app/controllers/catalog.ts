@@ -114,8 +114,13 @@ export default class CatalogController extends Controller {
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
     const userHasRepository =
       this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
+    const userCanSeeDeprecatedCourses = this.authenticator.currentUser?.id === '0b6862df-d708-4d26-9091-0241f61673af';
 
-    if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
+    if (course.releaseStatusIsDeprecated) {
+      return userHasRepository || userCanSeeDeprecatedCourses;
+    }
+
+    if (course.visibilityIsPrivate) {
       return userHasRepository;
     }
 
