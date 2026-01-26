@@ -234,7 +234,7 @@ module('Acceptance | view-user-profile', function (hooks) {
     assert.ok(userPage.profileCustomizationNotice.isVisible);
   });
 
-  test('it does not show a challenge if it is deprecated', async function (assert) {
+  test('it shows deprecated courses with a deprecated label', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -263,8 +263,15 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
 
-    assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
-    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
+    assert.strictEqual(userPage.courseProgressListItems.length, 2, 'both course progress list items should be shown');
+
+    const grepItem = userPage.courseProgressListItems.find((item) => item.name === 'Build your own grep');
+    const dockerItem = userPage.courseProgressListItems.find((item) => item.name === 'Build your own Docker');
+
+    assert.ok(grepItem, 'grep course should be shown');
+    assert.ok(dockerItem, 'deprecated docker course should be shown');
+    assert.notOk(grepItem.hasDeprecatedLabel, 'grep course should not have deprecated label');
+    assert.ok(dockerItem.hasDeprecatedLabel, 'docker course should have deprecated label');
   });
 
   test('it does not show private courses in user profile', async function (assert) {

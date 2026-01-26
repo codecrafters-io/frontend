@@ -7,8 +7,18 @@
   <div>
     <div class="flex justify-between items-start mb-3">
       <div>
-        <div class="text-lg font-bold text-gray-600 dark:text-gray-300 mr-2 mb-0.5" data-test-course-name>
-          {{this.course.name}}
+        <div class="flex items-center gap-2 mb-0.5">
+          <div class="text-lg font-bold text-gray-600 dark:text-gray-300" data-test-course-name>
+            {{this.course.name}}
+          </div>
+          {{#if this.course.releaseStatusIsDeprecated}}
+            <div
+              class="text-[10px] text-gray-400 dark:text-gray-600 font-semibold border border-gray-300 dark:border-gray-700 rounded-sm px-1 py-0.25"
+              data-test-deprecated-label
+            >
+              DEPRECATED
+            </div>
+          {{/if}}
         </div>
 
         <div class="text-xs text-gray-400">
