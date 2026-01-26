@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "codecrafters-frontend",
@@ -174,7 +175,7 @@
         "postcss": "^8.5.6",
         "postcss-loader": "^8.2.0",
         "prember": "^2.1.0",
-        "prettier": "^3.8.0",
+        "prettier": "^3.8.1",
         "prettier-plugin-ember-template-tag": "^2.1.0",
         "prismjs": "^1.30.0",
         "qunit": "^2.25.0",
@@ -2964,7 +2965,7 @@
 
     "pretender": ["pretender@3.4.7", "", { "dependencies": { "fake-xml-http-request": "^2.1.2", "route-recognizer": "^0.3.3" } }, "sha512-jkPAvt1BfRi0RKamweJdEcnjkeu7Es8yix3bJ+KgBC5VpG/Ln4JE3hYN6vJym4qprm8Xo5adhWpm3HCoft1dOw=="],
 
-    "prettier": ["prettier@3.8.0", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-yEPsovQfpxYfgWNhCfECjG5AQaO+K3dp6XERmOepyPDVqcJm+bjyCVO3pmU+nAPe0N5dDvekfGezt/EIiRe1TA=="],
+    "prettier": ["prettier@3.8.1", "", { "bin": { "prettier": "bin/prettier.cjs" } }, "sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg=="],
 
     "prettier-plugin-ember-template-tag": ["prettier-plugin-ember-template-tag@2.1.2", "", { "dependencies": { "@babel/core": "^7.27.4", "content-tag": "^4.0.0" }, "peerDependencies": { "prettier": ">= 3.0.0" } }, "sha512-SZqbv8qfqJ7AnAaNhyeHOzsq1kvlkHdVrCAZDVBjUeWuW8xF2AK7LfKRkn9MPEUsbEO7BSkLsjkb5++eoWjtGw=="],
 
