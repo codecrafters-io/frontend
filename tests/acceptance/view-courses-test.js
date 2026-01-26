@@ -328,6 +328,31 @@ module('Acceptance | view-courses', function (hooks) {
     assert.notOk(catalogPage.courseCards.map((item) => item.name).includes('Build your own Docker'), 'docker should not be included');
   });
 
+  test('it shows deprecated courses for specific user', async function (assert) {
+    testScenario(this.server);
+
+    const specialUser = this.server.create('user', {
+      id: '0b6862df-d708-4d26-9091-0241f61673af',
+      avatarUrl: 'https://github.com/special-user.png',
+      createdAt: new Date('2019-01-01T00:00:00.000Z'),
+      githubName: 'Special User',
+      githubUsername: 'special-user',
+      username: 'special-user',
+      name: 'Special User',
+      authoredCourseSlugs: [],
+    });
+
+    signIn(this.owner, this.server, specialUser);
+
+    let docker = this.server.schema.courses.findBy({ slug: 'docker' });
+    docker.update({ releaseStatus: 'deprecated' });
+
+    await catalogPage.visit();
+
+    assert.strictEqual(catalogPage.courseCards.length, 5, 'expected 5 course cards to be present');
+    assert.ok(catalogPage.courseCardByName('Build your own Docker'), 'docker should be included');
+  });
+
   test('it should not show private courses in catalog', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);

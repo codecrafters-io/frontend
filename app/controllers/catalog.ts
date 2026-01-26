@@ -7,6 +7,8 @@ import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-su
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
 
+const USER_ID_THAT_CAN_SEE_DEPRECATED_COURSES = '0b6862df-d708-4d26-9091-0241f61673af';
+
 export default class CatalogController extends Controller {
   declare model: ModelType;
 
@@ -109,14 +111,22 @@ export default class CatalogController extends Controller {
       .filter((item) => !item.isDismissed)[0] as FeatureSuggestionModel | null;
   }
 
+  get shouldShowDeprecatedCourses(): boolean {
+    return this.authenticator.currentUserId === USER_ID_THAT_CAN_SEE_DEPRECATED_COURSES;
+  }
+
   shouldDisplayCourse(course: CourseModel) {
     const userIsStaffOrCourseAuthor =
       this.authenticator.currentUser && (this.authenticator.currentUser.isStaff || this.authenticator.currentUser.isCourseAuthor(course));
     const userHasRepository =
       this.authenticator.currentUser && this.authenticator.currentUser.repositories.filter((item) => item.course === course).length > 0;
 
-    if (course.releaseStatusIsDeprecated || course.visibilityIsPrivate) {
+    if (course.visibilityIsPrivate) {
       return userHasRepository;
+    }
+
+    if (course.releaseStatusIsDeprecated) {
+      return userHasRepository || this.shouldShowDeprecatedCourses;
     }
 
     if (course.releaseStatusIsAlpha) {
