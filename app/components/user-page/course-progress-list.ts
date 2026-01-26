@@ -16,7 +16,7 @@ export default class CourseProgressList extends Component<Signature> {
   get courseParticipationGroups() {
     return Object.values(
       this.args.user.courseParticipations
-        .filter(({ course }) => !course.releaseStatusIsDeprecated && !course.visibilityIsPrivate && !course.releaseStatusIsAlpha)
+        .filter(({ course }) => !course.visibilityIsPrivate && !course.releaseStatusIsAlpha)
         .reduce(
           groupByFieldReducer(({ course: { id } }) => id),
           {},

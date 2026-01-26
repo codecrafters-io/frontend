@@ -234,7 +234,7 @@ module('Acceptance | view-user-profile', function (hooks) {
     assert.ok(userPage.profileCustomizationNotice.isVisible);
   });
 
-  test('it does not show a challenge if it is deprecated', async function (assert) {
+  test('it shows a challenge if it is deprecated', async function (assert) {
     testScenario(this.server);
 
     let currentUser = this.server.schema.users.first();
@@ -263,8 +263,9 @@ module('Acceptance | view-user-profile', function (hooks) {
 
     await userPage.visit({ username: 'rohitpaulk' });
 
-    assert.strictEqual(userPage.courseProgressListItems.length, 1, 'only one course progress list item should be shown');
-    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own grep', 'the course progress list item should be for grep');
+    assert.strictEqual(userPage.courseProgressListItems.length, 2, 'two course progress list items should be shown');
+    assert.strictEqual(userPage.courseProgressListItems[0].name, 'Build your own Docker', 'completed course should be listed first');
+    assert.strictEqual(userPage.courseProgressListItems[1].name, 'Build your own grep', 'incomplete course should be listed second');
   });
 
   test('it does not show private courses in user profile', async function (assert) {
