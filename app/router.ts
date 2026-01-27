@@ -74,7 +74,6 @@ Router.map(function () {
   this.route('leaderboard', { path: '/leaderboards/:language_slug' });
   this.route('login'); // TODO: Add dark mode support?
   this.route('logged-in'); // TODO: Add dark mode support?
-  this.route('membership'); // TODO: Add dark mode support
   this.route('pay'); // TODO: Add dark mode support
 
   this.route('perk', { path: '/perks/:slug' }, function () {
