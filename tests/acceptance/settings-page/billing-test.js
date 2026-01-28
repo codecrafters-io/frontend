@@ -265,4 +265,26 @@ module('Acceptance | settings-page | billing-test', function (hooks) {
 
     assert.false(billingPage.membershipExtendedNotice.isVisible, 'membership extended notice is not visible');
   });
+
+  test('membership expiry discount is shown in extend membership modal', async function (assert) {
+    testScenario(this.server);
+    const user = signInAsSubscriber(this.owner, this.server);
+
+    this.server.schema.promotionalDiscounts.create({
+      user: user,
+      type: 'membership_expiry',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    });
+
+    await billingPage.visit();
+    await billingPage.renewalSection.extendMembershipButton.click();
+
+    assert.true(billingPage.chooseMembershipPlanModal.isVisible, 'modal is visible');
+
+    const yearlyPlanCard = billingPage.chooseMembershipPlanModal.planCards[1];
+    assert.true(yearlyPlanCard.promotionalDiscountNotice.isVisible, 'promotional discount notice is visible on yearly plan');
+    assert.true(yearlyPlanCard.promotionalDiscountNotice.text.includes('Early renewal discount'), 'shows early renewal discount text');
+    assert.strictEqual(yearlyPlanCard.discountedPriceText, '$216', 'shows correct discounted price (40% off $360)');
+  });
 });

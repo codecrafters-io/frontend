@@ -64,7 +64,7 @@
                   >{{@promotionalDiscount.affiliateReferral.affiliateLink.affiliateName}}'s</span>
                   referral offer{{else if @promotionalDiscount.isFromStage2Completion}}Stage 2 completion discount{{else if
                   @promotionalDiscount.isFromSignup
-                }}Signup discount{{/if}}, expires in
+                }}Signup discount{{else if @promotionalDiscount.isFromMembershipExpiry}}Early renewal discount{{/if}}, expires in
                 <span class="font-mono">{{this.promotionalDiscountCountdownTimerText}}</span>
               </li>
             {{/if}}
