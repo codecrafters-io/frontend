@@ -31,8 +31,7 @@
     <PayPage::ChooseMembershipPlanModal
       {{! @glint-expect-error mut types are broken  }}
       @onClose={{fn (mut this.chooseMembershipPlanModalIsOpen) false}}
-      {{! we don't support discounts on extensions yet !}}
-      @activeDiscountForYearlyPlan={{null}}
+      @activeDiscountForYearlyPlan={{@model.user.activeDiscountFromMembershipExpiry}}
       @checkoutSessionCancelPath="/settings/billing"
       @checkoutSessionSuccessPath="/settings/billing?action=membership_extended"
       @closeModalCTAText="Back to billing page"

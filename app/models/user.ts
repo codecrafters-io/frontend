@@ -94,6 +94,10 @@ export default class UserModel extends Model {
     return this.activePromotionalDiscountForType('affiliate_referral');
   }
 
+  get activeDiscountFromMembershipExpiry() {
+    return this.activePromotionalDiscountForType('membership_expiry');
+  }
+
   get activeDiscountFromSignup() {
     return this.activePromotionalDiscountForType('signup');
   }
