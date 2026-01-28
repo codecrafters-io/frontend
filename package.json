@@ -199,7 +199,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.53.1",
     "webpack": "^5.104.1",
-    "webpack-bundle-analyzer": "^5.1.0"
+    "webpack-bundle-analyzer": "^5.2.0"
   },
   "engines": {
     "node": "22.*"
