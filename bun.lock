@@ -6,7 +6,7 @@
       "name": "codecrafters-frontend",
       "dependencies": {
         "@rails/actioncable": "^8.1.200",
-        "@rive-app/canvas": "^2.34.2",
+        "@rive-app/canvas": "^2.34.3",
         "@stripe/stripe-js": "^8.6.4",
         "@typeform/embed": "^5.10.0",
         "@vimeo/player": "^2.30.1",
@@ -879,7 +879,7 @@
 
     "@rails/actioncable": ["@rails/actioncable@8.1.200", "", {}, "sha512-on0DSb7AFUkq1ocxivDNQhhGW/RQpY91zvRVyyaEWP4gOOZWy33P/UyxjQk74IENWNrTqs8+zOGHwTjiiFruRw=="],
 
-    "@rive-app/canvas": ["@rive-app/canvas@2.34.2", "", {}, "sha512-s+Um9xHNDkZQTJ8oZZpJFLwQqJ2w7OA9Dsai+5vi1Y6fwUSHG8eRzgWVe6idT1rj1JkjXYZEWV1vlP0jkLQ4bw=="],
+    "@rive-app/canvas": ["@rive-app/canvas@2.34.3", "", {}, "sha512-4VUJ1ZMP+5C2usFvG4SndzbNK5NSYVRtdVGP2fVL38T2Htz/2vaVLAWbvjJYcgr64nIE5STMaahun8qfCJdviA=="],
 
     "@ro0gr/ceibo": ["@ro0gr/ceibo@2.2.0", "", {}, "sha512-4gSXPwwr99zUWxnTllN5L4QlfgFDloYKOsenoPvx46LE75x3wvLgGUhxUxhIMxJbqOZ0w9pzrugjQR7St0/PQg=="],
 
