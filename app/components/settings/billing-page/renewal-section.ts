@@ -1,10 +1,12 @@
 import Component from '@glimmer/component';
+import type PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
 import type SubscriptionModel from 'codecrafters-frontend/models/subscription';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    activeDiscountForYearlyPlan: PromotionalDiscountModel | null;
     onExtendMembershipButtonClick: () => void;
     subscription: SubscriptionModel;
   };

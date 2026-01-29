@@ -15,4 +15,14 @@
   <PrimaryButton @size="small" {{on "click" @onExtendMembershipButtonClick}} data-test-extend-membership-button>
     Extend membership →
   </PrimaryButton>
+
+  {{#if @activeDiscountForYearlyPlan}}
+    <div class="prose prose-sm prose-compact dark:prose-invert mt-4" data-test-early-renewal-discount-text>
+      <p>
+        <b>Offer:</b>
+        Get 🎁&nbsp;<b class="text-teal-500">{{@activeDiscountForYearlyPlan.percentageOff}}% off</b>
+        the yearly plan if you renew before expiry!
+      </p>
+    </div>
+  {{/if}}
 </Settings::FormSection>
