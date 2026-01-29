@@ -176,7 +176,7 @@
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.23.2",
     "eslint-plugin-qunit": "^8.2.5",
-    "globals": "^17.1.0",
+    "globals": "^17.2.0",
     "html-entities": "^2.6.0",
     "loader.js": "^4.7.0",
     "miragejs": "^0.1.48",
