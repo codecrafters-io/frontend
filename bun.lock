@@ -50,7 +50,7 @@
         "@glint/core": "^1.5.2",
         "@glint/environment-ember-loose": "^1.5.2",
         "@glint/environment-ember-template-imports": "^1.5.2",
-        "@glint/template": "^1.7.3",
+        "@glint/template": "^1.7.4",
         "@percy/cli": "^1.31.8",
         "@percy/ember": "^5.0.0",
         "@sentry/ember": "^10.37.0",
@@ -673,7 +673,7 @@
 
     "@glint/environment-ember-template-imports": ["@glint/environment-ember-template-imports@1.5.2", "", { "dependencies": { "content-tag": "^2.0.1" }, "peerDependencies": { "@glint/environment-ember-loose": "^1.5.2", "@glint/template": "^1.5.2", "@types/ember__component": "^4.0.10", "@types/ember__helper": "^4.0.1", "@types/ember__modifier": "^4.0.3", "@types/ember__routing": "^4.0.12" }, "optionalPeers": ["@types/ember__helper", "@types/ember__modifier"] }, "sha512-f/asPRUr2YWtwYWlvl67JC6PIlihIiFnEtvESvMnblsDyJPpzJmVFGGlVujCOkajLwbkX9DDEw7fydn64He8Qw=="],
 
-    "@glint/template": ["@glint/template@1.7.3", "", {}, "sha512-ouB9HjLJ5kDnAhORLx43vTmGukm6uHg5hg+jAoiSlyifQdVINmXIkkGPGCD1HQ0WeIDZ/CmxH7aIZlIyI90AAw=="],
+    "@glint/template": ["@glint/template@1.7.4", "", {}, "sha512-39gTESXJmiIzJhcweJQ+44eIX+n+alJpD6HKpX8nPXCggVu2Yq6KP9pA5gwUvWE1/NYZhITiOqdA7UuyVtWMww=="],
 
     "@handlebars/parser": ["@handlebars/parser@2.0.0", "", {}, "sha512-EP9uEDZv/L5Qh9IWuMUGJRfwhXJ4h1dqKTT4/3+tY0eu7sPis7xh23j61SYUnNF4vqCQvvUXpDo9Bh/+q1zASA=="],
 
