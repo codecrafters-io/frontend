@@ -17,7 +17,7 @@
         "fuse.js": "^7.0.0",
         "lottie-web": "^5.13.0",
         "mustache": "^4.2.0",
-        "node-html-parser": "^7.0.1",
+        "node-html-parser": "^7.0.2",
         "player.js": "^0.1.0",
         "posthog-js": "^1.332.0",
         "seedrandom": "^3.0.5",
@@ -2769,7 +2769,7 @@
 
     "node-html-light": ["node-html-light@1.4.0", "", { "dependencies": { "htmlparser2": "^5.0.0" } }, "sha512-sYlCrvhn5us6MW3ZLGpM0MXFlHUo14kN9itVFM3pjbaJG1a+B/3BCFoqAEAReqTDFxXs68ngkZ89edNxD0ja4Q=="],
 
-    "node-html-parser": ["node-html-parser@7.0.1", "", { "dependencies": { "css-select": "^5.1.0", "he": "1.2.0" } }, "sha512-KGtmPY2kS0thCWGK0VuPyOS+pBKhhe8gXztzA2ilAOhbUbxa9homF1bOyKvhGzMLXUoRds9IOmr/v5lr/lqNmA=="],
+    "node-html-parser": ["node-html-parser@7.0.2", "", { "dependencies": { "css-select": "^5.1.0", "he": "1.2.0" } }, "sha512-DxodLVh7a6JMkYzWyc8nBX9MaF4M0lLFYkJHlWOiu7+9/I6mwNK9u5TbAMC7qfqDJEPX9OIoWA2A9t4C2l1mUQ=="],
 
     "node-int64": ["node-int64@0.4.0", "", {}, "sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw=="],
 
