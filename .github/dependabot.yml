@@ -9,7 +9,7 @@ updates:
     open-pull-requests-limit: 10 # Default is 5
     directory: '/' # Location of package manifests
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     ignore:
       - dependency-name: 'ember-source'
       - dependency-name: 'ember-data'
@@ -45,9 +45,9 @@ updates:
     open-pull-requests-limit: 10
     directory: '/vercel-functions/prerender/_prerender-ember-route.func'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
 
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
