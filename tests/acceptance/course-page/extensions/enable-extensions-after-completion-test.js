@@ -2,7 +2,7 @@ import { setupAnimationTest } from 'ember-animated/test-support';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, visit } from '@ember/test-helpers';
 import baseStagesCompletePage from 'codecrafters-frontend/tests/pages/course/base-stages-complete-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
@@ -143,11 +143,50 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
     await courseOverviewPage.clickOnStartCourse();
 
     assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is extension completed page');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 8, 'step list has 8 items when extension 1 is completed');
 
     await coursePage.sidebar.configureExtensionsToggles[0].click();
     await coursePage.configureExtensionsModal.toggleExtension('Extension 2');
     await coursePage.configureExtensionsModal.clickOnCloseButton();
 
-    assert.strictEqual(currentURL(), '/courses/dummy/stages/ae0', 'current URL is next extension stage');
+    assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'current URL is still extension completed page');
+    assert.strictEqual(coursePage.sidebar.stepListItems.length, 10, 'step list has 10 items when extension 2 is enabled');
+  });
+
+  test('can directly navigate to extension-completed URL', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update('releaseStatus', 'live');
+
+    const repository = this.server.create('repository', 'withBaseStagesCompleted', {
+      course: course,
+      language: python,
+      user: currentUser,
+    });
+
+    // Disable Extension 2 so ext1's ExtensionCompletedStep is visible
+    this.server.create('course-extension-activation', {
+      repository: repository,
+      extension: course.extensions.models.find((ext) => ext.slug === 'ext1'),
+    });
+
+    // Complete all stages for extension 1
+    course.stages.models.forEach((stage) => {
+      if (stage.primaryExtensionSlug === 'ext1') {
+        this.server.create('submission', 'withStageCompletion', {
+          repository,
+          courseStage: stage,
+        });
+      }
+    });
+
+    // Directly visit the extension-completed URL
+    await visit('/courses/dummy/extension-completed/ext1');
+
+    assert.strictEqual(currentURL(), '/courses/dummy/extension-completed/ext1', 'stays on extension-completed page');
   });
 });

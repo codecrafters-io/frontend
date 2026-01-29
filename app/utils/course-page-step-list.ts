@@ -164,4 +164,8 @@ export class StepListDefinition {
 
     return this.visibleSteps.slice(stepIndex + 1);
   }
+
+  visibleStepsByType(type: StepDefinition['type']): StepDefinition[] {
+    return this.visibleSteps.filter((step) => step.type === type);
+  }
 }

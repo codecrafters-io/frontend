@@ -3,6 +3,7 @@ import RouterService from '@ember/routing/router-service';
 import { StepDefinition, StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { tracked } from '@glimmer/tracking';
 import CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import ExtensionCompletedStep from 'codecrafters-frontend/utils/course-page-step-list/extension-completed-step';
 
 export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
@@ -46,15 +47,17 @@ export default class CoursePageStateService extends Service {
     } else if (this.router.currentRouteName === 'course.base-stages-completed') {
       return this.stepList!.visibleStepByType('BaseStagesCompletedStep') || null;
     } else if (this.router.currentRouteName && this.router.currentRouteName.startsWith('course.stage')) {
-      const courseStageRoute = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage');
+      const route = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.stage')!;
+      const routeParams = route.params as { stage_slug: string };
+      const courseStageSteps = this.stepList!.visibleStepsByType('CourseStageStep') as CourseStageStep[];
 
-      const routeParams = courseStageRoute!.params as { stage_slug: string };
+      return courseStageSteps.find((step) => step.courseStage.slug === routeParams.stage_slug) || null;
+    } else if (this.router.currentRouteName === 'course.extension-completed') {
+      const route = this.router.currentRoute.find((route: { name: string }) => route.name === 'course.extension-completed')!;
+      const routeParams = route.params as { extension_slug: string };
+      const extensionCompletedSteps = this.stepList!.visibleStepsByType('ExtensionCompletedStep') as ExtensionCompletedStep[];
 
-      return (
-        this.stepList!.steps.find(
-          (step) => step.type === 'CourseStageStep' && (step as CourseStageStep).courseStage.slug === routeParams.stage_slug,
-        ) || null
-      );
+      return extensionCompletedSteps.find((step) => step.extension.slug === routeParams.extension_slug) || null;
     } else {
       return null;
     }
