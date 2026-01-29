@@ -168,12 +168,6 @@ module('Acceptance | course-page | extensions | enable-extensions-after-completi
       user: currentUser,
     });
 
-    // Disable Extension 2 so ext1's ExtensionCompletedStep is visible
-    this.server.create('course-extension-activation', {
-      repository: repository,
-      extension: course.extensions.models.find((ext) => ext.slug === 'ext1'),
-    });
-
     // Complete all stages for extension 1
     course.stages.models.forEach((stage) => {
       if (stage.primaryExtensionSlug === 'ext1') {
