@@ -64,13 +64,15 @@ export default class CodeExampleEvaluatorController extends Controller {
   evaluateSolutionsTask = task({ drop: true }, async (): Promise<void> => {
     const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;
 
-    await dummyRecord.generate({
-      evaluator_id: this.model.evaluator.id,
-      course_stage_id: this.currentCourseStage?.id,
-      language_id: this.currentLanguage?.id,
-    });
-
-    dummyRecord.unloadRecord();
+    try {
+      await dummyRecord.generate({
+        evaluator_id: this.model.evaluator.id,
+        course_stage_id: this.currentCourseStage?.id,
+        language_id: this.currentLanguage?.id,
+      });
+    } finally {
+      dummyRecord.unloadRecord();
+    }
   });
 
   updateSlugTask = task({ drop: true }, async (newSlug: string): Promise<void> => {
