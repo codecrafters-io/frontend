@@ -13,14 +13,14 @@ interface Signature {
 export default class Statistic extends Component<Signature> {
   get valueColorClasses(): string {
     if (!this.args.statistic) {
-      return 'text-gray-500';
+      return 'text-gray-500 dark:text-gray-400';
     }
 
     return {
-      green: 'text-teal-500',
-      yellow: 'text-yellow-500',
-      red: 'text-red-500',
-      gray: 'text-gray-500',
+      green: 'text-teal-500 dark:text-teal-400',
+      yellow: 'text-yellow-500 dark:text-yellow-400',
+      red: 'text-red-500 dark:text-red-400',
+      gray: 'text-gray-500 dark:text-gray-400',
     }[this.args.statistic.color];
   }
 }

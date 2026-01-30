@@ -1,11 +1,11 @@
-<div class="bg-white min-h-screen" data-test-code-example-insights-index-page>
+<div class="bg-white dark:bg-gray-950 min-h-screen" data-test-code-example-insights-index-page>
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 border-b border-gray-200 flex items-start justify-between">
+    <div class="pt-3 pb-6 border-b border-gray-200 dark:border-white/10 flex items-start justify-between">
       <div>
-        <h3 class="text-lg font-bold text-gray-900 mb-1">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">
           Code Examples 🚧 (Work in progress!)
         </h3>
-        <div class="text-xs text-gray-400">
+        <div class="text-xs text-gray-400 dark:text-gray-500">
           Summaries of code examples submitted by users.
         </div>
       </div>
@@ -22,31 +22,31 @@
 
     {{#if @model.selectedLanguage}}
       {{#if (gt @model.course.stages.length 0)}}
-        <ul role="list" class="divide-y divide-gray-100">
+        <ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
           {{#each @model.course.sortedBaseStages as |stage|}}
             <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} @language={{@model.selectedLanguage}} />
           {{/each}}
         </ul>
 
         {{#each @model.course.sortedExtensions as |extension|}}
-          <h3 class="font-semibold text-gray-400 text-center relative mt-8 mb-3">
-            <span class="block h-px w-full bg-gray-200 absolute top-50-percent -mt-px"></span>
-            <span class="relative px-6 bg-white">{{extension.name}}</span>
+          <h3 class="font-semibold text-gray-400 dark:text-gray-500 text-center relative mt-8 mb-3">
+            <span class="block h-px w-full bg-gray-200 dark:bg-white/10 absolute top-50-percent -mt-px"></span>
+            <span class="relative px-6 bg-white dark:bg-gray-950">{{extension.name}}</span>
           </h3>
 
-          <ul role="list" class="divide-y divide-gray-100">
+          <ul role="list" class="divide-y divide-gray-100 dark:divide-white/5">
             {{#each extension.sortedStages as |stage|}}
               <CourseAdmin::CodeExampleInsightsIndexPage::StageListItem @stage={{stage}} @language={{@model.selectedLanguage}} />
             {{/each}}
           </ul>
         {{/each}}
       {{else}}
-        <div class="text-gray-400 py-32 flex items-center justify-center">
+        <div class="text-gray-400 dark:text-gray-500 py-32 flex items-center justify-center">
           No stages found.
         </div>
       {{/if}}
     {{else}}
-      <div class="text-gray-400 py-32 flex items-center justify-center">
+      <div class="text-gray-400 dark:text-gray-500 py-32 flex items-center justify-center">
         No language selected.
       </div>
     {{/if}}
