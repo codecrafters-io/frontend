@@ -11,13 +11,13 @@
   ...attributes
 >
   {{#if @iconUrl}}
-    <img src={{@iconUrl}} alt="icon" class="{{if (eq @size 'small') 'h-4' 'h-5'}} mr-2" />
+    <img src={{@iconUrl}} alt="icon" class="{{if (eq @size 'small') 'h-4' 'h-5'}} mr-1.5" />
   {{else if @icon}}
     {{svg-jar
       @icon
       class=(concat
         (if (eq @size "small") "w-4 " "w-5 ")
-        "mr-2 fill-current "
+        "mr-1.5 fill-current "
         (if
           @isActive
           "text-gray-700 dark:text-gray-400 "
