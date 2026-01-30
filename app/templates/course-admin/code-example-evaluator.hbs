@@ -1,9 +1,9 @@
-<div class="bg-white min-h-screen">
+<div class="bg-white dark:bg-gray-950 min-h-screen">
   <div class="container mx-auto pt-4 pb-32 px-6">
-    <div class="py-3 border-b border-gray-200 mb-6">
+    <div class="py-3 border-b border-gray-200 dark:border-white/5 mb-6">
       <TertiaryLinkButton @route="course-admin.code-example-evaluators" @models={{array @model.course.slug}} @size="small" class="pl-1.5 mb-3">
         <div class="flex items-center">
-          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+          {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400"}}
 
           <span>
             Back
@@ -12,18 +12,26 @@
       </TertiaryLinkButton>
 
       <div class="flex items-center justify-between">
-        <div>
-          <h3 class="text-xl font-bold text-gray-900">
+        <EditableTextField @value={{@model.evaluator.slug}} @onUpdate={{perform this.updateSlugTask}}>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 {{if this.updateSlugTask.isRunning 'animate-pulse'}}">
             {{@model.evaluator.slug}}
           </h3>
-        </div>
-        <div class="flex items-center">
+        </EditableTextField>
+      </div>
+    </div>
+
+    <div>
+      <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
+
+      <div class="py-3 border-b border-gray-200 dark:border-white/5 mb-6 mt-8 flex items-center justify-between">
+        <div class="text-gray-900 dark:text-gray-100 font-semibold mb-1 text-2xl">Results</div>
+
+        <div class="flex items-center gap-3">
           <CourseStageDropdown
             @course={{@model.course}}
             @selectedCourseStage={{this.currentCourseStage}}
             @onAllCourseStagesDropdownLinkClick={{this.handleAllCourseStagesDropdownLinkClick}}
             @onSelectedCourseStageChange={{this.handleCourseStageChange}}
-            class="py-3 mr-4"
           />
 
           <LanguageDropdown
@@ -34,13 +42,9 @@
             @onAllLanguagesDropdownLinkClick={{this.handleAllLanguagesDropdownLinkClick}}
             @onRequestedLanguageChange={{this.handleRequestedLanguageChange}}
             @onDidInsertDropdown={{(noop)}}
-            class="py-3"
           />
         </div>
       </div>
-    </div>
-    <div>
-      <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
 
       <CourseAdmin::CodeExampleEvaluatorPage::AccuracySection @evaluator={{@model.evaluator}} class="mt-8" />
 

@@ -21,6 +21,7 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     this.evaluator = this.server.create('community-solution-evaluator', {
       slug: 'relevance',
       promptTemplate: 'Is the code example relevant to the prompt?',
+      status: 'draft',
     });
 
     this.solution1 = createCommunityCourseStageSolution(this.server, this.course, 2, this.language);
