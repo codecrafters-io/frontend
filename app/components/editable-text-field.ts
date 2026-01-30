@@ -42,8 +42,8 @@ export default class EditableTextField extends Component<Signature> {
   }
 
   @action
-  handleUpdate() {
-    this.args.onUpdate(this.editingValue);
+  async handleUpdate() {
+    await this.args.onUpdate(this.editingValue);
     this.isEditing = false;
   }
 }

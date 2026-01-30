@@ -134,7 +134,7 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
       passEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'pass'),
       failEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'fail'),
       unsureEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'unsure'),
-      trustedEvaluations: [], // await this.loadTrustedEvaluations(evaluator, course, languageSlugs, courseStageSlugs),
+      trustedEvaluations: await this.loadTrustedEvaluations(evaluator, course, languageSlugs, courseStageSlugs),
       filteredLanguageSlugs: params.languages.split(','),
       filteredCourseStageSlugs: params.course_stage_slugs.split(','),
     };
