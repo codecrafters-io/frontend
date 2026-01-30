@@ -1,13 +1,17 @@
-<div class="border-b border-gray-200">
+<div class="border-b border-gray-200 dark:border-white/10">
   <div class="container mx-auto pt-8 px-6">
     <div class="flex items-center gap-3 mb-4">
-      <LinkTo @route="course" @model={{@course.slug}} class="group flex items-center text-gray-400 hover:text-gray-500 transition-colors shrink-0">
+      <LinkTo
+        @route="course"
+        @model={{@course.slug}}
+        class="group flex items-center text-gray-400 dark:text-gray-600 hover:text-gray-500 dark:hover:text-gray-400 transition-colors shrink-0"
+      >
         {{svg-jar "arrow-left" class="w-6 mr-1 fill-current"}}
       </LinkTo>
 
       <CourseLogo @course={{@course}} class="w-8 h-8" />
 
-      <div class="font-bold text-2xl text-gray-700">{{@course.name}}</div>
+      <div class="font-bold text-2xl text-gray-700 dark:text-gray-200">{{@course.name}}</div>
     </div>
 
     <div class="flex items-center">
