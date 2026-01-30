@@ -15,6 +15,10 @@
   </div>
 
   <div class="mt-1 text-4xl font-semibold tracking-tight {{this.valueColorClasses}}">
-    {{@statistic.value}}
+    {{#if @statistic.value}}
+      {{@statistic.value}}
+    {{else}}
+      -
+    {{/if}}
   </div>
 </div>

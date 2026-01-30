@@ -11,6 +11,12 @@
           {{on "click" (fn this.handleEvaluateMoreSolutionsClick dd.actions)}}
           data-test-evaluate-more-solutions-link
         />
+        <DropdownLink
+          @text="Regenerate all evaluations"
+          @icon="refresh"
+          {{on "click" (fn this.handleRegenerateAllEvaluationsClick dd.actions)}}
+          data-test-regenerate-all-evaluations-link
+        />
       </div>
     </dd.Content>
   </BasicDropdown>

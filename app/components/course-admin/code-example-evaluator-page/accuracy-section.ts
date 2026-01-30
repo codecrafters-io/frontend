@@ -66,18 +66,12 @@ export default class AccuracySection extends Component<Signature> {
     return {
       title: 'False Negative Rate',
       label: 'false negatives',
-      value:
-        this.falseNegativePercentage !== null
-          ? `${this.falseNegativePercentage}%`
-          : `${this.negativeEvaluationsWithTrustedEvaluation.length} datapoints (need 10)`,
-      color:
-        this.falseNegativePercentage !== null && this.falseNegativePercentage < 10
-          ? 'green'
-          : this.negativeEvaluationsWithTrustedEvaluation.length >= 10
-            ? 'red'
-            : 'gray',
+      value: this.falseNegativePercentage !== null ? `${this.falseNegativePercentage}%` : null,
+      color: this.falseNegativePercentage !== null && this.falseNegativePercentage < 10 ? 'green' : 'red',
       explanationMarkdown:
-        'The percentage of "fail" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
+        this.falseNegativePercentage !== null
+          ? `The percentage of "fail" evaluations that did not match human values.\n\nTotal datapoints: ${this.negativeEvaluationsWithTrustedEvaluation.length}`
+          : `The percentage of "fail" evaluations that did not match human values.\n\nOnly ${this.negativeEvaluationsWithTrustedEvaluation.length}/10 datapoints available`,
     };
   }
 
@@ -100,18 +94,12 @@ export default class AccuracySection extends Component<Signature> {
     return {
       title: 'False Positive Rate',
       label: 'false positives',
-      value:
-        this.falsePositivePercentage !== null
-          ? `${this.falsePositivePercentage}%`
-          : `${this.positiveEvaluationsWithTrustedEvaluation.length} datapoints (need 10)`,
-      color:
-        this.falsePositivePercentage !== null && this.falsePositivePercentage < 10
-          ? 'green'
-          : this.positiveEvaluationsWithTrustedEvaluation.length >= 10
-            ? 'red'
-            : 'gray',
+      value: this.falsePositivePercentage !== null ? `${this.falsePositivePercentage}%` : null,
+      color: this.falsePositivePercentage !== null && this.falsePositivePercentage < 10 ? 'green' : 'red',
       explanationMarkdown:
-        'The percentage of "pass" evaluations that did not match human values. \n\nNeeds at least 10 trusted evaluations for comparison.',
+        this.falsePositivePercentage !== null
+          ? `The percentage of "pass" evaluations that did not match human values.\n\nTotal datapoints: ${this.positiveEvaluationsWithTrustedEvaluation.length}`
+          : `The percentage of "pass" evaluations that did not match human values.\n\nOnly ${this.positiveEvaluationsWithTrustedEvaluation.length}/10 datapoints available`,
     };
   }
 

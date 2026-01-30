@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo, hasMany } from '@ember-data/model';
+import { memberAction } from 'ember-api-actions';
 import type CourseModel from './course';
 import type LanguageModel from './language';
 import type CommunitySolutionEvaluationModel from './community-solution-evaluation';
@@ -26,4 +27,11 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   get isLive() {
     return this.status === 'live';
   }
+
+  declare regenerateAllEvaluations: (this: Model, payload: unknown) => Promise<void>;
 }
+
+CommunitySolutionEvaluatorModel.prototype.regenerateAllEvaluations = memberAction({
+  path: 'regenerate_all_evaluations',
+  type: 'post',
+});
