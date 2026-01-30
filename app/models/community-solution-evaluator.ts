@@ -21,4 +21,8 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   get isDraft() {
     return this.status === 'draft';
   }
+
+  get isLive() {
+    return this.status === 'live';
+  }
 }

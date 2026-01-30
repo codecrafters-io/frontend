@@ -25,6 +25,12 @@
               <div class="min-w-0">
                 <div class="flex items-center gap-x-2">
                   <span class="font-semibold leading-6 text-gray-950 dark:text-gray-100" data-test-evaluator-slug>{{evaluator.slug}}</span>
+
+                  {{#if evaluator.isDraft}}
+                    <Pill @color="gray">Draft</Pill>
+                  {{else if evaluator.isLive}}
+                    <Pill @color="green">Live</Pill>
+                  {{/if}}
                 </div>
               </div>
               <div class="flex flex-none items-center gap-x-4">
