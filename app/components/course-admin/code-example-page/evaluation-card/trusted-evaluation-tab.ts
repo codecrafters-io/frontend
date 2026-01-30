@@ -16,6 +16,10 @@ export interface Signature {
 export default class TrustedEvaluationTab extends Component<Signature> {
   @service declare store: Store;
 
+  get canCreateTrustedEvaluation(): boolean {
+    return this.args.evaluation.result === 'pass' || this.args.evaluation.result === 'fail';
+  }
+
   get trustedEvaluation() {
     return this.args.evaluation.trustedEvaluation;
   }

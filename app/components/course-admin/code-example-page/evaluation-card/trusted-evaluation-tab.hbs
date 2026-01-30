@@ -35,7 +35,7 @@
     >
       Edit Trusted Evaluation
     </TertiaryButton>
-  {{else}}
+  {{else if this.canCreateTrustedEvaluation}}
     <div class="prose dark:prose-invert mb-6">
       Is the
       <b class="uppercase">{{@evaluation.result}}</b>
@@ -64,6 +64,17 @@
           <span>Wrong</span>
         </div>
       </PrimaryButtonWithSpinner>
+    </div>
+  {{else}}
+    <div class="prose dark:prose-invert" data-test-unsure-evaluation-message>
+      <p>
+        Cannot create trusted evaluation for
+        <b class="uppercase">{{@evaluation.result}}</b>
+        results. Trusted evaluations can only be
+        <b>pass</b>
+        or
+        <b>fail</b>.
+      </p>
     </div>
   {{/if}}
 </div>
