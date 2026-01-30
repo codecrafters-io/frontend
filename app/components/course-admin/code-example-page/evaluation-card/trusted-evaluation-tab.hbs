@@ -52,15 +52,17 @@
         </div>
       </PrimaryButtonWithSpinner>
 
-      <PrimaryButtonWithSpinner
-        @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
-        {{on "click" (perform this.upsertTrustedEvaluationTask @evaluation.oppositeResult)}}
-      >
-        <div class="flex items-center gap-2">
-          {{svg-jar "x" class="w-4 h-4"}}
-          <span>Wrong</span>
-        </div>
-      </PrimaryButtonWithSpinner>
+      {{#if @evaluation.oppositeResult}}
+        <PrimaryButtonWithSpinner
+          @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
+          {{on "click" (perform this.upsertTrustedEvaluationTask @evaluation.oppositeResult)}}
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "x" class="w-4 h-4"}}
+            <span>Wrong</span>
+          </div>
+        </PrimaryButtonWithSpinner>
+      {{/if}}
     </div>
   {{/if}}
 </div>

@@ -22,14 +22,14 @@ export default class CommunitySolutionEvaluationModel extends Model {
   @tracked logsFileContents: string | null = null;
   @tracked promptFileContents: string | null = null;
 
-  get oppositeResult(): 'pass' | 'fail' {
+  get oppositeResult(): 'pass' | 'fail' | null {
     switch (this.result) {
       case 'pass':
         return 'fail';
       case 'fail':
         return 'pass';
       default:
-        throw new Error(`Invalid result: ${this.result}`);
+        return null;
     }
   }
 
