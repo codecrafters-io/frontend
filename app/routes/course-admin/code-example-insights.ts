@@ -2,6 +2,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import Store from '@ember-data/store';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
@@ -15,6 +16,10 @@ export type CodeExampleInsightsRouteModel = {
 
 export default class CodeExampleInsightsRoute extends BaseRoute {
   @service declare store: Store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   queryParams = {
     language_slug: {

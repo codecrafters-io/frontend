@@ -1,16 +1,16 @@
-<div class="bg-white min-h-screen">
+<div class="bg-white dark:bg-gray-950 min-h-screen">
   <div class="container mx-auto pt-4 pb-10 px-6">
-    <div class="pt-3 pb-6 border-b border-gray-200 flex items-start justify-between mb-8">
+    <div class="pt-3 pb-6 border-b border-gray-200 dark:border-white/5 flex items-start justify-between mb-8">
       <div>
         <TertiaryLinkButton @route="course-admin.code-example-insights-index" @size="small" class="pl-1.5 mb-3">
           <div class="flex items-center">
-            {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500"}}
+            {{svg-jar "arrow-circle-left" class="w-4 h-4 mr-1.5 text-gray-500 dark:text-gray-400"}}
             <span>
               Back
             </span>
           </div>
         </TertiaryLinkButton>
-        <h3 class="text-xl font-bold text-gray-900">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100">
           Code Examples in
           {{@model.language.name}}
           for
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="prose mb-8">
+    <div class="prose dark:prose-invert mb-8">
       Displaying code examples sorted by
       <div class="inline-block">
         <BasicDropdown as |dd|>
@@ -81,7 +81,7 @@
         </div>
         <CourseAdmin::CodeExampleInsights::MetadataContainer @solution={{solution}} />
         {{#if (not-eq solutionIndex (sub this.sortedSolutions.length 1))}}
-          <div class="col-span-2 bg-gray-200 h-px">
+          <div class="col-span-2 bg-gray-200 dark:bg-white/5 h-px">
           </div>
         {{/if}}
       {{/each}}
