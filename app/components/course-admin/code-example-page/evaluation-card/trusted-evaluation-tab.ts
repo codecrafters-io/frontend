@@ -43,7 +43,8 @@ export default class TrustedEvaluationTab extends Component<Signature> {
   @action
   async handleSelect(value: 'none' | 'pass' | 'fail') {
     if (value == 'none') {
-      this.trustedEvaluation?.destroyRecord();
+      await this.trustedEvaluation?.destroyRecord();
+      this.args.onClose?.();
     } else {
       let record = this.trustedEvaluation;
 

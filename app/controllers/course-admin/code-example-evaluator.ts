@@ -67,6 +67,7 @@ export default class CodeExampleEvaluatorController extends Controller {
     await dummyRecord.generate({
       course_stage_slug: this.currentCourseStage?.slug,
       language_slug: this.currentLanguage?.slug,
+      evaluator_slug: this.model.evaluator.slug,
     });
 
     dummyRecord.unloadRecord();
