@@ -46,26 +46,48 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorsPage.clickOnEvaluator('relevance');
     assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
 
-    await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
-    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].click();
-    await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].clickOnTabHeader('Trusted Evaluation');
+    const evaluationCard = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0];
 
-    const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
+    // Helper to open the card and navigate to trusted evaluation tab
+    const openTrustedEvaluationTab = async () => {
+      await codeExampleEvaluatorPage.evaluationsSection.scrollIntoView();
+      await evaluationCard.click();
+      await evaluationCard.clickOnTabHeader('Trusted Evaluation');
+    };
+
+    await openTrustedEvaluationTab();
+
+    const trustedEvaluationTab = evaluationCard.trustedEvaluationTab;
 
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
-    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'None', 'Default value is none');
+    assert.false(trustedEvaluationTab.hasTrustedEvaluation, 'No trusted evaluation message shown');
 
-    await trustedEvaluationTab.clickOnValue('Pass');
+    // Click "Correct" - creates trusted evaluation with same result as the current evaluation (pass)
+    // This collapses the card, so we need to re-open it
+    await trustedEvaluationTab.clickOnCorrectButton();
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
-    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Pass', 'Updated value is pass');
 
-    await trustedEvaluationTab.clickOnValue('Fail');
+    // Re-open to verify trusted evaluation is shown
+    await openTrustedEvaluationTab();
+    assert.true(trustedEvaluationTab.hasTrustedEvaluation, 'Trusted evaluation message shown');
+
+    // Edit the trusted evaluation - destroys it (does not close the card)
+    await trustedEvaluationTab.clickOnEditTrustedEvaluationButton();
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'Trusted evaluation destroyed');
+    assert.false(trustedEvaluationTab.hasTrustedEvaluation, 'No trusted evaluation message shown');
+
+    // Click "Wrong" - creates trusted evaluation with opposite result (fail)
+    await trustedEvaluationTab.clickOnWrongButton();
     assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 1, 'Trusted evaluation created');
-    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Fail', 'Updated value is fail');
 
-    await trustedEvaluationTab.clickOnValue('None');
-    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations yet');
-    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'None', 'Updated value is none');
+    // Re-open to verify trusted evaluation is shown
+    await openTrustedEvaluationTab();
+    assert.true(trustedEvaluationTab.hasTrustedEvaluation, 'Trusted evaluation message shown');
+
+    // Edit the trusted evaluation again - destroys it
+    await trustedEvaluationTab.clickOnEditTrustedEvaluationButton();
+    assert.strictEqual(this.server.schema.trustedCommunitySolutionEvaluations.all().models.length, 0, 'No trusted evaluations');
+    assert.false(trustedEvaluationTab.hasTrustedEvaluation, 'No trusted evaluation message shown');
   });
 
   test('can view trusted evaluation for existing evaluation', async function (assert) {
@@ -85,6 +107,6 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
     await codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].clickOnTabHeader('Trusted Evaluation');
 
     const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
-    assert.strictEqual(trustedEvaluationTab.selectedItemText, 'Pass', 'Updated value is pass');
+    assert.true(trustedEvaluationTab.hasTrustedEvaluation, 'Trusted evaluation message is shown');
   });
 });

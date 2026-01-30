@@ -1,8 +1,14 @@
 <div
-  class="border border-gray-200 rounded-md p-4 mb-4 {{if this.isCollapsed 'hover:border-gray-300 hover:bg-gray-100'}}"
+  class="border border-gray-200 dark:border-white/5 rounded-md p-4 mb-4
+    {{if this.isCollapsed 'hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-900'}}"
   role={{if this.isCollapsed "button" "presentation"}}
   {{! template-lint-disable no-invalid-interactive }}
   {{on "click" (if this.isCollapsed this.handleExpandButtonClick (noop))}}
+  {{on-action-cable-message
+    this.handleActionCableMessage
+    channel="CommunitySolutionEvaluationChannel"
+    args=(hash community_solution_evaluation_id=@evaluation.id)
+  }}
   data-test-evaluation-card
 >
   <CourseAdmin::CodeExamplePage::EvaluationCard::Header
@@ -15,7 +21,7 @@
     <div class="flex items-start gap-6 mt-4 relative">
       <div class="w-1/2">
         <Tabs @tabs={{this.tabs}} as |activeTabSlug|>
-          <div class="mt-4">
+          <div class="pt-6">
             {{#if (eq activeTabSlug "evaluation")}}
               <CourseAdmin::CodeExamplePage::EvaluationCard::EvaluationTab
                 @evaluation={{@evaluation}}
@@ -24,9 +30,12 @@
             {{else if (eq activeTabSlug "prompt")}}
               <CourseAdmin::CodeExamplePage::EvaluationCard::PromptTab @evaluation={{@evaluation}} />
             {{else if (eq activeTabSlug "trusted-evaluation")}}
-              <CourseAdmin::CodeExamplePage::EvaluationCard::TrustedEvaluationTab @evaluation={{@evaluation}} />
+              <CourseAdmin::CodeExamplePage::EvaluationCard::TrustedEvaluationTab
+                @evaluation={{@evaluation}}
+                @onClose={{this.handleCollapseButtonClick}}
+              />
             {{else}}
-              <div>Nothing yet!</div>
+              <div class="text-gray-500 dark:text-gray-400">Nothing yet!</div>
             {{/if}}
           </div>
         </Tabs>
