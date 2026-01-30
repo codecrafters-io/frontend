@@ -27,6 +27,26 @@ export default class AccuracySection extends Component<Signature> {
     });
   }
 
+  get failRatePercentage() {
+    if (this.allEvaluations.length === 0) {
+      return null;
+    }
+
+    const failCount = this.allEvaluations.filter((e) => e.result === 'fail').length;
+
+    return parseFloat(((100 * failCount) / this.allEvaluations.length).toFixed(2));
+  }
+
+  get failRateStatistic(): CourseStageParticipationAnalysisStatistic {
+    return {
+      title: 'Fail Rate',
+      label: 'fails',
+      value: this.failRatePercentage !== null ? `${this.failRatePercentage}%` : 'No evaluations',
+      color: 'gray',
+      explanationMarkdown: 'The percentage of evaluations that resulted in "fail".',
+    };
+  }
+
   get falseNegativeEvaluations() {
     return this.allEvaluations.filter((evaluation) => {
       return evaluation.result === 'fail' && evaluation.trustedEvaluation?.result === 'pass';
@@ -99,6 +119,26 @@ export default class AccuracySection extends Component<Signature> {
     return this.allEvaluations.filter((evaluation) => {
       return evaluation.result === 'fail' && evaluation.trustedEvaluation;
     });
+  }
+
+  get passRatePercentage() {
+    if (this.allEvaluations.length === 0) {
+      return null;
+    }
+
+    const passCount = this.allEvaluations.filter((e) => e.result === 'pass').length;
+
+    return parseFloat(((100 * passCount) / this.allEvaluations.length).toFixed(2));
+  }
+
+  get passRateStatistic(): CourseStageParticipationAnalysisStatistic {
+    return {
+      title: 'Pass Rate',
+      label: 'passes',
+      value: this.passRatePercentage !== null ? `${this.passRatePercentage}%` : 'No evaluations',
+      color: 'gray',
+      explanationMarkdown: 'The percentage of evaluations that resulted in "pass".',
+    };
   }
 
   get positiveEvaluationsWithTrustedEvaluation() {
