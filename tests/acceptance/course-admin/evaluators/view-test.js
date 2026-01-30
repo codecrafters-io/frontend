@@ -18,6 +18,7 @@ module('Acceptance | course-admin | evaluators | view-test', function (hooks) {
     this.server.create('community-solution-evaluator', {
       slug: 'relevance',
       promptTemplate: 'Is the code example relevant to the prompt?',
+      status: 'draft',
     });
   });
 

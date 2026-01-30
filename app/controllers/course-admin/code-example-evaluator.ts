@@ -6,6 +6,7 @@ import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { task } from 'ember-concurrency';
 
 export default class CodeExampleEvaluatorController extends Controller {
   declare model: CodeExampleEvaluatorRouteModel;
@@ -56,4 +57,10 @@ export default class CodeExampleEvaluatorController extends Controller {
   handleRequestedLanguageChange(language: LanguageModel) {
     this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
+
+  updateSlugTask = task({ drop: true }, async (newSlug: string): Promise<void> => {
+    this.model.evaluator.slug = newSlug;
+    await this.model.evaluator.save();
+    await this.router.replaceWith('course-admin.code-example-evaluator', this.model.course.slug, this.model.evaluator.slug).followRedirects();
+  });
 }
