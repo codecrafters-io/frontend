@@ -8,4 +8,11 @@ export default function (server) {
 
     return schema.communitySolutionEvaluators.create(attrs);
   });
+
+  server.patch('/community-solution-evaluators/:id', function (schema, request) {
+    const evaluator = schema.communitySolutionEvaluators.find(request.params.id);
+    const attrs = this.normalizedRequestAttrs();
+
+    return evaluator.update(attrs);
+  });
 }

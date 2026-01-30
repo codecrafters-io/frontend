@@ -1,9 +1,12 @@
-<div class="rounded-lg bg-white px-4 py-5 border border-gray-200 sm:p-6">
+<div class="rounded-lg bg-white dark:bg-gray-925 px-4 py-5 border border-gray-200 dark:border-white/5 sm:p-6">
   <div class="inline-flex items-center gap-1 group/statistic-card-title">
-    <span class="truncate font-medium text-gray-600">
+    <span class="truncate font-medium text-gray-600 dark:text-gray-300">
       {{@statistic.title}}
     </span>
-    {{svg-jar "question-mark-circle" class="w-4 h-4 text-gray-300 group-hover/statistic-card-title:text-gray-400"}}
+    {{svg-jar
+      "question-mark-circle"
+      class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover/statistic-card-title:text-gray-400 dark:group-hover/statistic-card-title:text-gray-600"
+    }}
     <EmberTooltip>
       <div class="prose prose-sm prose-invert text-white">
         {{markdown-to-html @statistic.explanationMarkdown}}

@@ -1,25 +1,39 @@
-<div>
+<div data-test-prompt-template-section>
   <div class="mb-6">
-    <div class="text-gray-900 font-semibold mb-1 text-lg">Prompt Template</div>
-    <div class="text-gray-400 text-xs">
+    <div class="text-gray-900 dark:text-gray-100 font-semibold mb-1 text-lg">Prompt Template</div>
+    <div class="text-gray-400 dark:text-gray-500 text-xs">
       Must start with a "&lt;criteria&gt; ... &lt;/criteria&gt;" section. Can be followed by additional instructions as a markdown list.
     </div>
   </div>
 
   <Textarea
     @value={{@evaluator.promptTemplate}}
-    class="font-mono text-sm rounded-sm px-3 py-2 placeholder-gray-300 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 shadow-xs w-full"
+    class="font-mono text-sm rounded-sm px-3 py-2 placeholder-gray-300 dark:placeholder-gray-600 focus:outline-hidden focus:ring-2 focus:ring-teal-500 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 shadow-xs w-full"
     placeholder="Learn about various network protocols and the TCP/IP model."
     rows="3"
     id="prompt_template"
     required
+    disabled={{not @evaluator.isDraft}}
     {{autoresize @evaluator.promptTemplate}}
     {{markdown-input}}
+    {{on "input" this.handlePromptTemplateInput}}
   />
 
-  <PrimaryButton @isDisabled={{true}} class="flex! mt-4">
-    Update Prompt Template
+  {{#if @evaluator.isDraft}}
+    <PrimaryButtonWithSpinner
+      data-test-update-prompt-template-button
+      @isDisabled={{or (not this.hasUnsavedChanges) this.updatePromptTemplateTask.isRunning}}
+      @shouldShowSpinner={{this.updatePromptTemplateTask.isRunning}}
+      {{on "click" (perform this.updatePromptTemplateTask)}}
+      class="mt-4"
+    >
+      Update Prompt Template
+    </PrimaryButtonWithSpinner>
+  {{else}}
+    <PrimaryButton data-test-update-prompt-template-button @isDisabled={{true}} class="flex! mt-4">
+      Update Prompt Template
 
-    <EmberTooltip @text="Not supported yet" />
-  </PrimaryButton>
+      <EmberTooltip @text="Only available for draft evaluators" />
+    </PrimaryButton>
+  {{/if}}
 </div>

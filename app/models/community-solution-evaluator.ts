@@ -16,4 +16,9 @@ export default class CommunitySolutionEvaluatorModel extends Model {
 
   @attr('string') declare slug: string;
   @attr('string') declare promptTemplate: string;
+  @attr('string') declare status: 'draft' | 'live';
+
+  get isDraft() {
+    return this.status === 'draft';
+  }
 }
