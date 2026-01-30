@@ -59,8 +59,15 @@ export default class CodeExampleEvaluatorController extends Controller {
   }
 
   updateSlugTask = task({ drop: true }, async (newSlug: string): Promise<void> => {
+    const previousSlug = this.model.evaluator.slug;
     this.model.evaluator.slug = newSlug;
-    await this.model.evaluator.save();
-    await this.router.replaceWith('course-admin.code-example-evaluator', this.model.course.slug, this.model.evaluator.slug).followRedirects();
+
+    try {
+      await this.model.evaluator.save();
+      await this.router.replaceWith('course-admin.code-example-evaluator', this.model.course.slug, this.model.evaluator.slug).followRedirects();
+    } catch (error) {
+      this.model.evaluator.slug = previousSlug;
+      throw error;
+    }
   });
 }
