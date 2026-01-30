@@ -1,62 +1,44 @@
 import Component from '@glimmer/component';
 import Store from '@ember-data/store';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
+    onClose?: () => void;
   };
 }
 
 export default class TrustedEvaluationTab extends Component<Signature> {
   @service declare store: Store;
 
-  get options(): { value: 'none' | 'pass' | 'fail'; isSelected: boolean; text: string }[] {
-    return [
-      {
-        value: 'none',
-        isSelected: !this.trustedEvaluation,
-        text: 'None',
-      },
-      {
-        value: 'pass',
-        isSelected: this.trustedEvaluation?.result == 'pass',
-        text: 'Pass',
-      },
-      {
-        value: 'fail',
-        isSelected: this.trustedEvaluation?.result == 'fail',
-        text: 'Fail',
-      },
-    ];
-  }
-
   get trustedEvaluation() {
     return this.args.evaluation.trustedEvaluation;
   }
 
-  @action
-  async handleSelect(value: 'none' | 'pass' | 'fail') {
-    if (value == 'none') {
-      this.trustedEvaluation?.destroyRecord();
-    } else {
-      let record = this.trustedEvaluation;
+  destroyTrustedEvaluationTask = task({ drop: true }, async (): Promise<void> => {
+    await this.trustedEvaluation?.destroyRecord();
+  });
 
-      if (!record) {
-        record = this.store.createRecord('trusted-community-solution-evaluation', {
-          communitySolution: this.args.evaluation.communitySolution,
-          evaluator: this.args.evaluation.evaluator,
-        });
-      }
+  upsertTrustedEvaluationTask = task({ drop: true }, async (value: 'pass' | 'fail'): Promise<void> => {
+    let record = this.trustedEvaluation;
 
-      record!.result = value;
-      await record!.save();
+    if (!record) {
+      record = this.store.createRecord('trusted-community-solution-evaluation', {
+        communitySolution: this.args.evaluation.communitySolution,
+        evaluator: this.args.evaluation.evaluator,
+      });
     }
-  }
+
+    record!.result = value;
+    await record!.save();
+
+    this.args.onClose?.();
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

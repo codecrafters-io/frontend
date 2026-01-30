@@ -1,0 +1,40 @@
+<ConceptAdmin::FormSection
+  @title="Context"
+  @description="Whether criteria applies to highlighted lines only or all contents."
+  data-test-context-section
+>
+  <:content>
+    <div class="flex items-center gap-3">
+      {{#if @evaluator.isDraft}}
+        <Toggle
+          @isDisabled={{this.updateContextTask.isRunning}}
+          @isOn={{this.isUsingChangedFiles}}
+          {{on "click" this.handleToggle}}
+          data-test-context-toggle
+        />
+      {{else}}
+        <Toggle @isOn={{this.isUsingChangedFiles}} @isDisabled={{true}} data-test-context-toggle />
+      {{/if}}
+
+      <span class="text-sm text-gray-700 dark:text-gray-300 {{if this.updateContextTask.isRunning 'animate-pulse'}}">
+        Only validate highlighted lines
+      </span>
+    </div>
+
+    <div class="prose dark:prose-invert prose-xs mt-4 {{if this.updateContextTask.isRunning 'animate-pulse'}}">
+      <p class="text-gray-600 dark:text-gray-400">
+        {{#if this.isUsingChangedFiles}}
+          The criteria will only be applied to highlighted lines.
+        {{else}}
+          The criteria will be applied to all lines (within files that contain highlighted lines).
+        {{/if}}
+      </p>
+    </div>
+
+    {{#unless @evaluator.isDraft}}
+      <p class="text-xs text-gray-400 dark:text-gray-600 mt-2">
+        Only available for draft evaluators
+      </p>
+    {{/unless}}
+  </:content>
+</ConceptAdmin::FormSection>

@@ -22,11 +22,16 @@
 
     <div>
       <CourseAdmin::CodeExampleEvaluatorPage::PromptTemplateSection @evaluator={{@model.evaluator}} />
+      <CourseAdmin::CodeExampleEvaluatorPage::ContextSection @evaluator={{@model.evaluator}} />
 
       <div class="py-3 border-b border-gray-200 dark:border-white/5 mb-6 mt-8 flex items-center justify-between">
         <div class="text-gray-900 dark:text-gray-100 font-semibold mb-1 text-2xl">Results</div>
 
         <div class="flex items-center gap-3">
+          <SecondaryButton {{on "click" (perform this.evaluateSolutionsTask)}}>
+            Evaluate solutions
+          </SecondaryButton>
+
           <CourseStageDropdown
             @course={{@model.course}}
             @selectedCourseStage={{this.currentCourseStage}}

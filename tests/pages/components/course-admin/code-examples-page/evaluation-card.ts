@@ -1,4 +1,4 @@
-import { clickOnText, text } from 'ember-cli-page-object';
+import { clickOnText, clickable, isPresent, text } from 'ember-cli-page-object';
 
 export default {
   clickOnTabHeader: clickOnText('[data-test-tab-header]'),
@@ -6,7 +6,12 @@ export default {
 
   trustedEvaluationTab: {
     scope: '[data-test-trusted-evaluation-tab]',
-    clickOnValue: clickOnText('[data-test-selectable-item]'),
-    selectedItemText: text('[data-test-selectable-item].border-teal-500'),
+    clickOnCorrectButton: clickable('[data-test-correct-button]'),
+    clickOnWrongButton: clickable('[data-test-wrong-button]'),
+    clickOnEditTrustedEvaluationButton: clickable('[data-test-edit-trusted-evaluation-button]'),
+    hasTrustedEvaluation: isPresent('[data-test-trusted-evaluation-message]'),
+    trustedEvaluationMatchesText: text('[data-test-trusted-evaluation-message]'),
+    trustedResult: text('[data-test-trusted-result]'),
+    evaluationResult: text('[data-test-evaluation-result]'),
   },
 };
