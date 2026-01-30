@@ -34,4 +34,8 @@ export default class CommunitySolutionEvaluatorModel extends Model {
 CommunitySolutionEvaluatorModel.prototype.regenerateAllEvaluations = memberAction({
   path: 'regenerate_all_evaluations',
   type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
 });

@@ -67,7 +67,7 @@ export default class AccuracySection extends Component<Signature> {
       title: 'False Negative Rate',
       label: 'false negatives',
       value: this.falseNegativePercentage !== null ? `${this.falseNegativePercentage}%` : null,
-      color: this.falseNegativePercentage !== null && this.falseNegativePercentage < 10 ? 'green' : 'red',
+      color: this.falseNegativePercentage === null ? 'gray' : this.falseNegativePercentage < 10 ? 'green' : 'red',
       explanationMarkdown:
         this.falseNegativePercentage !== null
           ? `The percentage of "fail" evaluations that did not match human values.\n\nTotal datapoints: ${this.negativeEvaluationsWithTrustedEvaluation.length}`
@@ -95,7 +95,7 @@ export default class AccuracySection extends Component<Signature> {
       title: 'False Positive Rate',
       label: 'false positives',
       value: this.falsePositivePercentage !== null ? `${this.falsePositivePercentage}%` : null,
-      color: this.falsePositivePercentage !== null && this.falsePositivePercentage < 10 ? 'green' : 'red',
+      color: this.falsePositivePercentage === null ? 'gray' : this.falsePositivePercentage < 10 ? 'green' : 'red',
       explanationMarkdown:
         this.falsePositivePercentage !== null
           ? `The percentage of "pass" evaluations that did not match human values.\n\nTotal datapoints: ${this.positiveEvaluationsWithTrustedEvaluation.length}`
