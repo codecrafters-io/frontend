@@ -61,7 +61,7 @@ export default class CodeExampleEvaluatorController extends Controller {
     this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
 
-  evaluateSolutionsTask = task({ drop: true }, async (): Promise<void> => {
+  evaluateMoreSolutionsTask = task({ drop: true }, async (): Promise<void> => {
     const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;
 
     await dummyRecord.generate({
