@@ -1,14 +1,15 @@
 import Component from '@glimmer/component';
 import Store from '@ember-data/store';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
-import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
+    onClose?: () => void;
   };
 }
 
@@ -39,10 +40,9 @@ export default class TrustedEvaluationTab extends Component<Signature> {
     return this.args.evaluation.trustedEvaluation;
   }
 
-  @action
-  async handleSelect(value: 'none' | 'pass' | 'fail') {
+  selectTask = task({ drop: true }, async (value: 'none' | 'pass' | 'fail'): Promise<void> => {
     if (value == 'none') {
-      this.trustedEvaluation?.destroyRecord();
+      await this.trustedEvaluation?.destroyRecord();
     } else {
       let record = this.trustedEvaluation;
 
@@ -55,8 +55,10 @@ export default class TrustedEvaluationTab extends Component<Signature> {
 
       record!.result = value;
       await record!.save();
+
+      this.args.onClose?.();
     }
-  }
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {

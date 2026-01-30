@@ -15,17 +15,17 @@
             Unsure
           </Pill>
         {{else}}
-          <div class="text-red-500 font-bold">
+          <div class="text-red-500 dark:text-red-400 font-bold">
             Unknown ({{@evaluation.result}})
           </div>
         {{/if}}
       </div>
 
-      <div class="text-sm text-gray-600 ml-1.5 mr-1">
+      <div class="text-sm text-gray-600 dark:text-gray-300 ml-1.5 mr-1">
         for
       </div>
 
-      <span class="text-sm text-gray-700 font-semibold">
+      <span class="text-sm text-gray-700 dark:text-gray-200 font-semibold">
         {{@evaluation.evaluator.slug}}
       </span>
 
@@ -41,7 +41,7 @@
     </div>
     <div class="flex items-center gap-3">
       <button
-        class="shrink-0 border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-colors px-2 py-1.5 text-gray-700 font-bold text-xs rounded-sm flex items-center
+        class="shrink-0 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-colors px-2 py-1.5 text-gray-700 dark:text-gray-200 font-bold text-xs rounded-sm flex items-center
           {{if @isExpanded 'opacity-100' 'opacity-0'}}"
         type="button"
         {{on "click" @onCloseButtonClick}}
@@ -57,7 +57,7 @@
         Regenerating...
       </Pill>
     {{/if}}
-    <span class="text-xs text-gray-400">
+    <span class="text-xs text-gray-400 dark:text-gray-500">
       {{date-from-now @evaluation.updatedAt}}
     </span>
   </div>

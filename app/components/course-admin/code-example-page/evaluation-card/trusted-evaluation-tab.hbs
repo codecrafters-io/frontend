@@ -3,7 +3,7 @@
     {{#each this.options as |option|}}
       <WelcomePage::OnboardingSurveyWizard::SelectableItem
         @isSelected={{option.isSelected}}
-        {{on "click" (fn this.handleSelect option.value)}}
+        {{on "click" (perform this.selectTask option.value)}}
         data-test-selectable-item
       >
         {{option.text}}
@@ -11,7 +11,7 @@
     {{/each}}
   </div>
 
-  <div class="prose">
+  <div class="prose dark:prose-invert">
     {{#if this.trustedEvaluation}}
       {{#if (eq this.trustedEvaluation.result @evaluation.result)}}
         <p>
