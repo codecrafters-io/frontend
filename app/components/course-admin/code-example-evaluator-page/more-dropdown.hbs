@@ -1,0 +1,17 @@
+<div class="flex items-center justify-center">
+  <BasicDropdown @horizontalPosition="right" as |dd|>
+    <dd.Trigger>
+      {{svg-jar "dots-horizontal" class=(concat "w-4 transform transition-all " (if dd.isOpen "text-teal-500" "text-gray-500"))}}
+    </dd.Trigger>
+    <dd.Content>
+      <div class="py-2 border border-gray-200 dark:border-white/10 rounded-sm shadow-sm bg-white dark:bg-gray-925" data-test-more-dropdown-content>
+        <DropdownLink
+          @text="Evaluate more solutions"
+          @icon="plus-circle"
+          {{on "click" (fn this.handleEvaluateMoreSolutionsClick dd.actions)}}
+          data-test-evaluate-more-solutions-link
+        />
+      </div>
+    </dd.Content>
+  </BasicDropdown>
+</div>
