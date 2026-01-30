@@ -7,6 +7,7 @@ import type RouterService from '@ember/routing/router-service';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type TrustedCommunitySolutionEvaluationModel from 'codecrafters-frontend/models/trusted-community-solution-evaluation';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type CodeExampleEvaluatorRouteModel = {
   course: CourseModel;
@@ -21,8 +22,8 @@ export type CodeExampleEvaluatorRouteModel = {
 };
 
 export default class CodeExampleEvaluatorRoute extends BaseRoute {
-  @service declare store: Store;
   @service declare router: RouterService;
+  @service declare store: Store;
 
   queryParams = {
     languages: {
@@ -47,6 +48,10 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
     }
 
     return filters;
+  }
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
   }
 
   async loadEvaluations(

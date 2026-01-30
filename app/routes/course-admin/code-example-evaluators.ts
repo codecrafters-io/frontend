@@ -3,6 +3,7 @@ import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type CodeExampleEvaluatorsRouteModel = {
   course: CourseModel;
@@ -11,6 +12,10 @@ export type CodeExampleEvaluatorsRouteModel = {
 
 export default class CodeExampleEvaluatorsRoute extends BaseRoute {
   @service declare store: Store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   async model(): Promise<CodeExampleEvaluatorsRouteModel> {
     // @ts-expect-error modelFor not typed

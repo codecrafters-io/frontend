@@ -1,7 +1,9 @@
 import { waitUntil } from '@ember/test-helpers';
-import { collection, create, text, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, text, visitable } from 'ember-cli-page-object';
 
 export default create({
+  clickOnCreateEvaluatorButton: clickable('[data-test-create-evaluator-button]'),
+
   clickOnEvaluator: async function (evaluatorSlug) {
     await waitUntil(() => {
       return [...this.evaluators].find((evaluator) => evaluator.slug === evaluatorSlug);
