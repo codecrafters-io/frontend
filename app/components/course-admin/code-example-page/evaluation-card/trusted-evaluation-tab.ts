@@ -9,6 +9,7 @@ export interface Signature {
 
   Args: {
     evaluation: CommunitySolutionEvaluationModel;
+    onClose?: () => void;
   };
 }
 
@@ -55,6 +56,8 @@ export default class TrustedEvaluationTab extends Component<Signature> {
 
       record!.result = value;
       await record!.save();
+
+      this.args.onClose?.();
     }
   }
 }
