@@ -1,25 +1,17 @@
 <div ...attributes data-test-trusted-evaluation-tab>
-  <div class="flex items-center flex-wrap gap-3 mb-6">
-    {{#each this.options as |option|}}
-      <WelcomePage::OnboardingSurveyWizard::SelectableItem
-        @isSelected={{option.isSelected}}
-        {{on "click" (fn this.handleSelect option.value)}}
-        data-test-selectable-item
-      >
-        {{option.text}}
-      </WelcomePage::OnboardingSurveyWizard::SelectableItem>
-    {{/each}}
-  </div>
-
-  <div class="prose">
-    {{#if this.trustedEvaluation}}
+  {{#if (and this.trustedEvaluation (not this.upsertTrustedEvaluationTask.isRunning))}}
+    <div class="prose dark:prose-invert">
       {{#if (eq this.trustedEvaluation.result @evaluation.result)}}
         <p>
-          ✅ This evaluation matches the trusted evaluation.
+          This evaluation
+          <span class="text-teal-500 font-semibold">matches</span>
+          the trusted evaluation.
         </p>
       {{else}}
         <p>
-          ❌ This evaluation does not match the trusted evaluation.
+          This evaluation
+          <span class="text-red-500 font-semibold">does not match</span>
+          the trusted evaluation.
         </p>
 
         <ul>
@@ -33,10 +25,42 @@
           </li>
         </ul>
       {{/if}}
-    {{else}}
-      <p>
-        This solution doesn't have a trusted evaluation yet.
-      </p>
-    {{/if}}
-  </div>
+    </div>
+
+    <TertiaryButton
+      @isDisabled={{this.destroyTrustedEvaluationTask.isRunning}}
+      {{on "click" (perform this.destroyTrustedEvaluationTask)}}
+      class="mt-6"
+    >
+      Edit Trusted Evaluation
+    </TertiaryButton>
+  {{else}}
+    <div class="prose dark:prose-invert mb-6">
+      Is the
+      <b class="uppercase">{{@evaluation.result}}</b>
+      evaluation correct?
+    </div>
+
+    <div class="flex items-center flex-wrap gap-3 mb-6">
+      <PrimaryButtonWithSpinner
+        @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
+        {{on "click" (perform this.upsertTrustedEvaluationTask @evaluation.result)}}
+      >
+        <div class="flex items-center gap-2">
+          {{svg-jar "check" class="w-4 h-4"}}
+          <span>Correct</span>
+        </div>
+      </PrimaryButtonWithSpinner>
+
+      <PrimaryButtonWithSpinner
+        @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
+        {{on "click" (perform this.upsertTrustedEvaluationTask @evaluation.oppositeResult)}}
+      >
+        <div class="flex items-center gap-2">
+          {{svg-jar "x" class="w-4 h-4"}}
+          <span>Wrong</span>
+        </div>
+      </PrimaryButtonWithSpinner>
+    </div>
+  {{/if}}
 </div>

@@ -1,0 +1,29 @@
+<ConceptAdmin::FormSection
+  @title="Context"
+  @description="Choose whether to evaluate using the diff (changes only) or the full file contents."
+  data-test-context-section
+>
+  <:content>
+    <div class="flex items-center gap-4">
+      <span class="text-sm text-gray-600 dark:text-gray-400 {{unless this.isUsingChangedFiles 'font-semibold text-gray-900 dark:text-gray-100'}}">
+        Diff
+      </span>
+
+      {{#if @evaluator.isDraft}}
+        <Toggle @isOn={{this.isUsingChangedFiles}} {{on "click" this.handleToggle}} data-test-context-toggle />
+      {{else}}
+        <Toggle @isOn={{this.isUsingChangedFiles}} @isDisabled={{true}} data-test-context-toggle />
+      {{/if}}
+
+      <span class="text-sm text-gray-600 dark:text-gray-400 {{if this.isUsingChangedFiles 'font-semibold text-gray-900 dark:text-gray-100'}}">
+        Full File Contents
+      </span>
+    </div>
+
+    {{#unless @evaluator.isDraft}}
+      <p class="text-xs text-gray-400 dark:text-gray-600 mt-2">
+        Only available for draft evaluators
+      </p>
+    {{/unless}}
+  </:content>
+</ConceptAdmin::FormSection>

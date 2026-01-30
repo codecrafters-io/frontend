@@ -6,6 +6,7 @@ import { tracked } from '@glimmer/tracking';
 import type { Signature as TabsSignature } from 'codecrafters-frontend/components/tabs';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
+import type Store from '@ember-data/store';
 
 export interface Signature {
   Element: HTMLDivElement;
@@ -17,6 +18,7 @@ export interface Signature {
 
 export default class EvaluationCard extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
+  @service declare store: Store;
 
   @tracked isExpanded = false;
 
@@ -52,6 +54,11 @@ export default class EvaluationCard extends Component<Signature> {
     ];
 
     return allTabs.filter((tab) => this.accessibleTabsSlugs.includes(tab.slug));
+  }
+
+  @action
+  async handleActionCableMessage() {
+    await this.store.findRecord('community-solution-evaluation', this.args.evaluation.id, { reload: true });
   }
 
   @action
