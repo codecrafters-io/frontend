@@ -48,6 +48,7 @@
         </div>
 
         <PrimaryButtonWithSpinner
+          @isDisabled={{this.createEvaluatorTask.isRunning}}
           @shouldShowSpinner={{this.createEvaluatorTask.isRunning}}
           data-test-create-evaluator-button
           {{on "click" this.handleCreateEvaluatorButtonClick}}

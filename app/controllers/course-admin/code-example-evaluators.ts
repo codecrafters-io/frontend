@@ -13,7 +13,7 @@ export default class CodeExampleEvaluatorsController extends Controller {
   @service declare router: RouterService;
   @service declare store: Store;
 
-  createEvaluatorTask = task({ keepLatest: true }, async (): Promise<void> => {
+  createEvaluatorTask = task({ drop: true }, async (): Promise<void> => {
     const evaluator = this.store.createRecord('community-solution-evaluator', {});
 
     await evaluator.save();
