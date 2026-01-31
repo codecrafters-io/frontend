@@ -11,6 +11,7 @@ import Model, { attr, hasMany } from '@ember-data/model';
 import TimeService from 'codecrafters-frontend/services/time';
 import UserModel from 'codecrafters-frontend/models/user';
 import bittorrentLogo from '/assets/images/challenge-logos/challenge-logo-bittorrent.svg';
+import claudeCodeLogo from '/assets/images/challenge-logos/challenge-logo-claude-code.svg';
 import dnsServerLogo from '/assets/images/challenge-logos/challenge-logo-dns-server.svg';
 import dockerLogo from '/assets/images/challenge-logos/challenge-logo-docker.svg';
 import gitLogo from '/assets/images/challenge-logos/challenge-logo-git.svg';
@@ -153,6 +154,7 @@ export default class CourseModel extends Model {
     return (
       {
         bittorrent: bittorrentLogo,
+        'claude-code': claudeCodeLogo,
         'dns-server': dnsServerLogo,
         docker: dockerLogo,
         git: gitLogo,
