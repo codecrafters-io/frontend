@@ -1,3 +1,14 @@
 <div class="prose prose-sm dark:prose-invert">
   {{markdown-to-html this.markdownContent}}
+
+  {{#each @solution.evaluations as |evaluation|}}
+    <div
+      {{on-action-cable-message
+        (perform this.refreshEvaluationsTask)
+        channel="CommunitySolutionEvaluationChannel"
+        args=(hash community_solution_evaluation_id=evaluation.id)
+      }}
+    >
+    </div>
+  {{/each}}
 </div>

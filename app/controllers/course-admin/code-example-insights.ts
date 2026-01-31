@@ -4,10 +4,13 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import type RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
+import type Store from '@ember-data/store';
 import type { CodeExampleInsightsRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-insights';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import * as Sentry from '@sentry/ember';
@@ -17,6 +20,7 @@ export default class CodeExampleInsightsController extends Controller {
 
   @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
+  @service declare store: Store;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
   @tracked sort_mode: 'newest' | 'shortest_diff' | 'shortest_highlights' = 'newest';
@@ -85,4 +89,20 @@ export default class CodeExampleInsightsController extends Controller {
   setSortMode(mode: 'newest' | 'shortest_diff' | 'shortest_highlights') {
     this.router.transitionTo({ queryParams: { sort_mode: mode } });
   }
+
+  runEvaluatorsForAllSolutionsTask = task({ drop: true }, async (): Promise<void> => {
+    const solutionIds = this.model.solutions.map((solution) => solution.id);
+
+    if (solutionIds.length === 0) {
+      return;
+    }
+
+    const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;
+
+    await dummyRecord.generateForSolutions({
+      solution_ids: solutionIds,
+    });
+
+    dummyRecord.unloadRecord();
+  });
 }

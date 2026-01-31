@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import type CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/community-course-stage-solution';
 import { capitalize } from '@ember/string';
+import { task } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -18,12 +19,18 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
       const results: string[] = [];
 
       for (const evaluation of this.args.solution.evaluations) {
+        let icon = evaluation.result === 'pass' ? '✅' : evaluation.result === 'fail' ? '❌' : '⚠️';
+
+        if (evaluation.requiresRegeneration) {
+          icon = '🚧';
+        }
+
         if (evaluation.result === 'pass') {
-          results.push(`✅ Passed \`${evaluation.evaluator.slug}\` check`);
+          results.push(`${icon} Passed \`${evaluation.evaluator.slug}\` check`);
         } else if (evaluation.result === 'fail') {
-          results.push(`❌ Failed \`${evaluation.evaluator.slug}\` check`);
+          results.push(`${icon} Failed \`${evaluation.evaluator.slug}\` check`);
         } else {
-          results.push(`⚠️ ${evaluation.result} \`${evaluation.evaluator.slug}\` check`);
+          results.push(`${icon} ${evaluation.result} \`${evaluation.evaluator.slug}\` check`);
         }
 
         if (evaluation.evaluator.isDraft) {
@@ -114,6 +121,10 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
   get verificationAgainstLatestTesterVersion() {
     return this.args.solution.verifications.find((v) => v.courseTesterVersion === this.latestTesterVersion) ?? null;
   }
+
+  refreshEvaluationsTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await Promise.all(this.args.solution.evaluations.map((evaluation) => evaluation.reload()));
+  });
 }
 
 declare module '@glint/environment-ember-loose/registry' {
