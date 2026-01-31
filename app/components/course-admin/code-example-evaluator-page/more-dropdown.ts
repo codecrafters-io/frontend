@@ -6,6 +6,7 @@ interface Signature {
 
   Args: {
     onEvaluateMoreSolutionsClick: () => void;
+    onRegenerateAllEvaluationsClick: () => void;
   };
 }
 
@@ -13,6 +14,12 @@ export default class MoreDropdown extends Component<Signature> {
   @action
   handleEvaluateMoreSolutionsClick(dropdownActions: { close: () => void }) {
     this.args.onEvaluateMoreSolutionsClick();
+    dropdownActions.close();
+  }
+
+  @action
+  handleRegenerateAllEvaluationsClick(dropdownActions: { close: () => void }) {
+    this.args.onRegenerateAllEvaluationsClick();
     dropdownActions.close();
   }
 }

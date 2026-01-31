@@ -73,6 +73,10 @@ export default class CodeExampleEvaluatorController extends Controller {
     dummyRecord.unloadRecord();
   });
 
+  regenerateAllEvaluationsTask = task({ drop: true }, async (): Promise<void> => {
+    await this.model.evaluator.regenerateAllEvaluations({});
+  });
+
   updateSlugTask = task({ drop: true }, async (newSlug: string): Promise<void> => {
     this.model.evaluator.slug = newSlug;
     await this.model.evaluator.save();
