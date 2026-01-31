@@ -13,7 +13,10 @@
           data-test-context-toggle
         />
       {{else}}
-        <Toggle @isOn={{this.isUsingHighlightedLines}} @isDisabled={{true}} data-test-context-toggle />
+        <span>
+          <Toggle @isOn={{this.isUsingHighlightedLines}} @isDisabled={{true}} data-test-context-toggle />
+          <EmberTooltip @text="Only available for draft evaluators" />
+        </span>
       {{/if}}
 
       <span class="text-sm text-gray-700 dark:text-gray-300 {{if this.updateContextTask.isRunning 'animate-pulse'}}">
@@ -30,11 +33,5 @@
         {{/if}}
       </p>
     </div>
-
-    {{#unless @evaluator.isDraft}}
-      <p class="text-xs text-gray-400 dark:text-gray-600 mt-2">
-        Only available for draft evaluators
-      </p>
-    {{/unless}}
   </:content>
 </ConceptAdmin::FormSection>
