@@ -34,10 +34,9 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
     },
   };
 
-  buildContextFilters(course: CourseModel, languageSlugsFilter: string[], courseStageSlugsFilter: string[]): Record<string, string> {
-    const filters: Record<string, string> = {
-      course_id: course.id,
-    };
+  buildContextFilters(_course: CourseModel, languageSlugsFilter: string[], courseStageSlugsFilter: string[]): Record<string, string> {
+    // TODO: Add a course_id filter if the evaluator is course-specific
+    const filters: Record<string, string> = {};
 
     if (languageSlugsFilter.length > 0) {
       filters['language_slugs'] = languageSlugsFilter.join(',');
