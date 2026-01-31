@@ -18,6 +18,7 @@
         </h3>
       </div>
       <div class="flex items-center gap-3">
+        <CourseAdmin::CodeExampleInsights::MoreDropdown @onReRunEvaluatorsClick={{perform this.runEvaluatorsForAllSolutionsTask}} />
         <CourseStageDropdown
           @course={{@model.courseStage.course}}
           @selectedCourseStage={{@model.courseStage}}
