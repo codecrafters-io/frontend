@@ -64,7 +64,7 @@ export default class CodeExampleEvaluatorController extends Controller {
   evaluateMoreSolutionsTask = task({ drop: true }, async (): Promise<void> => {
     const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;
 
-    await dummyRecord.generate({
+    await dummyRecord.generateForEvaluator({
       evaluator_id: this.model.evaluator.id,
       course_stage_id: this.currentCourseStage?.id,
       language_id: this.currentLanguage?.id,

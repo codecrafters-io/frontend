@@ -18,6 +18,14 @@ export default function (server) {
     return evaluation;
   });
 
+  server.post('/community-solution-evaluations/generate_for_evaluator', (schema) => {
+    return schema.communitySolutionEvaluations.all();
+  });
+
+  server.post('/community-solution-evaluations/generate_for_solutions', (schema) => {
+    return schema.communitySolutionEvaluations.all();
+  });
+
   server.get('/fake-community-solution-evaluation-logs', () => {
     return new Response(200, {}, 'Test log');
   });
