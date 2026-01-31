@@ -53,11 +53,13 @@ export default class MoreDropdown extends Component<Signature> {
   runEvaluatorsTask = task({ drop: true }, async (): Promise<void> => {
     const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;
 
-    await dummyRecord.generateForSolutions({
-      solution_ids: [this.args.solution.id],
-    });
-
-    dummyRecord.unloadRecord();
+    try {
+      await dummyRecord.generateForSolutions({
+        solution_ids: [this.args.solution.id],
+      });
+    } finally {
+      dummyRecord.unloadRecord();
+    }
   });
 }
 
