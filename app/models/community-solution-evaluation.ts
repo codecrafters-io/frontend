@@ -47,12 +47,22 @@ export default class CommunitySolutionEvaluationModel extends Model {
     return fetchFileContentsIfNeeded(this, this.promptFileUrl, 'promptFileContents', 'promptFileContentsSource');
   }
 
-  declare generate: (this: Model, payload: { evaluator_id: string; course_stage_id?: string; language_id?: string }) => Promise<void>;
+  declare generateForEvaluator: (this: Model, payload: { evaluator_id: string; course_stage_id?: string; language_id?: string }) => Promise<void>;
+  declare generateForSolutions: (this: Model, payload: { solution_ids: string[] }) => Promise<void>;
   declare regenerate: (this: Model, payload: unknown) => Promise<void>;
 }
 
-CommunitySolutionEvaluationModel.prototype.generate = collectionAction({
-  path: 'generate',
+CommunitySolutionEvaluationModel.prototype.generateForEvaluator = collectionAction({
+  path: 'generate_for_evaluator',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
+
+CommunitySolutionEvaluationModel.prototype.generateForSolutions = collectionAction({
+  path: 'generate_for_solutions',
   type: 'post',
 
   after(response) {
