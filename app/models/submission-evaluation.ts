@@ -9,8 +9,9 @@ export default class SubmissionEvaluationModel extends Model {
   @attr('string') declare logsFileUrl: string;
 
   @tracked logsFileContents: string | null = null;
+  @tracked logsFileContentsSource: string | null = null;
 
   async fetchLogsFileContentsIfNeeded(): Promise<void> {
-    return fetchFileContentsIfNeeded(this, 'logsFileUrl', 'logsFileContents');
+    return fetchFileContentsIfNeeded(this, this.logsFileUrl, 'logsFileContents', 'logsFileContentsSource');
   }
 }

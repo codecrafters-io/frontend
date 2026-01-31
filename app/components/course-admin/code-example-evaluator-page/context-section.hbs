@@ -8,12 +8,12 @@
       {{#if @evaluator.isDraft}}
         <Toggle
           @isDisabled={{this.updateContextTask.isRunning}}
-          @isOn={{this.isUsingChangedFiles}}
+          @isOn={{this.isUsingHighlightedLines}}
           {{on "click" this.handleToggle}}
           data-test-context-toggle
         />
       {{else}}
-        <Toggle @isOn={{this.isUsingChangedFiles}} @isDisabled={{true}} data-test-context-toggle />
+        <Toggle @isOn={{this.isUsingHighlightedLines}} @isDisabled={{true}} data-test-context-toggle />
       {{/if}}
 
       <span class="text-sm text-gray-700 dark:text-gray-300 {{if this.updateContextTask.isRunning 'animate-pulse'}}">
@@ -23,7 +23,7 @@
 
     <div class="prose dark:prose-invert prose-xs mt-4 {{if this.updateContextTask.isRunning 'animate-pulse'}}">
       <p class="text-gray-600 dark:text-gray-400">
-        {{#if this.isUsingChangedFiles}}
+        {{#if this.isUsingHighlightedLines}}
           The criteria will only be applied to highlighted lines.
         {{else}}
           The criteria will be applied to all lines (within files that contain highlighted lines).

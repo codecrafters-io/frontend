@@ -20,7 +20,9 @@ export default class CommunitySolutionEvaluationModel extends Model {
   @attr('date') declare updatedAt: Date;
 
   @tracked logsFileContents: string | null = null;
+  @tracked logsFileContentsSource: string | null = null; // The url used to fetch the logs file contents
   @tracked promptFileContents: string | null = null;
+  @tracked promptFileContentsSource: string | null = null; // The url used to fetch the prompt file contents
 
   get oppositeResult(): 'pass' | 'fail' {
     switch (this.result) {
@@ -38,11 +40,11 @@ export default class CommunitySolutionEvaluationModel extends Model {
   }
 
   async fetchLogsFileContentsIfNeeded(): Promise<void> {
-    return fetchFileContentsIfNeeded(this, 'logsFileUrl', 'logsFileContents');
+    return fetchFileContentsIfNeeded(this, this.logsFileUrl, 'logsFileContents', 'logsFileContentsSource');
   }
 
   async fetchPromptFileContentsIfNeeded(): Promise<void> {
-    return fetchFileContentsIfNeeded(this, 'promptFileUrl', 'promptFileContents');
+    return fetchFileContentsIfNeeded(this, this.promptFileUrl, 'promptFileContents', 'promptFileContentsSource');
   }
 
   declare generate: (this: Model, payload: { evaluator_id: string; course_stage_id?: string; language_id?: string }) => Promise<void>;

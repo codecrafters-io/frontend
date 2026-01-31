@@ -15,7 +15,7 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   @hasMany('trusted-community-solution-evaluation', { async: false, inverse: 'evaluator' })
   declare trustedEvaluations: TrustedCommunitySolutionEvaluationModel[];
 
-  @attr('string') declare context: 'diff' | 'changed_files';
+  @attr('string') declare context: 'highlighted_lines' | 'highlighted_files';
   @attr('string') declare promptTemplate: string;
   @attr('string') declare slug: string;
   @attr('string') declare status: 'draft' | 'live';

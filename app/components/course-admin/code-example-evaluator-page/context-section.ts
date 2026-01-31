@@ -12,8 +12,8 @@ export interface Signature {
 }
 
 export default class ContextSection extends Component<Signature> {
-  get isUsingChangedFiles() {
-    return this.args.evaluator.context === 'changed_files';
+  get isUsingHighlightedLines() {
+    return this.args.evaluator.context === 'highlighted_lines';
   }
 
   @action
@@ -22,7 +22,7 @@ export default class ContextSection extends Component<Signature> {
       return;
     }
 
-    this.args.evaluator.context = this.isUsingChangedFiles ? 'diff' : 'changed_files';
+    this.args.evaluator.context = this.isUsingHighlightedLines ? 'highlighted_files' : 'highlighted_lines';
     this.updateContextTask.perform();
   }
 
