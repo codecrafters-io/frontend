@@ -1,5 +1,6 @@
 import { service } from '@ember/service';
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 import Store from '@ember-data/store';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
@@ -15,6 +16,10 @@ export type ModelType = {
 
 export default class CodeExampleInsightsIndexRoute extends BaseRoute {
   @service declare store: Store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   queryParams = {
     language_slug: {

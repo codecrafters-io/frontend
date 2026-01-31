@@ -23,7 +23,11 @@ export default class CodeExampleInsightsMetadata extends Component<Signature> {
         } else if (evaluation.result === 'fail') {
           results.push(`❌ Failed \`${evaluation.evaluator.slug}\` check`);
         } else {
-          results.push(`⚠️ ${evaluation.result}ed \`${evaluation.evaluator.slug}\` check`);
+          results.push(`⚠️ ${evaluation.result} \`${evaluation.evaluator.slug}\` check`);
+        }
+
+        if (evaluation.evaluator.isDraft) {
+          results[results.length - 1] += ' (draft)';
         }
       }
 
