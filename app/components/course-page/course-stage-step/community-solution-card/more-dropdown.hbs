@@ -22,6 +22,12 @@
 
       {{#if (current-user-is-staff)}}
         <DropdownLink @text="Copy ID" @icon="clipboard-copy" {{on "click" (fn this.handleCopyIdLinkClick dd.actions)}} data-test-copy-id-link />
+        <DropdownLink
+          @text="Run evaluators"
+          @icon="play"
+          {{on "click" (fn this.handleRunEvaluatorsClick dd.actions)}}
+          data-test-run-evaluators-link
+        />
       {{/if}}
     </div>
   </dd.Content>
