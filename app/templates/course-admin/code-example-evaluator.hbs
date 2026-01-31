@@ -56,9 +56,9 @@
 
       <CourseAdmin::CodeExampleEvaluatorPage::EvaluationsSection
         @evaluator={{@model.evaluator}}
-        @passEvaluations={{@model.passEvaluations}}
-        @failEvaluations={{@model.failEvaluations}}
-        @unsureEvaluations={{@model.unsureEvaluations}}
+        @passEvaluations={{this.passEvaluations}}
+        @failEvaluations={{this.failEvaluations}}
+        @unsureEvaluations={{this.unsureEvaluations}}
         class="mt-8"
       />
     </div>
