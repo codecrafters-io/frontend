@@ -15,10 +15,10 @@ export default createPage({
   conceptCards: collection('[data-test-concept-card]', {
     actionText: text('[data-test-action-text]'),
     hasProgressBar: isPresent('[data-test-concept-card-progress]'),
+    hasProgressDonut: isPresent('[data-test-concept-card-progress-donut]'),
     hover: triggerable('mouseenter'),
     href: attribute('href'),
     progressText: text('[data-test-concept-card-progress-text]'),
-    progressBarStyle: attribute('style', '[data-test-concept-card-progress-bar]'),
     title: text('[data-test-concept-title]'),
 
     draftLabel: {
