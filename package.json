@@ -190,6 +190,7 @@
     "qunit": "^2.25.0",
     "qunit-assertions-extra": "^1.0",
     "qunit-dom": "^3.5.0",
+    "semver": "^7.7.3",
     "shiki": "^3.21.0",
     "sinon": "^21.0.1",
     "stylelint": "^17.0.0",
