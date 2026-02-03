@@ -218,7 +218,7 @@ export default class CourseModel extends Model {
   }
 
   get votableExtensionIdeas() {
-    return this.extensionIdeas.filter((idea) => !idea.developmentStatusIsReleased);
+    return this.extensionIdeas.filter((idea) => !idea.isArchived && !idea.developmentStatusIsReleased);
   }
 
   availableLanguageConfigurationsForUser(user: UserModel) {
