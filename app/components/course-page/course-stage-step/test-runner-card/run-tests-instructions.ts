@@ -30,7 +30,7 @@ export default class RunTestsInstructions extends Component<Signature> {
   get commandVariants(): CopyableTerminalCommandVariant[] {
     const cliVariant = {
       label: 'codecrafters cli',
-      commands: ['codecrafters test # Visit https://codecrafters.io/cli to install'],
+      commands: ['codecrafters submit # Visit https://codecrafters.io/cli to install'],
     };
 
     const gitVariant = {
