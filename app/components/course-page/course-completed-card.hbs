@@ -40,6 +40,24 @@
         {{markdown-to-html @repository.course.completionMessageMarkdown}}
       {{/if}}
     </div>
+
+    {{#if (gt @repository.course.extensionIdeas.length 0)}}
+      <div class="mt-4">
+        <div class="prose dark:prose-invert">
+          <p>
+            There are
+            {{@repository.course.extensionIdeas.length}}
+            extension ideas available for this challenge. Vote and let us know which ones we should build next!
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <PrimaryLinkButton @route="course-extension-ideas" @query={{hash course=@repository.course.slug}}>
+            Vote on extension ideas
+          </PrimaryLinkButton>
+        </div>
+      </div>
+    {{/if}}
   </:content>
 </CoursePage::InstructionsCard>
 
