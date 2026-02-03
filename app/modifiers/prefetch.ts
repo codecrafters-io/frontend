@@ -2,17 +2,16 @@
 // This allows the browser to fetch the resource in the background, improving load times
 // when the user navigates to the URL.
 //
-// Usage: <a href={{url}} {{prefetch-url url}}></a>
+// The URL is automatically extracted from the element's href attribute.
+// Usage: <a href={{url}} {{prefetch}}></a>
 import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
 
 interface Signature {
-  Args: {
-    Positional: [string | undefined];
-  };
+  Element: HTMLAnchorElement;
 }
 
-function cleanup(instance: PrefetchUrlModifier) {
+function cleanup(instance: PrefetchModifier) {
   if (instance.linkElement && instance.linkElement.parentNode) {
     instance.linkElement.parentNode.removeChild(instance.linkElement);
   }
@@ -20,11 +19,13 @@ function cleanup(instance: PrefetchUrlModifier) {
   instance.linkElement = null;
 }
 
-export default class PrefetchUrlModifier extends Modifier<Signature> {
+export default class PrefetchModifier extends Modifier<Signature> {
   linkElement: HTMLLinkElement | null = null;
 
-  modify(_element: Element, [url]: [string | undefined]) {
+  modify(element: HTMLAnchorElement) {
     cleanup(this); // Remove any previous link element
+
+    const url = element.href;
 
     if (!url) {
       return;
@@ -46,6 +47,6 @@ export default class PrefetchUrlModifier extends Modifier<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'prefetch-url': typeof PrefetchUrlModifier;
+    prefetch: typeof PrefetchModifier;
   }
 }
