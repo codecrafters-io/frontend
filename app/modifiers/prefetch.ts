@@ -3,6 +3,7 @@
 // when the user navigates to the URL.
 //
 // The URL is automatically extracted from the element's href attribute.
+// Watches for href changes using MutationObserver and updates the prefetch link accordingly.
 // Usage: <a href={{url}} {{prefetch}}></a>
 import Modifier from 'ember-modifier';
 import { registerDestructor } from '@ember/destroyable';
@@ -12,6 +13,11 @@ interface Signature {
 }
 
 function cleanup(instance: PrefetchModifier) {
+  if (instance.observer) {
+    instance.observer.disconnect();
+    instance.observer = null;
+  }
+
   if (instance.linkElement && instance.linkElement.parentNode) {
     instance.linkElement.parentNode.removeChild(instance.linkElement);
   }
@@ -21,11 +27,33 @@ function cleanup(instance: PrefetchModifier) {
 
 export default class PrefetchModifier extends Modifier<Signature> {
   linkElement: HTMLLinkElement | null = null;
+  observer: MutationObserver | null = null;
 
   modify(element: HTMLAnchorElement) {
-    cleanup(this); // Remove any previous link element
+    cleanup(this); // Remove any previous link element and observer
 
-    const url = element.href;
+    this.updatePrefetchLink(element.href);
+
+    // Watch for changes to the href attribute
+    this.observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'href') {
+          this.updatePrefetchLink((mutation.target as HTMLAnchorElement).href);
+        }
+      }
+    });
+
+    this.observer.observe(element, { attributes: true, attributeFilter: ['href'] });
+
+    registerDestructor(this, cleanup);
+  }
+
+  updatePrefetchLink(url: string | undefined) {
+    // Remove existing link element if present
+    if (this.linkElement && this.linkElement.parentNode) {
+      this.linkElement.parentNode.removeChild(this.linkElement);
+      this.linkElement = null;
+    }
 
     if (!url) {
       return;
@@ -40,8 +68,6 @@ export default class PrefetchModifier extends Modifier<Signature> {
     // Append to document head
     document.head.appendChild(link);
     this.linkElement = link;
-
-    registerDestructor(this, cleanup);
   }
 }
 
