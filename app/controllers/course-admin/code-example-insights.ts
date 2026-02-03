@@ -23,7 +23,7 @@ export default class CodeExampleInsightsController extends Controller {
   @service declare store: Store;
 
   @tracked expandedSolution: CommunityCourseStageSolutionModel | null = null;
-  @tracked sort_mode: 'newest' | 'shortest_diff' | 'shortest_highlights' = 'newest';
+  @tracked sort_mode: 'newest' | 'shortest_diff' | 'shortest_highlights' = 'shortest_highlights';
 
   declare model: CodeExampleInsightsRouteModel;
 

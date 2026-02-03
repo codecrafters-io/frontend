@@ -61,7 +61,7 @@ export default class CodeExampleInsightsRoute extends BaseRoute {
         course_stage_id: courseStage.id,
         language_id: selectedLanguage.id,
         include: CommunityCourseStageSolutionModel.defaultIncludedResources.join(','),
-        order: params.sort_mode || 'newest',
+        order: params.sort_mode || 'shortest_highlights',
         adapterOptions: {
           admin: true,
         },
