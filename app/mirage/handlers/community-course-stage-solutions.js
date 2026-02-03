@@ -1,19 +1,27 @@
 import { Response } from 'miragejs';
 
+function filteredCommunityCourseStageSolutions(schema, request) {
+  let result = schema.communityCourseStageSolutions.all();
+
+  if (request.queryParams.language_id) {
+    result = result.filter((solution) => solution.language.id.toString() === request.queryParams.language_id);
+  }
+
+  if (request.queryParams.course_stage_id) {
+    result = result.filter((solution) => solution.courseStage.id.toString() === request.queryParams.course_stage_id);
+  }
+
+  return result;
+}
+
 export default function (server) {
   // TODO: Add pagination
   server.get('/community-course-stage-solutions', function (schema, request) {
-    let result = schema.communityCourseStageSolutions.all();
+    return filteredCommunityCourseStageSolutions(schema, request);
+  });
 
-    if (request.queryParams.language_id) {
-      result = result.filter((solution) => solution.language.id.toString() === request.queryParams.language_id);
-    }
-
-    if (request.queryParams.course_stage_id) {
-      result = result.filter((solution) => solution.courseStage.id.toString() === request.queryParams.course_stage_id);
-    }
-
-    return result;
+  server.get('/community-course-stage-solutions/for-admin', function (schema, request) {
+    return filteredCommunityCourseStageSolutions(schema, request);
   });
 
   server.get('/community-course-stage-solutions/:id');
