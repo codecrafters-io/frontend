@@ -54,7 +54,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(
       coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
-      'codecrafters test # Visit https://codecrafters.io/cli to install',
+      'codecrafters submit # Visit https://codecrafters.io/cli to install',
       'copyable text mentions cli after switching back',
     );
   });
@@ -90,7 +90,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(
       coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
-      'codecrafters test # Visit https://codecrafters.io/cli to install',
+      'codecrafters submit # Visit https://codecrafters.io/cli to install',
       'copyable text mentions cli by default',
     );
 
@@ -106,7 +106,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(
       coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
-      'codecrafters test # Visit https://codecrafters.io/cli to install',
+      'codecrafters submit # Visit https://codecrafters.io/cli to install',
       'copyable text mentions cli after switching back',
     );
   });
