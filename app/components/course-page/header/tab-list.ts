@@ -1,9 +1,59 @@
 import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import CourseModel from 'codecrafters-frontend/models/course';
 import RouterService from '@ember/routing/router-service';
 import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import type { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import { service } from '@ember/service';
+
+const preconnectedOrigins = new Set<string>();
+const prefetchedUrls = new Set<string>();
+
+function preloadExternalLink(url: string) {
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
+    return;
+  }
+
+  if (!url) {
+    return;
+  }
+
+  let resolvedUrl: URL;
+
+  try {
+    resolvedUrl = new URL(url, window.location.origin);
+  } catch {
+    return;
+  }
+
+  if (resolvedUrl.protocol !== 'http:' && resolvedUrl.protocol !== 'https:') {
+    return;
+  }
+
+  const origin = resolvedUrl.origin;
+  const href = resolvedUrl.toString();
+
+  if (origin && !preconnectedOrigins.has(origin)) {
+    preconnectedOrigins.add(origin);
+
+    const preconnect = document.createElement('link');
+    preconnect.rel = 'preconnect';
+    preconnect.href = origin;
+    preconnect.crossOrigin = 'anonymous';
+    document.head?.appendChild(preconnect);
+  }
+
+  if (!prefetchedUrls.has(href)) {
+    prefetchedUrls.add(href);
+
+    const prefetch = document.createElement('link');
+    prefetch.rel = 'prefetch';
+    prefetch.href = href;
+    prefetch.as = 'document';
+    prefetch.crossOrigin = 'anonymous';
+    document.head?.appendChild(prefetch);
+  }
+}
 
 interface Signature {
   Element: HTMLDivElement;
@@ -28,6 +78,11 @@ type Tab = {
 
 export default class TabList extends Component<Signature> {
   @service declare router: RouterService;
+
+  @action
+  handleExternalLinkDidInsert(_element: HTMLElement, url: string) {
+    preloadExternalLink(url);
+  }
 
   get allTabs(): Tab[] {
     return {

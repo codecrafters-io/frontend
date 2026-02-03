@@ -1,7 +1,13 @@
 <div class="flex items-center overflow-x-auto" ...attributes>
   {{#each this.availableTabs key="slug" as |tab|}}
     {{#if tab.externalLink}}
-      <a href={{tab.externalLink.url}} class="flex" target="_blank" rel="noopener noreferrer">
+      <a
+        href={{tab.externalLink.url}}
+        class="flex"
+        target="_blank"
+        rel="noopener noreferrer"
+        {{did-insert this.handleExternalLinkDidInsert tab.externalLink.url}}
+      >
         <CoursePage::Header::TabLink @icon={{tab.icon}} @text={{tab.name}} @isActive={{tab.isActive}} />
       </a>
     {{else}}
