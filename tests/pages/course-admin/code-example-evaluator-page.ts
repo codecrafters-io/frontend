@@ -1,8 +1,11 @@
 import { fillIn } from '@ember/test-helpers';
 import EvaluationCard from 'codecrafters-frontend/tests/pages/components/course-admin/code-examples-page/evaluation-card';
-import { clickable, collection, create, fillable, hasClass, text, value, visitable } from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, hasClass, isPresent, text, value, visitable } from 'ember-cli-page-object';
 
 export default create({
+  clickOnDeployButton: clickable('[data-test-deploy-button]'),
+  isDeployButtonVisible: isPresent('[data-test-deploy-button]'),
+
   evaluationsSection: {
     evaluationCards: collection('[data-test-evaluation-card]', EvaluationCard),
     scope: '[data-test-evaluations-section]',

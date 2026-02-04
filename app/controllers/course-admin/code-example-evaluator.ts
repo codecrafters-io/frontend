@@ -1,14 +1,15 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
-import type RouterService from '@ember/routing/router-service';
-import { service } from '@ember/service';
-import type Store from '@ember-data/store';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
+import type RouterService from '@ember/routing/router-service';
+import type Store from '@ember-data/store';
 import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { action } from '@ember/object';
+import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { waitFor } from '@ember/test-waiters';
 
 export default class CodeExampleEvaluatorController extends Controller {
   declare model: CodeExampleEvaluatorRouteModel;
@@ -57,6 +58,12 @@ export default class CodeExampleEvaluatorController extends Controller {
   }
 
   @action
+  @waitFor
+  async handleDeployButtonClick() {
+    await this.deployTask.perform();
+  }
+
+  @action
   handleRequestedLanguageChange(language: LanguageModel) {
     this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
@@ -71,6 +78,10 @@ export default class CodeExampleEvaluatorController extends Controller {
     });
 
     dummyRecord.unloadRecord();
+  });
+
+  deployTask = task({ drop: true }, async (): Promise<void> => {
+    await this.model.evaluator.deploy({});
   });
 
   regenerateAllEvaluationsTask = task({ drop: true }, async (): Promise<void> => {
