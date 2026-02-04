@@ -19,7 +19,6 @@
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
           <div class="h-px border-t border-gray-200 dark:border-gray-800 mb-6"></div>
-          {{! @glint-expect-error: not ts-ified yet }}
           <DiscussOnHnButton @link={{@codeWalkthrough.hackerNewsUrl}} />
         {{/if}}
       </div>
@@ -42,7 +41,6 @@
 
         {{#if @codeWalkthrough.hackerNewsUrl}}
           <div class="mt-6 hidden md:block">
-            {{! @glint-expect-error: not ts-ified yet }}
             <DiscussOnHnButton @link={{@codeWalkthrough.hackerNewsUrl}} />
           </div>
         {{/if}}
