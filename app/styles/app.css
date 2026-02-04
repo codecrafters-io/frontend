@@ -15,8 +15,10 @@
 @import url('pages/course-stage-solution-page.css');
 
 :root {
-  /* --font-cursive: 'Shadows Into Light Two', cursive; */
   --font-cursive: 'Indie Flower', cursive;
+
+  /* Force scrollbars to render with dark mode styling */
+  color-scheme: dark;
 }
 
 body {
