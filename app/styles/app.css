@@ -17,7 +17,12 @@
 :root {
   --font-cursive: 'Indie Flower', cursive;
 
-  /* Force scrollbars to render with dark mode styling */
+  /* Default to light color scheme for scrollbars and form controls */
+  color-scheme: light;
+}
+
+/* Apply dark color scheme when dark mode is enabled */
+.dark {
   color-scheme: dark;
 }
 
