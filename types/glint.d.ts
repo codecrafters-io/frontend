@@ -6,6 +6,27 @@ import type EmberTruthHelpersRegistry from 'ember-truth-helpers/template-registr
 import type EmberMathHelpersRegistry from 'ember-math-helpers/template-registry';
 import type { ModifierLike, HelperLike, ComponentLike } from '@glint/template';
 
+interface HeadMetaData {
+  description?: string;
+  type?: string;
+  siteName?: string;
+  title?: string;
+  imageUrl?: string;
+  twitterCard?: string;
+  twitterSite?: string;
+  shouldRenderNoIndexTag?: boolean;
+}
+
+interface HeadDefaults {
+  description?: string;
+  type?: string;
+  siteName?: string;
+  title?: string;
+  imageUrl?: string;
+  twitterCard?: string;
+  twitterSite?: string;
+}
+
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry
     extends
@@ -44,6 +65,9 @@ declare module '@glint/environment-ember-loose/registry' {
 
     'sortable-handle': ModifierLike<{ Args: { Positional: [] } }>;
     'svg-jar': ComponentLike<{ Args: { Named: { class: string; role?: string }; Positional: [string] } }>;
+
+    // ember-cli-head component (template at app/templates/head.hbs)
+    HeadContent: ComponentLike<{ Args: { Named: { metaData: HeadMetaData; defaults: HeadDefaults } } }>;
     // ...
   }
 }
