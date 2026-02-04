@@ -4,6 +4,8 @@
   setting values on the 'head-data' service.
 }}
 
+{{! @glint-nocheck: head.hbs is a special ember-cli-head template that cannot be typed via a route }}
+
 {{! template-lint-disable no-forbidden-elements }}
 
 <meta name="description" content={{or @model.metaData.description @model.defaults.description}} />
