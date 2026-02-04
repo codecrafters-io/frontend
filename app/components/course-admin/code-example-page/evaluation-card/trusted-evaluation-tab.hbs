@@ -35,6 +35,37 @@
     >
       Edit Trusted Evaluation
     </TertiaryButton>
+  {{else if (eq @evaluation.result "unsure")}}
+    <div class="prose dark:prose-invert mb-6">
+      <p>
+        The evaluation is
+        <b class="uppercase">unsure</b>. What's the correct answer?
+      </p>
+
+      <div class="flex items-center flex-wrap gap-3 mb-6">
+        <PrimaryButtonWithSpinner
+          @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
+          {{on "click" (perform this.upsertTrustedEvaluationTask "pass")}}
+          data-test-correct-button
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "check" class="w-4 h-4"}}
+            <span>Pass</span>
+          </div>
+        </PrimaryButtonWithSpinner>
+
+        <PrimaryButtonWithSpinner
+          @shouldShowSpinner={{this.upsertTrustedEvaluationTask.isRunning}}
+          {{on "click" (perform this.upsertTrustedEvaluationTask "fail")}}
+          data-test-wrong-button
+        >
+          <div class="flex items-center gap-2">
+            {{svg-jar "x" class="w-4 h-4"}}
+            <span>Fail</span>
+          </div>
+        </PrimaryButtonWithSpinner>
+      </div>
+    </div>
   {{else}}
     <div class="prose dark:prose-invert mb-6">
       Is the
