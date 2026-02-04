@@ -217,6 +217,10 @@ export default class CourseModel extends Model {
     return `https://github.com/${this.testerRepositoryFullName}`;
   }
 
+  get votableExtensionIdeas() {
+    return this.extensionIdeas.filter((idea) => !idea.developmentStatusIsReleased && !idea.isArchived);
+  }
+
   availableLanguageConfigurationsForUser(user: UserModel) {
     return this.languageConfigurations.filter((languageConfiguration) => languageConfiguration.isAvailableForUser(user));
   }
