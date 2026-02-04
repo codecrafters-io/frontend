@@ -1,11 +1,9 @@
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
-import CourseExtensionIdeaModel from 'codecrafters-frontend/models/course-extension-idea';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import type Store from '@ember-data/store';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 interface Signature {
@@ -19,7 +17,6 @@ interface Signature {
 
 export default class ConfigureExtensionsModal extends Component<Signature> {
   @service declare store: Store;
-  @tracked allCourseExtensionIdeas: CourseExtensionIdeaModel[] = [];
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
@@ -27,18 +24,14 @@ export default class ConfigureExtensionsModal extends Component<Signature> {
   }
 
   get orderedCourseExtensionIdeas() {
-    return this.allCourseExtensionIdeas
-      .filter((item) => !item.isArchived)
-      .filter((item) => item.course === this.args.repository.course)
-      .filter((item) => item.developmentStatus !== 'released')
-      .sort(fieldComparator('sortPositionForRoadmapPage'));
+    return this.args.repository.course.votableExtensionIdeas.sort(fieldComparator('sortPositionForRoadmapPage'));
   }
 
   @action
   async loadAllCourseExtensionIdeas() {
-    this.allCourseExtensionIdeas = (await this.store.findAll('course-extension-idea', {
+    await this.store.findAll('course-extension-idea', {
       include: 'course,current-user-votes,current-user-votes.user',
-    })) as unknown as CourseExtensionIdeaModel[];
+    });
   }
 }
 
