@@ -4,6 +4,8 @@ import window from 'ember-window-mock';
 import { action } from '@ember/object';
 
 interface Signature {
+  Element: HTMLDivElement;
+
   Args: {
     repository: {
       id: string;
@@ -15,5 +17,11 @@ export default class InstallGitHubAppStep extends Component<Signature> {
   @action
   handleInstallGitHubAppButtonClick() {
     window.location.href = `${config.x.backendUrl}/github_app_installations/start?repository_id=${this.args.repository.id}`;
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    'CoursePage::ConfigureGithubIntegrationModal::InstallGithubAppStep': typeof InstallGitHubAppStep;
   }
 }
