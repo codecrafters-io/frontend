@@ -43,7 +43,7 @@ declare module '@glint/environment-ember-loose/registry' {
     'sortable-item': ModifierLike<{ Args: { Named: { model: any } } }>;
 
     'sortable-handle': ModifierLike<{ Args: { Positional: [] } }>;
-    'svg-jar': ComponentLike<{ Args: { Named: { class: string }; Positional: [string] } }>;
+    'svg-jar': ComponentLike<{ Args: { Named: { class: string; role?: string }; Positional: [string] } }>;
     // ...
   }
 }
