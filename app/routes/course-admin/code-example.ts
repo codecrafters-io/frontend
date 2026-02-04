@@ -5,6 +5,7 @@ import CommunityCourseStageSolutionModel from 'codecrafters-frontend/models/comm
 import type SolutionComparisonModel from 'codecrafters-frontend/models/solution-comparison';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
 
 export type CodeExampleRouteModel = {
   course: CourseModel;
@@ -15,6 +16,10 @@ export type CodeExampleRouteModel = {
 
 export default class CodeExampleRoute extends BaseRoute {
   @service declare store: Store;
+
+  buildRouteInfoMetadata() {
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+  }
 
   async model(params: { code_example_id: string }): Promise<CodeExampleRouteModel> {
     // @ts-expect-error modelFor not typed
