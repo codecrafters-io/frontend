@@ -158,7 +158,7 @@
     "ember-modifier": "^4.2.2",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.2",
-    "ember-resize-modifier": "^0.7.1",
+    "ember-resize-modifier": "^1.0.1",
     "ember-resolver": "^13.1.1",
     "ember-screen": "^2.0.0",
     "ember-sinon-qunit": "^7.5.0",
