@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 
 interface Signature {
-  Element: HTMLDivElement;
+  Element: HTMLButtonElement;
 }
 
 export default class CollapseSidebarButton extends Component<Signature> {}
