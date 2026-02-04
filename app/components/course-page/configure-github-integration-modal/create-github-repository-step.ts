@@ -1,9 +1,7 @@
 import Component from '@glimmer/component';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
   Args: {
-    repository: RepositoryModel;
     recommendedRepositoryName: string;
     recommendedRepositoryNameWithoutOwner: string;
   };
