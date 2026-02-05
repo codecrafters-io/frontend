@@ -32,7 +32,7 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   }
 
   get totalEvaluationsCount() {
-    return this.passedEvaluationsCount + this.failedEvaluationsCount + this.unsureEvaluationsCount;
+    return (this.passedEvaluationsCount ?? 0) + (this.failedEvaluationsCount ?? 0) + (this.unsureEvaluationsCount ?? 0);
   }
 
   declare deploy: (this: Model, payload: unknown) => Promise<void>;
