@@ -28,13 +28,11 @@ export default class AccuracySection extends Component<Signature> {
   }
 
   get failRatePercentage() {
-    if (this.allEvaluations.length === 0) {
+    if (this.args.evaluator.totalEvaluationsCount === 0) {
       return null;
     }
 
-    const failCount = this.allEvaluations.filter((e) => e.result === 'fail').length;
-
-    return parseFloat(((100 * failCount) / this.allEvaluations.length).toFixed(2));
+    return parseFloat(((100 * this.args.evaluator.failedEvaluationsCount) / this.args.evaluator.totalEvaluationsCount).toFixed(2));
   }
 
   get failRateStatistic(): CourseStageParticipationAnalysisStatistic {
@@ -110,13 +108,11 @@ export default class AccuracySection extends Component<Signature> {
   }
 
   get passRatePercentage() {
-    if (this.allEvaluations.length === 0) {
+    if (this.args.evaluator.totalEvaluationsCount === 0) {
       return null;
     }
 
-    const passCount = this.allEvaluations.filter((e) => e.result === 'pass').length;
-
-    return parseFloat(((100 * passCount) / this.allEvaluations.length).toFixed(2));
+    return parseFloat(((100 * this.args.evaluator.passedEvaluationsCount) / this.args.evaluator.totalEvaluationsCount).toFixed(2));
   }
 
   get passRateStatistic(): CourseStageParticipationAnalysisStatistic {

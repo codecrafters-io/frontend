@@ -1,15 +1,15 @@
+import { action } from '@ember/object';
+import { service } from '@ember/service';
+import { task } from 'ember-concurrency';
+import { waitFor } from '@ember/test-waiters';
 import Controller from '@ember/controller';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
-import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
-import { action } from '@ember/object';
-import { service } from '@ember/service';
-import { task } from 'ember-concurrency';
-import { waitFor } from '@ember/test-waiters';
 
 export default class CodeExampleEvaluatorController extends Controller {
   declare model: CodeExampleEvaluatorRouteModel;
@@ -40,6 +40,11 @@ export default class CodeExampleEvaluatorController extends Controller {
 
   get sortedLanguagesForDropdown() {
     return this.model.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
+  }
+
+  @action
+  async handleActionCableMessage() {
+    await this.model.evaluator.reload();
   }
 
   @action

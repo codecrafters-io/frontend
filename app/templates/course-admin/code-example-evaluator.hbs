@@ -1,4 +1,11 @@
-<div class="bg-white dark:bg-gray-950 min-h-screen">
+<div
+  class="bg-white dark:bg-gray-950 min-h-screen"
+  {{on-action-cable-message
+    this.handleActionCableMessage
+    channel="CommunitySolutionEvaluatorChannel"
+    args=(hash community_solution_evaluator_id=@model.evaluator.id)
+  }}
+>
   <div class="container mx-auto pt-4 pb-32 px-6">
     <div class="py-3 border-b border-gray-200 dark:border-white/5 mb-6">
       <TertiaryLinkButton @route="course-admin.code-example-evaluators" @models={{array @model.course.slug}} @size="small" class="pl-1.5 mb-3">
