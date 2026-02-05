@@ -33,7 +33,7 @@ export default class CoverageStatistic extends Component<Signature> {
     return {
       title: 'Coverage',
       label: 'coverage',
-      value: percentage !== null ? `${Math.round(percentage)}%` : null,
+      value: percentage !== null ? `${percentage}%` : 'No evaluations',
       color: this.coverageColor,
       explanationMarkdown: 'The percentage of evaluations that resulted in "fail" (issues detected).',
     };
