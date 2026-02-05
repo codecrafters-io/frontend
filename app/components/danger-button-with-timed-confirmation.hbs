@@ -1,6 +1,6 @@
 <DangerButton
   @size={{@size}}
-  class="relative overflow-hidden"
+  class="relative border-0 overflow-hidden"
   {{! template-lint-disable no-pointer-down-event-binding }}
   {{on "mousedown" this.startProgress}}
   {{on "mouseleave" this.resetProgress}}
