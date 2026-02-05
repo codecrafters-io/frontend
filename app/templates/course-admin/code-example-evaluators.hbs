@@ -46,14 +46,7 @@
                 </div>
               </div>
               <div class="flex flex-none items-center gap-x-4">
-                <TertiaryLinkButton
-                  @size="small"
-                  @route="course-admin.code-example-evaluator"
-                  @models={{array @model.course.slug evaluator.slug}}
-                  data-test-view-evaluator-button
-                >
-                  View evaluator
-                </TertiaryLinkButton>
+                <CourseAdmin::CodeExampleEvaluatorsPage::CoverageStatistic @evaluator={{evaluator}} />
               </div>
             </LinkTo>
           </li>

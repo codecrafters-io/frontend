@@ -23,12 +23,28 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   @attr('string') declare status: 'draft' | 'live';
   @attr('number') declare unsureEvaluationsCount: number;
 
+  get failRatePercentage(): number | null {
+    if (this.totalEvaluationsCount === 0) {
+      return null;
+    }
+
+    return parseFloat(((100 * this.failedEvaluationsCount) / this.totalEvaluationsCount).toFixed(2));
+  }
+
   get isDraft() {
     return this.status === 'draft';
   }
 
   get isLive() {
     return this.status === 'live';
+  }
+
+  get passRatePercentage(): number | null {
+    if (this.totalEvaluationsCount === 0) {
+      return null;
+    }
+
+    return parseFloat(((100 * this.passedEvaluationsCount) / this.totalEvaluationsCount).toFixed(2));
   }
 
   get totalEvaluationsCount() {
