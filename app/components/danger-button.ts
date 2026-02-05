@@ -1,11 +1,12 @@
 import Component from '@glimmer/component';
+import type { BaseButtonSignature } from './base-button';
 
 interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
     isDisabled?: boolean;
-    size?: string;
+    size?: BaseButtonSignature['Args']['size'];
   };
 
   Blocks: {
