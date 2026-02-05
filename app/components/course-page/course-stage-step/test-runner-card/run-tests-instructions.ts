@@ -4,8 +4,6 @@ import type Owner from '@ember/owner';
 import { tracked } from '@glimmer/tracking';
 import type { CopyableTerminalCommandVariant } from 'codecrafters-frontend/components/copyable-terminal-command-with-variants';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
-import { service } from '@ember/service';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,8 +15,6 @@ interface Signature {
 }
 
 export default class RunTestsInstructions extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
-
   @tracked selectedCommandVariant: CopyableTerminalCommandVariant;
 
   constructor(owner: Owner, args: Signature['Args']) {
@@ -50,15 +46,7 @@ export default class RunTestsInstructions extends Component<Signature> {
   }
 
   get recommendedClientType() {
-    if (this.featureFlags.canViewCLIPingFlow) {
-      return 'cli';
-    }
-
-    if (this.args.currentStep.courseStage.isFirst || this.args.currentStep.courseStage.isSecond) {
-      return 'git';
-    } else {
-      return 'cli';
-    }
+    return 'cli';
   }
 
   get userHasRunTestsForStageAtLeastOnce() {

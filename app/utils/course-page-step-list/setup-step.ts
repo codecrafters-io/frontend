@@ -1,13 +1,9 @@
-import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import StepDefinition from 'codecrafters-frontend/utils/course-page-step-list/step';
 import type ProgressIndicator from 'codecrafters-frontend/utils/course-page-step-list/progress-indicator';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 
 export default class SetupStep extends StepDefinition {
-  @service declare featureFlags: FeatureFlagsService;
-
   @tracked repository: RepositoryModel;
 
   constructor(repository: RepositoryModel) {
@@ -19,13 +15,13 @@ export default class SetupStep extends StepDefinition {
     if (this.status === 'complete') {
       return {
         dotType: 'none',
-        text: this.featureFlags.canViewCLIPingFlow ? 'Ping received.' : 'Git push received.',
+        text: 'Ping received.',
       };
     } else if (this.status === 'in_progress') {
       return {
         dotColor: 'yellow',
         dotType: 'blinking',
-        text: this.featureFlags.canViewCLIPingFlow ? 'Listening for ping...' : 'Listening for a git push...',
+        text: 'Listening for ping...',
       };
     } else if (this.status === 'locked') {
       return {

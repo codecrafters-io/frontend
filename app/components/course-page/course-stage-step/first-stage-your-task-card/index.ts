@@ -4,7 +4,6 @@ import CoursePageStateService from 'codecrafters-frontend/services/course-page-s
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type { StepDefinition } from 'codecrafters-frontend/components/step-list';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
@@ -49,18 +48,9 @@ class TestCodeStep extends BaseStep implements StepDefinition {
   }
 }
 
-class SubmitCodeStep extends BaseStep implements StepDefinition {
-  id = 'submit-code';
-
-  get titleMarkdown() {
-    return 'Git push to submit your changes';
-  }
-}
-
 export default class FirstStageYourTaskCard extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
   get filename() {
@@ -80,9 +70,7 @@ export default class FirstStageYourTaskCard extends Component<Signature> {
   get steps() {
     return [
       new UncommentCodeStep(this.args.currentStep.repository, this.stepsAreComplete),
-      this.featureFlags.canViewCLIPingFlow
-        ? new TestCodeStep(this.args.currentStep.repository, this.stepsAreComplete)
-        : new SubmitCodeStep(this.args.currentStep.repository, this.stepsAreComplete),
+      new TestCodeStep(this.args.currentStep.repository, this.stepsAreComplete),
     ];
   }
 
