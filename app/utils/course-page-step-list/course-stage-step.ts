@@ -104,7 +104,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
       return {
         dotColor: 'gray',
         dotType: 'blinking',
-        text: this.courseStage.isFirst ? 'Listening for a git push...' : 'Ready to run tests...',
+        text: this.courseStage.isFirst ? 'Listening for ping...' : 'Ready to run tests...',
       };
     } else if (this.status === 'locked') {
       return {

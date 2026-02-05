@@ -1,7 +1,5 @@
 import Component from '@glimmer/component';
-import FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type SetupStep from 'codecrafters-frontend/utils/course-page-step-list/setup-step';
-import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -13,9 +11,7 @@ interface Signature {
   };
 }
 
-export default class WorkflowTutorialStep2ScreenComponent extends Component<Signature> {
-  @service declare featureFlags: FeatureFlagsService;
-}
+export default class WorkflowTutorialStep2ScreenComponent extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

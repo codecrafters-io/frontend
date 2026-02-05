@@ -1,49 +1,15 @@
-{{#if this.featureFlags.canViewCLIPingFlow}}
-  <div>
-    <CopyableTerminalCommand @commands={{array "codecrafters submit"}} class="mb-1.5" />
+<div>
+  <CopyableTerminalCommand @commands={{array "codecrafters submit"}} class="mb-1.5" />
 
-    <div class="flex items-center gap-0.5 pl-0.5">
-      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
+  <div class="flex items-center gap-0.5 pl-0.5">
+    {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
 
-      {{! TODO: Change troubleshooting link }}
-      <span class="text-blue-500 text-xs underline font-medium">
-        <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
-      </span>
-    </div>
+    {{! TODO: Change troubleshooting link }}
+    <span class="text-blue-500 text-xs underline font-medium">
+      <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
+    </span>
   </div>
-{{else}}
-  <div class="mb-3">
-    <div class="prose prose-compact dark:prose-invert mb-3">
-      First, run this command to commit your changes:
-    </div>
-
-    <CopyableTerminalCommand @commands={{array 'git commit -am "[any message]"'}} class="mb-1.5" />
-
-    <div class="flex items-center gap-0.5 pl-0.5">
-      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
-
-      <span class="text-blue-500 text-xs underline font-medium">
-        <a href="#" {{on "click" (fn (mut this.isCommitModalOpen) true)}}>Troubleshoot</a>
-      </span>
-    </div>
-  </div>
-
-  <div>
-    <div class="prose prose-compact dark:prose-invert mb-3">
-      Next, run this command to push your changes:
-    </div>
-
-    <CopyableTerminalCommand @commands={{array "git push origin master"}} class="mb-1.5" />
-
-    <div class="flex items-center gap-0.5 pl-0.5">
-      {{svg-jar "question-mark-circle" class="w-3 h-3 fill-current text-blue-500"}}
-
-      <span class="text-blue-500 text-xs underline font-medium">
-        <a href="#" {{on "click" (fn (mut this.isPushModalOpen) true)}}>Troubleshoot</a>
-      </span>
-    </div>
-  </div>
-{{/if}}
+</div>
 
 {{!-- <div class="prose dark:prose-invert">
   <p class={{if @isComplete "line-through"}}>
