@@ -33,11 +33,11 @@ export default class AccuracySection extends Component<Signature> {
     }
 
     if (this.failRatePercentage < 5) {
-      return 'red';
+      return 'green';
     } else if (this.failRatePercentage < 10) {
       return 'yellow';
     } else {
-      return 'green';
+      return 'red';
     }
   }
 
@@ -126,9 +126,9 @@ export default class AccuracySection extends Component<Signature> {
       return 'gray';
     }
 
-    if (this.passRatePercentage < 90) {
+    if (this.passRatePercentage >= 95) {
       return 'green';
-    } else if (this.passRatePercentage < 95) {
+    } else if (this.passRatePercentage >= 90) {
       return 'yellow';
     } else {
       return 'red';
