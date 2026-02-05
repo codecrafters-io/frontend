@@ -16,9 +16,12 @@ export default class CommunitySolutionEvaluatorModel extends Model {
   declare trustedEvaluations: TrustedCommunitySolutionEvaluationModel[];
 
   @attr('string') declare context: 'highlighted_lines' | 'highlighted_files';
+  @attr('number') declare failedEvaluationsCount: number;
+  @attr('number') declare passedEvaluationsCount: number;
   @attr('string') declare promptTemplate: string;
   @attr('string') declare slug: string;
   @attr('string') declare status: 'draft' | 'live';
+  @attr('number') declare unsureEvaluationsCount: number;
 
   get isDraft() {
     return this.status === 'draft';
@@ -26,6 +29,10 @@ export default class CommunitySolutionEvaluatorModel extends Model {
 
   get isLive() {
     return this.status === 'live';
+  }
+
+  get totalEvaluationsCount() {
+    return this.passedEvaluationsCount + this.failedEvaluationsCount + this.unsureEvaluationsCount;
   }
 
   declare deploy: (this: Model, payload: unknown) => Promise<void>;
