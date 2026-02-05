@@ -28,8 +28,18 @@ export default class CommunitySolutionEvaluatorModel extends Model {
     return this.status === 'live';
   }
 
+  declare deploy: (this: Model, payload: unknown) => Promise<void>;
   declare regenerateAllEvaluations: (this: Model, payload: unknown) => Promise<void>;
 }
+
+CommunitySolutionEvaluatorModel.prototype.deploy = memberAction({
+  path: 'deploy',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
 
 CommunitySolutionEvaluatorModel.prototype.regenerateAllEvaluations = memberAction({
   path: 'regenerate_all_evaluations',

@@ -15,4 +15,10 @@ export default function (server) {
 
     return evaluator.update(attrs);
   });
+
+  server.post('/community-solution-evaluators/:id/deploy', function (schema, request) {
+    const evaluator = schema.communitySolutionEvaluators.find(request.params.id);
+
+    return evaluator.update({ status: 'live' });
+  });
 }

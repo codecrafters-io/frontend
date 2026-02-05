@@ -12,11 +12,39 @@
       </TertiaryLinkButton>
 
       <div class="flex items-center justify-between">
-        <EditableTextField @value={{@model.evaluator.slug}} @onUpdate={{perform this.updateSlugTask}}>
-          <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 {{if this.updateSlugTask.isRunning 'animate-pulse'}}">
-            {{@model.evaluator.slug}}
-          </h3>
-        </EditableTextField>
+        <div class="flex items-center gap-3">
+          <EditableTextField @value={{@model.evaluator.slug}} @onUpdate={{perform this.updateSlugTask}}>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-gray-100 {{if this.updateSlugTask.isRunning 'animate-pulse'}}">
+              {{@model.evaluator.slug}}
+            </h3>
+          </EditableTextField>
+
+          {{#if @model.evaluator.isDraft}}
+            <span
+              class="inline-flex items-center rounded-md bg-yellow-50 dark:bg-yellow-400/10 px-2 py-1 text-xs font-medium text-yellow-800 dark:text-yellow-500 ring-1 ring-inset ring-yellow-600/20 dark:ring-yellow-400/20"
+            >
+              Draft
+            </span>
+          {{else}}
+            <span
+              class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-500/10 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-400 ring-1 ring-inset ring-green-600/20 dark:ring-green-500/20"
+            >
+              Live
+            </span>
+          {{/if}}
+        </div>
+
+        {{#if @model.evaluator.isDraft}}
+          <PrimaryButtonWithSpinner
+            @size="small"
+            @isDisabled={{this.deployTask.isRunning}}
+            @shouldShowSpinner={{this.deployTask.isRunning}}
+            data-test-deploy-button
+            {{on "click" this.handleDeployButtonClick}}
+          >
+            Deploy
+          </PrimaryButtonWithSpinner>
+        {{/if}}
       </div>
     </div>
 
