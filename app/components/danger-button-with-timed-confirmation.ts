@@ -3,13 +3,14 @@ import config from 'codecrafters-frontend/config/environment';
 import { action } from '@ember/object';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
+import type { BaseButtonSignature } from './base-button';
 
 interface Signature {
   Element: HTMLButtonElement;
 
   Args: {
     onConfirm: () => void;
-    size?: string;
+    size?: BaseButtonSignature['Args']['size'];
   };
 
   Blocks: {
