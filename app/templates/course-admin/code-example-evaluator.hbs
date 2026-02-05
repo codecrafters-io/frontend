@@ -35,15 +35,21 @@
         </div>
 
         {{#if @model.evaluator.isDraft}}
-          <PrimaryButtonWithSpinner
-            @size="small"
-            @isDisabled={{this.deployTask.isRunning}}
-            @shouldShowSpinner={{this.deployTask.isRunning}}
-            data-test-deploy-button
-            {{on "click" this.handleDeployButtonClick}}
-          >
-            Deploy
-          </PrimaryButtonWithSpinner>
+          <div class="flex items-center gap-2">
+            <DangerButtonWithTimedConfirmation @size="small" @onConfirm={{this.handleDeleteButtonClick}} data-test-delete-button>
+              Delete
+            </DangerButtonWithTimedConfirmation>
+
+            <PrimaryButtonWithSpinner
+              @size="small"
+              @isDisabled={{this.deployTask.isRunning}}
+              @shouldShowSpinner={{this.deployTask.isRunning}}
+              data-test-deploy-button
+              {{on "click" this.handleDeployButtonClick}}
+            >
+              Deploy
+            </PrimaryButtonWithSpinner>
+          </div>
         {{/if}}
       </div>
     </div>

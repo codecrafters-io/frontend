@@ -21,4 +21,10 @@ export default function (server) {
 
     return evaluator.update({ status: 'live' });
   });
+
+  server.delete('/community-solution-evaluators/:id', function (schema, request) {
+    const evaluator = schema.communitySolutionEvaluators.find(request.params.id);
+
+    return evaluator.destroy();
+  });
 }

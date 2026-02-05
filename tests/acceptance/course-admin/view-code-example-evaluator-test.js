@@ -5,7 +5,7 @@ import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, settled, waitUntil } from '@ember/test-helpers';
 
 module('Acceptance | course-admin | view-code-example-evaluator', function (hooks) {
   setupApplicationTest(hooks);
@@ -108,5 +108,30 @@ module('Acceptance | course-admin | view-code-example-evaluator', function (hook
 
     const trustedEvaluationTab = codeExampleEvaluatorPage.evaluationsSection.evaluationCards[0].trustedEvaluationTab;
     assert.true(trustedEvaluationTab.hasTrustedEvaluation, 'Trusted evaluation message is shown');
+  });
+
+  test('can delete draft evaluator', async function (assert) {
+    await codeExampleEvaluatorPage.visit({ course_slug: this.course.slug, evaluator_slug: this.evaluator.slug });
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
+
+    assert.true(codeExampleEvaluatorPage.isDeleteButtonVisible, 'Delete button is visible for draft evaluator');
+    assert.strictEqual(this.server.schema.communitySolutionEvaluators.all().models.length, 1, 'Evaluator exists');
+
+    await codeExampleEvaluatorPage.deleteButton.mousedown();
+    await waitUntil(() => currentURL() === '/courses/redis/admin/code-example-evaluators');
+    await settled();
+
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators', 'Redirected to evaluators list');
+    assert.strictEqual(this.server.schema.communitySolutionEvaluators.all().models.length, 0, 'Evaluator is deleted');
+  });
+
+  test('delete button is not visible for live evaluator', async function (assert) {
+    this.evaluator.update({ status: 'live' });
+
+    await codeExampleEvaluatorPage.visit({ course_slug: this.course.slug, evaluator_slug: this.evaluator.slug });
+    assert.strictEqual(currentURL(), '/courses/redis/admin/code-example-evaluators/relevance', 'URL is correct');
+
+    assert.false(codeExampleEvaluatorPage.isDeleteButtonVisible, 'Delete button is not visible for live evaluator');
+    assert.false(codeExampleEvaluatorPage.isDeployButtonVisible, 'Deploy button is not visible for live evaluator');
   });
 });

@@ -59,6 +59,12 @@ export default class CodeExampleEvaluatorController extends Controller {
 
   @action
   @waitFor
+  async handleDeleteButtonClick() {
+    await this.deleteTask.perform();
+  }
+
+  @action
+  @waitFor
   async handleDeployButtonClick() {
     await this.deployTask.perform();
   }
@@ -78,6 +84,11 @@ export default class CodeExampleEvaluatorController extends Controller {
     });
 
     dummyRecord.unloadRecord();
+  });
+
+  deleteTask = task({ drop: true }, async (): Promise<void> => {
+    await this.model.evaluator.destroyRecord();
+    this.router.transitionTo('course-admin.code-example-evaluators', this.model.course.slug);
   });
 
   deployTask = task({ drop: true }, async (): Promise<void> => {
