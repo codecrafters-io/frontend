@@ -9,15 +9,11 @@ export default create({
       return [...this.evaluators].find((evaluator) => evaluator.slug === evaluatorSlug);
     });
 
-    await [...this.evaluators].find((evaluator) => evaluator.slug === evaluatorSlug).viewEvaluatorButton.click();
+    await [...this.evaluators].find((evaluator) => evaluator.slug === evaluatorSlug).click();
   },
 
   evaluators: collection('[data-test-evaluator-item]', {
     slug: text('[data-test-evaluator-slug]'),
-
-    viewEvaluatorButton: {
-      scope: '[data-test-view-evaluator-button]',
-    },
   }),
 
   visit: visitable('/courses/:course_slug/admin/code-example-evaluators'),

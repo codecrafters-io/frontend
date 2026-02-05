@@ -21,42 +21,38 @@ export default class AccuracySection extends Component<Signature> {
     return this.args.evaluator.evaluations;
   }
 
-  get evaluationsWithTrustedEvaluation() {
-    return this.allEvaluations.filter((evaluation) => {
-      return evaluation.trustedEvaluation;
-    });
-  }
+  get coverageColor(): 'green' | 'yellow' | 'red' | 'gray' {
+    const percentage = this.args.evaluator.failRatePercentage;
 
-  get failRateColor(): 'green' | 'yellow' | 'red' | 'gray' {
-    if (this.failRatePercentage === null) {
+    if (percentage === null) {
       return 'gray';
     }
 
-    if (this.failRatePercentage < 5) {
+    if (percentage < 5) {
       return 'red';
-    } else if (this.failRatePercentage < 10) {
+    } else if (percentage < 10) {
       return 'yellow';
     } else {
       return 'green';
     }
   }
 
-  get failRatePercentage() {
-    if (this.args.evaluator.totalEvaluationsCount === 0) {
-      return null;
-    }
+  get coverageStatistic(): CourseStageParticipationAnalysisStatistic {
+    const percentage = this.args.evaluator.failRatePercentage;
 
-    return parseFloat(((100 * this.args.evaluator.failedEvaluationsCount) / this.args.evaluator.totalEvaluationsCount).toFixed(2));
-  }
-
-  get failRateStatistic(): CourseStageParticipationAnalysisStatistic {
     return {
-      title: 'Fail Rate',
-      label: 'fails',
-      value: this.failRatePercentage !== null ? `${this.failRatePercentage}%` : 'No evaluations',
-      color: this.failRateColor,
+      title: 'Coverage',
+      label: 'coverage',
+      value: percentage !== null ? `${percentage}%` : 'No evaluations',
+      color: this.coverageColor,
       explanationMarkdown: 'The percentage of evaluations that resulted in "fail".',
     };
+  }
+
+  get evaluationsWithTrustedEvaluation() {
+    return this.allEvaluations.filter((evaluation) => {
+      return evaluation.trustedEvaluation;
+    });
   }
 
   get falseNegativeEvaluations() {
@@ -119,38 +115,6 @@ export default class AccuracySection extends Component<Signature> {
     return this.allEvaluations.filter((evaluation) => {
       return evaluation.result === 'fail' && evaluation.trustedEvaluation;
     });
-  }
-
-  get passRateColor(): 'green' | 'yellow' | 'red' | 'gray' {
-    if (this.passRatePercentage === null) {
-      return 'gray';
-    }
-
-    if (this.passRatePercentage < 90) {
-      return 'green';
-    } else if (this.passRatePercentage < 95) {
-      return 'yellow';
-    } else {
-      return 'red';
-    }
-  }
-
-  get passRatePercentage() {
-    if (this.args.evaluator.totalEvaluationsCount === 0) {
-      return null;
-    }
-
-    return parseFloat(((100 * this.args.evaluator.passedEvaluationsCount) / this.args.evaluator.totalEvaluationsCount).toFixed(2));
-  }
-
-  get passRateStatistic(): CourseStageParticipationAnalysisStatistic {
-    return {
-      title: 'Pass Rate',
-      label: 'passes',
-      value: this.passRatePercentage !== null ? `${this.passRatePercentage}%` : 'No evaluations',
-      color: this.passRateColor,
-      explanationMarkdown: 'The percentage of evaluations that resulted in "pass".',
-    };
   }
 
   get positiveEvaluationsWithTrustedEvaluation() {
