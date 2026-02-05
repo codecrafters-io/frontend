@@ -9,7 +9,7 @@ interface Signature {
 
   Args: {
     onConfirm: () => void;
-    size?: string;
+    size?: 'extra-small' | 'small' | 'regular' | 'large';
   };
 
   Blocks: {

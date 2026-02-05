@@ -5,7 +5,7 @@ interface Signature {
 
   Args: {
     isDisabled?: boolean;
-    size?: string;
+    size?: 'extra-small' | 'small' | 'regular' | 'large';
   };
 
   Blocks: {
