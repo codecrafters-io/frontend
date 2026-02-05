@@ -12,7 +12,7 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
-  test('suggests Git for stage 2', async function (assert) {
+  test('suggests CLI for stage 2', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
@@ -38,8 +38,8 @@ module('Acceptance | course-page | test-runner-card', function (hooks) {
 
     assert.strictEqual(
       coursePage.testRunnerCard.copyableTerminalCommands[0].copyableText,
-      'git add . git commit --allow-empty -m "[any message]" git push origin master',
-      'copyable text mentions git by default',
+      'codecrafters submit # Visit https://codecrafters.io/cli to install',
+      'copyable text mentions cli by default',
     );
 
     await coursePage.testRunnerCard.copyableTerminalCommands[0].clickOnVariantButton('git');
