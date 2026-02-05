@@ -27,6 +27,20 @@ export default class AccuracySection extends Component<Signature> {
     });
   }
 
+  get failRateColor(): 'green' | 'yellow' | 'red' | 'gray' {
+    if (this.failRatePercentage === null) {
+      return 'gray';
+    }
+
+    if (this.failRatePercentage < 5) {
+      return 'red';
+    } else if (this.failRatePercentage < 10) {
+      return 'yellow';
+    } else {
+      return 'green';
+    }
+  }
+
   get failRatePercentage() {
     if (this.args.evaluator.totalEvaluationsCount === 0) {
       return null;
@@ -40,7 +54,7 @@ export default class AccuracySection extends Component<Signature> {
       title: 'Fail Rate',
       label: 'fails',
       value: this.failRatePercentage !== null ? `${this.failRatePercentage}%` : 'No evaluations',
-      color: 'gray',
+      color: this.failRateColor,
       explanationMarkdown: 'The percentage of evaluations that resulted in "fail".',
     };
   }
@@ -107,6 +121,20 @@ export default class AccuracySection extends Component<Signature> {
     });
   }
 
+  get passRateColor(): 'green' | 'yellow' | 'red' | 'gray' {
+    if (this.passRatePercentage === null) {
+      return 'gray';
+    }
+
+    if (this.passRatePercentage < 90) {
+      return 'green';
+    } else if (this.passRatePercentage < 95) {
+      return 'yellow';
+    } else {
+      return 'red';
+    }
+  }
+
   get passRatePercentage() {
     if (this.args.evaluator.totalEvaluationsCount === 0) {
       return null;
@@ -120,7 +148,7 @@ export default class AccuracySection extends Component<Signature> {
       title: 'Pass Rate',
       label: 'passes',
       value: this.passRatePercentage !== null ? `${this.passRatePercentage}%` : 'No evaluations',
-      color: 'gray',
+      color: this.passRateColor,
       explanationMarkdown: 'The percentage of evaluations that resulted in "pass".',
     };
   }
