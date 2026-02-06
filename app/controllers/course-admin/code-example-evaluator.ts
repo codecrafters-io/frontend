@@ -1,15 +1,18 @@
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
 import Controller from '@ember/controller';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type { CodeExampleEvaluatorRouteModel } from 'codecrafters-frontend/routes/course-admin/code-example-evaluator';
 import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
+import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
+import type TrustedCommunitySolutionEvaluationModel from 'codecrafters-frontend/models/trusted-community-solution-evaluation';
 
 export default class CodeExampleEvaluatorController extends Controller {
   declare model: CodeExampleEvaluatorRouteModel;
@@ -21,6 +24,11 @@ export default class CodeExampleEvaluatorController extends Controller {
   languages = '';
   usernames = '';
   course_stage_slugs = '';
+
+  @tracked passEvaluations: CommunitySolutionEvaluationModel[] = [];
+  @tracked failEvaluations: CommunitySolutionEvaluationModel[] = [];
+  @tracked unsureEvaluations: CommunitySolutionEvaluationModel[] = [];
+  @tracked trustedEvaluations: TrustedCommunitySolutionEvaluationModel[] = [];
 
   get currentCourseStage() {
     return this.filteredCourseStages[0] || null;
@@ -40,6 +48,76 @@ export default class CodeExampleEvaluatorController extends Controller {
 
   get sortedLanguagesForDropdown() {
     return this.model.course.betaOrLiveLanguages.toSorted(fieldComparator('name'));
+  }
+
+  buildContextFilters(languageSlugsFilter: string[], courseStageSlugsFilter: string[]): Record<string, string> {
+    const filters: Record<string, string> = {};
+
+    if (languageSlugsFilter.length > 0) {
+      filters['language_slugs'] = languageSlugsFilter.join(',');
+    }
+
+    if (courseStageSlugsFilter.length > 0) {
+      filters['course_stage_slugs'] = courseStageSlugsFilter.join(',');
+    }
+
+    return filters;
+  }
+
+  async fetchEvaluations(
+    evaluator: CommunitySolutionEvaluatorModel,
+    languageSlugsFilter: string[],
+    courseStageSlugsFilter: string[],
+    resultFilter: string,
+  ): Promise<CommunitySolutionEvaluationModel[]> {
+    const filters = this.buildContextFilters(languageSlugsFilter, courseStageSlugsFilter);
+
+    if (resultFilter) {
+      filters['result'] = resultFilter;
+    }
+
+    return (await this.store.query('community-solution-evaluation', {
+      ...filters,
+      ...{
+        evaluator_id: evaluator.id,
+        limit: 30,
+        include: [
+          'community-solution',
+          'community-solution.user',
+          'community-solution.language',
+          'community-solution.course-stage',
+          'community-solution.trusted-evaluations',
+          'community-solution.trusted-evaluations.community-solution',
+          'community-solution.trusted-evaluations.creator',
+          'community-solution.trusted-evaluations.evaluator',
+          'evaluator',
+        ].join(','),
+      },
+    })) as unknown as CommunitySolutionEvaluationModel[];
+  }
+
+  async fetchTrustedEvaluations(
+    evaluator: CommunitySolutionEvaluatorModel,
+    languageSlugsFilter: string[],
+    courseStageSlugsFilter: string[],
+  ): Promise<TrustedCommunitySolutionEvaluationModel[]> {
+    const filters = this.buildContextFilters(languageSlugsFilter, courseStageSlugsFilter);
+
+    return (await this.store.query('trusted-community-solution-evaluation', {
+      ...filters,
+      ...{
+        evaluator_id: evaluator.id,
+        include: [
+          'creator',
+          'community-solution',
+          'community-solution.user',
+          'community-solution.language',
+          'community-solution.course-stage',
+          'community-solution.evaluations',
+          'evaluator',
+        ].join(','),
+      },
+    })) as unknown as TrustedCommunitySolutionEvaluationModel[];
   }
 
   @action
@@ -78,6 +156,22 @@ export default class CodeExampleEvaluatorController extends Controller {
   handleRequestedLanguageChange(language: LanguageModel) {
     this.router.transitionTo({ queryParams: { languages: language.slug } });
   }
+
+  loadEvaluationsTask = task({ restartable: true }, async (): Promise<void> => {
+    const { evaluator, filteredLanguageSlugs, filteredCourseStageSlugs } = this.model;
+
+    const [passEvaluations, failEvaluations, unsureEvaluations, trustedEvaluations] = await Promise.all([
+      this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'pass'),
+      this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'fail'),
+      this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'unsure'),
+      this.fetchTrustedEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs),
+    ]);
+
+    this.passEvaluations = passEvaluations;
+    this.failEvaluations = failEvaluations;
+    this.unsureEvaluations = unsureEvaluations;
+    this.trustedEvaluations = trustedEvaluations;
+  });
 
   evaluateMoreSolutionsTask = task({ drop: true }, async (): Promise<void> => {
     const dummyRecord = this.store.createRecord('community-solution-evaluation') as CommunitySolutionEvaluationModel;

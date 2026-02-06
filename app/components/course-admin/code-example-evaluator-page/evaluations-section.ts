@@ -11,6 +11,7 @@ export interface Signature {
 
   Args: {
     evaluator: CommunitySolutionEvaluatorModel;
+    isLoading: boolean;
     passEvaluations: CommunitySolutionEvaluationModel[];
     failEvaluations: CommunitySolutionEvaluationModel[];
     unsureEvaluations: CommunitySolutionEvaluationModel[];
@@ -19,7 +20,6 @@ export interface Signature {
 
 export default class EvaluationsSection extends Component<Signature> {
   @tracked activeTabSlug: 'fail' | 'pass' | 'unsure' = 'fail';
-  @tracked sortedEvaluations: CommunitySolutionEvaluationModel[] = [];
 
   get filteredEvaluations() {
     if (this.activeTabSlug === 'fail') {
@@ -31,6 +31,10 @@ export default class EvaluationsSection extends Component<Signature> {
     } else {
       throw new Error(`Invalid tab: ${this.activeTabSlug}`);
     }
+  }
+
+  get sortedEvaluations() {
+    return this.filteredEvaluations.toSorted(fieldComparator('updatedAt')).reverse();
   }
 
   get tabs() {
@@ -54,14 +58,8 @@ export default class EvaluationsSection extends Component<Signature> {
   }
 
   @action
-  handleDidInsertTabContents() {
-    this.sortedEvaluations = this.filteredEvaluations.toSorted(fieldComparator('updatedAt')).reverse();
-  }
-
-  @action
   handleTabChange(tab: Tab) {
     this.activeTabSlug = tab.slug as 'fail' | 'pass' | 'unsure';
-    this.handleDidInsertTabContents();
   }
 }
 

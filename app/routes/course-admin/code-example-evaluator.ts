@@ -5,9 +5,9 @@ import type CourseModel from 'codecrafters-frontend/models/course';
 import type CommunitySolutionEvaluatorModel from 'codecrafters-frontend/models/community-solution-evaluator';
 import type RouterService from '@ember/routing/router-service';
 import type LanguageModel from 'codecrafters-frontend/models/language';
-import type CommunitySolutionEvaluationModel from 'codecrafters-frontend/models/community-solution-evaluation';
-import type TrustedCommunitySolutionEvaluationModel from 'codecrafters-frontend/models/trusted-community-solution-evaluation';
+import type Transition from '@ember/routing/transition';
 import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import type CodeExampleEvaluatorController from 'codecrafters-frontend/controllers/course-admin/code-example-evaluator';
 
 export type CodeExampleEvaluatorRouteModel = {
   course: CourseModel;
@@ -15,10 +15,6 @@ export type CodeExampleEvaluatorRouteModel = {
   evaluator: CommunitySolutionEvaluatorModel;
   filteredLanguageSlugs: string[];
   filteredCourseStageSlugs: string[];
-  trustedEvaluations: TrustedCommunitySolutionEvaluationModel[];
-  passEvaluations: CommunitySolutionEvaluationModel[];
-  failEvaluations: CommunitySolutionEvaluationModel[];
-  unsureEvaluations: CommunitySolutionEvaluationModel[];
 };
 
 export default class CodeExampleEvaluatorRoute extends BaseRoute {
@@ -34,81 +30,8 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
     },
   };
 
-  buildContextFilters(_course: CourseModel, languageSlugsFilter: string[], courseStageSlugsFilter: string[]): Record<string, string> {
-    // TODO: Add a course_id filter if the evaluator is course-specific
-    const filters: Record<string, string> = {};
-
-    if (languageSlugsFilter.length > 0) {
-      filters['language_slugs'] = languageSlugsFilter.join(',');
-    }
-
-    if (courseStageSlugsFilter.length > 0) {
-      filters['course_stage_slugs'] = courseStageSlugsFilter.join(',');
-    }
-
-    return filters;
-  }
-
   buildRouteInfoMetadata() {
     return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
-  }
-
-  async loadEvaluations(
-    evaluator: CommunitySolutionEvaluatorModel,
-    course: CourseModel,
-    languageSlugsFilter: string[],
-    courseStageSlugsFilter: string[],
-    resultFilter: string,
-  ): Promise<CommunitySolutionEvaluationModel[]> {
-    const filters = this.buildContextFilters(course, languageSlugsFilter, courseStageSlugsFilter);
-
-    if (resultFilter) {
-      filters['result'] = resultFilter;
-    }
-
-    return (await this.store.query('community-solution-evaluation', {
-      ...filters,
-      ...{
-        evaluator_id: evaluator.id,
-        limit: 30,
-        include: [
-          'community-solution',
-          'community-solution.user',
-          'community-solution.language',
-          'community-solution.course-stage',
-          'community-solution.trusted-evaluations',
-          'community-solution.trusted-evaluations.community-solution',
-          'community-solution.trusted-evaluations.creator',
-          'community-solution.trusted-evaluations.evaluator',
-          'evaluator',
-        ].join(','),
-      },
-    })) as unknown as CommunitySolutionEvaluationModel[];
-  }
-
-  async loadTrustedEvaluations(
-    evaluator: CommunitySolutionEvaluatorModel,
-    course: CourseModel,
-    languageSlugsFilter: string[],
-    courseStageSlugsFilter: string[],
-  ): Promise<TrustedCommunitySolutionEvaluationModel[]> {
-    const filters = this.buildContextFilters(course, languageSlugsFilter, courseStageSlugsFilter);
-
-    return (await this.store.query('trusted-community-solution-evaluation', {
-      ...filters,
-      ...{
-        evaluator_id: evaluator.id,
-        include: [
-          'creator',
-          'community-solution',
-          'community-solution.user',
-          'community-solution.language',
-          'community-solution.course-stage',
-          'community-solution.evaluations',
-          'evaluator',
-        ].join(','),
-      },
-    })) as unknown as TrustedCommunitySolutionEvaluationModel[];
   }
 
   async model(params: { evaluator_slug: string; languages: string; course_stage_slugs: string }): Promise<CodeExampleEvaluatorRouteModel> {
@@ -127,19 +50,17 @@ export default class CodeExampleEvaluatorRoute extends BaseRoute {
       return {} as CodeExampleEvaluatorRouteModel;
     }
 
-    const languageSlugs = params.languages.split(',');
-    const courseStageSlugs = params.course_stage_slugs.split(',');
-
     return {
       course: course,
       languages: (await this.store.findAll('language')) as unknown as LanguageModel[],
       evaluator: evaluator,
-      passEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'pass'),
-      failEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'fail'),
-      unsureEvaluations: await this.loadEvaluations(evaluator, course, languageSlugs, courseStageSlugs, 'unsure'),
-      trustedEvaluations: await this.loadTrustedEvaluations(evaluator, course, languageSlugs, courseStageSlugs),
       filteredLanguageSlugs: params.languages.split(','),
       filteredCourseStageSlugs: params.course_stage_slugs.split(','),
     };
+  }
+
+  setupController(controller: CodeExampleEvaluatorController, model: CodeExampleEvaluatorRouteModel, transition: Transition) {
+    super.setupController(controller, model, transition);
+    controller.loadEvaluationsTask.perform();
   }
 }
