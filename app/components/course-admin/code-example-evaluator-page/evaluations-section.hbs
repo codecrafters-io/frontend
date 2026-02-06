@@ -12,10 +12,16 @@
   </div>
 
   <Tabs @size="regular" @tabs={{this.tabs}} @activeTabSlug={{this.activeTabSlug}} @onTabChange={{this.handleTabChange}}>
-    <div class="mt-6" {{did-insert this.handleDidInsertTabContents}}>
-      {{#each this.sortedEvaluations as |evaluation|}}
-        <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
-      {{/each}}
+    <div class="mt-6">
+      {{#if @isLoading}}
+        <div class="text-gray-400 dark:text-gray-600 text-sm py-8 text-center">
+          Loading evaluations...
+        </div>
+      {{else}}
+        {{#each this.sortedEvaluations as |evaluation|}}
+          <CourseAdmin::CodeExamplePage::EvaluationCard @evaluation={{evaluation}} class="mb-4" />
+        {{/each}}
+      {{/if}}
     </div>
   </Tabs>
 </div>
