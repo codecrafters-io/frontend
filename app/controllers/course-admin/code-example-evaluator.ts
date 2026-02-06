@@ -28,7 +28,6 @@ export default class CodeExampleEvaluatorController extends Controller {
   @tracked passEvaluations: CommunitySolutionEvaluationModel[] = [];
   @tracked failEvaluations: CommunitySolutionEvaluationModel[] = [];
   @tracked unsureEvaluations: CommunitySolutionEvaluationModel[] = [];
-  @tracked trustedEvaluations: TrustedCommunitySolutionEvaluationModel[] = [];
 
   get currentCourseStage() {
     return this.filteredCourseStages[0] || null;
@@ -160,7 +159,7 @@ export default class CodeExampleEvaluatorController extends Controller {
   loadEvaluationsTask = task({ restartable: true }, async (): Promise<void> => {
     const { evaluator, filteredLanguageSlugs, filteredCourseStageSlugs } = this.model;
 
-    const [passEvaluations, failEvaluations, unsureEvaluations, trustedEvaluations] = await Promise.all([
+    const [passEvaluations, failEvaluations, unsureEvaluations] = await Promise.all([
       this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'pass'),
       this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'fail'),
       this.fetchEvaluations(evaluator, filteredLanguageSlugs, filteredCourseStageSlugs, 'unsure'),
@@ -170,7 +169,6 @@ export default class CodeExampleEvaluatorController extends Controller {
     this.passEvaluations = passEvaluations;
     this.failEvaluations = failEvaluations;
     this.unsureEvaluations = unsureEvaluations;
-    this.trustedEvaluations = trustedEvaluations;
   });
 
   evaluateMoreSolutionsTask = task({ drop: true }, async (): Promise<void> => {
