@@ -10,10 +10,15 @@ export default class PromotionalDiscountModel extends Model {
 
   @attr('date') createdAt!: Date;
   @attr('date') expiresAt!: Date;
-  @attr('string') type!: 'signup' | 'affiliate_referral' | 'stage_2_completion' | 'membership_expiry';
   @attr('number') percentageOff!: number;
+  @attr('string') type!: 'signup' | 'affiliate_referral' | 'stage_2_completion' | 'membership_expiry';
+  @attr('date') usedAt!: Date | null;
 
   @service declare time: TimeService;
+
+  get isActive() {
+    return !this.isExpired && !this.isUsed;
+  }
 
   get isExpired() {
     // short-circuit, prevent re-computation
@@ -38,6 +43,10 @@ export default class PromotionalDiscountModel extends Model {
 
   get isFromStage2Completion() {
     return this.type === 'stage_2_completion';
+  }
+
+  get isUsed() {
+    return !!this.usedAt;
   }
 
   computeDiscountedPrice(price: number) {

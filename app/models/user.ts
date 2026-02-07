@@ -227,7 +227,7 @@ export default class UserModel extends Model {
     return (
       this.promotionalDiscounts
         .filter((item) => item.type === type)
-        .filter((item) => !item.isExpired)
+        .filter((item) => item.isActive)
         .sort(fieldComparator('createdAt'))
         .reverse()[0] || null
     );

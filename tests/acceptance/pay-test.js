@@ -77,6 +77,23 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
 
+  test('used signup discount is not shown on pay page', async function (assert) {
+    testScenario(this.server);
+
+    const user = signIn(this.owner, this.server);
+
+    this.server.create('promotional-discount', {
+      userId: user.id,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+      usedAt: new Date(new Date().getTime() - 1 * 60 * 60 * 1000),
+    });
+
+    await payPage.visit();
+    assert.false(payPage.signupDiscountNotice.isVisible, 'should not show signup discount notice for used discount');
+  });
+
   test('user with stage2 discount can start checkout session', async function (assert) {
     testScenario(this.server);
 
