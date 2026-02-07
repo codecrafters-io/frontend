@@ -97,4 +97,17 @@ module('Acceptance | view-discount-countdown', function (hooks) {
     await catalogPage.visit();
     assert.notOk(catalogPage.header.discountTimerBadge.isVisible, 'Discount timer badge is not visible without active discount');
   });
+
+  test('discount timer badge is not visible when discount is used', async function (assert) {
+    this.server.schema.promotionalDiscounts.create({
+      user: this.currentUser,
+      type: 'signup',
+      percentageOff: 40,
+      expiresAt: new Date(new Date().getTime() + 1 * 60 * 60 * 1000),
+      usedAt: new Date(new Date().getTime() - 1 * 60 * 60 * 1000),
+    });
+
+    await catalogPage.visit();
+    assert.notOk(catalogPage.header.discountTimerBadge.isVisible, 'Discount timer badge is not visible when discount is used');
+  });
 });
