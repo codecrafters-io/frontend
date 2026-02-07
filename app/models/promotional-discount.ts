@@ -46,7 +46,7 @@ export default class PromotionalDiscountModel extends Model {
   }
 
   get isUsed() {
-    return this.usedAt !== null;
+    return this.usedAt != null;
   }
 
   computeDiscountedPrice(price: number) {
