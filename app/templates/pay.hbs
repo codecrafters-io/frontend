@@ -15,6 +15,8 @@
       <PayPage::ReferralDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
     {{else if this.activeDiscountForYearlyPlan.isFromStage2Completion}}
       <PayPage::Stage2CompletionDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
+    {{else if this.activeDiscountForYearlyPlan.isFromMembershipExpiry}}
+      <PayPage::EarlyRenewalDiscountNotice @discount={{this.activeDiscountForYearlyPlan}} class="mt-8" />
     {{/if}}
 
     <AnimatedContainer>

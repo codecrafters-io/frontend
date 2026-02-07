@@ -1,0 +1,18 @@
+<div
+  class="flex p-3.5 bg-linear-to-b from-gray-600 to-gray-950 border border-yellow-600 rounded-sm relative shadow-sm"
+  data-test-early-renewal-discount-notice
+  ...attributes
+>
+  <div class="mr-1.5 shrink-0">
+    <img src={{this.iconImage}} alt="treasure" class="w-8 animate-spin-once" />
+  </div>
+
+  <div class="text-gradient-to-b from-yellow-100 to-amber-500 leading-7 inline-block mt-0.5">
+    🎁 Early renewal offer: Renew in
+    <span class="font-bold percy-timestamp font-mono text-lg border-b border-yellow-500 border-dashed">{{this.timeLeftText}}</span>
+    to get
+    <span class="font-bold">{{@discount.percentageOff}}% off</span>
+    the annual plan.
+  </div>
+  <EmberTooltip @text="Renew your membership before expiry to get a discount on the 1 year plan." @side="bottom" />
+</div>
