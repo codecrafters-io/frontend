@@ -10,6 +10,10 @@ export default createPage({
   clickOnModalBackdrop: clickable('[data-test-modal-backdrop]'),
   header: Header,
 
+  earlyRenewalDiscountNotice: {
+    scope: '[data-test-early-renewal-discount-notice]',
+  },
+
   pageRegionalDiscountNotice: {
     scope: '[data-test-regional-discount-notice]',
   },

@@ -157,6 +157,40 @@ module('Acceptance | pay-test', function (hooks) {
     assert.notStrictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, signupDiscount.id);
   });
 
+  test('user with early renewal discount can start checkout session', async function (assert) {
+    testScenario(this.server);
+
+    const user = signIn(this.owner, this.server);
+
+    const earlyRenewalDiscount = this.server.create('promotional-discount', {
+      userId: user.id,
+      type: 'membership_expiry',
+      percentageOff: 50,
+      expiresAt: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+    });
+
+    await payPage.visit();
+    assert.true(payPage.earlyRenewalDiscountNotice.isVisible, 'should show page-level early renewal discount notice');
+    assert.ok(payPage.earlyRenewalDiscountNotice.text.match(/early renewal.*50%/i), 'should show early renewal discount details on page');
+
+    await payPage.pricingPlanCards[1].ctaButton.click();
+    await payPage.chooseMembershipPlanModal.planCards[1].click();
+    assert.strictEqual(payPage.chooseMembershipPlanModal.planCards[1].discountedPriceText, '$180', 'should show discounted price');
+    assert.true(
+      payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.isVisible,
+      'should show early renewal discount notice in modal',
+    );
+    assert.ok(
+      payPage.chooseMembershipPlanModal.planCards[1].promotionalDiscountNotice.text.match(
+        /^50% off — Early renewal discount, expires in \d{2}h:\d{2}m:\d{2}s$/,
+      ),
+    );
+
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount.id, earlyRenewalDiscount.id);
+  });
+
   // TODO: Add test for only referral discount
 
   test('user can create checkout session with regional discount applied', async function (assert) {
