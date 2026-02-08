@@ -44,6 +44,16 @@ import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-co
 import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
 
+languages.push(
+  LanguageDescription.of({
+    name: 'Elixir',
+    extensions: ['ex', 'exs'],
+    async load() {
+      return (await import('codemirror-lang-elixir')).elixir();
+    },
+  }),
+);
+
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
   div.innerHTML = src;
