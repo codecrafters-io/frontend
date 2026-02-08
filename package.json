@@ -116,6 +116,7 @@
     "canvas-confetti": "^1.9.4",
     "codemirror": "^6.0.2",
     "codemirror-lang-elixir": "^4.0.0",
+    "codemirror-lang-zig": "^0.1.0",
     "concurrently": "^9.2.1",
     "culori": "^4.0.2",
     "date-fns": "4.1.0",

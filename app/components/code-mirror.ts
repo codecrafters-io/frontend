@@ -52,6 +52,13 @@ languages.push(
       return (await import('codemirror-lang-elixir')).elixir();
     },
   }),
+  LanguageDescription.of({
+    name: 'Zig',
+    extensions: ['zig'],
+    async load() {
+      return (await import('codemirror-lang-zig')).zig();
+    },
+  }),
 );
 
 function generateHTMLElement(src: string): HTMLElement {

@@ -107,6 +107,7 @@
         "canvas-confetti": "^1.9.4",
         "codemirror": "^6.0.2",
         "codemirror-lang-elixir": "^4.0.0",
+        "codemirror-lang-zig": "^0.1.0",
         "concurrently": "^9.2.1",
         "culori": "^4.0.2",
         "date-fns": "4.1.0",
@@ -1601,6 +1602,8 @@
     "codemirror": ["codemirror@6.0.2", "", { "dependencies": { "@codemirror/autocomplete": "^6.0.0", "@codemirror/commands": "^6.0.0", "@codemirror/language": "^6.0.0", "@codemirror/lint": "^6.0.0", "@codemirror/search": "^6.0.0", "@codemirror/state": "^6.0.0", "@codemirror/view": "^6.0.0" } }, "sha512-VhydHotNW5w1UGK0Qj96BwSk/Zqbp9WbnyK2W/eVMv4QyF41INRGpjUhFJY7/uDNuudSc33a/PKr4iDqRduvHw=="],
 
     "codemirror-lang-elixir": ["codemirror-lang-elixir@4.0.0", "", { "dependencies": { "@codemirror/language": "^6.0.0", "lezer-elixir": "^1.0.0" } }, "sha512-mzFesxo/t6KOxwnkqVd34R/q7yk+sMtHh6vUKGAvjwHmpL7bERHB+vQAsmU/nqrndkwVeJEHWGw/z/ybfdiudA=="],
+
+    "codemirror-lang-zig": ["codemirror-lang-zig@0.1.0", "", { "dependencies": { "@codemirror/language": "^6.0.0", "@lezer/common": "^1.0.0", "@lezer/lr": "^1.0.0" } }, "sha512-/6rTQzs1SUQKNTkD88+B4g89h46Yad+Vm1AIuXfgLSWWsqRjkTZovhjZny6TW1BijSjIR2OC9cJlC7mHa/Ystw=="],
 
     "coffeescript": ["coffeescript@1.12.7", "", { "bin": { "coffee": "./bin/coffee", "cake": "./bin/cake" } }, "sha512-pLXHFxQMPklVoEekowk8b3erNynC+DVJzChxS/LCBBgR6/8AJkHivkm//zbowcfc7BTCAjryuhx6gPqPRfsFoA=="],
 
