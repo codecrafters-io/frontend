@@ -14,6 +14,25 @@ module('Acceptance | course-page | leaderboard-progress', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
 
+  test('default leaderboard language is first by track position when no language is selected', async function (assert) {
+    testScenario(this.server, ['dummy']);
+    signIn(this.owner, this.server);
+
+    const course = this.server.schema.courses.findBy({ slug: 'dummy' });
+    course.update({ releaseStatus: 'live' });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Dummy');
+    await courseOverviewPage.clickOnStartCourse();
+
+    // Before selecting a language, the leaderboard should default to the first language by track position (Rust)
+    assert.strictEqual(
+      coursePage.trackLeaderboard.titleText.toUpperCase(),
+      'RUST LEADERBOARD',
+      'default leaderboard shows Rust (first language by track position) before user selects a language',
+    );
+  });
+
   test('can complete first stage', async function (assert) {
     testScenario(this.server, ['dummy']);
     signIn(this.owner, this.server);

@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import PreferredLanguageLeaderboardService from 'codecrafters-frontend/services/preferred-language-leaderboard';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
+import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
@@ -67,7 +68,7 @@ export default class CoursePageRightSidebar extends Component<Signature> {
       }
     }
 
-    return this.args.course.betaOrLiveLanguages.toSorted((a, b) => a.sortPositionForTrack.localeCompare(b.sortPositionForTrack))[0]!;
+    return this.args.course.betaOrLiveLanguages.toSorted(fieldComparator('sortPositionForTrack'))[0]!;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion(): FeatureSuggestionModel | null {
