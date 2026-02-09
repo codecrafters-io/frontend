@@ -26,18 +26,6 @@
     </div>
 
     <div class="shrink-0 flex items-center gap-3">
-      {{#if (or (current-user-is-staff) (current-user-is-course-author @model.courseStage.course))}}
-        <div class="flex items-center gap-2">
-          <div class="text-xs text-gray-400 dark:text-gray-500">
-            Use ratings
-          </div>
-
-          <Toggle @isOn={{eq this.order "experimental"}} {{on "click" this.handleOrderToggle}} class="shrink-0" />
-
-          <EmberTooltip @text="Only visible to staff & challenge authors. Toggle to sort by rankings." />
-        </div>
-      {{/if}}
-
       <LanguageDropdown
         @languages={{this.sortedLanguagesForDropdown}}
         @requestedLanguage={{this.requestedLanguage}}
