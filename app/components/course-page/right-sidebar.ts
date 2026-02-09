@@ -67,7 +67,7 @@ export default class CoursePageRightSidebar extends Component<Signature> {
       }
     }
 
-    return this.args.course.betaOrLiveLanguages[0]!;
+    return this.args.course.betaOrLiveLanguages.toSorted((a, b) => a.sortPositionForTrack.localeCompare(b.sortPositionForTrack))[0]!;
   }
 
   get visiblePrivateLeaderboardFeatureSuggestion(): FeatureSuggestionModel | null {
