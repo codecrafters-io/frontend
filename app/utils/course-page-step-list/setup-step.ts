@@ -57,7 +57,7 @@ export default class SetupStep extends StepDefinition {
   }
 
   get title() {
-    return 'Repository Setup';
+    return 'Local Setup';
   }
 
   get type(): 'SetupStep' {

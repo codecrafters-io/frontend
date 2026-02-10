@@ -38,7 +38,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await coursePage.sidebar.clickOnStepListItem('Bind to a port');
     assert.strictEqual(currentURL(), '/courses/redis/stages/jm1', 'stage 1 is shown');
 
-    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
+    await coursePage.sidebar.clickOnStepListItem('Local Setup');
     assert.strictEqual(currentURL(), '/courses/redis/setup', 'setup page is shown');
   });
 

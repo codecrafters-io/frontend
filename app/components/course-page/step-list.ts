@@ -46,7 +46,7 @@ export default class StepList extends Component<Signature> {
 
   get toggleButtonTooltipCopy() {
     if (this.args.activeRepository.get('isNew')) {
-      return 'Complete repository setup to configure extensions';
+      return 'Complete local setup to configure extensions';
     } else {
       return 'Click here to configure extensions';
     }

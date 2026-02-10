@@ -78,7 +78,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
-      contentString: 'Complete repository setup to configure extensions',
+      contentString: 'Complete local setup to configure extensions',
     });
   });
 
@@ -96,7 +96,7 @@ module('Acceptance | course-page | extensions | enable-extensions', function (ho
     await coursePage.sidebar.configureExtensionsToggles[0].hover();
 
     assertTooltipContent(assert, {
-      contentString: 'Complete repository setup to configure extensions',
+      contentString: 'Complete local setup to configure extensions',
     });
   });
 
