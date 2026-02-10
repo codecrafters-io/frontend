@@ -127,7 +127,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     );
   });
 
-  test('can try other language from repository setup page (regression)', async function (assert) {
+  test('can try other language from local setup page (regression)', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);
 
@@ -148,7 +148,7 @@ module('Acceptance | course-page | try-other-language', function (hooks) {
     await catalogPage.clickOnCourse('Build your own Dummy');
     await courseOverviewPage.clickOnStartCourse();
 
-    await coursePage.sidebar.clickOnStepListItem('Repository Setup');
+    await coursePage.sidebar.clickOnStepListItem('Local Setup');
 
     await coursePage.repositoryDropdown.click();
     await coursePage.repositoryDropdown.clickOnAction('Try a different language');

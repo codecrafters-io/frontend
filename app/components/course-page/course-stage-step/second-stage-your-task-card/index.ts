@@ -33,7 +33,7 @@ class RunTestsStep extends BaseStep implements StepDefinition {
   id = 'run-tests';
 
   get titleMarkdown() {
-    return 'Run tests';
+    return 'Run tests remotely';
   }
 }
 

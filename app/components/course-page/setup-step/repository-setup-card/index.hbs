@@ -1,16 +1,16 @@
 <CoursePage::InstructionsCard data-test-repository-setup-card ...attributes>
   <:header>
     <div class="flex items-center gap-x-3 w-full border-b border-gray-200 dark:border-white/10 pb-2 mb-5">
-      <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Repository Setup</h2>
+      <h2 class="font-semibold text-lg text-gray-700 dark:text-gray-200">Local Setup</h2>
       <CoursePage::StepStatusPill @step={{this.coursePageState.currentStep}} data-test-status-text />
     </div>
   </:header>
   <:content>
     <div class="prose dark:prose-invert mb-5">
       <p>
-        We've prepared a starter repository with some
+        Follow these steps to set up your
         {{@repository.language.name}}
-        code for you.
+        project locally.
       </p>
     </div>
 

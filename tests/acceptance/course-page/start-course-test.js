@@ -159,7 +159,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
-    assert.strictEqual(coursePage.header.stepName, 'Repository Setup', 'step name is repository setup');
+    assert.strictEqual(coursePage.header.stepName, 'Local Setup', 'step name is local setup');
     assert.strictEqual(coursePage.testResultsBar.progressIndicatorText, 'Listening for ping...', 'progress text is listening for ping');
 
     assert.strictEqual(

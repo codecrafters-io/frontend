@@ -110,7 +110,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
       return {
         dotType: 'none',
         text: this.courseStage.isFirst
-          ? 'Complete repository setup to gain access to this stage.'
+          ? 'Complete local setup to gain access to this stage.'
           : 'Complete previous stages to gain access to this stage.',
       };
     } else {
