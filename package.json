@@ -111,7 +111,7 @@
     "@types/showdown": "^2.0.2",
     "@types/three": "^0.172.0",
     "@uiw/codemirror-theme-github": "^4.25.4",
-    "autoprefixer": "^10.4.23",
+    "autoprefixer": "^10.4.24",
     "broccoli-asset-rev": "^3.0.0",
     "canvas-confetti": "^1.9.4",
     "codemirror": "^6.0.2",
