@@ -4,7 +4,6 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,8 +18,6 @@ interface Signature {
 }
 
 export default class PreviousStepsIncompleteOverlay extends Component<Signature> {
-  transition = fade;
-
   @tracked modalWasDismissed = false;
   @tracked lastSeenStepStatus: string | null = null;
 
