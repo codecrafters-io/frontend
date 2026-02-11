@@ -32,6 +32,11 @@ export default class TestsPassedOverlay extends Component<Signature> {
   }
 
   @action
+  handleNoticeClick() {
+    this.modalWasDismissed = false;
+  }
+
+  @action
   handleStepIdUpdated() {
     if (this.args.currentStep.id === this.lastSeenStepId) {
       return;

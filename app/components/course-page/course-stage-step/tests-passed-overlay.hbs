@@ -10,7 +10,7 @@
         class="sticky top-10 z-10 px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
         {{! Ensure this is visible when modal is dismissed }}
         {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-        {{on "click" (fn (mut this.modalWasDismissed) false)}}
+        {{on "click" this.handleNoticeClick}}
       />
     {{/if}}
 
