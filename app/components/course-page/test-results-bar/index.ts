@@ -7,7 +7,6 @@ import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-lis
 import { tracked } from '@glimmer/tracking';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
-import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import fade from 'ember-animated/transitions/fade';
@@ -32,7 +31,6 @@ export default class TestResultsBar extends Component<Signature> {
 
   @service declare authenticator: AuthenticatorService;
   @service declare coursePageState: CoursePageStateService;
-  @service declare featureFlags: FeatureFlagsService;
   @service declare screen: ScreenService;
 
   @tracked activeTabSlugForLeftPane = 'logs'; // 'logs' | 'autofix'
@@ -64,13 +62,11 @@ export default class TestResultsBar extends Component<Signature> {
       if (courseStageStep.courseStage.isFirst) {
         return ['logs'];
       } else {
-        if (this.featureFlags.canViewAutofixFlow && this.autofixRequestForActiveStep) {
+        if (this.autofixRequestForActiveStep) {
           return ['logs', 'autofix'];
         } else {
           return ['logs'];
         }
-
-        // return ['logs'];
       }
     } else {
       return ['logs'];
