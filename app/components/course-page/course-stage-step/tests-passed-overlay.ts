@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,8 +16,6 @@ interface Signature {
 }
 
 export default class TestsPassedOverlay extends Component<Signature> {
-  transition = fade;
-
   @tracked lastSeenStepId: string | null = null;
   @tracked modalWasDismissed = false;
 
@@ -29,6 +26,11 @@ export default class TestsPassedOverlay extends Component<Signature> {
   @action
   handleModalDismissed() {
     this.modalWasDismissed = true;
+  }
+
+  @action
+  handleNoticeClick() {
+    this.modalWasDismissed = false;
   }
 
   @action
