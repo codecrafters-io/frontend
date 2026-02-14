@@ -36,13 +36,36 @@ import {
 } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
-import { yaml } from '@codemirror/lang-yaml';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
+
+languages.push(
+  LanguageDescription.of({
+    name: 'Elixir',
+    extensions: ['ex', 'exs'],
+    async load() {
+      return (await import('codemirror-lang-elixir')).elixir();
+    },
+  }),
+  LanguageDescription.of({
+    name: 'Zig',
+    extensions: ['zig'],
+    async load() {
+      return (await import('codemirror-lang-zig')).zig();
+    },
+  }),
+  LanguageDescription.of({
+    name: 'Gleam',
+    extensions: ['gleam'],
+    async load() {
+      return (await import('@exercism/codemirror-lang-gleam')).gleam();
+    },
+  }),
+);
 
 function generateHTMLElement(src: string): HTMLElement {
   const div = document.createElement('div');
@@ -119,9 +142,6 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
       switch (detectedLanguage.name.toLowerCase()) {
         case 'markdown':
           loadedLanguage = markdown({ codeLanguages: languages });
-          break;
-        case 'yaml':
-          loadedLanguage = yaml();
           break;
         default:
           loadedLanguage = await detectedLanguage.load();
