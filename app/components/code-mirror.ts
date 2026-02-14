@@ -36,7 +36,6 @@ import {
 } from '@codemirror/language';
 import { languages } from '@codemirror/language-data';
 import { markdown } from '@codemirror/lang-markdown';
-import { yaml } from '@codemirror/lang-yaml';
 import { highlightNewlines } from 'codecrafters-frontend/utils/code-mirror-highlight-newlines';
 import { highlightRanges } from 'codecrafters-frontend/utils/code-mirror-highlight-ranges';
 import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges';
@@ -136,9 +135,6 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
       switch (detectedLanguage.name.toLowerCase()) {
         case 'markdown':
           loadedLanguage = markdown({ codeLanguages: languages });
-          break;
-        case 'yaml':
-          loadedLanguage = yaml();
           break;
         default:
           loadedLanguage = await detectedLanguage.load();
