@@ -58,6 +58,13 @@ languages.push(
       return (await import('codemirror-lang-zig')).zig();
     },
   }),
+  LanguageDescription.of({
+    name: 'Gleam',
+    extensions: ['gleam'],
+    async load() {
+      return (await import('@exercism/codemirror-lang-gleam')).gleam();
+    },
+  }),
 );
 
 function generateHTMLElement(src: string): HTMLElement {

@@ -45,6 +45,7 @@
         "@embroider/router": "^2.1.8",
         "@embroider/webpack": "^4.1.0",
         "@eslint/js": "^9.25.1",
+        "@exercism/codemirror-lang-gleam": "^2.0.1",
         "@glimmer/component": "^2.0.0",
         "@glimmer/tracking": "^1.1.2",
         "@glint/core": "^1.5.2",
@@ -622,6 +623,8 @@
     "@eslint/object-schema": ["@eslint/object-schema@2.1.7", "", {}, "sha512-VtAOaymWVfZcmZbp6E2mympDIHvyjXs/12LqWYjVw6qjrfF+VK+fyG33kChz3nnK+SU5/NeHOqrTEHS8sXO3OA=="],
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
+
+    "@exercism/codemirror-lang-gleam": ["@exercism/codemirror-lang-gleam@2.0.1", "", { "dependencies": { "@codemirror/autocomplete": "^6.15.0", "@codemirror/language": "^6.10.1", "@lezer/highlight": "^1.2.0", "@lezer/lr": "^1.4.0" } }, "sha512-vl4wJ7ayMb71PBJKkA8dQev0KLTWazTIKs/zM3xQWaBQhGu9loyca9nQqpfmWAyxvkph0X/a8AJBF5C6w/8EGw=="],
 
     "@fastify/busboy": ["@fastify/busboy@2.1.1", "", {}, "sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA=="],
 

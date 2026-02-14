@@ -388,6 +388,8 @@ module('Integration | Component | code-mirror', function (hooks) {
         assert.ok(codeMirror.hasRendered);
         this.set('language', 'zig');
         assert.ok(codeMirror.hasRendered);
+        this.set('language', 'gleam');
+        assert.ok(codeMirror.hasRendered);
       });
 
       skip('it does something useful with the editor');
