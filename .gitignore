@@ -9,6 +9,7 @@
 /.env
 /.pnp*
 /.eslintcache
+/.stylelintcache
 /tsconfig.tsbuildinfo
 /coverage/
 /npm-debug.log*

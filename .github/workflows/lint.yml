@@ -38,6 +38,20 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: bun install --frozen-lockfile --ignore-scripts
 
+      # Persist lint tool caches (eslint, stylelint, tsc incremental) across runs
+      - name: Cache lint artifacts
+        uses: actions/cache@v5
+        with:
+          path: |
+            .eslintcache
+            .stylelintcache
+            tsconfig.tsbuildinfo
+          key: lint-${{ runner.os }}-${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            lint-${{ runner.os }}-${{ github.ref }}-
+            lint-${{ runner.os }}-refs/heads/main-
+            lint-${{ runner.os }}-
+
       - name: Run linter
         id: lint
         continue-on-error: true
