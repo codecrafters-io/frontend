@@ -50,7 +50,7 @@ const OPTION_DEFAULTS = {
   highlightSelectionMatches: true,
   highlightSpecialChars: true,
   highlightTrailingWhitespace: true,
-  highlightWhitespace: true,
+  highlightWhitespace: false,
   history: true,
   indentOnInput: true,
   indentUnit: true,
