@@ -93,13 +93,6 @@ export default defineConfig([
       ],
       'import/no-unresolved': 'off',
 
-      // These import/* module-resolution rules are redundant with TypeScript/Glint
-      // type checking for .ts files, and are extremely expensive.
-      // `import/namespace` alone accounts for 63.6% of ESLint rule time (7.4s).
-      'import/namespace': 'off',
-      'import/named': 'off',
-      'import/default': 'off',
-
       '@stylistic/padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'return' },
@@ -151,6 +144,13 @@ export default defineConfig([
     files: ['**/*.{ts,gts}'],
     extends: [tseslint.configs.recommended, eslintConfigEmberGTS, importPlugin.flatConfigs.typescript],
     rules: {
+      // These import/* module-resolution rules are redundant with TypeScript/Glint
+      // type checking for .ts files, and are extremely expensive.
+      // `import/namespace` alone accounts for 63.6% of ESLint rule time (7.4s).
+      'import/namespace': 'off',
+      'import/named': 'off',
+      'import/default': 'off',
+
       'no-constant-condition': ['error', { checkLoops: false }],
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/member-ordering': [
