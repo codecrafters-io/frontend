@@ -26,17 +26,27 @@ jobs:
         with:
           bun-version: '1.3.5'
 
-      # Caching node_modules directory for faster installs
-      - id: cache
-        name: Cache dependencies
-        uses: actions/cache@v5
+      - id: dependency_cache_restore
+        name: Restore dependencies cache
+        uses: actions/cache/restore@v5
         with:
-          path: ./node_modules
-          key: modules-v2-${{ hashFiles('bun.lock') }}
+          path: |
+            ./node_modules
+            ~/.bun/install/cache
+          key: modules-v3-${{ runner.os }}-bun-1.3.5-${{ hashFiles('bun.lock') }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        if: steps.dependency_cache_restore.outputs.cache-hit != 'true'
         run: bun install --frozen-lockfile --ignore-scripts
+
+      - name: Save dependencies cache
+        if: steps.dependency_cache_restore.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v5
+        with:
+          path: |
+            ./node_modules
+            ~/.bun/install/cache
+          key: ${{ steps.dependency_cache_restore.outputs.cache-primary-key }}
 
       - name: Run linter
         id: lint
