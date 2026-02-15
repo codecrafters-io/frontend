@@ -93,6 +93,15 @@ export default defineConfig([
       ],
       'import/no-unresolved': 'off',
 
+      // These import/* module-resolution rules are redundant with TypeScript/Glint
+      // type checking and are extremely expensive (~9s of ESLint's ~19s cold runtime).
+      // `import/namespace` alone accounts for 63.6% of ESLint rule time.
+      'import/namespace': 'off',
+      'import/named': 'off',
+      'import/default': 'off',
+      'import/no-named-as-default': 'off',
+      'import/no-named-as-default-member': 'off',
+
       '@stylistic/padding-line-between-statements': [
         'error',
         { blankLine: 'always', prev: '*', next: 'return' },
