@@ -105,6 +105,29 @@ module.exports = function (defaults) {
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
+        optimization:
+          config.environment !== 'test'
+            ? undefined // Use default optimization settings in production and development environments
+            : {
+                // In testing environments, squash together chunks from libraries with a lot of chunks, to fix occasional
+                // chunk loading errors when running tests in concurrent browser instances spawned by ember-exam.
+                splitChunks: {
+                  cacheGroups: {
+                    codemirror: {
+                      test: /[\\/]node_modules[\\/][@]?(codemirror|lezer)/,
+                      name: 'codemirror',
+                      chunks: 'all',
+                      idHint: 'codemirror',
+                    },
+                    shiki: {
+                      test: /[\\/]node_modules[\\/][@]?(shiki)/,
+                      name: 'shiki',
+                      chunks: 'all',
+                      idHint: 'shiki',
+                    },
+                  },
+                },
+              },
         plugins: [
           customFilePlugin('version.txt', config.x.version),
 
