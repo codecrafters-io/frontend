@@ -20,7 +20,7 @@
     "lint": "concurrently \"bun run lint:css\" \"bun run lint:hbs\" \"bun run lint:js\" \"bun run lint:types\" \"bun run lint:glint\" --names \"lint:css,lint:hbs,lint:js,lint:types,lint:glint\" --prefixColors auto",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "bun run lint:css -- --fix",
-    "lint:fix": "concurrently \"bun run lint:css:fix\" \"bun run lint:hbs:fix\" \"bun run lint:js:fix\" \"bun run lint:glint:fix\" \"bun run format\" --names \"fix:css,fix:hbs,fix:js,fix:glint,format\" --prefixColors auto",
+    "lint:fix": "concurrently \"bun run lint:css:fix\" \"bun run lint:hbs:fix\" \"bun run lint:js:fix\" \"bun run lint:glint:fix\" --names \"fix:css,fix:hbs,fix:js,fix:glint\" --prefixColors auto && bun run format",
     "lint:format": "prettier . --cache --check",
     "lint:hbs": "ember-template-lint .",
     "lint:hbs:fix": "ember-template-lint . --fix",
