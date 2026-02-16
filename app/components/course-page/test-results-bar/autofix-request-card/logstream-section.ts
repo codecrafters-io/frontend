@@ -6,11 +6,11 @@ import move from 'ember-animated/motions/move';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type Store from '@ember-data/store';
-import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -63,6 +63,20 @@ class ToolCall {
           return `Editing ${this.tool_arguments['path']!}`;
         } else {
           return `Edited ${this.tool_arguments['path']!}`;
+        }
+
+      case 'create_draft_hints':
+        if (this.status === 'in_progress') {
+          return 'Identifying potential bugs';
+        } else {
+          return 'Identified potential bugs';
+        }
+
+      case 'finalize_hints':
+        if (this.status === 'in_progress') {
+          return 'Finalizing hints';
+        } else {
+          return 'Finalized hints';
         }
 
       case 'write':
@@ -119,19 +133,13 @@ export default class LogstreamSection extends Component<Signature> {
 
   @tracked declare logstream: Logstream;
   @tracked logstreamContent = '';
-  @tracked eventsContainer: HTMLDivElement | null = null;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
 
     this.logstream = new Logstream(args.autofixRequest.logstreamId, this.actionCableConsumer, this.store, () => {
       this.logstreamContent = this.logstream.content || '';
-
-      next(() => {
-        if (this.eventsContainer) {
-          this.eventsContainer.scrollTop = this.eventsContainer.scrollHeight;
-        }
-      });
+      this.reloadAutofixRequestTask.perform();
     });
 
     next(() => {
@@ -150,6 +158,10 @@ export default class LogstreamSection extends Component<Signature> {
         }
       })
       .filter(Boolean) as Event[];
+  }
+
+  get lastToolCall(): ToolCall {
+    return this.toolCalls[this.toolCalls.length - 1]!;
   }
 
   get toolCalls(): ToolCall[] {
@@ -186,10 +198,9 @@ export default class LogstreamSection extends Component<Signature> {
     return result;
   }
 
-  @action
-  handleDidInsertEventsContainer(eventsContainer: HTMLDivElement) {
-    this.eventsContainer = eventsContainer;
-  }
+  reloadAutofixRequestTask = task({ keepLatest: true }, async (): Promise<void> => {
+    await this.args.autofixRequest.reload();
+  });
 
   // @ts-expect-error ember-animated not typed
   // eslint-disable-next-line require-yield
