@@ -108,6 +108,99 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 
+  test('shows system-initiated evaluating message', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withEvaluatingStatus', {
+      repository: repository,
+      clientType: 'system',
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(
+      coursePage.testResultsBar.progressIndicatorText,
+      'Checking next stage...',
+      'footer text is checking next stage for system-initiated evaluating submission',
+    );
+  });
+
+  test('shows system-initiated failure message', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withFailureStatus', {
+      repository: repository,
+      clientType: 'system',
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(
+      coursePage.testResultsBar.progressIndicatorText,
+      'Ready to run tests',
+      'footer text is ready to run tests for system-initiated failed submission',
+    );
+  });
+
+  test('shows system-initiated success message', async function (assert) {
+    testScenario(this.server);
+    signInAsSubscriber(this.owner, this.server);
+
+    let currentUser = this.server.schema.users.first();
+    let python = this.server.schema.languages.findBy({ name: 'Python' });
+    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+
+    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+      course: redis,
+      language: python,
+      user: currentUser,
+    });
+
+    this.server.create('submission', 'withSuccessStatus', {
+      repository: repository,
+      clientType: 'system',
+      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+    });
+
+    await catalogPage.visit();
+    await catalogPage.clickOnCourse('Build your own Redis');
+    await courseOverviewPage.clickOnStartCourse();
+
+    assert.strictEqual(
+      coursePage.testResultsBar.progressIndicatorText,
+      'Next stage already implemented!',
+      'footer text is next stage already implemented for system-initiated success submission',
+    );
+  });
+
   test('can pass tests using CLI', async function (assert) {
     testScenario(this.server);
     signInAsSubscriber(this.owner, this.server);

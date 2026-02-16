@@ -72,12 +72,16 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
     return this.lastFailedSubmissionCreatedAt && new Date().getTime() - this.lastFailedSubmissionCreatedAt.getTime() <= 600 * 1000; // in last 10 minutes
   }
 
+  get lastSubmissionIsSystemInitiated(): boolean {
+    return !!this.repository.lastSubmission && this.repository.lastSubmission.clientTypeIsSystem;
+  }
+
   get progressIndicator(): ProgressIndicator | null {
     if (this.testsStatus === 'evaluating') {
       return {
         dotColor: 'yellow',
         dotType: 'blinking',
-        text: 'Running tests...',
+        text: this.lastSubmissionIsSystemInitiated ? 'Checking next stage...' : 'Running tests...',
         textColor: 'yellow',
       };
     } else if (this.status === 'complete') {
@@ -86,6 +90,14 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
         text: this.completionNoticeMessage!,
       };
     } else if (this.testsStatus === 'failed') {
+      if (this.lastSubmissionIsSystemInitiated) {
+        return {
+          dotColor: 'gray',
+          dotType: 'static',
+          text: 'Ready to run tests',
+        };
+      }
+
       return {
         dotColor: 'red',
         dotType: 'static',
@@ -97,7 +109,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
       return {
         dotColor: 'green',
         dotType: 'static',
-        text: 'Tests passed!',
+        text: this.lastSubmissionIsSystemInitiated ? 'Next stage already implemented!' : 'Tests passed!',
         textColor: 'green',
       };
     } else if (this.status === 'in_progress') {
