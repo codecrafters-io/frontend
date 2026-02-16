@@ -1,4 +1,11 @@
-<ModalBody class="w-full max-w-xl" @shouldCloseOnOutsideClick={{false}} @shouldShowCloseButton={{false}} @onClose={{@onClose}} data-test-tests-passed-modal ...attributes>
+<ModalBody
+  class="w-full max-w-2xs"
+  @shouldCloseOnOutsideClick={{true}}
+  @shouldShowCloseButton={{true}}
+  @onClose={{@onClose}}
+  data-test-tests-passed-modal
+  ...attributes
+>
   <AnimatedContainer>
     <div class="flex flex-col items-center w-full">
       {{#animated-if (eq this.action "choose_action")}}

@@ -112,7 +112,7 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
 
     // Try the same using the completed step notice
     await coursePage.sidebar.clickOnStepListItem('Expiry');
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
 
     assert.contains(coursePage.completedStepNotice.nextOrActiveStepButton.text, 'View next step', 'copy for next or active step button is correct');
 

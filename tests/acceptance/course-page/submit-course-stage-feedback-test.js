@@ -19,9 +19,6 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     testScenario(this.server);
     const currentUser = signInAsSubscriber(this.owner, this.server);
 
-    // TODO: Remove this once leaderboard isn't behind a feature flag
-    currentUser.update('featureFlags', { 'should-see-leaderboard': 'test' });
-
     const go = this.server.schema.languages.findBy({ slug: 'go' });
     const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
@@ -55,7 +52,6 @@ module('Acceptance | course-page | submit-course-stage-feedback', function (hook
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', '2nd stage is expanded');
-    assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
     assert.ok(coursePage.feedbackPrompt.isVisible, 'has feedback prompt');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');

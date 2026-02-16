@@ -43,6 +43,10 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
     }
   }
 
+  get currentScreenIsWorkflowTutorialScreen(): boolean {
+    return ['workflow-tutorial-step-1', 'workflow-tutorial-step-2'].includes(this.currentScreen);
+  }
+
   @action
   async handleBackToReviewButtonClick() {
     this.currentScreen = 'workflow-tutorial-step-1';
