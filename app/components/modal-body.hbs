@@ -3,7 +3,7 @@
   {{on-click-outside this.handleClickOutside}}
   ...attributes
 >
-  {{#if (and @allowManualClose (not @shouldHideCloseButton))}}
+  {{#if @shouldShowCloseButton}}
     <button
       class="absolute right-6 top-6 sm:right-12 sm:top-12 opacity-60 hover:opacity-100"
       type="button"
