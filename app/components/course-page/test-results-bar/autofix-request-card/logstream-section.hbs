@@ -1,19 +1,13 @@
-<div class="overflow-y-auto h-32" {{did-insert this.handleDidInsertEventsContainer}} ...attributes>
+<div class="py-0.5 font-mono" ...attributes>
   <AnimatedContainer>
-    {{#animated-each this.toolCalls key="tool_call_id" use=this.listTransition duration=100 as |toolCall|}}
-      <div class="py-0.5">
-        <AnimatedContainer>
-          {{#animated-if (eq toolCall.status "in_progress") use=this.transition duration=100}}
-            <div class="text-xs text-gray-300">
-              <TextShimmer @text={{toolCall.text}} />
-            </div>
-          {{else}}
-            <div class="text-xs text-gray-500">
-              {{toolCall.text}}
-            </div>
-          {{/animated-if}}
-        </AnimatedContainer>
+    {{#animated-if (eq this.lastToolCall.status "in_progress") use=this.transition duration=100}}
+      <div class="text-xs text-gray-300">
+        <TextShimmer @text={{this.lastToolCall.text}} />
       </div>
-    {{/animated-each}}
+    {{else}}
+      <div class="text-xs text-gray-500">
+        {{this.lastToolCall.text}}
+      </div>
+    {{/animated-if}}
   </AnimatedContainer>
 </div>

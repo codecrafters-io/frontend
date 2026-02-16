@@ -1,76 +1,81 @@
-<div class="bg-gray-925 rounded-sm border border-white/5 p-4 w-full max-w-xl overflow-y-auto" ...attributes data-test-autofix-request-card>
+<div class="w-full" ...attributes data-test-autofix-request-card>
   <AnimatedContainer>
-    {{#animated-value @autofixRequest.status duration=200 use=this.transition as |status|}}
-      {{#if (eq status "in_progress")}}
-        <div class="flex items-center gap-2">
-          <BlinkingDot @color="yellow" class="shrink-0" />
-          <span class="text-lg font-semibold text-white">Generating custom hint...</span>
-        </div>
-      {{else if (eq status "success")}}
-        <div class="flex items-start gap-2">
-          <StaticDot @color="green" class="shrink-0 mt-2" />
-
-          <span class="text-lg font-semibold text-white">
-            Hint:
-            {{@autofixRequest.summary}}
-          </span>
-        </div>
-      {{/if}}
-    {{/animated-value}}
+    <div class="space-y-2">
+      {{#each @autofixRequest.hintsJson key="slug" as |hint hintIndex|}}
+        <CoursePage::TestResultsBar::AutofixRequestCard::HintCard
+          @autofixRequest={{@autofixRequest}}
+          @hint={{hint}}
+          @isExpanded={{eq this.expandedHintIndex hintIndex}}
+          @onExpand={{fn this.handleHintExpand hintIndex}}
+          @onCollapse={{this.handleHintCollapse}}
+        />
+      {{else}}
+        <CoursePage::TestResultsBar::AutofixRequestCard::HintCard
+          @autofixRequest={{@autofixRequest}}
+          @hint={{this.dummyHint}}
+          @isExpanded={{false}}
+          @onExpand={{fn this.handleHintExpand 0}}
+          @onCollapse={{this.handleHintCollapse}}
+        />
+      {{/each}}
+    </div>
 
     {{! Investigate issue with animated-if usage here }}
     {{#if (eq @autofixRequest.status "in_progress")}}
       <CoursePage::TestResultsBar::AutofixRequestCard::LogstreamSection class="mt-3" @autofixRequest={{@autofixRequest}} />
     {{else}}
       <div>
-        <BlurredOverlay @isBlurred={{this.explanationIsBlurred}} @overlayClass="bg-gray-950/20" class="-mx-4 -mb-4">
-          <:content>
-            <div class="p-4 prose prose-sm dark:prose-invert has-prism-highlighting">
-              {{markdown-to-html @autofixRequest.explanationMarkdown}}
-            </div>
-          </:content>
+        {{#if (eq @autofixRequest.status "success")}}
+          <AnimatedContainer>
+            {{#animated-if (not this.solutionIsBlurred) use=this.transition duration=200}}
+              <div class="flex items-center justify-center w-full mt-4 mb-2">
+                <TertiaryButton
+                  class="flex! justify-center items-center gap-2 dark:bg-transparent dark:text-gray-200 dark:border-white/5 dark:hover:border-gray-700/60 dark:hover:bg-gray-700/50"
+                  {{on "click" this.handleHideSolutionButtonClick}}
+                  data-test-hide-solution-button
+                >
+                  {{svg-jar "eye-off" class="size-4"}}
+                  Hide fixed code
+                </TertiaryButton>
+              </div>
+            {{/animated-if}}
+          </AnimatedContainer>
 
-          <:overlay>
-            {{#if (eq @autofixRequest.status "success")}}
-              <SecondaryButton @size="small" class="bg-gray-900 mt-6" {{on "click" this.handleShowExplanationButtonClick}}>
+          <BlurredOverlay
+            class="group mt-2"
+            @isBlurred={{this.solutionIsBlurred}}
+            @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-950/20 dark:group-hover:bg-gray-950/0"
+          >
+            <:content>
+              <div class="flex flex-col gap-6">
+                {{#each this.changedFilesForRender key="filename" as |changedFile|}}
+                  <FileDiffCard
+                    @code={{changedFile.diff}}
+                    @filename={{changedFile.filename}}
+                    @forceDarkTheme={{true}}
+                    {{! @glint-expect-error language can be nullable }}
+                    @language={{@autofixRequest.submission.repository.language.slug}}
+                  />
+                {{/each}}
+              </div>
+            </:content>
+
+            <:overlay>
+              <SecondaryButton
+                class="self-center bg-gray-900 group-hover:bg-teal-950 group-hover:text-teal-400 group-hover:border-teal-400 backdrop-blur-3xl"
+                data-test-reveal-solution-button
+              >
                 <div class="flex items-center gap-2">
-                  <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
-                  Explain more?
+                  {{svg-jar "eye" class="size-6"}}
+                  <span>Show fixed code</span>
                 </div>
               </SecondaryButton>
-            {{/if}}
-          </:overlay>
-        </BlurredOverlay>
 
-        {{#animated-if (not this.explanationIsBlurred) use=this.transition duration=200}}
-          <div class="w-full flex items-center justify-center mt-4">
-            <SecondaryButton @size="small" class="bg-gray-900" {{on "click" this.handleToggleFixedCodeButtonClick}}>
-              <div class="flex items-center gap-2">
-                <div class="flex">{{svg-jar "eye" class="size-6"}}</div>
-
-                {{#if this.diffIsHidden}}
-                  Show fixed code
-                {{else}}
-                  Hide fixed code
-                {{/if}}
-              </div>
-            </SecondaryButton>
-          </div>
-
-          {{#animated-if (not this.diffIsHidden) use=this.transition duration=200}}
-            <div class="flex flex-col gap-6 pt-4">
-              {{#each this.changedFilesForRender key="filename" as |changedFile|}}
-                <FileDiffCard
-                  @code={{changedFile.diff}}
-                  @filename={{changedFile.filename}}
-                  @forceDarkTheme={{true}}
-                  {{! @glint-expect-error language can be nullable }}
-                  @language={{@autofixRequest.submission.repository.language.slug}}
-                />
-              {{/each}}
-            </div>
-          {{/animated-if}}
-        {{/animated-if}}
+              <button class="absolute inset-0" type="button" {{on "click" this.handleRevealSolutionButtonClick}} data-test-solution-blurred-overlay>
+              </button>
+            </:overlay>
+          </BlurredOverlay>
+        {{/if}}
       </div>
     {{/if}}
   </AnimatedContainer>

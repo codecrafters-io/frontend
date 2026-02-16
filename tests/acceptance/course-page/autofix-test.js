@@ -1,9 +1,8 @@
 import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { module, skip } from 'qunit';
+import { module, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -13,32 +12,45 @@ import finishRender from 'codecrafters-frontend/tests/support/finish-render';
 import { waitUntil } from '@ember/test-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
-// This isn't exposed as a feature anymore, disable for now
 module('Acceptance | course-page | autofix', function (hooks) {
   setupApplicationTest(hooks);
   setupAnimationTest(hooks);
   setupWindowMock(hooks);
 
-  skip('can trigger autofix when last submission failed', async function (assert) {
+  test('can view live autofix progress', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
 
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const currentUser = this.server.schema.users.first();
+    const python = this.server.schema.languages.findBy({ name: 'Python' });
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
 
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
+    const repository = this.server.create('repository', 'withFirstStageCompleted', {
       course: redis,
       language: python,
       user: currentUser,
     });
 
-    this.server.create('submission', 'withFailureStatus', {
+    const submission = this.server.create('submission', 'withFailureStatus', {
       repository: repository,
       courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
+    });
+
+    const fakeLogstream = this.server.create('fake-logstream', {
+      id: 'fake-logstream-id',
+      chunks: [],
+      isTerminated: false,
+    });
+
+    this.server.create('autofix-request', {
+      creatorType: 'system',
+      submission: submission,
+      repository: repository,
+      status: 'in_progress',
+      logstreamId: 'fake-logstream-id',
     });
 
     await catalogPage.visit();
@@ -46,157 +58,98 @@ module('Acceptance | course-page | autofix', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('AI Hints');
-    await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
 
     await waitUntil(() => fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
 
+    // Simulate tool calls arriving via logstream
+    const toolCallEvents = [
+      JSON.stringify({ event: 'tool_call_start', params: { tool_call_id: 'tc_1', tool_name: 'read', tool_arguments: { path: 'app/server.py' } } }),
+      JSON.stringify({ event: 'tool_call_end', params: { tool_call_id: 'tc_1' } }),
+      JSON.stringify({ event: 'tool_call_start', params: { tool_call_id: 'tc_2', tool_name: 'read', tool_arguments: { path: 'app/handler.py' } } }),
+      JSON.stringify({ event: 'tool_call_end', params: { tool_call_id: 'tc_2' } }),
+      JSON.stringify({
+        event: 'tool_call_start',
+        params: {
+          tool_call_id: 'tc_3',
+          tool_name: 'create_draft_hints',
+          tool_arguments: {
+            hints: [
+              {
+                slug: 'missing-resp-terminator',
+                title_markdown: 'Missing RESP bulk string terminator',
+                description_markdown:
+                  'The `handle_command` function in `app/server.py` does not append `\\r\\n` after the bulk string response, which violates the RESP protocol. For example, the response `$4\\r\\nPONG` should be `$4\\r\\nPONG\\r\\n`.',
+              },
+              {
+                slug: 'connection-not-closed',
+                title_markdown: 'Connection not closed on client disconnect',
+                description_markdown:
+                  'When the client disconnects, the socket is not properly closed in the `finally` block of `handle_client`, which can lead to resource leaks over time.',
+              },
+            ],
+          },
+        },
+      }),
+      JSON.stringify({
+        event: 'tool_call_end',
+        params: { tool_call_id: 'tc_3', tool_result: "2 hints recorded. Make sure to finalize hints after you've fixed bugs and tests have passed." },
+      }),
+      JSON.stringify({ event: 'tool_call_start', params: { tool_call_id: 'tc_4', tool_name: 'edit', tool_arguments: { path: 'app/server.py' } } }),
+      JSON.stringify({ event: 'tool_call_end', params: { tool_call_id: 'tc_4' } }),
+      JSON.stringify({
+        event: 'tool_call_start',
+        params: { tool_call_id: 'tc_5', tool_name: 'bash', tool_arguments: { command: 'python test.py' } },
+      }),
+    ];
+
+    fakeLogstream.update({ chunks: [toolCallEvents.join('\n') + '\n'] });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
+    await finishRender();
+
+    // Simulate draft hints arriving (server updates autofix request with hints)
     const autofixRequest = this.server.schema.autofixRequests.first();
-    const logstream = this.server.schema.fakeLogstreams.first();
-    assert.ok(autofixRequest, 'autofix request was created');
-    assert.ok(logstream, 'fake logstream was created');
-
-    logstream.update({ chunks: ['Running tests...\n\n'] });
-    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
-    await finishRender();
-
-    await percySnapshot('Autofix - Short logs', { scope: '[data-test-test-results-bar]' });
-
-    const chunks = Array.from({ length: 100 }, (_, i) => `\x1b[92m[stage-${i}] passed\x1b[0m\n`);
-    logstream.update({ chunks: ['Running tests...\n\n', ...chunks] });
-    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
-    await finishRender();
-
-    const testResultsBarHeight = coursePage.testResultsBar.height;
-    const testResultsBarContentsHeight = coursePage.testResultsBar.contents.height;
-    assert.ok(testResultsBarContentsHeight < testResultsBarHeight, 'Test results bar contents should be smaller than the bar');
-
-    await percySnapshot('Autofix - Long logs', { scope: '[data-test-test-results-bar]' });
-
     autofixRequest.update({
-      status: 'success',
-      logsBase64: btoa(logstream.chunks.join('')),
-      explanationMarkdown: '## Autofix succeeded!\n\n - [x] Fix 1\n - [x] Fix 2\n - [ ] Fix 3\n\n',
-      changedFiles: [
+      hintsJson: [
         {
-          filename: 'test.py',
-          diff: [
-            ' def test_0():',
-            '      assert 0 == 0',
-            '      assert 0 == 0',
-            '      assert 0 == 0',
-            '      assert 0 == 0',
-            '      assert 0 == 0',
-            ' ',
-            ' def test_1():',
-            '-    assert 1 == 2',
-            '+    assert 1 == 1',
-            ' ',
-            ' def test_2():',
-            '      assert 2 == 2',
-            '      assert 2 == 2',
-            '      assert 2 == 2',
-            '      assert 2 == 2',
-            '      assert 2 == 2',
-          ].join('\n'),
+          title_markdown: 'Missing RESP bulk string terminator',
+          description_markdown:
+            'The `handle_command` function in `app/server.py` does not append `\\r\\n` after the bulk string response, which violates the RESP protocol. For example, the response `$4\\r\\nPONG` should be `$4\\r\\nPONG\\r\\n`.',
+        },
+        {
+          title_markdown: 'Connection not closed on client disconnect',
+          description_markdown:
+            'When the client disconnects, the socket is not properly closed in the `finally` block of `handle_client`, which can lead to resource leaks over time.',
         },
       ],
     });
 
-    logstream.update({ isTerminated: true });
-    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
-    await finishRender();
-    await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
-
-    await percySnapshot('Autofix - Success', { scope: '[data-test-test-results-bar]' });
-  });
-
-  skip('renders failed autofix', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    const fakeActionCableConsumer = new FakeActionCableConsumer();
-    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.testResultsBar.clickOnBottomSection();
-    await coursePage.testResultsBar.clickOnTab('AI Hints');
-    await coursePage.testResultsBar.autofixSection.clickOnStartAutofixButton();
-
-    await waitUntil(() => fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
-
-    const autofixRequest = this.server.schema.autofixRequests.first();
-    const logstream = this.server.schema.fakeLogstreams.first();
-
-    autofixRequest.update({
-      status: 'failure',
-      logsBase64: btoa('Failure reason: xxx.'),
-    });
-
-    logstream.update({ isTerminated: true });
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
     await finishRender();
 
-    await waitUntil(() => !fakeActionCableConsumer.hasSubscription('LogstreamChannel'));
+    // await this.pauseTest();
 
-    await percySnapshot('Autofix - Failure', { scope: '[data-test-test-results-bar]' });
-    assert.strictEqual(1, 1); // Add at least one assertion
-  });
+    // Simulate hints being finalized (bash completes, then finalize_hints is called)
+    const finalizeEvents = [
+      JSON.stringify({ event: 'tool_call_end', params: { tool_call_id: 'tc_5' } }),
+      JSON.stringify({
+        event: 'tool_call_start',
+        params: {
+          tool_call_id: 'tc_6',
+          tool_name: 'finalize_hints',
+          tool_arguments: { hint_slugs: ['missing-resp-terminator', 'connection-not-closed'] },
+        },
+      }),
+      JSON.stringify({
+        event: 'tool_call_end',
+        params: { tool_call_id: 'tc_6', tool_result: '2 hints finalized.' },
+      }),
+    ];
 
-  skip('is not visible for stage 3 and beyond', async function (assert) {
-    testScenario(this.server);
-    signIn(this.owner, this.server);
-
-    const fakeActionCableConsumer = new FakeActionCableConsumer();
-    this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
-
-    let currentUser = this.server.schema.users.first();
-    let python = this.server.schema.languages.findBy({ name: 'Python' });
-    let redis = this.server.schema.courses.findBy({ slug: 'redis' });
-
-    let repository = this.server.create('repository', 'withFirstStageCompleted', {
-      course: redis,
-      language: python,
-      user: currentUser,
-    });
-
-    this.server.create('submission', 'withFailureStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
-    });
-
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-
-    await coursePage.testResultsBar.clickOnBottomSection();
-    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs', 'AI Hints']);
-
-    this.server.create('submission', 'withSuccessStatus', {
-      repository: repository,
-      courseStage: redis.stages.models.toSorted(fieldComparator('position'))[1],
-    });
-
-    fakeActionCableConsumer.sendData('RepositoryChannel', { event: 'updated' });
+    fakeLogstream.update({ chunks: [toolCallEvents.join('\n') + '\n', finalizeEvents.join('\n') + '\n'] });
+    autofixRequest.update({ status: 'success' });
+    fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
     await finishRender();
-    assert.deepEqual(coursePage.testResultsBar.tabNames, ['Logs']);
+
+    await this.pauseTest();
   });
 });

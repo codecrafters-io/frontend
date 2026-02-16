@@ -3,6 +3,12 @@ import RepositoryModel from 'codecrafters-frontend/models/repository';
 import SubmissionModel from 'codecrafters-frontend/models/submission';
 import config from 'codecrafters-frontend/config/environment';
 
+export type AutofixHint = {
+  description_markdown: string;
+  slug: string;
+  title_markdown: string;
+};
+
 export default class AutofixRequestModel extends Model {
   @belongsTo('submission', { async: false, inverse: 'autofixRequests' }) declare submission: SubmissionModel;
   @belongsTo('repository', { async: false, inverse: 'autofixRequests' }) declare repository: RepositoryModel;
@@ -11,6 +17,7 @@ export default class AutofixRequestModel extends Model {
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;
   @attr('string') declare explanationMarkdown: string;
+  @attr() declare hintsJson: AutofixHint[] | null; // free-form JSON
   @attr('string') declare logstreamId: string; // For streaming logs when status is in_progress
   @attr('string') declare logsBase64: string; // Base64-encoded logs
   @attr('number') declare resultDelayInMilliseconds: number | null;

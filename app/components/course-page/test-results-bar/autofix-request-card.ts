@@ -2,6 +2,7 @@ import AnalyticsEventTrackerService from 'codecrafters-frontend/services/analyti
 import Component from '@glimmer/component';
 import fade from 'ember-animated/transitions/fade';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
+import type { AutofixHint } from 'codecrafters-frontend/models/autofix-request';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -19,8 +20,8 @@ export default class AutofixRequestCard extends Component<Signature> {
 
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
-  @tracked diffWasUnblurred = false;
-  @tracked explanationWasUnblurred = false;
+  @tracked solutionIsBlurred = true;
+  @tracked expandedHintIndex: number | null = null;
 
   get changedFilesForRender(): AutofixRequestModel['changedFiles'] {
     if (this.args.autofixRequest.status === 'in_progress') {
@@ -44,40 +45,34 @@ export default class AutofixRequestCard extends Component<Signature> {
     }
   }
 
-  get diffIsHidden() {
-    // We never show a diff unless the autofix request is successful
-    if (this.args.autofixRequest.status !== 'success') {
-      return true;
-    }
-
-    return !this.diffWasUnblurred;
-  }
-
-  get explanationIsBlurred() {
-    if (this.args.autofixRequest.status !== 'success') {
-      return true;
-    }
-
-    return !this.explanationWasUnblurred;
+  get dummyHint(): AutofixHint {
+    return {
+      title_markdown: 'Generating hint...',
+      description_markdown: '',
+    };
   }
 
   @action
-  handleShowExplanationButtonClick() {
-    if (this.explanationIsBlurred) {
-      this.analyticsEventTracker.track('revealed_autofix_explanation', { autofix_request_id: this.args.autofixRequest.id });
-    }
-
-    this.explanationWasUnblurred = true;
+  handleHideSolutionButtonClick() {
+    this.solutionIsBlurred = true;
   }
 
   @action
-  handleToggleFixedCodeButtonClick() {
-    if (this.diffIsHidden) {
-      this.analyticsEventTracker.track('revealed_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
-      this.diffWasUnblurred = true;
-    } else {
-      this.diffWasUnblurred = false;
-    }
+  handleHintCollapse(): void {
+    this.expandedHintIndex = null;
+  }
+
+  @action
+  handleHintExpand(hintIndex: number): void {
+    this.expandedHintIndex = hintIndex;
+    this.solutionIsBlurred = true;
+  }
+
+  @action
+  handleRevealSolutionButtonClick() {
+    this.analyticsEventTracker.track('revealed_autofix_diff', { autofix_request_id: this.args.autofixRequest.id });
+    this.solutionIsBlurred = false;
+    this.expandedHintIndex = null;
   }
 }
 
