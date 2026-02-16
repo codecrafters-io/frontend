@@ -1,5 +1,12 @@
-<ModalBody @shouldCloseOnOutsideClick={{false}} @shouldShowCloseButton={{false}} @onClose={{@onClose}} data-test-previous-steps-incomplete-modal class="max-w-xl" ...attributes>
-  <div class="flex flex-col items-center w-full max-w-2xs">
+<ModalBody
+  @shouldCloseOnOutsideClick={{true}}
+  @shouldShowCloseButton={{true}}
+  @onClose={{@onClose}}
+  data-test-previous-steps-incomplete-modal
+  class="w-full max-w-[19rem]"
+  ...attributes
+>
+  <div class="flex flex-col items-center w-full max-w-[19rem]">
     <div class="w-16 h-16 mb-3">
       <RiveAnimation @src="/assets/animations/warning_icon.riv" />
     </div>
@@ -9,7 +16,7 @@
     </div>
 
     <div class="prose dark:prose-invert prose-sm mb-5" data-test-completion-message>
-      <p class="text-balance text-center">
+      <p class="text-pretty text-center">
         This step depends on previous steps that you haven't completed yet.
       </p>
     </div>
@@ -23,17 +30,8 @@
       <div class="flex items-center justify-center">
         {{svg-jar "arrow-left" class="w-4 mr-1 fill-current shrink-0"}}
 
-        <span>Back to current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
+        <span>View current {{if (eq @activeStep.type "CourseStageStep") "stage" "step"}}</span>
       </div>
     </PrimaryLinkButton>
-
-    <div
-      class="mt-3 text-gray-500 hover:text-gray-900 dark:text-gray-300 pb-0.25 border-b border-gray-400 dark:border-gray-500 hover:border-gray-600 dark:hover:border-gray-400 shrink-0 text-xs text-center"
-      role="button"
-      {{on "click" @onClose}}
-      data-test-just-exploring-button
-    >
-      I'm just exploring 👀
-    </div>
   </div>
 </ModalBody>
