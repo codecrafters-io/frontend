@@ -5,9 +5,9 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    allowManualClose?: boolean;
+    shouldCloseOnOutsideClick: boolean;
+    shouldShowCloseButton: boolean;
     onClose?: () => void;
-    shouldHideCloseButton?: boolean;
   };
 
   Blocks: {
@@ -18,7 +18,7 @@ interface Signature {
 export default class ModalBody extends Component<Signature> {
   @action
   handleClickOutside() {
-    if (this.args.allowManualClose) {
+    if (this.args.shouldCloseOnOutsideClick) {
       this.handleCloseButtonClick();
     }
   }
