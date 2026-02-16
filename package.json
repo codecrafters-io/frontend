@@ -158,7 +158,7 @@
     "ember-load-initializers": "^3.0.1",
     "ember-math-helpers": "^5.0.0",
     "ember-mirage": "^0.4.3",
-    "ember-modifier": "^4.2.2",
+    "ember-modifier": "^4.3.0",
     "ember-page-title": "^9.0.3",
     "ember-qunit": "^9.0.2",
     "ember-resize-modifier": "^1.0.1",
