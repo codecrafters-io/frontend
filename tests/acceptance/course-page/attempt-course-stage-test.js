@@ -104,7 +104,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
 
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
   });
 

@@ -67,8 +67,8 @@ export default create({
   createRepositoryCard: CreateRepositoryCard,
 
   currentStepCompleteModal: {
+    clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     clickOnNextOrActiveStepButton: clickable('[data-test-next-or-active-step-button]'),
-    clickOnViewInstructionsButton: clickable('[data-test-view-instructions-button]'),
     completionMessage: text('[data-test-completion-message]'),
     languageLeaderboardRankSection: {
       rankText: text('[data-test-rank]'),
@@ -138,7 +138,7 @@ export default create({
 
   previousStepsIncompleteModal: {
     clickOnActiveStepButton: clickable('[data-test-active-step-button]'),
-    clickOnJustExploringButton: clickable('[data-test-just-exploring-button]'),
+    clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     scope: '[data-test-previous-steps-incomplete-modal]',
   },
 

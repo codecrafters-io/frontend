@@ -57,7 +57,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     await courseOverviewPage.clickOnStartCourse();
 
     await coursePage.sidebar.clickOnStepListItem('The second stage');
-    await coursePage.previousStepsIncompleteModal.clickOnJustExploringButton();
+    await coursePage.previousStepsIncompleteModal.clickOnCloseButton();
 
     const linkElements = document.querySelectorAll('#your-task-card a');
     const firstLinkElement = Array.from(linkElements).find((link) => link.textContent === 'link1');
@@ -136,7 +136,7 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
     assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
     await percySnapshot('Course Stages - Completed stage');
