@@ -21,6 +21,10 @@ export default class StepDefinition {
   declare globalPosition: number; // Set soon after construction
   declare positionInGroup: number; // Set soon after construction
 
+  get completionModalTitle(): string {
+    return 'Step complete!';
+  }
+
   get completionNoticeMessage(): string | null {
     if (this.status !== 'complete') {
       return null;

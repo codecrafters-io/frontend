@@ -29,6 +29,10 @@ export default class CourseStageStep extends StepDefinition {
     return this.completedAt && isYesterday(this.completedAt);
   }
 
+  get completionModalTitle(): string {
+    return 'Stage complete!';
+  }
+
   get completionNoticeMessage() {
     if (this.status !== 'complete') {
       return null;
