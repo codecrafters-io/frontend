@@ -78,19 +78,10 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
 
   get progressIndicator(): ProgressIndicator | null {
     if (this.testsStatus === 'evaluating') {
-      if (this.lastSubmissionIsSystemInitiated) {
-        return {
-          dotColor: 'yellow',
-          dotType: 'blinking',
-          text: 'Checking next stage\u2026',
-          textColor: 'yellow',
-        };
-      }
-
       return {
         dotColor: 'yellow',
         dotType: 'blinking',
-        text: 'Running tests...',
+        text: this.lastSubmissionIsSystemInitiated ? 'Checking next stage...' : 'Running tests...',
         textColor: 'yellow',
       };
     } else if (this.status === 'complete') {
@@ -115,19 +106,10 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
         explanationMarkdown: this.courseStage.isFirst ? this.firstStageTestFailureExplanationMarkdown : undefined,
       };
     } else if (this.testsStatus === 'passed') {
-      if (this.lastSubmissionIsSystemInitiated) {
-        return {
-          dotColor: 'green',
-          dotType: 'static',
-          text: 'Next stage already implemented!',
-          textColor: 'green',
-        };
-      }
-
       return {
         dotColor: 'green',
         dotType: 'static',
-        text: 'Tests passed!',
+        text: this.lastSubmissionIsSystemInitiated ? 'Next stage already implemented!' : 'Tests passed!',
         textColor: 'green',
       };
     } else if (this.status === 'in_progress') {

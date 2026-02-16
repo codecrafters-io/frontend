@@ -134,7 +134,7 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.strictEqual(
       coursePage.testResultsBar.progressIndicatorText,
-      'Checking next stage\u2026',
+      'Checking next stage...',
       'footer text is checking next stage for system-initiated evaluating submission',
     );
   });
