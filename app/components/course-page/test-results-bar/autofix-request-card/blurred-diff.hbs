@@ -1,0 +1,35 @@
+<BlurredOverlay
+  class="group mt-2"
+  @isBlurred={{@isBlurred}}
+  @overlayClass="inset-px rounded-sm cursor-pointer group-hover:backdrop-blur-[3px] group-hover:bg-gray-50/20 dark:bg-gray-950/20 dark:group-hover:bg-gray-950/0"
+  ...attributes
+>
+  <:content>
+    <div class="flex flex-col gap-6">
+      {{#each @autofixRequest.changedFiles key="filename" as |changedFile|}}
+        <FileDiffCard
+          @code={{changedFile.diff}}
+          @filename={{changedFile.filename}}
+          @forceDarkTheme={{true}}
+          {{! @glint-expect-error language can be nullable }}
+          @language={{@autofixRequest.submission.repository.language.slug}}
+        />
+      {{/each}}
+    </div>
+  </:content>
+
+  <:overlay>
+    <SecondaryButton
+      class="self-center bg-gray-900 group-hover:bg-teal-950 group-hover:text-teal-400 group-hover:border-teal-400 backdrop-blur-3xl"
+      data-test-reveal-solution-button
+    >
+      <div class="flex items-center gap-2">
+        {{svg-jar "eye" class="size-6"}}
+        <span>Show fixed code</span>
+      </div>
+    </SecondaryButton>
+
+    <button class="absolute inset-0" type="button" {{on "click" @onReveal}} data-test-solution-blurred-overlay>
+    </button>
+  </:overlay>
+</BlurredOverlay>
