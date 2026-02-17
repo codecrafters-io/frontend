@@ -1,40 +1,50 @@
-<ModalBody @shouldCloseOnOutsideClick={{false}} @shouldShowCloseButton={{false}} @onClose={{@onClose}} data-test-setup-step-complete-modal class="px-0! py-0! max-w-xl" ...attributes>
+<ModalBody
+  @shouldCloseOnOutsideClick={{true}}
+  @shouldShowCloseButton={{true}}
+  @onClose={{@onClose}}
+  data-test-setup-step-complete-modal
+  class="w-full max-w-sm"
+  ...attributes
+>
   <AnimatedContainer>
-    <div class="flex flex-col items-center py-8 px-4 sm:px-8" {{did-insert this.handleDidInsert}}>
+    <div class="flex flex-col items-center" {{did-insert this.handleDidInsert}}>
       {{#animated-value this.currentScreen use=this.transition duration=500 as |currentScreen|}}
         {{#if (eq currentScreen "start-workflow-tutorial")}}
           <CoursePage::SetupStepCompleteModal::StartWorkflowTutorialScreen
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
-            @onViewInstructionsButtonClick={{@onClose}}
-            class="w-full max-w-3xs"
+            class="w-full max-w-[calc(var(--container-2xs)-(var(--spacing)*16))]"
+            {{! max-w-2xs - 2 * px-8 padding }}
           />
         {{else if (eq currentScreen "workflow-tutorial-step-1")}}
           <CoursePage::SetupStepCompleteModal::WorkflowTutorialStep1Screen
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
             @onStepSelect={{this.handleStepSelect}}
-            class="w-full max-w-xs"
+            {{! max-w-sm - 2 * px-8 padding }}
+            class="w-full max-w-[calc(var(--container-sm)-(var(--spacing)*16))]"
           />
         {{else if (eq currentScreen "workflow-tutorial-step-2")}}
           <CoursePage::SetupStepCompleteModal::WorkflowTutorialStep2Screen
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
             @onStepSelect={{this.handleStepSelect}}
-            class="w-full max-w-xs"
+            {{! max-w-sm - 2 * px-8 padding }}
+            class="w-full max-w-[calc(var(--container-sm)-(var(--spacing)*16))]"
           />
         {{else if (eq currentScreen "workflow-tutorial-completed")}}
           <CoursePage::SetupStepCompleteModal::WorkflowTutorialCompletedScreen
             @step={{@step}}
             @onNextButtonClick={{this.handleNextButtonClick}}
             @onBackToReviewButtonClick={{this.handleBackToReviewButtonClick}}
-            class="w-full max-w-60"
+            {{! max-w-2xs - 2 * px-8 padding }}
+            class="w-full max-w-[calc(var(--container-2xs)-(var(--spacing)*16))]"
           />
         {{else if (eq currentScreen "step-previously-completed")}}
           <CoursePage::SetupStepCompleteModal::StepPreviouslyCompletedScreen
             @step={{@step}}
-            @onViewInstructionsButtonClick={{@onClose}}
-            class="w-full max-w-60"
+            {{! max-w-2xs - 2 * px-8 padding }}
+            class="w-full max-w-[calc(var(--container-2xs)-(var(--spacing)*16))]"
           />
         {{else}}
           <div>Not implemented: {{currentScreen}}</div>

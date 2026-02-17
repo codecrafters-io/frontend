@@ -44,7 +44,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
 
     assert.ok(coursePage.completedStepNotice.shareProgressButton.isVisible, 'completed step notice is visible if completed stage is not first stage');
   });
@@ -81,7 +81,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     assert.notOk(coursePage.shareProgressModal.isVisible, 'progress banner modal is not visible');
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
 
     await coursePage.completedStepNotice.shareProgressButton.click();
     assert.ok(coursePage.shareProgressModal.isVisible, 'progress banner modal is visible');
@@ -137,7 +137,7 @@ module('Acceptance | course-page | share-progress', function (hooks) {
     await finishRender();
 
     // TODO: See if there's a way to get the "share progress" flow onto the current step complete modal instead?
-    await coursePage.currentStepCompleteModal.clickOnViewInstructionsButton();
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
 
     await coursePage.completedStepNotice.shareProgressButton.click();
     await coursePage.shareProgressModal.clickOnCopyButton();

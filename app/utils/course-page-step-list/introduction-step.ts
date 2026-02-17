@@ -11,6 +11,10 @@ export default class IntroductionStep extends StepDefinition {
     this.repository = repository;
   }
 
+  get completionModalTitle(): string {
+    return 'Introduction complete!';
+  }
+
   get progressIndicator(): ProgressIndicator | null {
     if (this.status === 'complete') {
       return {

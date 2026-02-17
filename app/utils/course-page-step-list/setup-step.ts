@@ -11,6 +11,10 @@ export default class SetupStep extends StepDefinition {
     this.repository = repository;
   }
 
+  get completionModalTitle(): string {
+    return 'Local setup complete!';
+  }
+
   get progressIndicator(): ProgressIndicator | null {
     if (this.status === 'complete') {
       return {
