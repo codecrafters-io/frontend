@@ -19,6 +19,6 @@ export default class HintCard extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageYourTaskCard::HintCard': typeof HintCard;
+    'CoursePage::CourseStageStep::SolutionWithHints::HintCard': typeof HintCard;
   }
 }

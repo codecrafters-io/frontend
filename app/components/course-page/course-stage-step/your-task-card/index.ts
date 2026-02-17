@@ -4,6 +4,7 @@ import CourseStageModel from 'codecrafters-frontend/models/course-stage';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import Store from '@ember-data/store';
 import { service } from '@ember/service';
+import type CourseStageSolutionModel from 'codecrafters-frontend/models/course-stage-solution';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -21,6 +22,10 @@ export default class YourTaskCard extends Component<Signature> {
 
   get instructionsMarkdown() {
     return this.args.courseStage.buildInstructionsMarkdownFor(this.args.repository);
+  }
+
+  get solution(): CourseStageSolutionModel | null {
+    return this.args.courseStage.solutions.find((s) => s.language === this.args.repository.language) || null;
   }
 }
 
