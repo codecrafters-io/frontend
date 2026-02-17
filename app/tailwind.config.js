@@ -120,7 +120,7 @@ module.exports = {
             '--tw-prose-invert-code': colors.gray[300],
             '--tw-prose-invert-headings': colors.gray[200],
             '--tw-prose-invert-links': colors.sky[500],
-            '--tw-prose-invert-pre-bg': colors.gray[900],
+            '--tw-prose-invert-pre-bg': mixOklch(colors.gray[800], colors.gray[900], 0.5), // gray-850
             maxWidth: '90ch', // Default is 65ch
             a: {
               fontWeight: '600',

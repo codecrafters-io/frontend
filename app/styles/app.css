@@ -185,7 +185,7 @@ body {
 }
 
 .has-prism-highlighting pre[class*='language-']:is(.dark *) {
-  background-color: oklch(21% 0.034 264.665deg); /* gray-900 */
+  background-color: oklch(24.4% 0.0335 260.76deg); /* gray-850 */
 }
 
 .sortable-item {
