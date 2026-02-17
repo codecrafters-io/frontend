@@ -29,7 +29,7 @@
           @activeTabSlug={{this.activeTabSlugForLeftPane}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlugForLeftPane)}}
           @availableTabSlugs={{this.availableTabSlugsForLeftPane}}
-          class="transition-width duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2' 'w-full'}} grow"
+          class="transition-width duration-200 ease-out w-full grow"
         >
           {{#if (eq this.activeTabSlugForLeftPane "logs")}}
             <CoursePage::TestResultsBar::LogsSection
@@ -50,7 +50,7 @@
           @activeTabSlug={{this.activeTabSlugForRightPane}}
           @onActiveTabSlugChange={{fn (mut this.activeTabSlugForRightPane)}}
           @availableTabSlugs={{this.availableTabSlugsForRightPane}}
-          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-1/2 pl-6 opacity-100' 'w-[0] opacity-0'}} grow"
+          class="transition-[width,opacity] duration-200 ease-out {{if this.shouldShowRightPane 'w-full pl-4 opacity-100 grow' 'w-0 opacity-0'}}"
         >
           {{! Extra if convinces glint that autofixRequest is not null }}
           {{#if this.autofixRequestForActiveStep}}
