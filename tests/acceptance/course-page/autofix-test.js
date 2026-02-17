@@ -111,11 +111,13 @@ module('Acceptance | course-page | autofix', function (hooks) {
     autofixRequest.update({
       hintsJson: [
         {
+          slug: 'missing-resp-terminator',
           title_markdown: 'Missing RESP bulk string terminator',
           description_markdown:
             'The `handle_command` function in `app/server.py` does not append `\\r\\n` after the bulk string response, which violates the RESP protocol. For example, the response `$4\\r\\nPONG` should be `$4\\r\\nPONG\\r\\n`.',
         },
         {
+          slug: 'connection-not-closed',
           title_markdown: 'Connection not closed on client disconnect',
           description_markdown:
             'When the client disconnects, the socket is not properly closed in the `finally` block of `handle_client`, which can lead to resource leaks over time.',
@@ -150,6 +152,6 @@ module('Acceptance | course-page | autofix', function (hooks) {
     fakeActionCableConsumer.sendData('LogstreamChannel', { event: 'updated' });
     await finishRender();
 
-    await this.pauseTest();
+    // await this.pauseTest();
   });
 });
