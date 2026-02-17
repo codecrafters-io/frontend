@@ -27,7 +27,7 @@ module('Acceptance | header-test', function (hooks) {
   });
 
   test('header should show generic leaderboard link if user has feature flag enabled and leaderboard entries', async function (assert) {
-    const user = signIn(this.owner, this.server);
+    signIn(this.owner, this.server);
 
     await catalogPage.visit();
     assert.true(catalogPage.header.hasLink('Leaderboard'), 'expect leaderboard link to be visible');
