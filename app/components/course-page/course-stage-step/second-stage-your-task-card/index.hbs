@@ -23,20 +23,9 @@
       </p>
     </div>
 
-    <StepList @steps={{this.steps}} class="scroll-mt-32 mt-5" as |stepList|>
-      {{#if (eq stepList.step.id "implement-solution")}}
-        <CoursePage::CourseStageStep::SecondStageYourTaskCard::ImplementSolutionStep
-          @repository={{@currentStep.repository}}
-          @courseStage={{@currentStep.courseStage}}
-          @isComplete={{this.implementSolutionStepIsComplete}}
-        />
-      {{else if (eq stepList.step.id "run-tests")}}
-        <CoursePage::CourseStageStep::SecondStageYourTaskCard::RunTestsStep
-          @repository={{@currentStep.repository}}
-          @courseStage={{@currentStep.courseStage}}
-          @isComplete={{this.runTestsStepIsComplete}}
-        />
-      {{/if}}
-    </StepList>
+    <CoursePage::CourseStageStep::YourTaskCard::HowToPassStepList
+      @repository={{@currentStep.repository}}
+      @courseStage={{@currentStep.courseStage}}
+    />
   </:content>
 </CoursePage::InstructionsCard>

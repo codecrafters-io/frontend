@@ -12,9 +12,11 @@
   <:content>
     <div class="prose dark:prose-invert has-prism-highlighting" data-test-stage-instructions {{highlight-code-blocks this.instructionsMarkdown}}>
       {{markdown-to-html this.instructionsMarkdown}}
+
+      <h3>How to pass this stage</h3>
     </div>
 
-    <CoursePage::CourseStageStep::YourTaskCard::ActionButtonList @courseStage={{@courseStage}} @repository={{@repository}} class="mt-3" />
+    <CoursePage::CourseStageStep::YourTaskCard::HowToPassStepList @repository={{@repository}} @courseStage={{@courseStage}} />
 
     {{#if (eq this.coursePageState.nextStep this.coursePageState.activeStep)}}
       <div class="mt-4 flex">

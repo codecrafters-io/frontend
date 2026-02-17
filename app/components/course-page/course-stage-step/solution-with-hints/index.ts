@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
-import type CourseStageModel from 'codecrafters-frontend/models/course-stage';
-import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import type CourseStageSolutionModel from 'codecrafters-frontend/models/course-stage-solution';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { service } from '@ember/service';
@@ -11,23 +10,17 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repository: RepositoryModel;
-    courseStage: CourseStageModel;
-    isComplete: boolean;
+    solution: CourseStageSolutionModel;
   };
 }
 
-export default class ImplementSolutionStep extends Component<Signature> {
+export default class SolutionWithHints extends Component<Signature> {
   @service declare analyticsEventTracker: AnalyticsEventTrackerService;
 
   transition = fade;
 
   @tracked expandedHintIndex: number | null = null;
   @tracked solutionIsBlurred = true;
-
-  get solution() {
-    return this.args.repository.secondStageSolution;
-  }
 
   @action
   handleHideSolutionButtonClick(): void {
@@ -36,9 +29,9 @@ export default class ImplementSolutionStep extends Component<Signature> {
 
   @action
   handleHintCardHeaderClick(hintIndex: number): void {
-    const hint = this.solution!.hintsJson![hintIndex]!;
+    const hint = this.args.solution.hintsJson![hintIndex]!;
     const analyticsEventContext = {
-      solution_id: this.solution!.id,
+      solution_id: this.args.solution.id,
       hint_number: hintIndex + 1,
       hint_title: hint.title_markdown,
     };
@@ -56,7 +49,7 @@ export default class ImplementSolutionStep extends Component<Signature> {
 
   @action
   handleRevealSolutionButtonClick(): void {
-    this.solution?.createView();
+    this.args.solution.createView();
     this.solutionIsBlurred = false;
     this.expandedHintIndex = null;
   }
@@ -64,6 +57,6 @@ export default class ImplementSolutionStep extends Component<Signature> {
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {
-    'CoursePage::CourseStageStep::SecondStageYourTaskCard::ImplementSolutionStep': typeof ImplementSolutionStep;
+    'CoursePage::CourseStageStep::SolutionWithHints': typeof SolutionWithHints;
   }
 }
