@@ -2,11 +2,9 @@ import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import Logstream from 'codecrafters-frontend/utils/logstream';
 import fade from 'ember-animated/transitions/fade';
-import move from 'ember-animated/motions/move';
 import type ActionCableConsumerService from 'codecrafters-frontend/services/action-cable-consumer';
 import type AutofixRequestModel from 'codecrafters-frontend/models/autofix-request';
 import type Store from '@ember-data/store';
-import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -201,22 +199,6 @@ export default class LogstreamSection extends Component<Signature> {
   reloadAutofixRequestTask = task({ keepLatest: true }, async (): Promise<void> => {
     await this.args.autofixRequest.reload();
   });
-
-  // @ts-expect-error ember-animated not typed
-  // eslint-disable-next-line require-yield
-  *listTransition({ insertedSprites, keptSprites, removedSprites }) {
-    for (const sprite of keptSprites) {
-      move(sprite);
-    }
-
-    for (const sprite of insertedSprites) {
-      fadeIn(sprite);
-    }
-
-    for (const sprite of removedSprites) {
-      fadeOut(sprite);
-    }
-  }
 
   willDestroy() {
     super.willDestroy();
