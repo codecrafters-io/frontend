@@ -1,15 +1,3 @@
-{{#unless this.solution}}
-  <div class="prose dark:prose-invert prose-compact mb-3">
-    <p>
-      Head over to your editor / IDE and implement your solution.
-    </p>
-    <p>
-      If you want a quick look at what functions to use or how to structure your code, we recommend looking at
-      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
-    </p>
-  </div>
-{{/unless}}
-
 {{#if this.solution}}
   {{#if (gt this.solution.hintsJson.length 0)}}
     {{#each this.solution.hintsJson as |hint hintIndex|}}
@@ -74,4 +62,14 @@
       </div>
     {{/animated-if}}
   </AnimatedContainer>
+{{else}}
+  <div class="prose dark:prose-invert prose-compact mb-3">
+    <p>
+      Head over to your editor / IDE and implement your solution.
+    </p>
+    <p>
+      If you want a quick look at what functions to use or how to structure your code, we recommend looking at
+      <LinkTo @route="course.stage.code-examples">Code Examples</LinkTo>.
+    </p>
+  </div>
 {{/if}}
