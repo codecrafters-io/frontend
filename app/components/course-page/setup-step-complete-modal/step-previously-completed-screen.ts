@@ -9,7 +9,6 @@ interface Signature {
 
   Args: {
     step: SetupStep;
-    onViewInstructionsButtonClick: () => void;
   };
 }
 

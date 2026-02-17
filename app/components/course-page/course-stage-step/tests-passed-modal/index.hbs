@@ -1,11 +1,17 @@
-<ModalBody class="w-full max-w-[19rem]" @shouldCloseOnOutsideClick={{true}} @shouldShowCloseButton={{true}} @onClose={{@onClose}} data-test-tests-passed-modal ...attributes>
+<ModalBody
+  class="w-full max-w-[19rem]"
+  @shouldCloseOnOutsideClick={{true}}
+  @shouldShowCloseButton={{true}}
+  @onClose={{@onClose}}
+  data-test-tests-passed-modal
+  ...attributes
+>
   <AnimatedContainer>
     <div class="flex flex-col items-center w-full">
       {{#animated-if (eq this.action "choose_action")}}
         <CoursePage::CourseStageStep::TestsPassedModal::ChooseActionStep
           @currentStep={{@currentStep}}
           @onActionButtonClick={{this.handleActionButtonClick}}
-          @onViewInstructionsLinkClick={{@onClose}}
           @isCreatingCourseStageCompletion={{this.courseStageCompletion.createTask.isRunning}}
         />
       {{/animated-if}}
@@ -14,7 +20,6 @@
         <CoursePage::CourseStageStep::TestsPassedModal::SubmitCodeStep
           @onActionButtonClick={{this.handleActionButtonClick}}
           @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
-          @onViewInstructionsLinkClick={{@onClose}}
           @repository={{@currentStep.repository}}
         />
       {{/animated-if}}
@@ -22,7 +27,6 @@
       {{#animated-if (eq this.action "refactor_code")}}
         <CoursePage::CourseStageStep::TestsPassedModal::RefactorCodeStep
           @onBackButtonClick={{fn this.handleActionButtonClick "choose_action"}}
-          @onViewInstructionsLinkClick={{@onClose}}
           @currentStep={{@currentStep}}
         />
       {{/animated-if}}

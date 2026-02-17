@@ -11,7 +11,6 @@ interface Signature {
   Args: {
     onActionButtonClick: (action: 'mark_stage_as_complete' | 'refactor_code') => void;
     onBackButtonClick: () => void;
-    onViewInstructionsLinkClick: () => void;
     repository: RepositoryModel;
   };
 }
