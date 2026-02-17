@@ -10,7 +10,6 @@ interface Signature {
 
   Args: {
     onBackButtonClick: () => void;
-    onViewInstructionsLinkClick: () => void;
     currentStep: CourseStageStep;
   };
 }
