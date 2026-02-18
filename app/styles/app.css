@@ -20,7 +20,7 @@
   color-scheme: light;
 }
 
-:root .dark {
+:root:has(.dark) {
   color-scheme: dark;
 }
 
