@@ -37,12 +37,22 @@ export default class AutofixRequestCard extends Component<Signature> {
   }
 
   @action
-  handleHintCollapse(): void {
+  handleHintCollapse(hintIndex: number): void {
+    this.analyticsEventTracker.track('collapsed_autofix_hint', {
+      autofix_request_id: this.args.autofixRequest.id,
+      hint_index: hintIndex,
+    });
+
     this.expandedHintIndex = null;
   }
 
   @action
   handleHintExpand(hintIndex: number): void {
+    this.analyticsEventTracker.track('expanded_autofix_hint', {
+      autofix_request_id: this.args.autofixRequest.id,
+      hint_index: hintIndex,
+    });
+
     this.expandedHintIndex = hintIndex;
     this.solutionIsBlurred = true;
   }

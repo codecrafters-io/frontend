@@ -19,7 +19,7 @@
               @hint={{hint}}
               @isExpanded={{eq this.expandedHintIndex hintIndex}}
               @onExpand={{fn this.handleHintExpand hintIndex}}
-              @onCollapse={{this.handleHintCollapse}}
+              @onCollapse={{fn this.handleHintCollapse hintIndex}}
             />
           {{/each}}
         </div>
@@ -29,7 +29,7 @@
           @hint={{this.dummyHint}}
           @isExpanded={{eq this.expandedHintIndex 0}}
           @onExpand={{fn this.handleHintExpand 0}}
-          @onCollapse={{this.handleHintCollapse}}
+          @onCollapse={{fn this.handleHintCollapse 0}}
         />
       {{/animated-if}}
     </AnimatedContainer>

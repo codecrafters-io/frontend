@@ -16,13 +16,11 @@ export default class AutofixRequestModel extends Model {
   @attr('string') declare creatorType: 'user' | 'system' | 'staff' | 'internal';
   @attr() declare changedFiles: { diff: string; filename: string }[]; // free-form JSON
   @attr('date') declare createdAt: Date;
-  @attr('string') declare explanationMarkdown: string;
   @attr() declare hintsJson: AutofixHint[] | null; // free-form JSON
   @attr('string') declare logstreamId: string; // For streaming logs when status is in_progress
   @attr('string') declare logsBase64: string; // Base64-encoded logs
   @attr('number') declare resultDelayInMilliseconds: number | null;
   @attr('string') declare status: string; // 'in_progress' | 'success' | 'failure' | 'error'
-  @attr('string') declare summary: string;
 
   get adminUrl() {
     return `${config.x.backendUrl}/admin/autofix_requests/${this.id}`;
