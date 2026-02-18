@@ -3,7 +3,7 @@ import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overvie
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { module, test } from 'qunit';
-import { setupAnimationTest, time } from 'ember-animated/test-support';
+import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -81,11 +81,13 @@ module('Acceptance | course-page | autofix', function (hooks) {
       autofixRequest.update({
         hintsJson: [
           {
+            slug: 'missing-resp-terminator',
             title_markdown: 'Missing RESP bulk string terminator',
             description_markdown:
               'The `handle_command` function in `app/server.py` does not append `\\r\\n` after the bulk string response, which violates the RESP protocol. For example, the response `$4\\r\\nPONG` should be `$4\\r\\nPONG\\r\\n`.',
           },
           {
+            slug: 'connection-not-closed',
             title_markdown: 'Connection not closed on client disconnect',
             description_markdown:
               'When the client disconnects, the socket is not properly closed in the `finally` block of `handle_client`, which can lead to resource leaks over time.',
@@ -129,13 +131,19 @@ module('Acceptance | course-page | autofix', function (hooks) {
       await finishRender();
     };
 
-    setTimeout(async () => {
-      await draftHints();
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      await finalizeHints();
-    }, 2000);
+    await draftHints();
+    await waitUntil(() => document.querySelectorAll('[data-test-autofix-hint-card]').length === 2);
 
-    time.runAtSpeed(1);
-    await this.pauseTest();
+    assert.dom('[data-test-autofix-request-card]').includesText('Missing RESP bulk string terminator');
+    assert.dom('[data-test-autofix-request-card]').includesText('Connection not closed on client disconnect');
+    assert.dom('[data-test-autofix-request-card]').includesText('Verifying...');
+    assert.dom('[data-test-reveal-solution-button]').doesNotExist();
+
+    await finalizeHints();
+    await waitUntil(() => document.querySelectorAll('[data-test-autofix-hint-card]').length === 1);
+
+    assert.dom('[data-test-autofix-request-card]').doesNotIncludeText('Connection not closed on client disconnect');
+    assert.dom('[data-test-autofix-request-card]').includesText('Verified');
+    assert.dom('[data-test-reveal-solution-button]').exists();
   });
 });
