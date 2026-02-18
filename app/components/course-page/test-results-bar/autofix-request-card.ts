@@ -48,10 +48,14 @@ export default class AutofixRequestCard extends Component<Signature> {
 
   @action
   handleHintExpand(hintIndex: number): void {
-    this.analyticsEventTracker.track('expanded_autofix_hint', {
-      autofix_request_id: this.args.autofixRequest.id,
-      hint_index: hintIndex,
-    });
+    const hint = this.args.autofixRequest.hintsJson?.[hintIndex];
+
+    if (hint) {
+      this.analyticsEventTracker.track('expanded_autofix_hint', {
+        autofix_request_id: this.args.autofixRequest.id,
+        hint_index: hintIndex,
+      });
+    }
 
     this.expandedHintIndex = hintIndex;
     this.solutionIsBlurred = true;
