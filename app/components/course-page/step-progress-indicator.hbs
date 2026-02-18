@@ -9,9 +9,9 @@
         {{/if}}
       {{else}}
         {{#if (eq @step.progressIndicator.dotType "blinking")}}
-          <BlinkingDot class="mr-2" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
+          <BlinkingDot class="mr-1.5" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
         {{else}}
-          <StaticDot class="mr-2" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
+          <StaticDot class="mr-1.5" @color={{@step.progressIndicatorAsProgressIndicatorWithDot.dotColor}} />
         {{/if}}
       {{/if}}
     </AnimatedContainer>
