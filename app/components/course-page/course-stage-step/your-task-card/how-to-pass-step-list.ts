@@ -48,8 +48,7 @@ export default class HowToPassStepList extends Component<Signature> {
   get implementSolutionStepIsComplete() {
     return (
       this.runTestsStepIsComplete ||
-      (this.args.repository.lastSubmission?.courseStage === this.args.courseStage &&
-        !this.args.repository.lastSubmission?.clientTypeIsSystem)
+      (this.args.repository.lastSubmission?.courseStage === this.args.courseStage && !this.args.repository.lastSubmission?.clientTypeIsSystem)
     );
   }
 

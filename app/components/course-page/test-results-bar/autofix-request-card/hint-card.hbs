@@ -1,0 +1,48 @@
+<div class="border border-white/10 bg-gray-900 rounded-sm {{unless @isExpanded 'hover:bg-gray-700/50'}}" ...attributes data-test-autofix-hint-card>
+  <div class="p-3 flex items-center gap-2 justify-between" role="button" {{on "click" (if @isExpanded @onCollapse @onExpand)}}>
+    <div class="flex items-center gap-1.5">
+      <div class="flex items-center justify-center transition-transform duration-200 rotate-90 {{if @isExpanded 'rotate-180'}}">
+        <span class="text-gray-400 dark:text-gray-600 triangle-up" aria-hidden="true">
+        </span>
+      </div>
+
+      {{!-- {{svg-jar "light-bulb" class=(concat "size-5 " (if this.isVerifying "text-yellow-500 animate-pulse" "text-teal-500"))}} --}}
+
+      <h3 class="text-sm font-semibold {{if this.isVerifying 'text-gray-200' 'text-white'}}">
+        <span class="text-gray-500 dark:text-gray-500">Hint:</span>
+        {{@hint.title_markdown}}
+      </h3>
+    </div>
+
+    <div data-test-autofix-hint-status>
+      <AnimatedContainer>
+        {{#animated-if this.isVerifying use=this.transition duration=200}}
+          <Pill @color="yellow">
+            <div class="flex items-center gap-1">
+              <BlinkingDot @color="yellow" />
+              <span>Verifying...</span>
+            </div>
+
+            <EmberTooltip @text="We're verifying this hint by running tests" @popperContainer="body" />
+          </Pill>
+        {{else}}
+          <Pill @color="teal">
+            Verified
+
+            <EmberTooltip @text="Tests passed after this hint was applied." @popperContainer="body" />
+          </Pill>
+        {{/animated-if}}
+      </AnimatedContainer>
+    </div>
+  </div>
+
+  <AnimatedContainer>
+    {{#animated-if @isExpanded use=this.transition duration=200}}
+      <div class="p-3 pt-0">
+        <div class="prose prose-sm dark:prose-invert">
+          {{markdown-to-html @hint.description_markdown}}
+        </div>
+      </div>
+    {{/animated-if}}
+  </AnimatedContainer>
+</div>

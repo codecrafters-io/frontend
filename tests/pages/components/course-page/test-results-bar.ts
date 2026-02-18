@@ -3,6 +3,10 @@ import { clickOnText, clickable, collection, text, triggerable } from 'ember-cli
 import { find } from '@ember/test-helpers';
 
 export default {
+  autofixHintCards: collection('[data-test-autofix-hint-card]', {
+    statusText: text('[data-test-autofix-hint-status]'),
+  }),
+
   autofixSection: {
     clickOnStartAutofixButton: clickable('[data-test-start-autofix-button]'),
     scope: '[data-test-autofix-section]',
