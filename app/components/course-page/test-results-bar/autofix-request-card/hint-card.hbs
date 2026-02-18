@@ -26,11 +26,13 @@
             <EmberTooltip @text="We're verifying this hint by running tests" @popperContainer="body" />
           </Pill>
         {{else}}
-          <Pill @color="teal">
-            Verified
+          {{#if this.isVerified}}
+            <Pill @color="teal">
+              Verified
 
-            <EmberTooltip @text="Tests passed after this hint was applied." @popperContainer="body" />
-          </Pill>
+              <EmberTooltip @text="Tests passed after this hint was applied." @popperContainer="body" />
+            </Pill>
+          {{/if}}
         {{/animated-if}}
       </AnimatedContainer>
     </div>
