@@ -4,6 +4,7 @@ import { find } from '@ember/test-helpers';
 
 export default {
   autofixHintCards: collection('[data-test-autofix-hint-card]', {
+    clickOnToggleButton: clickable('[role="button"]'),
     statusText: text('[data-test-autofix-hint-status]'),
   }),
 

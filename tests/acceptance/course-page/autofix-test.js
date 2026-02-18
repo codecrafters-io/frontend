@@ -65,6 +65,10 @@ module('Acceptance | course-page | autofix', function (hooks) {
     const autofixRequest = this.server.schema.autofixRequests.first();
     const toolCallEvents = [];
 
+    const expandedAutofixHintEvents = () => {
+      return this.server.schema.analyticsEvents.all().models.filter((event) => event.name === 'expanded_autofix_hint');
+    };
+
     const draftHints = async () => {
       // Simulate tool calls arriving via logstream
       toolCallEvents.push(
@@ -135,6 +139,10 @@ module('Acceptance | course-page | autofix', function (hooks) {
     assert.strictEqual(coursePage.testResultsBar.autofixHintCards.length, 1);
     await percySnapshot('Autofix - Generating hints');
 
+    await coursePage.testResultsBar.autofixHintCards[0].clickOnToggleButton();
+    assert.strictEqual(expandedAutofixHintEvents().length, 0, 'expanded_autofix_hint is not tracked for dummy hints');
+    await coursePage.testResultsBar.autofixHintCards[0].clickOnToggleButton();
+
     await draftHints();
     await animationsSettled();
     assert.strictEqual(coursePage.testResultsBar.autofixHintCards.length, 2);
@@ -149,6 +157,9 @@ module('Acceptance | course-page | autofix', function (hooks) {
     assert.strictEqual(coursePage.testResultsBar.autofixHintCards.length, 2);
     assert.ok(coursePage.testResultsBar.autofixHintCards[0].statusText.includes('Verified'));
     await percySnapshot('Autofix - Hints finalized');
+
+    await coursePage.testResultsBar.autofixHintCards[0].clickOnToggleButton();
+    assert.strictEqual(expandedAutofixHintEvents().length, 1, 'expanded_autofix_hint is tracked for non-dummy hints');
   });
 
   test('can view failed autofix', async function (assert) {

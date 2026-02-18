@@ -31,6 +31,10 @@ export default class AutofixRequestCard extends Component<Signature> {
     };
   }
 
+  get hasRealHints() {
+    return (this.args.autofixRequest.hintsJson?.length ?? 0) > 0;
+  }
+
   @action
   handleHideSolutionButtonClick() {
     this.solutionIsBlurred = true;
@@ -48,10 +52,12 @@ export default class AutofixRequestCard extends Component<Signature> {
 
   @action
   handleHintExpand(hintIndex: number): void {
-    this.analyticsEventTracker.track('expanded_autofix_hint', {
-      autofix_request_id: this.args.autofixRequest.id,
-      hint_index: hintIndex,
-    });
+    if (this.hasRealHints) {
+      this.analyticsEventTracker.track('expanded_autofix_hint', {
+        autofix_request_id: this.args.autofixRequest.id,
+        hint_index: hintIndex,
+      });
+    }
 
     this.expandedHintIndex = hintIndex;
     this.solutionIsBlurred = true;
