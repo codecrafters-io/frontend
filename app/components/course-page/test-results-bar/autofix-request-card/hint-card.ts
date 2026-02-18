@@ -21,6 +21,10 @@ export default class HintCard extends Component<Signature> {
   get isVerifying() {
     return this.args.autofixRequest.status === 'in_progress';
   }
+
+  get isVerified() {
+    return this.args.autofixRequest.status === 'success';
+  }
 }
 
 declare module '@glint/environment-ember-loose/registry' {
