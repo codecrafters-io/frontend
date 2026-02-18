@@ -54,6 +54,25 @@ module('Acceptance | concepts-test', function (hooks) {
 - Always sign in (use any of the signIn functions from `codecrafters-frontend/tests/support/authentication-helpers`) if the test requires a user to be logged in.
 - Structure tests with clear Arrange-Act-Assert pattern
 
+## Assertions
+
+- Use page objects for DOM assertions instead of `assert.dom()`. Page objects provide a higher-level abstraction and keep selectors out of test files.
+- Use `assert.strictEqual` with page object properties for checking values (text, counts, etc.)
+- Use `assert.ok` with page object boolean properties for checking visibility/state
+
+Good:
+```js
+assert.strictEqual(coursePage.sidebar.stepListItems.length, 8);
+assert.strictEqual(coursePage.testResultsBar.autofixHintCards[0].statusText, 'Verified');
+assert.ok(coursePage.feedbackPrompt.isVisible);
+```
+
+Bad:
+```js
+assert.dom('[data-test-step-list-item]').exists({ count: 8 });
+assert.dom('[data-test-autofix-hint-card]').containsText('Verified');
+```
+
 Example:
 ```js
 test('can create concept', async function (assert) {
