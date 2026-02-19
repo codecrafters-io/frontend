@@ -27,18 +27,6 @@
   hyphens: none;
 }
 
-.has-prism-highlighting pre[class*='language-']::-moz-selection,
-.has-prism-highlighting pre[class*='language-'] ::-moz-selection {
-  text-shadow: none;
-  background: #b3d4fc;
-}
-
-.has-prism-highlighting pre[class*='language-']::selection,
-.has-prism-highlighting pre[class*='language-'] ::selection {
-  text-shadow: none;
-  background: #b3d4fc;
-}
-
 @media print {
   .has-prism-highlighting pre[class*='language-'] {
     text-shadow: none;
