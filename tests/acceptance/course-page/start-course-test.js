@@ -224,10 +224,15 @@ module('Acceptance | course-page | start-course', function (hooks) {
     assert.strictEqual(currentURL(), '/courses/dummy/introduction', 'current URL is course page URL');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
+    await animationsSettled();
     await coursePage.createRepositoryCard.clickOnOptionButton('Beginner');
+    await animationsSettled();
     await coursePage.createRepositoryCard.clickOnNextQuestionButton();
+    await animationsSettled();
     await coursePage.createRepositoryCard.clickOnOptionButton('Every day');
+    await animationsSettled();
     await coursePage.createRepositoryCard.clickOnOptionButton('Yes please');
+    await animationsSettled();
     await coursePage.createRepositoryCard.clickOnContinueButton();
 
     let repository = this.server.schema.repositories.find(1);
