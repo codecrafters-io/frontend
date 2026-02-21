@@ -133,22 +133,24 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING', 'course stage item is active if clicked on');
     assert.ok(coursePage.currentStepCompleteModal.languageLeaderboardRankSection.isVisible, 'language leaderboard rank section is visible');
-    await coursePage.currentStepCompleteModal.clickOnCloseButton();
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage 5 days ago.');
 
+    await coursePage.currentStepCompleteModal.clickOnCloseButton();
+    await animationsSettled();
+
+    assert.ok(coursePage.currentStepCompletePill.isVisible, 'current step complete pill is visible');
     await percySnapshot('Course Stages - Completed stage');
 
     await coursePage.sidebar.clickOnStepListItem('Respond to multiple PINGs');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Respond to multiple PINGs', 'course stage item is active if clicked on');
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage yesterday.');
+    assert.ok(coursePage.currentStepCompletePill.isVisible, 'current step complete pill is visible');
 
     await coursePage.sidebar.clickOnStepListItem('Handle concurrent clients');
     await animationsSettled();
 
     assert.strictEqual(coursePage.header.stepName, 'Handle concurrent clients', 'course stage item is active if clicked on');
-    assert.contains(coursePage.completedStepNotice.text, 'You completed this stage today.');
+    assert.ok(coursePage.currentStepCompletePill.isVisible, 'current step complete pill is visible');
   });
 
   test('can navigate directly to stage even if previous stages are not completed', async function (assert) {

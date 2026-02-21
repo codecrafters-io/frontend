@@ -26,16 +26,9 @@ export default create({
   clickOnHeaderTabLink: clickOnText('[data-test-course-page-header-sticky-section] [data-test-header-tab-link]'),
   clickOnModalBackdrop: clickable('[data-test-modal-backdrop]'),
 
-  completedStepNotice: {
-    nextOrActiveStepButton: {
-      scope: '[data-test-next-or-active-step-button]',
-    },
-
-    scope: '[data-test-completed-step-notice]',
-
-    shareProgressButton: {
-      scope: '[data-test-share-progress-button]',
-    },
+  currentStepCompletePill: {
+    nextStepButton: { scope: '[data-test-next-step-button]' },
+    scope: '[data-test-current-step-complete-pill]',
   },
 
   courseCompletedCard: {
@@ -149,20 +142,7 @@ export default create({
   },
 
   secondStageYourTaskCard: SecondStageYourTaskCard,
-
   setupStepCompleteModal: SetupStepCompleteModal,
-
-  shareProgressModal: {
-    clickOnCopyButton: clickable('[data-test-copy-button]'),
-
-    copyableText: {
-      scope: '[data-test-copyable-text]',
-    },
-
-    scope: '[data-test-share-progress-modal]',
-    socialPlatformIcons: collection('[data-test-social-platform-icon]'),
-  },
-
   repositorySetupCard: RepositorySetupCard,
   sidebar: Sidebar,
   testResultsBar: TestResultsBar,
