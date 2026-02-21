@@ -1,21 +1,21 @@
-<div
-  class="pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 bg-yellow-100 dark:bg-yellow-950 border border-yellow-300 dark:border-yellow-700 shadow-md"
+<LinkTo
+  class="group pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 bg-yellow-100 dark:bg-yellow-950 border border-yellow-300 dark:border-yellow-700 dark:hover:border-yellow-600 shadow-md"
   data-test-previous-steps-incomplete-pill
+  @route={{this.activeStep.routeParams.route}}
+  @models={{this.activeStep.routeParams.models}}
   ...attributes
 >
-  {{svg-jar "exclamation" class="size-6 fill-yellow-400 shrink-0"}}
+  {{svg-jar "exclamation" class="size-6 fill-yellow-400 group-hover:fill-yellow-700 dark:group-hover:fill-yellow-300 shrink-0"}}
 
   <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
     Previous steps incomplete
   </span>
 
-  <LinkTo
-    @route={{this.activeStep.routeParams.route}}
-    @models={{this.activeStep.routeParams.models}}
-    class="inline-flex items-center gap-1 text-sm font-semibold text-yellow-900 dark:text-yellow-100 hover:text-yellow-700 dark:hover:text-yellow-300 underline underline-offset-2"
+  <span
+    class="inline-flex items-center gap-1 text-sm font-semibold text-yellow-900 dark:text-yellow-100 underline underline-offset-2"
     data-test-back-to-active-step-button
   >
     {{svg-jar "arrow-left" class="w-3.5 h-3.5 fill-current shrink-0"}}
     <span>Back</span>
-  </LinkTo>
-</div>
+  </span>
+</LinkTo>

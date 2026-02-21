@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 
 interface Signature {
-  Element: HTMLDivElement;
+  Element: HTMLAnchorElement;
 }
 
 export default class PreviousStepsIncompletePill extends Component<Signature> {
