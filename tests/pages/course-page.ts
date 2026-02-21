@@ -194,7 +194,7 @@ export default create({
   },
 
   testsPassedPill: {
-    click: clickable('[data-test-tests-passed-pill]'),
+    click: clickable(),
     proceedButton: {
       scope: '[data-test-proceed-button]',
     },
