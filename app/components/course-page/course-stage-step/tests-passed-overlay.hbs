@@ -7,7 +7,7 @@
   <:content>
     {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
       <div class="sticky top-10 z-10 flex items-start justify-center pointer-events-none h-0">
-        <CoursePage::CourseStageStep::TestsPassedPill class="mt-4" @onClick={{fn (mut this.modalWasDismissed) false}} />
+        <CoursePage::CourseStageStep::TestsPassedPill class="mt-4" {{on "click" (fn (mut this.modalWasDismissed) false)}} />
       </div>
     {{/animated-if}}
 

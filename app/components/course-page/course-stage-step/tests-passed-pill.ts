@@ -2,10 +2,6 @@ import Component from '@glimmer/component';
 
 interface Signature {
   Element: HTMLButtonElement;
-
-  Args: {
-    onClick: () => void;
-  };
 }
 
 export default class TestsPassedPill extends Component<Signature> {}

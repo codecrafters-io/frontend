@@ -51,9 +51,7 @@ export default class TestsPassedOverlay extends Component<Signature> {
       move(sprite, { easing: easeOut });
     });
 
-    keptSprites.forEach((sprite) => {
-      move(sprite);
-    });
+    keptSprites.forEach(move);
 
     removedSprites.forEach((sprite) => {
       fadeOut(sprite);
