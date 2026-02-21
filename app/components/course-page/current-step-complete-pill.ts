@@ -54,10 +54,6 @@ export default class CurrentStepCompletePill extends Component<Signature> {
 
   get targetStepButtonCopy() {
     if (this.nextStep === this.targetStep) {
-      if (this.nextStep?.type === 'CourseStageStep') {
-        return 'View next stage';
-      }
-
       return 'View next step';
     }
 
