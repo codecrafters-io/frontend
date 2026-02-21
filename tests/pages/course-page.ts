@@ -188,8 +188,17 @@ export default create({
 
   testsPassedModal: {
     clickOnActionButton: clickOnText('[data-test-action-button-title]'),
+    clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     scope: '[data-test-tests-passed-modal]',
     title: text('[data-test-modal-title]'),
+  },
+
+  testsPassedPill: {
+    click: clickable('[data-test-tests-passed-pill]'),
+    proceedButton: {
+      scope: '[data-test-proceed-button]',
+    },
+    scope: '[data-test-tests-passed-pill]',
   },
 
   upgradeModal: {
