@@ -7,7 +7,7 @@
   <:content>
     {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
       <div class="sticky top-10 z-10 flex items-start justify-center pointer-events-none h-0">
-        <CoursePage::PreviousStepsIncompletePill @step={{@currentStep}} class="mt-4" />
+        <CoursePage::PreviousStepsIncompletePill class="mt-4" />
       </div>
     {{/animated-if}}
 
