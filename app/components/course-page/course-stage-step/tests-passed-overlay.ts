@@ -1,8 +1,11 @@
 import Component from '@glimmer/component';
+import move from 'ember-animated/motions/move';
 import type CourseStageStep from 'codecrafters-frontend/utils/course-page-step-list/course-stage-step';
+import type { Sprite } from 'ember-animated';
 import { action } from '@ember/object';
+import { easeOut, easeIn } from 'ember-animated/easings/cosine';
+import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { tracked } from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,8 +20,6 @@ interface Signature {
 }
 
 export default class TestsPassedOverlay extends Component<Signature> {
-  transition = fade;
-
   @tracked lastSeenStepId: string | null = null;
   @tracked modalWasDismissed = false;
 
@@ -39,6 +40,27 @@ export default class TestsPassedOverlay extends Component<Signature> {
 
     this.lastSeenStepId = this.args.currentStep.id;
     this.modalWasDismissed = false;
+  }
+
+  // eslint-disable-next-line require-yield
+  *transition({ insertedSprites, keptSprites, removedSprites }: { insertedSprites: Sprite[]; keptSprites: Sprite[]; removedSprites: Sprite[] }) {
+    insertedSprites.forEach((sprite) => {
+      fadeIn(sprite);
+      sprite.startTranslatedBy(0, -50);
+      sprite.applyStyles({ 'z-index': '1' });
+      move(sprite, { easing: easeOut });
+    });
+
+    keptSprites.forEach((sprite) => {
+      move(sprite);
+    });
+
+    removedSprites.forEach((sprite) => {
+      fadeOut(sprite);
+      sprite.applyStyles({ 'z-index': '1' });
+      sprite.endTranslatedBy(0, -50);
+      move(sprite, { easing: easeIn });
+    });
   }
 }
 
