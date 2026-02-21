@@ -4,7 +4,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
@@ -236,5 +236,18 @@ module('Acceptance | course-page | attempt-course-stage', function (hooks) {
 
     assert.notOk(coursePage.testRunnerCard.isVisible, 'test runner card is not visible');
     assert.ok(coursePage.testsPassedModal.isVisible, 'tests passed modal is visible');
+
+    await coursePage.testsPassedModal.clickOnCloseButton();
+    await animationsSettled();
+
+    assert.notOk(coursePage.testsPassedModal.isVisible, 'tests passed modal is not visible after dismissal');
+    assert.ok(coursePage.testsPassedPill.isVisible, 'tests passed pill is visible after dismissing modal');
+    assert.ok(coursePage.testsPassedPill.proceedButton.isVisible, 'proceed button is visible in tests passed pill');
+
+    await coursePage.testsPassedPill.click();
+    await animationsSettled();
+
+    assert.notOk(coursePage.testsPassedPill.isVisible, 'tests passed pill is not visible after clicking');
+    assert.ok(coursePage.testsPassedModal.isVisible, 'tests passed modal is visible again after clicking pill');
   });
 });

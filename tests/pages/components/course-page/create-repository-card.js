@@ -1,8 +1,20 @@
+import { click } from '@ember/test-helpers';
 import { collection, clickOnText, clickable, isVisible, text } from 'ember-cli-page-object';
 import requestLanguageDropdown from './repository-setup-card/request-language-dropdown';
 
 export default {
-  clickOnContinueButton: clickable('[data-test-continue-button]'),
+  async clickOnContinueButton() {
+    const continueButton =
+      Array.from(document.querySelectorAll('[data-test-create-repository-card] [data-test-continue-button]')).find(
+        (element) => element instanceof HTMLElement && element.offsetParent !== null,
+      ) || document.querySelector('[data-test-create-repository-card] [data-test-continue-button]');
+
+    if (!continueButton) {
+      throw new Error('Continue button not found in create repository card');
+    }
+
+    await click(continueButton);
+  },
   clickOnLanguageButton: clickOnText('button'),
   clickOnNextQuestionButton: clickable('[data-test-next-question-button]'),
   clickOnOptionButton: clickOnText('button'),
