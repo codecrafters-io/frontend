@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
-import fade from 'ember-animated/transitions/fade';
+import coursePageOverlayTransition from 'codecrafters-frontend/utils/course-page-overlay-transition';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -19,12 +19,11 @@ interface Signature {
 }
 
 export default class CurrentStepCompleteOverlay extends Component<Signature> {
-  transition = fade;
-
   @tracked modalWasDismissed = false;
   @tracked lastSeenStepStatus: string | null = null;
 
   @service declare coursePageState: CoursePageStateService;
+  transition = coursePageOverlayTransition;
 
   get shouldShowModal(): boolean {
     if (!this.coursePageState.nextStep) {
