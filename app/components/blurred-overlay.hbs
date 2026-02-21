@@ -2,7 +2,8 @@
   {{yield to="content"}}
 
   {{#if @isBlurred}}
-    <div class="absolute inset-0 z-10 backdrop-blur-xs flex items-start justify-center {{@overlayClass}}">
+    {{! template-lint-disable no-invalid-interactive }}
+    <div class="absolute inset-0 z-10 backdrop-blur-xs flex items-start justify-center {{@overlayClass}}" {{on "click" this.handleOverlayClick}}>
       {{yield to="overlay"}}
     </div>
   {{/if}}

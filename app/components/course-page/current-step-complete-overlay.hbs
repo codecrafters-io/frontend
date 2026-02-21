@@ -2,6 +2,7 @@
   @isBlurred={{this.shouldShowModal}}
   {{did-update this.handleStepStatusUpdated @currentStep.status}}
   @overlayClass="bg-gray-200/20 dark:bg-gray-900/20"
+  @onOverlayClick={{this.handleModalDismissed}}
   ...attributes
 >
   <:content>
