@@ -1,0 +1,21 @@
+<div
+  class="pointer-events-auto inline-flex items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 bg-yellow-100 dark:bg-yellow-950 border border-yellow-300 dark:border-yellow-700 shadow-md"
+  data-test-previous-steps-incomplete-pill
+  ...attributes
+>
+  {{svg-jar "exclamation" class="size-6 fill-yellow-400 shrink-0"}}
+
+  <span class="text-sm font-medium text-yellow-800 dark:text-yellow-200">
+    Previous steps incomplete
+  </span>
+
+  <LinkTo
+    @route={{this.activeStep.routeParams.route}}
+    @models={{this.activeStep.routeParams.models}}
+    class="inline-flex items-center gap-1 text-sm font-semibold text-yellow-900 dark:text-yellow-100 hover:text-yellow-700 dark:hover:text-yellow-300 underline underline-offset-2"
+    data-test-back-to-active-step-button
+  >
+    {{svg-jar "arrow-left" class="w-3.5 h-3.5 fill-current shrink-0"}}
+    <span>Back</span>
+  </LinkTo>
+</div>
