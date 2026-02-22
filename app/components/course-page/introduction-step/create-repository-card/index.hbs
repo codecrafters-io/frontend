@@ -14,10 +14,11 @@
   <:expandedSection>
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
-        @preferredLanguageSlug={{@preferredLanguageSlug}}
         @errorMessage={{@repositoryCreationErrorMessage}}
-        @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
+        @onTryOtherLanguage={{@onTryOtherLanguage}}
+        @preferredLanguageSlug={{@preferredLanguageSlug}}
+        @repository={{@repository}}
       />
     {{else if (eq this.expandedSection.type "SelectLanguageProficiencyLevelSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageProficiencyLevelSection

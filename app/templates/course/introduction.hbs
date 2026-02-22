@@ -1,10 +1,11 @@
 <CoursePage::CurrentStepCompleteOverlay @currentStep={{this.currentStep}}>
   <div class="w-full pt-8 pb-32 px-3 md:px-6 lg:px-10">
-    <CoursePage::IntroductionStep::WelcomeCard @repository={{@model.activeRepository}} class="mb-6" />
+    <CoursePage::IntroductionStep::WelcomeCard @repository={{this.courseController.activeRepository}} class="mb-6" />
     <CoursePage::IntroductionStep::CreateRepositoryCard
       @onLanguageSelection={{this.courseController.handleLanguageSelection}}
+      @onTryOtherLanguage={{fn this.courseController.handleTryOtherLanguage null}}
       @preferredLanguageSlug={{@model.track}}
-      @repository={{@model.activeRepository}}
+      @repository={{this.courseController.activeRepository}}
       @repositoryCreationErrorMessage={{this.courseController.repositoryCreationErrorMessage}}
       class="mb-6"
     />

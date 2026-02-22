@@ -29,10 +29,10 @@ export default class CourseRoute extends BaseRoute {
 
   queryParams = {
     repo: {
-      refreshModel: true,
+      refreshModel: false,
     },
     track: {
-      refreshModel: true,
+      refreshModel: false,
     },
   };
 

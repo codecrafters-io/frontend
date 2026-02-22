@@ -14,9 +14,10 @@ interface Signature {
 
   Args: {
     errorMessage?: string;
+    onLanguageSelection: (language: LanguageModel) => void;
+    onTryOtherLanguage: () => void;
     preferredLanguageSlug?: string;
     repository: RepositoryModel;
-    onLanguageSelection: (language: LanguageModel) => void;
   };
 }
 

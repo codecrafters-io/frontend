@@ -12,10 +12,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    course: CourseModel;
-    repositories: RepositoryModel[];
     activeRepository: RepositoryModel;
+    course: CourseModel;
     onCollapseButtonClick: () => void;
+    onRetryWithSameLanguage?: (dropdownActions: { close: () => void }) => void;
+    onSelectRepository?: (repository: RepositoryModel, dropdownActions: { close: () => void }) => void;
+    onTryDifferentLanguage?: () => void;
+    repositories: RepositoryModel[];
   };
 }
 

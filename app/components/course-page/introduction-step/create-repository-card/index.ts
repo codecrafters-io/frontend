@@ -14,6 +14,7 @@ interface Signature {
 
   Args: {
     onLanguageSelection: (language: LanguageModel) => void | Promise<boolean>;
+    onTryOtherLanguage: () => void;
     preferredLanguageSlug: string | undefined;
     repository: RepositoryModel;
     repositoryCreationErrorMessage?: string;

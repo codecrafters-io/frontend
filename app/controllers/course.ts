@@ -12,9 +12,11 @@ import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type LanguageModel from 'codecrafters-frontend/models/language';
+import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { ModelType } from 'codecrafters-frontend/routes/course';
 import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { StepListDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import * as Sentry from '@sentry/ember';
 import { task } from 'ember-concurrency';
 
@@ -36,6 +38,9 @@ export default class CourseController extends Controller {
   @tracked repo: string | undefined = undefined;
   @tracked track: string | undefined = undefined;
 
+  /** When set, used instead of model.activeRepository (avoids model refresh on QP change). */
+  @tracked activeRepositoryOverride: RepositoryModel | null = null;
+
   @tracked configureGithubIntegrationModalIsOpen = false;
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
@@ -47,6 +52,10 @@ export default class CourseController extends Controller {
   @tracked stepTypePreviouslyWas: StepType | null = null;
 
   @tracked repositoryCreationErrorMessage: string | undefined;
+
+  get activeRepository(): RepositoryModel {
+    return this.activeRepositoryOverride ?? this.model.activeRepository;
+  }
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -83,7 +92,7 @@ export default class CourseController extends Controller {
       this.configureGithubIntegrationModalIsOpen = true;
 
       next(() => {
-        this.router.transitionTo({ queryParams: { action: null } }); // reset param
+        this.action = undefined;
       });
     }
   }
@@ -109,12 +118,12 @@ export default class CourseController extends Controller {
   @action
   async handleLanguageSelection(language: LanguageModel): Promise<boolean> {
     this.repositoryCreationErrorMessage = undefined;
-    this.model.activeRepository.language = language;
+    this.activeRepository.language = language;
 
     try {
-      await this.model.activeRepository.save();
+      await this.activeRepository.save();
     } catch (error) {
-      this.model.activeRepository.language = undefined;
+      this.activeRepository.language = undefined;
       this.repositoryCreationErrorMessage =
         'Failed to create repository, please try again? Contact us at hello@codecrafters.io if this error persists.';
       Sentry.captureException(error);
@@ -122,7 +131,9 @@ export default class CourseController extends Controller {
       return false;
     }
 
-    this.router.transitionTo({ queryParams: { repo: this.model.activeRepository.id, track: null } });
+    this.repo = this.activeRepository.id;
+    this.track = undefined;
+    this.activeRepositoryOverride = null;
 
     return true;
   }
@@ -133,8 +144,24 @@ export default class CourseController extends Controller {
   }
 
   @action
+  handleRetryWithSameLanguage(dropdownActions: { close: () => void }) {
+    const trackSlug = this.activeRepository.language?.slug ?? undefined;
+    this.handleTryOtherLanguage(trackSlug ?? null);
+    dropdownActions.close();
+  }
+
+  @action
   async handleRouteChanged() {
     this.sidebarIsExpandedOnMobile = false;
+  }
+
+  @action
+  handleSelectRepository(repository: RepositoryModel, dropdownActions: { close: () => void }) {
+    this.activeRepositoryOverride = repository;
+    this.repo = repository.id;
+    this.track = undefined;
+    this.coursePageState.setStepList(new StepListDefinition(repository));
+    dropdownActions.close();
   }
 
   @action
@@ -143,12 +170,36 @@ export default class CourseController extends Controller {
   }
 
   @action
+  handleTryOtherLanguage(track: string | null) {
+    const course = this.model.course;
+    const existingNew = this.store.peekAll('repository').find((repository) => repository.isNew);
+
+    let newRepository: RepositoryModel;
+
+    if (existingNew) {
+      (existingNew as RepositoryModel).course = course;
+      (existingNew as RepositoryModel).user = this.authenticator.currentUser!;
+      newRepository = existingNew as RepositoryModel;
+    } else {
+      newRepository = this.store.createRecord('repository', {
+        course,
+        user: this.authenticator.currentUser,
+      }) as RepositoryModel;
+    }
+
+    this.activeRepositoryOverride = newRepository;
+    this.repo = 'new';
+    this.track = track ?? undefined;
+    this.coursePageState.setStepList(new StepListDefinition(newRepository));
+  }
+
+  @action
   async handleWillDestroyContainer() {
     this.teardownRouteChangeListeners();
   }
 
   pollRepositoryTask = task({ keepLatest: true }, async (): Promise<void> => {
-    await new RepositoryPoller(this.model.activeRepository).doPoll();
+    await new RepositoryPoller(this.activeRepository).doPoll();
   });
 
   @action
@@ -156,6 +207,7 @@ export default class CourseController extends Controller {
     if (isExiting) {
       this.repo = undefined;
       this.track = undefined;
+      this.activeRepositoryOverride = null;
     }
   }
 

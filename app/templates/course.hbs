@@ -21,20 +21,23 @@
   {{! @glint-expect-error on-key modifier types aren't right? }}
   {{on-key "cmd+KeyJ" this.handleToggleTestResultsBar}}
 >
-  {{#if @model.activeRepository.id}}
+  {{#if this.activeRepository.id}}
     <div
       class="hidden"
-      {{on-action-cable-message this.pollRepositoryTask.perform channel="RepositoryChannel" args=(hash repository_id=@model.activeRepository.id)}}
+      {{on-action-cable-message this.pollRepositoryTask.perform channel="RepositoryChannel" args=(hash repository_id=this.activeRepository.id)}}
       {{on-visibility-change this.pollRepositoryTask.perform if="visible"}}
     />
   {{/if}}
 
   {{#if this.sidebarIsExpandedOnDesktop}}
     <CoursePage::Sidebar
+      @activeRepository={{this.activeRepository}}
       @course={{@model.course}}
-      @repositories={{@model.repositories}}
-      @activeRepository={{@model.activeRepository}}
       @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+      @onRetryWithSameLanguage={{this.handleRetryWithSameLanguage}}
+      @onSelectRepository={{this.handleSelectRepository}}
+      @onTryDifferentLanguage={{fn this.handleTryOtherLanguage null}}
+      @repositories={{@model.repositories}}
       {{! pb-12 accounts for the test results bar at the bottom !}}
       class="group relative pb-12 w-full max-w-[18em] shrink-0 h-screen hidden lg:flex"
     />
@@ -48,10 +51,13 @@
       </div>
 
       <CoursePage::Sidebar
+        @activeRepository={{this.activeRepository}}
         @course={{@model.course}}
-        @repositories={{@model.repositories}}
-        @activeRepository={{@model.activeRepository}}
         @onCollapseButtonClick={{this.handleCollapseSidebarButtonClick}}
+        @onRetryWithSameLanguage={{this.handleRetryWithSameLanguage}}
+        @onSelectRepository={{this.handleSelectRepository}}
+        @onTryDifferentLanguage={{fn this.handleTryOtherLanguage null}}
+        @repositories={{@model.repositories}}
         class="group relative w-full max-w-[18em] shrink-0 h-screen lg:hidden"
       />
     </CoursePage::Sidebar::MobileBackdrop>
@@ -66,7 +72,7 @@
     />
 
     <CoursePage::Header::MainSection
-      @activeRepository={{@model.activeRepository}}
+      @activeRepository={{this.activeRepository}}
       @activeStep={{this.coursePageState.activeStep}}
       @course={{@model.course}}
       @currentStep={{this.coursePageState.currentStep}}
@@ -91,7 +97,7 @@
       </div>
 
       <CoursePage::RightSidebar
-        @activeRepository={{@model.activeRepository}}
+        @activeRepository={{this.activeRepository}}
         @course={{@model.course}}
         @isExpanded={{this.leaderboardIsExpanded}}
         @onCollapseButtonClick={{this.handleCollapseLeaderboardButtonClick}}
@@ -106,7 +112,7 @@
   <CoursePage::TestResultsBar
     @activeStep={{this.coursePageState.activeStep}}
     @currentStep={{this.coursePageState.currentStep}}
-    @repository={{@model.activeRepository}}
+    @repository={{this.activeRepository}}
     class="absolute bottom-0 left-0 right-0 z-20"
   />
 </div>
@@ -115,7 +121,7 @@
   <ModalBackdrop>
     {{! @glint-expect-error: not ts-ified yet }}
     <CoursePage::ConfigureGithubIntegrationModal
-      @repository={{@model.activeRepository}}
+      @repository={{this.activeRepository}}
       {{! @glint-expect-error: mut not ts-ified yet }}
       @onClose={{fn (mut this.configureGithubIntegrationModalIsOpen) false}}
     />
