@@ -9,6 +9,7 @@ import type LeaderboardEntriesCacheRegistryService from 'codecrafters-frontend/s
 import type LeaderboardModel from 'codecrafters-frontend/models/leaderboard';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type { LeaderboardEntryWithRank } from 'codecrafters-frontend/utils/leaderboard-entries-cache';
+import { didCancel } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { fadeIn, fadeOut } from 'ember-animated/motions/opacity';
 import { service } from '@ember/service';
@@ -65,7 +66,13 @@ export default class TrackLeaderboard extends Component<Signature> {
 
   @action
   async handleDidInsert() {
-    await this.leaderboardEntriesCache.loadOrRefresh();
+    try {
+      await this.leaderboardEntriesCache.loadOrRefresh();
+    } catch (error) {
+      if (!didCancel(error)) {
+        throw error;
+      }
+    }
   }
 
   // eslint-disable-next-line require-yield
