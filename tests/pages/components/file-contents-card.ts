@@ -1,4 +1,4 @@
-import { clickable, create, text, triggerable } from 'ember-cli-page-object';
+import { create, text, triggerable } from 'ember-cli-page-object';
 import codeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 
 export default create({
@@ -6,18 +6,15 @@ export default create({
   codeMirror,
   header: {
     scope: '[data-test-file-contents-card-header]',
-    click: clickable(),
 
     hover: triggerable('mouseenter', '[data-test-file-contents-card-header-hover-target]'),
 
     expandButton: {
       scope: '[data-test-file-contents-card-header-expand-button]',
-      click: clickable(),
     },
 
     collapseButton: {
       scope: '[data-test-file-contents-card-header-collapse-button]',
-      click: clickable(),
     },
 
     tooltipBubble: {
@@ -29,6 +26,5 @@ export default create({
 
   collapseButton: {
     scope: '[data-test-file-contents-card-collapse-button]',
-    click: clickable(),
   },
 });

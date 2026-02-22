@@ -1,4 +1,4 @@
-import { attribute, clickable, collection, create, text, visitable } from 'ember-cli-page-object';
+import { attribute, collection, create, text, visitable } from 'ember-cli-page-object';
 import CodeMirror from 'codecrafters-frontend/tests/pages/components/code-mirror';
 import DarkModeToggle from 'codecrafters-frontend/tests/pages/components/dark-mode-toggle';
 import FileContentsCard from 'codecrafters-frontend/tests/pages/components/file-contents-card';
@@ -7,9 +7,7 @@ export default create({
   tabSwitcher: {
     scope: '[data-test-demo-tab-switcher]',
 
-    tabs: collection('a', {
-      click: clickable(),
-    }),
+    tabs: collection('a'),
 
     findTabByText(text: string) {
       return this.tabs.findOneBy('text', text);
@@ -50,7 +48,6 @@ export default create({
 
         checkbox: {
           scope: 'input[type=checkbox]',
-          click: clickable(),
           isDisabled: attribute('disabled'),
         },
       }),
