@@ -183,7 +183,7 @@
     "html-entities": "^2.6.0",
     "loader.js": "^4.7.0",
     "miragejs": "^0.1.48",
-    "node-fetch": "^2.6.12",
+    "node-fetch": "^3.3.2",
     "postcss": "^8.5.6",
     "postcss-loader": "^8.2.0",
     "prember": "^2.1.0",
