@@ -24,7 +24,6 @@ export default {
 
   hideRejectedCommentsButton: {
     scope: '[data-test-hide-rejected-comments-button]',
-    click: clickable(),
   },
 
   scope: '[data-test-comment-card]',

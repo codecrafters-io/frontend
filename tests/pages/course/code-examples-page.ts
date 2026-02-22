@@ -53,9 +53,7 @@ export default createPage({
         return this.links.length > 0 && [...this.links].some((link) => link.text === linkText);
       },
 
-      links: collection('[data-test-dropdown-link]', {
-        click: clickable(),
-      }),
+      links: collection('[data-test-dropdown-link]'),
 
       resetScope: true,
       scope: '[data-test-more-dropdown-content]',

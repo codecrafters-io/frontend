@@ -10,7 +10,6 @@ export default {
 
   toggleRejectedCommentsButton: {
     scope: '[data-test-toggle-rejected-comments-button]',
-    click: clickable(),
   },
 
   scope: '[data-test-comment-list]',

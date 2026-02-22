@@ -1,4 +1,4 @@
-import { blurrable, clickable, collection, create, fillable, focusable, text } from 'ember-cli-page-object';
+import { blurrable, collection, create, fillable, focusable, text } from 'ember-cli-page-object';
 import { alias } from 'ember-cli-page-object/macros';
 
 export default create({
@@ -44,18 +44,15 @@ export default create({
 
         collapsedLinesPlaceholders: collection('> .cm-cc-collapsedLines', {
           text: text(),
-          click: clickable(),
         }),
 
         lines: collection('> .cm-line', {
           text: text(),
-          click: clickable(),
           fillIn: fillable(),
         }),
 
         changedLines: collection('> .cm-changedLine', {
           text: text(),
-          click: clickable(),
           fillIn: fillable(),
         }),
 
