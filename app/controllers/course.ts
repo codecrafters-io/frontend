@@ -11,9 +11,11 @@ import type Store from '@ember-data/store';
 import type RouterService from '@ember/routing/router-service';
 import type AnalyticsEventTrackerService from 'codecrafters-frontend/services/analytics-event-tracker';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
+import type LanguageModel from 'codecrafters-frontend/models/language';
 import type { ModelType } from 'codecrafters-frontend/routes/course';
 import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
+import * as Sentry from '@sentry/ember';
 import { task } from 'ember-concurrency';
 
 export default class CourseController extends Controller {
@@ -43,6 +45,8 @@ export default class CourseController extends Controller {
   @tracked stepStatusPreviouslyWas: StepStatus | null = null;
   @tracked stepIdPreviouslyWas: string | null = null;
   @tracked stepTypePreviouslyWas: StepType | null = null;
+
+  @tracked repositoryCreationErrorMessage: string | undefined;
 
   get currentUser() {
     return this.authenticator.currentUser;
@@ -100,6 +104,27 @@ export default class CourseController extends Controller {
     this.analyticsEventTracker.track('expanded_course_page_sidebar', {
       course_id: this.model.course.id,
     });
+  }
+
+  @action
+  async handleLanguageSelection(language: LanguageModel): Promise<boolean> {
+    this.repositoryCreationErrorMessage = undefined;
+    this.model.activeRepository.language = language;
+
+    try {
+      await this.model.activeRepository.save();
+    } catch (error) {
+      this.model.activeRepository.language = undefined;
+      this.repositoryCreationErrorMessage =
+        'Failed to create repository, please try again? Contact us at hello@codecrafters.io if this error persists.';
+      Sentry.captureException(error);
+
+      return false;
+    }
+
+    this.router.transitionTo({ queryParams: { repo: this.model.activeRepository.id, track: null } });
+
+    return true;
   }
 
   @action

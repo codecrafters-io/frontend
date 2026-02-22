@@ -3,8 +3,6 @@ import type Owner from '@ember/owner';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import RouterService from '@ember/routing/router-service';
-import * as Sentry from '@sentry/ember';
 import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
 import { action } from '@ember/object';
@@ -15,17 +13,17 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    onLanguageSelection: (language: LanguageModel) => void | Promise<boolean>;
     preferredLanguageSlug: string | undefined;
     repository: RepositoryModel;
+    repositoryCreationErrorMessage?: string;
   };
 }
 
 export default class CreateRepositoryCard extends Component<Signature> {
-  @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
   @tracked expandedSectionIndex: number | null = null;
-  @tracked repositoryCreationErrorMessage: string | undefined;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
@@ -56,23 +54,11 @@ export default class CreateRepositoryCard extends Component<Signature> {
 
   @action
   async handleLanguageSelection(language: LanguageModel) {
-    this.repositoryCreationErrorMessage = undefined;
-    this.args.repository.language = language;
+    const result = await this.args.onLanguageSelection(language);
 
-    try {
-      await this.args.repository.save(); // TODO: This is kinda slow, investigate ways to make it faster
-    } catch (error) {
-      this.args.repository.language = undefined;
-      this.repositoryCreationErrorMessage =
-        'Failed to create repository, please try again? Contact us at hello@codecrafters.io if this error persists.';
-      Sentry.captureException(error);
-
-      return;
+    if (result === true) {
+      this.expandNextSection();
     }
-
-    this.expandNextSection();
-
-    this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
   }
 
   @action

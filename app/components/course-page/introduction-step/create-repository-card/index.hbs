@@ -15,7 +15,7 @@
     {{#if (eq this.expandedSection.type "SelectLanguageSection")}}
       <CoursePage::IntroductionStep::CreateRepositoryCard::SelectLanguageSection
         @preferredLanguageSlug={{@preferredLanguageSlug}}
-        @errorMessage={{this.repositoryCreationErrorMessage}}
+        @errorMessage={{@repositoryCreationErrorMessage}}
         @repository={{@repository}}
         @onLanguageSelection={{this.handleLanguageSelection}}
       />
