@@ -5,7 +5,7 @@ import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { currentURL, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
+import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
@@ -113,10 +113,11 @@ module('Acceptance | course-page | complete-challenge-test', function (hooks) {
     // Try the same using the completed step notice
     await coursePage.sidebar.clickOnStepListItem('Expiry');
     await coursePage.currentStepCompleteModal.clickOnCloseButton();
+    await animationsSettled();
 
-    assert.contains(coursePage.completedStepNotice.nextOrActiveStepButton.text, 'View next step', 'copy for next or active step button is correct');
+    assert.ok(coursePage.currentStepCompletePill.nextStepButton.isVisible, 'next step button is visible');
 
-    await coursePage.completedStepNotice.nextOrActiveStepButton.click();
+    await coursePage.currentStepCompletePill.nextStepButton.click();
     assert.strictEqual(currentURL(), '/courses/redis/base-stages-completed', 'URL is /base-stages-completed');
   });
 });

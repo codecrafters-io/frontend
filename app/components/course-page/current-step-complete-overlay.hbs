@@ -6,18 +6,11 @@
   ...attributes
 >
   <:content>
-    <AnimatedContainer>
-      {{#animated-if this.modalWasDismissed duration=150 use=this.transition}}
-        <CoursePage::CompletedStepNotice
-          {{! @glint-expect-error repository is nullable according to coursePageState }}
-          @repository={{this.coursePageState.stepList.repository}}
-          @step={{@currentStep}}
-          class="px-3 md:px-6 lg:px-10 w-full scroll-mt-20"
-          {{! Ensure this is visible when modal is dismissed }}
-          {{upscroll-on-insert scrollableContainer="#course-page-scrollable-area"}}
-        />
-      {{/animated-if}}
-    </AnimatedContainer>
+    {{#animated-if this.modalWasDismissed duration=200 use=this.transition}}
+      <div class="sticky top-10 z-10 flex items-start justify-center pointer-events-none h-0">
+        <CoursePage::CurrentStepCompletePill class="mt-4" />
+      </div>
+    {{/animated-if}}
 
     {{yield}}
   </:content>
