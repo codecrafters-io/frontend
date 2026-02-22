@@ -133,7 +133,7 @@ export default class CourseController extends Controller {
 
     this.repo = this.activeRepository.id;
     this.track = undefined;
-    this.activeRepositoryOverride = null;
+    // Keep activeRepositoryOverride so we keep showing this repo (model never refreshes)
 
     return true;
   }

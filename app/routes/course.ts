@@ -98,7 +98,7 @@ export default class CourseRoute extends BaseRoute {
     const includedCourseResources = [
       'extensions',
       'stages.solutions.language',
-      'language-configurations.language',
+      'language-configurations.language.leaderboard',
       'stages.screencasts',
       'stages.screencasts.language',
       'stages.screencasts.user',

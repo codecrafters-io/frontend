@@ -19,10 +19,7 @@ export default class CourseStageRoute extends BaseRoute {
     super(...args);
 
     this.router.on('routeDidChange', (transition: Transition) => {
-      if (
-        transition?.from?.name === 'course.introduction' &&
-        transition?.to?.name === 'course.introduction'
-      ) {
+      if (transition?.from?.name === 'course.introduction' && transition?.to?.name === 'course.introduction') {
         return;
       }
 
