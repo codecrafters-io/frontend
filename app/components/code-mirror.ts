@@ -42,6 +42,7 @@ import { collapseRanges } from 'codecrafters-frontend/utils/code-mirror-collapse
 import { collapseRangesGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-ranges-gutter';
 import { collapseUnchanged } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged';
 import { collapseUnchangedGutter } from 'codecrafters-frontend/utils/code-mirror-collapse-unchanged-gutter';
+import { lineComments, type LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
 
 languages.push(
   LanguageDescription.of({
@@ -83,7 +84,7 @@ export type LineRange = { startLine: number; endLine: number };
 
 type DocumentUpdateCallback = (newValue: string) => void;
 
-type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[];
+type Argument = boolean | string | number | undefined | Extension | DocumentUpdateCallback | LineRange[] | LineDataCollection;
 
 type OptionHandler = (args: Signature['Args']['Named']) => Extension[] | Promise<Extension[]>;
 
@@ -110,6 +111,8 @@ const OPTION_HANDLERS: { [key: string]: OptionHandler } = {
   indentOnInput: ({ indentOnInput: enabled }) => (enabled ? [indentOnInput()] : []),
   indentUnit: ({ indentUnit: indentUnitText }) => (indentUnitText !== undefined ? [indentUnit.of(indentUnitText)] : []),
   indentWithTab: ({ indentWithTab: enabled }) => (enabled ? [keymap.of([indentWithTab])] : []),
+  lineCommentsOrCommentsRelatedOption: ({ lineComments: enabled, lineData, readOnly }) =>
+    enabled && lineData && readOnly ? [lineComments(lineData)] : [],
   lineNumbers: ({ lineNumbers: enabled }) => (enabled ? [lineNumbers()] : []),
   foldGutter: ({ foldGutter: enabled }) =>
     enabled
@@ -295,6 +298,14 @@ export interface Signature {
        */
       language?: string;
       /**
+       * Enable line comments (disabled when document is not read-only)
+       */
+      lineComments?: boolean;
+      /**
+       * Line data containing comments counts or other line-related metadata
+       */
+      lineData?: LineDataCollection;
+      /**
        * Enable the line numbers gutter
        */
       lineNumbers?: boolean;
@@ -414,17 +425,10 @@ export default class CodeMirror extends Component<Signature> {
       return;
     }
 
-    // When originalDocument changes - completely unload the diff compartment to avoid any side-effects
-    if (optionName === 'originalDocumentOrDiffRelatedOption') {
+    // These options need to be reset after changing, to avoid any side-effects
+    if (['collapsedRanges', 'lineCommentsOrCommentsRelatedOption', 'originalDocumentOrDiffRelatedOption'].includes(optionName)) {
       this.#updateRenderedView({
-        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-    }
-
-    // When collapsedRanges changes - completely unload the collapsedRanges compartment to avoid any side-effects
-    if (optionName === 'collapsedRanges') {
-      this.#updateRenderedView({
-        effects: this.#resetCompartment('collapsedRanges'),
+        effects: this.#resetCompartment(optionName),
       });
     }
 
@@ -432,16 +436,6 @@ export default class CodeMirror extends Component<Signature> {
     this.#updateRenderedView({
       effects: await this.#updateCompartment(optionName),
     });
-
-    // When syntaxHighlighting changes - reload the diff compartment to also re-configure syntaxHighlightDeletions
-    if (optionName === 'syntaxHighlighting') {
-      this.#updateRenderedView({
-        effects: this.#resetCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-      this.#updateRenderedView({
-        effects: await this.#updateCompartment('originalDocumentOrDiffRelatedOption'),
-      });
-    }
 
     // When lineSeparator changes - completely reload the document to avoid any side-effects
     if (optionName === 'lineSeparator') {
