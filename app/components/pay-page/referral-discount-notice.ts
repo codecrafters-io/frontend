@@ -27,7 +27,7 @@ export default class ReferralDiscountNotice extends Component<Signature> {
   }
 
   get tooltipText() {
-    return `The 1 year plan is usually $360, but you can get it for $${this.discountedPrice} with this offer.`;
+    return `The 1 year plan is usually $360, but you can get it for $${Math.round(this.discountedPrice)} with this offer.`;
   }
 }
 
