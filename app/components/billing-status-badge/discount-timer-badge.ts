@@ -32,7 +32,7 @@ export default class DiscountTimerBadge extends Component<Signature> {
   }
 
   get tooltipText() {
-    return `Upgrade in ${formatTimeDurationForCountdown(this.expiresAt, this.time.currentTime)} to get 40% off the annual plan. Click to view details.`;
+    return `Upgrade in ${formatTimeDurationForCountdown(this.expiresAt, this.time.currentTime)} to get ${this.args.discount.percentageOff}% off the annual plan. Click to view details.`;
   }
 }
 
