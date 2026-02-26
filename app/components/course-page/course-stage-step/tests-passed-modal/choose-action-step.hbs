@@ -26,6 +26,17 @@
     </div>
   {{else}}
     <div class="flex flex-col gap-2 w-full items-center">
+      {{#unless @currentStep.courseStage.isFirst}}
+        <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
+          @icon="code"
+          @title="Refactor code (optional)"
+          @description="Edit your code before moving to the next stage"
+          @isProcessing={{false}}
+          data-test-refactor-code-button
+          {{on "click" (fn @onActionButtonClick "refactor_code")}}
+        />
+      {{/unless}}
+
       <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
         @icon="check"
         @title="Mark stage as complete"
@@ -34,17 +45,6 @@
         data-test-mark-stage-as-complete-button
         {{on "click" (fn @onActionButtonClick "mark_stage_as_complete")}}
       />
-
-      {{#unless @currentStep.courseStage.isFirst}}
-        <CoursePage::CourseStageStep::TestsPassedModal::ActionButton
-          @icon="code"
-          @title="Refactor code"
-          @description="Edit your code before moving to the next stage"
-          @isProcessing={{false}}
-          data-test-refactor-code-button
-          {{on "click" (fn @onActionButtonClick "refactor_code")}}
-        />
-      {{/unless}}
     </div>
   {{/animated-if}}
 </div>
