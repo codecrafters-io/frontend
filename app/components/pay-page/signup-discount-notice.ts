@@ -17,8 +17,16 @@ export default class SignupDiscountNotice extends Component<Signature> {
 
   @service declare time: TimeService;
 
+  get discountedPrice() {
+    return this.args.discount.computeDiscountedPrice(360);
+  }
+
   get timeLeftText() {
     return formatTimeDurationForCountdown(this.args.discount.expiresAt, this.time.currentTime);
+  }
+
+  get tooltipText() {
+    return `The 1 year plan is usually $360, but you can get it for $${this.discountedPrice} with this offer.`;
   }
 }
 
