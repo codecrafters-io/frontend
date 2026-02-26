@@ -53,9 +53,6 @@ export default class SetupStepCompleteModalComponent extends Component<Signature
     console.log('handleDidInsert');
     // Pre-cache the workflow animation GIF to avoid flickering when it loads.
     fetch('https://codecrafters.io/images/overview/workflow-animation-3.gif', { mode: 'no-cors' });
-
-    // TODO: Remove this once can-view-cli-ping-flow feature flag is the default
-    fetch('https://codecrafters.io/images/overview/workflow-animation-2.gif', { mode: 'no-cors' });
   }
 
   @action

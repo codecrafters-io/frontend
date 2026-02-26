@@ -49,10 +49,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
   test('can start course', async function (assert) {
     testScenario(this.server, ['dummy']);
-    const user = signIn(this.owner, this.server);
-
-    // TODO: Change this once can-view-cli-ping-flow feature flag is the default
-    user.update({ featureFlags: { 'can-view-cli-ping-flow': 'test' } });
+    signIn(this.owner, this.server);
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
@@ -205,9 +202,6 @@ module('Acceptance | course-page | start-course', function (hooks) {
   test('can start course with workflow tutorial', async function (assert) {
     testScenario(this.server, ['dummy']);
     const user = signIn(this.owner, this.server);
-
-    // TODO: Change this once can-view-cli-ping-flow feature flag is the default
-    user.update({ featureFlags: { 'can-view-cli-ping-flow': 'test' } });
 
     const fakeActionCableConsumer = new FakeActionCableConsumer();
     this.owner.register('service:action-cable-consumer', fakeActionCableConsumer, { instantiate: false });
