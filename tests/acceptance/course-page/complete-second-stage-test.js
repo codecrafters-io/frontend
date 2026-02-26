@@ -111,6 +111,11 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     assert.ok(coursePage.secondStageYourTaskCard.steps[1].isComplete, 'Second step is complete');
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
+    assert.deepEqual(
+      coursePage.testsPassedModal.actionButtons.map((actionButton) => actionButton.title),
+      ['Refactor code (optional)', 'Mark stage as complete'],
+      'Tests passed modal actions are ordered and labeled correctly',
+    );
     await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
     assert.notOk(coursePage.testsPassedModal.isVisible, 'Tests passed modal disappears');

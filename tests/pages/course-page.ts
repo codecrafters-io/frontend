@@ -167,6 +167,9 @@ export default create({
   },
 
   testsPassedModal: {
+    actionButtons: collection('[data-test-action-button-title]', {
+      title: text(),
+    }),
     clickOnActionButton: clickOnText('[data-test-action-button-title]'),
     clickOnCloseButton: clickable('[data-test-close-modal-button]'),
     scope: '[data-test-tests-passed-modal]',
