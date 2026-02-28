@@ -1,6 +1,7 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import { service } from '@ember/service';
+import type Transition from '@ember/routing/transition';
 import type RouterService from '@ember/routing/router-service';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import type { ModelType as CourseRouteModelType } from 'codecrafters-frontend/routes/course';
@@ -17,7 +18,11 @@ export default class CourseStageRoute extends BaseRoute {
   constructor(...args: object[]) {
     super(...args);
 
-    this.router.on('routeDidChange', () => {
+    this.router.on('routeDidChange', (transition: Transition) => {
+      if (transition?.from?.name === 'course.introduction' && transition?.to?.name === 'course.introduction') {
+        return;
+      }
+
       const element = document.querySelector('#course-page-scrollable-area');
 
       if (element) {

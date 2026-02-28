@@ -29,15 +29,14 @@
           @isSelected={{true}}
         />
 
-        <TertiaryLinkButton
+        <TertiaryButton
           {{! @glint-expect-error isNew is not typed correctly }}
           @isDisabled={{@repository.isNew}}
-          @route="course.introduction"
-          @models={{array @repository.course.slug}}
-          @query={{hash repo="new" track=null}}
+          {{on "click" @onTryOtherLanguage}}
+          data-test-try-other-language-button
         >
           Try other language
-        </TertiaryLinkButton>
+        </TertiaryButton>
       {{/if}}
     {{else}}
       {{#if (and (gt this.preferredLanguages.length 0) (not this.shouldShowNonPreferredLanguages))}}

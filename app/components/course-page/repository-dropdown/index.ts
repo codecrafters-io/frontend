@@ -13,8 +13,11 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    repositories: RepositoryModel[];
     activeRepository: RepositoryModel;
+    onRetryWithSameLanguage?: (dropdownActions: { close: () => void }) => void;
+    onSelectRepository?: (repository: RepositoryModel, dropdownActions: { close: () => void }) => void;
+    onTryDifferentLanguage?: () => void;
+    repositories: RepositoryModel[];
   };
 
   Blocks: {
@@ -102,24 +105,36 @@ export default class CoursePageRepositoryDropdown extends Component<Signature> {
 
   @action
   async handleRepositoryLinkClick(repository: RepositoryModel, dropdownActions: { close: () => void }) {
-    // TODO: Even though we're using replaceWith, this does seem to cause a history entry to be added. Debug why?
-    await this.router.replaceWith('course', repository.course.slug, { queryParams: { repo: repository.id } }).followRedirects();
-    dropdownActions.close();
+    if (this.args.onSelectRepository) {
+      this.args.onSelectRepository(repository, dropdownActions);
+    } else {
+      // TODO: Even though we're using replaceWith, this does seem to cause a history entry to be added. Debug why?
+      await this.router.replaceWith('course', repository.course.slug, { queryParams: { repo: repository.id } }).followRedirects();
+      dropdownActions.close();
+    }
   }
 
   @action
   async handleRetryWithSameLanguageActionClick(dropdownActions: { close: () => void }) {
-    this.router
-      .transitionTo('course.introduction', { queryParams: { repo: 'new', track: this.args.activeRepository.language!.slug } })
-      .followRedirects();
-
-    dropdownActions.close();
+    if (this.args.onRetryWithSameLanguage) {
+      this.args.onRetryWithSameLanguage(dropdownActions);
+    } else {
+      this.router
+        .transitionTo('course.introduction', { queryParams: { repo: 'new', track: this.args.activeRepository.language!.slug } })
+        .followRedirects();
+      dropdownActions.close();
+    }
   }
 
   @action
   async handleTryDifferentLanguageActionClick(dropdownActions: { close: () => void }) {
-    this.router.transitionTo('course.introduction', { queryParams: { repo: 'new', track: null } });
-    dropdownActions.close();
+    if (this.args.onTryDifferentLanguage) {
+      this.args.onTryDifferentLanguage();
+      dropdownActions.close();
+    } else {
+      this.router.transitionTo('course.introduction', { queryParams: { repo: 'new', track: null } });
+      dropdownActions.close();
+    }
   }
 }
 

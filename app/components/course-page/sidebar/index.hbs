@@ -3,7 +3,13 @@
   data-test-course-page-sidebar
   ...attributes
 >
-  <CoursePage::RepositoryDropdown @repositories={{@repositories}} @activeRepository={{@activeRepository}} />
+  <CoursePage::RepositoryDropdown
+    @activeRepository={{@activeRepository}}
+    @onRetryWithSameLanguage={{@onRetryWithSameLanguage}}
+    @onSelectRepository={{@onSelectRepository}}
+    @onTryDifferentLanguage={{@onTryDifferentLanguage}}
+    @repositories={{@repositories}}
+  />
 
   <div class="px-3 mt-1">
     <div class="h-px bg-gray-200 dark:bg-white/5 w-full"></div>
