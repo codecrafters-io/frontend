@@ -68,7 +68,7 @@
     "@shikijs/rehype": "^3.22.0",
     "@shikijs/transformers": "^3.22.0",
     "@stylistic/eslint-plugin": "^5.7.1",
-    "@tailwindcss/postcss": "^4.1.18",
+    "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tsconfig/ember": "^3.0.12",
     "@types/array-to-sentence": "^2.0.0",
