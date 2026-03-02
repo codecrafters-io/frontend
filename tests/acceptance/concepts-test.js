@@ -7,7 +7,7 @@ import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { currentURL } from '@ember/test-helpers';
+import { currentURL, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -262,6 +262,41 @@ module('Acceptance | concepts-test', function (hooks) {
       conceptPage.conceptCompletedModal.text.includes('Get free access to the rest of Network Primer'),
       'Modal shows correct group access message',
     );
+  });
+
+  test('pressing enter while continue button is not focused only advances one block group', async function (assert) {
+    testScenario(this.server);
+    createConcepts(this.server);
+
+    signInAsStaff(this.owner, this.server);
+
+    await conceptsPage.visit();
+    await conceptsPage.clickOnConceptCard('Network Protocols');
+
+    assert.strictEqual(conceptPage.blocks.length, 1, 'Only the first block group should be visible initially');
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused by default');
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    assert.false(conceptPage.focusedContinueButton.isPresent, 'Continue button is not focused');
+
+    await triggerKeyEvent(document, 'keydown', 'Enter');
+    await animationsSettled();
+
+    const keyupTarget = document.activeElement;
+
+    await triggerKeyEvent(keyupTarget || document.body, 'keyup', 'Enter');
+    await animationsSettled();
+
+    // Browsers dispatch a click on keyup if Enter is released while a button is focused.
+    if (keyupTarget instanceof HTMLButtonElement) {
+      keyupTarget.click();
+      await animationsSettled();
+    }
+
+    assert.strictEqual(conceptPage.blocks.length, 2, 'Only one additional block group should be revealed');
   });
 
   test('anonymous users can view concepts not linked to a concept group', async function (assert) {
