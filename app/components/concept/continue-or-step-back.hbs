@@ -8,7 +8,7 @@
         data-test-continue-button
         {{did-insert this.handleDidInsertContinueButtonElement}}
         {{! @glint-expect-error on-key modifier types aren't right? }}
-        {{on-key "Enter" this.handleEnterKeyPress}}
+        {{on-key "Enter" this.handleEnterKeyPress event="keyup"}}
       >
         {{or @continueButtonText "Continue"}}
       </PrimaryButton>
