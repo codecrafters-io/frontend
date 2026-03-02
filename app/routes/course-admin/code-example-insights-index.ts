@@ -42,9 +42,7 @@ export default class CodeExampleInsightsIndexRoute extends BaseRoute {
       }
     }
 
-    let analyses: CommunitySolutionsAnalysisModel[] = [];
-
-    analyses = (await this.store.query('community-solutions-analysis', {
+    const analyses = (await this.store.query('community-solutions-analysis', {
       course_id: course.id,
       language_id: selectedLanguage.id,
       include: 'course-stage,language',
