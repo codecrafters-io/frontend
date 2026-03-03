@@ -3,7 +3,7 @@ import { settled } from '@ember/test-helpers';
 
 export default {
   async click() {
-    await this.clickRaw();
+    this.clickRaw();
     await settled();
   },
 
