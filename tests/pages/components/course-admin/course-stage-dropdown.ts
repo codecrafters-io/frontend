@@ -1,35 +1,22 @@
-import { clickable, text } from 'ember-cli-page-object';
-import { click, waitUntil } from '@ember/test-helpers';
-
-const DROPDOWN_CONTENT_SELECTOR = '[data-test-course-stage-dropdown-content]';
-const COURSE_STAGE_LINK_SELECTOR = '[data-test-course-stage-link]';
+import { clickOnText, clickable, text } from 'ember-cli-page-object';
+import { settled } from '@ember/test-helpers';
 
 export default {
   async click() {
-    await this.clickRaw();
-
-    await waitUntil(() => !!document.querySelector(DROPDOWN_CONTENT_SELECTOR));
+    this.clickRaw();
+    await settled();
   },
 
-  async clickOnStageLink(stageName: string) {
-    await waitUntil(() => {
-      const stageLinks = Array.from(document.querySelectorAll(`${DROPDOWN_CONTENT_SELECTOR} ${COURSE_STAGE_LINK_SELECTOR}`));
-
-      return stageLinks.some((stageLink) => stageLink.textContent?.trim() === stageName);
-    });
-
-    const stageLink = Array.from(document.querySelectorAll(`${DROPDOWN_CONTENT_SELECTOR} ${COURSE_STAGE_LINK_SELECTOR}`)).find(
-      (element) => element.textContent?.trim() === stageName,
-    );
-
-    if (!(stageLink instanceof HTMLElement)) {
-      throw new Error(`Could not find course stage link: ${stageName}`);
-    }
-
-    await click(stageLink);
+  clickOnStageLink(stageName: string) {
+    return this.content.clickOnStageLink(stageName);
   },
 
-  clickRaw: clickable('[data-test-course-stage-dropdown-trigger]'),
+  clickRaw: clickable('button'),
+
+  content: {
+    clickOnStageLink: clickOnText('[data-test-course-stage-link]'),
+    scope: '[data-test-course-stage-dropdown-content]',
+  },
 
   currentStageName: text('[data-test-current-course-stage-name]'),
   scope: '[data-test-course-stage-dropdown]',

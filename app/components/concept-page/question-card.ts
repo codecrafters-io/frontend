@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import type ConceptQuestionModel from 'codecrafters-frontend/models/concept-question';
 import type { Option } from 'codecrafters-frontend/models/concept-question';
-import { later, next } from '@ember/runloop';
+import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import ConfettiService from 'codecrafters-frontend/services/confetti';
 
@@ -75,27 +75,12 @@ export default class QuestionCard extends Component<Signature> {
 
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
-    const firstOptionElement = element.querySelector('[data-test-question-card-option]');
+    const firstOptionElement = element.children[0];
 
     if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
-      const focusFirstOption = () => {
-        const activeElement = document.activeElement;
-        const hasFocusedOption = activeElement instanceof HTMLElement && element.contains(activeElement);
-
-        if (!hasFocusedOption) {
-          firstOptionElement.focus({ preventScroll: true });
-        }
-      };
-
-      // Run a couple of times to avoid focus races during animated inserts.
+      // focus() doesn't seem to work unless it's called after the current runloop
       next(() => {
-        focusFirstOption();
-
-        if (typeof requestAnimationFrame === 'function') {
-          requestAnimationFrame(focusFirstOption);
-        }
-
-        later(focusFirstOption, 50);
+        firstOptionElement?.focus({ preventScroll: true });
       });
     }
   }
