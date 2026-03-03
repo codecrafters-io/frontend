@@ -1,15 +1,12 @@
-import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
-import coursePage from 'codecrafters-frontend/tests/pages/course-page';
-import screencastsPage from 'codecrafters-frontend/tests/pages/screencasts-page';
-import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
-import { module, test } from 'qunit';
-import { setupAnimationTest } from 'ember-animated/test-support';
-import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { setupWindowMock } from 'ember-window-mock/test-support';
-import windowMock from 'ember-window-mock';
-import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { visit } from '@ember/test-helpers';
-import courseOverviewPage from 'codecrafters-frontend/tests/pages/course-overview-page';
+import { setupAnimationTest } from 'ember-animated/test-support';
+import windowMock from 'ember-window-mock';
+import { setupWindowMock } from 'ember-window-mock/test-support';
+import { module, test } from 'qunit';
+import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import screencastsPage from 'codecrafters-frontend/tests/pages/screencasts-page';
+import { signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 
 module('Acceptance | course-page | view-screencasts-test', function (hooks) {
@@ -73,10 +70,7 @@ module('Acceptance | course-page | view-screencasts-test', function (hooks) {
     createScreencast(this.server, go, '2023-06-30T19:11:29.254Z', 'Go screencast #1', 500); // Older
     createScreencast(this.server, go, '2024-01-30T19:11:29.254Z', 'Go screencast #2', 5000); // Newer
 
-    await catalogPage.visit();
-    await catalogPage.clickOnCourse('Build your own Redis');
-    await courseOverviewPage.clickOnStartCourse();
-    await coursePage.clickOnHeaderTabLink('Screencasts');
+    await visit('/courses/redis/stages/rg2/screencasts');
 
     assert.strictEqual(screencastsPage.screencastPreviews.length, 3);
 

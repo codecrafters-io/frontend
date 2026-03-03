@@ -53,6 +53,7 @@ Router.map(function () {
       this.route('code-examples');
       this.route('concepts');
       this.route('instructions', { path: '/' });
+      // TODO: Remove entirely, replace with resources page
       this.route('screencasts');
     });
 
