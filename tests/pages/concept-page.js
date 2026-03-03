@@ -1,8 +1,18 @@
 import { attribute, clickOnText, clickable, collection, isPresent, text, triggerable, visitable, hasClass } from 'ember-cli-page-object';
 import { animationsSettled } from 'ember-animated/test-support';
-import { visit } from '@ember/test-helpers';
+import { click, visit } from '@ember/test-helpers';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
 import FeedbackDropdown from 'codecrafters-frontend/tests/pages/components/feedback-dropdown';
+
+function focusedQuestionOptionElement() {
+  const activeElement = document.activeElement;
+
+  if (!(activeElement instanceof HTMLElement) || !activeElement.matches('[data-test-question-card-option]')) {
+    throw new Error('Element not found.');
+  }
+
+  return activeElement;
+}
 
 export default createPage({
   blocks: collection('[data-test-block]'),
@@ -28,7 +38,9 @@ export default createPage({
   feedbackDropdown: FeedbackDropdown,
 
   focusedContinueButton: {
-    scope: '[data-test-continue-button]:focus',
+    get isPresent() {
+      return document.activeElement instanceof HTMLElement && document.activeElement.matches('[data-test-continue-button]');
+    },
   },
 
   progress: {
@@ -45,7 +57,13 @@ export default createPage({
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
 
     focusedOption: {
-      scope: '[data-test-question-card-option]:focus',
+      async click() {
+        await click(focusedQuestionOptionElement());
+      },
+
+      get text() {
+        return focusedQuestionOptionElement().textContent.trim();
+      },
     },
 
     hasSubmitted: isPresent('[data-test-question-submitted]'),

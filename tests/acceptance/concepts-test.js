@@ -7,7 +7,7 @@ import percySnapshot from '@percy/ember';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
-import { click, currentURL, triggerKeyEvent, waitUntil } from '@ember/test-helpers';
+import { currentURL, triggerKeyEvent } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
@@ -20,49 +20,6 @@ function createConcepts(server) {
   createConceptFromFixture(server, tcpOverview);
   createConceptFromFixture(server, networkProtocols);
   createConceptFromFixture(server, dummy);
-}
-
-async function assertContinueButtonIsFocused(assert, message = 'Continue button is focused') {
-  await waitUntil(() => conceptPage.focusedContinueButton.isPresent, { timeout: 5000 });
-
-  assert.true(conceptPage.focusedContinueButton.isPresent, message);
-}
-
-async function findFocusedOptionForQuestionCard(questionCardIndex) {
-  await waitUntil(
-    () => {
-      const questionCardElement = document.querySelectorAll('[data-test-question-card]')[questionCardIndex];
-      const activeElement = document.activeElement;
-
-      return (
-        questionCardElement instanceof HTMLElement &&
-        activeElement instanceof HTMLElement &&
-        questionCardElement.contains(activeElement) &&
-        activeElement.matches('[data-test-question-card-option]')
-      );
-    },
-    { timeout: 5000 },
-  );
-
-  const focusedOptionElement = document.activeElement;
-
-  if (!(focusedOptionElement instanceof HTMLElement)) {
-    throw new Error(`Could not find focused option for question card ${questionCardIndex}`);
-  }
-
-  return focusedOptionElement;
-}
-
-async function focusedOptionTextForQuestionCard(questionCardIndex) {
-  const focusedOptionElement = await findFocusedOptionForQuestionCard(questionCardIndex);
-
-  return focusedOptionElement.textContent?.trim();
-}
-
-async function clickFocusedOptionForQuestionCard(questionCardIndex) {
-  const focusedOptionElement = await findFocusedOptionForQuestionCard(questionCardIndex);
-
-  await click(focusedOptionElement);
 }
 
 module('Acceptance | concepts-test', function (hooks) {
@@ -229,72 +186,72 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await animationsSettled();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     await animationsSettled();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
     await animationsSettled();
 
     // Question 1
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'PDF');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
     await conceptPage.questionCards[0].keydown({ keyCode: 65 }); // Send enter key
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
     // Question 2
-    assert.strictEqual(await focusedOptionTextForQuestionCard(1), '1 layer');
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
     await conceptPage.questionCards[1].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(1), '4 layers');
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '4 layers');
     await conceptPage.questionCards[1].keydown({ keyCode: 65 }); // Send enter key
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
     // Question 3
-    assert.strictEqual(await focusedOptionTextForQuestionCard(2), 'Ethernet');
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
     await conceptPage.questionCards[2].keydown({ keyCode: 65 }); // Send enter key
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
     // Question 4
-    assert.strictEqual(await focusedOptionTextForQuestionCard(3), 'TCP');
+    assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'TCP');
     await conceptPage.questionCards[3].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(3), 'UDP');
+    assert.strictEqual(conceptPage.questionCards[3].focusedOption.text, 'UDP');
     await conceptPage.questionCards[3].keydown({ keyCode: 65 }); // Send enter key
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
-    await assertContinueButtonIsFocused(assert);
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused');
     await conceptPage.clickOnContinueButton();
 
     assert.true(conceptPage.upcomingConcept.title.text.includes('Network Primer'), 'Concept group title is correct');
@@ -317,7 +274,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
 
     assert.strictEqual(conceptPage.blocks.length, 1, 'Only the first block group should be visible initially');
-    await assertContinueButtonIsFocused(assert, 'Continue button is focused by default');
+    assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused by default');
 
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
@@ -747,23 +704,23 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     // Should be able to move back and fort
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'HTTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
     await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
 
     // Can move to end of list
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'PDF');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
 
     // Can wrap around to start of list
     await conceptPage.questionCards[0].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
 
-    await clickFocusedOptionForQuestionCard(0); // Simulate ENTER on focused option
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
@@ -794,13 +751,13 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
 
     // Question 3
-    assert.strictEqual(await focusedOptionTextForQuestionCard(2), 'Ethernet');
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
     await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(2), 'HTTP');
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'HTTP');
     await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(2), 'FTP');
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'FTP');
     await conceptPage.questionCards[2].keydown({ keyCode: 74 }); // Send j key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(2), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'SMTP');
 
     await conceptPage.questionCards[2].clickOnShowExplanationButton();
     await conceptPage.clickOnContinueButton();
@@ -837,23 +794,23 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
     // Should be able to move back and fort
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'HTTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'HTTP');
     await conceptPage.questionCards[0].keydown({ key: 'ArrowUp' }); // Send up arrow key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
 
     // Can move to end of list
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'PDF');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'PDF');
 
     // Can wrap around to start of list
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
-    assert.strictEqual(await focusedOptionTextForQuestionCard(0), 'SMTP');
+    assert.strictEqual(conceptPage.questionCards[0].focusedOption.text, 'SMTP');
 
-    await clickFocusedOptionForQuestionCard(0); // Simulate ENTER on focused option
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
@@ -894,14 +851,14 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
 
-    assert.strictEqual(await focusedOptionTextForQuestionCard(1), '1 layer');
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
 
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
     await conceptPage.questionCards[0].keydown({ key: 'ArrowDown' }); // Send down arrow key
 
-    assert.strictEqual(await focusedOptionTextForQuestionCard(1), '1 layer');
+    assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
   });
 
   test('only published concepts are visible to users', async function (assert) {
@@ -1011,7 +968,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
-    await clickFocusedOptionForQuestionCard(0); // Simulate ENTER on focused option
+    await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' });
     await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' });
     await conceptPage.feedbackDropdown.toggle();
