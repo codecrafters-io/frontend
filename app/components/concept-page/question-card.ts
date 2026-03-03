@@ -75,7 +75,14 @@ export default class QuestionCard extends Component<Signature> {
 
   @action
   handleDidInsertOptionsList(element: HTMLElement) {
-    const firstOptionElement = element.children[0];
+    const optionElements = Array.from(element.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
+
+    optionElements.forEach((optionElement) => {
+      optionElement.addEventListener('blur', () => optionElement.removeAttribute('data-focused'));
+      optionElement.addEventListener('focus', () => optionElement.setAttribute('data-focused', 'true'));
+    });
+
+    const firstOptionElement = optionElements[0];
 
     if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
       firstOptionElement.setAttribute('data-focused', 'true');
