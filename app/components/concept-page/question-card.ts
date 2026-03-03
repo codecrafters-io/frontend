@@ -78,7 +78,9 @@ export default class QuestionCard extends Component<Signature> {
     const firstOptionElement = element.children[0];
 
     if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
-      firstOptionElement.focus({ preventScroll: true });
+      next(() => {
+        firstOptionElement.focus({ preventScroll: true });
+      });
     }
   }
 
