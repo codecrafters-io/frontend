@@ -119,20 +119,6 @@ export default class TabList extends Component<Signature> {
 
     if (this.args.course.visibilityIsPublic) {
       // @ts-expect-error currentStep.courseStage not typed
-      if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.hasScreencasts) {
-        tabs.push({
-          icon: 'play',
-          name: 'Screencasts',
-          slug: 'screencasts',
-          internalLink: {
-            route: 'course.stage.screencasts',
-            models: this.args.currentStep.routeParams.models,
-          },
-          isActive: this.router.currentRouteName === 'course.stage.screencasts',
-        });
-      }
-
-      // @ts-expect-error currentStep.courseStage not typed
       if (this.args.currentStep.courseStage && this.args.currentStep.courseStage.course.hasConcepts) {
         tabs.push({
           icon: 'academic-cap',

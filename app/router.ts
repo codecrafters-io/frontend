@@ -53,7 +53,7 @@ Router.map(function () {
       this.route('code-examples');
       this.route('concepts');
       this.route('instructions', { path: '/' });
-      this.route('screencasts');
+      this.route('screencasts'); // TODO: Remove entirely, replace with resources page
     });
 
     this.route('extension-completed', { path: '/extension-completed/:extension_slug' });
