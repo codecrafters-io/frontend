@@ -11,14 +11,14 @@
     <CoursePage::CourseStageStep::CommunitySolutionCard::HeaderLabel @solution={{@solution}} />
 
     {{#if @solution.screencast}}
-      <LinkTo @route="course.stage.screencasts" @query={{hash selectedScreencastId=@solution.screencast.id}} class="flex">
+      <a href={{@solution.screencast.originalUrl}} target="_blank" rel="noopener noreferrer" class="flex">
         <Pill @color="blue">
           {{svg-jar "play" class="w-4 h-4 mr-1 text-blue-500"}}
           Screencast
 
           <EmberTooltip @text="This solution has a linked screencast. Click to view." />
         </Pill>
-      </LinkTo>
+      </a>
     {{/if}}
   </div>
 
