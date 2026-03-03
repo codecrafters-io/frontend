@@ -78,7 +78,11 @@ export default class QuestionCard extends Component<Signature> {
     const firstOptionElement = element.children[0];
 
     if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
-      firstOptionElement.focus({ preventScroll: true });
+      firstOptionElement.setAttribute('data-focused', 'true');
+
+      next(() => {
+        firstOptionElement?.focus({ preventScroll: true });
+      });
     }
   }
 
@@ -101,11 +105,10 @@ export default class QuestionCard extends Component<Signature> {
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
-    if (currentFocusedOptionIndex < options.length - 1) {
-      options[currentFocusedOptionIndex + 1]!.focus({ preventScroll: true });
-    } else {
-      options[0]!.focus({ preventScroll: true });
-    }
+    const newIndex = currentFocusedOptionIndex < options.length - 1 ? currentFocusedOptionIndex + 1 : 0;
+    options.forEach((o) => o.removeAttribute('data-focused'));
+    options[newIndex]!.setAttribute('data-focused', 'true');
+    options[newIndex]!.focus({ preventScroll: true });
   }
 
   @action
@@ -127,11 +130,10 @@ export default class QuestionCard extends Component<Signature> {
     const options = Array.from(latestQuestionCard.querySelectorAll('[data-test-question-card-option]')) as HTMLElement[];
     const currentFocusedOptionIndex = options.indexOf(currentFocusedOption);
 
-    if (currentFocusedOptionIndex > 0) {
-      options[currentFocusedOptionIndex - 1]!.focus({ preventScroll: true });
-    } else {
-      options[options.length - 1]!.focus({ preventScroll: true });
-    }
+    const newIndex = currentFocusedOptionIndex > 0 ? currentFocusedOptionIndex - 1 : options.length - 1;
+    options.forEach((o) => o.removeAttribute('data-focused'));
+    options[newIndex]!.setAttribute('data-focused', 'true');
+    options[newIndex]!.focus({ preventScroll: true });
   }
 
   @action

@@ -21,6 +21,13 @@ export default class ContinueOrStepBack extends Component<Signature> {
   @action
   handleDidInsertContinueButtonElement(element: HTMLButtonElement): void {
     this.continueButtonElement = element;
+
+    if (this.args.shouldHighlightKeyboardShortcuts) {
+      element.setAttribute('data-focused', 'true');
+
+      element.addEventListener('blur', () => element.removeAttribute('data-focused'));
+      element.addEventListener('focus', () => element.setAttribute('data-focused', 'true'));
+    }
   }
 
   @action

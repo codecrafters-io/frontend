@@ -277,6 +277,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.focusedContinueButton.isPresent, 'Continue button is focused by default');
 
     if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.removeAttribute('data-focused');
       document.activeElement.blur();
     }
 

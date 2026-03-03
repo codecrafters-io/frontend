@@ -28,7 +28,7 @@ export default createPage({
   feedbackDropdown: FeedbackDropdown,
 
   focusedContinueButton: {
-    scope: '[data-test-continue-button]:focus',
+    scope: '[data-test-continue-button][data-focused="true"]',
   },
 
   progress: {
@@ -45,7 +45,7 @@ export default createPage({
     clickOnShowExplanationButton: clickable('[data-test-question-card-show-explanation-button]'),
 
     focusedOption: {
-      scope: '[data-test-question-card-option]:focus',
+      scope: '[data-test-question-card-option][data-focused="true"]',
     },
 
     hasSubmitted: isPresent('[data-test-question-submitted]'),
