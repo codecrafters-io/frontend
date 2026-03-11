@@ -92,6 +92,7 @@ module.exports = {
     },
     fontFamily: {
       sans: 'Montserrat, sans-serif',
+      serif: '"Source Serif 4", Georgia, serif',
       mono: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
     },
     extend: {
@@ -100,6 +101,7 @@ module.exports = {
       },
       colors: {
         gray: {
+          650: '#2a2c3c',
           825: mixOklch(colors.gray[800], colors.gray[900], 0.25),
           850: mixOklch(colors.gray[800], colors.gray[900], 0.5),
           925: mixOklch(colors.gray[900], colors.gray[950], 0.5),

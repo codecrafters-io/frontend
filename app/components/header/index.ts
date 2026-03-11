@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
-import logoImage from '/assets/images/logo/logomark-color.svg';
+import logoImage from '/assets/images/logo/logo-icon.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ContainerWidthService from 'codecrafters-frontend/services/container-width';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';

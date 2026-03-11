@@ -1,65 +1,148 @@
-<div class="bg-gray-950 border-t border-white/5">
-  <footer aria-labelledby="footer-heading" class="container lg:max-w-(--breakpoint-lg) mx-auto">
-    <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <div class="xl:col-span-1">
-          <a href="https://codecrafters.io" class="inline-flex" target="_blank" rel="noopener noreferrer">
-            <img class="h-12" src={{this.image}} alt="CodeCrafters" />
-          </a>
-          <p class="mt-8 text-gray-300 text-base">
-            Programming challenges for seasoned developers.
-          </p>
-          <div class="mt-8 flex space-x-6">
-            <a href="https://twitter.com/codecraftersio" class="text-gray-400 hover:text-gray-300">
-              <span class="sr-only">Twitter</span>
-              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
-                ></path>
-              </svg>
-            </a>
+<footer
+  aria-labelledby="footer-heading"
+  class="relative w-full overflow-hidden"
+  style="background-image: linear-gradient(to bottom, #090a0c 0%, #001015 100%);"
+>
+  <h2 id="footer-heading" class="sr-only">Footer</h2>
 
-            <a href="http://github.com/codecrafters-io" class="text-gray-400 hover:text-gray-300">
-              <span class="sr-only">GitHub</span>
-              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill-rule="evenodd"
-                  d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-            </a>
-          </div>
+  <div class="relative max-w-screen-2xl mx-auto overflow-hidden">
+    {{! Top horizontal line }}
+    <div class="w-full bg-gray-650" style="height: 0.5px;"></div>
+
+    {{! Main content }}
+    <div class="flex flex-col lg:flex-row px-5 lg:px-0">
+      {{! Left branding }}
+      <div class="w-full lg:w-2/5 lg:shrink-0 py-10 lg:p-10 flex flex-col gap-8">
+        <a href="https://codecrafters.io" class="flex items-center gap-[11px]" target="_blank" rel="noopener noreferrer">
+          <img src={{this.logoIcon}} alt="CodeCrafters" class="w-[47px] h-[33px]" />
+          <span class="font-serif text-[36px] text-gray-200 tracking-[-1.08px]">CodeCrafters</span>
+        </a>
+        <p class="text-base text-gray-500 leading-6">
+          Programming challenges for<br />seasoned developers.
+        </p>
+        <div class="flex gap-6 text-gray-500">
+          {{! X/Twitter }}
+          <a href="https://twitter.com/codecraftersio" class="hover:text-gray-400 transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="shrink-0">
+              <path d="M15.75 1.875H18.6563L12.4062 9.0625L19.75 18.125H13.9375L9.46875 12.4437L4.375 18.125H1.46875L8.15625 10.4375L1.125 1.875H7.0625L11.0938 7.0625L15.75 1.875ZM14.75 16.4375H16.3125L6.1875 3.4375H4.5L14.75 16.4375Z" fill="currentColor" />
+            </svg>
+          </a>
+          {{! GitHub }}
+          <a href="https://github.com/codecrafters-io" class="hover:text-gray-400 transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" class="shrink-0">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10 0C4.475 0 0 4.475 0 10C0 14.425 2.8625 18.1625 6.8375 19.4875C7.3375 19.575 7.525 19.275 7.525 19.0125C7.525 18.775 7.5125 17.9875 7.5125 17.15C5 17.6125 4.35 16.5375 4.15 15.975C4.0375 15.6875 3.55 14.8 3.125 14.5625C2.775 14.375 2.275 13.9125 3.1125 13.9C3.9 13.8875 4.4625 14.625 4.65 14.925C5.55 16.4375 6.9875 16.0125 7.5625 15.75C7.65 15.1 7.9125 14.6625 8.2 14.4125C5.975 14.1625 3.65 13.3 3.65 9.475C3.65 8.3875 4.0375 7.4875 4.675 6.7875C4.575 6.5375 4.225 5.5125 4.775 4.1375C4.775 4.1375 5.6125 3.875 7.525 5.1625C8.325 4.9375 9.175 4.825 10.025 4.825C10.875 4.825 11.725 4.9375 12.525 5.1625C14.4375 3.8625 15.275 4.1375 15.275 4.1375C15.825 5.5125 15.475 6.5375 15.375 6.7875C16.0125 7.4875 16.4 8.375 16.4 9.475C16.4 13.3125 14.0625 14.1625 11.8375 14.4125C12.2 14.725 12.5125 15.325 12.5125 16.2625C12.5125 17.6 12.5 18.675 12.5 19.0125C12.5 19.275 12.6875 19.5875 13.1875 19.4875C15.1727 18.8173 16.8977 17.5415 18.1198 15.8395C19.3419 14.1376 19.9995 12.0953 20 10C20 4.475 15.525 0 10 0Z" fill="currentColor" />
+            </svg>
+          </a>
+          {{! LinkedIn }}
+          <a href="https://www.linkedin.com/in/sarupbanskota/" class="hover:text-gray-400 transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg width="20" height="20" viewBox="0 0 256 256" fill="none" aria-hidden="true" class="shrink-0">
+              <path d="M218.123 218.127h-37.931v-59.403c0-14.165-.253-32.4-19.728-32.4-19.756 0-22.779 15.434-22.779 31.369v60.43h-37.93V95.967h36.413v16.694h.51a39.907 39.907 0 0 1 35.928-19.733c38.445 0 45.533 25.288 45.533 58.186l-.016 67.013ZM56.955 79.27c-12.157.002-22.014-9.852-22.016-22.009-.002-12.157 9.851-22.014 22.008-22.016 12.157-.003 22.014 9.851 22.016 22.008A22.013 22.013 0 0 1 56.955 79.27m18.966 138.858H37.95V95.967h37.97v122.16ZM237.033.018H18.89C8.58-.098.125 8.161-.001 18.471v219.053c.122 10.315 8.576 18.582 18.89 18.474h218.144c10.336.128 18.823-8.139 18.966-18.474V18.454c-.147-10.33-8.635-18.588-18.966-18.453" fill="currentColor" />
+            </svg>
+          </a>
         </div>
-        <div
-          class="mt-12 grid grid-cols-2
-            {{if (eq this.footerLinkGroups.length 4) 'md:grid-cols-4' 'md:grid-cols-3'}}
-            gap-x-8 gap-y-12 xl:mt-0 xl:col-span-2"
-        >
-          {{#each this.footerLinkGroups as |footerLinkGroup|}}
-            <div>
-              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
-                {{footerLinkGroup.heading}}
-              </h3>
-              <ul class="mt-4 space-y-4">
-                {{#each footerLinkGroup.links as |link|}}
+      </div>
+
+      {{! Vertical divider (desktop only) }}
+      <div class="hidden lg:block self-stretch shrink-0 bg-gray-650" style="width: 0.5px;"></div>
+
+      {{! Horizontal divider (mobile only) }}
+      <div class="lg:hidden w-full bg-gray-650" style="height: 0.5px;"></div>
+
+      {{! Navigation columns }}
+      <div class="flex-1 flex flex-col lg:flex-row gap-20 lg:gap-0 py-10 lg:p-10">
+        {{! Challenges + Resources row on mobile }}
+        <div class="flex gap-10 lg:contents">
+          <div class="w-[157px] lg:w-auto lg:flex-1">
+            <div class="flex flex-col gap-4">
+              <h3 class="text-sm text-gray-400 tracking-[-0.32px]">Challenges</h3>
+              <ul class="flex flex-col gap-2">
+                {{#each this.challengeLinkGroup.links as |link|}}
                   <li>
-                    <a href="{{link.url}}" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
+                    <a href={{link.url}} class="text-sm text-gray-500 hover:text-gray-400 transition-colors tracking-[-0.32px]" target="_blank" rel="noopener noreferrer">
                       {{link.text}}
                     </a>
                   </li>
                 {{/each}}
               </ul>
             </div>
-          {{/each}}
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-col gap-4">
+              <h3 class="text-sm text-gray-400 tracking-[-0.32px]">Resources</h3>
+              <ul class="flex flex-col gap-2">
+                {{#each this.resourceLinkGroup.links as |link|}}
+                  <li>
+                    <a href={{link.url}} class="text-sm text-gray-500 hover:text-gray-400 transition-colors tracking-[-0.32px]" target="_blank" rel="noopener noreferrer">
+                      {{link.text}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {{! Company + Legal row on mobile }}
+        <div class="flex gap-10 lg:contents">
+          <div class="w-[157px] lg:w-auto lg:flex-1">
+            <div class="flex flex-col gap-4">
+              <h3 class="text-sm text-gray-400 tracking-[-0.32px]">Company</h3>
+              <ul class="flex flex-col gap-2">
+                {{#each this.companyLinkGroup.links as |link|}}
+                  <li>
+                    <a href={{link.url}} class="text-sm text-gray-500 hover:text-gray-400 transition-colors tracking-[-0.32px]" target="_blank" rel="noopener noreferrer">
+                      {{link.text}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-col gap-4">
+              <h3 class="text-sm text-gray-400 tracking-[-0.32px]">Legal</h3>
+              <ul class="flex flex-col gap-2">
+                {{#each this.legalLinkGroup.links as |link|}}
+                  <li>
+                    <a href={{link.url}} class="text-sm text-gray-500 hover:text-gray-400 transition-colors tracking-[-0.32px]" target="_blank" rel="noopener noreferrer">
+                      {{link.text}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="mt-12 border-t border-white/5 pt-8">
-        <p class="text-base text-gray-600 xl:text-center">
-          &copy; 2026 CodeCrafters, Inc. All rights reserved.
-        </p>
-      </div>
     </div>
-  </footer>
-</div>
+
+    {{! Bottom section }}
+    <div class="flex flex-col items-center gap-6 pb-6">
+      <div class="w-full bg-gray-650" style="height: 0.5px;"></div>
+      <p class="text-xs text-center leading-5 tracking-[-0.24px]" style="color: #4c4f61;">
+        &copy; 2026 CodeCrafters, Inc. All rights reserved.
+      </p>
+    </div>
+
+    {{! Decorative logo vector }}
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 lg:left-[-506px] lg:translate-x-0 lg:top-[2px] lg:bottom-auto w-[468px] h-[330px] lg:w-[936px] lg:h-[660px] pointer-events-none">
+      <img src="/assets/images/footer-logo-vector.svg" alt="" aria-hidden="true" class="w-full h-full" />
+    </div>
+  </div>
+
+  {{! Decorative ellipse glows }}
+  <div class="absolute left-1/2 -translate-x-1/2 bottom-[-144px] size-[317px] pointer-events-none">
+    <div class="absolute inset-[-150%]">
+      <img src="/assets/images/footer-glow-ellipse.svg" alt="" aria-hidden="true" class="w-full h-full" />
+    </div>
+  </div>
+  <div class="absolute left-0 bottom-[-144px] size-[317px] pointer-events-none hidden lg:block">
+    <div class="absolute inset-[-150%]">
+      <img src="/assets/images/footer-glow-ellipse.svg" alt="" aria-hidden="true" class="w-full h-full" />
+    </div>
+  </div>
+  <div class="absolute right-0 bottom-[-144px] size-[317px] pointer-events-none hidden lg:block">
+    <div class="absolute inset-[-150%]">
+      <img src="/assets/images/footer-glow-ellipse.svg" alt="" aria-hidden="true" class="w-full h-full" />
+    </div>
+  </div>
+</footer>
