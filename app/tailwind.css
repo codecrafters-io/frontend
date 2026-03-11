@@ -12,11 +12,3 @@
 
 /* stylelint-disable-next-line at-rule-no-unknown */
 @plugin '@tailwindcss/typography';
-
-@font-face {
-  font-family: "PP Neue Montreal";
-  src: url("/assets/fonts/PPNeueMontreal-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
