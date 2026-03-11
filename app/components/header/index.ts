@@ -1,7 +1,8 @@
 import Component from '@glimmer/component';
 import type Owner from '@ember/owner';
 import PromotionalDiscountModel from 'codecrafters-frontend/models/promotional-discount';
-import logoImage from '/assets/images/logo/logo-icon.svg';
+import logoImageLight from '/assets/images/logo/logo-icon.svg';
+import logoImageDark from '/assets/images/logo/logo-icon-dark.svg';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ContainerWidthService from 'codecrafters-frontend/services/container-width';
 import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
@@ -20,7 +21,8 @@ interface Signature {
 }
 
 export default class Header extends Component<Signature> {
-  logoImage = logoImage;
+  logoImageLight = logoImageLight;
+  logoImageDark = logoImageDark;
 
   @service declare authenticator: AuthenticatorService;
   @service declare containerWidth: ContainerWidthService;
