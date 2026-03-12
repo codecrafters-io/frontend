@@ -35,11 +35,9 @@ module.exports = function (environment) {
       defaultMetaTags: {
         type: 'website',
         siteName: 'CodeCrafters',
-        title: "The Software Pro's Best Kept Secret.",
-        description: [
-          'Real-world proficiency projects designed for experienced engineers.',
-          'Develop software craftsmanship by recreating popular devtools from scratch.',
-        ].join(' '),
+        title: 'CodeCrafters | Build Your Own Redis, Git & SQLite From Scratch',
+        description:
+          'Advanced programming challenges for experienced engineers. Rebuild real production tools like Redis, Git, and SQLite from scratch in your IDE.',
         imageUrl: 'https://codecrafters.io/images/og-index.jpg',
         twitterCard: 'summary_large_image',
         twitterSite: '@codecraftersio',
