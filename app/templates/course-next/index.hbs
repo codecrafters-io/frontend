@@ -1,0 +1,11 @@
+<div class="py-3 px-3 md:px-6 border-b border-white/5">
+  <div class="flex items-center gap-2">
+    <CourseLogo @course={{@model.course}} class="size-8 brightness-90" />
+  </div>
+</div>
+
+<div class="container mx-auto lg:max-w-(--breakpoint-lg) px-3 md:px-6 pt-12 pb-32">
+  <h1 class="text-4xl font-semibold text-gradient-to-b from-white to-gray-300 leading-10">
+    {{@model.course.name}}
+  </h1>
+</div>
