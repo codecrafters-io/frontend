@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import image from '/assets/images/logo/logomark-color.svg';
+import wordmarkDark from '/assets/images/logo/wordmark-dark.svg';
 
 interface FooterLink {
   text: string;
@@ -12,7 +12,7 @@ interface FooterLinkGroup {
 }
 
 export default class Footer extends Component {
-  image = image;
+  wordmarkDark = wordmarkDark;
 
   get challengeLinkGroup(): FooterLinkGroup {
     return {

@@ -1,7 +1,8 @@
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import Component from '@glimmer/component';
 import FreeUsageGrantModel from 'codecrafters-frontend/models/free-usage-grant';
-import logoImage from '/assets/images/logo/logomark-color.svg';
+import logomarkDark from '/assets/images/logo/logomark-dark.svg';
+import logomarkLight from '/assets/images/logo/logomark-light.svg';
 import ReferralLinkModel from 'codecrafters-frontend/models/referral-link';
 import RouterService from '@ember/routing/router-service';
 import Store from '@ember-data/store';
@@ -20,7 +21,8 @@ interface Signature {
 }
 
 export default class AcceptReferralContainer extends Component<Signature> {
-  logoImage = logoImage;
+  logomarkDark = logomarkDark;
+  logomarkLight = logomarkLight;
 
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;

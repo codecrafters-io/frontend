@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
-import codeCraftersLogoImage from '/assets/images/logo/logomark-color.svg';
+import logomarkDark from '/assets/images/logo/logomark-dark.svg';
+import logomarkLight from '/assets/images/logo/logomark-light.svg';
 import InstitutionModel from 'codecrafters-frontend/models/institution';
 
 interface Signature {
@@ -12,7 +13,8 @@ interface Signature {
 }
 
 export default class ClaimOfferCard extends Component<Signature> {
-  codeCraftersLogoImage = codeCraftersLogoImage;
+  logomarkDark = logomarkDark;
+  logomarkLight = logomarkLight;
 }
 
 declare module '@glint/environment-ember-loose/registry' {

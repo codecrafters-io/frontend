@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
-import logoImage from '/assets/images/logo/logomark-color.svg';
+import logomarkDark from '/assets/images/logo/logomark-dark.svg';
+import logomarkLight from '/assets/images/logo/logomark-light.svg';
 import type AffiliateLinkModel from 'codecrafters-frontend/models/affiliate-link';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type LanguageModel from 'codecrafters-frontend/models/language';
@@ -16,7 +17,8 @@ interface Signature {
 }
 
 export default class AcceptReferralContainer extends Component<Signature> {
-  logoImage = logoImage;
+  logomarkDark = logomarkDark;
+  logomarkLight = logomarkLight;
 }
 
 declare module '@glint/environment-ember-loose/registry' {

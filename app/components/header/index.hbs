@@ -14,8 +14,8 @@
       <div class="flex">
         <div class="text-gray-700 dark:text-gray-300 pr-5 text-sm grow">
           <LinkTo class="flex items-center" @route="catalog">
-            <img class="h-8 w-8 mt-3 mb-3 mr-2" src={{this.logoImage}} alt="CodeCrafters" />
-            CodeCrafters
+            <img class="h-5 hidden dark:block" src={{this.wordmarkDark}} alt="CodeCrafters" />
+            <img class="h-5 dark:hidden" src={{this.wordmarkLight}} alt="CodeCrafters" />
           </LinkTo>
         </div>
       </div>
@@ -32,7 +32,7 @@
     </div>
 
     {{! Desktop  }}
-    <div class="hidden md:flex items-center justify-between grow">
+    <div class="h-[56px] hidden md:flex items-center justify-between grow">
       <div class="flex items-center">
         {{! Divider }}
         <div class="bg-gray-200 dark:bg-white/5 w-px h-5 mr-3"></div>
