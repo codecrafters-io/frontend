@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import logoImage from '/assets/images/logo/logomark-color.svg';
+import logomarkDark from '/assets/images/logo/logomark-dark.svg';
 import type MembershipGiftModel from 'codecrafters-frontend/models/membership-gift';
 
 interface Signature {
@@ -11,7 +11,7 @@ interface Signature {
 }
 
 export default class RedeemGiftPageGiftCard extends Component<Signature> {
-  logoImage = logoImage;
+  logomarkDark = logomarkDark;
 
   get expiryDateText(): string {
     const purchasedAt = this.args.membershipGift.purchasedAt;

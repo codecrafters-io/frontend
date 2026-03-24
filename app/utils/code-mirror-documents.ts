@@ -195,7 +195,7 @@ export default [
       '-<html><body>An example HTML document</body></html>',
       '+<html>',
       '+\t<head>',
-      '+\t\t<link rel="icon" href="/assets/favicon.ico" />',
+      '+\t\t<link rel="icon" href="/assets/images/favicon-light.svg" />',
       '+\t</head>',
       '+\t<body class="main-body" onblur="function doSomething(param1, param2) { return [param + param2]; }">',
       '+\t\t<span aria-disabled style="height: 100px; color: greenyellow; font-weight: bold">',

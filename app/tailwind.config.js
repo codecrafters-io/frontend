@@ -92,7 +92,6 @@ module.exports = {
     },
     fontFamily: {
       sans: 'Montserrat, sans-serif',
-      serif: '"Source Serif 4", Georgia, serif',
       mono: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
     },
     extend: {

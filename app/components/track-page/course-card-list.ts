@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import CourseModel from 'codecrafters-frontend/models/course';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import comingSoonImage from '/assets/images/icons/coming-soon.png';
-import logoImage from '/assets/images/logo/outline-color.svg';
 import AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import { service } from '@ember/service';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
@@ -17,7 +16,6 @@ interface Signature {
 }
 
 export default class TrackPageCourseCardList extends Component<Signature> {
-  logoImage = logoImage;
   comingSoonImage = comingSoonImage;
 
   @service declare authenticator: AuthenticatorService;
