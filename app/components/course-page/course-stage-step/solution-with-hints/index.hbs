@@ -1,4 +1,4 @@
-<div ...attributes>
+<div ...attributes {{did-update this.handleDidUpdateSolution @solution.id}}>
   {{#if (gt @solution.hintsJson.length 0)}}
     {{#each @solution.hintsJson as |hint hintIndex|}}
       <CoursePage::CourseStageStep::SolutionWithHints::HintCard
