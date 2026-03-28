@@ -23,7 +23,7 @@
         "posthog-js": "^1.336.4",
         "seedrandom": "^3.0.5",
         "showdown": "^2.1.0",
-        "three": "^0.172.0",
+        "three": "^0.183.2",
         "ua-parser-js": "^2.0.8",
         "web-vitals": "^5.1.0",
       },
@@ -3373,7 +3373,7 @@
 
     "thread-loader": ["thread-loader@3.0.4", "", { "dependencies": { "json-parse-better-errors": "^1.0.2", "loader-runner": "^4.1.0", "loader-utils": "^2.0.0", "neo-async": "^2.6.2", "schema-utils": "^3.0.0" }, "peerDependencies": { "webpack": "^4.27.0 || ^5.0.0" } }, "sha512-ByaL2TPb+m6yArpqQUZvP+5S1mZtXsEP7nWKKlAUTm7fCml8kB5s1uI3+eHRP2bk5mVYfRSBI7FFf+tWEyLZwA=="],
 
-    "three": ["three@0.172.0", "", {}, "sha512-6HMgMlzU97MsV7D/tY8Va38b83kz8YJX+BefKjspMNAv0Vx6dxMogHOrnRl/sbMIs3BPUKijPqDqJ/+UwJbIow=="],
+    "three": ["three@0.183.2", "", {}, "sha512-di3BsL2FEQ1PA7Hcvn4fyJOlxRRgFYBpMTcyOgkwJIaDOdJMebEFPA+t98EvjuljDx4hNulAGwF6KIjtwI5jgQ=="],
 
     "through": ["through@2.3.8", "", {}, "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg=="],
 
