@@ -61,7 +61,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
   }
 
   get hasOnlyOneSubmission(): boolean {
-    return this.repository.submissions.length === 1;
+    return this.repository.submissionsCount === 1;
   }
 
   get lastFailedSubmission() {
