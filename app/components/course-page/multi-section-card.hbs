@@ -24,29 +24,24 @@
         {{else}}
           <div class="px-4 sm:px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50" {{on "click" (fn @onSectionClick section)}} role="button">
             <div class="flex items-center gap-2">
+              <div
+                class="h-7 w-7 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 text-sm text-gray-900 dark:text-gray-200 font-semibold flex items-center justify-center"
+              >
+                {{add sectionIndex 1}}
+              </div>
               {{#if section.isComplete}}
-                <div
-                  class="h-7 w-7 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 text-sm text-gray-900 dark:text-gray-200 font-semibold flex items-center justify-center"
-                >
-                  {{add sectionIndex 1}}
-                </div>
                 <div class="flex items-center text-lg text-gray-400 dark:text-gray-500">
                   <span class="font-semibold">{{section.title}}</span>:
                   {{section.descriptionWhenCollapsed}}
                   {{svg-jar "check-circle" class="w-6 h-6 text-teal-500 dark:text-teal-600 ml-1"}}
                 </div>
               {{else}}
-                <div
-                  class="h-7 w-7 shrink-0 rounded-full bg-gray-100 dark:bg-gray-800 text-sm text-gray-900 dark:text-gray-200 font-semibold flex items-center justify-center"
-                >
-                  {{add sectionIndex 1}}
-                </div>
                 <div class="font-semibold text-lg text-gray-700 dark:text-gray-300">
                   {{section.title}}
                 </div>
               {{/if}}
 
-              <div>
+              <div class="ml-auto">
                 {{svg-jar "chevron-down" class="w-6 h-6 text-gray-400 dark:text-gray-500"}}
               </div>
             </div>
