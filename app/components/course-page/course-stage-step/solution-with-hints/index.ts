@@ -23,6 +23,12 @@ export default class SolutionWithHints extends Component<Signature> {
   @tracked solutionIsBlurred = true;
 
   @action
+  handleDidUpdateSolution(): void {
+    this.expandedHintIndex = null;
+    this.solutionIsBlurred = true;
+  }
+
+  @action
   handleHideSolutionButtonClick(): void {
     this.solutionIsBlurred = true;
   }
