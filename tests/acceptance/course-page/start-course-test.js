@@ -33,7 +33,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
 
     await percySnapshot('Auto Select Language - Before Clicking Show-Other-Languages Button');
 
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Pick your preferred language', 'current section title is preferred language');
     assert.strictEqual(coursePage.createRepositoryCard.languageButtons.length, 1, 'only one language-button can be visible');
     assert.strictEqual(coursePage.createRepositoryCard.languageButtons[0].text, 'Python', 'the only one language-button must be Python');
     assert.ok(coursePage.createRepositoryCard.showOtherLanguagesButton.isVisible, 'show-other-languages button is visible');
@@ -103,7 +103,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await percySnapshot('Start Course - Select Language');
 
     assert.strictEqual(coursePage.header.stepName, 'Introduction', 'step name is introduction');
-    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Preferred Language', 'current section title is preferred language');
+    assert.strictEqual(coursePage.createRepositoryCard.expandedSectionTitle, 'Pick your preferred language', 'current section title is preferred language');
 
     await coursePage.createRepositoryCard.clickOnLanguageButton('Python');
     await animationsSettled();
