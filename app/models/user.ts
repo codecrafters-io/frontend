@@ -49,6 +49,15 @@ export default class UserModel extends Model {
   @attr('boolean') declare isStaff: boolean;
   @attr('boolean') declare isVip: boolean;
   @attr('date') declare lastFreeUsageGrantExpiresAt: Date | null;
+  @attr('boolean') declare liveCallWidgetAvailable: boolean;
+  @attr() declare liveCallWidgetDisplayData: {
+    host_name: string;
+    host_title: string;
+    avatar_url: string;
+    cta_text: string;
+    button_text: string;
+    meet_link: string;
+  } | null;
   @attr('string') declare name: string;
   @attr('string') declare primaryEmailAddress: string;
   @attr('string') declare profileDescriptionMarkdown: string;
