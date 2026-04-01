@@ -1,0 +1,45 @@
+{{! app/components/live-call-widget/index.hbs }}
+{{#if this.liveCallWidget.shouldShowWidget}}
+  <div
+    class="fixed bottom-6 right-6 z-50 animate-fade-in"
+    data-test-live-call-widget
+  >
+    <div class="w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925">
+      <div class="p-4">
+        <div class="flex items-center gap-3 mb-3">
+          {{#if this.liveCallWidget.displayData.avatar_url}}
+            <img
+              src={{this.liveCallWidget.displayData.avatar_url}}
+              alt={{this.liveCallWidget.displayData.host_name}}
+              class="h-10 w-10 rounded-full object-cover"
+            />
+          {{else}}
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-500 text-sm font-semibold text-white">
+              {{this.hostInitial}}
+            </div>
+          {{/if}}
+          <div class="min-w-0">
+            <div class="text-sm font-medium text-gray-950 dark:text-gray-100 truncate">
+              {{this.liveCallWidget.displayData.host_name}}
+            </div>
+            <div class="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400">
+              <span class="inline-block h-1.5 w-1.5 rounded-full bg-green-500"></span>
+              Live now
+            </div>
+          </div>
+        </div>
+        <p class="mb-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+          {{this.liveCallWidget.displayData.cta_text}}
+        </p>
+        <button
+          type="button"
+          class="w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600"
+          {{on "click" this.openMeetLink}}
+          data-test-live-call-widget-join-button
+        >
+          {{this.liveCallWidget.displayData.button_text}}
+        </button>
+      </div>
+    </div>
+  </div>
+{{/if}}
