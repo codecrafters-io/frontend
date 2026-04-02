@@ -44,6 +44,6 @@ QUnit.done(async function () {
   await sendCoverage();
 });
 
-QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 5000;
+QUnit.config.testTimeout = config.x.percyIsEnabled ? 20000 : 3000;
 
 startEmberExam();
