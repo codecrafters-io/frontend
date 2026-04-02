@@ -22,14 +22,6 @@ export default class LiveCallWidgetAdminComponent extends Component {
   @tracked avatarUrl = '';
   @tracked ctaText = '';
   @tracked buttonText = '';
-  @action
-  async toggleExpanded(): Promise<void> {
-    this.isExpanded = !this.isExpanded;
-
-    if (this.isExpanded && !this.isLoading) {
-      await this.loadConfig();
-    }
-  }
 
   @action
   async loadConfig(): Promise<void> {
@@ -50,11 +42,30 @@ export default class LiveCallWidgetAdminComponent extends Component {
   }
 
   @action
-  async toggleActive(): Promise<void> {
-    const newValue = !this.isActive;
-    this.isActive = newValue;
+  async toggleExpanded(): Promise<void> {
+    this.isExpanded = !this.isExpanded;
 
-    await this.liveCallWidget.updateConfig({ 'is-active': newValue });
+    if (this.isExpanded && !this.isLoading) {
+      await this.loadConfig();
+    }
+  }
+
+  @action
+  async markUserSpoken(): Promise<void> {
+    if (!this.markSpokenUsername.trim()) return;
+
+    const result = await this.liveCallWidget.markUserSpoken(this.markSpokenUsername.trim());
+
+    if (result.success) {
+      this.markSpokenStatus = `Marked ${this.markSpokenUsername} as spoken to`;
+      this.markSpokenUsername = '';
+    } else {
+      this.markSpokenStatus = result.error ?? 'Error';
+    }
+
+    setTimeout(() => {
+      this.markSpokenStatus = '';
+    }, 3000);
   }
 
   @action
@@ -76,21 +87,11 @@ export default class LiveCallWidgetAdminComponent extends Component {
   }
 
   @action
-  async markUserSpoken(): Promise<void> {
-    if (!this.markSpokenUsername.trim()) return;
+  async toggleActive(): Promise<void> {
+    const newValue = !this.isActive;
+    this.isActive = newValue;
 
-    const result = await this.liveCallWidget.markUserSpoken(this.markSpokenUsername.trim());
-
-    if (result.success) {
-      this.markSpokenStatus = `Marked ${this.markSpokenUsername} as spoken to`;
-      this.markSpokenUsername = '';
-    } else {
-      this.markSpokenStatus = result.error ?? 'Error';
-    }
-
-    setTimeout(() => {
-      this.markSpokenStatus = '';
-    }, 3000);
+    await this.liveCallWidget.updateConfig({ 'is-active': newValue });
   }
 
   @action

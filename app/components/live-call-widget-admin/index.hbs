@@ -29,34 +29,34 @@
 
             <div class="space-y-3">
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Name</label>
-                <input type="text" value={{this.hostName}} {{on "input" (fn this.updateField "hostName")}}
+                <label for="lcw-host-name" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Name</label>
+                <input id="lcw-host-name" type="text" value={{this.hostName}} {{on "input" (fn this.updateField "hostName")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Title</label>
-                <input type="text" value={{this.hostTitle}} {{on "input" (fn this.updateField "hostTitle")}}
+                <label for="lcw-host-title" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Title</label>
+                <input id="lcw-host-title" type="text" value={{this.hostTitle}} {{on "input" (fn this.updateField "hostTitle")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
-                <input type="text" value={{this.avatarUrl}} {{on "input" (fn this.updateField "avatarUrl")}}
+                <label for="lcw-avatar-url" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
+                <input id="lcw-avatar-url" type="text" value={{this.avatarUrl}} {{on "input" (fn this.updateField "avatarUrl")}}
                   placeholder={{this.authenticator.currentUser.avatarUrl}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">CTA Text</label>
-                <input type="text" value={{this.ctaText}} {{on "input" (fn this.updateField "ctaText")}}
+                <label for="lcw-cta-text" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">CTA Text</label>
+                <input id="lcw-cta-text" type="text" value={{this.ctaText}} {{on "input" (fn this.updateField "ctaText")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Button Text</label>
-                <input type="text" value={{this.buttonText}} {{on "input" (fn this.updateField "buttonText")}}
+                <label for="lcw-button-text" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Button Text</label>
+                <input id="lcw-button-text" type="text" value={{this.buttonText}} {{on "input" (fn this.updateField "buttonText")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Meet Link</label>
-                <input type="text" value={{this.meetLink}} {{on "input" (fn this.updateField "meetLink")}}
+                <label for="lcw-meet-link" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Meet Link</label>
+                <input id="lcw-meet-link" type="text" value={{this.meetLink}} {{on "input" (fn this.updateField "meetLink")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
               </div>
             </div>
@@ -71,9 +71,9 @@
             </button>
 
             <div class="border-t border-gray-200 pt-3 dark:border-white/10">
-              <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mark User as Spoken To</label>
+              <label for="lcw-mark-spoken" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mark User as Spoken To</label>
               <div class="flex gap-2">
-                <input type="text" value={{this.markSpokenUsername}} {{on "input" (fn this.updateField "markSpokenUsername")}}
+                <input id="lcw-mark-spoken" type="text" value={{this.markSpokenUsername}} {{on "input" (fn this.updateField "markSpokenUsername")}}
                   placeholder="username"
                   class="flex-1 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
                 <button
