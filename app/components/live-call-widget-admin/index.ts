@@ -42,15 +42,6 @@ export default class LiveCallWidgetAdminComponent extends Component {
   }
 
   @action
-  async toggleExpanded(): Promise<void> {
-    this.isExpanded = !this.isExpanded;
-
-    if (this.isExpanded && !this.isLoading) {
-      await this.loadConfig();
-    }
-  }
-
-  @action
   async markUserSpoken(): Promise<void> {
     if (!this.markSpokenUsername.trim()) return;
 
@@ -92,6 +83,15 @@ export default class LiveCallWidgetAdminComponent extends Component {
     this.isActive = newValue;
 
     await this.liveCallWidget.updateConfig({ 'is-active': newValue });
+  }
+
+  @action
+  async toggleExpanded(): Promise<void> {
+    this.isExpanded = !this.isExpanded;
+
+    if (this.isExpanded && !this.isLoading) {
+      await this.loadConfig();
+    }
   }
 
   @action
