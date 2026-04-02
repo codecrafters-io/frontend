@@ -1,0 +1,110 @@
+{{#if this.liveCallWidget.shouldShowAdminPanel}}
+  <div class="fixed bottom-6 right-6 z-50" data-test-live-call-widget-admin>
+    {{#if this.isExpanded}}
+      <div class="w-80 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925">
+        <div class="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-white/10">
+          <span class="text-sm font-medium text-gray-950 dark:text-gray-100">Live Call Widget</span>
+          <button
+            type="button"
+            class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+            {{on "click" this.toggleExpanded}}
+          >Collapse</button>
+        </div>
+
+        <div class="max-h-96 overflow-y-auto p-4 space-y-4">
+          {{#if this.isLoading}}
+            <p class="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
+          {{else}}
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-medium text-gray-950 dark:text-gray-100">Active</span>
+              <button
+                type="button"
+                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{if this.isActive 'bg-teal-500' 'bg-gray-300 dark:bg-gray-700'}}"
+                {{on "click" this.toggleActive}}
+                data-test-live-call-widget-admin-toggle
+              >
+                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform {{if this.isActive 'translate-x-6' 'translate-x-1'}}"></span>
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              <div>
+                <label for="lcw-host-name" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Name</label>
+                <input id="lcw-host-name" type="text" value={{this.hostName}} {{on "input" (fn this.updateField "hostName")}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+              <div>
+                <label for="lcw-host-title" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Title</label>
+                <input id="lcw-host-title" type="text" value={{this.hostTitle}} {{on "input" (fn this.updateField "hostTitle")}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+              <div>
+                <label for="lcw-avatar-url" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
+                <input id="lcw-avatar-url" type="text" value={{this.avatarUrl}} {{on "input" (fn this.updateField "avatarUrl")}}
+                  placeholder={{this.authenticator.currentUser.avatarUrl}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+              <div>
+                <label for="lcw-cta-text" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">CTA Text</label>
+                <input id="lcw-cta-text" type="text" value={{this.ctaText}} {{on "input" (fn this.updateField "ctaText")}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+              <div>
+                <label for="lcw-button-text" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Button Text</label>
+                <input id="lcw-button-text" type="text" value={{this.buttonText}} {{on "input" (fn this.updateField "buttonText")}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+              <div>
+                <label for="lcw-meet-link" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Meet Link</label>
+                <input id="lcw-meet-link" type="text" value={{this.meetLink}} {{on "input" (fn this.updateField "meetLink")}}
+                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600 disabled:opacity-50"
+              {{on "click" this.saveConfig}}
+              disabled={{this.isSaving}}
+            >
+              {{if this.isSaving "Saving..." "Save Config"}}
+            </button>
+
+            <div class="border-t border-gray-200 pt-3 dark:border-white/10">
+              <label for="lcw-mark-spoken" class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mark User as Spoken To</label>
+              <div class="flex gap-2">
+                <input id="lcw-mark-spoken" type="text" value={{this.markSpokenUsername}} {{on "input" (fn this.updateField "markSpokenUsername")}}
+                  placeholder="username"
+                  class="flex-1 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <button
+                  type="button"
+                  class="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+                  {{on "click" this.markUserSpoken}}
+                >Mark</button>
+              </div>
+              {{#if this.markSpokenStatus}}
+                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{this.markSpokenStatus}}</p>
+              {{/if}}
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    {{else}}
+      <button
+        type="button"
+        class="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white shadow-lg transition-colors hover:bg-gray-50 dark:border-white/10 dark:bg-gray-925 dark:hover:bg-gray-900"
+        {{on "click" this.toggleExpanded}}
+        data-test-live-call-widget-admin-button
+      >
+        <span class="relative flex h-3 w-3">
+          {{#if this.isActive}}
+            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
+            <span class="relative inline-flex h-3 w-3 rounded-full bg-teal-500"></span>
+          {{else}}
+            <span class="relative inline-flex h-3 w-3 rounded-full bg-gray-400"></span>
+          {{/if}}
+        </span>
+      </button>
+    {{/if}}
+  </div>
+{{/if}}

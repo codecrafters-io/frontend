@@ -2,11 +2,17 @@ import Service, { service } from '@ember/service';
 import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/route-info';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import type LiveCallWidgetService from 'codecrafters-frontend/services/live-call-widget';
 
 export default class HelpscoutBeaconService extends Service {
   @service declare router: RouterService;
+  @service declare liveCallWidget: LiveCallWidgetService;
 
   get shouldShowBeacon(): boolean {
+    if (this.liveCallWidget.shouldShowWidget) {
+      return false;
+    }
+
     let currentRoute: RouteInfo | null = this.router.currentRoute;
 
     while (currentRoute) {
