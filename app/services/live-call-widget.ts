@@ -23,19 +23,19 @@ export default class LiveCallWidgetService extends Service {
 
   subscription: ActionCableSubscription | null = null;
 
+  get shouldShowAdminPanel(): boolean {
+    if (!this.authenticator.isAuthenticated) return false;
+    if (!this.authenticator.currentUser) return false;
+
+    return this.authenticator.currentUser.isStaff;
+  }
+
   get shouldShowWidget(): boolean {
     if (!this.authenticator.isAuthenticated) return false;
     if (!this.authenticator.currentUser) return false;
     if (this.authenticator.currentUser.isStaff) return false;
 
     return this.isAvailable && this.displayData !== null;
-  }
-
-  get shouldShowAdminPanel(): boolean {
-    if (!this.authenticator.isAuthenticated) return false;
-    if (!this.authenticator.currentUser) return false;
-
-    return this.authenticator.currentUser.isStaff;
   }
 
   subscribe(): void {
@@ -45,10 +45,12 @@ export default class LiveCallWidgetService extends Service {
       'LiveCallWidgetChannel',
       {},
       {
-        onData: (data: { type: string; available: boolean; display_data?: { host_name: string; host_title: string; avatar_url: string; cta_text: string; button_text: string; meet_link: string } }) => {
-          if (data.type === 'status_change') {
-            if (data.available && data.display_data) {
-              this.displayData = data.display_data;
+        onData: (data: unknown) => {
+          const parsed = data as { type: string; available: boolean; display_data?: { host_name: string; host_title: string; avatar_url: string; cta_text: string; button_text: string; meet_link: string } };
+
+          if (parsed.type === 'status_change') {
+            if (parsed.available && parsed.display_data) {
+              this.displayData = parsed.display_data;
               this.isAvailable = true;
             } else {
               this.isAvailable = false;
@@ -60,13 +62,6 @@ export default class LiveCallWidgetService extends Service {
     );
   }
 
-  unsubscribe(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
-  }
-
   async fetchConfig(): Promise<Record<string, unknown>> {
     const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
       headers: this.adminHeaders(),
@@ -76,21 +71,22 @@ export default class LiveCallWidgetService extends Service {
     return json.data?.attributes ?? {};
   }
 
-  async updateConfig(attributes: Record<string, unknown>): Promise<void> {
-    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
-      method: 'PATCH',
-      headers: {
-        ...this.adminHeaders(),
-        'Content-Type': 'application/vnd.api+json',
-      },
-      body: JSON.stringify({
-        data: { attributes },
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to update config: ${response.status}`);
+  unsubscribe(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
     }
+  }
+
+  private adminHeaders(): Record<string, string> {
+    const headers: Record<string, string> = {};
+    const token = this.sessionTokenStorage.currentToken;
+
+    if (token) {
+      headers['x-session-token'] = token;
+    }
+
+    return headers;
   }
 
   async markUserSpoken(username: string): Promise<{ success: boolean; error?: string }> {
@@ -112,15 +108,21 @@ export default class LiveCallWidgetService extends Service {
     }
   }
 
-  private adminHeaders(): Record<string, string> {
-    const headers: Record<string, string> = {};
-    const token = this.sessionTokenStorage.currentToken;
+  async updateConfig(attributes: Record<string, unknown>): Promise<void> {
+    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
+      method: 'PATCH',
+      headers: {
+        ...this.adminHeaders(),
+        'Content-Type': 'application/vnd.api+json',
+      },
+      body: JSON.stringify({
+        data: { attributes },
+      }),
+    });
 
-    if (token) {
-      headers['x-session-token'] = token;
+    if (!response.ok) {
+      throw new Error(`Failed to update config: ${response.status}`);
     }
-
-    return headers;
   }
 }
 
