@@ -22,15 +22,6 @@ export default class LiveCallWidgetAdminComponent extends Component {
   @tracked avatarUrl = '';
   @tracked ctaText = '';
   @tracked buttonText = '';
-  @tracked audienceFilter = 'all';
-  @tracked geoFilter = 'all';
-
-  get isAudienceAll(): boolean { return this.audienceFilter === 'all'; }
-  get isAudiencePaid(): boolean { return this.audienceFilter === 'paid_only'; }
-  get isAudienceFree(): boolean { return this.audienceFilter === 'free_only'; }
-  get isGeoAll(): boolean { return this.geoFilter === 'all'; }
-  get isGeoUs(): boolean { return this.geoFilter === 'us_only'; }
-
   @action
   async toggleExpanded(): Promise<void> {
     this.isExpanded = !this.isExpanded;
@@ -53,8 +44,6 @@ export default class LiveCallWidgetAdminComponent extends Component {
       this.avatarUrl = (attrs['avatar-url'] as string) ?? '';
       this.ctaText = (attrs['cta-text'] as string) ?? '';
       this.buttonText = (attrs['button-text'] as string) ?? '';
-      this.audienceFilter = (attrs['audience-filter'] as string) ?? 'all';
-      this.geoFilter = (attrs['geo-filter'] as string) ?? 'all';
     } finally {
       this.isLoading = false;
     }
@@ -80,8 +69,6 @@ export default class LiveCallWidgetAdminComponent extends Component {
         'avatar-url': this.avatarUrl,
         'cta-text': this.ctaText,
         'button-text': this.buttonText,
-        'audience-filter': this.audienceFilter,
-        'geo-filter': this.geoFilter,
       });
     } finally {
       this.isSaving = false;

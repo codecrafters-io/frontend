@@ -27,10 +27,6 @@
               </button>
             </div>
 
-            <div class="text-xs text-gray-500 dark:text-gray-400">
-              {{if this.isActive "Active" "Inactive"}} for: {{this.audienceFilter}} users, {{this.geoFilter}} geo
-            </div>
-
             <div class="space-y-3">
               <div>
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Name</label>
@@ -62,23 +58,6 @@
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Meet Link</label>
                 <input type="text" value={{this.meetLink}} {{on "input" (fn this.updateField "meetLink")}}
                   class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Audience</label>
-                <select {{on "change" (fn this.updateField "audienceFilter")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100">
-                  <option value="all" selected={{this.isAudienceAll}}>All Users</option>
-                  <option value="paid_only" selected={{this.isAudiencePaid}}>Paid Only</option>
-                  <option value="free_only" selected={{this.isAudienceFree}}>Free Only</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Geography</label>
-                <select {{on "change" (fn this.updateField "geoFilter")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100">
-                  <option value="all" selected={{this.isGeoAll}}>All Regions</option>
-                  <option value="us_only" selected={{this.isGeoUs}}>US Only</option>
-                </select>
               </div>
             </div>
 
