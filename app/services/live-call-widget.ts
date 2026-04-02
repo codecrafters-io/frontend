@@ -38,6 +38,46 @@ export default class LiveCallWidgetService extends Service {
     return this.isAvailable && this.displayData !== null;
   }
 
+  private adminHeaders(): Record<string, string> {
+    const headers: Record<string, string> = {};
+    const token = this.sessionTokenStorage.currentToken;
+
+    if (token) {
+      headers['x-session-token'] = token;
+    }
+
+    return headers;
+  }
+
+  async fetchConfig(): Promise<Record<string, unknown>> {
+    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
+      headers: this.adminHeaders(),
+    });
+
+    const json = await response.json();
+
+    return json.data?.attributes ?? {};
+  }
+
+  async markUserSpoken(username: string): Promise<{ success: boolean; error?: string }> {
+    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config/mark-user-spoken`, {
+      method: 'POST',
+      headers: {
+        ...this.adminHeaders(),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username }),
+    });
+
+    if (response.ok) {
+      return { success: true };
+    } else if (response.status === 404) {
+      return { success: false, error: 'User not found' };
+    } else {
+      return { success: false, error: 'Something went wrong' };
+    }
+  }
+
   subscribe(): void {
     if (this.subscription) return;
 
@@ -62,49 +102,10 @@ export default class LiveCallWidgetService extends Service {
     );
   }
 
-  async fetchConfig(): Promise<Record<string, unknown>> {
-    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
-      headers: this.adminHeaders(),
-    });
-
-    const json = await response.json();
-    return json.data?.attributes ?? {};
-  }
-
   unsubscribe(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = null;
-    }
-  }
-
-  private adminHeaders(): Record<string, string> {
-    const headers: Record<string, string> = {};
-    const token = this.sessionTokenStorage.currentToken;
-
-    if (token) {
-      headers['x-session-token'] = token;
-    }
-
-    return headers;
-  }
-
-  async markUserSpoken(username: string): Promise<{ success: boolean; error?: string }> {
-    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config/mark-user-spoken`, {
-      method: 'POST',
-      headers: {
-        ...this.adminHeaders(),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username }),
-    });
-
-    if (response.ok) {
-      return { success: true };
-    } else if (response.status === 404) {
-      return { success: false, error: 'User not found' };
-    } else {
-      return { success: false, error: 'Something went wrong' };
     }
   }
 
