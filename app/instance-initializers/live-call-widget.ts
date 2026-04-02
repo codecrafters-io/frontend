@@ -7,16 +7,7 @@ export function initialize(applicationInstance: ApplicationInstance) {
   const liveCallWidget = applicationInstance.lookup('service:live-call-widget') as LiveCallWidgetService;
 
   if (authenticator.isAuthenticated) {
-    const checkUser = () => {
-      if (authenticator.currentUserIsLoaded) {
-        liveCallWidget.syncFromUser();
-        liveCallWidget.subscribe();
-      } else {
-        setTimeout(checkUser, 100);
-      }
-    };
-
-    checkUser();
+    liveCallWidget.subscribe();
   }
 }
 

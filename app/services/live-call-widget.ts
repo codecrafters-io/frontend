@@ -45,10 +45,11 @@ export default class LiveCallWidgetService extends Service {
       'LiveCallWidgetChannel',
       {},
       {
-        onData: (data: { type: string; available: boolean }) => {
+        onData: (data: { type: string; available: boolean; display_data?: { host_name: string; host_title: string; avatar_url: string; cta_text: string; button_text: string; meet_link: string } }) => {
           if (data.type === 'status_change') {
-            if (data.available) {
-              this.refreshUserEligibility();
+            if (data.available && data.display_data) {
+              this.displayData = data.display_data;
+              this.isAvailable = true;
             } else {
               this.isAvailable = false;
               this.displayData = null;
@@ -64,19 +65,6 @@ export default class LiveCallWidgetService extends Service {
       this.subscription.unsubscribe();
       this.subscription = null;
     }
-  }
-
-  syncFromUser(): void {
-    const user = this.authenticator.currentUser;
-    if (!user) return;
-
-    this.isAvailable = user.liveCallWidgetAvailable ?? false;
-    this.displayData = user.liveCallWidgetDisplayData ?? null;
-  }
-
-  async refreshUserEligibility(): Promise<void> {
-    await this.authenticator.syncCurrentUser();
-    this.syncFromUser();
   }
 
   async fetchConfig(): Promise<Record<string, unknown>> {
