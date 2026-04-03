@@ -60,6 +60,10 @@ This failure is expected!
 Check the [How to pass this stage](#first-stage-tutorial-heading) section for instructions.`.trim();
   }
 
+  get hasOnlyOneSubmission(): boolean {
+    return this.repository.submissionsCount === 1;
+  }
+
   get lastFailedSubmission() {
     if (this.repository.lastSubmissionHasFailureStatus) {
       return this.repository.lastSubmission;
@@ -94,7 +98,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
         text: this.completionNoticeMessage!,
       };
     } else if (this.testsStatus === 'failed') {
-      if (this.lastSubmissionIsSystemInitiated) {
+      if (this.lastSubmissionIsSystemInitiated || this.hasOnlyOneSubmission) {
         return {
           dotColor: 'gray',
           dotType: 'static',
