@@ -110,7 +110,11 @@ export default class LiveCallWidgetService extends Service {
   }
 
   async updateConfig(attributes: Record<string, unknown>): Promise<void> {
-    const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
+    const url = `${config.x.backendUrl}/api/v1/live-call-widget-config`;
+
+    console.log('[LiveCallWidget] PATCH', url, attributes);
+
+    const response = await fetch(url, {
       method: 'PATCH',
       headers: {
         ...this.adminHeaders(),
@@ -121,7 +125,12 @@ export default class LiveCallWidgetService extends Service {
       }),
     });
 
+    console.log('[LiveCallWidget] Response:', response.status, response.url);
+
     if (!response.ok) {
+      const body = await response.text();
+      console.error('[LiveCallWidget] Update failed:', response.status, body);
+
       throw new Error(`Failed to update config: ${response.status}`);
     }
   }
