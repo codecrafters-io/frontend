@@ -63,11 +63,11 @@
 
             <button
               type="button"
-              class="w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600 disabled:opacity-50"
+              class="w-full rounded-md px-3 py-2 text-sm font-semibold transition-colors disabled:opacity-50 {{if this.hasAnyChanges (if this.hasToggleChanged (if this.isActive 'bg-teal-500 text-white hover:bg-teal-600' 'bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20') 'bg-teal-500 text-white hover:bg-teal-600') 'bg-gray-200 text-gray-500 dark:bg-gray-800 dark:text-gray-500 cursor-default'}}"
               {{on "click" this.saveConfig}}
-              disabled={{this.isSaving}}
+              disabled={{if this.hasAnyChanges this.isSaving true}}
             >
-              {{if this.isSaving "Saving..." "Save Config"}}
+              {{this.saveButtonText}}
             </button>
 
             <div class="border-t border-gray-200 pt-3 dark:border-white/10">

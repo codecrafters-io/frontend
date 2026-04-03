@@ -6,36 +6,83 @@ import type LiveCallWidgetService from 'codecrafters-frontend/services/live-call
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class LiveCallWidgetAdminComponent extends Component {
-  @service declare liveCallWidget: LiveCallWidgetService;
   @service declare authenticator: AuthenticatorService;
+  @service declare liveCallWidget: LiveCallWidgetService;
 
   @tracked isExpanded = false;
   @tracked isLoading = false;
   @tracked isSaving = false;
-  @tracked markSpokenUsername = '';
   @tracked markSpokenStatus = '';
+  @tracked markSpokenUsername = '';
 
-  @tracked isActive = false;
-  @tracked meetLink = '';
+  // Current form state
+  @tracked avatarUrl = '';
+  @tracked buttonText = '';
+  @tracked ctaText = '';
   @tracked hostName = '';
   @tracked hostTitle = '';
-  @tracked avatarUrl = '';
-  @tracked ctaText = '';
-  @tracked buttonText = '';
+  @tracked isActive = false;
+  @tracked meetLink = '';
+
+  // Loaded state (to detect changes)
+  private loadedActive = false;
+  private loadedAvatarUrl = '';
+  private loadedButtonText = '';
+  private loadedCtaText = '';
+  private loadedHostName = '';
+  private loadedHostTitle = '';
+  private loadedMeetLink = '';
+
+  get hasToggleChanged(): boolean {
+    return this.isActive !== this.loadedActive;
+  }
+
+  get hasFieldsChanged(): boolean {
+    return (
+      this.avatarUrl !== this.loadedAvatarUrl ||
+      this.buttonText !== this.loadedButtonText ||
+      this.ctaText !== this.loadedCtaText ||
+      this.hostName !== this.loadedHostName ||
+      this.hostTitle !== this.loadedHostTitle ||
+      this.meetLink !== this.loadedMeetLink
+    );
+  }
+
+  get hasAnyChanges(): boolean {
+    return this.hasToggleChanged || this.hasFieldsChanged;
+  }
+
+  get saveButtonText(): string {
+    if (this.isSaving) return 'Saving...';
+    if (this.hasToggleChanged && this.isActive) return 'Go Live';
+    if (this.hasToggleChanged && !this.isActive) return 'Switch Off';
+    if (this.hasFieldsChanged) return 'Save Changes';
+
+    return 'Save Changes';
+  }
 
   @action
   async loadConfig(): Promise<void> {
     this.isLoading = true;
 
     try {
-      const attrs = await this.liveCallWidget.fetchConfig() as Record<string, string | boolean>;
-      this.isActive = attrs['is-active'] as boolean ?? false;
-      this.meetLink = (attrs['meet-link'] as string) ?? '';
+      const attrs = (await this.liveCallWidget.fetchConfig()) as Record<string, string | boolean>;
+      this.isActive = (attrs['is-active'] as boolean) ?? false;
+      this.avatarUrl = (attrs['avatar-url'] as string) ?? '';
+      this.buttonText = (attrs['button-text'] as string) ?? '';
+      this.ctaText = (attrs['cta-text'] as string) ?? '';
       this.hostName = (attrs['host-name'] as string) ?? '';
       this.hostTitle = (attrs['host-title'] as string) ?? '';
-      this.avatarUrl = (attrs['avatar-url'] as string) ?? '';
-      this.ctaText = (attrs['cta-text'] as string) ?? '';
-      this.buttonText = (attrs['button-text'] as string) ?? '';
+      this.meetLink = (attrs['meet-link'] as string) ?? '';
+
+      // Snapshot loaded state
+      this.loadedActive = this.isActive;
+      this.loadedAvatarUrl = this.avatarUrl;
+      this.loadedButtonText = this.buttonText;
+      this.loadedCtaText = this.ctaText;
+      this.loadedHostName = this.hostName;
+      this.loadedHostTitle = this.hostTitle;
+      this.loadedMeetLink = this.meetLink;
     } finally {
       this.isLoading = false;
     }
@@ -64,32 +111,44 @@ export default class LiveCallWidgetAdminComponent extends Component {
     this.isSaving = true;
 
     try {
-      await this.liveCallWidget.updateConfig({
-        'meet-link': this.meetLink,
-        'host-name': this.hostName,
-        'host-title': this.hostTitle,
-        'avatar-url': this.avatarUrl,
-        'cta-text': this.ctaText,
-        'button-text': this.buttonText,
-      });
+      const attrs: Record<string, unknown> = {};
+
+      if (this.hasToggleChanged) {
+        attrs['is-active'] = this.isActive;
+      }
+
+      if (this.hasFieldsChanged) {
+        attrs['avatar-url'] = this.avatarUrl;
+        attrs['button-text'] = this.buttonText;
+        attrs['cta-text'] = this.ctaText;
+        attrs['host-name'] = this.hostName;
+        attrs['host-title'] = this.hostTitle;
+        attrs['meet-link'] = this.meetLink;
+      }
+
+      await this.liveCallWidget.updateConfig(attrs);
+
+      // Update snapshot to reflect saved state
+      this.loadedActive = this.isActive;
+      this.loadedAvatarUrl = this.avatarUrl;
+      this.loadedButtonText = this.buttonText;
+      this.loadedCtaText = this.ctaText;
+      this.loadedHostName = this.hostName;
+      this.loadedHostTitle = this.hostTitle;
+      this.loadedMeetLink = this.meetLink;
+
+      // Collapse after save so staff can see the result
+      this.isExpanded = false;
+    } catch (e) {
+      console.error('Failed to save live call widget config:', e);
     } finally {
       this.isSaving = false;
     }
   }
 
   @action
-  async toggleActive(): Promise<void> {
-    const newValue = !this.isActive;
-    const previousValue = this.isActive;
-    this.isActive = newValue;
-
-    try {
-      await this.liveCallWidget.updateConfig({ 'is-active': newValue });
-    } catch (e) {
-      // Revert on failure
-      this.isActive = previousValue;
-      console.error('Failed to toggle live call widget:', e);
-    }
+  toggleActive(): void {
+    this.isActive = !this.isActive;
   }
 
   @action
