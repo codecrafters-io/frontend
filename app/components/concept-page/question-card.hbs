@@ -8,13 +8,14 @@
     </div>
 
     {{! template-lint-disable no-invalid-interactive }}
-    <div class="question-card-option-container flex flex-col -mx-3 sm:-mx-4 gap-px" {{did-insert this.handleDidInsertOptionsList}}>
+    <div class="question-card-option-container flex flex-col -mx-3 sm:-mx-4 gap-px">
       {{#each this.options as |option optionIndex|}}
         <ConceptPage::QuestionCardOption
           class="px-4"
           @option={{option}}
           @isSubmitted={{this.hasSubmitted}}
           {{on "click" (fn this.handleOptionSelected optionIndex)}}
+          {{(if (and @isCurrentBlock (eq optionIndex 0)) (modifier "focus-on-insert" preventScroll=true))}}
           data-test-question-card-option
         />
       {{/each}}
