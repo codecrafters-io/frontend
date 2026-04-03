@@ -33,8 +33,8 @@ export default class LiveCallWidgetAdminComponent extends Component {
   private loadedHostTitle = '';
   private loadedMeetLink = '';
 
-  get hasToggleChanged(): boolean {
-    return this.isActive !== this.loadedActive;
+  get hasAnyChanges(): boolean {
+    return this.hasToggleChanged || this.hasFieldsChanged;
   }
 
   get hasFieldsChanged(): boolean {
@@ -48,8 +48,8 @@ export default class LiveCallWidgetAdminComponent extends Component {
     );
   }
 
-  get hasAnyChanges(): boolean {
-    return this.hasToggleChanged || this.hasFieldsChanged;
+  get hasToggleChanged(): boolean {
+    return this.isActive !== this.loadedActive;
   }
 
   get saveButtonText(): string {
