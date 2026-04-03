@@ -700,6 +700,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
@@ -749,6 +750,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     // Question 3
     assert.strictEqual(conceptPage.questionCards[2].focusedOption.text, 'Ethernet');
@@ -790,6 +792,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     assert.false(conceptPage.questionCards[0].hasSubmitted, 'the question has not been submitted yet');
 
@@ -825,6 +828,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptsPage.clickOnConceptCard('Network Protocols');
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     const currentScrollY = window.scrollY;
 
@@ -850,6 +854,7 @@ module('Acceptance | concepts-test', function (hooks) {
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
 
     assert.strictEqual(conceptPage.questionCards[1].focusedOption.text, '1 layer');
 
@@ -967,6 +972,7 @@ module('Acceptance | concepts-test', function (hooks) {
 
     await conceptPage.clickOnContinueButton();
     await conceptPage.clickOnContinueButton();
+    await animationsSettled();
     await conceptPage.questionCards[0].keydown({ keyCode: 75 }); // Send k key
     await conceptPage.questionCards[0].focusedOption.click(); // Simulate ENTER on focused option
     await conceptPage.questionCards[0].keydown({ keyCode: 'Enter' });
