@@ -74,18 +74,6 @@ export default class QuestionCard extends Component<Signature> {
   }
 
   @action
-  handleDidInsertOptionsList(element: HTMLElement) {
-    const firstOptionElement = element.children[0];
-
-    if (this.args.isCurrentBlock && firstOptionElement instanceof HTMLElement) {
-      // focus() doesn't seem to work unless it's called after the current runloop
-      next(() => {
-        firstOptionElement?.focus({ preventScroll: true });
-      });
-    }
-  }
-
-  @action
   handleMoveDown(event: KeyboardEvent) {
     if (this.selectedOptionIndex !== null) {
       return;
