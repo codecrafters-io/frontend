@@ -80,9 +80,16 @@ export default class LiveCallWidgetAdminComponent extends Component {
   @action
   async toggleActive(): Promise<void> {
     const newValue = !this.isActive;
+    const previousValue = this.isActive;
     this.isActive = newValue;
 
-    await this.liveCallWidget.updateConfig({ 'is-active': newValue });
+    try {
+      await this.liveCallWidget.updateConfig({ 'is-active': newValue });
+    } catch (e) {
+      // Revert on failure
+      this.isActive = previousValue;
+      console.error('Failed to toggle live call widget:', e);
+    }
   }
 
   @action
