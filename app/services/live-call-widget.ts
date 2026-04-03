@@ -50,7 +50,6 @@ export default class LiveCallWidgetService extends Service {
 
   async fetchConfig(): Promise<Record<string, unknown>> {
     const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config`, {
-      credentials: 'include',
       headers: this.adminHeaders(),
     });
 
@@ -62,7 +61,6 @@ export default class LiveCallWidgetService extends Service {
   async markUserSpoken(username: string): Promise<{ success: boolean; error?: string }> {
     const response = await fetch(`${config.x.backendUrl}/api/v1/live-call-widget-config/mark-user-spoken`, {
       method: 'POST',
-      credentials: 'include',
       headers: {
         ...this.adminHeaders(),
         'Content-Type': 'application/json',
@@ -117,7 +115,6 @@ export default class LiveCallWidgetService extends Service {
 
     const response = await fetch(url, {
       method: 'PATCH',
-      credentials: 'include',
       headers: {
         ...this.adminHeaders(),
         'Content-Type': 'application/vnd.api+json',
