@@ -33,7 +33,6 @@ export default class LiveCallWidgetService extends Service {
   get shouldShowWidget(): boolean {
     if (!this.authenticator.isAuthenticated) return false;
     if (!this.authenticator.currentUser) return false;
-    if (this.authenticator.currentUser.isStaff) return false;
 
     return this.isAvailable && this.displayData !== null;
   }
