@@ -16,32 +16,32 @@
 
 ### Core (`/Users/sarupbanskota/gig/cc/work/core`)
 
-| Action | Path | Responsibility |
-|--------|------|----------------|
-| Create | `db/migrate/YYYYMMDDHHMMSS_create_live_call_widget_configs.rb` | Migration |
-| Create | `app/models/live_call_widget_config.rb` | Model + eligibility logic |
-| Create | `app/serializers/live_call_widget_config_serializer.rb` | JSON:API serializer for admin API |
-| Create | `app/controllers/api/live_call_widget_configs_controller.rb` | Admin CRUD + mark-user-spoken |
-| Create | `app/channels/live_call_widget_channel.rb` | ActionCable broadcast channel |
-| Modify | `app/models/request.rb` | Add `cf-ipcountry` to whitelisted headers |
-| Modify | `app/serializers/user_serializer.rb` | Add `live_call_widget_available` + `live_call_widget_display_data` attributes |
-| Modify | `config/routes.rb` | Add config resource routes |
-| Create | `test/controllers/api/live_call_widget_configs_controller_test.rb` | Controller tests |
-| Create | `test/models/live_call_widget_config_test.rb` | Model tests |
-| Create | `test/factories/live_call_widget_config.rb` | Factory |
+| Action | Path                                                               | Responsibility                                                                |
+| ------ | ------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| Create | `db/migrate/YYYYMMDDHHMMSS_create_live_call_widget_configs.rb`     | Migration                                                                     |
+| Create | `app/models/live_call_widget_config.rb`                            | Model + eligibility logic                                                     |
+| Create | `app/serializers/live_call_widget_config_serializer.rb`            | JSON:API serializer for admin API                                             |
+| Create | `app/controllers/api/live_call_widget_configs_controller.rb`       | Admin CRUD + mark-user-spoken                                                 |
+| Create | `app/channels/live_call_widget_channel.rb`                         | ActionCable broadcast channel                                                 |
+| Modify | `app/models/request.rb`                                            | Add `cf-ipcountry` to whitelisted headers                                     |
+| Modify | `app/serializers/user_serializer.rb`                               | Add `live_call_widget_available` + `live_call_widget_display_data` attributes |
+| Modify | `config/routes.rb`                                                 | Add config resource routes                                                    |
+| Create | `test/controllers/api/live_call_widget_configs_controller_test.rb` | Controller tests                                                              |
+| Create | `test/models/live_call_widget_config_test.rb`                      | Model tests                                                                   |
+| Create | `test/factories/live_call_widget_config.rb`                        | Factory                                                                       |
 
 ### Frontend (`/Users/sarupbanskota/gig/cc/work/frontend`)
 
-| Action | Path | Responsibility |
-|--------|------|----------------|
-| Modify | `app/models/user.ts` | Add `liveCallWidgetAvailable` + `liveCallWidgetDisplayData` attributes |
-| Create | `app/services/live-call-widget.ts` | State management, ActionCable subscription, admin API calls |
-| Create | `app/components/live-call-widget/index.hbs` | User-facing floating card template |
-| Create | `app/components/live-call-widget/index.ts` | User-facing floating card logic |
-| Create | `app/components/live-call-widget-admin/index.hbs` | Admin panel template |
-| Create | `app/components/live-call-widget-admin/index.ts` | Admin panel logic |
-| Modify | `app/templates/application.hbs` | Render widget components |
-| Modify | `app/services/beacon.ts` | Hide HelpScout when live call widget is visible |
+| Action | Path                                              | Responsibility                                                         |
+| ------ | ------------------------------------------------- | ---------------------------------------------------------------------- |
+| Modify | `app/models/user.ts`                              | Add `liveCallWidgetAvailable` + `liveCallWidgetDisplayData` attributes |
+| Create | `app/services/live-call-widget.ts`                | State management, ActionCable subscription, admin API calls            |
+| Create | `app/components/live-call-widget/index.hbs`       | User-facing floating card template                                     |
+| Create | `app/components/live-call-widget/index.ts`        | User-facing floating card logic                                        |
+| Create | `app/components/live-call-widget-admin/index.hbs` | Admin panel template                                                   |
+| Create | `app/components/live-call-widget-admin/index.ts`  | Admin panel logic                                                      |
+| Modify | `app/templates/application.hbs`                   | Render widget components                                               |
+| Modify | `app/services/beacon.ts`                          | Hide HelpScout when live call widget is visible                        |
 
 ---
 
@@ -50,6 +50,7 @@
 ### Task 1: Migration + Model + Factory
 
 **Files:**
+
 - Create: `db/migrate/20260401120000_create_live_call_widget_configs.rb`
 - Create: `app/models/live_call_widget_config.rb`
 - Create: `test/factories/live_call_widget_config.rb`
@@ -165,6 +166,7 @@ git commit -m "feat: add live_call_widget_configs table and model"
 ### Task 2: Model Tests
 
 **Files:**
+
 - Create: `test/models/live_call_widget_config_test.rb`
 
 **Working directory:** `/Users/sarupbanskota/gig/cc/work/core`
@@ -258,6 +260,7 @@ git commit -m "test: add live_call_widget_config model tests"
 ### Task 3: Config Serializer
 
 **Files:**
+
 - Create: `app/serializers/live_call_widget_config_serializer.rb`
 
 **Working directory:** `/Users/sarupbanskota/gig/cc/work/core`
@@ -291,6 +294,7 @@ git commit -m "feat: add live_call_widget_config serializer"
 ### Task 4: Controller + Routes
 
 **Files:**
+
 - Create: `app/controllers/api/live_call_widget_configs_controller.rb`
 - Modify: `config/routes.rb`
 - Create: `test/controllers/api/live_call_widget_configs_controller_test.rb`
@@ -491,6 +495,7 @@ git commit -m "feat: add live_call_widget_config controller and routes"
 ### Task 5: ActionCable Channel
 
 **Files:**
+
 - Create: `app/channels/live_call_widget_channel.rb`
 
 **Working directory:** `/Users/sarupbanskota/gig/cc/work/core`
@@ -529,6 +534,7 @@ git commit -m "feat: add LiveCallWidgetChannel for real-time broadcasts"
 ### Task 6: Request Model + User Serializer Eligibility
 
 **Files:**
+
 - Modify: `app/models/request.rb` — add `cf-ipcountry` to `WHITELISTED_HEADERS`
 - Modify: `app/serializers/user_serializer.rb` — add `live_call_widget_available` and `live_call_widget_display_data`
 
@@ -592,6 +598,7 @@ git commit -m "feat: add live_call_widget eligibility to user serializer"
 ### Task 7: User Model Attributes
 
 **Files:**
+
 - Modify: `app/models/user.ts`
 
 **Working directory:** `/Users/sarupbanskota/gig/cc/work/frontend`
@@ -624,6 +631,7 @@ git commit -m "feat: add live call widget attributes to user model"
 ### Task 8: Live Call Widget Service
 
 **Files:**
+
 - Create: `app/services/live-call-widget.ts`
 
 **Working directory:** `/Users/sarupbanskota/gig/cc/work/frontend`
@@ -796,6 +804,7 @@ git commit -m "feat: add live call widget service with ActionCable and admin API
 ### Task 9: User-Facing Widget Component
 
 **Files:**
+
 - Create: `app/components/live-call-widget/index.hbs`
 - Create: `app/components/live-call-widget/index.ts`
 
@@ -835,41 +844,38 @@ Note: Use the app's actual Tailwind design tokens. The card should match the dar
 ```handlebars
 {{! app/components/live-call-widget/index.hbs }}
 {{#if this.liveCallWidget.shouldShowWidget}}
-  <div
-    class="fixed bottom-6 right-6 z-50 animate-fade-in"
-    data-test-live-call-widget
-  >
-    <div class="w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925">
-      <div class="p-4">
-        <div class="flex items-center gap-3 mb-3">
+  <div class='fixed bottom-6 right-6 z-50 animate-fade-in' data-test-live-call-widget>
+    <div class='w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925'>
+      <div class='p-4'>
+        <div class='flex items-center gap-3 mb-3'>
           {{#if this.liveCallWidget.displayData.avatar_url}}
             <img
               src={{this.liveCallWidget.displayData.avatar_url}}
               alt={{this.liveCallWidget.displayData.host_name}}
-              class="h-10 w-10 rounded-full object-cover"
+              class='h-10 w-10 rounded-full object-cover'
             />
           {{else}}
-            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-teal-500 text-sm font-semibold text-white">
+            <div class='flex h-10 w-10 items-center justify-center rounded-full bg-teal-500 text-sm font-semibold text-white'>
               {{this.hostInitial}}
             </div>
           {{/if}}
-          <div class="min-w-0">
-            <div class="text-sm font-medium text-gray-950 dark:text-gray-100 truncate">
+          <div class='min-w-0'>
+            <div class='text-sm font-medium text-gray-950 dark:text-gray-100 truncate'>
               {{this.liveCallWidget.displayData.host_name}}
             </div>
-            <div class="flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400">
-              <span class="inline-block h-1.5 w-1.5 rounded-full bg-green-500"></span>
+            <div class='flex items-center gap-1.5 text-xs text-green-600 dark:text-green-400'>
+              <span class='inline-block h-1.5 w-1.5 rounded-full bg-green-500'></span>
               Live now
             </div>
           </div>
         </div>
-        <p class="mb-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400">
+        <p class='mb-3 text-xs leading-relaxed text-gray-600 dark:text-gray-400'>
           {{this.liveCallWidget.displayData.cta_text}}
         </p>
         <button
-          type="button"
-          class="w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600"
-          {{on "click" this.openMeetLink}}
+          type='button'
+          class='w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600'
+          {{on 'click' this.openMeetLink}}
           data-test-live-call-widget-join-button
         >
           {{this.liveCallWidget.displayData.button_text}}
@@ -892,6 +898,7 @@ git commit -m "feat: add user-facing live call widget component"
 ### Task 10: Admin Panel Component
 
 **Files:**
+
 - Create: `app/components/live-call-widget-admin/index.hbs`
 - Create: `app/components/live-call-widget-admin/index.ts`
 
@@ -929,11 +936,21 @@ export default class LiveCallWidgetAdminComponent extends Component {
   @tracked audienceFilter = 'all';
   @tracked geoFilter = 'all';
 
-  get isAudienceAll(): boolean { return this.audienceFilter === 'all'; }
-  get isAudiencePaid(): boolean { return this.audienceFilter === 'paid_only'; }
-  get isAudienceFree(): boolean { return this.audienceFilter === 'free_only'; }
-  get isGeoAll(): boolean { return this.geoFilter === 'all'; }
-  get isGeoUs(): boolean { return this.geoFilter === 'us_only'; }
+  get isAudienceAll(): boolean {
+    return this.audienceFilter === 'all';
+  }
+  get isAudiencePaid(): boolean {
+    return this.audienceFilter === 'paid_only';
+  }
+  get isAudienceFree(): boolean {
+    return this.audienceFilter === 'free_only';
+  }
+  get isGeoAll(): boolean {
+    return this.geoFilter === 'all';
+  }
+  get isGeoUs(): boolean {
+    return this.geoFilter === 'us_only';
+  }
 
   @action
   async toggleExpanded(): Promise<void> {
@@ -949,8 +966,8 @@ export default class LiveCallWidgetAdminComponent extends Component {
     this.isLoading = true;
 
     try {
-      const attrs = await this.liveCallWidget.fetchConfig() as Record<string, string | boolean>;
-      this.isActive = attrs['is-active'] as boolean ?? false;
+      const attrs = (await this.liveCallWidget.fetchConfig()) as Record<string, string | boolean>;
+      this.isActive = (attrs['is-active'] as boolean) ?? false;
       this.meetLink = (attrs['meet-link'] as string) ?? '';
       this.hostName = (attrs['host-name'] as string) ?? '';
       this.hostTitle = (attrs['host-title'] as string) ?? '';
@@ -1023,118 +1040,159 @@ export default class LiveCallWidgetAdminComponent extends Component {
 ```handlebars
 {{! app/components/live-call-widget-admin/index.hbs }}
 {{#if this.liveCallWidget.shouldShowAdminPanel}}
-  <div class="fixed bottom-6 right-6 z-50" data-test-live-call-widget-admin>
+  <div class='fixed bottom-6 right-6 z-50' data-test-live-call-widget-admin>
     {{#if this.isExpanded}}
       {{! Expanded admin panel }}
-      <div class="w-80 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925">
+      <div class='w-80 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-gray-925'>
         {{! Header }}
-        <div class="flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-white/10">
-          <span class="text-sm font-medium text-gray-950 dark:text-gray-100">Live Call Widget</span>
+        <div class='flex items-center justify-between border-b border-gray-200 px-4 py-3 dark:border-white/10'>
+          <span class='text-sm font-medium text-gray-950 dark:text-gray-100'>Live Call Widget</span>
           <button
-            type="button"
-            class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-            {{on "click" this.toggleExpanded}}
+            type='button'
+            class='text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200'
+            {{on 'click' this.toggleExpanded}}
           >Collapse</button>
         </div>
 
-        <div class="max-h-96 overflow-y-auto p-4 space-y-4">
+        <div class='max-h-96 overflow-y-auto p-4 space-y-4'>
           {{#if this.isLoading}}
-            <p class="text-sm text-gray-500 dark:text-gray-400">Loading...</p>
+            <p class='text-sm text-gray-500 dark:text-gray-400'>Loading...</p>
           {{else}}
             {{! Toggle }}
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-medium text-gray-950 dark:text-gray-100">Active</span>
+            <div class='flex items-center justify-between'>
+              <span class='text-sm font-medium text-gray-950 dark:text-gray-100'>Active</span>
               <button
-                type="button"
-                class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors {{if this.isActive 'bg-teal-500' 'bg-gray-300 dark:bg-gray-700'}}"
-                {{on "click" this.toggleActive}}
+                type='button'
+                class='relative inline-flex h-6 w-11 items-center rounded-full transition-colors
+                  {{if this.isActive "bg-teal-500" "bg-gray-300 dark:bg-gray-700"}}'
+                {{on 'click' this.toggleActive}}
                 data-test-live-call-widget-admin-toggle
               >
-                <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform {{if this.isActive 'translate-x-6' 'translate-x-1'}}"></span>
+                <span
+                  class='inline-block h-4 w-4 transform rounded-full bg-white transition-transform
+                    {{if this.isActive "translate-x-6" "translate-x-1"}}'
+                ></span>
               </button>
             </div>
 
             {{! Status line }}
-            <div class="text-xs text-gray-500 dark:text-gray-400">
-              {{if this.isActive "Active" "Inactive"}} for: {{this.audienceFilter}} users, {{this.geoFilter}} geo
+            <div class='text-xs text-gray-500 dark:text-gray-400'>
+              {{if this.isActive 'Active' 'Inactive'}}
+              for:
+              {{this.audienceFilter}}
+              users,
+              {{this.geoFilter}}
+              geo
             </div>
 
             {{! Config fields }}
-            <div class="space-y-3">
+            <div class='space-y-3'>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Name</label>
-                <input type="text" value={{this.hostName}} {{on "input" (fn this.updateField "hostName")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Host Name</label>
+                <input
+                  type='text'
+                  value={{this.hostName}}
+                  {{on 'input' (fn this.updateField 'hostName')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Host Title</label>
-                <input type="text" value={{this.hostTitle}} {{on "input" (fn this.updateField "hostTitle")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Host Title</label>
+                <input
+                  type='text'
+                  value={{this.hostTitle}}
+                  {{on 'input' (fn this.updateField 'hostTitle')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Avatar URL</label>
-                <input type="text" value={{this.avatarUrl}} {{on "input" (fn this.updateField "avatarUrl")}}
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Avatar URL</label>
+                <input
+                  type='text'
+                  value={{this.avatarUrl}}
+                  {{on 'input' (fn this.updateField 'avatarUrl')}}
                   placeholder={{this.authenticator.currentUser.avatarUrl}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">CTA Text</label>
-                <input type="text" value={{this.ctaText}} {{on "input" (fn this.updateField "ctaText")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>CTA Text</label>
+                <input
+                  type='text'
+                  value={{this.ctaText}}
+                  {{on 'input' (fn this.updateField 'ctaText')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Button Text</label>
-                <input type="text" value={{this.buttonText}} {{on "input" (fn this.updateField "buttonText")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Button Text</label>
+                <input
+                  type='text'
+                  value={{this.buttonText}}
+                  {{on 'input' (fn this.updateField 'buttonText')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Meet Link</label>
-                <input type="text" value={{this.meetLink}} {{on "input" (fn this.updateField "meetLink")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Meet Link</label>
+                <input
+                  type='text'
+                  value={{this.meetLink}}
+                  {{on 'input' (fn this.updateField 'meetLink')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Audience</label>
-                <select {{on "change" (fn this.updateField "audienceFilter")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100">
-                  <option value="all" selected={{this.isAudienceAll}}>All Users</option>
-                  <option value="paid_only" selected={{this.isAudiencePaid}}>Paid Only</option>
-                  <option value="free_only" selected={{this.isAudienceFree}}>Free Only</option>
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Audience</label>
+                <select
+                  {{on 'change' (fn this.updateField 'audienceFilter')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                >
+                  <option value='all' selected={{this.isAudienceAll}}>All Users</option>
+                  <option value='paid_only' selected={{this.isAudiencePaid}}>Paid Only</option>
+                  <option value='free_only' selected={{this.isAudienceFree}}>Free Only</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Geography</label>
-                <select {{on "change" (fn this.updateField "geoFilter")}}
-                  class="w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100">
-                  <option value="all" selected={{this.isGeoAll}}>All Regions</option>
-                  <option value="us_only" selected={{this.isGeoUs}}>US Only</option>
+                <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Geography</label>
+                <select
+                  {{on 'change' (fn this.updateField 'geoFilter')}}
+                  class='w-full rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                >
+                  <option value='all' selected={{this.isGeoAll}}>All Regions</option>
+                  <option value='us_only' selected={{this.isGeoUs}}>US Only</option>
                 </select>
               </div>
             </div>
 
             <button
-              type="button"
-              class="w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600 disabled:opacity-50"
-              {{on "click" this.saveConfig}}
+              type='button'
+              class='w-full rounded-md bg-teal-500 px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-teal-600 disabled:opacity-50'
+              {{on 'click' this.saveConfig}}
               disabled={{this.isSaving}}
             >
-              {{if this.isSaving "Saving..." "Save Config"}}
+              {{if this.isSaving 'Saving...' 'Save Config'}}
             </button>
 
             {{! Mark as spoken to }}
-            <div class="border-t border-gray-200 pt-3 dark:border-white/10">
-              <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Mark User as Spoken To</label>
-              <div class="flex gap-2">
-                <input type="text" value={{this.markSpokenUsername}} {{on "input" (fn this.updateField "markSpokenUsername")}}
-                  placeholder="username"
-                  class="flex-1 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100" />
+            <div class='border-t border-gray-200 pt-3 dark:border-white/10'>
+              <label class='block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1'>Mark User as Spoken To</label>
+              <div class='flex gap-2'>
+                <input
+                  type='text'
+                  value={{this.markSpokenUsername}}
+                  {{on 'input' (fn this.updateField 'markSpokenUsername')}}
+                  placeholder='username'
+                  class='flex-1 rounded-md border border-gray-300 bg-white px-2 py-1.5 text-sm text-gray-950 dark:border-white/10 dark:bg-gray-900 dark:text-gray-100'
+                />
                 <button
-                  type="button"
-                  class="rounded-md bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
-                  {{on "click" this.markUserSpoken}}
+                  type='button'
+                  class='rounded-md bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'
+                  {{on 'click' this.markUserSpoken}}
                 >Mark</button>
               </div>
               {{#if this.markSpokenStatus}}
-                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">{{this.markSpokenStatus}}</p>
+                <p class='mt-1 text-xs text-gray-500 dark:text-gray-400'>{{this.markSpokenStatus}}</p>
               {{/if}}
             </div>
           {{/if}}
@@ -1143,17 +1201,17 @@ export default class LiveCallWidgetAdminComponent extends Component {
     {{else}}
       {{! Collapsed indicator }}
       <button
-        type="button"
-        class="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white shadow-lg transition-colors hover:bg-gray-50 dark:border-white/10 dark:bg-gray-925 dark:hover:bg-gray-900"
-        {{on "click" this.toggleExpanded}}
+        type='button'
+        class='flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 bg-white shadow-lg transition-colors hover:bg-gray-50 dark:border-white/10 dark:bg-gray-925 dark:hover:bg-gray-900'
+        {{on 'click' this.toggleExpanded}}
         data-test-live-call-widget-admin-button
       >
-        <span class="relative flex h-3 w-3">
+        <span class='relative flex h-3 w-3'>
           {{#if this.isActive}}
-            <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75"></span>
-            <span class="relative inline-flex h-3 w-3 rounded-full bg-teal-500"></span>
+            <span class='absolute inline-flex h-full w-full animate-ping rounded-full bg-teal-400 opacity-75'></span>
+            <span class='relative inline-flex h-3 w-3 rounded-full bg-teal-500'></span>
           {{else}}
-            <span class="relative inline-flex h-3 w-3 rounded-full bg-gray-400"></span>
+            <span class='relative inline-flex h-3 w-3 rounded-full bg-gray-400'></span>
           {{/if}}
         </span>
       </button>
@@ -1174,6 +1232,7 @@ git commit -m "feat: add live call widget admin panel component"
 ### Task 11: Application Template Integration + Beacon Hiding
 
 **Files:**
+
 - Modify: `app/templates/application.hbs`
 - Modify: `app/services/beacon.ts`
 - Create: `app/instance-initializers/live-call-widget.ts`

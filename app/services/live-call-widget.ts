@@ -85,7 +85,11 @@ export default class LiveCallWidgetService extends Service {
       {},
       {
         onData: (data: unknown) => {
-          const parsed = data as { type: string; available: boolean; display_data?: { host_name: string; host_title: string; avatar_url: string; cta_text: string; button_text: string; meet_link: string } };
+          const parsed = data as {
+            type: string;
+            available: boolean;
+            display_data?: { host_name: string; host_title: string; avatar_url: string; cta_text: string; button_text: string; meet_link: string };
+          };
 
           if (parsed.type === 'status_change') {
             if (parsed.available && parsed.display_data) {
