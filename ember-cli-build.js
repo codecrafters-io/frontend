@@ -101,7 +101,7 @@ module.exports = function (defaults) {
     staticAppPaths: ['mirage'],
     staticEmberSource: true,
     staticInvokables: true,
-    splitAtRoutes: ['badges', 'concept', 'code-walkthrough', 'course', 'course-admin', 'concept-admin', 'demo'], // can also be a RegExp
+    splitAtRoutes: config.environment === 'test' ? [] : ['badges', 'concept', 'code-walkthrough', 'course', 'course-admin', 'concept-admin', 'demo'],
     packagerOptions: {
       publicAssetURL: '/',
       webpackConfig: {
