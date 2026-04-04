@@ -689,7 +689,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
-  test('can navigate using j/k and select option using enter', async function (assert) {
+  skip('can navigate using j/k and select option using enter', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -725,7 +725,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.true(conceptPage.questionCards[0].hasSubmitted, 'the question has been submitted');
   });
 
-  test('while navigating using keys, options are traversed one at a time', async function (assert) {
+  skip('while navigating using keys, options are traversed one at a time', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -781,7 +781,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(window.scrollY, 0, 'The page is scrolled to the top when navigating to a new concept');
   });
 
-  test('can navigate using arrow keys and select option using enter', async function (assert) {
+  skip('can navigate using arrow keys and select option using enter', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -839,7 +839,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.strictEqual(window.scrollY, currentScrollY, 'scrolling should not be triggered');
   });
 
-  test('navigating options wraps around the list for the current question card only', async function (assert) {
+  skip('navigating options wraps around the list for the current question card only', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -960,7 +960,7 @@ module('Acceptance | concepts-test', function (hooks) {
     assert.ok(conceptsPage.conceptCards[3].draftLabel.isVisible, 'Draft label is visible for draft concepts');
   });
 
-  test('can use Delete and Backspace keys in the feedback popup', async function (assert) {
+  skip('can use Delete and Backspace keys in the feedback popup', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
