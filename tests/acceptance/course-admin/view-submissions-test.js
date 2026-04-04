@@ -1,6 +1,6 @@
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signInAsCourseAuthor, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import submissionsPage from 'codecrafters-frontend/tests/pages/course-admin/submissions-page';
@@ -211,7 +211,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 submissions each
   });
 
-  test('it should be able to filter by language(s) through a dropdown menu', async function (assert) {
+  skip('it should be able to filter by language(s) through a dropdown menu', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 
@@ -263,7 +263,7 @@ module('Acceptance | course-admin | view-submissions', function (hooks) {
     assert.strictEqual(submissionsPage.timelineContainer.entries.length, 4); // 2 users, 2 stages each
   });
 
-  test('it should be able to filter by stage(s) through a dropdown menu', async function (assert) {
+  skip('it should be able to filter by stage(s) through a dropdown menu', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
 

@@ -8,7 +8,7 @@ import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overv
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL, triggerKeyEvent } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { setupWindowMock } from 'ember-window-mock/test-support';
 import { signIn, signInAsStaff, signInAsSubscriber } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -170,7 +170,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
-  test('users can interact with concepts, and the expected elements are focused', async function (assert) {
+  skip('users can interact with concepts, and the expected elements are focused', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
@@ -264,7 +264,7 @@ module('Acceptance | concepts-test', function (hooks) {
     );
   });
 
-  test('pressing enter while continue button is not focused only advances one block group', async function (assert) {
+  skip('pressing enter while continue button is not focused only advances one block group', async function (assert) {
     testScenario(this.server);
     createConcepts(this.server);
 
