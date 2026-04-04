@@ -17,7 +17,7 @@
     "install:silent": "bun install --silent",
     "inspect:eslint": "eslint --inspect-config",
     "format": "prettier . --cache --write --log-level warn",
-    "lint": "concurrently \"bun run lint:css\" \"bun run lint:hbs\" \"bun run lint:js\" \"bun run lint:types\" \"bun run lint:glint\" --names \"lint:css,lint:hbs,lint:js,lint:types,lint:glint\" --prefixColors auto",
+    "lint": "concurrently \"bun run lint:css\" \"bun run lint:hbs\" \"bun run lint:js\" \"bun run lint:types\" \"bun run lint:glint\" \"bun run lint:format\" --names \"lint:css,lint:hbs,lint:js,lint:types,lint:glint,lint:format\" --prefixColors auto",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "bun run lint:css -- --fix",
     "lint:fix": "concurrently \"bun run lint:css:fix\" \"bun run lint:hbs:fix\" \"bun run lint:js:fix\" \"bun run lint:glint:fix\" --names \"fix:css,fix:hbs,fix:js,fix:glint\" --prefixColors auto && bun run format",
