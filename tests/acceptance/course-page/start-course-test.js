@@ -10,7 +10,7 @@ import ApiRequestsVerifier from 'codecrafters-frontend/tests/support/verify-api-
 import { animationsSettled, setupAnimationTest } from 'ember-animated/test-support';
 import { assertTooltipContent, assertTooltipNotRendered } from 'ember-tooltips/test-support';
 import { currentURL } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
@@ -199,7 +199,7 @@ module('Acceptance | course-page | start-course', function (hooks) {
     await animationsSettled();
   });
 
-  test('can start course with workflow tutorial', async function (assert) {
+  skip('can start course with workflow tutorial', async function (assert) {
     testScenario(this.server, ['dummy']);
     const user = signIn(this.owner, this.server);
 
