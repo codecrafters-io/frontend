@@ -3,6 +3,7 @@ import fade from 'ember-animated/transitions/fade';
 
 export interface Section {
   title: string;
+  expandedTitle?: string;
   descriptionWhenCollapsed: string | null; // Used when the section is collapsed
   isComplete: boolean;
 }

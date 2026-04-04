@@ -38,6 +38,10 @@ export class SelectLanguageSection extends Section {
     return this.repository.language ? `${this.repository.language.name}` : null;
   }
 
+  get expandedTitle() {
+    return 'Pick your preferred language';
+  }
+
   get isComplete() {
     return !!this.repository.language;
   }
