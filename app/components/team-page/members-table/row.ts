@@ -29,6 +29,10 @@ export default class TeamPageMembersTableRow extends Component<Signature> {
     return this.authenticator.currentUser;
   }
 
+  get hasManyCourses(): boolean {
+    return this.sortedCourses.length > 4;
+  }
+
   get sortedCourses(): CourseModel[] {
     return this.args.membership.user.courseParticipations
       .map((item) => item.course)

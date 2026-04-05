@@ -1,10 +1,10 @@
 <tr class="border-b border-gray-100 hover:bg-gray-50 group" ...attributes>
-  {{! Member column }}
-  <td class="px-4 py-3">
-    <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center hover:underline" target="_blank" rel="noopener noreferrer">
-      <AvatarImage @user={{@membership.user}} class="w-7 h-7 border border-gray-300 rounded-md shadow-xs mr-2" />
-      <div>
-        <span class="text-gray-700 text-sm font-semibold">
+  {{! Member column — truncated name with external link icon }}
+  <td class="px-4 py-3 max-w-[200px]">
+    <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center group/link" target="_blank" rel="noopener noreferrer">
+      <AvatarImage @user={{@membership.user}} class="w-7 h-7 border border-gray-300 rounded-md shadow-xs mr-2 shrink-0" />
+      <div class="min-w-0 flex items-center gap-1">
+        <span class="text-gray-700 text-sm font-semibold truncate max-w-[130px] inline-block align-middle">
           {{#if @membership.user.githubName}}
             {{@membership.user.githubName}}
           {{else}}
@@ -12,14 +12,29 @@
           {{/if}}
         </span>
         {{#if @membership.isAdmin}}
-          <span class="text-gray-400 text-sm"> (admin)</span>
+          <span class="text-gray-400 text-xs shrink-0">(admin)</span>
         {{/if}}
+        {{! External link icon }}
+        <svg
+          class="w-3 h-3 text-gray-400 group-hover/link:text-teal-500 shrink-0 transition-colors"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+          ></path>
+        </svg>
       </div>
     </a>
   </td>
 
   {{! Last Seen column }}
-  <td class="px-4 py-3 text-gray-500 text-sm whitespace-nowrap">
+  <td class="px-3 py-3 text-gray-500 text-sm whitespace-nowrap">
     {{#if @membership.lastAttemptAt}}
       {{short-relative-time @membership.lastAttemptAt}}
     {{else}}
@@ -28,26 +43,31 @@
   </td>
 
   {{! Joined column }}
-  <td class="px-4 py-3 text-gray-500 text-sm whitespace-nowrap">
+  <td class="px-3 py-3 text-gray-500 text-sm whitespace-nowrap">
     {{short-relative-time @membership.createdAt}}
   </td>
 
   {{! Stages column }}
-  <td class="px-4 py-3 text-right text-gray-700 text-sm font-mono">
+  <td class="px-3 py-3 text-right text-gray-700 text-sm font-mono">
     {{@membership.numberOfStageAttempts}}
   </td>
 
-  {{! Courses column }}
-  <td class="px-4 py-3">
-    <div class="flex items-center">
-      {{#each this.sortedCourses as |course|}}
-        <CourseLogo @course={{course}} class="w-5 mr-1" alt="This user started the {{course.name}} challenge." />
-      {{/each}}
+  {{! Courses column — scrollable, max ~4 icons wide with fade }}
+  <td class="px-3 py-3">
+    <div class="relative max-w-[110px]">
+      <div class="flex items-center overflow-x-auto no-scrollbar">
+        {{#each this.sortedCourses as |course|}}
+          <CourseLogo @course={{course}} class="w-5 mr-1 shrink-0" alt="This user started the {{course.name}} challenge." />
+        {{/each}}
+      </div>
+      {{#if this.hasManyCourses}}
+        <div class="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-white group-hover:from-gray-50 pointer-events-none"></div>
+      {{/if}}
     </div>
   </td>
 
   {{! Actions column }}
-  <td class="px-4 py-3 text-right">
+  <td class="px-3 py-3 text-right">
     {{#unless @membership.isSoleAdmin}}
       {{#if this.isRemoving}}
         <svg class="animate-spin w-4 h-4 text-red-600 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -61,7 +81,6 @@
       {{else}}
         {{#if (eq @membership.user this.currentUser)}}
           <button type="button" class="text-gray-400 hover:text-red-600 transition-colors p-1" {{on "click" this.handleLeaveTeamButtonClick}}>
-            {{! X icon }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
@@ -73,7 +92,6 @@
             class="text-gray-400 hover:text-red-600 transition-colors p-1 opacity-0 group-hover:opacity-100"
             {{on "click" this.handleRemoveButtonClick}}
           >
-            {{! X icon }}
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
