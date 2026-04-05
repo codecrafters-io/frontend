@@ -91,6 +91,7 @@ Router.map(function () {
   });
 
   this.route('team', { path: '/teams/:team_id' }); // TODO: Add dark mode support
+  this.route('team-v2', { path: '/teams/:team_id/v2' });
   this.route('teams.create', { path: '/teams/create' }); // TODO: Add dark mode support
   this.route('teams.pay', { path: '/teams/pay' });
   this.route('track', { path: '/tracks/:track_slug' }); // TODO: Add dark mode support

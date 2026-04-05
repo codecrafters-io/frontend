@@ -8,6 +8,8 @@ export default class TeamMembershipModel extends Model {
 
   @attr('date') declare createdAt: Date;
   @attr('boolean') declare isAdmin: boolean;
+  @attr('number') declare numberOfStageAttempts: number;
+  @attr('date') declare lastAttemptAt: Date | null;
 
   get isSoleAdmin(): boolean {
     return this.team.admins.length === 1 && this.isAdmin;

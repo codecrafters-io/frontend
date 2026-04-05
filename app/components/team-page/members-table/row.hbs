@@ -1,0 +1,85 @@
+<tr class="border-b border-gray-100 hover:bg-gray-50 group" ...attributes>
+  {{! Member column }}
+  <td class="px-4 py-3">
+    <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center hover:underline" target="_blank" rel="noopener noreferrer">
+      <AvatarImage
+        @user={{@membership.user}}
+        class="w-7 h-7 border border-gray-300 rounded-md shadow-xs mr-2"
+      />
+      <div>
+        <span class="text-gray-700 text-sm font-semibold">
+          {{#if @membership.user.githubName}}
+            {{@membership.user.githubName}}
+          {{else}}
+            {{@membership.user.username}}
+          {{/if}}
+        </span>
+        {{#if @membership.isAdmin}}
+          <span class="text-gray-400 text-sm"> (admin)</span>
+        {{/if}}
+      </div>
+    </a>
+  </td>
+
+  {{! Joined column }}
+  <td class="px-4 py-3 text-gray-500 text-sm whitespace-nowrap">
+    {{date-from-now @membership.createdAt}}
+  </td>
+
+  {{! Stage Attempts column }}
+  <td class="px-4 py-3 text-right text-gray-700 text-sm font-mono">
+    {{@membership.numberOfStageAttempts}}
+  </td>
+
+  {{! Last Active column }}
+  <td class="px-4 py-3 text-gray-500 text-sm whitespace-nowrap">
+    {{#if @membership.lastAttemptAt}}
+      {{date-from-now @membership.lastAttemptAt}}
+    {{else}}
+      <span class="text-gray-300">&mdash;</span>
+    {{/if}}
+  </td>
+
+  {{! Courses column }}
+  <td class="px-4 py-3">
+    <div class="flex items-center">
+      {{#each this.sortedCourses as |course|}}
+        <CourseLogo @course={{course}} class="w-5 mr-1" alt="This user started the {{course.name}} challenge." />
+      {{/each}}
+    </div>
+  </td>
+
+  {{! Actions column }}
+  <td class="px-4 py-3 text-right">
+    {{#unless @membership.isSoleAdmin}}
+      {{#if this.isRemoving}}
+        <svg class="animate-spin w-4 h-4 text-red-600 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+      {{else}}
+        {{#if (eq @membership.user this.currentUser)}}
+          <button
+            type="button"
+            class="text-gray-500 hover:text-red-600 underline text-xs font-bold"
+            {{on "click" this.handleLeaveTeamButtonClick}}
+          >
+            leave
+          </button>
+        {{else if @currentUserIsTeamAdmin}}
+          <button
+            type="button"
+            class="text-gray-500 hover:text-red-600 underline text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+            {{on "click" this.handleRemoveButtonClick}}
+          >
+            remove
+          </button>
+        {{/if}}
+      {{/if}}
+    {{/unless}}
+  </td>
+</tr>
