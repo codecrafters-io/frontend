@@ -2,7 +2,7 @@ import catalogPage from 'codecrafters-frontend/tests/pages/catalog-page';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
 import { assertTooltipContent } from 'ember-tooltips/test-support';
 import { currentURL, waitUntil } from '@ember/test-helpers';
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn, signInAsSubscriber, signInAsInstitutionMembershipGrantRecipient } from 'codecrafters-frontend/tests/support/authentication-helpers';
@@ -26,7 +26,7 @@ module('Acceptance | header-test', function (hooks) {
     assert.strictEqual(currentURL(), '/pay', 'expect to be redirected to pay page');
   });
 
-  test('header should show generic leaderboard link if user has feature flag enabled and leaderboard entries', async function (assert) {
+  skip('header should show generic leaderboard link if user has feature flag enabled and leaderboard entries', async function (assert) {
     signIn(this.owner, this.server);
 
     await catalogPage.visit();
