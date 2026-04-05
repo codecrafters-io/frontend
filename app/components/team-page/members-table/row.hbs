@@ -1,4 +1,4 @@
-<tr class="border-b border-gray-100 hover:bg-gray-50 group" ...attributes>
+<tr class="border-b border-gray-100 hover:bg-gray-50 group" data-test-members-list-item-container ...attributes>
   {{! Member column — truncated name with external link icon }}
   <td class="px-4 py-3 max-w-[200px]">
     <a href={{@membership.user.codecraftersProfileUrl}} class="flex items-center group/link" target="_blank" rel="noopener noreferrer">
@@ -6,9 +6,9 @@
       <div class="min-w-0 flex items-center gap-1">
         <span class="text-gray-700 text-sm font-semibold truncate max-w-[130px] inline-block align-middle">
           {{#if @membership.user.githubName}}
-            {{@membership.user.githubName}}
+            <span data-test-github-name>{{@membership.user.githubName}}</span>
           {{else}}
-            {{@membership.user.username}}
+            <span data-test-username>{{@membership.user.username}}</span>
           {{/if}}
         </span>
         {{#if @membership.isAdmin}}
@@ -80,22 +80,28 @@
         </svg>
       {{else}}
         {{#if (eq @membership.user this.currentUser)}}
-          <button type="button" class="text-gray-400 hover:text-red-600 transition-colors p-1" {{on "click" this.handleLeaveTeamButtonClick}}>
+          <button
+            type="button"
+            class="text-gray-400 hover:text-red-600 transition-colors p-1"
+            data-test-leave-team-button
+            {{on "click" this.handleLeaveTeamButtonClick}}
+          >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            <EmberTooltip @text="Leave team" />
+            <EmberTooltip @text="Leave team" @side="left" />
           </button>
         {{else if @currentUserIsTeamAdmin}}
           <button
             type="button"
             class="text-gray-400 hover:text-red-600 transition-colors p-1 opacity-0 group-hover:opacity-100"
+            data-test-remove-button
             {{on "click" this.handleRemoveButtonClick}}
           >
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
-            <EmberTooltip @text="Remove member. Their seat can be reassigned to someone else." />
+            <EmberTooltip @text="Remove member. Their seat can be reassigned to someone else." @side="left" />
           </button>
         {{/if}}
       {{/if}}
