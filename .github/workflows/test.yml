@@ -112,5 +112,6 @@ jobs:
         if: always()
         with:
           files: test-results.xml
+          action_fail: true
           seconds_between_github_writes: 0.01
           seconds_between_github_reads: 0.01
