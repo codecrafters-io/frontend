@@ -6,9 +6,9 @@
       <div class="min-w-0 flex items-center gap-1">
         <span class="text-gray-700 text-sm font-semibold truncate max-w-[130px] inline-block align-middle">
           {{#if @membership.user.githubName}}
-            <span data-test-github-name>{{@membership.user.githubName}}</span>
+            <span data-test-github-name data-test-username>{{@membership.user.githubName}}</span>
           {{else}}
-            <span data-test-username>{{@membership.user.username}}</span>
+            <span data-test-github-name data-test-username>{{@membership.user.username}}</span>
           {{/if}}
         </span>
         {{#if @membership.isAdmin}}
