@@ -3,7 +3,7 @@ import { service } from '@ember/service';
 import { action } from '@ember/object';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-const ALLOWED_USERNAMES = ['vishaag'];
+const ALLOWED_USERNAMES = ['vishaag', 'dronaxis'];
 const LOBBYSIDE_SCRIPT_ID = 'lobbyside-widget-script';
 
 export default class LobbysideWidgetComponent extends Component {

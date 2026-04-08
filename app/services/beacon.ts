@@ -14,7 +14,7 @@ export default class HelpscoutBeaconService extends Service {
     // Staff users and specific users see the Lobbyside widget instead of HelpScout
     const user = this.authenticator.currentUser;
 
-    if (user?.isStaff || user?.username === 'vishaag') {
+    if (user?.isStaff || user?.username === 'vishaag' || user?.username === 'dronaxis') {
       return false;
     }
 
