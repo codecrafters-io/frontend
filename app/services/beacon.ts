@@ -11,8 +11,10 @@ export default class HelpscoutBeaconService extends Service {
   @service declare liveCallWidget: LiveCallWidgetService;
 
   get shouldShowBeacon(): boolean {
-    // Staff users see the live call widget admin panel instead of HelpScout
-    if (this.authenticator.currentUser?.isStaff) {
+    // Staff users and specific users see the Lobbyside widget instead of HelpScout
+    const user = this.authenticator.currentUser;
+
+    if (user?.isStaff || user?.username === 'vishaag') {
       return false;
     }
 
