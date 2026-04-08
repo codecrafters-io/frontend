@@ -395,6 +395,18 @@ module('Integration | Component | code-mirror', function (hooks) {
       skip('it does something useful with the editor');
     });
 
+    module('lineComments', function () {
+      test("it doesn't break the editor when passed", async function (assert) {
+        this.set('lineComments', true);
+        await render(hbs`<CodeMirror @lineComments={{this.lineComments}} />`);
+        assert.ok(codeMirror.hasRendered);
+        this.set('lineComments', false);
+        assert.ok(codeMirror.hasRendered);
+      });
+
+      skip('it does something useful with the editor');
+    });
+
     module('lineNumbers', function () {
       test("it doesn't break the editor when passed", async function (assert) {
         this.set('lineNumbers', true);
