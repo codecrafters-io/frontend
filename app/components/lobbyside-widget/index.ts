@@ -28,7 +28,7 @@ export default class LobbysideWidgetComponent extends Component {
     const script = document.createElement('script');
     script.id = LOBBYSIDE_SCRIPT_ID;
     script.src = 'https://lobbyside.com/widget.js';
-    script.dataset['companyId'] = '5076a418-7b79-4140-a4eb-173c8d1e57e7';
+    script.dataset['companyId'] = 'f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4';
     document.body.appendChild(script);
   }
 
