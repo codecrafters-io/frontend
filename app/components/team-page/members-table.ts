@@ -7,7 +7,7 @@ import type TeamModel from 'codecrafters-frontend/models/team';
 import type TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 
 type TimePeriod = 'all' | '3m' | '6m' | '1y';
-type SortColumn = 'member' | 'lastSeen' | 'joined' | 'attempts' | 'stages' | 'courses';
+type SortColumn = 'member' | 'lastSeen' | 'joined' | 'attempts' | 'courses';
 type SortDirection = 'asc' | 'desc';
 
 const PERIOD_OPTIONS: { value: TimePeriod; label: string }[] = [
@@ -57,21 +57,7 @@ export default class TeamPageMembersTable extends Component<Signature> {
       case '1y':
         return membership.numberOfAttempts1y || 0;
       default:
-        return membership.numberOfAttempts || 0;
-    }
-  }
-
-  @action
-  getStages(membership: TeamMembershipModel): number {
-    switch (this.selectedPeriod) {
-      case '3m':
-        return membership.numberOfStagesCompleted3m || 0;
-      case '6m':
-        return membership.numberOfStagesCompleted6m || 0;
-      case '1y':
-        return membership.numberOfStagesCompleted1y || 0;
-      default:
-        return membership.numberOfStagesCompleted || 0;
+        return membership.numberOfStageAttempts || 0;
     }
   }
 
@@ -108,9 +94,6 @@ export default class TeamPageMembersTable extends Component<Signature> {
           break;
         case 'attempts':
           comparison = this.getAttempts(a) - this.getAttempts(b);
-          break;
-        case 'stages':
-          comparison = this.getStages(a) - this.getStages(b);
           break;
         case 'courses':
           comparison = this.getCourseCount(a) - this.getCourseCount(b);
