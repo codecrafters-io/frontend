@@ -11,6 +11,15 @@ export default class TeamMembershipModel extends Model {
   @attr('number') declare numberOfStageAttempts: number;
   @attr('date') declare lastAttemptAt: Date | null;
 
+  @attr('number') declare numberOfAttempts: number;
+  @attr('number') declare numberOfStagesCompleted: number;
+  @attr('number') declare numberOfAttempts3m: number;
+  @attr('number') declare numberOfAttempts6m: number;
+  @attr('number') declare numberOfAttempts1y: number;
+  @attr('number') declare numberOfStagesCompleted3m: number;
+  @attr('number') declare numberOfStagesCompleted6m: number;
+  @attr('number') declare numberOfStagesCompleted1y: number;
+
   get isSoleAdmin(): boolean {
     return this.team.admins.length === 1 && this.isAdmin;
   }

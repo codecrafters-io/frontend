@@ -16,6 +16,8 @@ interface Signature {
   Args: {
     membership: TeamMembershipModel;
     currentUserIsTeamAdmin: boolean;
+    attempts: number;
+    stages: number;
   };
 }
 
