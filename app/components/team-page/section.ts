@@ -9,6 +9,7 @@ interface Signature {
 
   Blocks: {
     default: [];
+    headerRight: [];
   };
 }
 
