@@ -6,33 +6,20 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import type TeamModel from 'codecrafters-frontend/models/team';
 import type TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 
-type TimePeriod = 'all' | '3m' | '6m' | '1y';
 type SortDirection = 'asc' | 'desc';
-
-const PERIOD_OPTIONS: { value: TimePeriod; label: string }[] = [
-  { value: 'all', label: 'All time' },
-  { value: '3m', label: '3 months' },
-  { value: '6m', label: '6 months' },
-  { value: '1y', label: '1 year' },
-];
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
     team: TeamModel;
-    enablePeriodFilter: boolean;
   };
 }
 
 export default class TeamPageMembersTable extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
-  @tracked selectedPeriod: TimePeriod = 'all';
   @tracked lastSeenSortDirection: SortDirection | null = null;
-  @tracked isPeriodDropdownOpen = false;
-
-  periodOptions = PERIOD_OPTIONS;
 
   get currentUserIsTeamAdmin() {
     if (!this.authenticator.currentUser) {
@@ -40,24 +27,6 @@ export default class TeamPageMembersTable extends Component<Signature> {
     }
 
     return this.args.team.admins.includes(this.authenticator.currentUser);
-  }
-
-  get selectedPeriodLabel(): string {
-    return PERIOD_OPTIONS.find((o) => o.value === this.selectedPeriod)!.label;
-  }
-
-  @action
-  getAttempts(membership: TeamMembershipModel): number {
-    switch (this.selectedPeriod) {
-      case '3m':
-        return membership.numberOfAttempts3m || 0;
-      case '6m':
-        return membership.numberOfAttempts6m || 0;
-      case '1y':
-        return membership.numberOfAttempts1y || 0;
-      default:
-        return membership.numberOfStageAttempts || 0;
-    }
   }
 
   get sortedMemberships(): TeamMembershipModel[] {
@@ -103,22 +72,6 @@ export default class TeamPageMembersTable extends Component<Signature> {
     } else {
       this.lastSeenSortDirection = 'desc';
     }
-  }
-
-  @action
-  handlePeriodSelect(period: TimePeriod) {
-    this.selectedPeriod = period;
-    this.isPeriodDropdownOpen = false;
-  }
-
-  @action
-  togglePeriodDropdown() {
-    this.isPeriodDropdownOpen = !this.isPeriodDropdownOpen;
-  }
-
-  @action
-  closePeriodDropdown() {
-    this.isPeriodDropdownOpen = false;
   }
 }
 

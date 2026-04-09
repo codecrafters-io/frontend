@@ -106,14 +106,6 @@ export function signInAsTeamAdmin(owner, server, user) {
     user: user,
     team: team,
     isAdmin: true,
-    numberOfAttempts: 0,
-    numberOfStagesCompleted: 0,
-    numberOfAttempts3m: 0,
-    numberOfAttempts6m: 0,
-    numberOfAttempts1y: 0,
-    numberOfStagesCompleted3m: 0,
-    numberOfStagesCompleted6m: 0,
-    numberOfStagesCompleted1y: 0,
   });
 
   return signIn(owner, server, user);
@@ -129,14 +121,6 @@ export function signInAsTeamMember(owner, server, user) {
     user: user,
     team: team,
     isAdmin: false,
-    numberOfAttempts: 0,
-    numberOfStagesCompleted: 0,
-    numberOfAttempts3m: 0,
-    numberOfAttempts6m: 0,
-    numberOfAttempts1y: 0,
-    numberOfStagesCompleted3m: 0,
-    numberOfStagesCompleted6m: 0,
-    numberOfStagesCompleted1y: 0,
   });
 
   return signIn(owner, server, user);
@@ -154,14 +138,6 @@ export function signInAsSubscribedTeamMember(owner, server) {
     user: user,
     team: team,
     isAdmin: false,
-    numberOfAttempts: 0,
-    numberOfStagesCompleted: 0,
-    numberOfAttempts3m: 0,
-    numberOfAttempts6m: 0,
-    numberOfAttempts1y: 0,
-    numberOfStagesCompleted3m: 0,
-    numberOfStagesCompleted6m: 0,
-    numberOfStagesCompleted1y: 0,
   });
 
   return signIn(owner, server, user);
