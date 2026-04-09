@@ -17,7 +17,6 @@ interface Signature {
     membership: TeamMembershipModel;
     currentUserIsTeamAdmin: boolean;
     attempts: number;
-    stages: number;
   };
 }
 
