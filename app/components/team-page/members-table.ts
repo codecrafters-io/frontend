@@ -7,7 +7,6 @@ import type TeamModel from 'codecrafters-frontend/models/team';
 import type TeamMembershipModel from 'codecrafters-frontend/models/team-membership';
 
 type TimePeriod = 'all' | '3m' | '6m' | '1y';
-type SortColumn = 'member' | 'lastSeen' | 'joined' | 'attempts' | 'courses';
 type SortDirection = 'asc' | 'desc';
 
 const PERIOD_OPTIONS: { value: TimePeriod; label: string }[] = [
@@ -22,6 +21,7 @@ interface Signature {
 
   Args: {
     team: TeamModel;
+    enablePeriodFilter: boolean;
   };
 }
 
@@ -29,8 +29,7 @@ export default class TeamPageMembersTable extends Component<Signature> {
   @service declare authenticator: AuthenticatorService;
 
   @tracked selectedPeriod: TimePeriod = 'all';
-  @tracked sortColumn: SortColumn = 'attempts';
-  @tracked sortDirection: SortDirection = 'desc';
+  @tracked lastSeenSortDirection: SortDirection | null = null;
   @tracked isPeriodDropdownOpen = false;
 
   periodOptions = PERIOD_OPTIONS;
@@ -61,56 +60,48 @@ export default class TeamPageMembersTable extends Component<Signature> {
     }
   }
 
-  getCourseCount(membership: TeamMembershipModel): number {
-    const courses = membership.user.courseParticipations.map((item) => item.course);
-    const uniqueCourses = new Set(courses.map((c) => c.id));
-
-    return uniqueCourses.size;
-  }
-
-  getMemberName(membership: TeamMembershipModel): string {
-    return (membership.user.githubName || membership.user.username || '').toLowerCase();
-  }
-
   get sortedMemberships(): TeamMembershipModel[] {
     const memberships = this.args.team.memberships.slice();
-    const dir = this.sortDirection === 'asc' ? 1 : -1;
 
+    // If user clicked Last Seen header, sort by that
+    if (this.lastSeenSortDirection) {
+      const dir = this.lastSeenSortDirection === 'asc' ? 1 : -1;
+
+      return memberships.sort((a, b) => {
+        const aTime = a.lastAttemptAt ? a.lastAttemptAt.getTime() : 0;
+        const bTime = b.lastAttemptAt ? b.lastAttemptAt.getTime() : 0;
+
+        return (aTime - bTime) * dir;
+      });
+    }
+
+    // Default sort: attempts desc, then last seen desc, then joined desc
     return memberships.sort((a, b) => {
-      let comparison = 0;
+      const stagesDiff = (b.numberOfStageAttempts || 0) - (a.numberOfStageAttempts || 0);
 
-      switch (this.sortColumn) {
-        case 'member':
-          comparison = this.getMemberName(a).localeCompare(this.getMemberName(b));
-          break;
-        case 'lastSeen': {
-          const aTime = a.lastAttemptAt ? a.lastAttemptAt.getTime() : 0;
-          const bTime = b.lastAttemptAt ? b.lastAttemptAt.getTime() : 0;
-          comparison = aTime - bTime;
-          break;
-        }
-        case 'joined':
-          comparison = a.createdAt.getTime() - b.createdAt.getTime();
-          break;
-        case 'attempts':
-          comparison = this.getAttempts(a) - this.getAttempts(b);
-          break;
-        case 'courses':
-          comparison = this.getCourseCount(a) - this.getCourseCount(b);
-          break;
+      if (stagesDiff !== 0) {
+        return stagesDiff;
       }
 
-      return comparison * dir;
+      const aLastSeen = a.lastAttemptAt ? a.lastAttemptAt.getTime() : 0;
+      const bLastSeen = b.lastAttemptAt ? b.lastAttemptAt.getTime() : 0;
+
+      if (aLastSeen !== bLastSeen) {
+        return bLastSeen - aLastSeen;
+      }
+
+      return b.createdAt.getTime() - a.createdAt.getTime();
     });
   }
 
   @action
-  handleSortClick(column: SortColumn) {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  handleLastSeenSortClick() {
+    if (this.lastSeenSortDirection === 'desc') {
+      this.lastSeenSortDirection = 'asc';
+    } else if (this.lastSeenSortDirection === 'asc') {
+      this.lastSeenSortDirection = null; // back to default
     } else {
-      this.sortColumn = column;
-      this.sortDirection = 'desc';
+      this.lastSeenSortDirection = 'desc';
     }
   }
 
