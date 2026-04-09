@@ -47,6 +47,7 @@ export default class TeamPageMembersTable extends Component<Signature> {
     return PERIOD_OPTIONS.find((o) => o.value === this.selectedPeriod)!.label;
   }
 
+  @action
   getAttempts(membership: TeamMembershipModel): number {
     switch (this.selectedPeriod) {
       case '3m':
@@ -60,6 +61,7 @@ export default class TeamPageMembersTable extends Component<Signature> {
     }
   }
 
+  @action
   getStages(membership: TeamMembershipModel): number {
     switch (this.selectedPeriod) {
       case '3m':
