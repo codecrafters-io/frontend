@@ -6,11 +6,9 @@ export default create({
   inviteURLDescription: text('[data-test-invite-url-description]'),
 
   members: collection('[data-test-members-list-item-container]', {
-    attempts: text('[data-test-attempts]'),
     clickLeaveTeamButton: clickable('[data-test-leave-team-button]'),
     clickRemoveButton: clickable('[data-test-remove-button]'),
     githubName: text('[data-test-github-name]'),
-    stages: text('[data-test-stages]'),
     username: text('[data-test-username]'),
   }),
 
@@ -20,11 +18,6 @@ export default create({
 
   memberByUsername(username) {
     return [...this.members].find((item) => item.username === username);
-  },
-
-  periodFilter: {
-    clickToggle: clickable('[data-test-period-toggle]'),
-    scope: '[data-test-period-filter]',
   },
 
   setupSubscriptionContainer: {
