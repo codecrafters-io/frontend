@@ -19,12 +19,12 @@ export default class TestCliConnectionStep extends Component<Signature> {
   get commandVariants(): CopyableTerminalCommandVariant[] {
     const linuxMacOSVariant = {
       label: 'Linux / macOS',
-      commands: ['curl -fsSL https://codecrafters.io/install.sh | bash', 'codecrafters ping'],
+      commands: ['curl -fsSL https://codecrafters.io/install.sh | bash # Install CodeCrafters CLI', 'codecrafters ping'],
     };
 
     const powershellVariant = {
       label: 'PowerShell',
-      commands: ['irm https://codecrafters.io/install.ps1 | iex', 'codecrafters ping'],
+      commands: ['irm https://codecrafters.io/install.ps1 | iex # Install CodeCrafters CLI', 'codecrafters ping'],
     };
 
     if (this.userAgent.isWindows) {
