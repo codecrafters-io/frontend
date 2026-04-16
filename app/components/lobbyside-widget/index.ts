@@ -57,7 +57,7 @@ export default class LobbysideWidgetComponent extends Component {
 
     lobbyside.setVisitor({
       email: user.primaryEmailAddress || '',
-      name: user.name || '',
+      name: user.name || user.githubName || '',
       github: user.githubUsername || '',
     });
   }
