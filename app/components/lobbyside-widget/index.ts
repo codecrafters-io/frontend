@@ -35,10 +35,20 @@ export default class LobbysideWidgetComponent extends Component {
     document.body.appendChild(script);
   }
 
+  @action
+  removeScript(): void {
+    const script = document.getElementById(LOBBYSIDE_SCRIPT_ID);
+
+    if (script) {
+      script.remove();
+    }
+  }
+
   private syncVisitorData(): void {
     const user = this.authenticator.currentUser;
 
-    if (!user || !(window as Record<string, unknown>)['Lobbyside']) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!user || !(window as any)['Lobbyside']) {
       return;
     }
 
@@ -50,14 +60,5 @@ export default class LobbysideWidgetComponent extends Component {
       name: user.name || '',
       github: user.githubUsername || '',
     });
-  }
-
-  @action
-  removeScript(): void {
-    const script = document.getElementById(LOBBYSIDE_SCRIPT_ID);
-
-    if (script) {
-      script.remove();
-    }
   }
 }
