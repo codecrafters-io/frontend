@@ -22,6 +22,8 @@ export default class LobbysideWidgetComponent extends Component {
   @action
   insertScript(): void {
     if (document.getElementById(LOBBYSIDE_SCRIPT_ID)) {
+      this.syncVisitorData();
+
       return;
     }
 
@@ -29,7 +31,25 @@ export default class LobbysideWidgetComponent extends Component {
     script.id = LOBBYSIDE_SCRIPT_ID;
     script.src = 'https://lobbyside.com/widget.js';
     script.dataset['companyId'] = 'f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4';
+    script.onload = () => this.syncVisitorData();
     document.body.appendChild(script);
+  }
+
+  private syncVisitorData(): void {
+    const user = this.authenticator.currentUser;
+
+    if (!user || !(window as Record<string, unknown>)['Lobbyside']) {
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lobbyside = (window as any).Lobbyside;
+
+    lobbyside.setVisitor({
+      email: user.primaryEmailAddress || '',
+      name: user.name || '',
+      github: user.githubUsername || '',
+    });
   }
 
   @action
