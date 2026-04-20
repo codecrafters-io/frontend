@@ -1,57 +1,81 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
+import { userIsStaffOrAllowlisted } from 'codecrafters-frontend/utils/staff-allowlist';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
-const LOBBYSIDE_SCRIPT_ID = 'lobbyside-widget-script';
+declare global {
+  interface Window {
+    Lobbyside?: {
+      setVisitor(visitor: { email: string; name: string; github: string }): void;
+    };
+  }
+}
 
-export default class LobbysideWidgetComponent extends Component {
+export type LobbysideAudience = 'everyone' | 'staff';
+
+export interface LobbysideWidgetSignature {
+  Element: HTMLDivElement;
+  Args: {
+    widgetId: string;
+    audience?: LobbysideAudience;
+  };
+}
+
+export default class LobbysideWidgetComponent extends Component<LobbysideWidgetSignature> {
   @service declare authenticator: AuthenticatorService;
 
+  get scriptId(): string {
+    return `lobbyside-widget-${this.args.widgetId}`;
+  }
+
   get shouldShow(): boolean {
+    if ((this.args.audience ?? 'everyone') === 'staff') {
+      return userIsStaffOrAllowlisted(this.authenticator.currentUser);
+    }
+
     return true;
   }
 
   @action
   insertScript(): void {
-    if (document.getElementById(LOBBYSIDE_SCRIPT_ID)) {
+    if (document.getElementById(this.scriptId)) {
       this.syncVisitorData();
 
       return;
     }
 
     const script = document.createElement('script');
-    script.id = LOBBYSIDE_SCRIPT_ID;
+    script.id = this.scriptId;
     script.src = 'https://lobbyside.com/widget.js';
-    script.dataset['companyId'] = 'f6948b5a-eac2-4f92-8fce-54d4fb3bdaa4';
+    script.dataset['widgetId'] = this.args.widgetId;
     script.onload = () => this.syncVisitorData();
     document.body.appendChild(script);
   }
 
   @action
   removeScript(): void {
-    const script = document.getElementById(LOBBYSIDE_SCRIPT_ID);
-
-    if (script) {
-      script.remove();
-    }
+    document.getElementById(this.scriptId)?.remove();
   }
 
-  private syncVisitorData(): void {
+  @action
+  syncVisitorData(): void {
     const user = this.authenticator.currentUser;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if (!user || !(window as any)['Lobbyside']) {
+    if (!user || !window.Lobbyside) {
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const lobbyside = (window as any).Lobbyside;
-
-    lobbyside.setVisitor({
+    window.Lobbyside.setVisitor({
       email: user.primaryEmailAddress || '',
       name: user.name || user.githubName || '',
       github: user.githubUsername || '',
     });
+  }
+}
+
+declare module '@glint/environment-ember-loose/registry' {
+  export default interface Registry {
+    LobbysideWidget: typeof LobbysideWidgetComponent;
   }
 }
