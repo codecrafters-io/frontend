@@ -2,6 +2,7 @@ import Service, { service } from '@ember/service';
 import type RouterService from '@ember/routing/router-service';
 import type RouteInfo from '@ember/routing/route-info';
 import RouteInfoMetadata, { HelpscoutBeaconVisibility } from 'codecrafters-frontend/utils/route-info-metadata';
+import { userIsStaffOrAllowlisted } from 'codecrafters-frontend/utils/staff-allowlist';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
 export default class HelpscoutBeaconService extends Service {
@@ -9,10 +10,8 @@ export default class HelpscoutBeaconService extends Service {
   @service declare router: RouterService;
 
   get shouldShowBeacon(): boolean {
-    // Staff users and specific users see the Lobbyside widget instead of HelpScout
-    const user = this.authenticator.currentUser;
-
-    if (user?.isStaff || user?.username === 'vishaag' || user?.username === 'dronaxis') {
+    // Staff and allowlisted users see the Lobbyside widget instead of HelpScout
+    if (userIsStaffOrAllowlisted(this.authenticator.currentUser)) {
       return false;
     }
 
