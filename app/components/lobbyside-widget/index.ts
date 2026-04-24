@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
+import config from 'codecrafters-frontend/config/environment';
 import { userIsStaffOrAllowlisted } from 'codecrafters-frontend/utils/staff-allowlist';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 
@@ -67,6 +68,18 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
 
   @action
   insertScript(): void {
+    // Skip the network fetch in test mode — the third-party widget script is
+    // not part of any test contract here, and injecting it makes acceptance
+    // tests flake: the request is fired against the public lobbyside.com CDN
+    // (no Mirage handler), and when the response arrives AFTER the test has
+    // torn down the app, our `onload → syncVisitorData → currentUser` chain
+    // calls `store.peekRecord()` on a destroyed store and the whole test
+    // run aborts with a global failure. Same pattern `UserSyncerService`
+    // uses (`app/services/user-syncer.ts`).
+    if (config.environment === 'test') {
+      return;
+    }
+
     if (document.getElementById(this.scriptId)) {
       this.syncVisitorData();
 
@@ -77,13 +90,37 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
     script.id = this.scriptId;
     script.src = 'https://lobbyside.com/widget.js';
     script.dataset['widgetId'] = this.args.widgetId;
-    script.onload = () => this.syncVisitorData();
+
+    script.onload = () => {
+      // The script is fetched async, so this callback can still fire after
+      // the component (and the Ember Data store) has been torn down — most
+      // commonly when the user navigates away mid-load. Bail in that case
+      // so `syncVisitorData → currentUser → store.peekRecord` doesn't
+      // throw against a destroyed store. Belt-and-braces with the
+      // `script.onload = null` cleanup in `removeScript` below.
+      if (this.isDestroying || this.isDestroyed) {
+        return;
+      }
+
+      this.syncVisitorData();
+    };
+
     document.body.appendChild(script);
   }
 
   @action
   removeScript(): void {
-    document.getElementById(this.scriptId)?.remove();
+    const script = document.getElementById(this.scriptId) as HTMLScriptElement | null;
+
+    if (script) {
+      // Cancel any pending onload before removing the element. The browser
+      // can still fire `onload` against a script that's already been
+      // detached from the DOM (the listener was attached to the element
+      // reference, not the DOM position), so dropping the handler here
+      // prevents a torn-down component from re-entering its own callback.
+      script.onload = null;
+      script.remove();
+    }
   }
 
   @action
