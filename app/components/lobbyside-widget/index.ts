@@ -37,6 +37,34 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
     return true;
   }
 
+  // The next three getters mirror the fields we push to Lobbyside via
+  // `setVisitor`. They exist (and are referenced from the template's
+  // `{{did-update}}` args) so that we re-sync the visitor stash whenever any
+  // individual field's value changes — not just when `currentUserId` changes.
+  //
+  // Why this matters: Ember Data sometimes hydrates the user record in two
+  // passes. A page-level payload may sideload the current user with `name` +
+  // `githubUsername` but no `primaryEmailAddress`; the full payload from
+  // `authenticator.syncCurrentUser` arrives a beat later and fills the email
+  // in-place. Because `currentUserId` is the same string before and after
+  // that mutation, a `did-update` keyed only on `currentUserId` does NOT
+  // re-fire — and the embedder's `__LOBBYSIDE_VISITOR_DATA__.email` stays
+  // empty even though name/github were already pre-filled. Tracking each
+  // field directly forces a re-sync the moment any of them change.
+  get userGithub(): string {
+    return this.authenticator.currentUser?.githubUsername || '';
+  }
+
+  get userName(): string {
+    const user = this.authenticator.currentUser;
+
+    return user?.name || user?.githubName || '';
+  }
+
+  get userPrimaryEmail(): string {
+    return this.authenticator.currentUser?.primaryEmailAddress || '';
+  }
+
   @action
   insertScript(): void {
     if (document.getElementById(this.scriptId)) {
@@ -60,16 +88,14 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
 
   @action
   syncVisitorData(): void {
-    const user = this.authenticator.currentUser;
-
-    if (!user || !window.Lobbyside) {
+    if (!this.authenticator.currentUser || !window.Lobbyside) {
       return;
     }
 
     window.Lobbyside.setVisitor({
-      email: user.primaryEmailAddress || '',
-      name: user.name || user.githubName || '',
-      github: user.githubUsername || '',
+      email: this.userPrimaryEmail,
+      name: this.userName,
+      github: this.userGithub,
     });
   }
 }

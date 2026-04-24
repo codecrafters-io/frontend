@@ -1,3 +1,11 @@
 {{#if this.shouldShow}}
-  <div {{did-insert this.insertScript}} {{did-update this.syncVisitorData this.authenticator.currentUserId}} {{will-destroy this.removeScript}}></div>
+  {{! Track each visitor field in `did-update` so we re-sync whenever any of
+      them change — not just on currentUserId transitions. See the doc-comment
+      above the getters in `index.ts` for why this matters (Ember Data's two-pass
+      hydration can leave `primaryEmailAddress` empty after the first sync). }}
+  <div
+    {{did-insert this.insertScript}}
+    {{did-update this.syncVisitorData this.userPrimaryEmail this.userName this.userGithub}}
+    {{will-destroy this.removeScript}}
+  ></div>
 {{/if}}
