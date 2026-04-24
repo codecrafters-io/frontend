@@ -1,11 +1,21 @@
 {{#if this.shouldShow}}
-  {{! Track each visitor field in `did-update` so we re-sync whenever any of
-      them change — not just on currentUserId transitions. See the doc-comment
-      above the getters in `index.ts` for why this matters (Ember Data's two-pass
-      hydration can leave `primaryEmailAddress` empty after the first sync). }}
+  {{! Track BOTH currentUserId AND each individual visitor field in `did-update`.
+
+      - `currentUserId` catches identity transitions (login / logout / account
+        switch) even when the new user's record briefly hydrates with empty
+        fields — without this leading dep, a logout-then-login-as-different-user
+        sequence where both states coincidentally have all-empty getters would
+        not re-fire `syncVisitorData`, leaving stale visitor data in Lobbyside
+        until the new user's fields finished populating.
+      - The three field getters (`userPrimaryEmail`, `userName`, `userGithub`)
+        catch in-place mutations on the SAME user record, which is how Ember
+        Data's two-pass hydration delivers `primaryEmailAddress` (a page-level
+        sideload populates name + githubUsername first; the full /users/current
+        payload fills in the email a beat later). See the doc-comment above
+        the getters in `index.ts` for the full rationale. }}
   <div
     {{did-insert this.insertScript}}
-    {{did-update this.syncVisitorData this.userPrimaryEmail this.userName this.userGithub}}
+    {{did-update this.syncVisitorData this.authenticator.currentUserId this.userPrimaryEmail this.userName this.userGithub}}
     {{will-destroy this.removeScript}}
   ></div>
 {{/if}}
