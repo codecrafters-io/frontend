@@ -102,6 +102,7 @@ export default class FeedbackPrompt extends Component<Signature> {
   @action
   handleSubmitButtonClick() {
     this.feedbackSubmission!.status = 'closed';
+    this.feedbackSubmission!.isAcknowledgedByStaff = false;
 
     // Don't fire for editing submissions
     if (!this.isEditingClosedSubmission) {
