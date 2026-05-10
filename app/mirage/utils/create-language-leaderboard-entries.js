@@ -1,13 +1,11 @@
 function findOrCreateUser(server, username, attrs = {}) {
   return (
-    // eslint-disable-next-line ember/no-array-prototype-extensions
     server.schema.users.findBy({ username }) ||
     server.create('user', { username, githubUsername: username, avatarUrl: `https://github.com/${username}.png`, createdAt: new Date(), ...attrs })
   );
 }
 
 export default function createLanguageLeaderboardEntries(server, languageSlug) {
-  // eslint-disable-next-line ember/no-array-prototype-extensions
   const language = server.schema.languages.findBy({ slug: languageSlug });
   const leaderboard = language.leaderboard || server.create('leaderboard', { language });
 
