@@ -16,12 +16,13 @@ export interface PricingPlan {
   title: string;
   priceInDollars: number;
   validityInMonths?: number; // undefined for lifetime
+  isSoldOut?: boolean;
 }
 
 export const PRICING_PLANS: PricingPlan[] = [
   { id: 'v1-3mo', frequency: 'quarterly', title: '3 months', priceInDollars: 120, validityInMonths: 3 },
   { id: 'v1-1yr', frequency: 'yearly', title: '1 year', priceInDollars: 360, validityInMonths: 12 },
-  { id: 'v1-lifetime', frequency: 'lifetime', title: 'Lifetime', priceInDollars: 1490 },
+  { id: 'v1-lifetime', frequency: 'lifetime', title: 'Lifetime', priceInDollars: 1490, isSoldOut: true },
 ];
 
 interface Signature {
