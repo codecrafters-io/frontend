@@ -17,7 +17,7 @@ export default class FaqList extends Component<Signature> {
   faqs: Faq[] = [
     {
       query: 'How many exercises are there?',
-      answerMarkdown: `We have over 350 stages split across 10 challenges which you can attempt in 29 programming languages. Here's what you'll be building:
+      answerMarkdown: `We have over 350 stages split across 11 challenges which you can attempt in 29 programming languages. Here's what you'll be building:
 
 
 * Build Your Own Redis
@@ -30,6 +30,7 @@ export default class FaqList extends Component<Signature> {
 * Build Your Own Shell
 * Build Your Own Interpreter
 * Build Your Own Kafka
+* Build Your Own Claude Code
 
 If we launch new challenges during your membership, you get access to those too. Visit [our catalog](https://app.codecrafters.io/catalog) to check each individual challenge in detail.`,
     },
