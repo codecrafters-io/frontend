@@ -62,14 +62,12 @@ export default class Header extends Component<Signature> {
     return [
       { text: 'Catalog', route: 'catalog', type: 'route' },
       { text: 'Pricing', route: 'pay', type: 'route' },
-      { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
   }
 
   get linksForAuthenticatedUser(): { text: string; route: string; type: 'route' | 'link'; routeParams?: string[] }[] {
     const links: { text: string; route: string; type: 'route' | 'link'; routeParams?: string[] }[] = [
       { text: 'Catalog', route: 'catalog', type: 'route' },
-      { text: 'Roadmap', route: 'roadmap', type: 'route' },
     ];
 
     links.push({

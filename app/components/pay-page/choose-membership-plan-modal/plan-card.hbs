@@ -91,6 +91,8 @@
     <div class="text-gray-500 dark:text-gray-400 text-xxs shrink-0 text-right mt-0.5">
       {{#if this.amortizedMonthlyPriceInDollars}}
         Effectively ${{this.amortizedMonthlyPriceInDollars}}/mo
+      {{else if @plan.isSoldOut}}
+        Sold out
       {{else}}
         Limited spots
       {{/if}}

@@ -10,7 +10,13 @@
       />
     {{/each}}
 
-    <PrimaryButton @size="large" {{on "click" @onChoosePlanButtonClick}} data-test-choose-plan-button>
+    <PrimaryButton
+      @size="large"
+      @isDisabled={{@selectedPlan.isSoldOut}}
+      disabled={{@selectedPlan.isSoldOut}}
+      {{on "click" @onChoosePlanButtonClick}}
+      data-test-choose-plan-button
+    >
       Choose
       {{@selectedPlan.title}}
       pass →
