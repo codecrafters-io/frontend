@@ -57,17 +57,6 @@
         </div>
 
         {{#if this.feedbackSubmission.hasSelectedAnswer}}
-          <div class="prose prose-sm prose-green dark:prose-invert mt-4">
-            P.S.
-            <a
-              href="https://forum.codecrafters.io/u/rohitpaulk/activity"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="underline font-semibold"
-            >rohitpaulk</a>
-            reads every one of these messages! We act on most feedback within a week.
-          </div>
-
           {{! template-lint-disable require-input-label }}
           <Textarea
             @value={{this.feedbackSubmission.explanation}}
