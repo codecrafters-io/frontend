@@ -209,8 +209,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
     assert.strictEqual(coursePage.testsPassedModal.title, 'Tests passed!', 'Tests passed modal title is correct');
 
-    await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
-    assert.strictEqual(coursePage.testsPassedModal.title, 'Submit code', 'Tests passed modal title is correct');
+    assert.strictEqual(coursePage.testsPassedModal.title, 'Tests passed!', 'Tests passed modal title is correct');
 
     this.server.create('submission', 'withSuccessStatus', {
       clientType: 'git',
@@ -222,7 +221,7 @@ module('Acceptance | course-page | complete-second-stage', function (hooks) {
     await finishRender();
 
     assert.ok(coursePage.testsPassedModal.isVisible, 'Tests passed modal is visible');
-    assert.strictEqual(coursePage.testsPassedModal.title, 'Submit code', 'Tests passed modal title is correct');
+    assert.strictEqual(coursePage.testsPassedModal.title, 'Tests passed!', 'Tests passed modal title is correct');
 
     await coursePage.testsPassedModal.clickOnActionButton('Mark stage as complete');
 
