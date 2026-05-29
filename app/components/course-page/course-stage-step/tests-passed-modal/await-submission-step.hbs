@@ -1,0 +1,46 @@
+<div
+  class="flex flex-col items-center w-full relative"
+  {{did-update this.handleLastSubmissionBecameUsable @repository.lastSubmissionCanBeUsedForStageCompletion}}
+>
+  <div class="w-20 h-20 mb-2">
+    <RiveAnimation @src="/assets/animations/checkmark_icon.riv" />
+  </div>
+
+  <div class="mb-5 font-bold text-2xl text-gray-700 dark:text-gray-100" data-test-modal-title>
+    Tests passed!
+  </div>
+
+  <div class="prose dark:prose-invert mb-3 text-center text-balance">
+    <p>
+      Run the
+
+      {{#if (gt this.selectedCommandVariant.commands.length 1)}}
+        following commands
+      {{else}}
+        <code>submit</code>
+        command
+      {{/if}}
+
+      to submit your code.
+    </p>
+  </div>
+
+  <CopyableTerminalCommandWithVariants class="mb-3" @variants={{this.commandVariants}} @onVariantSelect={{this.handleVariantSelect}} />
+
+  <div class="prose dark:prose-invert mb-5 text-center prose-sm text-balance">
+    <p class="text-xs">
+      Unable to use the
+      <a href="https://codecrafters.io/cli" target="_blank" rel="noopener noreferrer">CodeCrafters&nbsp;CLI</a>? You can use Git too.
+    </p>
+  </div>
+
+  <div class="flex items-center text-sm" ...attributes>
+    <AnimatedContainer>
+      <BlinkingDot class="mr-2" @color="yellow" />
+    </AnimatedContainer>
+
+    <span class="text-yellow-600 dark:text-yellow-500 font-medium" data-test-progress-indicator-text>
+      Waiting for command...
+    </span>
+  </div>
+</div>

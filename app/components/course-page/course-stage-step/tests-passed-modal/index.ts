@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { waitFor } from '@ember/test-waiters';
+import type Owner from '@ember/owner';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -18,7 +19,17 @@ interface Signature {
 export default class TestsPassedModal extends Component<Signature> {
   @service declare courseStageCompletion: CourseStageCompletionService;
 
-  @tracked action: 'choose_action' | 'refactor_code' | 'mark_stage_as_complete' | 'submit_code' = 'choose_action';
+  @tracked action: 'await_submission' | 'choose_action' | 'refactor_code' | 'mark_stage_as_complete' | 'submit_code' = 'choose_action';
+
+  constructor(owner: Owner, args: Signature['Args']) {
+    super(owner, args);
+
+    if (this.args.currentStep.repository.lastSubmissionCanBeUsedForStageCompletion) {
+      this.action = 'choose_action';
+    } else {
+      this.action = 'await_submission';
+    }
+  }
 
   @action
   @waitFor

@@ -9,6 +9,13 @@
 >
   <AnimatedContainer>
     <div class="flex flex-col items-center w-full">
+      {{#animated-if (eq this.action "await_submission")}}
+        <CoursePage::CourseStageStep::TestsPassedModal::AwaitSubmissionStep
+          @onActionButtonClick={{this.handleActionButtonClick}}
+          @repository={{@currentStep.repository}}
+        />
+      {{/animated-if}}
+
       {{#animated-if (eq this.action "choose_action")}}
         <CoursePage::CourseStageStep::TestsPassedModal::ChooseActionStep
           @currentStep={{@currentStep}}
