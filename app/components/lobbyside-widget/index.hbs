@@ -14,6 +14,7 @@
         payload fills in the email a beat later). See the doc-comment above
         the getters in `index.ts` for the full rationale. }}
   <div
+    data-test-lobbyside-widget={{@widgetId}}
     {{did-insert this.insertScript}}
     {{did-update this.syncVisitorData this.authenticator.currentUserId this.userPrimaryEmail this.userName this.userGithub}}
     {{will-destroy this.removeScript}}
