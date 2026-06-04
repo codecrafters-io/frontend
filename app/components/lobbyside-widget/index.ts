@@ -31,6 +31,12 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
   }
 
   get shouldShow(): boolean {
+    // Widgets are registered against the prod Lobbyside dashboard; staging builds
+    // share that dashboard, so suppress them to avoid prod widgets on staging.
+    if (config.x.isStaging) {
+      return false;
+    }
+
     if ((this.args.audience ?? 'everyone') === 'staff') {
       return userIsStaffOrAllowlisted(this.authenticator.currentUser);
     }

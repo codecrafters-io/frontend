@@ -13,6 +13,7 @@ declare const config: {
     backendUrl: string;
     helpscoutBeaconId: string;
     isCI: boolean;
+    isStaging: boolean;
     metaTagImagesBaseURL: string;
     stripePublishableKey: string;
     vercelAnalyticsId: string;

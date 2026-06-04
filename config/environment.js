@@ -1,6 +1,8 @@
 'use strict';
 
 module.exports = function (environment) {
+  const backendUrl = process.env.BACKEND_URL || 'https://test-backend.ngrok.io';
+
   const ENV = {
     modulePrefix: 'codecrafters-frontend',
     environment,
@@ -30,7 +32,11 @@ module.exports = function (environment) {
     },
 
     x: {
-      backendUrl: process.env.BACKEND_URL || 'https://test-backend.ngrok.io',
+      backendUrl,
+
+      // No dedicated `staging` Ember env — staging is the prod build pointed at
+      // the staging backend. Used to suppress prod-only integrations (Lobbyside).
+      isStaging: backendUrl.includes('backend-staging.codecrafters.io'),
 
       defaultMetaTags: {
         type: 'website',
