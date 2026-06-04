@@ -16,7 +16,16 @@
   <div
     data-test-lobbyside-widget={{@widgetId}}
     {{did-insert this.insertScript}}
-    {{did-update this.syncVisitorData this.authenticator.currentUserId this.userPrimaryEmail this.userName this.userGithub}}
+    {{did-update
+      this.syncVisitorData
+      this.authenticator.currentUserId
+      this.userPrimaryEmail
+      this.userName
+      this.userGithub
+      this.customFields.stages_completed
+      this.customFields.signed_up_date
+      this.customFields.subscription_type
+    }}
     {{will-destroy this.removeScript}}
   ></div>
 {{/if}}
