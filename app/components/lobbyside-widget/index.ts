@@ -8,12 +8,72 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 declare global {
   interface Window {
     Lobbyside?: {
-      setVisitor(visitor: { email: string; name: string; github: string }): void;
+      setVisitor(visitor: {
+        email: string;
+        name: string;
+        github: string;
+        stages_completed: string;
+        signed_up_date: string;
+        subscription_type: string;
+      }): void;
     };
   }
 }
 
 export type LobbysideAudience = 'everyone' | 'staff';
+
+// Structural subset of UserModel so the derivation stays pure + unit-testable.
+interface VisitorSource {
+  createdAt?: Date | null;
+  isVip?: boolean;
+  activeSubscription?: { isLifetimeMembership?: boolean } | null;
+  hasActiveSubscription?: boolean;
+  teamHasActiveSubscription?: boolean;
+  courseParticipations?: { completedStageSlugs?: string[] }[];
+}
+
+export interface LobbysideCustomFields {
+  stages_completed: string;
+  signed_up_date: string;
+  subscription_type: string;
+}
+
+function subscriptionType(user: VisitorSource | null | undefined): string {
+  if (!user) {
+    return '';
+  }
+
+  if (user.activeSubscription?.isLifetimeMembership) {
+    return 'lifetime';
+  }
+
+  if (user.hasActiveSubscription) {
+    return 'individual';
+  }
+
+  if (user.teamHasActiveSubscription) {
+    return 'team';
+  }
+
+  if (user.isVip) {
+    return 'vip';
+  }
+
+  return 'free';
+}
+
+export function lobbysideCustomFields(user: VisitorSource | null | undefined): LobbysideCustomFields {
+  const stagesCompleted = (user?.courseParticipations ?? []).reduce(
+    (sum, participation) => sum + (participation.completedStageSlugs?.length ?? 0),
+    0,
+  );
+
+  return {
+    stages_completed: String(stagesCompleted),
+    signed_up_date: user?.createdAt ? user.createdAt.toISOString().slice(0, 10) : '',
+    subscription_type: subscriptionType(user),
+  };
+}
 
 export interface LobbysideWidgetSignature {
   Element: HTMLDivElement;
@@ -25,6 +85,10 @@ export interface LobbysideWidgetSignature {
 
 export default class LobbysideWidgetComponent extends Component<LobbysideWidgetSignature> {
   @service declare authenticator: AuthenticatorService;
+
+  get customFields(): LobbysideCustomFields {
+    return lobbysideCustomFields(this.authenticator.currentUser);
+  }
 
   get scriptId(): string {
     return `lobbyside-widget-${this.args.widgetId}`;
@@ -139,6 +203,7 @@ export default class LobbysideWidgetComponent extends Component<LobbysideWidgetS
       email: this.userPrimaryEmail,
       name: this.userName,
       github: this.userGithub,
+      ...this.customFields,
     });
   }
 }

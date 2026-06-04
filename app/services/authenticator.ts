@@ -116,6 +116,8 @@ export default class AuthenticatorService extends Service {
     const includedResources = [
       'affiliate-links',
       'affiliate-links.user',
+      // Powers the `stages_completed` field the Lobbyside widget pushes via setVisitor.
+      'course-participations',
       'feature-suggestions',
       'promotional-discounts',
       'promotional-discounts.affiliate-referral',
