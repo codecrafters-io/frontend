@@ -118,6 +118,8 @@ export default class AuthenticatorService extends Service {
       'affiliate-links.user',
       // Powers the `stages_completed` field the Lobbyside widget pushes via setVisitor.
       'course-participations',
+      // Powers the `other_emails` field the Lobbyside widget pushes via setVisitor.
+      'email-addresses',
       'feature-suggestions',
       'promotional-discounts',
       'promotional-discounts.affiliate-referral',
