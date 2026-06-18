@@ -15,7 +15,6 @@ declare global {
         stages_completed: string;
         signed_up_date: string;
         subscription_type: string;
-        other_emails: string;
       }): void;
     };
   }
@@ -31,15 +30,12 @@ interface VisitorSource {
   hasActiveSubscription?: boolean;
   teamHasActiveSubscription?: boolean;
   courseParticipations?: { completedStageSlugs?: string[] }[];
-  primaryEmailAddress?: string | null;
-  emailAddresses?: { value?: string | null }[];
 }
 
 export interface LobbysideCustomFields {
   stages_completed: string;
   signed_up_date: string;
   subscription_type: string;
-  other_emails: string;
 }
 
 function subscriptionType(user: VisitorSource | null | undefined): string {
@@ -66,21 +62,6 @@ function subscriptionType(user: VisitorSource | null | undefined): string {
   return 'free';
 }
 
-function otherEmails(user: VisitorSource | null | undefined): string {
-  const primary = (user?.primaryEmailAddress ?? '').trim();
-  const seen = new Set<string>();
-
-  for (const entry of user?.emailAddresses ?? []) {
-    const value = (entry?.value ?? '').trim();
-
-    if (value && value !== primary) {
-      seen.add(value);
-    }
-  }
-
-  return Array.from(seen).join(', ');
-}
-
 export function lobbysideCustomFields(user: VisitorSource | null | undefined): LobbysideCustomFields {
   const stagesCompleted = (user?.courseParticipations ?? []).reduce(
     (sum, participation) => sum + (participation.completedStageSlugs?.length ?? 0),
@@ -91,7 +72,6 @@ export function lobbysideCustomFields(user: VisitorSource | null | undefined): L
     stages_completed: String(stagesCompleted),
     signed_up_date: user?.createdAt ? user.createdAt.toISOString().slice(0, 10) : '',
     subscription_type: subscriptionType(user),
-    other_emails: otherEmails(user),
   };
 }
 
