@@ -77,10 +77,16 @@ module('Unit | Component | lobbyside-widget', function () {
     assert.strictEqual(lobbysideCustomFields(user).other_emails, '');
   });
 
-  test('other_emails dedupes and drops blank values', function (assert) {
+  test('other_emails dedupes and drops blank or missing values', function (assert) {
     const user = createUser({
       primaryEmailAddress: 'primary@example.com',
-      emailAddresses: [{ value: 'work@example.com' }, { value: '  work@example.com  ' }, { value: '' }, { value: 'alt@example.com' }],
+      emailAddresses: [
+        { value: 'work@example.com' },
+        { value: '  work@example.com  ' },
+        { value: '' },
+        { value: null },
+        { value: 'alt@example.com' },
+      ],
     } as unknown as Partial<UserModel>);
 
     assert.strictEqual(lobbysideCustomFields(user).other_emails, 'work@example.com, alt@example.com');
