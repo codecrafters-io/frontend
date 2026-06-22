@@ -152,5 +152,8 @@ export default class AuthenticatorService extends Service {
     this.prefillBeaconEmail();
     this.currentUserCacheStorage.setValues(user.id, user.username);
     this.cacheBuster++;
+
+    // Populates currentUser.emailAddresses for the Lobbyside `other_emails` field.
+    this.store.findAll('email-address', { include: 'user' }).catch(() => {});
   }
 }
