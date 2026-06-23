@@ -20,6 +20,7 @@ module('Unit | Component | lobbyside-widget', function () {
       stages_completed: '0',
       signed_up_date: '',
       subscription_type: '',
+      other_emails: '',
     });
   });
 
@@ -56,5 +57,44 @@ module('Unit | Component | lobbyside-widget', function () {
     assert.strictEqual(lobbysideCustomFields(createUser({ isVip: true })).subscription_type, 'vip');
 
     assert.strictEqual(lobbysideCustomFields(createUser()).subscription_type, 'free');
+  });
+
+  test('other_emails joins every non-primary email, comma-separated', function (assert) {
+    const user = createUser({
+      primaryEmailAddress: 'primary@example.com',
+      emailAddresses: [{ value: 'primary@example.com' }, { value: 'work@example.com' }, { value: 'school@example.com' }],
+    } as unknown as Partial<UserModel>);
+
+    assert.strictEqual(lobbysideCustomFields(user).other_emails, 'work@example.com, school@example.com');
+  });
+
+  test('other_emails excludes the primary email and is empty when it is the only one', function (assert) {
+    const user = createUser({
+      primaryEmailAddress: 'primary@example.com',
+      emailAddresses: [{ value: 'primary@example.com' }],
+    } as unknown as Partial<UserModel>);
+
+    assert.strictEqual(lobbysideCustomFields(user).other_emails, '');
+  });
+
+  test('other_emails dedupes and drops blank or missing values', function (assert) {
+    const user = createUser({
+      primaryEmailAddress: 'primary@example.com',
+      emailAddresses: [
+        { value: 'work@example.com' },
+        { value: '  work@example.com  ' },
+        { value: '' },
+        { value: null },
+        { value: 'alt@example.com' },
+      ],
+    } as unknown as Partial<UserModel>);
+
+    assert.strictEqual(lobbysideCustomFields(user).other_emails, 'work@example.com, alt@example.com');
+  });
+
+  test('other_emails is empty when the user has no email addresses', function (assert) {
+    const user = createUser({ primaryEmailAddress: 'primary@example.com', emailAddresses: [] } as unknown as Partial<UserModel>);
+
+    assert.strictEqual(lobbysideCustomFields(user).other_emails, '');
   });
 });
