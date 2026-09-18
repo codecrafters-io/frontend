@@ -22,6 +22,8 @@ export default class ApiRequestsVerifier {
         pathname !== '/api/v1/users/current' &&
         // Triggered on application boot (Lobbyside widget other_emails)
         pathname !== '/api/v1/email-addresses' &&
+        // Experiment availability probe on the course stage page
+        pathname !== '/api/v1/experiments/course-stage-chats' &&
         // Triggered when header is rendered
         !pathname.match(/^\/api\/v1\/users\/[^/]+\/top-language-leaderboard-slugs$/)
       );

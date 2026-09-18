@@ -24,6 +24,7 @@ import courseExtensionIdeas from './course-extension-ideas';
 import courseIdeas from './course-ideas';
 import courseLanguageRequests from './course-language-requests';
 import courseLeaderboardEntries from './course-leaderboard-entries';
+import courseStageChats from './course-stage-chats';
 import courseStageComments from './course-stage-comments';
 import courseStageCompletions from './course-stage-completions';
 import courseStageFeedbackSubmissions from './course-stage-feedback-submissions';
@@ -95,6 +96,7 @@ export default function handlers(server: Server) {
   courseIdeas(server);
   courseLanguageRequests(server);
   courseLeaderboardEntries(server);
+  courseStageChats(server);
   courseStageComments(server);
   courseStageCompletions(server);
   courseStageFeedbackSubmissions(server);

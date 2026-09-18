@@ -1,5 +1,5 @@
 <div class="group {{if @isExpanded 'w-64 xl:w-80'}}" ...attributes>
-  <div class="sticky top-16 z-11 {{if @isExpanded 'px-6' 'px-4'}}">
+  <div class="relative {{if @isExpanded 'px-6' 'px-4'}}">
     <div
       class="opacity-0 group-hover:opacity-100 absolute top-6 -left-3.5 z-10"
       {{on "click" (if @isExpanded @onCollapseButtonClick @onExpandButtonClick)}}
