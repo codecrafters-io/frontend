@@ -8,10 +8,10 @@
       <span class="mx-3 text-gray-600">|</span>
 
       <span class="text-sm text-gray-300 truncate" data-test-title>
-        Interview:
+        {{if @isQuiz "Quiz:" "Interview:"}}
         {{@repository.course.name}}
         ·
-        {{@milestone.title}}
+        {{@title}}
       </span>
 
       <Pill @color="teal" @size="small" class="ml-3 shrink-0">Experimental</Pill>
@@ -31,7 +31,7 @@
         <span class="mx-3 text-gray-600">|</span>
 
         <DangerButton @size="small" data-test-end-interview-button {{on "click" @onEndInterviewButtonClick}}>
-          End Interview
+          {{if @isQuiz "End Quiz" "End Interview"}}
         </DangerButton>
       {{else}}
         <TertiaryLinkButton

@@ -16,7 +16,7 @@
 
     <div class="flex items-center">
       {{#each this.tabs key="slug" as |tab|}}
-        <LinkTo @route={{tab.route}} @models={{tab.models}} class="flex">
+        <LinkTo @route={{tab.route}} @models={{tab.models}} class="flex" data-test-course-admin-tab={{tab.slug}}>
           <CoursePage::Header::TabLink @icon={{tab.icon}} @text={{tab.name}} @isActive={{tab.isActive}} />
         </LinkTo>
       {{/each}}

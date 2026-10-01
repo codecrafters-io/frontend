@@ -1,17 +1,17 @@
 import Component from '@glimmer/component';
 import logomarkDark from '/assets/images/logo/logomark-dark.svg';
-import type InterviewMilestone from 'codecrafters-frontend/utils/interview-milestone';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
-    milestone: InterviewMilestone;
+    isQuiz: boolean;
     onEndInterviewButtonClick: () => void;
     remainingSeconds: number;
     repository: RepositoryModel;
     shouldShowCallControls: boolean;
+    title: string;
   };
 }
 

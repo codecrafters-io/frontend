@@ -1,4 +1,5 @@
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
+import CompetitionQuizCard from 'codecrafters-frontend/tests/pages/components/course-page/competition-quiz-card';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
@@ -39,6 +40,7 @@ export default create({
   },
 
   commentList: CommentList,
+  competitionQuizCard: CompetitionQuizCard,
   configureExtensionsModal: ConfigureExtensionsModal,
 
   configureGithubIntegrationModal: {

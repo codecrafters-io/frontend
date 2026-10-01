@@ -1,16 +1,8 @@
-import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import InterviewBaseRoute from 'codecrafters-frontend/utils/interview-base-route';
 import InterviewMilestone from 'codecrafters-frontend/utils/interview-milestone';
-import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
-import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
-import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ChallengeInterviewModel from 'codecrafters-frontend/models/challenge-interview';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type RouterService from '@ember/routing/router-service';
-import type Store from '@ember-data/store';
-import { all as RSVPAll } from 'rsvp';
-import { service } from '@ember/service';
 
 export type ModelType = {
   course: CourseModel;
@@ -26,11 +18,7 @@ type Params = {
   repo?: string | null;
 };
 
-export default class CourseInterviewRoute extends BaseRoute {
-  @service declare authenticator: AuthenticatorService;
-  @service declare router: RouterService;
-  @service declare store: Store;
-
+export default class CourseInterviewRoute extends InterviewBaseRoute {
   queryParams = {
     interview: {
       refreshModel: true,
@@ -39,10 +27,6 @@ export default class CourseInterviewRoute extends BaseRoute {
       refreshModel: true,
     },
   };
-
-  buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden, colorScheme: RouteColorScheme.Dark });
-  }
 
   async findInterview(interviewId: string | null | undefined): Promise<ChallengeInterviewModel | null> {
     if (!interviewId) {
@@ -56,23 +40,8 @@ export default class CourseInterviewRoute extends BaseRoute {
     }
   }
 
-  async loadResources(): Promise<[CourseModel[], RepositoryModel[]]> {
-    const coursesPromise = this.store.findAll('course', {
-      include: 'extensions,stages,language-configurations.language',
-    }) as unknown as Promise<CourseModel[]>;
-
-    const repositoriesPromise = this.store.findAll('repository', {
-      include: RepositoryPoller.defaultIncludedResources,
-    }) as unknown as Promise<RepositoryModel[]>;
-
-    const [allCourses, allRepositories] = await RSVPAll([coursesPromise, repositoriesPromise, this.authenticator.authenticate()]);
-
-    return [allCourses, allRepositories];
-  }
-
   async model(params: Params): Promise<ModelType | undefined> {
-    const [allCourses, allRepositories] = await this.loadResources();
-    const course = allCourses.find((item) => item.slug === params.course_slug);
+    const [course, allRepositories] = await this.loadCourseAndRepositories(params.course_slug);
 
     if (!course) {
       this.router.replaceWith('not-found');
@@ -101,20 +70,5 @@ export default class CourseInterviewRoute extends BaseRoute {
       milestone,
       repository,
     };
-  }
-
-  selectRepository(course: CourseModel, allRepositories: RepositoryModel[], repositoryId: string | null | undefined): RepositoryModel | undefined {
-    const repositories = allRepositories.filter((repository) => {
-      return !repository.isNew && repository.course.id === course.id && repository.user.id === this.authenticator.currentUser?.id;
-    });
-
-    if (repositoryId) {
-      return repositories.find((repository) => repository.id === repositoryId);
-    }
-
-    return repositories
-      .filter((repository) => repository.firstSubmissionCreated)
-      .sort(fieldComparator('lastSubmissionAt'))
-      .at(-1);
   }
 }

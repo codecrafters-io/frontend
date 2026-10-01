@@ -6,6 +6,7 @@ interface Signature {
   Args: {
     description: string | null;
     isError?: boolean;
+    isSuccess?: boolean;
     title: string;
   };
 

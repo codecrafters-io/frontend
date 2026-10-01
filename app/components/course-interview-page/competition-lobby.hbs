@@ -1,0 +1,90 @@
+<div class="w-full max-w-2xl rounded-lg border border-white/10 bg-gray-900/60 p-6 md:p-8" data-test-competition-lobby ...attributes>
+  <div class="flex items-center mb-2">
+    {{svg-jar "microphone" class="w-5 h-5 text-teal-400 mr-2"}}
+    <span class="text-xs font-semibold uppercase tracking-wide text-teal-400">Competition quiz · up to 10 minutes</span>
+  </div>
+
+  <h1 class="text-2xl font-semibold text-gray-50 mb-3">Tell us how you built it</h1>
+
+  <p class="text-gray-300 leading-relaxed mb-6">
+    To make your entry in
+    <strong class="text-gray-100">{{@competition.name}}</strong>
+    count, talk an AI interviewer through how you built a couple of the
+    <strong class="text-gray-100">{{@repository.course.name}}</strong>
+    stages you completed. You answer out loud, and your code stays on screen so you can point at it.
+  </p>
+
+  <ul class="space-y-3 mb-6 text-sm text-gray-300">
+    <li class="flex items-start">
+      {{svg-jar "code" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>Two questions about stages you completed during the competition: how you approached them and what was tricky.</span>
+    </li>
+    <li class="flex items-start">
+      {{svg-jar "chat-alt-2" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>Then a couple of quick questions about your experience. There are no trick questions, and "I'm not sure" is a fine answer.</span>
+    </li>
+    <li class="flex items-start">
+      {{svg-jar "check-circle" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>The organisers review every quiz after the competition ends. You won't see a score here.</span>
+    </li>
+  </ul>
+
+  <div class="mb-6">
+    <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Stages you completed during the competition</div>
+
+    {{#if this.stagesCompleted.length}}
+      <div class="flex flex-wrap gap-1.5">
+        {{#each this.stagesCompleted as |stage|}}
+          <span class="rounded-sm bg-gray-800 px-2 py-0.5 text-xs text-gray-300" data-test-stage-completed>{{stage.name}}</span>
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="rounded-sm border border-white/10 bg-gray-800/60 p-3 text-sm text-gray-300" data-test-no-stages-notice>
+        Complete at least one stage of
+        {{@repository.course.name}}
+        during
+        {{@competition.name}}, then come back for the quiz.
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="flex items-start rounded-sm border border-yellow-500/30 bg-yellow-950/40 p-3 mb-6 text-sm text-yellow-200" data-test-one-attempt-notice>
+    {{svg-jar "information-circle" class="w-5 h-5 mr-2 shrink-0"}}
+    <span>You can take the quiz only once, so take it when you've finished the stages you're aiming for. If the call doesn't connect, you can try
+      again.</span>
+  </div>
+
+  {{#if this.microphoneIsBlocked}}
+    <div class="flex items-start rounded-sm border border-red-500/30 bg-red-950/50 p-3 mb-6 text-sm text-red-300" data-test-microphone-blocked-notice>
+      {{svg-jar "exclamation" class="w-5 h-5 mr-2 shrink-0"}}
+      <span>Microphone access is blocked. Allow it in your browser's site settings, then click "Start quiz" again.</span>
+    </div>
+  {{/if}}
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <label class="flex items-center text-sm text-gray-300 cursor-pointer select-none">
+      <input
+        type="checkbox"
+        checked={{@shouldShowCaptions}}
+        class="mr-2 rounded-sm border-gray-600 bg-gray-800 text-teal-500 focus:ring-teal-500"
+        data-test-captions-checkbox
+        {{on "change" @onCaptionsToggle}}
+      />
+      Show live captions
+    </label>
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.shouldDisableStartButton}}
+      @shouldShowSpinner={{@isStarting}}
+      disabled={{this.shouldDisableStartButton}}
+      data-test-start-quiz-button
+      {{on "click" @onStartButtonClick}}
+    >
+      {{if @isResuming "Resume quiz" "Start quiz"}}
+    </PrimaryButtonWithSpinner>
+  </div>
+
+  <p class="mt-6 text-xs text-gray-500">
+    The conversation is recorded and transcribed so the organisers can review it.
+  </p>
+</div>

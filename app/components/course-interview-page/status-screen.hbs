@@ -3,6 +3,10 @@
     <div class="flex items-center justify-center w-14 h-14 rounded-full bg-red-950 ring-1 ring-red-500/30 mb-6">
       {{svg-jar "exclamation" class="w-7 h-7 text-red-400"}}
     </div>
+  {{else if @isSuccess}}
+    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-teal-950 ring-1 ring-teal-500/30 mb-6">
+      {{svg-jar "check-circle" class="w-7 h-7 text-teal-400"}}
+    </div>
   {{else}}
     <div class="relative w-14 h-14 mb-6">
       <div class="absolute inset-0 rounded-full border-2 border-teal-500/20"></div>

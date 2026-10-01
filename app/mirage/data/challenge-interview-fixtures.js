@@ -1,8 +1,17 @@
+const brief = [
+  'Q1 (trace-through, app/main.py:12-30): Walk me through what happens when a client sends PING.',
+  'Q2 (failure mode, app/main.py:14-16): What happens if a RESP command arrives split across two reads?',
+].join('\n');
+
 export const readyInterviewAttributes = {
-  brief: [
-    'Q1 (trace-through, app/main.py:12-30): Walk me through what happens when a client sends PING.',
-    'Q2 (failure mode, app/main.py:14-16): What happens if a RESP command arrives split across two reads?',
-  ].join('\n'),
+  agentVariables: {
+    call_minutes: '8',
+    challenge_name: 'Build your own Redis',
+    first_name: 'Paul',
+    interview_brief: brief,
+    language_name: 'Python',
+    milestone_title: 'Base stages',
+  },
   codeFiles: [
     {
       path: 'app/main.py',
@@ -41,6 +50,20 @@ export const readyInterviewAttributes = {
   conversationToken: 'fake-conversation-token',
   maxDurationSeconds: 480,
   status: 'ready',
+};
+
+export const readyQuizAttributes = {
+  ...readyInterviewAttributes,
+  agentVariables: {
+    call_minutes: '10',
+    challenge_name: 'Build your own Redis',
+    competition_name: 'Redis Sprint',
+    first_name: 'Paul',
+    interview_brief: 'Question 1 (their approach to the stage "Respond to PING"): How did you implement the PING command?',
+    language_name: 'Python',
+    partner_name: 'Some YouTuber',
+  },
+  maxDurationSeconds: 600,
 };
 
 export const scoredInterviewReport = {

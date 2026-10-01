@@ -1,15 +1,16 @@
 import Component from '@glimmer/component';
 import config from 'codecrafters-frontend/config/environment';
-import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type ChallengeInterviewModel from 'codecrafters-frontend/models/challenge-interview';
 import type InterviewMilestone from 'codecrafters-frontend/utils/interview-milestone';
 import type Owner from '@ember/owner';
+import type PartnerCompetitionModel from 'codecrafters-frontend/models/partner-competition';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
 import type VoiceInterviewService from 'codecrafters-frontend/services/voice-interview';
 import type { ChallengeInterviewEndReason } from 'codecrafters-frontend/models/challenge-interview';
 import { action } from '@ember/object';
+import { interviewServiceRefusalMessage } from 'codecrafters-frontend/utils/interview-service-error';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
@@ -20,20 +21,23 @@ const POLL_INTERVAL_MS = config.environment === 'test' ? 0 : 2000;
 const WRAP_UP_NOTICE = "Time is nearly up. Let them finish the answer they're giving, then thank them, say goodbye and end the call.";
 const WRAP_UP_NOTICE_SECONDS = 90;
 
-export type CourseInterviewPhase = 'lobby' | 'preparing' | 'live' | 'scoring' | 'report' | 'failed';
+export type CourseInterviewPhase = 'lobby' | 'preparing' | 'live' | 'scoring' | 'report' | 'submitted' | 'failed';
 
 interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    competition?: PartnerCompetitionModel | null;
     initialInterview: ChallengeInterviewModel | null;
-    milestone: InterviewMilestone;
+    milestone?: InterviewMilestone | null;
     repository: RepositoryModel;
   };
 }
 
-function phaseForInterview(interview: ChallengeInterviewModel | null): CourseInterviewPhase {
-  if (interview?.isScored) {
+function phaseForInterview(interview: ChallengeInterviewModel | null, isQuiz: boolean): CourseInterviewPhase {
+  if (isQuiz && interview?.isSubmitted) {
+    return 'submitted';
+  } else if (interview?.isScored) {
     return 'report';
   } else if (interview?.isScoring) {
     return 'scoring';
@@ -45,12 +49,12 @@ function phaseForInterview(interview: ChallengeInterviewModel | null): CourseInt
 }
 
 export default class CourseInterviewPageContainer extends Component<Signature> {
-  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
   @service declare store: Store;
   @service declare voiceInterview: VoiceInterviewService;
 
   @tracked callDurationSeconds = DEFAULT_MAX_DURATION_SECONDS;
+  @tracked canRetry = true;
   @tracked failureMessage: string | null = null;
   @tracked interview: ChallengeInterviewModel | null;
   @tracked phase: CourseInterviewPhase;
@@ -64,27 +68,20 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     super(owner, args);
 
     this.interview = args.initialInterview;
-    this.phase = phaseForInterview(args.initialInterview);
+    this.phase = phaseForInterview(args.initialInterview, this.isQuiz);
     this.failureMessage = args.initialInterview?.errorMessage || null;
-  }
-
-  get agentVariables(): Record<string, string> {
-    const currentUser = this.authenticator.currentUser;
-    const firstName = currentUser?.name?.split(' ')[0] || currentUser?.username || 'there';
-
-    return {
-      call_minutes: String(Math.round(this.callDurationSeconds / 60)),
-      challenge_name: this.args.repository.course.name,
-      first_name: firstName,
-      interview_brief: this.interview?.brief || '',
-      interview_id: this.interview?.id || '',
-      language_name: this.args.repository.language?.name || '',
-      milestone_title: this.args.milestone.title,
-    };
   }
 
   get codeFiles() {
     return this.interview?.codeFiles || [];
+  }
+
+  get hasOpenInterview(): boolean {
+    return !!this.interview?.isOpen;
+  }
+
+  get isQuiz(): boolean {
+    return !!this.args.competition;
   }
 
   get phaseIsFailed(): boolean {
@@ -111,6 +108,18 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     return this.phase === 'scoring';
   }
 
+  get phaseIsSubmitted(): boolean {
+    return this.phase === 'submitted';
+  }
+
+  get submittedDescription(): string {
+    return `Thanks for taking part in ${this.args.competition?.name}. The organisers review every quiz after the competition ends and will be in touch about results.`;
+  }
+
+  get title(): string {
+    return this.args.competition?.name || this.args.milestone?.title || '';
+  }
+
   finishInterviewTask = task({ drop: true }, async (conversationId: string | null, endReason: ChallengeInterviewEndReason): Promise<void> => {
     this.#stopCountdown();
 
@@ -124,14 +133,19 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
 
     try {
       await waitForPromise(interview.markAsEnded({ conversation_id: conversationId, end_reason: endReason }));
-      await this.pollInterviewTask.perform(interview, 'scoring');
+
+      if (!this.isQuiz) {
+        await this.pollInterviewTask.perform(interview, 'scoring');
+      }
     } catch {
       this.#fail("We couldn't save your interview. Please try again.");
 
       return;
     }
 
-    if (interview.isScored) {
+    if (this.isQuiz && interview.isSubmitted) {
+      this.phase = 'submitted';
+    } else if (interview.isScored) {
       this.phase = 'report';
     } else {
       this.#fail(interview.errorMessage || "We couldn't score this interview.");
@@ -155,27 +169,27 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     this.failureMessage = null;
     this.phase = 'preparing';
 
-    const interview = this.store.createRecord('challenge-interview', {
-      milestoneSlug: this.args.milestone.slug,
-      repository: this.args.repository,
-    });
+    const resumableInterview = this.interview?.isOpen ? this.interview : null;
+    const interview = resumableInterview || this.#buildInterview();
 
     this.interview = interview;
 
     try {
-      await interview.save();
+      await (resumableInterview ? interview.reload() : interview.save());
       await this.pollInterviewTask.perform(interview, 'generating');
-    } catch {
-      if (interview.isNew) {
+    } catch (error) {
+      if (!interview.id) {
         interview.unloadRecord();
       }
 
-      this.#fail("We couldn't reach the interview service. Please try again.");
+      const refusal = interviewServiceRefusalMessage(error);
+
+      this.#fail(refusal || "We couldn't reach the interview service. Please try again.", { canRetry: !refusal });
 
       return;
     }
 
-    if (!interview.isReady || !interview.conversationToken) {
+    if (!interview.isReady || !interview.conversationToken || !interview.agentVariables) {
       this.#fail(interview.errorMessage || "We couldn't prepare questions for your code.");
 
       return;
@@ -189,7 +203,7 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     await this.voiceInterview.start({
       availableFilePaths: this.codeFiles.map((file) => file.path),
       conversationToken: interview.conversationToken,
-      dynamicVariables: this.agentVariables,
+      dynamicVariables: interview.agentVariables,
       onEnded: this.handleVoiceInterviewEnded,
     });
 
@@ -204,8 +218,17 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     }
   });
 
-  #fail(message: string): void {
+  #buildInterview(): ChallengeInterviewModel {
+    return this.store.createRecord('challenge-interview', {
+      competitionSlug: this.args.competition?.slug || null,
+      milestoneSlug: this.args.milestone?.slug || null,
+      repository: this.args.repository,
+    });
+  }
+
+  #fail(message: string, { canRetry = true } = {}): void {
     this.#stopCountdown();
+    this.canRetry = canRetry;
     this.failureMessage = message;
     this.phase = 'failed';
   }
@@ -219,7 +242,7 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
   async handleDidInsert(): Promise<void> {
     if (this.phase === 'scoring' && this.interview) {
       await this.pollInterviewTask.perform(this.interview, 'scoring');
-      this.phase = phaseForInterview(this.interview);
+      this.phase = phaseForInterview(this.interview, this.isQuiz);
     }
   }
 
@@ -234,7 +257,7 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     this.failureMessage = null;
     this.phase = 'lobby';
 
-    if (this.args.initialInterview) {
+    if (this.args.initialInterview && this.args.milestone) {
       this.router.transitionTo('course-interview', this.args.repository.course.slug, this.args.milestone.slug, {
         queryParams: { interview: null, repo: this.args.repository.id },
       });
