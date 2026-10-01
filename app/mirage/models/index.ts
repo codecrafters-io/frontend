@@ -6,6 +6,7 @@ import autofixRequest from './autofix-request';
 import badge from './badge';
 import badgeAward from './badge-award';
 import buildpack from './buildpack';
+import challengeInterview from './challenge-interview';
 import charge from './charge';
 import codeWalkthrough from './code-walkthrough';
 import communityCourseStageSolution from './community-course-stage-solution';
@@ -101,6 +102,7 @@ export default {
   badge,
   badgeAward,
   buildpack,
+  challengeInterview,
   charge,
   codeWalkthrough,
   communityCourseStageSolution,

@@ -1,0 +1,49 @@
+<div class="h-14 border-b border-white/10 bg-gray-950 shrink-0" data-test-top-bar ...attributes>
+  <div class="h-full flex items-center justify-between px-3 md:px-4">
+    <div class="flex items-center min-w-0">
+      <LinkTo @route="course" @model={{@repository.course.slug}} @query={{hash repo=@repository.id}} class="flex items-center shrink-0">
+        <img src={{this.logomarkDark}} alt="CodeCrafters" class="h-7 w-7" />
+      </LinkTo>
+
+      <span class="mx-3 text-gray-600">|</span>
+
+      <span class="text-sm text-gray-300 truncate" data-test-title>
+        Interview:
+        {{@repository.course.name}}
+        ·
+        {{@milestone.title}}
+      </span>
+
+      <Pill @color="teal" @size="small" class="ml-3 shrink-0">Experimental</Pill>
+    </div>
+
+    <div class="flex items-center shrink-0">
+      {{#if @shouldShowCallControls}}
+        <span
+          class="font-mono text-sm tabular-nums {{if this.isRunningOutOfTime 'text-red-400' 'text-gray-300'}}"
+          title="Time remaining"
+          data-test-remaining-time
+        >
+          {{this.formattedRemainingTime}}
+          mins
+        </span>
+
+        <span class="mx-3 text-gray-600">|</span>
+
+        <DangerButton @size="small" data-test-end-interview-button {{on "click" @onEndInterviewButtonClick}}>
+          End Interview
+        </DangerButton>
+      {{else}}
+        <TertiaryLinkButton
+          @route="course"
+          @model={{@repository.course.slug}}
+          @query={{hash repo=@repository.id}}
+          @size="small"
+          data-test-back-button
+        >
+          Back to challenge
+        </TertiaryLinkButton>
+      {{/if}}
+    </div>
+  </div>
+</div>

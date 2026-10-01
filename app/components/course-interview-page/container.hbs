@@ -1,0 +1,79 @@
+<div class="flex flex-col h-screen bg-gray-950 text-gray-100" data-test-course-interview-page {{did-insert this.handleDidInsert}} ...attributes>
+  <CourseInterviewPage::TopBar
+    @milestone={{@milestone}}
+    @onEndInterviewButtonClick={{this.handleEndInterviewButtonClick}}
+    @remainingSeconds={{this.remainingSeconds}}
+    @repository={{@repository}}
+    @shouldShowCallControls={{this.phaseIsLive}}
+  />
+
+  <div class="flex grow min-h-0 p-3 md:p-4 gap-4">
+    {{#if this.phaseIsLobby}}
+      <CourseInterviewPage::Lobby
+        @isStarting={{this.startInterviewTask.isRunning}}
+        @milestone={{@milestone}}
+        @onCaptionsToggle={{this.handleCaptionsToggle}}
+        @onStartButtonClick={{this.handleStartInterviewButtonClick}}
+        @repository={{@repository}}
+        @shouldShowCaptions={{this.shouldShowCaptions}}
+        class="m-auto"
+      />
+    {{else if this.phaseIsPreparing}}
+      <CourseInterviewPage::StatusScreen
+        @description="Pulling your latest code and working out what to ask about it. This usually takes 10 to 20 seconds."
+        @title="Reading your code..."
+        class="m-auto"
+        data-test-preparing-screen
+      />
+    {{else if this.phaseIsLive}}
+      <div
+        class="grid w-full max-w-sm shrink-0 gap-4 min-h-0 transition-[grid-template-rows] duration-500 ease-in-out motion-reduce:transition-none
+          {{if
+            this.shouldShowCaptions
+            'grid-rows-[auto_minmax(0,3fr)_minmax(11rem,2fr)_auto]'
+            'grid-rows-[auto_minmax(0,0fr)_minmax(11rem,1fr)_auto]'
+          }}"
+      >
+        <CourseInterviewPage::MilestoneCard @milestone={{@milestone}} @repository={{@repository}} />
+
+        <CourseInterviewPage::CaptionsPanel @isVisible={{this.shouldShowCaptions}} class="min-h-0" />
+
+        <CourseInterviewPage::VoiceOrb class="min-h-0" />
+
+        <CourseInterviewPage::CallControls @onCaptionsToggle={{this.handleCaptionsToggle}} @shouldShowCaptions={{this.shouldShowCaptions}} />
+      </div>
+
+      <CourseInterviewPage::CodePanel @codeFiles={{this.codeFiles}} class="grow min-w-0" />
+    {{else if this.phaseIsScoring}}
+      <CourseInterviewPage::StatusScreen
+        @description="Checking your answers against your code. You'll get feedback on each question in a moment."
+        @title="Scoring your interview..."
+        class="m-auto"
+        data-test-scoring-screen
+      />
+    {{else if this.phaseIsReport}}
+      {{#if this.interview.report}}
+        <CourseInterviewPage::Report
+          @codeFiles={{this.codeFiles}}
+          @milestone={{@milestone}}
+          @onRetakeButtonClick={{this.handleRetakeButtonClick}}
+          @report={{this.interview.report}}
+          @repository={{@repository}}
+          class="w-full"
+        />
+      {{/if}}
+    {{else if this.phaseIsFailed}}
+      <CourseInterviewPage::StatusScreen
+        @description={{this.failureMessage}}
+        @isError={{true}}
+        @title="Something went wrong"
+        class="m-auto"
+        data-test-failed-screen
+      >
+        <PrimaryButton class="mt-6" data-test-try-again-button {{on "click" this.handleRetakeButtonClick}}>
+          Try again
+        </PrimaryButton>
+      </CourseInterviewPage::StatusScreen>
+    {{/if}}
+  </div>
+</div>

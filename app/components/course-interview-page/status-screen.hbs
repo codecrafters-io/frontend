@@ -1,0 +1,20 @@
+<div class="flex flex-col items-center text-center max-w-md px-4" data-test-status-screen ...attributes>
+  {{#if @isError}}
+    <div class="flex items-center justify-center w-14 h-14 rounded-full bg-red-950 ring-1 ring-red-500/30 mb-6">
+      {{svg-jar "exclamation" class="w-7 h-7 text-red-400"}}
+    </div>
+  {{else}}
+    <div class="relative w-14 h-14 mb-6">
+      <div class="absolute inset-0 rounded-full border-2 border-teal-500/20"></div>
+      <div class="absolute inset-0 rounded-full border-2 border-transparent border-t-teal-400 animate-spin"></div>
+    </div>
+  {{/if}}
+
+  <h2 class="text-xl font-semibold text-gray-50 mb-2" data-test-status-screen-title>{{@title}}</h2>
+
+  {{#if @description}}
+    <p class="text-sm text-gray-400 leading-relaxed" data-test-status-screen-description>{{@description}}</p>
+  {{/if}}
+
+  {{yield}}
+</div>

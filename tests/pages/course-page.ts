@@ -5,6 +5,7 @@ import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/c
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageYourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-your-task-card';
 import Header from 'codecrafters-frontend/tests/pages/components/course-page/header';
+import InterviewPromptCard from 'codecrafters-frontend/tests/pages/components/course-page/interview-prompt-card';
 import Leaderboard from 'codecrafters-frontend/tests/pages/components/course-page/leaderboard';
 import PrivateLeaderboardFeatureSuggestion from 'codecrafters-frontend/tests/pages/components/private-leaderboard-feature-suggestion';
 import RepositoryDropdown from 'codecrafters-frontend/tests/pages/components/course-page/repository-dropdown';
@@ -121,6 +122,7 @@ export default create({
     scope: '[data-test-install-cli-link]',
   },
 
+  interviewPromptCard: InterviewPromptCard,
   leaderboard: Leaderboard,
 
   monthlyChallengeBanner: {

@@ -61,6 +61,7 @@ Router.map(function () {
     this.route('completed');
   });
 
+  this.route('course-interview', { path: '/courses/:course_slug/interview/:milestone_slug' });
   this.route('course-overview', { path: '/courses/:course_slug/overview' }); // TODO: Add dark mode support
   this.route('debug');
   this.route('gifts.buy', { path: '/gifts/buy' });

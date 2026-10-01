@@ -25,6 +25,8 @@
     <PrimaryButton data-test-configure-extensions-button class="mt-4" {{on "click" this.handleConfigureExtensionsButtonClick}}>
       Choose Extensions
     </PrimaryButton>
+
+    <CoursePage::InterviewPromptCard @milestone={{this.interviewMilestone}} class="mt-6" />
   </:content>
 </CoursePage::InstructionsCard>
 
