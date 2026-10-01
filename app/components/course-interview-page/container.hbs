@@ -8,7 +8,7 @@
     @title={{this.title}}
   />
 
-  <div class="flex grow min-h-0 p-3 md:p-4 gap-4">
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto flex grow min-h-0 gap-4 px-3 md:px-6 py-3 md:py-4">
     {{#if this.phaseIsLobby}}
       {{#if @competition}}
         <CourseInterviewPage::CompetitionLobby
@@ -41,7 +41,7 @@
       />
     {{else if this.phaseIsLive}}
       <div
-        class="grid w-full max-w-sm shrink-0 gap-4 min-h-0 transition-[grid-template-rows] duration-500 ease-in-out motion-reduce:transition-none
+        class="grid w-full max-w-xs shrink-0 gap-4 min-h-0 transition-[grid-template-rows] duration-500 ease-in-out motion-reduce:transition-none
           {{if
             this.shouldShowCaptions
             'grid-rows-[auto_minmax(0,3fr)_minmax(11rem,2fr)_auto]'

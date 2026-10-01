@@ -20,6 +20,7 @@ export default createPage({
     scope: '[data-test-failed-screen]',
   },
 
+  footer: { scope: '[data-test-footer]' },
   header: Header,
   lobby: Lobby,
   report: Report,

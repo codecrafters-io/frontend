@@ -94,6 +94,8 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
     await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
 
+    assert.notOk(courseQuizPage.header.isVisible, 'site header is hidden so the quiz fits the screen');
+    assert.notOk(courseQuizPage.footer.isVisible, 'site footer is hidden too');
     assert.contains(courseQuizPage.competitionLobby.oneAttemptNoticeText, 'only once');
 
     await percySnapshot('Course Quiz Page - Lobby');

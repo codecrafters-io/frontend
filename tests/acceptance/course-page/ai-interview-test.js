@@ -146,6 +146,7 @@ module('Acceptance | course-page | ai-interview-test', function (hooks) {
     await courseInterviewPage.visit({ course_slug: 'redis', milestone_slug: 'base-stages' });
 
     assert.notOk(courseInterviewPage.header.isVisible, 'site header is hidden so the interview fits the screen');
+    assert.notOk(courseInterviewPage.footer.isVisible, 'site footer is hidden too');
     assert.strictEqual(courseInterviewPage.lobby.stagesCovered.length, baseStagesCount, 'lobby lists every base stage');
     assert.notOk(courseInterviewPage.topBar.endInterviewButtonIsVisible, 'end interview button is hidden before the call');
 

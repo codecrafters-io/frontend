@@ -12,7 +12,11 @@ export default class InterviewBaseRoute extends BaseRoute {
   @service declare store: Store;
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ beaconVisibility: HelpscoutBeaconVisibility.Hidden, colorScheme: RouteColorScheme.Dark });
+    return new RouteInfoMetadata({
+      beaconVisibility: HelpscoutBeaconVisibility.Hidden,
+      colorScheme: RouteColorScheme.Dark,
+      shouldShowHeaderAndFooter: false,
+    });
   }
 
   async loadCourseAndRepositories(courseSlug: string): Promise<[CourseModel | undefined, RepositoryModel[]]> {

@@ -1,5 +1,6 @@
 import CodePanel from 'codecrafters-frontend/tests/pages/components/course-interview-page/code-panel';
 import CompetitionLobby from 'codecrafters-frontend/tests/pages/components/course-interview-page/competition-lobby';
+import Header from 'codecrafters-frontend/tests/pages/components/header';
 import Report from 'codecrafters-frontend/tests/pages/components/course-interview-page/report';
 import TopBar from 'codecrafters-frontend/tests/pages/components/course-interview-page/top-bar';
 import createPage from 'codecrafters-frontend/tests/support/create-page';
@@ -18,6 +19,8 @@ export default createPage({
     tryAgainButton: { scope: '[data-test-try-again-button]' },
   },
 
+  footer: { scope: '[data-test-footer]' },
+  header: Header,
   report: Report,
 
   submittedScreen: {
