@@ -1,0 +1,51 @@
+{{#if this.shouldShow}}
+  <div
+    class="rounded-md border border-teal-500/30 bg-teal-50 dark:bg-teal-950/30 p-4"
+    data-test-interview-prompt-card
+    {{did-insert this.handleDidInsert}}
+    ...attributes
+  >
+    <div class="flex flex-wrap items-center gap-2 mb-1.5">
+      {{svg-jar "microphone" class="w-4 h-4 text-teal-600 dark:text-teal-400"}}
+      <span class="font-semibold text-gray-900 dark:text-gray-50">Can you explain what you built?</span>
+      <Pill @color="teal" @size="small">Experimental · Staff only</Pill>
+    </div>
+
+    <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
+      Take an 8-minute voice interview about the code you wrote for
+      <strong>{{@milestone.title}}</strong>. An AI interviewer asks how your code works and why you built it that way, then gives you written
+      feedback.
+    </p>
+
+    {{#if this.latestScoredInterview}}
+      <div class="text-sm text-gray-600 dark:text-gray-300 mb-3" data-test-latest-result>
+        Last result:
+        <strong>{{this.latestVerdictLabel}}</strong>
+      </div>
+    {{/if}}
+
+    <div class="flex flex-wrap items-center gap-2">
+      <PrimaryLinkButton
+        @models={{array @milestone.repository.course.slug @milestone.slug}}
+        @query={{hash interview=null repo=this.repositoryId}}
+        @route="course-interview"
+        @size="small"
+        data-test-start-interview-button
+      >
+        {{if this.latestScoredInterview "Retake interview" "Start interview"}}
+      </PrimaryLinkButton>
+
+      {{#if this.latestScoredInterview}}
+        <TertiaryLinkButton
+          @models={{array @milestone.repository.course.slug @milestone.slug}}
+          @query={{hash interview=this.latestScoredInterview.id repo=this.repositoryId}}
+          @route="course-interview"
+          @size="small"
+          data-test-view-report-button
+        >
+          View report
+        </TertiaryLinkButton>
+      {{/if}}
+    </div>
+  </div>
+{{/if}}

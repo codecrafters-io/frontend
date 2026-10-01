@@ -12,6 +12,7 @@
 /* Custom styles for individual pages */
 @import url('pages/affiliate-link-page.css');
 @import url('pages/code-walkthrough-page.css');
+@import url('pages/course-interview-page.css');
 @import url('pages/course-stage-solution-page.css');
 
 :root {

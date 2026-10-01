@@ -1,0 +1,127 @@
+<div class="flex flex-col h-screen bg-gray-950 text-gray-100" data-test-course-interview-page {{did-insert this.handleDidInsert}} ...attributes>
+  <CourseInterviewPage::TopBar
+    @isQuiz={{this.isQuiz}}
+    @onEndInterviewButtonClick={{this.handleEndInterviewButtonClick}}
+    @remainingSeconds={{this.remainingSeconds}}
+    @repository={{@repository}}
+    @shouldShowCallControls={{this.phaseIsLive}}
+    @title={{this.title}}
+  />
+
+  <div class="container lg:max-w-(--breakpoint-lg) mx-auto flex grow min-h-0 gap-4 px-3 md:px-6 py-3 md:py-4">
+    {{#if this.phaseIsLobby}}
+      {{#if @competition}}
+        <CourseInterviewPage::CompetitionLobby
+          @competition={{@competition}}
+          @isResuming={{this.hasOpenInterview}}
+          @isStarting={{this.startInterviewTask.isRunning}}
+          @onCaptionsToggle={{this.handleCaptionsToggle}}
+          @onStartButtonClick={{this.handleStartInterviewButtonClick}}
+          @repository={{@repository}}
+          @shouldShowCaptions={{this.shouldShowCaptions}}
+          class="m-auto"
+        />
+      {{else if @milestone}}
+        <CourseInterviewPage::Lobby
+          @isStarting={{this.startInterviewTask.isRunning}}
+          @milestone={{@milestone}}
+          @onCaptionsToggle={{this.handleCaptionsToggle}}
+          @onStartButtonClick={{this.handleStartInterviewButtonClick}}
+          @repository={{@repository}}
+          @shouldShowCaptions={{this.shouldShowCaptions}}
+          class="m-auto"
+        />
+      {{/if}}
+    {{else if this.phaseIsPreparing}}
+      <CourseInterviewPage::StatusScreen
+        @description="Pulling your latest code and working out what to ask about it. This usually takes 10 to 20 seconds."
+        @title="Reading your code..."
+        class="m-auto"
+        data-test-preparing-screen
+      />
+    {{else if this.phaseIsLive}}
+      <div
+        class="grid w-full max-w-xs shrink-0 gap-4 min-h-0 transition-[grid-template-rows] duration-500 ease-in-out motion-reduce:transition-none
+          {{if
+            this.shouldShowCaptions
+            'grid-rows-[auto_minmax(0,3fr)_minmax(11rem,2fr)_auto]'
+            'grid-rows-[auto_minmax(0,0fr)_minmax(11rem,1fr)_auto]'
+          }}"
+      >
+        {{#if @competition}}
+          <CourseInterviewPage::CompetitionCard @competition={{@competition}} @repository={{@repository}} />
+        {{else if @milestone}}
+          <CourseInterviewPage::MilestoneCard @milestone={{@milestone}} @repository={{@repository}} />
+        {{/if}}
+
+        <CourseInterviewPage::CaptionsPanel @isVisible={{this.shouldShowCaptions}} class="min-h-0" />
+
+        <CourseInterviewPage::VoiceOrb class="min-h-0" />
+
+        <CourseInterviewPage::CallControls @onCaptionsToggle={{this.handleCaptionsToggle}} @shouldShowCaptions={{this.shouldShowCaptions}} />
+      </div>
+
+      <CourseInterviewPage::CodePanel @codeFiles={{this.codeFiles}} class="grow min-w-0" />
+    {{else if this.phaseIsScoring}}
+      <CourseInterviewPage::StatusScreen
+        @description={{if
+          this.isQuiz
+          "Saving your quiz. This takes a moment."
+          "Checking your answers against your code. You'll get feedback on each question in a moment."
+        }}
+        @title={{if this.isQuiz "Submitting your quiz..." "Scoring your interview..."}}
+        class="m-auto"
+        data-test-scoring-screen
+      />
+    {{else if this.phaseIsSubmitted}}
+      <CourseInterviewPage::StatusScreen
+        @description={{this.submittedDescription}}
+        @isSuccess={{true}}
+        @title="Quiz submitted"
+        class="m-auto"
+        data-test-submitted-screen
+      >
+        <TertiaryLinkButton @route="course" @model={{@repository.course.slug}} @query={{hash repo=@repository.id}} class="mt-6">
+          Back to challenge
+        </TertiaryLinkButton>
+      </CourseInterviewPage::StatusScreen>
+    {{else if this.phaseIsReport}}
+      {{#if this.interview.report}}
+        {{#if @milestone}}
+          <CourseInterviewPage::Report
+            @codeFiles={{this.codeFiles}}
+            @milestone={{@milestone}}
+            @onRetakeButtonClick={{this.handleRetakeButtonClick}}
+            @report={{this.interview.report}}
+            @repository={{@repository}}
+            class="w-full"
+          />
+        {{/if}}
+      {{/if}}
+    {{else if this.phaseIsFailed}}
+      <CourseInterviewPage::StatusScreen
+        @description={{this.failureMessage}}
+        @isError={{true}}
+        @title="Something went wrong"
+        class="m-auto"
+        data-test-failed-screen
+      >
+        {{#if this.canRetry}}
+          <PrimaryButton class="mt-6" data-test-try-again-button {{on "click" this.handleRetakeButtonClick}}>
+            Try again
+          </PrimaryButton>
+        {{else}}
+          <TertiaryLinkButton
+            @route="course"
+            @model={{@repository.course.slug}}
+            @query={{hash repo=@repository.id}}
+            class="mt-6"
+            data-test-back-to-challenge-button
+          >
+            Back to challenge
+          </TertiaryLinkButton>
+        {{/if}}
+      </CourseInterviewPage::StatusScreen>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<li class="flex items-center gap-4 py-4 px-0.5 hover:bg-gray-50" data-test-quiz-list-item ...attributes>
+  <div class="w-40 shrink-0">
+    <LinkTo
+      @route="course-admin.submissions"
+      @query={{hash usernames=@quiz.participantUsername}}
+      class="text-sm font-semibold text-gray-700 hover:underline truncate block"
+      data-test-participant-username
+    >{{@quiz.participantUsername}}</LinkTo>
+
+    {{#if @quiz.endedAt}}
+      <div class="flex items-center mt-1">
+        {{svg-jar "clock" class="w-4 text-gray-400 mr-1"}}
+        <span class="text-xs text-gray-400">{{date-from-now @quiz.endedAt}}</span>
+        <EmberTooltip @text={{date-format @quiz.endedAt format="PPPp"}} />
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="grow min-w-0">
+    <div class="text-sm text-gray-700" data-test-competition-name>{{@quiz.competitionName}}</div>
+
+    {{#if this.stagesAsked}}
+      <div class="text-xs text-gray-500 mt-1 truncate">Asked about: {{this.stagesAsked}}</div>
+    {{/if}}
+  </div>
+
+  <div class="w-36 shrink-0 text-xs text-gray-500" data-test-ai-read>
+    {{#if @quiz.aiReadLabel}}
+      AI read:
+      <span class="font-semibold text-gray-700">{{@quiz.aiReadLabel}}</span>
+    {{else if @quiz.isScoringFailed}}
+      <span class="text-red-600">Scoring failed</span>
+    {{else}}
+      Scoring…
+    {{/if}}
+  </div>
+
+  <Pill @color={{this.decisionColor}} @size="small" class="shrink-0" data-test-review-decision>{{@quiz.decisionLabel}}</Pill>
+
+  <TertiaryLinkButton @route="course-admin.quiz" @models={{array @course.slug @quiz.id}} @size="extra-small" data-test-review-button>
+    Review
+  </TertiaryLinkButton>
+</li>

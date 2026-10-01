@@ -1,0 +1,45 @@
+<div class="rounded-md border border-gray-200 p-4" data-test-quiz-question ...attributes>
+  <div class="flex items-start justify-between gap-4 mb-2">
+    <div>
+      {{#if @row.stage}}
+        <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1" data-test-question-stage>
+          {{@row.stage.name}}
+          {{#if @row.stage.extensionName}}
+            ·
+            {{@row.stage.extensionName}}
+          {{/if}}
+        </div>
+      {{/if}}
+      <div class="font-medium text-gray-900">{{@row.question}}</div>
+    </div>
+
+    <Pill @color={{this.verdictColor}} @size="small" class="shrink-0" data-test-question-verdict>{{this.verdictLabel}}</Pill>
+  </div>
+
+  {{#if @row.scored}}
+    <p class="text-sm text-gray-600 mb-3">{{@row.scored.verdict_explanation}}</p>
+
+    {{#if @row.scored.evidence_quote}}
+      <blockquote class="border-l-2 border-gray-300 pl-3 mb-3 text-sm italic text-gray-700" data-test-question-quote>
+        "{{@row.scored.evidence_quote}}"
+      </blockquote>
+    {{/if}}
+  {{/if}}
+
+  {{#if @row.stage}}
+    <LinkTo
+      @route="course-admin.submissions"
+      @query={{hash usernames=@participantUsername course_stage_slugs=@row.stage.slug}}
+      class="text-xs text-teal-600 hover:underline"
+      data-test-stage-submissions-link
+    >
+      View their submissions for this stage
+    </LinkTo>
+  {{/if}}
+
+  {{#if @row.anchor}}
+    {{#if @codeFiles}}
+      <CourseInterviewPage::CodeExcerpt @anchor={{@row.anchor}} @codeFiles={{@codeFiles}} class="mt-3" />
+    {{/if}}
+  {{/if}}
+</div>

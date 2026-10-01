@@ -1,0 +1,66 @@
+<div class="rounded-md border border-gray-200 p-4" data-test-decision-panel ...attributes>
+  <div class="text-sm font-semibold text-gray-900 mb-1">Eligibility</div>
+
+  <div class="text-sm text-gray-600 mb-3" data-test-review-decision>
+    {{@quiz.decisionLabel}}
+    {{#if @quiz.reviewedBy}}
+      · by
+      {{@quiz.reviewedBy}}
+      {{#if @quiz.reviewedAt}}
+        {{date-from-now @quiz.reviewedAt}}
+      {{/if}}
+    {{/if}}
+  </div>
+
+  <textarea
+    class="block w-full rounded-sm border border-gray-300 text-sm text-gray-700 focus:border-teal-500 focus:ring-teal-500"
+    placeholder="Note for other reviewers (optional)"
+    rows="3"
+    value={{this.note}}
+    aria-label="Review note"
+    data-test-review-note
+    {{on "input" this.handleNoteInput}}
+  ></textarea>
+
+  <div class="flex flex-wrap items-center gap-2 mt-3">
+    <PrimaryButton
+      @isDisabled={{this.saveDecisionTask.isRunning}}
+      @size="small"
+      disabled={{this.saveDecisionTask.isRunning}}
+      data-test-eligible-button
+      {{on "click" (fn this.handleDecisionButtonClick "eligible")}}
+    >
+      Eligible
+    </PrimaryButton>
+
+    <DangerButton
+      @isDisabled={{this.saveDecisionTask.isRunning}}
+      @size="small"
+      disabled={{this.saveDecisionTask.isRunning}}
+      data-test-not-eligible-button
+      {{on "click" (fn this.handleDecisionButtonClick "not_eligible")}}
+    >
+      Not eligible
+    </DangerButton>
+
+    {{#if @quiz.reviewDecision}}
+      <TertiaryButton
+        @isDisabled={{this.saveDecisionTask.isRunning}}
+        @size="small"
+        disabled={{this.saveDecisionTask.isRunning}}
+        data-test-clear-decision-button
+        {{on "click" (fn this.handleDecisionButtonClick null)}}
+      >
+        Clear
+      </TertiaryButton>
+    {{/if}}
+
+    {{#if this.saveDecisionTask.isRunning}}
+      <span class="text-xs text-gray-400">Saving…</span>
+    {{/if}}
+  </div>
+
+  {{#if this.errorMessage}}
+    <div class="text-sm text-red-600 mt-2" role="alert" data-test-review-error>{{this.errorMessage}}</div>
+  {{/if}}
+</div>

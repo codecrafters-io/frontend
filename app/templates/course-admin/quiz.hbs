@@ -1,0 +1,101 @@
+{{page-title (concat "Quiz: " this.model.quiz.participantUsername)}}
+
+<div class="bg-white min-h-screen">
+  <div class="container mx-auto pt-4 pb-10 px-6">
+    <div class="pt-3 pb-6 border-b border-gray-200">
+      <LinkTo @route="course-admin.quizzes" class="text-xs text-gray-500 hover:underline">← All quizzes</LinkTo>
+
+      <h3 class="text-lg font-bold text-gray-900 mt-2 mb-1">
+        {{this.model.quiz.participantUsername}}
+        ·
+        {{this.model.quiz.competitionName}}
+      </h3>
+
+      <div class="text-xs text-gray-400">
+        {{#if this.model.quiz.endedAt}}
+          Submitted
+          {{date-format this.model.quiz.endedAt format="PPPp"}}
+        {{/if}}
+        {{#if this.model.quiz.aiReadLabel}}
+          · AI read:
+          {{this.model.quiz.aiReadLabel}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-6">
+      <div class="lg:col-span-2 space-y-6">
+        {{#if this.model.quiz.isScoringFailed}}
+          <div class="rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-700" data-test-scoring-failed-notice>
+            Scoring failed, so there's no AI write-up:
+            {{this.model.quiz.errorMessage}}
+            The recording and transcript are still here to review.
+          </div>
+        {{/if}}
+
+        {{#if this.model.quiz.report}}
+          <div>
+            <p class="text-gray-700" data-test-quiz-summary>{{this.model.quiz.report.summary}}</p>
+
+            {{#if this.model.quiz.report.review_suggestions.length}}
+              <ul class="list-disc pl-5 mt-3 space-y-1 text-sm text-gray-600">
+                {{#each this.model.quiz.report.review_suggestions as |suggestion|}}
+                  <li>{{suggestion}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </div>
+        {{/if}}
+
+        <div class="space-y-4">
+          {{#each this.questionRows as |row|}}
+            <CourseAdmin::QuizPage::QuestionCard
+              @codeFiles={{this.model.quiz.codeFiles}}
+              @isScored={{if this.model.quiz.report true false}}
+              @participantUsername={{this.model.quiz.participantUsername}}
+              @row={{row}}
+            />
+          {{/each}}
+        </div>
+
+        {{#if this.model.quiz.report.closing_answers.length}}
+          <div>
+            <div class="text-sm font-semibold text-gray-900 mb-2">Feedback</div>
+            <div class="space-y-3">
+              {{#each this.model.quiz.report.closing_answers as |answer|}}
+                <div class="rounded-md border border-gray-200 p-4" data-test-closing-answer>
+                  <div class="text-xs text-gray-500 mb-1">{{answer.question}}</div>
+                  <p class="text-sm text-gray-700" data-test-closing-answer-summary>{{answer.summary}}</p>
+                  <blockquote class="border-l-2 border-gray-300 pl-3 mt-2 text-sm italic text-gray-600" data-test-closing-answer-quote>
+                    "{{answer.quote}}"
+                  </blockquote>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        {{/if}}
+
+        <div>
+          <div class="text-sm font-semibold text-gray-900 mb-2">Transcript</div>
+          <ol class="space-y-2">
+            {{#each this.model.quiz.transcript as |turn|}}
+              <li class="flex gap-3 text-sm" data-test-transcript-turn>
+                <span class="w-24 shrink-0 font-semibold {{if (eq turn.role 'agent') 'text-gray-400' 'text-gray-800'}}">
+                  {{if (eq turn.role "agent") "Interviewer" "Participant"}}
+                </span>
+                <span class="text-gray-700">{{turn.text}}</span>
+              </li>
+            {{else}}
+              <li class="text-sm text-gray-400">No transcript yet.</li>
+            {{/each}}
+          </ol>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <CourseAdmin::QuizPage::DecisionPanel @quiz={{this.model.quiz}} />
+        <CourseAdmin::QuizPage::RecordingPlayer @quiz={{this.model.quiz}} />
+      </div>
+    </div>
+  </div>
+</div>

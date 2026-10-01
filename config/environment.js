@@ -50,6 +50,8 @@ module.exports = function (environment) {
       },
 
       helpscoutBeaconId: process.env.HELPSCOUT_BEACON_ID || 'bb089ae9-a4ae-4114-8f7a-b660f6310158',
+      interviewServiceUrl:
+        process.env.INTERVIEW_SERVICE_URL || (environment === 'development' ? 'http://localhost:3000' : 'https://screener.ccio.dev'),
       isCI: false, // Overridden in test environment
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -85,6 +87,7 @@ module.exports = function (environment) {
     ENV.APP.autoboot = false;
 
     ENV.x.percyIsEnabled = process.env.PERCY_ENABLE === 'true';
+    ENV.x.interviewServiceUrl = 'https://interview-service.test';
     ENV.x.isCI = !!process.env.CI;
     ENV.x.stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || 'dummy';
   }

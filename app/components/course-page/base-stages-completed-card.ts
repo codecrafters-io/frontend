@@ -1,10 +1,11 @@
 import Component from '@glimmer/component';
+import InterviewMilestone from 'codecrafters-frontend/utils/interview-milestone';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
 import congratulationsImage from '/assets/images/icons/congratulations.png';
 import type CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import type RouterService from '@ember/routing/router-service';
 
 interface Signature {
@@ -22,6 +23,11 @@ export default class BaseStagesCompletedCard extends Component<Signature> {
   @service declare router: RouterService;
 
   @tracked configureExtensionsModalIsOpen = false;
+
+  @cached
+  get interviewMilestone() {
+    return InterviewMilestone.forBaseStages(this.args.repository);
+  }
 
   get totalExtensionStagesCount() {
     return this.args.repository.course.sortedExtensionStages.length;
