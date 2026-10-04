@@ -45,6 +45,10 @@ export default function (server) {
       .map((entry) => entry.leaderboard.language.slug);
   });
 
+  server.post('/users/:id/audio-survey-invite', function () {
+    return { url: 'https://example.com/audio-survey-invite' };
+  });
+
   server.post('/users/:id/sync-username-from-github', function (schema, request) {
     let user = schema.users.find(request.params.id);
     user.update({ username: 'updated-username' });

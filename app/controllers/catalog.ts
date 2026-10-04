@@ -1,16 +1,73 @@
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { service } from '@ember/service';
 import Controller from '@ember/controller';
+import window from 'ember-window-mock';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 import type { ModelType } from 'codecrafters-frontend/routes/catalog';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
+import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
+
+function dismissedAudioSurveyBannerStorageKey(userId: string) {
+  return `user-audio-survey-banner-dismissed:${userId}`;
+}
 
 export default class CatalogController extends Controller {
   declare model: ModelType;
 
   @service declare authenticator: AuthenticatorService;
+  @service declare localStorage: LocalStorageService;
+
+  @tracked audioSurveyBannerDismissedForUserId: string | null = null;
+  @tracked isCreatingAudioSurveyInvite = false;
+
+  get shouldShowUserAudioSurveyBanner() {
+    const user = this.authenticator.currentUser;
+
+    if (!user?.showUserAudioSurveyBanner) {
+      return false;
+    }
+
+    if (this.audioSurveyBannerDismissedForUserId === user.id) {
+      return false;
+    }
+
+    return this.localStorage.getItem(dismissedAudioSurveyBannerStorageKey(user.id)) !== '1';
+  }
+
+  @action
+  async createAudioSurveyInvite() {
+    if (this.isCreatingAudioSurveyInvite) {
+      return;
+    }
+
+    this.isCreatingAudioSurveyInvite = true;
+
+    try {
+      const response = await this.authenticator.currentUser!.createAudioSurveyInvite({});
+
+      if (response?.url) {
+        window.open(response.url, '_blank', 'noopener,noreferrer');
+      }
+    } finally {
+      this.isCreatingAudioSurveyInvite = false;
+    }
+  }
+
+  @action
+  dismissAudioSurveyBanner() {
+    const user = this.authenticator.currentUser;
+
+    if (!user) {
+      return;
+    }
+
+    this.localStorage.setItem(dismissedAudioSurveyBannerStorageKey(user.id), '1');
+    this.audioSurveyBannerDismissedForUserId = user.id;
+  }
 
   get courses() {
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));

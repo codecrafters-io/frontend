@@ -14,6 +14,25 @@
     />
   {{else if (not this.authenticator.isAuthenticated)}}
     <ProductWalkthroughFeatureSuggestion class="mb-6" />
+  {{else if this.shouldShowUserAudioSurveyBanner}}
+    <AlertWithIcon
+      @type="info"
+      @isDismissable={{true}}
+      @onDismiss={{this.dismissAudioSurveyBanner}}
+      class="mb-6"
+      data-test-user-audio-survey-banner
+    >
+      <p>
+        <button
+          type="button"
+          class="underline"
+          {{on "click" this.createAudioSurveyInvite}}
+          data-test-user-audio-survey-banner-button
+        >
+          We're inviting members to a short audio survey about how you use CodeCrafters.
+        </button>
+      </p>
+    </AlertWithIcon>
   {{/if}}
 
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 mb-8">
