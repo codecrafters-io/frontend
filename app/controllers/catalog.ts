@@ -24,51 +24,6 @@ export default class CatalogController extends Controller {
   @tracked audioSurveyBannerDismissedForUserId: string | null = null;
   @tracked isCreatingAudioSurveyInvite = false;
 
-  get shouldShowUserAudioSurveyBanner() {
-    const user = this.authenticator.currentUser;
-
-    if (!user?.showUserAudioSurveyBanner) {
-      return false;
-    }
-
-    if (this.audioSurveyBannerDismissedForUserId === user.id) {
-      return false;
-    }
-
-    return this.localStorage.getItem(dismissedAudioSurveyBannerStorageKey(user.id)) !== '1';
-  }
-
-  @action
-  async createAudioSurveyInvite() {
-    if (this.isCreatingAudioSurveyInvite) {
-      return;
-    }
-
-    this.isCreatingAudioSurveyInvite = true;
-
-    try {
-      const response = await this.authenticator.currentUser!.createAudioSurveyInvite({});
-
-      if (response?.url) {
-        window.open(response.url, '_blank', 'noopener,noreferrer');
-      }
-    } finally {
-      this.isCreatingAudioSurveyInvite = false;
-    }
-  }
-
-  @action
-  dismissAudioSurveyBanner() {
-    const user = this.authenticator.currentUser;
-
-    if (!user) {
-      return;
-    }
-
-    this.localStorage.setItem(dismissedAudioSurveyBannerStorageKey(user.id), '1');
-    this.audioSurveyBannerDismissedForUserId = user.id;
-  }
-
   get courses() {
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
   }
@@ -164,6 +119,51 @@ export default class CatalogController extends Controller {
     return this.authenticator.currentUser.featureSuggestions
       .filter((item) => item.featureIsProductWalkthrough)
       .filter((item) => !item.isDismissed)[0] as FeatureSuggestionModel | null;
+  }
+
+  get shouldShowUserAudioSurveyBanner() {
+    const user = this.authenticator.currentUser;
+
+    if (!user?.showUserAudioSurveyBanner) {
+      return false;
+    }
+
+    if (this.audioSurveyBannerDismissedForUserId === user.id) {
+      return false;
+    }
+
+    return this.localStorage.getItem(dismissedAudioSurveyBannerStorageKey(user.id)) !== '1';
+  }
+
+  @action
+  async createAudioSurveyInvite() {
+    if (this.isCreatingAudioSurveyInvite) {
+      return;
+    }
+
+    this.isCreatingAudioSurveyInvite = true;
+
+    try {
+      const response = await this.authenticator.currentUser!.createAudioSurveyInvite({});
+
+      if (response?.url) {
+        window.open(response.url, '_blank', 'noopener,noreferrer');
+      }
+    } finally {
+      this.isCreatingAudioSurveyInvite = false;
+    }
+  }
+
+  @action
+  dismissAudioSurveyBanner() {
+    const user = this.authenticator.currentUser;
+
+    if (!user) {
+      return;
+    }
+
+    this.localStorage.setItem(dismissedAudioSurveyBannerStorageKey(user.id), '1');
+    this.audioSurveyBannerDismissedForUserId = user.id;
   }
 
   shouldDisplayCourse(course: CourseModel) {
