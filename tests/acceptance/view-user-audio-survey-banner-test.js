@@ -19,16 +19,40 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
     }
   });
 
+  function createFakeSurveyTab() {
+    return {
+      closed: false,
+      location: { href: '' },
+      opener: {},
+
+      close() {
+        this.closed = true;
+      },
+    };
+  }
+
   test('it renders when the user is eligible', async function (assert) {
     testScenario(this.server);
     const user = signIn(this.owner, this.server);
     user.update({ showUserAudioSurveyBanner: true });
 
-    const openedUrls = [];
+    const openedTabs = [];
 
-    window.open = (urlToOpen) => {
-      openedUrls.push(urlToOpen);
+    window.open = (urlToOpen, target) => {
+      const surveyTab = createFakeSurveyTab();
+
+      openedTabs.push({ surveyTab, target, urlToOpen });
+
+      return surveyTab;
     };
+
+    this.server.post('/users/:id/audio-survey-invite', () => {
+      assert.strictEqual(openedTabs.length, 1, 'survey tab opens before the invite request returns');
+      assert.strictEqual(openedTabs[0].urlToOpen, '');
+      assert.strictEqual(openedTabs[0].target, '_blank');
+
+      return { url: 'https://example.com/audio-survey-invite' };
+    });
 
     await catalogPage.visit();
 
@@ -36,11 +60,11 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
     assert.false(catalogPage.productWalkthroughFeatureSuggestion.isVisible);
 
     await catalogPage.userAudioSurveyBanner.click();
-    await waitUntil(() => openedUrls.length === 1);
+    await waitUntil(() => openedTabs[0].surveyTab.location.href === 'https://example.com/audio-survey-invite');
 
     const inviteRequests = this.server.pretender.handledRequests.filter((request) => request.url.includes('audio-survey-invite'));
     assert.strictEqual(inviteRequests.length, 1);
-    assert.strictEqual(openedUrls[0], 'https://example.com/audio-survey-invite');
+    assert.strictEqual(openedTabs[0].surveyTab.opener, null);
   });
 
   test('dismissing it hides the banner', async function (assert) {
@@ -63,6 +87,8 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
     const user = signIn(this.owner, this.server);
     user.update({ showUserAudioSurveyBanner: true });
 
+    window.open = () => createFakeSurveyTab();
+
     await catalogPage.visit();
 
     const button = find('[data-test-user-audio-survey-banner-button]');
@@ -75,7 +101,7 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
     assert.strictEqual(inviteRequests.length, 1);
   });
 
-  test('it does not open a tab when the invite response has no url', async function (assert) {
+  test('it closes the survey tab when the invite response has no url', async function (assert) {
     testScenario(this.server);
     const user = signIn(this.owner, this.server);
     user.update({ showUserAudioSurveyBanner: true });
@@ -84,19 +110,45 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
       return { url: null };
     });
 
-    const openedUrls = [];
+    const openedTabs = [];
 
     window.open = () => {
-      openedUrls.push(true);
+      const surveyTab = createFakeSurveyTab();
+
+      openedTabs.push(surveyTab);
+
+      return surveyTab;
     };
 
     const controller = this.owner.lookup('controller:catalog');
 
     await catalogPage.visit();
     await catalogPage.userAudioSurveyBanner.click();
-    await waitUntil(() => controller.isCreatingAudioSurveyInvite === false);
+    await waitUntil(() => openedTabs[0]?.closed === true);
 
-    assert.strictEqual(openedUrls.length, 0);
+    assert.strictEqual(openedTabs.length, 1);
+    assert.false(controller.isCreatingAudioSurveyInvite);
+    assert.strictEqual(openedTabs[0].location.href, '');
+  });
+
+  test('it opens the survey in the current tab when the new tab is blocked', async function (assert) {
+    testScenario(this.server);
+    const user = signIn(this.owner, this.server);
+    user.update({ showUserAudioSurveyBanner: true });
+
+    const assignedUrls = [];
+
+    window.open = () => null;
+
+    window.location.assign = (url) => {
+      assignedUrls.push(url);
+    };
+
+    await catalogPage.visit();
+    await catalogPage.userAudioSurveyBanner.click();
+    await waitUntil(() => assignedUrls.length === 1);
+
+    assert.strictEqual(assignedUrls[0], 'https://example.com/audio-survey-invite');
   });
 
   test('it ignores a dismiss when nobody is signed in', function (assert) {

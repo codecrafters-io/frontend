@@ -143,12 +143,24 @@ export default class CatalogController extends Controller {
 
     this.isCreatingAudioSurveyInvite = true;
 
+    // Open during the click so the browser does not block the tab after the request.
+    const surveyTab = window.open('', '_blank');
+
     try {
       const response = await this.authenticator.currentUser!.createAudioSurveyInvite({});
 
-      if (response?.url) {
-        window.open(response.url, '_blank', 'noopener,noreferrer');
+      if (response?.url && surveyTab && !surveyTab.closed) {
+        surveyTab.location.href = response.url;
+        surveyTab.opener = null;
+      } else if (response?.url) {
+        window.location.assign(response.url);
+      } else {
+        surveyTab?.close();
       }
+    } catch (error) {
+      surveyTab?.close();
+
+      throw error;
     } finally {
       this.isCreatingAudioSurveyInvite = false;
     }
