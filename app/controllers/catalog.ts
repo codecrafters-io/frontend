@@ -152,7 +152,7 @@ export default class CatalogController extends Controller {
       if (response?.url && surveyTab && !surveyTab.closed) {
         surveyTab.location.href = response.url;
         surveyTab.opener = null;
-      } else if (response?.url) {
+      } else if (response?.url && !surveyTab) {
         window.location.assign(response.url);
       } else {
         surveyTab?.close();

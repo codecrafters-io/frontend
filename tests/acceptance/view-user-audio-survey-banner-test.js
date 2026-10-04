@@ -131,6 +131,39 @@ module('Acceptance | view-user-audio-survey-banner', function (hooks) {
     assert.strictEqual(openedTabs[0].location.href, '');
   });
 
+  test('it stays on the catalog when the survey tab is closed before the invite returns', async function (assert) {
+    testScenario(this.server);
+    const user = signIn(this.owner, this.server);
+    user.update({ showUserAudioSurveyBanner: true });
+
+    const assignedUrls = [];
+    let surveyTab;
+
+    window.open = () => {
+      surveyTab = createFakeSurveyTab();
+
+      return surveyTab;
+    };
+
+    window.location.assign = (url) => {
+      assignedUrls.push(url);
+    };
+
+    this.server.post('/users/:id/audio-survey-invite', () => {
+      surveyTab.close();
+
+      return { url: 'https://example.com/audio-survey-invite' };
+    });
+
+    await catalogPage.visit();
+    await catalogPage.userAudioSurveyBanner.click();
+    await settled();
+
+    assert.strictEqual(assignedUrls.length, 0);
+    assert.strictEqual(surveyTab.location.href, '');
+    assert.true(surveyTab.closed);
+  });
+
   test('it opens the survey in the current tab when the new tab is blocked', async function (assert) {
     testScenario(this.server);
     const user = signIn(this.owner, this.server);
