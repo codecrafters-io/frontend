@@ -34,11 +34,11 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     });
   }
 
-  function createRepository(server, overrides = {}) {
+  function createRepository(server, overrides = {}, trait = 'withBaseStagesCompleted') {
     const course = server.schema.courses.where({ slug: 'redis' }).models[0];
     course.update('releaseStatus', 'live');
 
-    return server.create('repository', 'withBaseStagesCompleted', {
+    return server.create('repository', trait, {
       course,
       language: server.schema.languages.where({ name: 'Python' }).models[0],
       user: server.schema.users.first(),
@@ -67,11 +67,46 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
     assert.strictEqual(currentURL(), `/courses/redis/quiz/redis-sprint?repo=${repository.id}`);
     assert.ok(courseQuizPage.competitionLobby.isVisible, 'competition lobby is visible');
-    assert.strictEqual(
-      courseQuizPage.competitionLobby.stagesCompleted.length,
-      baseStagesCount(repository),
-      'lobby lists the stages completed during the competition',
+    assert.strictEqual(courseQuizPage.competitionLobby.totalStagesText, `${baseStagesCount(repository)} stages`);
+    assert.strictEqual(courseQuizPage.competitionLobby.stageGroups.length, 1, 'only base stages were completed');
+    assert.strictEqual(courseQuizPage.competitionLobby.stageGroups[0].name, 'Base stages');
+  });
+
+  test('the lobby summarises completed stages by extension, with names on demand', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server);
+
+    const repository = createRepository(this.server, {}, 'withAllStagesCompleted');
+    const course = repository.course;
+    const extensions = course.extensions.models.toSorted((a, b) => a.position - b.position);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    const lobby = courseQuizPage.competitionLobby;
+
+    assert.strictEqual(lobby.totalStagesText, `${course.stages.models.length} stages`);
+    assert.deepEqual(
+      lobby.stageGroups.map((group) => group.name),
+      ['Base stages', ...extensions.map((extension) => extension.name)],
+      'base stages first, then extensions in course order',
     );
+
+    const firstExtensionStages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[0].slug);
+    const firstExtensionGroup = lobby.stageGroups[1];
+
+    assert.strictEqual(firstExtensionGroup.countText, `${firstExtensionStages.length} stages`);
+    assert.false(firstExtensionGroup.isExpanded, 'groups start collapsed, hiding stage names');
+
+    await firstExtensionGroup.clickOnSummary();
+
+    assert.true(firstExtensionGroup.isExpanded, 'the group expands');
+    assert.deepEqual(
+      firstExtensionGroup.stages.map((stage) => stage.text),
+      firstExtensionStages.toSorted((a, b) => a.position - b.position).map((stage) => stage.name),
+      "the group lists that extension's stages, in order",
+    );
+    assert.false(lobby.stageGroups[0].isExpanded, 'other groups stay collapsed');
   });
 
   test('the quiz card is hidden when no competition is open for the challenge', async function (assert) {

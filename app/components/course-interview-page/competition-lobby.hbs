@@ -30,14 +30,19 @@
   </ul>
 
   <div class="mb-6">
-    <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Stages you completed during the competition</div>
+    <div class="flex items-baseline justify-between gap-4 mb-2">
+      <div class="text-xs font-semibold uppercase tracking-wide text-gray-500">Stages you completed during the competition</div>
+
+      {{#if this.stagesCompleted.length}}
+        <div class="shrink-0 text-xs text-gray-500 tabular-nums" data-test-stages-completed-total>
+          {{this.stagesCompleted.length}}
+          {{pluralize "stage" count=this.stagesCompleted.length}}
+        </div>
+      {{/if}}
+    </div>
 
     {{#if this.stagesCompleted.length}}
-      <div class="flex flex-wrap gap-1.5">
-        {{#each this.stagesCompleted as |stage|}}
-          <span class="rounded-sm bg-gray-800 px-2 py-0.5 text-xs text-gray-300" data-test-stage-completed>{{stage.name}}</span>
-        {{/each}}
-      </div>
+      <CourseInterviewPage::CompletedStageGroups @course={{@repository.course}} @stages={{this.stagesCompleted}} />
     {{else}}
       <div class="rounded-sm border border-white/10 bg-gray-800/60 p-3 text-sm text-gray-300" data-test-no-stages-notice>
         Complete at least one stage of
