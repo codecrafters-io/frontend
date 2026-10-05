@@ -7,16 +7,17 @@
   <h1 class="text-2xl font-semibold text-gray-50 mb-3">Can you explain what you built?</h1>
 
   <p class="text-gray-300 leading-relaxed mb-6">
-    An AI interviewer will ask you 4 or 5 questions about the code you wrote for
+    Talk an AI interviewer through the code you wrote for
     <strong class="text-gray-100">{{@milestone.title}}</strong>
     in
-    <strong class="text-gray-100">{{@repository.course.name}}</strong>. You answer out loud, and your code stays on screen so you can talk through it.
+    <strong class="text-gray-100">{{@repository.course.name}}</strong>. It asks 4 or 5 questions, you answer out loud, and your code stays on screen
+    the whole time.
   </p>
 
   <ul class="space-y-3 mb-6 text-sm text-gray-300">
     <li class="flex items-start">
       {{svg-jar "code" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
-      <span>Questions are about your own code: how it works, why you built it that way, and what would break it.</span>
+      <span>We'll ask how your code works, why you built it that way, and what would break it.</span>
     </li>
     <li class="flex items-start">
       {{svg-jar "chat-alt-2" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
@@ -24,7 +25,7 @@
     </li>
     <li class="flex items-start">
       {{svg-jar "check-circle" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
-      <span>At the end you get written feedback on each question, with the parts of your code it refers to.</span>
+      <span>At the end you get written feedback on each answer, pointing at the parts of your code it's about.</span>
     </li>
   </ul>
 
@@ -37,37 +38,15 @@
     </div>
   </div>
 
-  {{#if this.microphoneIsBlocked}}
-    <div class="flex items-start rounded-sm border border-red-500/30 bg-red-950/50 p-3 mb-6 text-sm text-red-300" data-test-microphone-blocked-notice>
-      {{svg-jar "exclamation" class="w-5 h-5 mr-2 shrink-0"}}
-      <span>Microphone access is blocked. Allow it in your browser's site settings, then click "Start interview" again.</span>
-    </div>
-  {{/if}}
+  <CourseInterviewPage::LobbyActions
+    @isStarting={{@isStarting}}
+    @onCaptionsToggle={{@onCaptionsToggle}}
+    @onStartButtonClick={{@onStartButtonClick}}
+    @shouldShowCaptions={{@shouldShowCaptions}}
+    @startButtonLabel="Start interview"
+  />
 
-  <div class="flex flex-wrap items-center justify-between gap-4">
-    <label class="flex items-center text-sm text-gray-300 cursor-pointer select-none">
-      <input
-        type="checkbox"
-        checked={{@shouldShowCaptions}}
-        class="mr-2 rounded-sm border-gray-600 bg-gray-800 text-teal-500 focus:ring-teal-500"
-        data-test-captions-checkbox
-        {{on "change" @onCaptionsToggle}}
-      />
-      Show live captions
-    </label>
-
-    <PrimaryButtonWithSpinner
-      @isDisabled={{@isStarting}}
-      @shouldShowSpinner={{@isStarting}}
-      data-test-start-interview-button
-      {{on "click" @onStartButtonClick}}
-    >
-      Start interview
-    </PrimaryButtonWithSpinner>
-  </div>
-
-  <p class="mt-6 text-xs text-gray-500">
-    The conversation is recorded and transcribed so your answers can be scored. This is an experiment, so the questions and feedback may be rough
-    around the edges.
-  </p>
+  <InterviewRecordingNotice class="mt-6">
+    We record and transcribe the call so we can give you feedback. This is an experiment, so expect a few rough edges.
+  </InterviewRecordingNotice>
 </div>

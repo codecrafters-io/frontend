@@ -1,8 +1,6 @@
 import Component from '@glimmer/component';
 import type InterviewMilestone from 'codecrafters-frontend/utils/interview-milestone';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
-import type VoiceInterviewService from 'codecrafters-frontend/services/voice-interview';
-import { service } from '@ember/service';
 
 interface Signature {
   Element: HTMLDivElement;
@@ -17,13 +15,7 @@ interface Signature {
   };
 }
 
-export default class CourseInterviewPageLobby extends Component<Signature> {
-  @service declare voiceInterview: VoiceInterviewService;
-
-  get microphoneIsBlocked(): boolean {
-    return this.voiceInterview.microphoneStatus === 'blocked';
-  }
-}
+export default class CourseInterviewPageLobby extends Component<Signature> {}
 
 declare module '@glint/environment-ember-loose/registry' {
   export default interface Registry {

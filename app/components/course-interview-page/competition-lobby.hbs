@@ -7,9 +7,9 @@
   <h1 class="text-2xl font-semibold text-gray-50 mb-3">Tell us how you built it</h1>
 
   <p class="text-gray-300 leading-relaxed mb-6">
-    To make your entry in
+    To make your
     <strong class="text-gray-100">{{@competition.name}}</strong>
-    count, talk an AI interviewer through how you built a couple of the
+    entry count, talk an AI interviewer through how you built a couple of the
     <strong class="text-gray-100">{{@repository.course.name}}</strong>
     stages you completed. You answer out loud, and your code stays on screen so you can point at it.
   </p>
@@ -17,11 +17,12 @@
   <ul class="space-y-3 mb-6 text-sm text-gray-300">
     <li class="flex items-start">
       {{svg-jar "code" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
-      <span>Two questions about stages you completed during the competition: how you approached them and what was tricky.</span>
+      <span>Two questions about stages you completed during the competition: how you approached them, and what was tricky.</span>
     </li>
     <li class="flex items-start">
       {{svg-jar "chat-alt-2" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
-      <span>Then a couple of quick questions about your experience. There are no trick questions, and "I'm not sure" is a fine answer.</span>
+      <span>Then two quick ones about you: how you found the challenge, and what else you'd like CodeCrafters to help with. There are no trick
+        questions, and "I'm not sure" is a fine answer.</span>
     </li>
     <li class="flex items-start">
       {{svg-jar "check-circle" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
@@ -59,37 +60,16 @@
       again.</span>
   </div>
 
-  {{#if this.microphoneIsBlocked}}
-    <div class="flex items-start rounded-sm border border-red-500/30 bg-red-950/50 p-3 mb-6 text-sm text-red-300" data-test-microphone-blocked-notice>
-      {{svg-jar "exclamation" class="w-5 h-5 mr-2 shrink-0"}}
-      <span>Microphone access is blocked. Allow it in your browser's site settings, then click "Start quiz" again.</span>
-    </div>
-  {{/if}}
+  <CourseInterviewPage::LobbyActions
+    @isDisabled={{not this.hasCompletedStages}}
+    @isStarting={{@isStarting}}
+    @onCaptionsToggle={{@onCaptionsToggle}}
+    @onStartButtonClick={{@onStartButtonClick}}
+    @shouldShowCaptions={{@shouldShowCaptions}}
+    @startButtonLabel={{if @isResuming "Resume quiz" "Start quiz"}}
+  />
 
-  <div class="flex flex-wrap items-center justify-between gap-4">
-    <label class="flex items-center text-sm text-gray-300 cursor-pointer select-none">
-      <input
-        type="checkbox"
-        checked={{@shouldShowCaptions}}
-        class="mr-2 rounded-sm border-gray-600 bg-gray-800 text-teal-500 focus:ring-teal-500"
-        data-test-captions-checkbox
-        {{on "change" @onCaptionsToggle}}
-      />
-      Show live captions
-    </label>
-
-    <PrimaryButtonWithSpinner
-      @isDisabled={{this.shouldDisableStartButton}}
-      @shouldShowSpinner={{@isStarting}}
-      disabled={{this.shouldDisableStartButton}}
-      data-test-start-quiz-button
-      {{on "click" @onStartButtonClick}}
-    >
-      {{if @isResuming "Resume quiz" "Start quiz"}}
-    </PrimaryButtonWithSpinner>
-  </div>
-
-  <p class="mt-6 text-xs text-gray-500">
-    The conversation is recorded and transcribed so the organisers can review it.
-  </p>
+  <InterviewRecordingNotice class="mt-6">
+    We record and transcribe the call so the organisers can review it.
+  </InterviewRecordingNotice>
 </div>

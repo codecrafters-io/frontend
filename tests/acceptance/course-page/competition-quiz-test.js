@@ -1,3 +1,4 @@
+import assertLinksToPrivacyPolicy from 'codecrafters-frontend/tests/support/assert-links-to-privacy-policy';
 import config from 'codecrafters-frontend/config/environment';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
 import courseQuizPage from 'codecrafters-frontend/tests/pages/course-quiz-page';
@@ -107,6 +108,21 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
       "the group lists that extension's stages, in order",
     );
     assert.false(lobby.stageGroups[0].isExpanded, 'other groups stay collapsed');
+  });
+
+  test('the quiz card and lobby link to the privacy policy on a line of their own', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assertLinksToPrivacyPolicy(assert, coursePage.competitionQuizCard.recordingNotice, 'quiz card');
+
+    await coursePage.competitionQuizCard.clickOnTakeQuizButton();
+
+    assertLinksToPrivacyPolicy(assert, courseQuizPage.competitionLobby.recordingNotice, 'quiz lobby');
   });
 
   test('the quiz card is hidden when no competition is open for the challenge', async function (assert) {

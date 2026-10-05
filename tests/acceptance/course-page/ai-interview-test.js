@@ -1,3 +1,4 @@
+import assertLinksToPrivacyPolicy from 'codecrafters-frontend/tests/support/assert-links-to-privacy-policy';
 import config from 'codecrafters-frontend/config/environment';
 import courseInterviewPage from 'codecrafters-frontend/tests/pages/course-interview-page';
 import coursePage from 'codecrafters-frontend/tests/pages/course-page';
@@ -47,6 +48,20 @@ module('Acceptance | course-page | ai-interview-test', function (hooks) {
 
     assert.strictEqual(currentURL(), `/courses/redis/interview/base-stages?repo=${repository.id}`);
     assert.ok(courseInterviewPage.lobby.isVisible, 'lobby is visible');
+  });
+
+  test('the interview card and lobby link to the privacy policy on a line of their own', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+    createRepository(this.server, 'redis', 'withBaseStagesCompleted');
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assertLinksToPrivacyPolicy(assert, coursePage.interviewPromptCard.recordingNotice, 'interview card');
+
+    await coursePage.interviewPromptCard.clickOnStartInterviewButton();
+
+    assertLinksToPrivacyPolicy(assert, courseInterviewPage.lobby.recordingNotice, 'interview lobby');
   });
 
   test('non-staff users do not see the interview prompt', async function (assert) {
