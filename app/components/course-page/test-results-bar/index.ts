@@ -39,6 +39,8 @@ export default class TestResultsBar extends Component<Signature> {
   @tracked expandedContainerHeight = '75vh';
   @tracked isResizing = false;
 
+  resizeObserver: ResizeObserver | null = null;
+
   get autofixRequestForActiveStep(): AutofixRequestModel | null {
     if (this.args.activeStep.type !== 'CourseStageStep') {
       return null;
@@ -116,6 +118,20 @@ export default class TestResultsBar extends Component<Signature> {
   }
 
   @action
+  handleDidInsertContainer(element: HTMLDivElement) {
+    if (typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver(() => {
+      this.coursePageState.testResultsBarOverlayHeight = `${element.offsetHeight}px`;
+    });
+
+    this.resizeObserver.observe(element);
+    this.coursePageState.testResultsBarOverlayHeight = `${element.offsetHeight}px`;
+  }
+
+  @action
   handleExpandButtonClick() {
     this.coursePageState.testResultsBarIsExpanded = true;
   }
@@ -131,6 +147,12 @@ export default class TestResultsBar extends Component<Signature> {
     const touch = event.touches[0] as Touch;
     const newHeight = window.innerHeight - touch.clientY - (this.bottomSectionElement?.offsetHeight || 0);
     this.expandedContainerHeight = `max(200px, min(calc(100vh - 50px), ${newHeight}px))`;
+  }
+
+  @action
+  handleWillDestroyContainer() {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
   }
 
   @action

@@ -14,6 +14,7 @@ export default function apiRequestsCount(server) {
       pathname !== '/api/v1/analytics-events' &&
       // Triggered on application boot
       pathname !== '/api/v1/users/current' &&
+      pathname !== '/api/v1/experiments/course-stage-chats' &&
       // Triggered when header is rendered
       !pathname.match(/^\/api\/v1\/users\/[^/]+\/top-language-leaderboard-slugs$/)
     );

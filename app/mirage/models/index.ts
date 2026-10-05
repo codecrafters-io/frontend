@@ -33,6 +33,8 @@ import courseLanguageRequest from './course-language-request';
 import courseLeaderboardEntry from './course-leaderboard-entry';
 import courseParticipation from './course-participation';
 import courseStage from './course-stage';
+import courseStageChat from './course-stage-chat';
+import courseStageChatMessage from './course-stage-chat-message';
 import courseStageComment from './course-stage-comment';
 import courseStageCompletion from './course-stage-completion';
 import courseStageFeedbackSubmission from './course-stage-feedback-submission';
@@ -128,6 +130,8 @@ export default {
   courseLeaderboardEntry,
   courseParticipation,
   courseStage,
+  courseStageChat,
+  courseStageChatMessage,
   courseStageComment,
   courseStageCompletion,
   courseStageFeedbackSubmission,

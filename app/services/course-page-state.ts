@@ -9,6 +9,7 @@ export default class CoursePageStateService extends Service {
   @service declare router: RouterService;
   @tracked stepList?: StepListDefinition;
   @tracked testResultsBarIsExpanded = false;
+  @tracked testResultsBarOverlayHeight = '3rem';
 
   // The active step is the step that the user is currently working on.
   // It might not be the same as the "current" step, which is the step that the user is currently viewing.
