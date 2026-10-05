@@ -52,6 +52,7 @@ export default class UserModel extends Model {
   @attr('string') declare name: string;
   @attr('string') declare primaryEmailAddress: string;
   @attr('string') declare profileDescriptionMarkdown: string;
+  @attr('boolean') declare showUserAudioSurveyBanner: boolean;
   @attr('string') declare username: string;
   @attr('date') declare vipStatusExpiresAt: Date | null;
 
@@ -259,12 +260,18 @@ export default class UserModel extends Model {
     return this.authoredCourseSlugs && this.authoredCourseSlugs.includes(course.slug);
   }
 
+  declare createAudioSurveyInvite: (this: Model, payload: unknown) => Promise<{ url: string }>;
   declare fetchCurrent: (this: Model, payload: unknown) => Promise<UserModel | null>;
   declare fetchNextInvoicePreview: (this: Model, payload: unknown) => Promise<InvoiceModel | null>;
   declare fetchTopLanguageLeaderboardSlugs: (this: Model, payload: unknown) => Promise<string[]>;
   declare syncFeatureFlags: (this: Model, payload: unknown) => Promise<void>;
   declare syncUsernameFromGitHub: (this: Model, payload: unknown) => Promise<void>;
 }
+
+UserModel.prototype.createAudioSurveyInvite = memberAction({
+  path: 'audio-survey-invite',
+  type: 'post',
+});
 
 UserModel.prototype.fetchCurrent = collectionAction({
   path: 'current',
