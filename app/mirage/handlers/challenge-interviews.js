@@ -84,14 +84,25 @@ export default function (server) {
     const attributes = JSON.parse(request.requestBody).data.attributes;
     const reviewDecision = attributes['review-decision'] || null;
     const reviewNote = attributes['review-note'] || null;
+    const reviewer = schema.users.first().username;
     const hasReview = reviewDecision !== null || reviewNote !== null;
+    const isUnchanged = reviewDecision === quiz.reviewDecision && reviewNote === quiz.reviewNote;
+    const isRetakeAllowed = attributes['is-retake-allowed'];
 
     quiz.update({
       reviewDecision,
       reviewNote,
-      reviewedAt: hasReview ? new Date() : null,
-      reviewedBy: hasReview ? schema.users.first().username : null,
+      reviewedAt: hasReview ? (isUnchanged ? quiz.reviewedAt : new Date()) : null,
+      reviewedBy: hasReview ? (isUnchanged ? quiz.reviewedBy : reviewer) : null,
     });
+
+    if (isRetakeAllowed !== undefined) {
+      quiz.update({
+        isRetakeAllowed,
+        retakeAllowedAt: isRetakeAllowed ? quiz.retakeAllowedAt || new Date() : null,
+        retakeAllowedBy: isRetakeAllowed ? quiz.retakeAllowedBy || reviewer : null,
+      });
+    }
 
     return quiz;
   });

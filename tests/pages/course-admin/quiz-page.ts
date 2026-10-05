@@ -1,4 +1,5 @@
 import createPage from 'codecrafters-frontend/tests/support/create-page';
+import RetakePanel from 'codecrafters-frontend/tests/pages/components/course-admin/quiz-page/retake-panel';
 import { attribute, clickable, collection, fillable, isVisible, text, visitable } from 'ember-cli-page-object';
 
 export default createPage({
@@ -22,6 +23,7 @@ export default createPage({
   }),
 
   recordingPlayerIsVisible: isVisible('[data-test-recording-player]'),
+  retakePanel: RetakePanel,
   scoringFailedNoticeIsVisible: isVisible('[data-test-scoring-failed-notice]'),
   summaryText: text('[data-test-quiz-summary]'),
   transcriptTurns: collection('[data-test-transcript-turn]'),

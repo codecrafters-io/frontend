@@ -34,11 +34,14 @@ export default class CompetitionQuizModel extends Model {
   @attr('string') declare endReason: string | null;
   @attr('date') declare endedAt: Date | null;
   @attr('string') declare errorMessage: string | null;
+  @attr('boolean') declare isRetakeAllowed: boolean;
   @attr('string') declare participantId: string;
   @attr('string') declare participantUsername: string;
   @attr() declare plan: ChallengeInterviewPlan | null; // free-form JSON
   @attr() declare report: ChallengeInterviewReport | null; // free-form JSON
   @attr('string') declare repositoryId: string;
+  @attr('date') declare retakeAllowedAt: Date | null;
+  @attr('string') declare retakeAllowedBy: string | null;
   @attr('string') declare reviewDecision: CompetitionQuizReviewDecision | null;
   @attr('string') declare reviewNote: string | null;
   @attr('date') declare reviewedAt: Date | null;

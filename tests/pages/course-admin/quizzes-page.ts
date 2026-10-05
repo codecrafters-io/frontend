@@ -9,6 +9,7 @@ export default createPage({
     clickOnReviewButton: clickable('[data-test-review-button]'),
     competitionText: text('[data-test-competition-name]'),
     decisionText: text('[data-test-review-decision]'),
+    retakeBadgeIsVisible: isVisible('[data-test-retake-badge]'),
     usernameText: text('[data-test-participant-username]'),
   }),
 

@@ -24,9 +24,9 @@
 
   <div class="flex flex-wrap items-center gap-2 mt-3">
     <PrimaryButton
-      @isDisabled={{this.saveDecisionTask.isRunning}}
+      @isDisabled={{this.isSaving}}
       @size="small"
-      disabled={{this.saveDecisionTask.isRunning}}
+      disabled={{this.isSaving}}
       data-test-eligible-button
       {{on "click" (fn this.handleDecisionButtonClick "eligible")}}
     >
@@ -34,9 +34,9 @@
     </PrimaryButton>
 
     <DangerButton
-      @isDisabled={{this.saveDecisionTask.isRunning}}
+      @isDisabled={{this.isSaving}}
       @size="small"
-      disabled={{this.saveDecisionTask.isRunning}}
+      disabled={{this.isSaving}}
       data-test-not-eligible-button
       {{on "click" (fn this.handleDecisionButtonClick "not_eligible")}}
     >
@@ -45,9 +45,9 @@
 
     {{#if @quiz.reviewDecision}}
       <TertiaryButton
-        @isDisabled={{this.saveDecisionTask.isRunning}}
+        @isDisabled={{this.isSaving}}
         @size="small"
-        disabled={{this.saveDecisionTask.isRunning}}
+        disabled={{this.isSaving}}
         data-test-clear-decision-button
         {{on "click" (fn this.handleDecisionButtonClick null)}}
       >

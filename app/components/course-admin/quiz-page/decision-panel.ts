@@ -24,6 +24,10 @@ export default class DecisionPanel extends Component<Signature> {
     this.note = args.quiz.reviewNote || '';
   }
 
+  get isSaving(): boolean {
+    return this.saveDecisionTask.isRunning || (this.args.quiz.isSaving as unknown as boolean);
+  }
+
   saveDecisionTask = task({ drop: true }, async (decision: CompetitionQuizReviewDecision | null): Promise<void> => {
     const quiz = this.args.quiz;
 

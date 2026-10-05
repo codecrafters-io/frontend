@@ -35,6 +35,10 @@
     {{/if}}
   </div>
 
+  {{#if @quiz.isRetakeAllowed}}
+    <Pill @color="blue" @size="small" class="shrink-0" data-test-retake-badge>Retake allowed</Pill>
+  {{/if}}
+
   <Pill @color={{this.decisionColor}} @size="small" class="shrink-0" data-test-review-decision>{{@quiz.decisionLabel}}</Pill>
 
   <TertiaryLinkButton @route="course-admin.quiz" @models={{array @course.slug @quiz.id}} @size="extra-small" data-test-review-button>

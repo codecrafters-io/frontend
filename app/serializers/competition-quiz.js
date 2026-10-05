@@ -5,7 +5,11 @@ export default class CompetitionQuizSerializer extends ApplicationSerializer {
     const json = super.serialize(...arguments);
     const attributes = json.data.attributes;
 
-    json.data.attributes = { 'review-decision': attributes['review-decision'], 'review-note': attributes['review-note'] };
+    json.data.attributes = {
+      'is-retake-allowed': attributes['is-retake-allowed'],
+      'review-decision': attributes['review-decision'],
+      'review-note': attributes['review-note'],
+    };
 
     return json;
   }
