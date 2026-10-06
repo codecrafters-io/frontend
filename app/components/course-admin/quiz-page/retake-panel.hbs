@@ -1,0 +1,47 @@
+<div class="rounded-md border border-gray-200 p-4" data-test-retake-panel ...attributes>
+  <div class="text-sm font-semibold text-gray-900 mb-1">Retake</div>
+
+  {{#if this.hasSavedRetake}}
+    <p class="text-sm text-gray-600" data-test-retake-status>
+      Retake allowed by
+      {{@quiz.retakeAllowedBy}}
+      {{date-from-now @quiz.retakeAllowedAt}}.
+      {{@quiz.participantUsername}}
+      can start a new quiz from the challenge page. This one stays here for reference.
+    </p>
+
+    <TertiaryButtonWithSpinner
+      @isDisabled={{this.isSaving}}
+      @shouldShowSpinner={{this.saveRetakeTask.isRunning}}
+      @size="small"
+      class="mt-3"
+      disabled={{this.isSaving}}
+      data-test-undo-retake-button
+      {{on "click" this.handleUndoButtonClick}}
+    >
+      Undo
+    </TertiaryButtonWithSpinner>
+  {{else}}
+    <p class="text-sm text-gray-600">
+      If something went wrong on the call, let
+      {{@quiz.participantUsername}}
+      take the quiz again. This one stays here for reference.
+    </p>
+
+    <TertiaryButtonWithSpinner
+      @isDisabled={{this.isSaving}}
+      @shouldShowSpinner={{this.saveRetakeTask.isRunning}}
+      @size="small"
+      class="mt-3"
+      disabled={{this.isSaving}}
+      data-test-allow-retake-button
+      {{on "click" this.handleAllowRetakeButtonClick}}
+    >
+      Allow a retake
+    </TertiaryButtonWithSpinner>
+  {{/if}}
+
+  {{#if this.errorMessage}}
+    <div class="text-sm text-red-600 mt-2" role="alert" data-test-retake-error>{{this.errorMessage}}</div>
+  {{/if}}
+</div>

@@ -1,0 +1,16 @@
+{{#if this.lines.length}}
+  <div class="rounded-sm border border-white/10 bg-gray-950 overflow-hidden" data-test-code-excerpt ...attributes>
+    <div class="border-b border-white/10 px-3 py-1.5 font-mono text-xs text-gray-500">
+      {{@anchor.path}}
+    </div>
+
+    <div class="overflow-x-auto py-2 font-mono text-xs leading-5">
+      {{#each this.lines as |line|}}
+        <div class="flex px-3 {{if line.isHighlighted 'bg-teal-500/10'}}" data-test-code-excerpt-line>
+          <span class="w-10 shrink-0 select-none pr-3 text-right {{if line.isHighlighted 'text-teal-400' 'text-gray-600'}}">{{line.number}}</span>
+          <span class="text-gray-300 whitespace-pre">{{line.text}}</span>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/if}}

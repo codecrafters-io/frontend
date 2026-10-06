@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
+import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
 import type CourseModel from 'codecrafters-frontend/models/course';
 
 interface Signature {
@@ -21,7 +22,25 @@ type Tab = {
 };
 
 export default class CourseAdminHeader extends Component<Signature> {
+  @service declare authenticator: AuthenticatorService;
   @service declare router: RouterService;
+
+  get quizzesTabs(): Tab[] {
+    if (!this.authenticator.currentUser?.isStaff) {
+      return [];
+    }
+
+    return [
+      {
+        icon: 'microphone',
+        name: 'Quizzes',
+        slug: 'quizzes',
+        route: 'course-admin.quizzes',
+        models: [this.args.course.slug],
+        isActive: ['course-admin.quizzes', 'course-admin.quiz'].includes(this.router.currentRouteName),
+      },
+    ];
+  }
 
   get tabs(): Tab[] {
     return [
@@ -89,6 +108,7 @@ export default class CourseAdminHeader extends Component<Signature> {
         models: [this.args.course.slug],
         isActive: ['course-admin.code-example-evaluators', 'course-admin.code-example-evaluator'].includes(this.router.currentRouteName),
       },
+      ...this.quizzesTabs,
     ];
   }
 }
