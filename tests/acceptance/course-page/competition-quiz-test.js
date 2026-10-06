@@ -31,6 +31,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
       startsAt: new Date(Date.now() - 7 * DAY_MS),
       endsAt: new Date(Date.now() + 7 * DAY_MS),
       quizClosesAt: new Date(Date.now() + 10 * DAY_MS),
+      minCompletedStages: 5,
       ...overrides,
     });
   }
@@ -201,6 +202,30 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     assert.notOk(courseQuizPage.competitionLobby.isVisible, 'lobby is not offered again');
   });
 
+  test('the quiz card stays hidden until enough stages are completed during the competition', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server, { minCompletedStages: 10 });
+    createRepository(this.server);
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assert.notOk(coursePage.competitionQuizCard.isVisible, 'no card with fewer stages than the minimum');
+  });
+
+  test('a submitted quiz stays on the card even below the minimum', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server, { minCompletedStages: 10 });
+
+    const repository = createRepository(this.server);
+    this.server.create('challenge-interview', 'submittedQuiz', { repository });
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assert.ok(coursePage.competitionQuizCard.submittedNoticeIsVisible, 'card says the quiz was submitted');
+  });
+
   test('an unfinished attempt is resumed instead of preparing new questions', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
@@ -261,7 +286,23 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     assert.ok(courseQuizPage.competitionLobby.isVisible, 'lobby is visible again');
   });
 
-  test('the lobby asks for a stage completed during the competition first', async function (assert) {
+  test('the lobby says how many more stages are needed before the quiz', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server, { minCompletedStages: 10 });
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    const lobby = courseQuizPage.competitionLobby;
+
+    assert.contains(lobby.moreStagesNeededNoticeText, "You've completed 7 of the 10 stages you need during Redis Sprint.");
+    assert.contains(lobby.moreStagesNeededNoticeText, 'Complete 3 more, then come back for the quiz.');
+    assert.strictEqual(lobby.stageGroups.length, 1, 'still shows the stages that count');
+    assert.ok(lobby.startQuizButtonIsDisabled, 'start is disabled');
+  });
+
+  test('the lobby asks for the minimum when no stages count yet', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
     createCompetition(this.server);
@@ -269,8 +310,25 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
     await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
 
-    assert.ok(courseQuizPage.competitionLobby.noStagesNoticeIsVisible, 'explains what to do first');
-    assert.ok(courseQuizPage.competitionLobby.startQuizButtonIsDisabled, 'start is disabled');
+    const lobby = courseQuizPage.competitionLobby;
+
+    assert.contains(
+      lobby.moreStagesNeededNoticeText,
+      'Complete at least 5 stages of Build your own Redis during Redis Sprint, then come back for the quiz.',
+    );
+    assert.ok(lobby.startQuizButtonIsDisabled, 'start is disabled');
+  });
+
+  test('the lobby lets you start once you have the minimum', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server, { minCompletedStages: 7 });
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    assert.notOk(courseQuizPage.competitionLobby.moreStagesNeededNoticeIsVisible, 'nothing more to do');
+    assert.notOk(courseQuizPage.competitionLobby.startQuizButtonIsDisabled, 'start is enabled');
   });
 
   test('the quiz page sends you back to the challenge for a competition that is not open', async function (assert) {

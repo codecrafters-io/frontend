@@ -3,7 +3,8 @@ import { clickable, collection, isVisible, property, text } from 'ember-cli-page
 
 export default {
   clickOnStartQuizButton: clickable('[data-test-start-button]'),
-  noStagesNoticeIsVisible: isVisible('[data-test-no-stages-notice]'),
+  moreStagesNeededNoticeIsVisible: isVisible('[data-test-more-stages-needed-notice]'),
+  moreStagesNeededNoticeText: text('[data-test-more-stages-needed-notice]'),
   oneAttemptNoticeText: text('[data-test-one-attempt-notice]'),
   recordingNotice: InterviewRecordingNotice,
   scope: '[data-test-competition-lobby]',

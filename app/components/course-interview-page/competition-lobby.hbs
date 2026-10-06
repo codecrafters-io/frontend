@@ -44,14 +44,33 @@
 
     {{#if this.stagesCompleted.length}}
       <CourseInterviewPage::CompletedStageGroups @course={{@repository.course}} @stages={{this.stagesCompleted}} />
-    {{else}}
-      <div class="rounded-sm border border-white/10 bg-gray-800/60 p-3 text-sm text-gray-300" data-test-no-stages-notice>
-        Complete at least one stage of
-        {{@repository.course.name}}
-        during
-        {{@competition.name}}, then come back for the quiz.
-      </div>
     {{/if}}
+
+    {{#unless this.hasCompletedEnoughStages}}
+      <div
+        class="rounded-sm border border-white/10 bg-gray-800/60 p-3 text-sm text-gray-300 {{if this.stagesCompleted.length 'mt-3'}}"
+        data-test-more-stages-needed-notice
+      >
+        {{#if this.stagesCompleted.length}}
+          You've completed
+          {{this.stagesCompleted.length}}
+          of the
+          {{@competition.minCompletedStages}}
+          stages you need during
+          {{@competition.name}}. Complete
+          {{this.stagesStillNeeded}}
+          more, then come back for the quiz.
+        {{else}}
+          Complete at least
+          {{@competition.minCompletedStages}}
+          {{pluralize "stage" count=@competition.minCompletedStages}}
+          of
+          {{@repository.course.name}}
+          during
+          {{@competition.name}}, then come back for the quiz.
+        {{/if}}
+      </div>
+    {{/unless}}
   </div>
 
   <div class="flex items-start rounded-sm border border-yellow-500/30 bg-yellow-950/40 p-3 mb-6 text-sm text-yellow-200" data-test-one-attempt-notice>
@@ -61,7 +80,7 @@
   </div>
 
   <CourseInterviewPage::LobbyActions
-    @isDisabled={{not this.hasCompletedStages}}
+    @isDisabled={{not this.hasCompletedEnoughStages}}
     @isStarting={{@isStarting}}
     @onCaptionsToggle={{@onCaptionsToggle}}
     @onStartButtonClick={{@onStartButtonClick}}

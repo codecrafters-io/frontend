@@ -5,6 +5,7 @@ import type RepositoryModel from 'codecrafters-frontend/models/repository';
 export default class PartnerCompetitionModel extends Model {
   @attr() declare courseSlugs: string[]; // free-form JSON
   @attr('date') declare endsAt: Date;
+  @attr('number') declare minCompletedStages: number;
   @attr('string') declare name: string;
   @attr('string') declare partnerName: string;
   @attr('date') declare quizClosesAt: Date;
@@ -12,6 +13,10 @@ export default class PartnerCompetitionModel extends Model {
 
   get slug(): string {
     return this.id;
+  }
+
+  hasCompletedEnoughStages(repository: RepositoryModel): boolean {
+    return this.stagesCompletedDuringCompetition(repository).length >= this.minCompletedStages;
   }
 
   stagesCompletedDuringCompetition(repository: RepositoryModel): CourseStageModel[] {

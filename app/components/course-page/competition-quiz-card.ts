@@ -30,6 +30,13 @@ export default class CompetitionQuizCard extends Component<Signature> {
     return this.attempts.some((attempt) => attempt.isSubmitted);
   }
 
+  get visibleCompetition(): PartnerCompetitionModel | null {
+    const competition = this.competition;
+    const hasQuiz = this.hasSubmitted || this.hasOpenAttempt;
+
+    return competition && (hasQuiz || competition.hasCompletedEnoughStages(this.args.repository)) ? competition : null;
+  }
+
   // The interview service is a separate app, so a failed lookup just hides the card.
   loadCompetitionTask = task({ restartable: true }, async (): Promise<void> => {
     try {

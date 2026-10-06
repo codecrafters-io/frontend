@@ -18,12 +18,16 @@ interface Signature {
 }
 
 export default class CourseInterviewPageCompetitionLobby extends Component<Signature> {
-  get hasCompletedStages(): boolean {
-    return this.stagesCompleted.length > 0;
+  get hasCompletedEnoughStages(): boolean {
+    return this.args.competition.hasCompletedEnoughStages(this.args.repository);
   }
 
   get stagesCompleted(): CourseStageModel[] {
     return this.args.competition.stagesCompletedDuringCompetition(this.args.repository);
+  }
+
+  get stagesStillNeeded(): number {
+    return this.args.competition.minCompletedStages - this.stagesCompleted.length;
   }
 }
 

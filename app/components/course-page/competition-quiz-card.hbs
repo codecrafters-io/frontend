@@ -1,9 +1,9 @@
 <div {{did-insert this.handleDidInsert}}>
-  {{#if this.competition}}
+  {{#if this.visibleCompetition}}
     <div class="rounded-md border border-yellow-500/30 bg-yellow-50 dark:bg-yellow-950/30 p-4" data-test-competition-quiz-card ...attributes>
       <div class="flex flex-wrap items-center gap-2 mb-1.5">
         {{svg-jar "flag" class="w-4 h-4 text-yellow-600 dark:text-yellow-400"}}
-        <span class="font-semibold text-gray-900 dark:text-gray-50" data-test-competition-quiz-card-title>{{this.competition.name}} quiz</span>
+        <span class="font-semibold text-gray-900 dark:text-gray-50" data-test-competition-quiz-card-title>{{this.visibleCompetition.name}} quiz</span>
       </div>
 
       {{#if this.hasSubmitted}}
@@ -13,12 +13,12 @@
       {{else}}
         <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">
           Taking part in
-          {{this.competition.name}}? Once you've finished the stages you're aiming for, take the 10-minute voice quiz about how you built them so your
-          entry counts. You can take it once.
+          {{this.visibleCompetition.name}}? Once you've finished the stages you're aiming for, take the 10-minute voice quiz about how you built them
+          so your entry counts. You can take it once.
         </p>
 
         <PrimaryLinkButton
-          @models={{array @repository.course.slug this.competition.slug}}
+          @models={{array @repository.course.slug this.visibleCompetition.slug}}
           @query={{hash repo=@repository.id}}
           @route="course-quiz"
           @size="small"
