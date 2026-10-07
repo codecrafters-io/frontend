@@ -23,7 +23,7 @@
   {{/if}}
 
   {{! Lobbyside widgets — source of truth: https://lobbyside.com (CodeCrafters org dashboard).
-      The two public widgets render for everyone; the staff-audience one is gated to
+      The public widgets render for everyone; the staff-audience one is gated to
       cc staff accounts + the usernames in `staff-allowlist.ts`. If you change a UUID
       here, the corresponding widget on the dashboard must exist AND be live, otherwise
       it silently no-ops (the widget script renders nothing for unknown / inactive ids). }}
@@ -32,6 +32,7 @@
   <LobbysideWidget @widgetId="32695525-023a-4f48-8fe7-0e8df214edb7" />
   <LobbysideWidget @widgetId="643b761f-d83a-4de3-a682-dfce4549607e" @audience="staff" />
   <LobbysideWidget @widgetId="9c921a57-e736-4376-8507-2333901c46e0" />
+  <LobbysideWidget @widgetId="19427cb6-dd26-40df-9d50-cd8cf57a30a5" />
 
   {{! Enable this to debug ember-animated animations }}
   {{! <AnimatedTools /> }}
