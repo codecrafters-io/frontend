@@ -1,6 +1,36 @@
 import { tracked } from '@glimmer/tracking';
 import type { LineRange } from 'codecrafters-frontend/components/code-mirror';
 import parseDiffAsDocument from 'codecrafters-frontend/utils/parse-diff-as-document';
+import { LineData, LineDataCollection } from 'codecrafters-frontend/utils/code-mirror-line-comments';
+
+function generateRandomLineData(linesCount = 0) {
+  function getRandomInt(inclusiveMin: number, exclusiveMax: number) {
+    const minCeiled = Math.ceil(inclusiveMin);
+    const maxFloored = Math.floor(exclusiveMax);
+
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+  }
+
+  const lineData = Array.from({ length: linesCount }).map(function (_v, lineNumber) {
+    const rnd = Math.random();
+
+    let commentsCount;
+
+    if (rnd < 0.05) {
+      commentsCount = getRandomInt(100, 1000);
+    } else if (rnd < 0.1) {
+      commentsCount = getRandomInt(10, 100);
+    } else if (rnd < 0.8) {
+      commentsCount = 0;
+    } else {
+      commentsCount = getRandomInt(1, 10);
+    }
+
+    return new LineData(lineNumber + 1, commentsCount);
+  });
+
+  return new LineDataCollection(lineData);
+}
 
 export class ExampleDocument {
   @tracked document: string = '';
@@ -9,6 +39,7 @@ export class ExampleDocument {
   @tracked language: string;
   @tracked highlightedRanges: LineRange[];
   @tracked collapsedRanges: LineRange[];
+  @tracked lineData?: LineDataCollection;
 
   constructor({
     document = '',
@@ -31,6 +62,8 @@ export class ExampleDocument {
     this.language = language;
     this.highlightedRanges = highlightedRanges;
     this.collapsedRanges = collapsedRanges;
+
+    this.lineData = generateRandomLineData(document?.split('\n').length);
   }
 
   static createEmpty() {
