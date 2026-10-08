@@ -1,4 +1,5 @@
 import BaseRoute from 'codecrafters-frontend/utils/base-route';
+import CourseController from 'codecrafters-frontend/controllers/course';
 import { all as RSVPAll } from 'rsvp';
 import RepositoryPoller from 'codecrafters-frontend/utils/repository-poller';
 import type AuthenticatorService from 'codecrafters-frontend/services/authenticator';
@@ -118,6 +119,14 @@ export default class CourseRoute extends BaseRoute {
   }
 
   async model(params: { course_slug: string }, transition: Transition): Promise<ModelType> {
+    const courseController = this.controllerFor('course') as CourseController;
+
+    if (courseController.shouldSkipNextModelRefresh) {
+      courseController.shouldSkipNextModelRefresh = false;
+
+      return courseController.model;
+    }
+
     const [allCourses, allRepositories] = (await this.loadResources()) as [CourseModel[], RepositoryModel[]];
     const course = allCourses.find((course) => course.slug === params.course_slug) as CourseModel;
 
