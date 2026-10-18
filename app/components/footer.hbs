@@ -1,7 +1,13 @@
 <div class="bg-gray-950 border-t border-white/5">
-  <footer aria-labelledby="footer-heading" class="max-w-384 mx-auto border-x border-white/5">
+  <footer aria-labelledby="footer-heading" class="relative max-w-384 mx-auto overflow-hidden border-x border-white/5">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="lg:grid lg:grid-cols-5">
+    <img
+      src="/assets/images/footer-logo-vector.svg"
+      alt=""
+      aria-hidden="true"
+      class="pointer-events-none absolute top-0 left-1/2 h-[330px] w-[468px] -translate-x-1/2 lg:left-[-506px] lg:h-[660px] lg:w-[936px] lg:translate-x-0"
+    />
+    <div class="relative lg:grid lg:grid-cols-5">
       <div class="px-6 py-12 sm:px-10 lg:col-span-2 lg:border-r lg:border-white/5 lg:py-12">
         <div class="max-w-xs">
           <a href="https://codecrafters.io" class="inline-flex" target="_blank" rel="noopener noreferrer">
@@ -64,7 +70,7 @@
         {{/each}}
       </div>
     </div>
-    <div class="border-t border-white/5 px-6 py-6 sm:px-10 lg:pl-[40%]">
+    <div class="relative border-t border-white/5 px-6 py-6 sm:px-10 lg:pl-[40%]">
       <p class="text-xs text-gray-500">
         &copy; 2026 CodeCrafters, Inc. All rights reserved.
       </p>

@@ -74,32 +74,12 @@ export default class Footer extends Component {
           text: 'About',
           url: 'https://codecrafters.io/about',
         },
-        {
-          text: 'Philosophy',
-          url: 'https://codecrafters.io/philosophy',
-        },
-        {
-          text: 'Pricing',
-          url: 'https://codecrafters.io/pricing',
-        },
-        {
-          text: 'Jobs',
-          url: 'https://www.ycombinator.com/companies/codecrafters/jobs',
-        },
-        {
-          text: 'For Investors',
-          url: 'mailto:sarup@codecrafters.io',
-        },
-        {
-          text: 'Bulk Licenses',
-          url: 'mailto:sarup@codecrafters.io',
-        },
       ],
     };
   }
 
   get footerLinkGroups(): FooterLinkGroup[] {
-    return [this.challengeLinkGroup, this.resourcesLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
+    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }
 
   get legalLinkGroup(): FooterLinkGroup {
@@ -118,29 +98,13 @@ export default class Footer extends Component {
     };
   }
 
-  get resourcesLinkGroup(): FooterLinkGroup {
+  get supportLinkGroup(): FooterLinkGroup {
     return {
-      heading: 'Resources',
+      heading: 'Support',
       links: [
         {
-          text: 'Changelog',
-          url: 'https://forum.codecrafters.io/c/announcements/10',
-        },
-        {
-          text: 'Forum',
-          url: 'https://forum.codecrafters.io/',
-        },
-        {
-          text: 'Blog',
-          url: 'https://codecrafters.io/blog',
-        },
-        {
-          text: 'Help',
+          text: 'Docs',
           url: 'https://docs.codecrafters.io/',
-        },
-        {
-          text: 'Expense',
-          url: 'https://codecrafters.io/expense',
         },
         {
           text: 'Status',
