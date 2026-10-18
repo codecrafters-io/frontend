@@ -12,9 +12,8 @@ You will need the following things installed on your computer:
 - [Ember CLI](https://cli.emberjs.com/release/)
 - [Google Chrome](https://google.com/chrome/)
 
-You can run tests locally without a backend server, but to use the app you'll also need an instance of
-[codecrafters-io/core](https://github.com/codecrafters-io/core) running. You can either run this against staging,
-or against a local instance of `core`. Visit the `core` repo for setup instructions.
+You can run tests locally without a backend server. To use the app, point it at staging or a local
+instance of [codecrafters-io/core](https://github.com/codecrafters-io/core). Visit the `core` repo to run the backend locally.
 
 ## Setup / Installation
 
@@ -32,8 +31,17 @@ or against a local instance of `core`. Visit the `core` repo for setup instructi
 
 ## Running against staging
 
+`.env.example` already points at staging, so `make serve` uses it after you copy that file to `.env`.
+
+- `BACKEND_URL` is `https://backend-staging.codecrafters.io`
+- Open http://localhost:4200
+- Click **Log in**. The app sends you to the staging backend, then GitHub, then back to localhost with a `session_token`.
+- The app stores that token in `localStorage` (`session_token_v1`) and loads your staging account.
+- A first-time GitHub account is sent to `/welcome` before the page you were on.
+
+To point at staging without editing `.env`:
+
 - Run `BACKEND_URL="https://backend-staging.codecrafters.io" bun run start`
-- View your app at http://localhost:4200
 
 ## Running with or without FastBoot
 
