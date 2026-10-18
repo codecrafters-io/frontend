@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-x-6 gap-y-10 px-6 pb-12 sm:px-10 lg:col-span-3 lg:py-12 2xl:grid-cols-4">
+      <div class="grid grid-cols-2 gap-x-6 px-6 pb-12 sm:px-10 lg:col-span-3 lg:py-12">
         <div>
           <h3 class="text-sm font-medium text-gray-300">Challenges</h3>
           <ul class="mt-5 space-y-3">
@@ -65,23 +65,17 @@
             {{/each}}
           </ul>
         </div>
-        <div class="flex flex-col gap-5 2xl:contents">
-          {{#each this.secondaryLinkGroups as |footerLinkGroup|}}
-            <div>
-              <h3 class="text-sm font-medium text-gray-300">
-                {{footerLinkGroup.heading}}
-              </h3>
-              <ul class="mt-5 space-y-3">
-                {{#each footerLinkGroup.links as |link|}}
-                  <li>
-                    <a href={{link.url}} class="text-[13px] text-gray-400 hover:text-gray-200" target="_blank" rel="noopener noreferrer">
-                      {{link.text}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </div>
-          {{/each}}
+        <div>
+          <h3 class="text-sm font-medium text-gray-300">Resources</h3>
+          <ul class="mt-5 space-y-3">
+            {{#each this.resourcesLinkGroup.links as |link|}}
+              <li>
+                <a href={{link.url}} class="text-[13px] text-gray-400 hover:text-gray-200" target="_blank" rel="noopener noreferrer">
+                  {{link.text}}
+                </a>
+              </li>
+            {{/each}}
+          </ul>
         </div>
       </div>
     </div>

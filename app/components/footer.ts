@@ -78,41 +78,9 @@ export default class Footer extends Component {
     };
   }
 
-  get companyLinkGroup(): FooterLinkGroup {
+  get resourcesLinkGroup(): FooterLinkGroup {
     return {
-      heading: 'Company',
-      links: [
-        {
-          text: 'About',
-          url: 'https://codecrafters.io/about',
-        },
-      ],
-    };
-  }
-
-  get legalLinkGroup(): FooterLinkGroup {
-    return {
-      heading: 'Legal',
-      links: [
-        {
-          text: 'Terms',
-          url: 'https://codecrafters.io/terms',
-        },
-        {
-          text: 'Privacy',
-          url: 'https://codecrafters.io/privacy',
-        },
-      ],
-    };
-  }
-
-  get secondaryLinkGroups(): FooterLinkGroup[] {
-    return [this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-  }
-
-  get supportLinkGroup(): FooterLinkGroup {
-    return {
-      heading: 'Support',
+      heading: 'Resources',
       links: [
         {
           text: 'Docs',
@@ -121,6 +89,18 @@ export default class Footer extends Component {
         {
           text: 'Status',
           url: 'https://status.codecrafters.io/',
+        },
+        {
+          text: 'About',
+          url: 'https://codecrafters.io/about',
+        },
+        {
+          text: 'Terms',
+          url: 'https://codecrafters.io/terms',
+        },
+        {
+          text: 'Privacy',
+          url: 'https://codecrafters.io/privacy',
         },
       ],
     };
