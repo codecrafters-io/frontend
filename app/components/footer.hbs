@@ -51,9 +51,9 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-2 gap-x-6 gap-y-10 px-6 pb-12 sm:grid-cols-4 sm:px-10 lg:col-span-3 lg:py-12">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-10 px-6 pb-12 sm:px-10 lg:col-span-3 lg:py-12 2xl:grid-cols-4">
         {{#each this.footerLinkGroups as |footerLinkGroup|}}
-          <div>
+          <div class={{if (eq footerLinkGroup.heading "Challenges") "row-span-3 2xl:row-span-1"}}>
             <h3 class="text-sm font-medium text-gray-300">
               {{footerLinkGroup.heading}}
             </h3>
@@ -61,7 +61,12 @@
               {{#each footerLinkGroup.links as |link|}}
                 <li>
                   <a href={{link.url}} class="text-[13px] text-gray-400 hover:text-gray-200" target="_blank" rel="noopener noreferrer">
-                    {{link.text}}
+                    {{#if link.mobileText}}
+                      <span class="sm:hidden">{{link.mobileText}}</span>
+                      <span class="hidden sm:inline">{{link.text}}</span>
+                    {{else}}
+                      {{link.text}}
+                    {{/if}}
                   </a>
                 </li>
               {{/each}}
