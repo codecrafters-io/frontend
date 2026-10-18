@@ -90,10 +90,6 @@ export default class Footer extends Component {
     };
   }
 
-  get footerLinkGroups(): FooterLinkGroup[] {
-    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-  }
-
   get legalLinkGroup(): FooterLinkGroup {
     return {
       heading: 'Legal',
@@ -108,6 +104,10 @@ export default class Footer extends Component {
         },
       ],
     };
+  }
+
+  get secondaryLinkGroups(): FooterLinkGroup[] {
+    return [this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }
 
   get supportLinkGroup(): FooterLinkGroup {
