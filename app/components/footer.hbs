@@ -1,28 +1,27 @@
 <div class="bg-gray-950 border-t border-white/5">
-  <footer aria-labelledby="footer-heading" class="container lg:max-w-(--breakpoint-lg) mx-auto">
+  <footer aria-labelledby="footer-heading" class="max-w-384 mx-auto border-x border-white/5">
     <h2 id="footer-heading" class="sr-only">Footer</h2>
-    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
-      <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-        <div class="xl:col-span-1">
+    <div class="lg:grid lg:grid-cols-5">
+      <div class="px-6 py-12 sm:px-10 lg:col-span-2 lg:border-r lg:border-white/5 lg:py-12">
+        <div class="max-w-xs">
           <a href="https://codecrafters.io" class="inline-flex" target="_blank" rel="noopener noreferrer">
-            <img class="h-6" src={{this.wordmarkDark}} alt="CodeCrafters" />
+            <img class="h-8" src={{this.wordmarkDark}} alt="CodeCrafters" />
           </a>
-          <p class="mt-8 text-gray-300 text-base">
+          <p class="mt-8 max-w-56 text-base text-gray-400">
             Programming challenges for seasoned developers.
           </p>
-          <div class="mt-8 flex space-x-6">
-            <a href="https://twitter.com/codecraftersio" class="text-gray-400 hover:text-gray-300">
+          <div class="mt-8 flex gap-6">
+            <a href="https://x.com/codecraftersio" class="text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
               <span class="sr-only">Twitter</span>
-              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
-                  d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"
-                ></path>
+                  d="M18.901 2H22l-6.77 7.74L23.196 22h-6.238l-4.885-7.43L5.57 22H2.469l7.242-8.28L2.07 2h6.396l4.416 6.74L18.901 2Zm-1.095 18h1.717L7.532 3.895H5.69L17.806 20Z"
+                />
               </svg>
             </a>
-
-            <a href="http://github.com/codecrafters-io" class="text-gray-400 hover:text-gray-300">
+            <a href="https://github.com/codecrafters-io" class="text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
               <span class="sr-only">GitHub</span>
-              <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path
                   fill-rule="evenodd"
                   d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
@@ -30,36 +29,45 @@
                 ></path>
               </svg>
             </a>
+            <a
+              href="https://www.linkedin.com/company/codecrafters-io/"
+              class="text-gray-400 hover:text-gray-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="sr-only">LinkedIn</span>
+              <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M20.447 2H3.553A1.553 1.553 0 0 0 2 3.553v16.894C2 21.305 2.695 22 3.553 22h16.894c.858 0 1.553-.695 1.553-1.553V3.553C22 2.695 21.305 2 20.447 2ZM7.934 18.75H4.98V9.197h2.954v9.553ZM6.457 7.89a1.71 1.71 0 1 1 0-3.42 1.71 1.71 0 0 1 0 3.42Zm12.293 10.86h-2.95v-4.645c0-1.107-.021-2.532-1.543-2.532-1.544 0-1.78 1.206-1.78 2.452v4.725H9.53V9.197h2.832v1.305h.04c.394-.746 1.357-1.533 2.793-1.533 2.986 0 3.555 1.966 3.555 4.523v5.258Z"
+                />
+              </svg>
+            </a>
           </div>
         </div>
-        <div
-          class="mt-12 grid grid-cols-2
-            {{if (eq this.footerLinkGroups.length 4) 'md:grid-cols-4' 'md:grid-cols-3'}}
-            gap-x-8 gap-y-12 xl:mt-0 xl:col-span-2"
-        >
-          {{#each this.footerLinkGroups as |footerLinkGroup|}}
-            <div>
-              <h3 class="text-sm font-semibold text-gray-300 tracking-wider uppercase border-b-2 border-gray-850 inline-flex pb-1">
-                {{footerLinkGroup.heading}}
-              </h3>
-              <ul class="mt-4 space-y-4">
-                {{#each footerLinkGroup.links as |link|}}
-                  <li>
-                    <a href="{{link.url}}" class="text-base text-gray-400 hover:text-gray-300" target="_blank" rel="noopener noreferrer">
-                      {{link.text}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </div>
-          {{/each}}
-        </div>
       </div>
-      <div class="mt-12 border-t border-white/5 pt-8">
-        <p class="text-base text-gray-600 xl:text-center">
-          &copy; 2026 CodeCrafters, Inc. All rights reserved.
-        </p>
+      <div class="grid grid-cols-2 gap-x-6 gap-y-10 px-6 pb-12 sm:grid-cols-4 sm:px-10 lg:col-span-3 lg:py-12">
+        {{#each this.footerLinkGroups as |footerLinkGroup|}}
+          <div>
+            <h3 class="text-sm font-medium text-gray-300">
+              {{footerLinkGroup.heading}}
+            </h3>
+            <ul class="mt-5 space-y-3">
+              {{#each footerLinkGroup.links as |link|}}
+                <li>
+                  <a href={{link.url}} class="text-[13px] text-gray-400 hover:text-gray-200" target="_blank" rel="noopener noreferrer">
+                    {{link.text}}
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/each}}
       </div>
+    </div>
+    <div class="border-t border-white/5 px-6 py-6 sm:px-10 lg:pl-[40%]">
+      <p class="text-xs text-gray-500">
+        &copy; 2026 CodeCrafters, Inc. All rights reserved.
+      </p>
     </div>
   </footer>
 </div>

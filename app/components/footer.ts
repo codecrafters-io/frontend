@@ -19,36 +19,48 @@ export default class Footer extends Component {
       heading: 'Challenges',
       links: [
         {
-          text: 'Git',
+          text: 'Build your own Git',
           url: 'https://app.codecrafters.io/courses/git/overview',
         },
         {
-          text: 'Redis',
-          url: 'https://app.codecrafters.io/courses/redis/overview',
-        },
-        {
-          text: 'Shell',
-          url: 'https://app.codecrafters.io/courses/shell/overview',
-        },
-        {
-          text: 'SQLite',
-          url: 'https://app.codecrafters.io/courses/sqlite/overview',
-        },
-        {
-          text: 'Grep',
+          text: 'Build your own Grep',
           url: 'https://app.codecrafters.io/courses/grep/overview',
         },
         {
-          text: 'BitTorrent',
+          text: 'Build your own Redis',
+          url: 'https://app.codecrafters.io/courses/redis/overview',
+        },
+        {
+          text: 'Build your own Shell',
+          url: 'https://app.codecrafters.io/courses/shell/overview',
+        },
+        {
+          text: 'Build your own Kafka',
+          url: 'https://app.codecrafters.io/courses/kafka/overview',
+        },
+        {
+          text: 'Build your own SQLite',
+          url: 'https://app.codecrafters.io/courses/sqlite/overview',
+        },
+        {
+          text: 'Build your own BitTorrent',
           url: 'https://app.codecrafters.io/courses/bittorrent/overview',
         },
         {
-          text: 'HTTP Server',
+          text: 'Build your own DNS Server',
+          url: 'https://app.codecrafters.io/courses/dns-server/overview',
+        },
+        {
+          text: 'Build your own HTTP Server',
           url: 'https://app.codecrafters.io/courses/http-server/overview',
         },
         {
-          text: 'DNS Server',
-          url: 'https://app.codecrafters.io/courses/dns-server/overview',
+          text: 'Build your own Interpreter',
+          url: 'https://app.codecrafters.io/courses/interpreter/overview',
+        },
+        {
+          text: 'Build your own Claude Code',
+          url: 'https://app.codecrafters.io/courses/claude-code/overview',
         },
       ],
     };
@@ -63,15 +75,31 @@ export default class Footer extends Component {
           url: 'https://codecrafters.io/about',
         },
         {
-          text: 'Changelog',
-          url: 'https://forum.codecrafters.io/c/announcements/10',
+          text: 'Philosophy',
+          url: 'https://codecrafters.io/philosophy',
+        },
+        {
+          text: 'Pricing',
+          url: 'https://codecrafters.io/pricing',
+        },
+        {
+          text: 'Jobs',
+          url: 'https://www.ycombinator.com/companies/codecrafters/jobs',
+        },
+        {
+          text: 'For Investors',
+          url: 'mailto:sarup@codecrafters.io',
+        },
+        {
+          text: 'Bulk Licenses',
+          url: 'mailto:sarup@codecrafters.io',
         },
       ],
     };
   }
 
   get footerLinkGroups(): FooterLinkGroup[] {
-    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
+    return [this.challengeLinkGroup, this.resourcesLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
   }
 
   get legalLinkGroup(): FooterLinkGroup {
@@ -90,13 +118,29 @@ export default class Footer extends Component {
     };
   }
 
-  get supportLinkGroup(): FooterLinkGroup {
+  get resourcesLinkGroup(): FooterLinkGroup {
     return {
-      heading: 'Support',
+      heading: 'Resources',
       links: [
         {
-          text: 'Docs',
+          text: 'Changelog',
+          url: 'https://forum.codecrafters.io/c/announcements/10',
+        },
+        {
+          text: 'Forum',
+          url: 'https://forum.codecrafters.io/',
+        },
+        {
+          text: 'Blog',
+          url: 'https://codecrafters.io/blog',
+        },
+        {
+          text: 'Help',
           url: 'https://docs.codecrafters.io/',
+        },
+        {
+          text: 'Expense',
+          url: 'https://codecrafters.io/expense',
         },
         {
           text: 'Status',
