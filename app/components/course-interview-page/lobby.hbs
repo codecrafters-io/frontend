@@ -1,0 +1,52 @@
+<div class="w-full max-w-2xl rounded-lg border border-white/10 bg-gray-900/60 p-6 md:p-8" data-test-lobby ...attributes>
+  <div class="flex items-center mb-2">
+    {{svg-jar "microphone" class="w-5 h-5 text-teal-400 mr-2"}}
+    <span class="text-xs font-semibold uppercase tracking-wide text-teal-400">Voice interview · up to 8 minutes</span>
+  </div>
+
+  <h1 class="text-2xl font-semibold text-gray-50 mb-3">Can you explain what you built?</h1>
+
+  <p class="text-gray-300 leading-relaxed mb-6">
+    Talk an AI interviewer through the code you wrote for
+    <strong class="text-gray-100">{{@milestone.title}}</strong>
+    in
+    <strong class="text-gray-100">{{@repository.course.name}}</strong>. It asks 4 or 5 questions, you answer out loud, and your code stays on screen
+    the whole time.
+  </p>
+
+  <ul class="space-y-3 mb-6 text-sm text-gray-300">
+    <li class="flex items-start">
+      {{svg-jar "code" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>We'll ask how your code works, why you built it that way, and what would break it.</span>
+    </li>
+    <li class="flex items-start">
+      {{svg-jar "chat-alt-2" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>There are no trick questions. "I'm not sure" is a fine answer, and the interviewer won't correct you mid-call.</span>
+    </li>
+    <li class="flex items-start">
+      {{svg-jar "check-circle" class="w-5 h-5 text-gray-500 mr-3 shrink-0"}}
+      <span>At the end you get written feedback on each answer, pointing at the parts of your code it's about.</span>
+    </li>
+  </ul>
+
+  <div class="mb-6">
+    <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-2">Stages covered</div>
+    <div class="flex flex-wrap gap-1.5" data-test-stages-covered>
+      {{#each @milestone.stages as |stage|}}
+        <span class="rounded-sm bg-gray-800 px-2 py-0.5 text-xs text-gray-300" data-test-stage-covered>{{stage.name}}</span>
+      {{/each}}
+    </div>
+  </div>
+
+  <CourseInterviewPage::LobbyActions
+    @isStarting={{@isStarting}}
+    @onCaptionsToggle={{@onCaptionsToggle}}
+    @onStartButtonClick={{@onStartButtonClick}}
+    @shouldShowCaptions={{@shouldShowCaptions}}
+    @startButtonLabel="Start interview"
+  />
+
+  <InterviewRecordingNotice class="mt-6">
+    We record and transcribe the call so we can give you feedback. This is an experiment, so expect a few rough edges.
+  </InterviewRecordingNotice>
+</div>

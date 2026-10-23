@@ -6,6 +6,7 @@ import autofixRequest from './autofix-request';
 import badge from './badge';
 import badgeAward from './badge-award';
 import buildpack from './buildpack';
+import challengeInterview from './challenge-interview';
 import charge from './charge';
 import codeWalkthrough from './code-walkthrough';
 import communityCourseStageSolution from './community-course-stage-solution';
@@ -15,6 +16,7 @@ import communitySolutionEvaluator from './community-solution-evaluator';
 import communitySolutionExport from './community-solution-export';
 import communitySolutionVerification from './community-solution-verification';
 import communitySolutionsAnalysis from './community-solutions-analysis';
+import competitionQuiz from './competition-quiz';
 import concept from './concept';
 import conceptEngagement from './concept-engagement';
 import conceptGroup from './concept-group';
@@ -64,6 +66,7 @@ import legacyMembershipPurchase from './legacy-membership-purchase';
 import membershipGift from './membership-gift';
 import membershipPurchase from './membership-purchase';
 import onboardingSurvey from './onboarding-survey';
+import partnerCompetition from './partner-competition';
 import perk from './perk';
 import promotionalDiscount from './promotional-discount';
 import referralActivation from './referral-activation';
@@ -101,6 +104,7 @@ export default {
   badge,
   badgeAward,
   buildpack,
+  challengeInterview,
   charge,
   codeWalkthrough,
   communityCourseStageSolution,
@@ -110,6 +114,7 @@ export default {
   communitySolutionExport,
   communitySolutionVerification,
   communitySolutionsAnalysis,
+  competitionQuiz,
   concept,
   conceptEngagement,
   conceptGroup,
@@ -159,6 +164,7 @@ export default {
   membershipGift,
   membershipPurchase,
   onboardingSurvey,
+  partnerCompetition,
   perk,
   promotionalDiscount,
   referralActivation,
