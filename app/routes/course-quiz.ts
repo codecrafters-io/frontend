@@ -2,8 +2,10 @@ import InterviewBaseRoute from 'codecrafters-frontend/utils/interview-base-route
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import type ChallengeInterviewModel from 'codecrafters-frontend/models/challenge-interview';
 import type CourseModel from 'codecrafters-frontend/models/course';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type PartnerCompetitionModel from 'codecrafters-frontend/models/partner-competition';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
+import { service } from '@ember/service';
 
 export type ModelType = {
   competition: PartnerCompetitionModel;
@@ -19,6 +21,8 @@ type Params = {
 };
 
 export default class CourseQuizRoute extends InterviewBaseRoute {
+  @service declare featureFlags: FeatureFlagsService;
+
   queryParams = {
     repo: {
       refreshModel: true,
@@ -61,7 +65,8 @@ export default class CourseQuizRoute extends InterviewBaseRoute {
     }
 
     const repository = this.selectRepository(course, allRepositories, params.repo);
-    const competition = repository ? await this.findCompetition(course.slug, params.competition_slug) : null;
+    const shouldLoadCompetition = !!repository && this.featureFlags.canViewCompetitionQuiz;
+    const competition = shouldLoadCompetition ? await this.findCompetition(course.slug, params.competition_slug) : null;
 
     if (!repository || !competition) {
       this.router.replaceWith('course', course.slug);

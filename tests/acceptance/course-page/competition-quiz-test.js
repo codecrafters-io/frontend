@@ -10,7 +10,7 @@ import { module, test } from 'qunit';
 import { Response } from 'miragejs';
 import { setupAnimationTest } from 'ember-animated/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
-import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
+import { signIn, signInAsStaff } from 'codecrafters-frontend/tests/support/authentication-helpers';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -52,9 +52,20 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     return repository.course.stages.models.filter((stage) => !stage.primaryExtensionSlug).length;
   }
 
+  function quizServiceRequests(server) {
+    return Array.from(server.pretender.handledRequests).filter((request) => request.url.startsWith(config.x.interviewServiceUrl));
+  }
+
+  function signInWithQuizAccess(owner, server) {
+    const user = signIn(owner, server);
+    user.update({ featureFlags: { 'can-view-competition-quiz': true } });
+
+    return user;
+  }
+
   test('participants see the quiz card when a competition is open for the challenge', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
 
     const repository = createRepository(this.server);
@@ -76,7 +87,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the lobby summarises completed stages by extension, with names on demand', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
 
     const repository = createRepository(this.server);
@@ -119,7 +130,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the quiz card and lobby link to the privacy policy on a line of their own', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
     createRepository(this.server);
 
@@ -134,7 +145,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the quiz card is hidden when no competition is open for the challenge', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server, { courseSlugs: ['docker'] });
     createRepository(this.server);
 
@@ -143,9 +154,44 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     assert.notOk(coursePage.competitionQuizCard.isVisible, 'competition quiz card is hidden');
   });
 
-  test('participants can take the quiz and see it submitted, without a grade', async function (assert) {
+  test('the quiz card stays hidden for people without quiz access, without asking the quiz service', async function (assert) {
     testScenario(this.server);
     signIn(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assert.notOk(coursePage.competitionQuizCard.isVisible, 'competition quiz card is hidden');
+    assert.strictEqual(quizServiceRequests(this.server).length, 0, 'the quiz service is never asked');
+  });
+
+  test('staff see the quiz card without quiz access', async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await visit('/courses/redis/base-stages-completed');
+
+    assert.ok(coursePage.competitionQuizCard.isVisible, 'competition quiz card is visible');
+  });
+
+  test('the quiz page sends people without quiz access back to the challenge, without asking the quiz service', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    assert.notOk(currentURL().includes('/quiz/'), 'redirected away from the quiz page');
+    assert.strictEqual(quizServiceRequests(this.server).length, 0, 'the quiz service is never asked');
+  });
+
+  test('participants can take the quiz and see it submitted, without a grade', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
 
     const repository = createRepository(this.server);
@@ -191,7 +237,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('a submitted quiz shows as submitted on the card and on the quiz page', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
 
     const repository = createRepository(this.server);
@@ -210,7 +256,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the quiz card stays hidden until enough stages are completed during the competition', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server, { minCompletedStages: 10 });
     createRepository(this.server);
 
@@ -221,7 +267,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('a submitted quiz stays on the card even below the minimum', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server, { minCompletedStages: 10 });
 
     const repository = createRepository(this.server);
@@ -234,7 +280,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('an unfinished attempt is resumed instead of preparing new questions', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
 
     const repository = createRepository(this.server);
@@ -255,7 +301,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('shows the reason when the quiz service refuses, without offering a retry', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
     createRepository(this.server);
 
@@ -275,7 +321,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('a call that never connects lets the participant try again', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
     createRepository(this.server);
 
@@ -294,7 +340,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the lobby says how many more stages are needed before the quiz', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server, { minCompletedStages: 10 });
     createRepository(this.server);
 
@@ -310,7 +356,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the lobby asks for the minimum when no stages count yet', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server);
     createRepository(this.server, { createdAt: new Date(Date.now() - 30 * DAY_MS) });
 
@@ -327,7 +373,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the lobby lets you start once you have the minimum', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createCompetition(this.server, { minCompletedStages: 7 });
     createRepository(this.server);
 
@@ -339,7 +385,7 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
 
   test('the quiz page sends you back to the challenge for a competition that is not open', async function (assert) {
     testScenario(this.server);
-    signIn(this.owner, this.server);
+    signInWithQuizAccess(this.owner, this.server);
     createRepository(this.server);
 
     await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'made-up' });

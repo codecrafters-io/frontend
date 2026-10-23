@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import type ChallengeInterviewModel from 'codecrafters-frontend/models/challenge-interview';
+import type FeatureFlagsService from 'codecrafters-frontend/services/feature-flags';
 import type PartnerCompetitionModel from 'codecrafters-frontend/models/partner-competition';
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type Store from '@ember-data/store';
@@ -17,6 +18,7 @@ interface Signature {
 }
 
 export default class CompetitionQuizCard extends Component<Signature> {
+  @service declare featureFlags: FeatureFlagsService;
   @service declare store: Store;
 
   @tracked attempts: ChallengeInterviewModel[] = [];
@@ -54,8 +56,8 @@ export default class CompetitionQuizCard extends Component<Signature> {
   });
 
   @action
-  handleDidInsert(): void {
-    this.loadCompetitionTask.perform();
+  async handleDidInsert(): Promise<void> {
+    await this.loadCompetitionTask.perform();
   }
 }
 
