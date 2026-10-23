@@ -36,7 +36,7 @@ export default class DecisionPanel extends Component<Signature> {
     quiz.reviewNote = this.note.trim() || null;
 
     try {
-      await quiz.save();
+      await quiz.save({ adapterOptions: { attributes: ['reviewDecision', 'reviewNote'] } });
     } catch {
       quiz.rollbackAttributes();
       this.errorMessage = "Couldn't save your decision. Please try again.";

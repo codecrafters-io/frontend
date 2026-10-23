@@ -17,6 +17,12 @@ module('Acceptance | course-admin | review-competition-quizzes-test', function (
     return server.create('competition-quiz', { ...competitionQuizAttributes, ...overrides });
   }
 
+  function reviewRequests(server) {
+    return Array.from(server.pretender.handledRequests).filter(
+      (request) => request.method === 'PATCH' && request.url.startsWith(`${config.x.interviewServiceUrl}/api/competition-quizzes/`),
+    );
+  }
+
   test('staff see the quizzes submitted for a challenge', async function (assert) {
     testScenario(this.server);
     signInAsStaff(this.owner, this.server);
@@ -160,6 +166,45 @@ module('Acceptance | course-admin | review-competition-quizzes-test', function (
 
     assert.false(quiz.reload().isRetakeAllowed, 'the retake is taken back');
     assert.ok(quizPage.retakePanel.allowRetakeButtonIsVisible, 'the button is back');
+  });
+
+  test("allowing a retake from a page that's out of date leaves another reviewer's decision alone", async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const quiz = createQuiz(this.server, { participantUsername: 'ada' });
+
+    await quizPage.visit({ course_slug: 'redis', quiz_id: quiz.id });
+    quiz.update({ reviewDecision: 'eligible', reviewNote: 'Clear answers.', reviewedAt: new Date(), reviewedBy: 'grace' });
+
+    await quizPage.retakePanel.clickOnAllowRetakeButton();
+
+    const [patch] = reviewRequests(this.server);
+
+    assert.deepEqual(Object.keys(JSON.parse(patch.requestBody).data.attributes), ['is-retake-allowed'], 'only the retake is sent');
+    assert.strictEqual(quiz.reload().reviewDecision, 'eligible', "grace's decision stands");
+    assert.strictEqual(quiz.reviewNote, 'Clear answers.');
+  });
+
+  test("recording a decision from a page that's out of date leaves another reviewer's retake alone", async function (assert) {
+    testScenario(this.server);
+    signInAsStaff(this.owner, this.server);
+
+    const quiz = createQuiz(this.server, { participantUsername: 'ada' });
+
+    await quizPage.visit({ course_slug: 'redis', quiz_id: quiz.id });
+    quiz.update({ isRetakeAllowed: true, retakeAllowedAt: new Date(), retakeAllowedBy: 'grace' });
+
+    await quizPage.clickOnEligibleButton();
+
+    const [patch] = reviewRequests(this.server);
+
+    assert.deepEqual(
+      Object.keys(JSON.parse(patch.requestBody).data.attributes).sort(),
+      ['review-decision', 'review-note'],
+      'only the decision is sent',
+    );
+    assert.true(quiz.reload().isRetakeAllowed, "grace's retake stands");
   });
 
   test('the allow-retake button is disabled while it saves', async function (assert) {

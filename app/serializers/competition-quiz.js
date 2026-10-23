@@ -1,16 +1,14 @@
 import ApplicationSerializer from './application';
 
+const REVIEW_ATTRIBUTES = ['isRetakeAllowed', 'reviewDecision', 'reviewNote'];
+
 export default class CompetitionQuizSerializer extends ApplicationSerializer {
-  serialize() {
-    const json = super.serialize(...arguments);
-    const attributes = json.data.attributes;
+  // Each panel sends only what it changed, so a page that's out of date can't undo another reviewer's save.
+  serializeAttribute(snapshot, json, key, attribute) {
+    const attributesToSend = snapshot.adapterOptions?.attributes || REVIEW_ATTRIBUTES;
 
-    json.data.attributes = {
-      'is-retake-allowed': attributes['is-retake-allowed'],
-      'review-decision': attributes['review-decision'],
-      'review-note': attributes['review-note'],
-    };
-
-    return json;
+    if (attributesToSend.includes(key)) {
+      super.serializeAttribute(snapshot, json, key, attribute);
+    }
   }
 }

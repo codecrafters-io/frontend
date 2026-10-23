@@ -91,19 +91,23 @@ export default function (server) {
   server.patch('/competition-quizzes/:id', function (schema, request) {
     const quiz = schema.competitionQuizzes.find(request.params.id);
     const attributes = JSON.parse(request.requestBody).data.attributes;
-    const reviewDecision = attributes['review-decision'] || null;
-    const reviewNote = attributes['review-note'] || null;
     const reviewer = schema.users.first().username;
-    const hasReview = reviewDecision !== null || reviewNote !== null;
-    const isUnchanged = reviewDecision === quiz.reviewDecision && reviewNote === quiz.reviewNote;
     const isRetakeAllowed = attributes['is-retake-allowed'];
 
-    quiz.update({
-      reviewDecision,
-      reviewNote,
-      reviewedAt: hasReview ? (isUnchanged ? quiz.reviewedAt : new Date()) : null,
-      reviewedBy: hasReview ? (isUnchanged ? quiz.reviewedBy : reviewer) : null,
-    });
+    // Like the quiz service, the decision and its note change only when the update includes a decision.
+    if ('review-decision' in attributes) {
+      const reviewDecision = attributes['review-decision'] || null;
+      const reviewNote = attributes['review-note'] || null;
+      const hasReview = reviewDecision !== null || reviewNote !== null;
+      const isUnchanged = reviewDecision === quiz.reviewDecision && reviewNote === quiz.reviewNote;
+
+      quiz.update({
+        reviewDecision,
+        reviewNote,
+        reviewedAt: hasReview ? (isUnchanged ? quiz.reviewedAt : new Date()) : null,
+        reviewedBy: hasReview ? (isUnchanged ? quiz.reviewedBy : reviewer) : null,
+      });
+    }
 
     if (isRetakeAllowed !== undefined) {
       quiz.update({

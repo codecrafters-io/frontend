@@ -31,7 +31,7 @@ export default class RetakePanel extends Component<Signature> {
     quiz.isRetakeAllowed = isRetakeAllowed;
 
     try {
-      await quiz.save();
+      await quiz.save({ adapterOptions: { attributes: ['isRetakeAllowed'] } });
     } catch {
       quiz.rollbackAttributes();
       this.errorMessage = isRetakeAllowed ? "Couldn't allow the retake. Please try again." : "Couldn't undo the retake. Please try again.";
