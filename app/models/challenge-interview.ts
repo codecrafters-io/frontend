@@ -97,8 +97,18 @@ export default class ChallengeInterviewModel extends Model {
     return this.status === 'scoring';
   }
 
+  declare markAsConnected: (this: Model, payload: { conversation_id: string }) => Promise<unknown>;
   declare markAsEnded: (this: Model, payload: { conversation_id: string | null; end_reason: ChallengeInterviewEndReason }) => Promise<unknown>;
 }
+
+ChallengeInterviewModel.prototype.markAsConnected = memberAction({
+  path: 'connected',
+  type: 'post',
+
+  after(response) {
+    this.store.pushPayload(response);
+  },
+});
 
 ChallengeInterviewModel.prototype.markAsEnded = memberAction({
   path: 'ended',

@@ -52,6 +52,15 @@ export default function (server) {
     return schema.challengeInterviews.create({ ...attrs, createdAt: new Date(), format, isSubmitted: false, status: 'generating' });
   });
 
+  server.post('/challenge-interviews/:id/connected', function (schema, request) {
+    const interview = schema.challengeInterviews.find(request.params.id);
+    const { conversation_id: conversationId } = JSON.parse(request.requestBody);
+
+    interview.update({ conversationId, isSubmitted: true });
+
+    return interview;
+  });
+
   server.post('/challenge-interviews/:id/ended', function (schema, request) {
     const interview = schema.challengeInterviews.find(request.params.id);
     const { conversation_id: conversationId, end_reason: endReason } = JSON.parse(request.requestBody);

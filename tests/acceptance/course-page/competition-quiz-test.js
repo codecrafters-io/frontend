@@ -5,6 +5,7 @@ import courseQuizPage from 'codecrafters-frontend/tests/pages/course-quiz-page';
 import FakeVoiceInterviewService from 'codecrafters-frontend/tests/support/fake-voice-interview-service';
 import percySnapshot from '@percy/ember';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
+import { readyQuizAttributes } from 'codecrafters-frontend/mirage/data/challenge-interview-fixtures';
 import { currentURL, settled, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { Response } from 'miragejs';
@@ -352,6 +353,245 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     await courseQuizPage.failedScreen.clickOnTryAgainButton();
 
     assert.ok(courseQuizPage.competitionLobby.isVisible, 'lobby is visible again');
+  });
+
+  test('the call is attached the moment the interviewer joins, so the quiz counts even if the tab closes', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    const voiceInterview = this.owner.lookup('service:voice-interview');
+    const connectedRequests = () => quizServiceRequests(this.server).filter((request) => request.url.endsWith('/connected'));
+
+    assert.strictEqual(connectedRequests().length, 0, 'nothing is attached before the interviewer speaks');
+
+    voiceInterview.simulateAgentMessage('How did you implement the PING command?');
+    await settled();
+
+    assert.deepEqual(JSON.parse(connectedRequests()[0].requestBody), { conversation_id: 'fake-conversation-id' });
+    assert.strictEqual(this.server.schema.challengeInterviews.first().conversationId, 'fake-conversation-id');
+  });
+
+  test('a call that fails to connect sets its questions aside, and trying again prepares a fresh attempt', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    const voiceInterview = this.owner.lookup('service:voice-interview');
+    voiceInterview.nextConnectionError = 'Could not establish a WebRTC connection';
+
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.ok(courseQuizPage.failedScreen.isVisible, 'the failure is shown');
+
+    const [endRequest] = quizServiceRequests(this.server).filter((request) => request.url.endsWith('/ended'));
+
+    assert.deepEqual(
+      JSON.parse(endRequest.requestBody),
+      { conversation_id: null, end_reason: 'connection_error' },
+      'the server hears it never connected',
+    );
+
+    voiceInterview.nextConnectionError = null;
+    await courseQuizPage.failedScreen.clickOnTryAgainButton();
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.strictEqual(this.server.schema.challengeInterviews.all().length, 2, 'a fresh attempt was prepared');
+    assert.ok(voiceInterview.isConnecting, 'the new call is starting');
+  });
+
+  test('trying again after the quiz service hiccups picks the same attempt back up', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    let lookups = 0;
+
+    this.server.get(`${config.x.interviewServiceUrl}/api/challenge-interviews/:id`, function (schema, request) {
+      const interview = schema.challengeInterviews.find(request.params.id);
+      lookups += 1;
+
+      if (lookups === 1) {
+        return new Response(502, {}, { error: "Couldn't reach the voice service" });
+      }
+
+      interview.update({ ...readyQuizAttributes, agentVariables: { ...readyQuizAttributes.agentVariables, interview_id: interview.id } });
+
+      return interview;
+    });
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.ok(courseQuizPage.failedScreen.isVisible, 'the hiccup is shown');
+
+    await courseQuizPage.failedScreen.clickOnTryAgainButton();
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.strictEqual(this.server.schema.challengeInterviews.all().length, 1, 'the same attempt was picked back up');
+    assert.ok(this.owner.lookup('service:voice-interview').isConnecting, 'the call starts');
+  });
+
+  test('starting picks up an attempt that was already prepared, and fetches its call', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    this.server.post(`${config.x.interviewServiceUrl}/api/challenge-interviews`, function (schema) {
+      const attrs = this.normalizedRequestAttrs('challenge-interview');
+
+      return schema.challengeInterviews.create({
+        ...attrs,
+        ...readyQuizAttributes,
+        agentVariables: null,
+        conversationToken: null,
+        createdAt: new Date(),
+        format: 'competition',
+        isSubmitted: false,
+      });
+    });
+
+    this.server.get(`${config.x.interviewServiceUrl}/api/challenge-interviews/:id`, function (schema, request) {
+      const interview = schema.challengeInterviews.find(request.params.id);
+      interview.update({ ...readyQuizAttributes, agentVariables: { ...readyQuizAttributes.agentVariables, interview_id: interview.id } });
+
+      return interview;
+    });
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.ok(this.owner.lookup('service:voice-interview').isConnecting, 'the call starts');
+  });
+
+  test('muting while the call connects carries over once it does', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+
+    const voiceInterview = this.owner.lookup('service:voice-interview');
+    const releaseConnection = voiceInterview.holdNextConnection();
+
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+    await courseQuizPage.callControls.clickOnMuteButton();
+    releaseConnection();
+    await settled();
+
+    assert.deepEqual(voiceInterview.mutedStates, [true], 'the microphone is muted on the call itself');
+  });
+
+  test('leaving during the quiz asks first, since it ends the call', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    const confirmations = [];
+    const answers = [false, true];
+
+    window.confirm = (message) => {
+      confirmations.push(message);
+
+      return answers.shift();
+    };
+
+    await courseQuizPage.topBar.clickOnLogoLink();
+
+    assert.ok(currentURL().includes('/quiz/'), 'still on the quiz');
+    assert.ok(this.owner.lookup('service:voice-interview').isConnecting, 'staying keeps the call going');
+    assert.contains(confirmations[0], 'uses up this attempt');
+
+    const unload = new Event('beforeunload', { cancelable: true });
+    window.dispatchEvent(unload);
+
+    assert.true(unload.defaultPrevented, 'closing the tab asks too');
+
+    await courseQuizPage.topBar.clickOnLogoLink();
+
+    assert.notOk(currentURL().includes('/quiz/'), 'left after confirming');
+    assert.strictEqual(confirmations.length, 2, 'asked once per attempt to leave');
+  });
+
+  test('a quiz whose call was attached shows as submitted even if saving its end fails', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    this.server.post(
+      `${config.x.interviewServiceUrl}/api/challenge-interviews/:id/ended`,
+      () => new Response(500, {}, { error: 'Something went wrong on our side' }),
+    );
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    const voiceInterview = this.owner.lookup('service:voice-interview');
+    voiceInterview.simulateAgentMessage('How did you implement the PING command?');
+    await settled();
+    voiceInterview.simulateAgentEndedCall();
+    await settled();
+
+    assert.ok(courseQuizPage.submittedScreen.isVisible, 'the attached call already counts');
+  });
+
+  test('if saving the end of an unattached call fails, trying again sends it again instead of starting over', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    let endRequests = 0;
+
+    this.server.post(
+      `${config.x.interviewServiceUrl}/api/challenge-interviews/:id/connected`,
+      () => new Response(500, {}, { error: 'Something went wrong on our side' }),
+    );
+
+    this.server.post(`${config.x.interviewServiceUrl}/api/challenge-interviews/:id/ended`, function (schema, request) {
+      endRequests += 1;
+
+      if (endRequests === 1) {
+        return new Response(500, {}, { error: 'Something went wrong on our side' });
+      }
+
+      const interview = schema.challengeInterviews.find(request.params.id);
+      interview.update({ conversationId: 'fake-conversation-id', conversationToken: null, isSubmitted: true, status: 'scoring' });
+
+      return interview;
+    });
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    const voiceInterview = this.owner.lookup('service:voice-interview');
+    voiceInterview.simulateAgentMessage('How did you implement the PING command?');
+    await settled();
+    voiceInterview.simulateAgentEndedCall();
+    await settled();
+
+    assert.ok(courseQuizPage.failedScreen.isVisible, "the participant hears it didn't save");
+
+    await courseQuizPage.failedScreen.clickOnTryAgainButton();
+
+    assert.ok(courseQuizPage.submittedScreen.isVisible, 'the resent end saves the quiz');
+    assert.strictEqual(endRequests, 2);
+    assert.strictEqual(this.server.schema.challengeInterviews.all().length, 1, 'no second attempt was started');
   });
 
   test('the lobby says how many more stages are needed before the quiz', async function (assert) {

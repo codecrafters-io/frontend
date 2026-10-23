@@ -7,6 +7,7 @@ import type PartnerCompetitionModel from 'codecrafters-frontend/models/partner-c
 import type RepositoryModel from 'codecrafters-frontend/models/repository';
 import type RouterService from '@ember/routing/router-service';
 import type Store from '@ember-data/store';
+import type Transition from '@ember/routing/transition';
 import type VoiceInterviewService from 'codecrafters-frontend/services/voice-interview';
 import type { ChallengeInterviewEndReason } from 'codecrafters-frontend/models/challenge-interview';
 import { action } from '@ember/object';
@@ -17,6 +18,7 @@ import { tracked } from '@glimmer/tracking';
 import { waitForPromise } from '@ember/test-waiters';
 
 const DEFAULT_MAX_DURATION_SECONDS = 480;
+const LEAVE_QUIZ_MESSAGE = 'Leaving ends the call and uses up this attempt. Leave anyway?';
 const POLL_INTERVAL_MS = config.environment === 'test' ? 0 : 2000;
 const WRAP_UP_NOTICE = "Time is nearly up. Let them finish the answer they're giving, then thank them, say goodbye and end the call.";
 const WRAP_UP_NOTICE_SECONDS = 90;
@@ -62,7 +64,9 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
   @tracked shouldShowCaptions = true;
 
   #countdownInterval: number | null = null;
+  #hasConfirmedLeaving = false;
   #hasSentWrapUpNotice = false;
+  #pendingEnd: { conversationId: string | null; endReason: ChallengeInterviewEndReason } | null = null;
 
   constructor(owner: Owner, args: Signature['Args']) {
     super(owner, args);
@@ -112,6 +116,10 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     return this.phase === 'submitted';
   }
 
+  get shouldConfirmLeaving(): boolean {
+    return this.isQuiz && this.phaseIsLive;
+  }
+
   get submittedDescription(): string {
     return `Thanks for taking part in ${this.args.competition?.name}. The organisers review every quiz after the competition ends and will be in touch about results.`;
   }
@@ -130,15 +138,23 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     }
 
     this.phase = 'scoring';
+    this.#pendingEnd = { conversationId, endReason };
 
     try {
       await waitForPromise(interview.markAsEnded({ conversation_id: conversationId, end_reason: endReason }));
+      this.#pendingEnd = null;
 
       if (!this.isQuiz) {
         await this.pollInterviewTask.perform(interview, 'scoring');
       }
     } catch {
-      this.#fail("We couldn't save your interview. Please try again.");
+      // A quiz call attached when the interviewer joined already counts, and gets scored without us.
+      if (this.isQuiz && interview.isSubmitted) {
+        this.#pendingEnd = null;
+        this.phase = 'submitted';
+      } else {
+        this.#fail(this.isQuiz ? "We couldn't save your quiz. Please try again." : "We couldn't save your interview. Please try again.");
+      }
 
       return;
     }
@@ -177,6 +193,11 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     try {
       await (resumableInterview ? interview.reload() : interview.save());
       await this.pollInterviewTask.perform(interview, 'generating');
+
+      // Starting can pick up an attempt that was already prepared, whose call token only comes with a reload.
+      if (interview.isReady && !interview.conversationToken) {
+        await interview.reload();
+      }
     } catch (error) {
       if (!interview.id) {
         interview.unloadRecord();
@@ -205,9 +226,15 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
       conversationToken: interview.conversationToken,
       dynamicVariables: interview.agentVariables,
       onEnded: this.handleVoiceInterviewEnded,
+      onInterviewerJoined: this.isQuiz ? this.handleInterviewerJoined : undefined,
     });
 
     if (this.voiceInterview.status === 'failed') {
+      // The questions went out with the token, so the server sets them aside and the retry prepares fresh ones.
+      if (this.isQuiz) {
+        void interview.markAsEnded({ conversation_id: null, end_reason: 'connection_error' }).catch(() => {});
+      }
+
       this.#fail(this.voiceInterview.errorMessage || "We couldn't connect you to the interviewer.");
 
       return;
@@ -251,9 +278,26 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
     void this.voiceInterview.end('user_ended');
   }
 
+  // Attaching the call once the interviewer joins makes the attempt count, even if this tab closes before the end.
+  @action
+  handleInterviewerJoined(conversationId: string): void {
+    void this.interview?.markAsConnected({ conversation_id: conversationId }).catch(() => {});
+  }
+
   @action
   async handleRetakeButtonClick(): Promise<void> {
-    this.interview = null;
+    if (this.#pendingEnd) {
+      const { conversationId, endReason } = this.#pendingEnd;
+      await this.finishInterviewTask.perform(conversationId, endReason);
+
+      return;
+    }
+
+    // An attempt that never got its call can be picked back up; any other starts afresh.
+    if (!(this.interview?.isOpen && !this.interview.conversationToken)) {
+      this.interview = null;
+    }
+
     this.failureMessage = null;
     this.phase = 'lobby';
 
@@ -261,6 +305,21 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
       this.router.transitionTo('course-interview', this.args.repository.course.slug, this.args.milestone.slug, {
         queryParams: { interview: null, repo: this.args.repository.id },
       });
+    }
+  }
+
+  // Leaving passes through a loading substate too, so one confirmation has to cover both transitions.
+  @action
+  handleRouteWillChange(transition: Transition): void {
+    // @ts-expect-error queryParamsOnly is on router.js's Transition but missing from Ember's type
+    if (!this.shouldConfirmLeaving || transition.queryParamsOnly || this.#hasConfirmedLeaving) {
+      return;
+    }
+
+    if (window.confirm(LEAVE_QUIZ_MESSAGE)) {
+      this.#hasConfirmedLeaving = true;
+    } else {
+      transition.abort();
     }
   }
 

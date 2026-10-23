@@ -9,8 +9,10 @@ export default class FakeVoiceInterviewService extends VoiceInterviewService {
   contextualUpdates: string[] = [];
   lastSessionOptions: VoiceInterviewSessionOptions | null = null;
   mutedStates: boolean[] = [];
+  nextConnectionError: string | null = null;
 
   #callbacks: VoiceInterviewConversationCallbacks | null = null;
+  #connectionGate: Promise<void> | null = null;
 
   async checkMicrophone(): Promise<boolean> {
     this.microphoneStatus = 'ready';
@@ -25,6 +27,15 @@ export default class FakeVoiceInterviewService extends VoiceInterviewService {
     this.lastSessionOptions = options;
     this.#callbacks = callbacks;
 
+    if (this.#connectionGate) {
+      await this.#connectionGate;
+      this.#connectionGate = null;
+    }
+
+    if (this.nextConnectionError) {
+      throw new Error(this.nextConnectionError);
+    }
+
     callbacks.onConnect('fake-conversation-id');
 
     return {
@@ -38,6 +49,14 @@ export default class FakeVoiceInterviewService extends VoiceInterviewService {
         this.mutedStates.push(isMuted);
       },
     };
+  }
+
+  // Keeps the next call "connecting" until the returned function is called.
+  holdNextConnection(): () => void {
+    let release: () => void = () => {};
+    this.#connectionGate = new Promise((resolve) => (release = resolve));
+
+    return release;
   }
 
   #requireCallbacks(): VoiceInterviewConversationCallbacks {

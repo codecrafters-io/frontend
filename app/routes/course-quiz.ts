@@ -23,9 +23,10 @@ type Params = {
 export default class CourseQuizRoute extends InterviewBaseRoute {
   @service declare featureFlags: FeatureFlagsService;
 
+  // Not refreshModel: aborting a transition off this route would then refresh it, remounting the page mid-call.
   queryParams = {
     repo: {
-      refreshModel: true,
+      refreshModel: false,
     },
   };
 

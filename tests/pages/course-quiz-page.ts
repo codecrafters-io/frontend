@@ -1,3 +1,4 @@
+import CallControls from 'codecrafters-frontend/tests/pages/components/course-interview-page/call-controls';
 import CodePanel from 'codecrafters-frontend/tests/pages/components/course-interview-page/code-panel';
 import CompetitionLobby from 'codecrafters-frontend/tests/pages/components/course-interview-page/competition-lobby';
 import Header from 'codecrafters-frontend/tests/pages/components/header';
@@ -7,6 +8,7 @@ import createPage from 'codecrafters-frontend/tests/support/create-page';
 import { clickable, text, visitable } from 'ember-cli-page-object';
 
 export default createPage({
+  callControls: CallControls,
   codePanel: CodePanel,
   competitionCard: { scope: '[data-test-competition-card]' },
   competitionLobby: CompetitionLobby,

@@ -41,6 +41,7 @@ export interface VoiceInterviewSessionOptions {
   conversationToken: string;
   dynamicVariables: Record<string, string | number | boolean>;
   onEnded: (conversationId: string | null, reason: ChallengeInterviewEndReason) => void;
+  onInterviewerJoined?: (conversationId: string) => void;
 }
 
 type ShowCodeParameters = {
@@ -65,6 +66,7 @@ export default class VoiceInterviewService extends Service {
   #interviewerJoinTimeout: number | null = null;
   #liveSince: number | null = null;
   #onEnded: VoiceInterviewSessionOptions['onEnded'] | null = null;
+  #onInterviewerJoined: VoiceInterviewSessionOptions['onInterviewerJoined'] | null = null;
   #requestedEndReason: ChallengeInterviewEndReason | null = null;
 
   get captionLines(): InterviewCaptionLine[] {
@@ -250,6 +252,10 @@ export default class VoiceInterviewService extends Service {
     this.#clearInterviewerJoinTimeout();
     this.#liveSince = performance.now();
     this.status = 'live';
+
+    if (this.conversationId) {
+      this.#onInterviewerJoined?.(this.conversationId);
+    }
   }
 
   #reset(): void {
@@ -264,6 +270,7 @@ export default class VoiceInterviewService extends Service {
     this.#availableFilePaths = [];
     this.#conversation = null;
     this.#onEnded = null;
+    this.#onInterviewerJoined = null;
     this.#requestedEndReason = null;
   }
 
@@ -292,6 +299,7 @@ export default class VoiceInterviewService extends Service {
     this.#reset();
     this.#availableFilePaths = options.availableFilePaths;
     this.#onEnded = options.onEnded;
+    this.#onInterviewerJoined = options.onInterviewerJoined;
     this.status = 'connecting';
 
     try {
@@ -305,6 +313,11 @@ export default class VoiceInterviewService extends Service {
       }
 
       this.#conversation = conversation;
+
+      // Mute can be pressed while the call is still connecting, before there was a call to mute.
+      if (this.isMuted) {
+        conversation.setMicMuted(true);
+      }
 
       if (this.status === 'connecting') {
         this.#interviewerJoinTimeout = window.setTimeout(() => void this.end('connection_error'), this.interviewerJoinTimeoutMs);
