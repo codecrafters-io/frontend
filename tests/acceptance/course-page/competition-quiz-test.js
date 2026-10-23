@@ -79,33 +79,39 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     signIn(this.owner, this.server);
     createCompetition(this.server);
 
-    const repository = createRepository(this.server, {}, 'withAllStagesCompleted');
-    const course = repository.course;
-    const extensions = course.extensions.models.toSorted((a, b) => a.position - b.position);
+    const repository = createRepository(this.server);
+    const stagesOf = (extensionSlug) =>
+      repository.course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensionSlug).toSorted((a, b) => a.position - b.position);
+    const rdbStages = stagesOf('persistence-rdb').slice(0, 3);
+    const transactionsStages = stagesOf('transactions').slice(0, 2);
+
+    // Seeded out of course order, so the lobby has to sort groups and stages itself.
+    [...transactionsStages, ...rdbStages.toReversed()].forEach((courseStage) => {
+      this.server.create('course-stage-completion', { repository, courseStage, completedAt: repository.createdAt });
+    });
 
     await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
 
     const lobby = courseQuizPage.competitionLobby;
 
-    assert.strictEqual(lobby.totalStagesText, `${course.stages.models.length} stages`);
+    assert.strictEqual(lobby.totalStagesText, `${baseStagesCount(repository) + rdbStages.length + transactionsStages.length} stages`);
     assert.deepEqual(
       lobby.stageGroups.map((group) => group.name),
-      ['Base stages', ...extensions.map((extension) => extension.name)],
+      ['Base stages', 'RDB Persistence', 'Transactions'],
       'base stages first, then extensions in course order',
     );
 
-    const firstExtensionStages = course.stages.models.filter((stage) => stage.primaryExtensionSlug === extensions[0].slug);
-    const firstExtensionGroup = lobby.stageGroups[1];
+    const rdbGroup = lobby.stageGroups[1];
 
-    assert.strictEqual(firstExtensionGroup.countText, `${firstExtensionStages.length} stages`);
-    assert.false(firstExtensionGroup.isExpanded, 'groups start collapsed, hiding stage names');
+    assert.strictEqual(rdbGroup.countText, `${rdbStages.length} stages`);
+    assert.false(rdbGroup.isExpanded, 'groups start collapsed, hiding stage names');
 
-    await firstExtensionGroup.clickOnSummary();
+    await rdbGroup.clickOnSummary();
 
-    assert.true(firstExtensionGroup.isExpanded, 'the group expands');
+    assert.true(rdbGroup.isExpanded, 'the group expands');
     assert.deepEqual(
-      firstExtensionGroup.stages.map((stage) => stage.text),
-      firstExtensionStages.toSorted((a, b) => a.position - b.position).map((stage) => stage.name),
+      rdbGroup.stages.map((stage) => stage.text),
+      rdbStages.map((stage) => stage.name),
       "the group lists that extension's stages, in order",
     );
     assert.false(lobby.stageGroups[0].isExpanded, 'other groups stay collapsed');
