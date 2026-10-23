@@ -29,6 +29,12 @@ export default create({
 
   helpscoutBeacon: helpscoutBeacon,
 
+  userAudioSurveyBanner: {
+    click: clickable('[data-test-user-audio-survey-banner-button]'),
+    clickOnDismissButton: clickable('[data-test-dismiss-button]'),
+    scope: '[data-test-user-audio-survey-banner]',
+  },
+
   productWalkthroughFeatureSuggestion: {
     clickOnDismissButton: clickable('[data-test-dismiss-button]'),
     clickOnStartHereButton: clickable('[data-test-start-here-button]'),

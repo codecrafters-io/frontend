@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import wordmarkDark from '/assets/images/logo/wordmark-dark.svg';
 
 interface FooterLink {
+  mobileText?: string;
   text: string;
   url: string;
 }
@@ -19,80 +20,67 @@ export default class Footer extends Component {
       heading: 'Challenges',
       links: [
         {
-          text: 'Git',
+          mobileText: 'BYO Git',
+          text: 'Build your own Git',
           url: 'https://app.codecrafters.io/courses/git/overview',
         },
         {
-          text: 'Redis',
-          url: 'https://app.codecrafters.io/courses/redis/overview',
-        },
-        {
-          text: 'Shell',
-          url: 'https://app.codecrafters.io/courses/shell/overview',
-        },
-        {
-          text: 'SQLite',
-          url: 'https://app.codecrafters.io/courses/sqlite/overview',
-        },
-        {
-          text: 'Grep',
+          mobileText: 'BYO Grep',
+          text: 'Build your own Grep',
           url: 'https://app.codecrafters.io/courses/grep/overview',
         },
         {
-          text: 'BitTorrent',
+          mobileText: 'BYO Redis',
+          text: 'Build your own Redis',
+          url: 'https://app.codecrafters.io/courses/redis/overview',
+        },
+        {
+          mobileText: 'BYO Shell',
+          text: 'Build your own Shell',
+          url: 'https://app.codecrafters.io/courses/shell/overview',
+        },
+        {
+          mobileText: 'BYO Kafka',
+          text: 'Build your own Kafka',
+          url: 'https://app.codecrafters.io/courses/kafka/overview',
+        },
+        {
+          mobileText: 'BYO SQLite',
+          text: 'Build your own SQLite',
+          url: 'https://app.codecrafters.io/courses/sqlite/overview',
+        },
+        {
+          mobileText: 'BYO BitTorrent',
+          text: 'Build your own BitTorrent',
           url: 'https://app.codecrafters.io/courses/bittorrent/overview',
         },
         {
-          text: 'HTTP Server',
+          mobileText: 'BYO DNS Server',
+          text: 'Build your own DNS Server',
+          url: 'https://app.codecrafters.io/courses/dns-server/overview',
+        },
+        {
+          mobileText: 'BYO HTTP Server',
+          text: 'Build your own HTTP Server',
           url: 'https://app.codecrafters.io/courses/http-server/overview',
         },
         {
-          text: 'DNS Server',
-          url: 'https://app.codecrafters.io/courses/dns-server/overview',
+          mobileText: 'BYO Interpreter',
+          text: 'Build your own Interpreter',
+          url: 'https://app.codecrafters.io/courses/interpreter/overview',
+        },
+        {
+          mobileText: 'BYO Claude Code',
+          text: 'Build your own Claude Code',
+          url: 'https://app.codecrafters.io/courses/claude-code/overview',
         },
       ],
     };
   }
 
-  get companyLinkGroup(): FooterLinkGroup {
+  get resourcesLinkGroup(): FooterLinkGroup {
     return {
-      heading: 'Company',
-      links: [
-        {
-          text: 'About',
-          url: 'https://codecrafters.io/about',
-        },
-        {
-          text: 'Changelog',
-          url: 'https://forum.codecrafters.io/c/announcements/10',
-        },
-      ],
-    };
-  }
-
-  get footerLinkGroups(): FooterLinkGroup[] {
-    return [this.challengeLinkGroup, this.supportLinkGroup, this.companyLinkGroup, this.legalLinkGroup];
-  }
-
-  get legalLinkGroup(): FooterLinkGroup {
-    return {
-      heading: 'Legal',
-      links: [
-        {
-          text: 'Terms',
-          url: 'https://codecrafters.io/terms',
-        },
-        {
-          text: 'Privacy',
-          url: 'https://codecrafters.io/privacy',
-        },
-      ],
-    };
-  }
-
-  get supportLinkGroup(): FooterLinkGroup {
-    return {
-      heading: 'Support',
+      heading: 'Resources',
       links: [
         {
           text: 'Docs',
@@ -101,6 +89,18 @@ export default class Footer extends Component {
         {
           text: 'Status',
           url: 'https://status.codecrafters.io/',
+        },
+        {
+          text: 'About',
+          url: 'https://codecrafters.io/about',
+        },
+        {
+          text: 'Terms',
+          url: 'https://codecrafters.io/terms',
+        },
+        {
+          text: 'Privacy',
+          url: 'https://codecrafters.io/privacy',
         },
       ],
     };
