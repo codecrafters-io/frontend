@@ -11,7 +11,7 @@ import type Transition from '@ember/routing/transition';
 import type VoiceInterviewService from 'codecrafters-frontend/services/voice-interview';
 import type { ChallengeInterviewEndReason } from 'codecrafters-frontend/models/challenge-interview';
 import { action } from '@ember/object';
-import { interviewServiceRefusalMessage } from 'codecrafters-frontend/utils/interview-service-error';
+import { interviewServiceBusyMessage, interviewServiceRefusalMessage } from 'codecrafters-frontend/utils/interview-service-error';
 import { service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
@@ -204,8 +204,9 @@ export default class CourseInterviewPageContainer extends Component<Signature> {
       }
 
       const refusal = interviewServiceRefusalMessage(error);
+      const message = refusal || interviewServiceBusyMessage(error) || "We couldn't reach the interview service. Please try again.";
 
-      this.#fail(refusal || "We couldn't reach the interview service. Please try again.", { canRetry: !refusal });
+      this.#fail(message, { canRetry: !refusal });
 
       return;
     }

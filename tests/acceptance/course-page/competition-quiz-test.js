@@ -440,6 +440,40 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     assert.ok(this.owner.lookup('service:voice-interview').isConnecting, 'the call starts');
   });
 
+  test('when every call slot is taken, says so and lets the participant try again', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    let lookups = 0;
+
+    this.server.get(`${config.x.interviewServiceUrl}/api/challenge-interviews/:id`, function (schema, request) {
+      const interview = schema.challengeInterviews.find(request.params.id);
+      lookups += 1;
+
+      if (lookups === 1) {
+        return new Response(503, {}, { error: 'A lot of people are on calls right now. Please try again in a few minutes.' });
+      }
+
+      interview.update({ ...readyQuizAttributes, agentVariables: { ...readyQuizAttributes.agentVariables, interview_id: interview.id } });
+
+      return interview;
+    });
+
+    await courseQuizPage.visit({ course_slug: 'redis', competition_slug: 'redis-sprint' });
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.strictEqual(courseQuizPage.failedScreen.descriptionText, 'A lot of people are on calls right now. Please try again in a few minutes.');
+    assert.ok(courseQuizPage.failedScreen.tryAgainButton.isVisible, 'a slot can free up');
+
+    await courseQuizPage.failedScreen.clickOnTryAgainButton();
+    await courseQuizPage.competitionLobby.clickOnStartQuizButton();
+
+    assert.strictEqual(this.server.schema.challengeInterviews.all().length, 1, 'the same attempt was picked back up');
+    assert.ok(this.owner.lookup('service:voice-interview').isConnecting, 'the call starts');
+  });
+
   test('starting picks up an attempt that was already prepared, and fetches its call', async function (assert) {
     testScenario(this.server);
     signInWithQuizAccess(this.owner, this.server);
