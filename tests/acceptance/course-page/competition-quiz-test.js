@@ -189,6 +189,22 @@ module('Acceptance | course-page | competition-quiz-test', function (hooks) {
     assert.strictEqual(quizServiceRequests(this.server).length, 0, 'the quiz service is never asked');
   });
 
+  test('requests to the quiz service carry the session token and none of the analytics headers', async function (assert) {
+    testScenario(this.server);
+    signInWithQuizAccess(this.owner, this.server);
+    createCompetition(this.server);
+    createRepository(this.server);
+
+    await visit('/courses/redis/base-stages-completed');
+
+    const [request] = quizServiceRequests(this.server);
+    const customHeaders = Object.keys(request.requestHeaders)
+      .map((name) => name.toLowerCase())
+      .filter((name) => name.startsWith('x-'));
+
+    assert.deepEqual(customHeaders, ['x-session-token']);
+  });
+
   test('participants can take the quiz and see it submitted, without a grade', async function (assert) {
     testScenario(this.server);
     signInWithQuizAccess(this.owner, this.server);

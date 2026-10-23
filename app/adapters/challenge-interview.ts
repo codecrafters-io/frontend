@@ -4,6 +4,13 @@ import config from 'codecrafters-frontend/config/environment';
 export default class ChallengeInterviewAdapter extends ApplicationAdapter {
   namespace = 'api';
 
+  // The interview service only needs to know who's asking, not the analytics context our own API gets.
+  get headers(): Record<string, string> {
+    const token = this.sessionTokenStorage.currentToken;
+
+    return token ? { 'x-session-token': token } : {};
+  }
+
   get host() {
     return config.x.interviewServiceUrl;
   }
