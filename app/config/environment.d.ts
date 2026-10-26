@@ -12,6 +12,7 @@ declare const config: {
   x: {
     backendUrl: string;
     helpscoutBeaconId: string;
+    interviewServiceUrl: string;
     isCI: boolean;
     isStaging: boolean;
     metaTagImagesBaseURL: string;

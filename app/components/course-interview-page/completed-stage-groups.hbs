@@ -1,0 +1,28 @@
+<div class="rounded-sm border border-white/10 divide-y divide-white/10" ...attributes>
+  {{#each this.groups as |group|}}
+    <details class="group" data-test-stage-group>
+      <summary
+        class="flex items-center justify-between gap-3 px-3 py-2 cursor-pointer select-none list-none text-sm text-gray-200 hover:bg-white/5 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-teal-500 [&::-webkit-details-marker]:hidden"
+        data-test-stage-group-summary
+      >
+        <span class="flex items-center min-w-0">
+          {{svg-jar
+            "chevron-right"
+            class="w-4 h-4 mr-2 shrink-0 text-gray-500 transition-transform group-open:rotate-90 motion-reduce:transition-none"
+          }}
+          <span class="truncate" data-test-stage-group-name>{{group.name}}</span>
+        </span>
+        <span class="shrink-0 text-xs text-gray-500 tabular-nums" data-test-stage-group-count>
+          {{group.stages.length}}
+          {{pluralize "stage" count=group.stages.length}}
+        </span>
+      </summary>
+
+      <ul class="flex flex-wrap gap-1.5 px-3 pt-1 pb-3">
+        {{#each group.stages as |stage|}}
+          <li class="rounded-sm bg-gray-800 px-2 py-0.5 text-xs text-gray-300" data-test-stage-completed>{{stage.name}}</li>
+        {{/each}}
+      </ul>
+    </details>
+  {{/each}}
+</div>

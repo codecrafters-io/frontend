@@ -5,6 +5,7 @@ import affiliateReferrals from './affiliate-referrals';
 import analyticsEvents from './analytics-events';
 import autofixRequests from './autofix-requests';
 import badges from './badges';
+import challengeInterviews from './challenge-interviews';
 import charges from './charges';
 import codeWalkthroughs from './code-walkthroughs';
 import communityCourseStageSolutionComments from './community-course-stage-solution-comments';
@@ -76,6 +77,7 @@ export default function handlers(server: Server) {
   analyticsEvents(server);
   autofixRequests(server);
   badges(server);
+  challengeInterviews(server);
   charges(server);
   codeWalkthroughs(server);
   communityCourseStageSolutionComments(server);

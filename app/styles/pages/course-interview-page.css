@@ -1,0 +1,21 @@
+.interview-caption-word {
+  animation: interview-caption-word-in 220ms ease-out both;
+}
+
+@keyframes interview-caption-word-in {
+  from {
+    filter: blur(3px);
+    opacity: 0;
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interview-caption-word {
+    animation: none;
+  }
+}
