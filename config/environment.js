@@ -1,7 +1,16 @@
 'use strict';
 
+function defaultInterviewServiceUrl(environment, isStaging) {
+  if (environment === 'development') {
+    return 'http://localhost:3000';
+  }
+
+  return isStaging ? 'https://screener-staging.ccio.dev' : 'https://screener.ccio.dev';
+}
+
 module.exports = function (environment) {
   const backendUrl = process.env.BACKEND_URL || 'https://test-backend.ngrok.io';
+  const isStaging = backendUrl.includes('backend-staging.codecrafters.io');
 
   const ENV = {
     modulePrefix: 'codecrafters-frontend',
@@ -36,7 +45,7 @@ module.exports = function (environment) {
 
       // No dedicated `staging` Ember env — staging is the prod build pointed at
       // the staging backend. Used to suppress prod-only integrations (Lobbyside).
-      isStaging: backendUrl.includes('backend-staging.codecrafters.io'),
+      isStaging,
 
       defaultMetaTags: {
         type: 'website',
@@ -50,8 +59,7 @@ module.exports = function (environment) {
       },
 
       helpscoutBeaconId: process.env.HELPSCOUT_BEACON_ID || 'bb089ae9-a4ae-4114-8f7a-b660f6310158',
-      interviewServiceUrl:
-        process.env.INTERVIEW_SERVICE_URL || (environment === 'development' ? 'http://localhost:3000' : 'https://screener.ccio.dev'),
+      interviewServiceUrl: process.env.INTERVIEW_SERVICE_URL || defaultInterviewServiceUrl(environment, isStaging),
       isCI: false, // Overridden in test environment
       metaTagImagesBaseURL: 'https://codecrafters.io/images/app_og/',
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
