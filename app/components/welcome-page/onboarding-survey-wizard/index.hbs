@@ -1,22 +1,259 @@
-<div
-  class="border border-gray-200 dark:border-white/5 p-4 sm:p-8 bg-white dark:bg-gray-925 max-w-(--breakpoint-md) w-full rounded-sm"
-  data-test-onboarding-survey-wizard
->
-  <AnimatedContainer>
-    {{#animated-value this.currentStep use=this.fade as |currentStep|}}
-      {{#if (eq currentStep 1)}}
-        <WelcomePage::OnboardingSurveyWizard::Step1
-          @onContinueButtonClick={{this.handleContinueButtonClick}}
-          @onSurveyUpdated={{this.handleSurveyUpdated}}
-          @onboardingSurvey={{@onboardingSurvey}}
-        />
-      {{else if (eq currentStep 2)}}
-        <WelcomePage::OnboardingSurveyWizard::Step2
-          @onboardingSurvey={{@onboardingSurvey}}
-          @onContinueButtonClick={{this.handleContinueButtonClick}}
-          @onSurveyUpdated={{this.handleSurveyUpdated}}
-        />
+<div class="onboarding-workspace" data-test-onboarding-survey-wizard>
+  <aside class="sidebar" aria-label="Your onboarding journey">
+    <LinkTo @route="catalog" class="brand"><img src={{this.wordmarkUrl}} alt="CodeCrafters home" width="206" height="27" /></LinkTo>
+    <div class="sidebar-story">
+      <p class="welcome-note">For the curious developer.</p>
+      <h2>Build the tools.<br />Understand<br />the internals.</h2>
+      <p class="sidebar-description">Real systems, built from scratch.<br />One small stage at a time.</p>
+      <div class="system-sketch" aria-hidden="true">
+        <div class="sketch-request"><span class="sketch-dot"></span><code>PING</code><span class="packet-line"></span></div>
+        <div class="sketch-server">{{svg-jar "server-outline" class="" role="presentation"}}<span>Your server</span><span
+            class="sketch-status"
+          ></span></div>
+        <div class="sketch-response"><span class="packet-line"></span><code>PONG</code><span class="sketch-dot"></span></div>
+        <p>You write the code. We test the behavior.</p>
+      </div>
+    </div>
+    <ol class="journey">
+      {{#each this.steps as |step|}}
+        <li class={{if (lt step.number this.currentStep) "is-complete"}} aria-current={{if (eq step.number this.currentStep) "step"}}>
+          <span class="journey-marker" aria-hidden="true">{{#if (lt step.number this.currentStep)}}{{svg-jar
+                "check-outline"
+                class=""
+                role="presentation"
+              }}{{else}}{{step.number}}{{/if}}</span>
+          <span><strong>{{step.title}}</strong><small>{{step.description}}</small></span>
+        </li>
+      {{/each}}
+    </ol>
+    <p class="sidebar-footer">Your editor. Your language. Your code.</p>
+  </aside>
+
+  <section class="main-panel" aria-label="Get started with CodeCrafters" aria-busy={{this.isSaving}}>
+    <header class="topbar"><span>Welcome to CodeCrafters</span><span
+        class="progress-text"
+        aria-live="polite"
+        data-test-step-progress
+      >{{this.currentStep}} of 3</span></header>
+    <div class="mobile-progress" aria-hidden="true"><span data-step={{this.currentStep}}></span></div>
+    <form {{on "submit" this.continue}}>
+      {{#if this.saveError}}<p class="save-error" role="alert" data-test-save-error>{{this.saveError}}</p>{{/if}}
+
+      {{#if (eq this.currentStep 1)}}
+        <section class="step" aria-labelledby="onboarding-goal-heading">
+          <div class="step-intro">
+            <p class="section-context">Let curiosity lead.</p>
+            <h1 id="onboarding-goal-heading" tabindex="-1" {{did-insert this.focusHeading}}>What brings you here?</h1>
+            <p class="step-description">Pick your main goal. We'll help you find a place to start.</p>
+          </div>
+          <fieldset disabled={{this.isSaving}}>
+            <legend class="sr-only">Your main goal</legend>
+            <div class="goal-grid">
+              {{#each this.goals as |goal|}}
+                <label class="goal-choice" data-test-goal={{goal.value}}>
+                  <input
+                    type="radio"
+                    name="onboarding-goal"
+                    value={{goal.value}}
+                    checked={{eq this.goal goal.value}}
+                    {{on "change" this.selectGoal}}
+                  />
+                  <span class="choice-icon" aria-hidden="true">{{svg-jar goal.icon class="" role="presentation"}}</span>
+                  <strong>{{goal.title}}</strong><span class="choice-description">{{goal.description}}</span>
+                  <span class="choice-indicator" aria-hidden="true">{{svg-jar "check-outline" class="" role="presentation"}}</span>
+                </label>
+              {{/each}}
+            </div>
+            <label class="other-goal" data-test-goal="other"><input
+                type="radio"
+                name="onboarding-goal"
+                value="other"
+                checked={{eq this.goal "other"}}
+                {{on "change" this.selectGoal}}
+              /><span>Something else</span></label>
+            {{#if (eq this.goal "other")}}
+              <label class="other-answer">What would you like to work on?
+                <textarea
+                  value={{@onboardingSurvey.freeFormAnswerForUsagePurpose}}
+                  rows="2"
+                  maxlength="500"
+                  placeholder="Tell us in your own words"
+                  {{on "input" this.updateGoalText}}
+                  data-test-goal-text
+                ></textarea>
+              </label>
+            {{/if}}
+          </fieldset>
+          <footer class="step-actions">
+            <p>{{if this.goalIsInvalid "Choose one goal to continue." "A starting point, not a commitment."}}</p>
+            <button class="button button-primary" type="submit" disabled={{this.continueIsDisabled}} data-test-continue-button>
+              {{if this.isSaving "Saving..." "Continue"}}{{svg-jar "arrow-right-outline" class="" role="presentation"}}
+            </button>
+          </footer>
+        </section>
+      {{else if (eq this.currentStep 2)}}
+        <section class="step" aria-labelledby="onboarding-about-heading">
+          <div class="step-intro">
+            <p class="section-context">Different backgrounds. Same curiosity.</p>
+            <h1 id="onboarding-about-heading" tabindex="-1" {{did-insert this.focusHeading}}>A little about you.</h1>
+            <p class="step-description">Help us understand the developers building with CodeCrafters.</p>
+          </div>
+          <fieldset class="question-group">
+            <legend>What best describes your current role?</legend><p class="field-hint">Choose the closest match.</p>
+            <div class="role-grid">
+              {{#each this.roles as |role|}}
+                <label class="pill-choice" data-test-role={{role}}><input
+                    type="radio"
+                    name="onboarding-role"
+                    value={{role}}
+                    checked={{eq this.role role}}
+                    {{on "change" this.selectRole}}
+                  /><span>{{role}}</span></label>
+              {{/each}}
+            </div>
+            {{#if (eq this.role "Other")}}<label class="other-answer">Your role<input
+                  type="text"
+                  value={{this.otherRole}}
+                  maxlength="100"
+                  placeholder="e.g. DevOps engineer"
+                  {{on "input" this.updateOtherRole}}
+                  data-test-other-role
+                /></label>{{/if}}
+          </fieldset>
+          <fieldset class="question-group experience-group">
+            <legend>Years of professional programming</legend>
+            <div class="experience-grid">
+              {{#each this.experienceRanges as |range|}}
+                <label class="experience-choice" data-test-experience={{range}}><input
+                    type="radio"
+                    name="onboarding-experience"
+                    value={{range}}
+                    checked={{eq this.experience range}}
+                    {{on "change" this.selectExperience}}
+                  /><strong>{{range}}</strong><span>years</span></label>
+              {{/each}}
+            </div>
+            <p class="field-hint">Less than 2 includes no professional experience.</p>
+          </fieldset>
+          <div class="optional-question" data-test-company-disclosure><button
+              class="optional-toggle"
+              type="button"
+              aria-expanded={{this.companyIsExpanded}}
+              aria-controls="onboarding-company-fields"
+              {{on "click" this.toggleCompany}}
+            ><span>Add company size <span class="optional-label">Optional</span></span>{{svg-jar
+                "plus-outline"
+                class=""
+                role="presentation"
+              }}</button>{{#if this.companyIsExpanded}}<div id="onboarding-company-fields">
+                <label for="onboarding-company-size">People at your company</label>
+                <select id="onboarding-company-size" {{on "change" this.selectCompanySize}} data-test-company-size>
+                  <option value="" selected={{eq this.companySize ""}}>Choose an option</option>
+                  {{#each this.companySizes as |size|}}<option value={{size}} selected={{eq this.companySize size}}>{{size}}</option>{{/each}}
+                </select>
+              </div>{{/if}}</div>
+          <footer class="step-actions about-actions">
+            <button class="button button-back" type="button" {{on "click" this.back}} data-test-back>{{svg-jar
+                "arrow-left-outline"
+                class=""
+                role="presentation"
+              }}Back</button>
+            <div class="action-group"><button class="button button-quiet" type="button" {{on "click" this.skipProfile}} data-test-skip-profile>Skip
+                for now</button><button
+                class="button button-primary"
+                type="submit"
+                disabled={{this.continueIsDisabled}}
+                data-test-continue-button
+              >Find my first build{{svg-jar "arrow-right-outline" class="" role="presentation"}}</button></div>
+          </footer>
+        </section>
+      {{else}}
+        <section class="step" aria-labelledby="onboarding-build-heading">
+          <div class="step-intro result-intro">
+            <p class="section-context">Enough about you. Let's build.</p>
+            <h1 id="onboarding-build-heading" tabindex="-1" {{did-insert this.focusHeading}}>Turn curiosity into code.</h1>
+            <p class="step-description">A working system, built by you. Start with one stage and take it from there.</p>
+          </div>
+          {{#if this.recommendedCourse}}
+            <article class="recommendation" aria-labelledby="onboarding-challenge-name" data-test-recommendation>
+              <div class="challenge-topline"><span class="recommendation-label"><span></span>Suggested first build</span><CourseLogo
+                  @course={{this.recommendedCourse}}
+                /></div>
+              <h2 id="onboarding-challenge-name">{{this.recommendedCourse.name}}</h2>
+              <p>{{this.recommendedCourse.shortDescription}}</p>
+              {{#if this.recommendedCourse.firstStage}}
+                <div class="first-stage"><span class="stage-marker" aria-hidden="true">{{svg-jar
+                      "terminal-outline"
+                      class=""
+                      role="presentation"
+                    }}</span><div><small>Your first stage</small><strong>{{this.recommendedCourse.firstStage.name}}</strong></div><span
+                    class="stage-line"
+                    aria-hidden="true"
+                  ></span></div>
+              {{/if}}
+              <button
+                class="button button-primary start-building"
+                type="button"
+                disabled={{this.isSaving}}
+                {{on "click" (fn this.finish "suggested")}}
+                data-test-start-building
+              >
+                {{#if this.isSaving}}Saving...{{else if @hasNextDestination}}Continue where you left off{{else}}Start building{{/if}}{{svg-jar
+                  "arrow-right-outline"
+                  class=""
+                  role="presentation"
+                }}
+              </button>
+              <p class="challenge-footnote">Choose your language inside the challenge.</p>
+            </article>
+          {{/if}}
+          <button class="browse-link" type="button" disabled={{this.isSaving}} {{on "click" (fn this.finish "catalog")}} data-test-browse-challenges>
+            {{if this.recommendedCourse "Or explore all challenges" "Explore all challenges"}}{{svg-jar
+              "arrow-right-outline"
+              class=""
+              role="presentation"
+            }}
+          </button>
+          <div class="optional-question referral-question" data-test-referral-disclosure><button
+              class="optional-toggle"
+              type="button"
+              disabled={{this.isSaving}}
+              aria-expanded={{this.referralIsExpanded}}
+              aria-controls="onboarding-referral-fields"
+              {{on "click" this.toggleReferral}}
+            ><span>One last thing: how did you find us? <span class="optional-label">Optional</span></span>{{svg-jar
+                "plus-outline"
+                class=""
+                role="presentation"
+              }}</button>{{#if this.referralIsExpanded}}<div id="onboarding-referral-fields">
+                <fieldset disabled={{this.isSaving}}><legend class="sr-only">How did you hear about CodeCrafters?</legend><div class="referral-grid">
+                    {{#each this.referralSources as |source|}}<label class="pill-choice" data-test-referral={{source}}><input
+                          type="radio"
+                          name="onboarding-referral"
+                          value={{source}}
+                          checked={{eq this.referralSource source}}
+                          {{on "change" this.selectReferral}}
+                        /><span>{{source}}</span></label>{{/each}}
+                  </div></fieldset>
+                {{#if (eq this.referralSource "Other")}}<label class="other-answer">Where did you hear about us?<input
+                      type="text"
+                      value={{@onboardingSurvey.freeFormAnswerForReferralSource}}
+                      disabled={{this.isSaving}}
+                      maxlength="200"
+                      {{on "input" this.updateReferralText}}
+                      data-test-other-referral
+                    /></label>{{/if}}
+                <p class="field-hint">Thanks for helping us understand how developers discover CodeCrafters.</p>
+              </div>{{/if}}</div>
+          <footer class="step-actions result-actions"><button
+              class="button button-back"
+              type="button"
+              disabled={{this.isSaving}}
+              {{on "click" this.back}}
+              data-test-back
+            >{{svg-jar "arrow-left-outline" class="" role="presentation"}}Back</button><span>Your choices are a starting point. Explore freely.</span></footer>
+        </section>
       {{/if}}
-    {{/animated-value}}
-  </AnimatedContainer>
+    </form>
+  </section>
 </div>

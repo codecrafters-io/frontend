@@ -1,0 +1,106 @@
+{{#if this.isVisible}}
+  <section class="catalog-profile-prompt mb-6" aria-labelledby="catalog-profile-heading" aria-busy={{this.isSaving}} data-test-profile-prompt>
+    <div class="profile-prompt-intro">
+      <div class="profile-prompt-icon" aria-hidden="true">{{svg-jar "user-circle-outline" class="" role="presentation"}}</div>
+      <div class="profile-prompt-copy">
+        <h2 id="catalog-profile-heading">{{if this.shouldResumeOnboarding "Find your first build." "A little more about you?"}}</h2>
+        <p>{{if
+            this.shouldResumeOnboarding
+            "Pick up your setup where you left off. We'll help you find a place to start."
+            "Share your role and experience to help us understand who's building with CodeCrafters."
+          }}</p>
+      </div>
+      {{#unless this.isExpanded}}
+        <div class="profile-prompt-actions">
+          {{#if this.shouldResumeOnboarding}}
+            <LinkTo @route="welcome" class="profile-prompt-primary" data-test-resume-onboarding>Continue setup{{svg-jar
+                "arrow-right-outline"
+                class=""
+                role="presentation"
+              }}</LinkTo>
+          {{else}}
+            <button type="button" class="profile-prompt-primary" disabled={{this.isSaving}} {{on "click" this.expand}} data-test-open-profile>Share my
+              background{{svg-jar "arrow-right-outline" class="" role="presentation"}}</button>
+          {{/if}}
+          <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>Not now</button>
+        </div>
+      {{/unless}}
+    </div>
+    {{#if this.isExpanded}}
+      <form class="profile-prompt-form" {{on "submit" this.save}} data-test-profile-form>
+        <fieldset disabled={{this.isSaving}}>
+          <legend tabindex="-1" {{did-insert this.focusForm}}>What best describes your current role?</legend>
+          <div class="profile-prompt-choices">
+            {{#each this.roles as |role|}}
+              <label class="profile-prompt-choice" data-test-profile-role={{role}}>
+                <input type="radio" name="catalog-profile-role" value={{role}} checked={{eq this.role role}} {{on "change" this.selectRole}} />
+                <span>{{role}}</span>
+              </label>
+            {{/each}}
+          </div>
+          {{#if (eq this.role "Other")}}
+            <label class="profile-prompt-field">Your role<input
+                type="text"
+                value={{this.otherRole}}
+                maxlength="100"
+                placeholder="e.g. DevOps engineer"
+                {{on "input" this.updateOtherRole}}
+                data-test-profile-other-role
+              /></label>
+          {{/if}}
+        </fieldset>
+        <fieldset disabled={{this.isSaving}}>
+          <legend>Years of professional programming</legend>
+          <div class="profile-prompt-choices profile-prompt-experience">
+            {{#each this.experienceRanges as |range|}}
+              <label class="profile-prompt-choice" data-test-profile-experience={{range}}>
+                <input
+                  type="radio"
+                  name="catalog-profile-experience"
+                  value={{range}}
+                  checked={{eq this.experience range}}
+                  {{on "change" this.selectExperience}}
+                />
+                <strong>{{range}} <span>years</span></strong>
+              </label>
+            {{/each}}
+          </div>
+          <p class="profile-prompt-hint">Less than 2 includes no professional experience.</p>
+        </fieldset>
+        <button
+          type="button"
+          class="profile-prompt-optional"
+          disabled={{this.isSaving}}
+          aria-expanded={{this.companyIsExpanded}}
+          aria-controls="catalog-profile-company"
+          {{on "click" this.toggleCompany}}
+          data-test-profile-company-toggle
+        >Add company size <span>Optional</span>{{svg-jar "plus-outline" class="" role="presentation"}}</button>
+        {{#if this.companyIsExpanded}}
+          <label class="profile-prompt-field" id="catalog-profile-company">People at your company
+            <select disabled={{this.isSaving}} {{on "change" this.selectCompanySize}} data-test-profile-company>
+              <option value="" selected={{eq this.companySize ""}}>Choose an option</option>
+              {{#each this.companySizes as |size|}}<option value={{size}} selected={{eq this.companySize size}}>{{size}}</option>{{/each}}
+            </select>
+          </label>
+        {{/if}}
+        <div class="profile-prompt-footer">
+          <p>Thanks for helping us shape CodeCrafters.</p>
+          <div class="profile-prompt-actions">
+            <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>Not
+              now</button>
+            <button type="submit" class="profile-prompt-primary" disabled={{this.saveIsDisabled}} data-test-save-profile>{{if
+                this.isSaving
+                "Saving..."
+                "Save answers"
+              }}{{svg-jar "check-outline" class="" role="presentation"}}</button>
+          </div>
+        </div>
+      </form>
+    {{/if}}
+    {{#if this.saveError}}<p class="profile-prompt-error" role="alert" data-test-profile-error>{{this.saveError}}</p>{{/if}}
+  </section>
+{{else}}
+  {{yield}}
+{{/if}}
+<p class="sr-only" role="status">{{this.statusMessage}}</p>

@@ -5,10 +5,12 @@ import Store from '@ember-data/store';
 import { service } from '@ember/service';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
 import type RouterService from '@ember/routing/router-service';
-import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import RouteInfoMetadata, { HelpscoutBeaconVisibility, RouteColorScheme } from 'codecrafters-frontend/utils/route-info-metadata';
+import type CourseModel from 'codecrafters-frontend/models/course';
 
 export type ModelType = {
   onboardingSurvey: OnboardingSurveyModel;
+  courses: CourseModel[];
 };
 
 export default class WelcomeRoute extends BaseRoute {
@@ -38,16 +40,17 @@ export default class WelcomeRoute extends BaseRoute {
   }
 
   buildRouteInfoMetadata() {
-    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Both });
+    return new RouteInfoMetadata({ colorScheme: RouteColorScheme.Light, beaconVisibility: HelpscoutBeaconVisibility.Hidden });
   }
 
   async model() {
     await this.authenticator.authenticate(); // Force auth
 
-    return {
-      onboardingSurvey: (await this.store.queryRecord('onboarding-survey', {
-        user_id: this.authenticator.currentUserId,
-      })) as OnboardingSurveyModel | null,
-    };
+    const onboardingSurvey = (await this.store.queryRecord('onboarding-survey', {
+      user_id: this.authenticator.currentUserId,
+    })) as OnboardingSurveyModel | null;
+    const courses = onboardingSurvey?.status === 'incomplete' ? await this.store.findAll('course', { include: 'stages' }) : [];
+
+    return { onboardingSurvey, courses };
   }
 }

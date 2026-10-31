@@ -13,6 +13,8 @@
 @import url('pages/affiliate-link-page.css');
 @import url('pages/code-walkthrough-page.css');
 @import url('pages/course-stage-solution-page.css');
+@import url('pages/welcome-page.css');
+@import url('pages/catalog-profile-prompt.css');
 
 :root {
   --font-cursive: 'Indie Flower', cursive;

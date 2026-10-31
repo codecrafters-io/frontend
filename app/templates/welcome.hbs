@@ -1,7 +1,10 @@
 {{page-title "Welcome"}}
 
-<div class="container mx-auto lg:max-w-(--breakpoint-lg) pt-8 pb-48 sm:pt-16 px-3 md:px-6" {{did-insert this.handleDidInsertContainer}}>
-  <div class="flex justify-center">
-    <WelcomePage::OnboardingSurveyWizard @onboardingSurvey={{@model.onboardingSurvey}} @onSurveyComplete={{this.handleSurveyCompleted}} />
-  </div>
+<div {{did-insert this.handleDidInsertContainer}}>
+  <WelcomePage::OnboardingSurveyWizard
+    @onboardingSurvey={{@model.onboardingSurvey}}
+    @courses={{@model.courses}}
+    @hasNextDestination={{not (not (or this.next this.stashedNext))}}
+    @onSurveyComplete={{this.handleSurveyCompleted}}
+  />
 </div>

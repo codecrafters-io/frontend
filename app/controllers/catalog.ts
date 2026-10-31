@@ -32,6 +32,10 @@ export default class CatalogController extends Controller {
     return this.model.courses.flatMap((course) => (this.shouldDisplayCourse(course) ? course.betaOrLiveLanguages : [])).reduce(uniqReducer(), []);
   }
 
+  get onboardingProfileFeatureSuggestion() {
+    return this.authenticator.currentUser?.featureSuggestions.find((item) => item.featureIsOnboardingProfile);
+  }
+
   get orderedCourses() {
     if (!this.authenticator.currentUser) {
       return this.courses.toSorted((course1, course2) => {

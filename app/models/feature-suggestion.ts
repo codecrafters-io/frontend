@@ -8,6 +8,10 @@ export default class FeatureSuggestionModel extends Model {
   @attr('date') declare dismissedAt: Date | null;
   @belongsTo('user', { async: false, inverse: 'featureSuggestions' }) declare user: UserModel;
 
+  get featureIsOnboardingProfile() {
+    return this.featureSlug === 'onboarding-profile-v1';
+  }
+
   get featureIsPrivateLeaderboard() {
     return this.featureSlug === 'private-leaderboard';
   }
