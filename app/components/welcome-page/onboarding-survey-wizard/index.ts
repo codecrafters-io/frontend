@@ -10,13 +10,15 @@ import type AuthenticatorService from 'codecrafters-frontend/services/authentica
 import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 import wordmarkDark from '/assets/images/logo/wordmark-dark.svg';
 import { roles, experienceRanges, companySizes } from 'codecrafters-frontend/utils/onboarding-profile-options';
+import type OnboardingPreferencesService from 'codecrafters-frontend/services/onboarding-preferences';
+import { onboardingGoals, recommendedCourseSlugs, recommendationReason } from 'codecrafters-frontend/utils/onboarding-recommendations';
 
 interface Signature {
   Args: {
     onboardingSurvey: OnboardingSurveyModel;
     courses: CourseModel[];
     hasNextDestination: boolean;
-    onSurveyComplete: (destination: 'suggested' | 'catalog', courseSlug?: string) => void;
+    onSurveyComplete: () => void;
   };
   Element: HTMLDivElement;
 }
@@ -24,6 +26,7 @@ interface Signature {
 export default class OnboardingSurveyWizard extends Component<Signature> {
   @service declare store: Store;
   @service declare authenticator: AuthenticatorService;
+  @service declare onboardingPreferences: OnboardingPreferencesService;
   @tracked currentStep = 1;
   @tracked isSaving = false;
   @tracked saveError: string | null = null;
@@ -35,106 +38,35 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
   @tracked experience = '';
   @tracked companySize = '';
   @tracked profileSkipped = false;
-  @tracked companyIsExpanded = false;
-  @tracked referralIsExpanded = false;
-
   wordmarkUrl = wordmarkDark;
   private savedProfileSnapshot: string | null = null;
-
-  goals = [
-    {
-      value: 'Understand how systems work',
-      title: 'Understand how systems work',
-      description: 'Get inside the tools you use every day.',
-      icon: 'server-outline',
-      courseSlug: 'redis',
-    },
-    {
-      value: 'Pick up a new language',
-      title: 'Learn a new language',
-      description: 'Put new syntax to work on a real project.',
-      icon: 'code-outline',
-      courseSlug: 'http-server',
-    },
-    {
-      value: 'Master a language',
-      title: 'Go deeper in my language',
-      description: 'Move beyond the basics. Build with confidence.',
-      icon: 'cube-transparent-outline',
-      courseSlug: 'redis',
-    },
-    {
-      value: 'Build portfolio projects',
-      title: 'Build portfolio projects',
-      description: 'Create something substantial from scratch.',
-      icon: 'briefcase-outline',
-      courseSlug: 'git',
-    },
-    {
-      value: 'Interview prep',
-      title: 'Prepare for interviews',
-      description: 'Practice systems fundamentals by building.',
-      icon: 'academic-cap-outline',
-      courseSlug: 'redis',
-    },
-    {
-      value: 'Not sure yet',
-      title: 'Follow my curiosity',
-      description: 'Explore, experiment, and see what clicks.',
-      icon: 'beaker-outline',
-      courseSlug: 'shell',
-    },
-  ];
-
+  goals = onboardingGoals;
   roles = roles;
   experienceRanges = experienceRanges;
   companySizes = companySizes;
-  referralSources = [
-    'YouTube',
-    'GitHub',
-    'Google',
-    'Reddit',
-    'Hacker News',
-    'LinkedIn',
-    'Twitter',
-    'Instagram',
-    'Facebook',
-    'TikTok',
-    'Friend/Colleague',
-    'Newsletter',
-    'Other',
-    "Don't remember",
-  ];
 
-  steps = [
-    { number: 1, title: 'Your goal', description: 'What you want to build toward' },
-    { number: 2, title: 'A little about you', description: 'Your background and experience' },
-    { number: 3, title: 'Your first build', description: 'A place to put curiosity to work' },
-  ];
-
-  get continueIsDisabled() {
-    return this.isSaving || (this.currentStep === 1 ? this.goalIsInvalid : this.profileIsInvalid);
+  get preferences() {
+    return {
+      goal: this.profileSkipped ? '' : this.goal,
+      role: this.profileSkipped ? '' : this.role,
+      experience: this.profileSkipped ? '' : this.experience,
+      companySize: this.profileSkipped ? '' : this.companySize,
+      referralSurveyId: this.args.onboardingSurvey.id,
+    };
   }
 
-  get goalIsInvalid() {
-    return !this.goal || (this.goal === 'other' && !this.args.onboardingSurvey.freeFormAnswerForUsagePurpose.trim());
-  }
-
-  get profileIsInvalid() {
-    return !this.role || !this.experience || (this.role === 'Other' && !this.otherRole.trim());
+  get recommendationReason() {
+    return recommendationReason(this.preferences);
   }
 
   get recommendedCourse() {
     const available = this.args.courses.filter((course) => course.releaseStatus === 'live' && course.visibility === 'public');
-    const desiredSlug = this.goals.find((goal) => goal.value === this.goal)?.courseSlug || 'http-server';
+    const preferred = recommendedCourseSlugs(this.preferences);
 
-    return available.find((course) => course.slug === desiredSlug) || available.find((course) => course.slug === 'redis') || available[0];
-  }
-
-  get referralSource() {
     return (
-      this.args.onboardingSurvey.selectedOptionsForReferralSource[0] ||
-      (this.args.onboardingSurvey.freeFormAnswerForReferralSource.trim() ? 'Other' : '')
+      preferred.map((slug) => available.find((course) => course.slug === slug)).find(Boolean) ||
+      available.find((course) => course.slug === 'redis') ||
+      available[0]
     );
   }
 
@@ -147,36 +79,29 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
   }
 
   @action
+  clearField(field: 'role' | 'experience' | 'companySize', event: Event) {
+    this[field] = '';
+    (event.currentTarget as HTMLElement).closest('fieldset')?.querySelector('input')?.focus();
+  }
+
+  @action
   @waitFor
   async continue(event: Event) {
     event.preventDefault();
 
-    if (this.currentStep === 3 || this.continueIsDisabled) {
-      return;
-    }
-
-    this.saveError = null;
+    if (this.isSaving) return;
 
     if (this.currentStep === 1) {
-      this.isSaving = true;
-
-      try {
-        await this.args.onboardingSurvey.save();
-        this.currentStep = 2;
-      } catch {
-        this.saveError = 'Your answer could not be saved. Please try again.';
-      } finally {
-        this.isSaving = false;
-      }
+      await this.saveGoal();
     } else {
       this.profileSkipped = false;
-      this.currentStep = 3;
+      await this.finish();
     }
   }
 
   @action
   @waitFor
-  async finish(destination: 'suggested' | 'catalog') {
+  async finish() {
     if (this.isSaving) {
       return;
     }
@@ -187,16 +112,16 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
     const properties = {
       schema_version: 1,
       onboarding_survey_id: survey.id,
-      usage_purpose: survey.selectedOptionsForUsagePurpose[0] || 'Other',
+      usage_purpose: survey.selectedOptionsForUsagePurpose[0] || (survey.freeFormAnswerForUsagePurpose.trim() ? 'Other' : null),
       usage_purpose_other: survey.freeFormAnswerForUsagePurpose.trim() || null,
-      role: this.profileSkipped ? null : this.role,
-      role_other: !this.profileSkipped && this.role === 'Other' ? this.otherRole.trim() : null,
-      professional_programming_years: this.profileSkipped ? null : this.experience,
+      role: this.profileSkipped ? null : this.role || null,
+      role_other: !this.profileSkipped && this.role === 'Other' ? this.otherRole.trim() || null : null,
+      professional_programming_years: this.profileSkipped ? null : this.experience || null,
       company_size: this.profileSkipped ? null : this.companySize || null,
       profile_skipped: this.profileSkipped,
-      referral_source: this.referralSource || null,
-      referral_source_other: this.referralSource === 'Other' ? survey.freeFormAnswerForReferralSource.trim() || null : null,
-      recommended_course_slug: this.recommendedCourse?.slug || null,
+      referral_source: survey.selectedOptionsForReferralSource[0] || null,
+      referral_source_other: survey.selectedOptionsForReferralSource[0] === 'Other' ? survey.freeFormAnswerForReferralSource.trim() || null : null,
+      recommended_course_slug: this.profileSkipped ? null : this.recommendedCourse?.slug || null,
     };
     const snapshot = JSON.stringify(properties);
 
@@ -231,7 +156,8 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
       return;
     }
 
-    this.args.onSurveyComplete(destination, this.recommendedCourse?.slug);
+    this.onboardingPreferences.save(this.preferences);
+    this.args.onSurveyComplete();
   }
 
   @action
@@ -240,9 +166,23 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
     scrollToTop();
   }
 
+  private async saveGoal() {
+    this.isSaving = true;
+    this.saveError = null;
+
+    try {
+      await this.args.onboardingSurvey.save();
+      this.currentStep = 2;
+    } catch {
+      this.saveError = 'Your answer could not be saved. Please try again.';
+    } finally {
+      this.isSaving = false;
+    }
+  }
+
   @action
   selectCompanySize(event: Event) {
-    this.companySize = (event.target as HTMLSelectElement).value;
+    this.companySize = (event.target as HTMLInputElement).value;
   }
 
   @action
@@ -263,35 +203,26 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
   }
 
   @action
-  selectReferral(event: Event) {
-    this.args.onboardingSurvey.selectedOptionsForReferralSource = [(event.target as HTMLInputElement).value];
-
-    if (this.referralSource !== 'Other') {
-      this.args.onboardingSurvey.freeFormAnswerForReferralSource = '';
-    }
-  }
-
-  @action
   selectRole(event: Event) {
     this.role = (event.target as HTMLInputElement).value;
   }
 
   @action
-  skipProfile() {
-    if (!this.isSaving) {
-      this.profileSkipped = true;
-      this.currentStep = 3;
-    }
+  @waitFor
+  async skipGoal() {
+    if (this.isSaving) return;
+    this.goal = '';
+    this.args.onboardingSurvey.selectedOptionsForUsagePurpose = [];
+    this.args.onboardingSurvey.freeFormAnswerForUsagePurpose = '';
+    await this.saveGoal();
   }
 
   @action
-  toggleCompany() {
-    this.companyIsExpanded = !this.companyIsExpanded;
-  }
-
-  @action
-  toggleReferral() {
-    this.referralIsExpanded = !this.referralIsExpanded;
+  @waitFor
+  async skipProfile() {
+    if (this.isSaving) return;
+    this.profileSkipped = true;
+    await this.finish();
   }
 
   @action
@@ -302,11 +233,6 @@ export default class OnboardingSurveyWizard extends Component<Signature> {
   @action
   updateOtherRole(event: Event) {
     this.otherRole = (event.target as HTMLInputElement).value;
-  }
-
-  @action
-  updateReferralText(event: Event) {
-    this.args.onboardingSurvey.freeFormAnswerForReferralSource = (event.target as HTMLInputElement).value;
   }
 }
 

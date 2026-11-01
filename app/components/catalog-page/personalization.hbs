@@ -1,0 +1,83 @@
+{{#if this.preferences}}
+  <section class="catalog-personalization" aria-label="Your personalized challenges" data-test-personalized-catalog>
+    {{#if @course}}
+      <div class="personalization-summary">{{#each this.summary as |item|}}<span>{{item}}</span>{{/each}}</div>
+      <article class="personalization-recommendation" aria-labelledby="catalog-recommendation-heading" data-test-recommendation>
+        <div class="personalization-copy">
+          <p class="personalization-label">Suggested for you</p>
+          <h2 id="catalog-recommendation-heading">{{@course.name}}</h2>
+          <p>{{this.reason}}</p>
+          <LinkTo @route="course-overview" @model={{@course.slug}} class="personalization-primary" data-test-start-building>Explore this challenge{{svg-jar
+              "arrow-right-outline"
+              class=""
+              role="presentation"
+            }}</LinkTo>
+          <p class="personalization-hint">A starting point based on your preferences. Every challenge is still yours to explore.</p>
+        </div>
+        <div class="personalization-art"><CourseLogo @course={{@course}} /></div>
+      </article>
+    {{/if}}
+    {{#if this.preferences.experience}}
+      <details class="personalization-guidance" open={{not this.conciseGuidance}} data-test-starting-guidance>
+        <summary>{{if this.conciseGuidance "First-stage guidance, if you need it" "A little help getting started"}}</summary>
+        <p>{{if
+            this.conciseGuidance
+            "Go straight into the internals. Stage instructions and hints are here whenever you want them."
+            "Get one small thing working first. Each stage gives you a concrete target, test feedback, and hints when you need them."
+          }}</p>
+        <ol><li>Explore a challenge that interests you.</li><li>Choose your language and open your own editor.</li><li>Build one stage, push your
+            code, and use the test feedback.</li></ol>
+      </details>
+    {{/if}}
+    {{#if this.preferences.referralSurveyId}}
+      <div class="personalization-referral" data-test-referral-disclosure>
+        <button
+          class="personalization-referral-toggle"
+          type="button"
+          aria-expanded={{this.referralIsExpanded}}
+          aria-controls="catalog-referral-fields"
+          disabled={{this.isSaving}}
+          {{on "click" this.toggleReferral}}
+          data-test-referral-toggle
+        >How did you hear about us? <span>Optional</span>{{svg-jar "plus-outline" class="" role="presentation"}}</button>
+        {{#if this.referralSaved}}<p class="personalization-hint" role="status">Thanks for sharing how you found us. You can reopen the question to
+            edit your answer.</p>{{/if}}
+        {{#if this.referralIsExpanded}}
+          <form id="catalog-referral-fields" {{on "submit" this.saveReferral}} aria-busy={{this.isSaving}}>
+            <fieldset disabled={{this.isSaving}}><legend class="sr-only">How did you hear about us?</legend>
+              <p class="personalization-hint">This helps us understand how developers find CodeCrafters.</p>
+              <div class="personalization-choices">
+                {{#each this.referralSources as |source|}}<label class="personalization-choice" data-test-referral={{source}}><input
+                      type="radio"
+                      name="catalog-referral"
+                      value={{source}}
+                      checked={{eq this.referralSource source}}
+                      {{on "change" this.selectReferral}}
+                    /><span>{{source}}</span></label>{{/each}}
+              </div>
+              {{#if (eq this.referralSource "Other")}}<label class="personalization-field">Where did you find us?<input
+                    type="text"
+                    value={{this.otherReferral}}
+                    maxlength="200"
+                    {{on "input" this.updateOtherReferral}}
+                    data-test-other-referral
+                  /></label>{{/if}}
+            </fieldset>
+            <div class="personalization-actions"><button
+                type="button"
+                disabled={{this.isSaving}}
+                {{on "click" this.toggleReferral}}
+                data-test-skip-referral
+              >Not now</button><button
+                type="submit"
+                class="personalization-primary"
+                disabled={{this.referralSaveIsDisabled}}
+                data-test-save-referral
+              >{{if this.isSaving "Saving..." "Done"}}</button></div>
+          </form>
+        {{/if}}
+        {{#if this.saveError}}<p class="personalization-error" role="alert" data-test-referral-error>{{this.saveError}}</p>{{/if}}
+      </div>
+    {{/if}}
+  </section>
+{{/if}}

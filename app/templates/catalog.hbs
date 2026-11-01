@@ -33,6 +33,19 @@
     {{/if}}
   </CatalogPage::ProfilePrompt>
 
+  <CatalogPage::Personalization @course={{this.recommendedCourse}} />
+  {{#if this.recommendedCourse}}
+    <div class="flex justify-between items-center gap-4 mb-4 mt-6"><h2 class="text-base font-semibold text-gray-900 dark:text-gray-200">{{if
+          this.usePersonalizedOrder
+          "All challenges, ordered for you"
+          "All challenges"
+        }}</h2><button
+        type="button"
+        class="text-xs text-teal-700 dark:text-teal-400 underline"
+        {{on "click" this.togglePersonalizedOrder}}
+        data-test-toggle-catalog-order
+      >{{if this.usePersonalizedOrder "Use default order" "Use personalized order"}}</button></div>
+  {{/if}}
   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-2 mb-8">
     {{#each this.orderedCourses as |course|}}
       <CourseCard @course={{course}} />

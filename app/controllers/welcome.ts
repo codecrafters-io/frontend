@@ -27,20 +27,9 @@ export default class WelcomeController extends Controller {
   }
 
   @action
-  handleSurveyCompleted(destination: 'suggested' | 'catalog', courseSlug?: string) {
-    if (destination === 'catalog') {
-      this.router.transitionTo('catalog');
-
-      return;
-    }
-
-    // Preserve the original destination, otherwise use the selected challenge.
+  handleSurveyCompleted() {
     if (!this.stashedNext) {
-      if (courseSlug) {
-        this.router.transitionTo('course-overview', courseSlug);
-      } else {
-        this.router.transitionTo('catalog');
-      }
+      this.router.transitionTo('catalog');
 
       return;
     }

@@ -8,15 +8,32 @@ redirects or interrupt challenge URLs. Only one catalog prompt appears at a time
 - An active `onboarding-profile-v1` feature suggestion enables the invitation.
 - An incomplete onboarding survey offers **Continue setup**, linking to the full
   onboarding flow. It remains optional.
-- A completed or absent survey offers a short inline form: role, professional
-  programming experience, and optional company size. Existing goals and referral
-  answers are not asked again.
-- **Not now** persists `dismissedAt` through the existing feature-suggestion PATCH.
+- A completed or absent survey offers one optional personalization form: role,
+  professional programming experience, and company size. Each answer is optional.
+  Existing goals and referral answers are not asked again.
+- **I'll pick myself** persists `dismissedAt` through the existing feature-suggestion PATCH.
 - Saving posts `submitted_onboarding_profile` with `schema_version: 1`,
   `source: catalog_profile_prompt`, the suggestion ID, and profile answers. Only
   after that succeeds does the invitation get dismissed.
 - Completing or skipping the full invited onboarding also dismisses its profile
   invitation. Failed saves preserve answers and allow retry.
+
+## Personalization and storage
+
+- Signup contains two screens: goal, then optional profile. Both can be skipped.
+- Completion opens the catalog. Goal and role order relevant, public live
+  challenges; experience changes the default visibility of starting guidance.
+- Recently active courses retain their position ahead of unstarted challenges.
+- Company size is research context and does not influence difficulty or ranking.
+- "Your preferences" reopens an editable form without requiring another invitation.
+- "How did you hear about us?" is an optional catalog section after signup. It
+  updates the existing survey independently and never blocks challenge navigation.
+- Profile events use the existing analytics endpoint. Preferences are also cached
+  under a user-specific browser key for immediate display and later visits on that
+  browser. Signing out or switching accounts does not share personalization.
+- Browser storage failures leave the current session usable. Cross-device profile
+  preference syncing requires backend profile storage; analytics events alone are
+  not a client-readable profile API. No new backend fields or endpoints are assumed.
 
 ## Backend rollout needed
 
