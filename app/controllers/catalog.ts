@@ -10,21 +10,19 @@ import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-su
 import type LocalStorageService from 'codecrafters-frontend/services/local-storage';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
 import uniqReducer from 'codecrafters-frontend/utils/uniq-reducer';
-import type OnboardingPreferencesService from 'codecrafters-frontend/services/onboarding-preferences';
-import { recommendedCourseSlugs } from 'codecrafters-frontend/utils/onboarding-recommendations';
 
 function dismissedAudioSurveyBannerStorageKey(userId: string) {
   return `user-audio-survey-banner-dismissed:${userId}`;
 }
 
 export default class CatalogController extends Controller {
-  @tracked audioSurveyBannerDismissedForUserId: string | null = null;
-  @service declare authenticator: AuthenticatorService;
-  @tracked isCreatingAudioSurveyInvite = false;
-  @service declare localStorage: LocalStorageService;
   declare model: ModelType;
-  @service declare onboardingPreferences: OnboardingPreferencesService;
-  @tracked usePersonalizedOrder = true;
+
+  @service declare authenticator: AuthenticatorService;
+  @service declare localStorage: LocalStorageService;
+
+  @tracked audioSurveyBannerDismissedForUserId: string | null = null;
+  @tracked isCreatingAudioSurveyInvite = false;
 
   get courses() {
     return this.model.courses.filter((course) => this.shouldDisplayCourse(course));
@@ -44,8 +42,6 @@ export default class CatalogController extends Controller {
         return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
       });
     } else {
-      const preferred = this.usePersonalizedOrder ? this.preferredSlugs : [];
-
       return this.courses.toSorted((course1, course2) => {
         const repositoriesForCourse1 = this.authenticator
           .currentUser!.repositories.filter((item) => item.course === course1)
@@ -73,11 +69,6 @@ export default class CatalogController extends Controller {
         } else if (!lastActivityForCourse1At && lastActivityForCourse2At) {
           return 1;
         } else {
-          const first = preferred.indexOf(course1.slug);
-          const second = preferred.indexOf(course2.slug);
-          const rankDifference = (first < 0 ? preferred.length : first) - (second < 0 ? preferred.length : second);
-          if (rankDifference) return rankDifference;
-
           return course1.sortPositionForTrack > course2.sortPositionForTrack ? 1 : -1;
         }
       });
@@ -124,10 +115,6 @@ export default class CatalogController extends Controller {
     }
   }
 
-  get preferredSlugs() {
-    return recommendedCourseSlugs(this.onboardingPreferences.preferences);
-  }
-
   get productWalkthroughFeatureSuggestion(): FeatureSuggestionModel | null {
     if (!this.authenticator.currentUser) {
       return null;
@@ -136,18 +123,6 @@ export default class CatalogController extends Controller {
     return this.authenticator.currentUser.featureSuggestions
       .filter((item) => item.featureIsProductWalkthrough)
       .filter((item) => !item.isDismissed)[0] as FeatureSuggestionModel | null;
-  }
-
-  get recommendedCourse() {
-    const preferences = this.onboardingPreferences.preferences;
-    if (!preferences || (!this.preferredSlugs.length && !preferences.experience)) return undefined;
-    const available = this.courses.filter((course) => course.releaseStatus === 'live' && course.visibility === 'public');
-
-    return (
-      this.preferredSlugs.map((slug) => available.find((course) => course.slug === slug)).find(Boolean) ||
-      available.find((course) => course.slug === 'redis') ||
-      available[0]
-    );
   }
 
   get shouldShowUserAudioSurveyBanner() {
@@ -222,10 +197,5 @@ export default class CatalogController extends Controller {
     }
 
     return true;
-  }
-
-  @action
-  togglePersonalizedOrder() {
-    this.usePersonalizedOrder = !this.usePersonalizedOrder;
   }
 }

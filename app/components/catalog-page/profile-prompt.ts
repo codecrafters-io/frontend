@@ -7,9 +7,6 @@ import type Store from '@ember-data/store';
 import type FeatureSuggestionModel from 'codecrafters-frontend/models/feature-suggestion';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
 import { roles, experienceRanges, companySizes } from 'codecrafters-frontend/utils/onboarding-profile-options';
-import type OnboardingPreferencesService from 'codecrafters-frontend/services/onboarding-preferences';
-import { onboardingGoals } from 'codecrafters-frontend/utils/onboarding-recommendations';
-import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 interface Signature {
   Args: {
@@ -21,10 +18,8 @@ interface Signature {
 
 export default class CatalogProfilePrompt extends Component<Signature> {
   @service declare store: Store;
-  @service declare onboardingPreferences: OnboardingPreferencesService;
-  @tracked isEditing = false;
-  @tracked goal = '';
   @tracked isExpanded = false;
+  @tracked companyIsExpanded = false;
   @tracked isSaving = false;
   @tracked saveError: string | null = null;
   @tracked role = '';
@@ -32,25 +27,18 @@ export default class CatalogProfilePrompt extends Component<Signature> {
   @tracked experience = '';
   @tracked companySize = '';
   @tracked statusMessage = '';
-  goals = onboardingGoals;
+
   roles = roles;
   experienceRanges = experienceRanges;
   companySizes = companySizes;
   private savedProfileSnapshot: string | null = null;
 
-  get hasPreferences() {
-    return !!this.onboardingPreferences.preferences;
-  }
-
   get isVisible() {
-    return (
-      this.isEditing ||
-      (this.args.onboardingSurvey !== undefined && !!this.args.featureSuggestion && (!this.args.featureSuggestion.isDismissed || this.isSaving))
-    );
+    return this.args.onboardingSurvey !== undefined && !!this.args.featureSuggestion && (!this.args.featureSuggestion.isDismissed || this.isSaving);
   }
 
   get saveIsDisabled() {
-    return this.isSaving;
+    return this.isSaving || !this.role || !this.experience || (this.role === 'Other' && !this.otherRole.trim());
   }
 
   get shouldResumeOnboarding() {
@@ -58,25 +46,11 @@ export default class CatalogProfilePrompt extends Component<Signature> {
   }
 
   @action
-  clearField(field: 'role' | 'experience' | 'companySize', event: Event) {
-    this[field] = '';
-    (event.currentTarget as HTMLElement).closest('fieldset')?.querySelector('input')?.focus();
-  }
-
-  @action
   @waitFor
   async dismiss() {
-    if (this.isSaving) return;
-
-    if (this.isEditing) {
-      this.isEditing = false;
-      this.isExpanded = false;
-      this.saveError = null;
-
+    if (this.isSaving || !this.args.featureSuggestion) {
       return;
     }
-
-    if (!this.args.featureSuggestion) return;
 
     this.isSaving = true;
     this.saveError = null;
@@ -105,18 +79,7 @@ export default class CatalogProfilePrompt extends Component<Signature> {
   }
 
   @action
-  editPreferences() {
-    this.isEditing = true;
-    this.expand();
-  }
-
-  @action
   expand() {
-    const preferences = this.onboardingPreferences.preferences;
-    this.goal = preferences?.goal ?? this.args.onboardingSurvey?.selectedOptionsForUsagePurpose[0] ?? '';
-    this.role = preferences?.role || '';
-    this.experience = preferences?.experience || '';
-    this.companySize = preferences?.companySize || '';
     this.isExpanded = true;
     this.saveError = null;
   }
@@ -131,7 +94,7 @@ export default class CatalogProfilePrompt extends Component<Signature> {
   async save(event: Event) {
     event.preventDefault();
 
-    if (this.saveIsDisabled) {
+    if (this.saveIsDisabled || !this.args.featureSuggestion) {
       return;
     }
 
@@ -139,15 +102,14 @@ export default class CatalogProfilePrompt extends Component<Signature> {
     this.saveError = null;
     const properties = {
       schema_version: 1,
-      source: this.isEditing ? 'catalog_preferences' : 'catalog_profile_prompt',
-      feature_suggestion_id: this.args.featureSuggestion?.id || null,
+      source: 'catalog_profile_prompt',
+      feature_suggestion_id: this.args.featureSuggestion.id,
       onboarding_survey_id: this.args.onboardingSurvey?.id || null,
-      role: this.role || null,
-      role_other: this.role === 'Other' ? this.otherRole.trim() || null : null,
-      professional_programming_years: this.experience || null,
+      role: this.role,
+      role_other: this.role === 'Other' ? this.otherRole.trim() : null,
+      professional_programming_years: this.experience,
       company_size: this.companySize || null,
       profile_skipped: false,
-      usage_purpose: this.goal || null,
     };
     const snapshot = JSON.stringify(properties);
 
@@ -157,18 +119,8 @@ export default class CatalogProfilePrompt extends Component<Signature> {
         this.savedProfileSnapshot = snapshot;
       }
 
-      if (this.args.featureSuggestion && !this.args.featureSuggestion.isDismissed) await this.dismissSuggestion();
-      this.onboardingPreferences.save({
-        goal: this.goal,
-        role: this.role,
-        experience: this.experience,
-        companySize: this.companySize,
-        referralSurveyId: this.onboardingPreferences.preferences?.referralSurveyId || null,
-      });
-      this.isEditing = false;
-      this.isExpanded = false;
-      this.statusMessage = 'Your preferences have been updated.';
-      scrollToTop();
+      await this.dismissSuggestion();
+      this.statusMessage = 'Thanks. Your answers have been saved.';
     } catch {
       this.saveError = 'Your answers could not be saved. Please try again.';
     } finally {
@@ -178,7 +130,7 @@ export default class CatalogProfilePrompt extends Component<Signature> {
 
   @action
   selectCompanySize(event: Event) {
-    this.companySize = (event.target as HTMLInputElement).value;
+    this.companySize = (event.target as HTMLSelectElement).value;
   }
 
   @action
@@ -187,13 +139,13 @@ export default class CatalogProfilePrompt extends Component<Signature> {
   }
 
   @action
-  selectGoal(event: Event) {
-    this.goal = (event.target as HTMLInputElement).value;
+  selectRole(event: Event) {
+    this.role = (event.target as HTMLInputElement).value;
   }
 
   @action
-  selectRole(event: Event) {
-    this.role = (event.target as HTMLInputElement).value;
+  toggleCompany() {
+    this.companyIsExpanded = !this.companyIsExpanded;
   }
 
   @action

@@ -10,7 +10,6 @@ import RouteInfoMetadata, { RouteColorScheme } from 'codecrafters-frontend/utils
 import type LanguageModel from 'codecrafters-frontend/models/language';
 import type OnboardingSurveyModel from 'codecrafters-frontend/models/onboarding-survey';
 import type Transition from '@ember/routing/transition';
-import scrollToTop from 'codecrafters-frontend/utils/scroll-to-top';
 
 export type ModelType = {
   repositories?: RepositoryModel[];
@@ -21,10 +20,6 @@ export type ModelType = {
 export default class CatalogRoute extends BaseRoute {
   @service declare authenticator: AuthenticatorService;
   @service declare store: Store;
-
-  activate() {
-    scrollToTop();
-  }
 
   async beforeModel(transition: Transition) {
     if (this.authenticator.isAuthenticated) {

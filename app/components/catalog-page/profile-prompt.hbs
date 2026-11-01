@@ -3,11 +3,11 @@
     <div class="profile-prompt-intro">
       <div class="profile-prompt-icon" aria-hidden="true">{{svg-jar "user-circle-outline" class="" role="presentation"}}</div>
       <div class="profile-prompt-copy">
-        <h2 id="catalog-profile-heading">{{if this.shouldResumeOnboarding "Find your first build." "Personalize your challenges"}}</h2>
+        <h2 id="catalog-profile-heading">{{if this.shouldResumeOnboarding "Find your first build." "A little more about you?"}}</h2>
         <p>{{if
             this.shouldResumeOnboarding
             "Pick up your setup where you left off. We'll help you find a place to start."
-            "A few quick choices help us put relevant builds first. All answers are optional."
+            "Share your role and experience to help us understand who's building with CodeCrafters."
           }}</p>
       </div>
       {{#unless this.isExpanded}}
@@ -19,44 +19,17 @@
                 role="presentation"
               }}</LinkTo>
           {{else}}
-            <button
-              type="button"
-              class="profile-prompt-primary"
-              disabled={{this.isSaving}}
-              {{on "click" this.expand}}
-              data-test-open-profile
-            >Personalize my challenges{{svg-jar "arrow-right-outline" class="" role="presentation"}}</button>
+            <button type="button" class="profile-prompt-primary" disabled={{this.isSaving}} {{on "click" this.expand}} data-test-open-profile>Share my
+              background{{svg-jar "arrow-right-outline" class="" role="presentation"}}</button>
           {{/if}}
-          <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>{{if
-              this.isEditing
-              "Cancel"
-              "I'll pick myself"
-            }}</button>
+          <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>Not now</button>
         </div>
       {{/unless}}
     </div>
     {{#if this.isExpanded}}
       <form class="profile-prompt-form" {{on "submit" this.save}} data-test-profile-form>
-        {{#if this.isEditing}}
-          <fieldset disabled={{this.isSaving}}><legend>What brings you here?</legend><div class="profile-prompt-choices">
-              <label class="profile-prompt-choice"><input
-                  type="radio"
-                  name="catalog-profile-goal"
-                  value=""
-                  checked={{eq this.goal ""}}
-                  {{on "change" this.selectGoal}}
-                /><span>No preference</span></label>
-              {{#each this.goals as |goal|}}<label class="profile-prompt-choice" data-test-profile-goal={{goal.value}}><input
-                    type="radio"
-                    name="catalog-profile-goal"
-                    value={{goal.value}}
-                    checked={{eq this.goal goal.value}}
-                    {{on "change" this.selectGoal}}
-                  /><span>{{goal.title}}</span></label>{{/each}}
-            </div></fieldset>
-        {{/if}}
         <fieldset disabled={{this.isSaving}}>
-          <legend tabindex="-1" {{did-insert this.focusForm}}>What do you work on?</legend>
+          <legend tabindex="-1" {{did-insert this.focusForm}}>What best describes your current role?</legend>
           <div class="profile-prompt-choices">
             {{#each this.roles as |role|}}
               <label class="profile-prompt-choice" data-test-profile-role={{role}}>
@@ -65,14 +38,8 @@
               </label>
             {{/each}}
           </div>
-          {{#if this.role}}<button
-              type="button"
-              class="profile-prompt-quiet"
-              {{on "click" (fn this.clearField "role")}}
-              data-test-clear-profile-role
-            >Clear role</button>{{/if}}
           {{#if (eq this.role "Other")}}
-            <label class="profile-prompt-field">Your role (optional)<input
+            <label class="profile-prompt-field">Your role<input
                 type="text"
                 value={{this.otherRole}}
                 maxlength="100"
@@ -83,7 +50,7 @@
           {{/if}}
         </fieldset>
         <fieldset disabled={{this.isSaving}}>
-          <legend>How long have you programmed professionally?</legend>
+          <legend>Years of professional programming</legend>
           <div class="profile-prompt-choices profile-prompt-experience">
             {{#each this.experienceRanges as |range|}}
               <label class="profile-prompt-choice" data-test-profile-experience={{range}}>
@@ -98,41 +65,34 @@
               </label>
             {{/each}}
           </div>
-          {{#if this.experience}}<button
-              type="button"
-              class="profile-prompt-quiet"
-              {{on "click" (fn this.clearField "experience")}}
-              data-test-clear-profile-experience
-            >Clear experience</button>{{/if}}
           <p class="profile-prompt-hint">Less than 2 includes no professional experience.</p>
         </fieldset>
-        <fieldset disabled={{this.isSaving}}><legend>How big is your company?</legend><p class="profile-prompt-hint">This helps us understand the
-            teams using CodeCrafters.</p><div class="profile-prompt-choices">
-            {{#each this.companySizes as |size|}}<label class="profile-prompt-choice" data-test-profile-company={{size}}><input
-                  type="radio"
-                  name="catalog-profile-company"
-                  value={{size}}
-                  checked={{eq this.companySize size}}
-                  {{on "change" this.selectCompanySize}}
-                /><span>{{size}}</span></label>{{/each}}
-          </div>{{#if this.companySize}}<button
-              type="button"
-              class="profile-prompt-quiet"
-              {{on "click" (fn this.clearField "companySize")}}
-              data-test-clear-profile-company
-            >Clear company size</button>{{/if}}</fieldset>
+        <button
+          type="button"
+          class="profile-prompt-optional"
+          disabled={{this.isSaving}}
+          aria-expanded={{this.companyIsExpanded}}
+          aria-controls="catalog-profile-company"
+          {{on "click" this.toggleCompany}}
+          data-test-profile-company-toggle
+        >Add company size <span>Optional</span>{{svg-jar "plus-outline" class="" role="presentation"}}</button>
+        {{#if this.companyIsExpanded}}
+          <label class="profile-prompt-field" id="catalog-profile-company">People at your company
+            <select disabled={{this.isSaving}} {{on "change" this.selectCompanySize}} data-test-profile-company>
+              <option value="" selected={{eq this.companySize ""}}>Choose an option</option>
+              {{#each this.companySizes as |size|}}<option value={{size}} selected={{eq this.companySize size}}>{{size}}</option>{{/each}}
+            </select>
+          </label>
+        {{/if}}
         <div class="profile-prompt-footer">
-          <p>You can change your preferences anytime.</p>
+          <p>Thanks for helping us shape CodeCrafters.</p>
           <div class="profile-prompt-actions">
-            <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>{{if
-                this.isEditing
-                "Cancel"
-                "I'll pick myself"
-              }}</button>
+            <button type="button" class="profile-prompt-quiet" disabled={{this.isSaving}} {{on "click" this.dismiss}} data-test-dismiss-profile>Not
+              now</button>
             <button type="submit" class="profile-prompt-primary" disabled={{this.saveIsDisabled}} data-test-save-profile>{{if
                 this.isSaving
                 "Saving..."
-                "Show my challenges"
+                "Save answers"
               }}{{svg-jar "check-outline" class="" role="presentation"}}</button>
           </div>
         </div>
@@ -141,12 +101,6 @@
     {{#if this.saveError}}<p class="profile-prompt-error" role="alert" data-test-profile-error>{{this.saveError}}</p>{{/if}}
   </section>
 {{else}}
-  {{#if this.hasPreferences}}<button
-      type="button"
-      class="mb-5 text-xs text-teal-700 dark:text-teal-400 underline"
-      {{on "click" this.editPreferences}}
-      data-test-edit-preferences
-    >Your preferences</button>{{/if}}
   {{yield}}
 {{/if}}
 <p class="sr-only" role="status">{{this.statusMessage}}</p>

@@ -1,4 +1,4 @@
-import { click, currentURL, fillIn, visit } from '@ember/test-helpers';
+import { click, currentURL, fillIn, select, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { Response } from 'miragejs';
 import testScenario from 'codecrafters-frontend/mirage/scenarios/test';
@@ -76,7 +76,8 @@ module('Acceptance | catalog-profile-prompt', function (hooks) {
     const { survey, suggestion } = createEligibleUser(this);
     await fillProfile();
     await click('[data-test-profile-role="Full-stack"]');
-    await click('[data-test-profile-company="51\u2013500"]');
+    await click('[data-test-profile-company-toggle]');
+    await select('[data-test-profile-company]', '51\u2013500');
 
     // Act
     await click('[data-test-save-profile]');
@@ -110,8 +111,8 @@ module('Acceptance | catalog-profile-prompt', function (hooks) {
     assert.propContains(profileEvents(this.server)[0].properties, { onboarding_survey_id: null, company_size: null });
   });
 
-  // Verifies that optional background fields do not block personalization.
-  test('accepts a partial profile', async function (assert) {
+  // Verifies that the form requires both core answers and a meaningful custom role.
+  test('validates role and experience before saving', async function (assert) {
     // Arrange
     createEligibleUser(this);
     await visit('/catalog');
@@ -123,7 +124,7 @@ module('Acceptance | catalog-profile-prompt', function (hooks) {
     await fillIn('[data-test-profile-other-role]', '   ');
 
     // Assert
-    assert.dom('[data-test-save-profile]').isNotDisabled();
+    assert.dom('[data-test-save-profile]').isDisabled();
 
     // Act
     await fillIn('[data-test-profile-other-role]', 'DevOps engineer');
@@ -236,9 +237,10 @@ module('Acceptance | catalog-profile-prompt', function (hooks) {
     await click('[data-test-resume-onboarding]');
     await click('[data-test-goal="Master a language"]');
     await click('[data-test-continue-button]');
+    await click('[data-test-skip-profile]');
 
     // Act
-    await click('[data-test-skip-profile]');
+    await click('[data-test-browse-challenges]');
 
     // Assert
     assert.strictEqual(currentURL(), '/catalog');
@@ -273,68 +275,5 @@ module('Acceptance | catalog-profile-prompt', function (hooks) {
     assert.dom('[data-test-profile-prompt]').exists();
     assert.dom('[data-test-product-walkthrough-feature-suggestion]').doesNotExist();
     assert.dom('[data-test-user-audio-survey-banner]').doesNotExist();
-  });
-  // Verifies that the returning-user answer visibly changes the recommendation.
-  test('personalizes the catalog after saving a returning profile', async function (assert) {
-    // Arrange
-    createEligibleUser(this);
-    await fillProfile();
-    await click('[data-test-profile-role="ML or Data"]');
-
-    // Act
-    await click('[data-test-save-profile]');
-
-    // Assert
-    assert.dom('[data-test-recommendation]').includesText('Build your own SQLite');
-  });
-
-  // Verifies that preferences remain editable after the original invitation has been dismissed.
-  test('edits preferences without requiring another invitation', async function (assert) {
-    // Arrange
-    createEligibleUser(this);
-    await fillProfile();
-    await click('[data-test-save-profile]');
-    await click('[data-test-edit-preferences]');
-    await click('[data-test-profile-role="ML or Data"]');
-
-    // Act
-    await click('[data-test-save-profile]');
-
-    // Assert
-    assert.dom('[data-test-recommendation]').includesText('Build your own SQLite');
-    assert.strictEqual(profileEvents(this.server)[1].properties.source, 'catalog_preferences');
-  });
-
-  // Verifies that clearing a saved role removes it from the applied profile.
-  test('can clear an individual preference', async function (assert) {
-    // Arrange
-    createEligibleUser(this);
-    await fillProfile();
-    await click('[data-test-save-profile]');
-    await click('[data-test-edit-preferences]');
-
-    // Act
-    await click('[data-test-clear-profile-role]');
-    await click('[data-test-save-profile]');
-
-    // Assert
-    assert.strictEqual(profileEvents(this.server)[1].properties.role, null);
-  });
-  // Verifies that clearing an old goal does not restore it when preferences reopen.
-  test('preserves an explicitly cleared goal', async function (assert) {
-    // Arrange
-    const { survey } = createEligibleUser(this);
-    survey.update({ selectedOptionsForUsagePurpose: ['Build portfolio projects'] });
-    await fillProfile();
-    await click('[data-test-save-profile]');
-    await click('[data-test-edit-preferences]');
-    await click('input[name="catalog-profile-goal"][value=""]');
-    await click('[data-test-save-profile]');
-
-    // Act
-    await click('[data-test-edit-preferences]');
-
-    // Assert
-    assert.dom('input[name="catalog-profile-goal"][value=""]').isChecked();
   });
 });

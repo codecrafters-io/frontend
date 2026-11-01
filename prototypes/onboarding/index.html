@@ -4,403 +4,190 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <title>Personalize your challenges | CodeCrafters</title>
+    <title>A place to start | CodeCrafters</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;650;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;650;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script src="onboarding.js" defer></script>
   </head>
   <body>
-    <main>
-      <section
-        class="workspace"
-        id="personalization"
-        aria-label="Personalize CodeCrafters"
-      >
-        <aside class="sidebar">
-          <img
-            class="wordmark"
-            src="../../public/assets/images/logo/wordmark-dark.svg"
-            alt="CodeCrafters"
-            width="206"
-            height="27"
-          />
-          <div class="sidebar-story">
-            <p class="welcome-note">For the curious developer.</p>
-            <h2>Build the tools.<br />Understand<br />the internals.</h2>
-            <p class="sidebar-description">
-              Real systems, built from scratch.<br />One small stage at a time.
-            </p>
-          </div>
-          <div class="preview-card" aria-live="polite" aria-atomic="true">
-            <p class="preview-label" id="preview-label">
-              A preview of what comes next
-            </p>
-            <img
-              id="preview-logo"
-              src="../../public/assets/images/challenge-logos/challenge-logo-http-server.svg"
-              alt=""
-              width="54"
-              height="54"
-            />
-            <h3 id="preview-title">Build your own HTTP server</h3>
-            <p class="preview-reason" id="preview-reason">
-              Your answers bring relevant challenges to the front.
-            </p>
-            <span class="preview-note">Every challenge stays open to you.</span>
-          </div>
-          <p class="sidebar-footer">Your editor. Your language. Your code.</p>
-        </aside>
-        <div class="main-panel">
-          <header class="topbar">
-            <span id="welcome-text">Welcome to CodeCrafters</span
-            ><span class="optional-tag"
-              ><span id="step-status">1 of 2</span> &middot; Optional</span
-            >
-          </header>
-          <div class="form-content">
-            <div id="goal-step">
-              <h1 id="goal-heading" tabindex="-1">What brings you here?</h1>
-              <p class="intro">
-                Choose your main goal. We&rsquo;ll use it to help shape your
-                starting point.
-              </p>
-              <form id="goal-form">
-                <fieldset aria-describedby="goal-help">
-                  <legend class="sr-only">Your main goal</legend>
-                  <p class="field-help" id="goal-help">
-                    Choose one. You can change it anytime.
-                  </p>
-                  <div class="goal-options" id="goal-options"></div>
-                  <label class="other-goal-input" id="other-goal-field" hidden
-                    >What would you like to work on?<textarea
-                      id="other-goal"
-                      name="otherGoal"
-                      rows="2"
-                      maxlength="300"
-                      placeholder="Tell us in your own words"
-                    ></textarea>
-                  </label>
-                  <button
-                    type="button"
-                    class="clear-choice"
-                    id="clear-goal"
-                    hidden
-                  >
-                    Clear goal
-                  </button>
-                </fieldset>
-                <footer class="form-actions">
-                  <button type="button" class="text-button" id="skip-goal">
-                    Skip this question</button
-                  ><button type="submit" class="button primary">
-                    Continue<img
-                      src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg"
-                      alt=""
-                    />
-                  </button>
-                </footer>
-                <p class="change-note">
-                  Next: optional preferences to personalize your challenges.
-                </p>
-              </form>
+    <main class="workspace">
+      <aside class="sidebar" aria-label="Your onboarding journey">
+        <a class="brand" href="https://app.codecrafters.io" aria-label="CodeCrafters home">
+          <img src="../../public/assets/images/logo/wordmark-dark.svg" alt="CodeCrafters" width="206" height="27" />
+        </a>
+
+        <div class="sidebar-story">
+          <p class="welcome-note">For the curious developer.</p>
+          <h2>Build the tools.<br />Understand<br />the internals.</h2>
+          <p class="sidebar-description">Real systems, built from scratch.<br />One small stage at a time.</p>
+          <div class="system-sketch" aria-hidden="true">
+            <div class="sketch-request"><span class="sketch-dot"></span><code>PING</code><span class="packet-line"></span></div>
+            <div class="sketch-server">
+              <img src="../../public/assets/images/heroicons/outline/server-outline.svg" alt="" /><span>Your server</span
+              ><span class="sketch-status"></span>
             </div>
-            <div id="profile-step" hidden>
-              <button
-                type="button"
-                class="text-button back-to-goal"
-                id="back-to-goal"
-              >
-                Back to your goal
-              </button>
-              <h1 id="personalization-heading" tabindex="-1">
-                Personalize your challenges
-              </h1>
-              <p class="intro">
-                A few quick choices help us put relevant builds first.<br
-                  class="desktop-break"
-                />
-                Answer what you like. You can explore everything.
-              </p>
-              <form id="personalization-form">
-                <fieldset aria-describedby="role-help">
-                  <legend>What do you work on?</legend>
-                  <p class="field-help" id="role-help">
-                    We&rsquo;ll bring related challenges to the front.
-                  </p>
-                  <div
-                    class="choices"
-                    id="role-options"
-                    aria-describedby="role-help"
-                  ></div>
-                  <button
-                    class="clear-choice"
-                    type="button"
-                    data-clear="role"
-                    hidden
-                  >
-                    Clear role
-                  </button>
-                </fieldset>
-                <fieldset aria-describedby="experience-help">
-                  <legend>How long have you programmed professionally?</legend>
-                  <p class="field-help" id="experience-help">
-                    We&rsquo;ll tailor your starting guidance.
-                  </p>
-                  <div
-                    class="choices experience-options"
-                    id="experience-options"
-                    aria-describedby="experience-help"
-                  ></div>
-                  <button
-                    class="clear-choice"
-                    type="button"
-                    data-clear="experience"
-                    hidden
-                  >
-                    Clear experience
-                  </button>
-                </fieldset>
-                <fieldset class="company-field" aria-describedby="company-help">
-                  <legend>How big is your company?</legend>
-                  <p class="field-help" id="company-help">
-                    This helps us understand the teams using CodeCrafters.
-                  </p>
-                  <div
-                    class="choices company-options"
-                    id="company-options"
-                    aria-describedby="company-help"
-                  ></div>
-                  <button
-                    class="clear-choice"
-                    type="button"
-                    data-clear="companySize"
-                    hidden
-                  >
-                    Clear company size
-                  </button>
-                </fieldset>
-                <footer class="form-actions">
-                  <button
-                    type="button"
-                    class="text-button"
-                    id="skip-personalization"
-                  >
-                    I&rsquo;ll pick myself</button
-                  ><button type="submit" class="button primary">
-                    Show my challenges<img
-                      src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg"
-                      alt=""
-                    />
-                  </button>
-                </footer>
-                <p class="change-note">
-                  All answers are optional. You can change your preferences
-                  anytime.
-                </p>
-              </form>
-            </div>
+            <div class="sketch-response"><span class="packet-line"></span><code>PONG</code><span class="sketch-dot"></span></div>
+            <p>You write the code. We test the behavior.</p>
           </div>
         </div>
-      </section>
-      <section
-        id="catalog"
-        class="catalog"
-        aria-labelledby="catalog-heading"
-        hidden
-      >
-        <header class="catalog-nav">
-          <img
-            class="wordmark"
-            src="../../public/assets/images/logo/wordmark-dark.svg"
-            alt="CodeCrafters"
-            width="206"
-            height="27"
-          /><span>Challenges</span
-          ><button type="button" class="nav-button" id="edit-preferences">
-            Your preferences
-          </button>
+
+        <ol class="journey">
+          <li data-journey="1" aria-current="step">
+            <span class="journey-marker">1</span><span><strong>Your goal</strong><small>What you want to build toward</small></span>
+          </li>
+          <li data-journey="2">
+            <span class="journey-marker">2</span><span><strong>A little about you</strong><small>Your background and experience</small></span>
+          </li>
+          <li data-journey="3">
+            <span class="journey-marker">3</span><span><strong>Your first build</strong><small>A place to put curiosity to work</small></span>
+          </li>
+        </ol>
+        <p class="sidebar-footer">Your editor. Your language. Your code.</p>
+      </aside>
+
+      <section class="main-panel" aria-label="Get started with CodeCrafters">
+        <header class="topbar">
+          <span>Welcome to CodeCrafters</span>
+          <span class="progress-text" id="progress-text">1 of 3</span>
         </header>
-        <div class="catalog-content">
-          <aside
-            class="returning-prompt"
-            id="returning-prompt"
-            aria-labelledby="returning-title"
-            hidden
-          >
-            <div>
-              <h2 id="returning-title">Make room for your next challenge.</h2>
-              <p>
-                Tell us what you work on. We&rsquo;ll put relevant builds first.
-              </p>
+        <div class="mobile-progress" aria-hidden="true"><span id="mobile-progress-fill"></span></div>
+
+        <form id="onboarding-form" novalidate>
+          <section class="step" id="step-1" aria-labelledby="goal-heading">
+            <div class="step-intro">
+              <p class="section-context">Let curiosity lead.</p>
+              <h1 id="goal-heading" tabindex="-1">What brings you here?</h1>
+              <p class="step-description">Pick your main goal. We&rsquo;ll help you find a place to start.</p>
             </div>
-            <div class="prompt-actions">
-              <button
-                class="button primary"
-                id="returning-personalize"
-                type="button"
-              >
-                Personalize my challenges</button
-              ><button class="text-button" id="dismiss-prompt" type="button">
-                I&rsquo;ll pick myself
+            <fieldset class="goal-fieldset">
+              <legend class="sr-only">Your main goal</legend>
+              <div class="goal-grid" id="goal-options"></div>
+              <label class="other-goal"><input type="radio" name="goal" value="other" /><span>Something else</span></label>
+              <label class="other-answer" id="other-goal-field" hidden
+                >What would you like to work on?<textarea
+                  name="otherGoal"
+                  id="other-goal"
+                  rows="2"
+                  maxlength="500"
+                  placeholder="Tell us in your own words"
+                ></textarea>
+              </label>
+            </fieldset>
+            <footer class="step-actions">
+              <p id="goal-hint">Choose one goal to continue.</p>
+              <button class="button button-primary" type="submit" id="goal-continue" disabled>
+                Continue<img src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg" alt="" />
               </button>
-            </div>
-          </aside>
-          <div class="catalog-intro">
-            <div>
-              <h1 id="catalog-heading" tabindex="-1">
-                Choose your next build.
-              </h1>
-              <p id="catalog-description">
-                Rebuild a real tool, one tested stage at a time.
-              </p>
-            </div>
-            <span class="catalog-count">7 challenges to explore</span>
-          </div>
-          <div class="preference-summary" id="preference-summary" hidden></div>
-          <article class="featured-challenge" id="featured-challenge" hidden>
-            <div class="featured-copy">
-              <p class="recommendation-label">Suggested for you</p>
-              <h2 id="featured-title"></h2>
-              <p class="featured-reason" id="featured-reason"></p>
-              <div class="topics" id="featured-topics"></div>
-              <button class="button primary" id="featured-open" type="button">
-                Explore this challenge<img
-                  src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg"
-                  alt=""
-                />
-              </button>
-            </div>
-            <div class="featured-art">
-              <img
-                id="featured-logo"
-                src="../../public/assets/images/challenge-logos/challenge-logo-redis.svg"
-                alt=""
-              /><code id="featured-code"></code>
-            </div>
-          </article>
-          <details class="guidance" id="starting-guidance" hidden>
-            <summary id="guidance-summary">
-              A little help getting started
-            </summary>
-            <div>
-              <p id="guidance-copy"></p>
-              <ol>
-                <li>Explore a challenge that interests you.</li>
-                <li>Choose your language and open your own editor.</li>
-                <li>
-                  Build one stage, push your code, and use the test feedback.
-                </li>
-              </ol>
-            </div>
-          </details>
-          <section
-            class="referral-section"
-            aria-label="How you found CodeCrafters"
-          >
-            <details id="referral-question">
-              <summary>
-                <span>How did you hear about us?</span
-                ><span class="referral-optional">Optional</span>
-              </summary>
-              <form id="referral-form">
-                <fieldset>
-                  <legend class="sr-only">How did you hear about us?</legend>
-                  <p class="field-help">
-                    This helps us understand how developers find CodeCrafters.
-                  </p>
-                  <div class="choices" id="referral-options"></div>
-                  <label
-                    class="other-goal-input"
-                    id="other-referral-field"
-                    hidden
-                    >Where did you find us?<input
-                      type="text"
-                      id="other-referral"
-                      name="otherReferral"
-                      maxlength="150"
-                  /></label>
-                </fieldset>
-                <div class="referral-actions">
-                  <button type="button" class="text-button" id="skip-referral">
-                    Not now</button
-                  ><button type="submit" class="button primary">Done</button>
-                </div>
-              </form>
-            </details>
-            <div id="referral-answer" class="referral-answer" hidden>
-              <span id="referral-thanks" role="status"></span
-              ><button type="button" class="text-button" id="edit-referral">
-                Edit answer
-              </button>
-            </div>
+            </footer>
           </section>
-          <div class="catalog-section-heading">
-            <h2 id="grid-heading">All challenges</h2>
-            <button
-              class="text-button order-toggle"
-              id="reset-order"
-              type="button"
-              hidden
-            >
-              Use default order
-            </button>
-          </div>
-          <div class="challenge-grid" id="challenge-grid"></div>
+
+          <section class="step" id="step-2" aria-labelledby="about-heading" hidden>
+            <div class="step-intro">
+              <p class="section-context">Different backgrounds. Same curiosity.</p>
+              <h1 id="about-heading" tabindex="-1">A little about you.</h1>
+              <p class="step-description">Help us understand the developers building with CodeCrafters.</p>
+            </div>
+            <fieldset class="question-group">
+              <legend>What best describes your current role?</legend>
+              <p class="field-hint">Choose the closest match.</p>
+              <div class="role-grid" id="role-options"></div>
+              <label class="other-answer" id="other-role-field" hidden
+                >Your role<input type="text" name="otherRole" id="other-role" maxlength="100" placeholder="e.g. DevOps engineer"
+              /></label>
+            </fieldset>
+            <fieldset class="question-group experience-group">
+              <legend>Years of professional programming</legend>
+              <div class="experience-grid" id="experience-options"></div>
+              <p class="field-hint">Less than 2 includes no professional experience.</p>
+            </fieldset>
+            <details class="optional-question" id="company-disclosure">
+              <summary>
+                <span>Add company size <span class="optional-label">Optional</span></span
+                ><img src="../../public/assets/images/heroicons/outline/plus-outline.svg" alt="" />
+              </summary>
+              <label for="company-size">People at your company</label>
+              <select id="company-size" name="companySize">
+                <option value="">Choose an option</option>
+                <option>Just me or freelance</option>
+                <option>2&ndash;50</option>
+                <option>51&ndash;500</option>
+                <option>500+</option>
+                <option>Not currently at a company</option>
+              </select>
+            </details>
+            <footer class="step-actions about-actions">
+              <button class="button button-back" type="button" data-back="1">
+                <img src="../../public/assets/images/heroicons/outline/arrow-left-outline.svg" alt="" />Back
+              </button>
+              <div class="action-group">
+                <button class="button button-quiet" type="button" id="skip-about">Skip for now</button
+                ><button class="button button-primary" type="submit" id="about-continue" disabled>
+                  Find my first build<img src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg" alt="" />
+                </button>
+              </div>
+            </footer>
+          </section>
+
+          <section class="step" id="step-3" aria-labelledby="build-heading" hidden>
+            <div class="step-intro result-intro">
+              <p class="section-context">Enough about you. Let&rsquo;s build.</p>
+              <h1 id="build-heading" tabindex="-1">Turn curiosity into code.</h1>
+              <p class="step-description" id="recommendation-reason"></p>
+            </div>
+            <article class="recommendation" aria-labelledby="challenge-name">
+              <div class="challenge-topline">
+                <span class="recommendation-label"><span></span>Suggested first build</span
+                ><img id="challenge-logo" src="../../public/assets/images/challenge-logos/challenge-logo-redis.svg" alt="" />
+              </div>
+              <h2 id="challenge-name">Build your own Redis</h2>
+              <p id="challenge-description"></p>
+              <div class="challenge-topics" id="challenge-topics"></div>
+              <div class="first-stage">
+                <span class="stage-marker"><img src="../../public/assets/images/heroicons/outline/terminal-outline.svg" alt="" /></span>
+                <div><small>Your first stage</small><strong id="first-stage-title"></strong></div>
+                <span class="stage-line"></span>
+              </div>
+              <a
+                class="button button-primary start-building"
+                id="start-building"
+                href="https://app.codecrafters.io/courses/redis/overview"
+                target="_blank"
+                rel="noopener"
+                >Start building<img src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg" alt=""
+              /></a>
+              <p class="challenge-footnote">Choose your language inside the challenge.</p>
+            </article>
+            <a class="browse-link" href="https://app.codecrafters.io/catalog" target="_blank" rel="noopener"
+              >Or explore all challenges<img src="../../public/assets/images/heroicons/outline/arrow-right-outline.svg" alt=""
+            /></a>
+            <details class="optional-question referral-question" id="referral-disclosure">
+              <summary>
+                <span>One last thing: how did you find us? <span class="optional-label">Optional</span></span
+                ><img src="../../public/assets/images/heroicons/outline/plus-outline.svg" alt="" />
+              </summary>
+              <fieldset>
+                <legend class="sr-only">How did you hear about CodeCrafters?</legend>
+                <div class="referral-grid" id="referral-options"></div>
+              </fieldset>
+              <label class="other-answer" id="other-referral-field" hidden
+                >Where did you hear about us?<input type="text" id="other-referral" name="otherReferral" maxlength="200"
+              /></label>
+              <p class="field-hint">Thanks for helping us understand how developers discover CodeCrafters.</p>
+            </details>
+            <footer class="step-actions result-actions">
+              <button class="button button-back" type="button" data-back="2">
+                <img src="../../public/assets/images/heroicons/outline/arrow-left-outline.svg" alt="" />Back</button
+              ><span>Your choices are a starting point. Explore freely.</span>
+            </footer>
+          </section>
+        </form>
+        <div class="prototype-note">
+          <span>Interactive design preview. Nothing is submitted.</span><button type="button" id="restart-preview">Restart preview</button>
         </div>
+        <p class="sr-only" id="step-announcement" aria-live="polite" aria-atomic="true"></p>
       </section>
     </main>
-    <footer class="demo-toolbar" aria-label="Prototype controls">
-      <span
-        ><span class="demo-dot"></span>Interactive prototype
-        <span class="demo-explainer"
-          >&mdash; answers stay in this demo</span
-        ></span
-      >
-      <div>
-        <a href="?view=signup" id="signup-demo" aria-current="page"
-          >New signup</a
-        ><a href="?view=returning" id="returning-demo">Returning user</a
-        ><button type="button" id="restart-demo">Restart</button>
-      </div>
-    </footer>
-    <dialog id="challenge-dialog" aria-labelledby="dialog-title">
-      <div class="dialog-content">
-        <button
-          class="dialog-close text-button"
-          type="button"
-          id="close-dialog"
-          aria-label="Close challenge preview"
-        >
-          Close</button
-        ><img
-          id="dialog-logo"
-          src="../../public/assets/images/challenge-logos/challenge-logo-redis.svg"
-          width="64"
-          height="64"
-          alt=""
-        />
-        <p class="dialog-context">Challenge preview</p>
-        <h2 class="dialog-title" id="dialog-title"></h2>
-        <p id="dialog-description"></p>
-        <div class="topics" id="dialog-topics"></div>
-        <div class="stage-preview">
-          <span>Your first stage</span>
-          <h3 id="dialog-stage"></h3>
-          <p id="dialog-stage-copy"></p>
-        </div>
-        <p class="demo-note">
-          This is a design prototype. No account or repository is created.
-        </p>
-        <button type="button" class="button primary" id="back-to-catalog">
-          Back to challenges
-        </button>
-      </div>
-    </dialog>
-    <noscript>This interactive prototype needs JavaScript enabled.</noscript>
   </body>
 </html>

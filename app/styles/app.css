@@ -15,7 +15,6 @@
 @import url('pages/course-stage-solution-page.css');
 @import url('pages/welcome-page.css');
 @import url('pages/catalog-profile-prompt.css');
-@import url('pages/catalog-personalization.css');
 
 :root {
   --font-cursive: 'Indie Flower', cursive;
