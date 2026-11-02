@@ -1,6 +1,8 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'codecrafters-frontend/tests/helpers';
 import ConceptGroup from 'codecrafters-frontend/models/concept-group';
+import { SERIALIZER_SHOEBOX_IDENTIFIER } from 'codecrafters-frontend/serializers/application';
+import { stub } from 'sinon';
 
 module('Unit | Serializer | application', function (hooks) {
   setupTest(hooks);
@@ -58,5 +60,34 @@ module('Unit | Serializer | application', function (hooks) {
     const result = serializer.normalizeQueryRecordResponse(store, ConceptGroup, { data: [] }, null, 'queryRecord');
 
     assert.strictEqual(result.data, null, 'data must be null');
+  });
+
+  test('it leaves stage instructions out of the FastBoot shoebox', function (assert) {
+    const shoeboxContents = new Map();
+    const fastboot = this.owner.lookup('service:fastboot');
+
+    stub(fastboot, 'isFastBoot').value(true);
+    stub(fastboot, 'shoebox').value({ put: (key, value) => shoeboxContents.set(key, value), retrieve: (key) => shoeboxContents.get(key) });
+
+    let store = this.owner.lookup('service:store');
+    let serializer = store.serializerFor('application');
+
+    const stage = {
+      id: 'c000000a-e004-4005-b009-cc09f2000001',
+      type: 'course-stages',
+      attributes: {
+        name: 'Respond to PING',
+        'community-solution-counts': { go: 3 },
+        'description-markdown-template': 'Respond with +PONG',
+        'marketing-markdown': 'Respond to the PING command',
+      },
+    };
+
+    const result = serializer.normalize(store.modelFor('course-stage'), stage);
+    const [shoeboxStage] = shoeboxContents.get(SERIALIZER_SHOEBOX_IDENTIFIER);
+
+    assert.deepEqual(shoeboxStage.attributes, { name: 'Respond to PING' }, 'shoebox copy has no instructions');
+    assert.strictEqual(result.data.attributes.descriptionMarkdownTemplate, 'Respond with +PONG', 'store still gets the instructions');
+    assert.strictEqual(stage.attributes['description-markdown-template'], 'Respond with +PONG', 'payload is not changed');
   });
 });

@@ -94,7 +94,14 @@ export default class CourseRoute extends BaseRoute {
     }
   }
 
-  async loadResources() {
+  // Records from a prerendered page's shoebox have no stage instructions until the background reload lands
+  hasStagesWithoutInstructions(courseSlug: string) {
+    const course = this.store.peekAll('course').find((course) => course.slug === courseSlug) as CourseModel | undefined;
+
+    return !!course?.stages.some((stage) => stage.descriptionMarkdownTemplate === undefined);
+  }
+
+  async loadResources(courseSlug: string) {
     const includedCourseResources = [
       'extensions',
       'stages.solutions.language',
@@ -106,6 +113,7 @@ export default class CourseRoute extends BaseRoute {
 
     const coursesPromise = this.store.findAll('course', {
       include: includedCourseResources.join(','),
+      ...(this.hasStagesWithoutInstructions(courseSlug) ? { reload: true } : {}),
     }) as unknown as Promise<CourseModel[]>;
 
     const repositoriesPromise = this.store.findAll('repository', {
@@ -118,7 +126,7 @@ export default class CourseRoute extends BaseRoute {
   }
 
   async model(params: { course_slug: string }, transition: Transition): Promise<ModelType> {
-    const [allCourses, allRepositories] = (await this.loadResources()) as [CourseModel[], RepositoryModel[]];
+    const [allCourses, allRepositories] = (await this.loadResources(params.course_slug)) as [CourseModel[], RepositoryModel[]];
     const course = allCourses.find((course) => course.slug === params.course_slug) as CourseModel;
 
     const repositories = allRepositories.filter((repository) => {
