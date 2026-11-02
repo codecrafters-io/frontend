@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { currentURL, visit } from '@ember/test-helpers';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
+import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
 import networkProtocols from 'codecrafters-frontend/mirage/concept-fixtures/network-protocols';
 import tcpOverview from 'codecrafters-frontend/mirage/concept-fixtures/tcp-overview';
@@ -53,5 +54,49 @@ module('Acceptance | Meta tags', function (hooks) {
     assert
       .dom('meta[property="og:image"]', document.head)
       .hasAttribute('content', 'https://codecrafters.io/images/app_og/collection-test-concept-group.png');
+  });
+
+  test('it has a canonical URL when visiting /catalog', async function (assert) {
+    await visit('/catalog');
+    assert.dom('link[rel="canonical"]', document.head).hasAttribute('href', 'https://app.codecrafters.io/catalog');
+    assert.dom('meta[property="og:url"]', document.head).hasAttribute('content', 'https://app.codecrafters.io/catalog');
+  });
+
+  test('it has a canonical URL when visiting a track page', async function (assert) {
+    await visit('/tracks/go');
+    assert.dom('link[rel="canonical"]', document.head).hasAttribute('href', 'https://app.codecrafters.io/tracks/go');
+  });
+
+  test('it drops query params from the canonical URL of a course page', async function (assert) {
+    await visit('/courses/redis/overview?track=go');
+    assert.strictEqual(currentURL(), '/courses/redis/overview?track=go');
+    assert.dom('link[rel="canonical"]', document.head).hasAttribute('href', 'https://app.codecrafters.io/courses/redis/overview');
+    assert.dom('meta[name="robots"]', document.head).doesNotExist();
+  });
+
+  test('it hides alpha course pages from search engines', async function (assert) {
+    await visit('/courses/dummy/overview');
+    assert.dom('meta[name="robots"]', document.head).hasAttribute('content', 'noindex');
+    assert.dom('link[rel="canonical"]', document.head).doesNotExist();
+  });
+
+  test('it lets search engines index pages visited after an alpha course page', async function (assert) {
+    await visit('/courses/dummy/overview');
+    await visit('/catalog');
+    assert.dom('meta[name="robots"]', document.head).doesNotExist();
+    assert.dom('link[rel="canonical"]', document.head).hasAttribute('href', 'https://app.codecrafters.io/catalog');
+  });
+
+  test('it has no canonical URL on pages that require login', async function (assert) {
+    signIn(this.owner, this.server);
+
+    await visit('/settings/profile');
+    assert.dom('meta[name="robots"]', document.head).hasAttribute('content', 'noindex');
+    assert.dom('link[rel="canonical"]', document.head).doesNotExist();
+  });
+
+  test('it has no canonical URL on the 404 page', async function (assert) {
+    await visit('/this-page-does-not-exist');
+    assert.dom('link[rel="canonical"]', document.head).doesNotExist();
   });
 });

@@ -1,16 +1,27 @@
 import type RouterService from '@ember/routing/router-service';
 import Service, { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import config from 'codecrafters-frontend/config/environment';
 import RouteInfoMetadata from 'codecrafters-frontend/utils/route-info-metadata';
 
 export default class HeadDataService extends Service {
   @service declare router: RouterService;
 
+  get canonicalUrl() {
+    const path = this.router.currentURL?.split(/[?#]/)[0]?.replace(/\/+$/, '');
+
+    if (!path || this.shouldRenderNoIndexTag || this.router.currentRouteName === 'not-found') {
+      return undefined;
+    }
+
+    return `${config.x.canonicalBaseUrl}${path}`;
+  }
+
   get shouldRenderNoIndexTag() {
     const routeMeta = this.router.currentRoute?.metadata;
     const allowsAnonymousAccess = routeMeta instanceof RouteInfoMetadata && routeMeta.allowsAnonymousAccess;
 
-    return !allowsAnonymousAccess;
+    return !allowsAnonymousAccess || this.shouldPreventIndexing;
   }
 
   @tracked title?: string;
@@ -20,6 +31,7 @@ export default class HeadDataService extends Service {
   @tracked siteName?: string;
   @tracked twitterCard?: string;
   @tracked twitterSite?: string;
+  @tracked shouldPreventIndexing = false;
 }
 
 // Don't remove this declaration: this is what enables TypeScript to resolve

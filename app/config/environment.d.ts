@@ -11,6 +11,7 @@ declare const config: {
   rootURL: string;
   x: {
     backendUrl: string;
+    canonicalBaseUrl: string;
     helpscoutBeaconId: string;
     isCI: boolean;
     isStaging: boolean;
