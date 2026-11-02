@@ -25,6 +25,8 @@ export default class CourseOverviewRoute extends BaseRoute {
   @service declare router: RouterService;
 
   previousMetaImageUrl: string | undefined;
+  previousMetaTitle: string | undefined;
+  previousMetaDescription: string | undefined;
 
   activate(): void {
     scrollToTop();
@@ -38,7 +40,12 @@ export default class CourseOverviewRoute extends BaseRoute {
     }
 
     this.previousMetaImageUrl = this.metaData.imageUrl;
+    this.previousMetaTitle = this.metaData.title;
+    this.previousMetaDescription = this.metaData.description;
+
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
+    this.metaData.title = model.course.name;
+    this.metaData.description = model.course.overviewPageMetaDescription;
     this.metaData.shouldPreventIndexing = model.course.releaseStatusIsAlpha || model.course.visibilityIsPrivate;
   }
 
@@ -48,6 +55,8 @@ export default class CourseOverviewRoute extends BaseRoute {
 
   deactivate() {
     this.metaData.imageUrl = this.previousMetaImageUrl;
+    this.metaData.title = this.previousMetaTitle;
+    this.metaData.description = this.previousMetaDescription;
     this.metaData.shouldPreventIndexing = false;
   }
 

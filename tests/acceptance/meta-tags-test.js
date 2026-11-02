@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { currentURL, visit } from '@ember/test-helpers';
+import { getPageTitle } from 'ember-page-title/test-support';
 import { setupApplicationTest } from 'codecrafters-frontend/tests/helpers';
 import { signIn } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import createConceptFromFixture from 'codecrafters-frontend/mirage/utils/create-concept-from-fixture';
@@ -98,5 +99,45 @@ module('Acceptance | Meta tags', function (hooks) {
   test('it has no canonical URL on the 404 page', async function (assert) {
     await visit('/this-page-does-not-exist');
     assert.dom('link[rel="canonical"]', document.head).doesNotExist();
+  });
+
+  test('it has a page-specific title and description on track pages', async function (assert) {
+    await visit('/tracks/go');
+    assert.strictEqual(getPageTitle(), 'Go Projects: Build Redis, Git, SQLite & More | CodeCrafters');
+    assert.dom('meta[property="og:title"]', document.head).hasAttribute('content', 'Go Projects: Build Redis, Git, SQLite & More');
+
+    assert
+      .dom('meta[name="description"]', document.head)
+      .hasAttribute(
+        'content',
+        'Master Go by building Redis, Git, SQLite, and 1 more real-world project from scratch. Advanced, test-driven challenges for experienced engineers.',
+      );
+  });
+
+  test('it names every course in the title of a track with few courses', async function (assert) {
+    await visit('/tracks/crystal');
+    assert.strictEqual(getPageTitle(), 'Crystal Projects: Build Redis | CodeCrafters');
+
+    assert
+      .dom('meta[name="description"]', document.head)
+      .hasAttribute('content', 'Master Crystal by building Redis from scratch. Advanced, test-driven challenges for experienced engineers.');
+  });
+
+  test('it has a page-specific description on course overview pages', async function (assert) {
+    await visit('/courses/redis/overview');
+    assert.strictEqual(getPageTitle(), 'Build your own Redis | CodeCrafters');
+    assert.dom('meta[property="og:title"]', document.head).hasAttribute('content', 'Build your own Redis');
+
+    assert
+      .dom('meta[name="description"]', document.head)
+      .hasAttribute(
+        'content',
+        'Build your own Redis from scratch. Learn about TCP servers, the Redis protocol and more. Available in Rust, Go, Python, and 17 other languages.',
+      );
+  });
+
+  test('it has a descriptive title on the catalog', async function (assert) {
+    await visit('/catalog');
+    assert.strictEqual(getPageTitle(), 'Programming Challenges for Experienced Engineers | CodeCrafters');
   });
 });

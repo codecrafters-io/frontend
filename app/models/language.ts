@@ -2,6 +2,8 @@ import ConceptGroupModel from './concept-group';
 import CourseLanguageConfigurationModel from './course-language-configuration';
 import LeaderboardModel from './leaderboard';
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
+import type CourseModel from './course';
+import { pluralize } from 'ember-inflector';
 import colorLogoC from '/assets/images/language-logos/c-color.svg';
 import colorLogoClojure from '/assets/images/language-logos/clojure-color.svg';
 import colorLogoCpp from '/assets/images/language-logos/cpp-color.svg';
@@ -203,8 +205,28 @@ export default class LanguageModel extends Model {
     }[this.slug];
   }
 
+  // Courses listed on this language's track page
+  get trackCourses(): CourseModel[] {
+    return this.store
+      .peekAll('course')
+      .filter((course) => (course.releaseStatusIsLive || course.releaseStatusIsBeta) && course.visibilityIsPublic)
+      .filter((course) => course.betaOrLiveLanguages.includes(this));
+  }
+
   get trackDescriptionMarkdown() {
     return `${this.name} mastery exercises. Become your team's resident ${this.name} expert.`;
+  }
+
+  // The best-known courses first, then track page order
+  get #trackHeadlineCourseNames(): string[] {
+    const headlineSlugs = ['redis', 'git', 'sqlite'];
+    const rank = (course: CourseModel) =>
+      headlineSlugs.includes(course.slug) ? headlineSlugs.indexOf(course.slug) : 3 + course.sortPositionForTrack;
+
+    return this.trackCourses
+      .toSorted((a, b) => rank(a) - rank(b))
+      .slice(0, 3)
+      .map((course) => course.shortName);
   }
 
   get trackIntroductionMarkdown() {
@@ -256,5 +278,36 @@ A quick welcome to CodeCrafters.
       typescript: 31718,
       zig: 12524,
     }[this.slug];
+  }
+
+  get trackMetaDescription() {
+    const items = this.#trackHeadlineCourseNames;
+    const otherCoursesCount = this.trackCourses.length - items.length;
+
+    if (items.length === 0) {
+      return `Master ${this.name} with advanced, test-driven challenges for experienced engineers.`;
+    }
+
+    if (otherCoursesCount > 0) {
+      items.push(pluralize(otherCoursesCount, 'more real-world project'));
+    }
+
+    return `Master ${this.name} by building ${new Intl.ListFormat('en').format(items)} from scratch. Advanced, test-driven challenges for experienced engineers.`;
+  }
+
+  get trackPageTitle() {
+    const items = this.#trackHeadlineCourseNames;
+
+    if (this.trackCourses.length > items.length) {
+      items.push('More');
+    }
+
+    if (items.length === 0) {
+      return `${this.name} Projects`;
+    }
+
+    const list = items.length > 1 ? `${items.slice(0, -1).join(', ')} & ${items.at(-1)}` : items[0];
+
+    return `${this.name} Projects: Build ${list}`;
   }
 }
