@@ -237,7 +237,8 @@
   ],
   "ember-addon": {
     "paths": [
-      "lib/default-meta-tags"
+      "lib/default-meta-tags",
+      "lib/sitemap-xml"
     ]
   },
   "packageManager": "bun@1.3.5"

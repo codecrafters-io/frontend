@@ -198,6 +198,8 @@ export default defineConfig([
       'ember-cli-build.js',
       'lib/custom-file-plugin.js',
       'lib/default-meta-tags/index.js',
+      'lib/fetch-courses.js',
+      'lib/sitemap-xml/index.js',
     ],
     plugins: {
       n,

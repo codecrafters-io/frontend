@@ -5,6 +5,7 @@ require('dotenv').config({ quiet: true });
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const config = require('./config/environment')(EmberApp.env());
 const customFilePlugin = require('./lib/custom-file-plugin');
+const fetchCourses = require('./lib/fetch-courses');
 const nodeFetch = require('node-fetch');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { Webpack } = require('@embroider/webpack');
@@ -58,14 +59,9 @@ module.exports = function (defaults) {
         ];
 
         // Get a list of Courses and Languages from the API
-        const apiResponse = await nodeFetch(`${config.x.backendUrl}/api/v1/courses?include=language-configurations.language`);
+        const payload = await fetchCourses(config.x.backendUrl);
 
-        if (apiResponse.status !== 200) {
-          throw new Error(`Failed to load Courses and Languages from the API, status: ${apiResponse.status}`);
-        }
-
-        // Parse the response and make a combined list of all models
-        const payload = await apiResponse.json();
+        // Make a combined list of all models
         const models = [...(payload.data || []), ...(payload.included || [])];
 
         // Add routes for all Courses
