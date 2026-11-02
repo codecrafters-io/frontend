@@ -28,7 +28,7 @@ export default class TrackRoute extends BaseRoute {
     scrollToTop();
   }
 
-  afterModel({ language }: { language?: LanguageModel } = {}): void {
+  afterModel({ language }: { language?: LanguageModel }): void {
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.previousMetaTitle = this.metaData.title;
     this.previousMetaDescription = this.metaData.description;
