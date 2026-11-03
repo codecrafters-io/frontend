@@ -1,0 +1,12 @@
+{
+  "name": "sitemap-xml",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "html-entities": "*"
+  },
+  "ember-addon": {
+    "main": "index.js"
+  }
+}

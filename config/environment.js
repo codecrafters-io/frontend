@@ -38,6 +38,9 @@ module.exports = function (environment) {
       // the staging backend. Used to suppress prod-only integrations (Lobbyside).
       isStaging: backendUrl.includes('backend-staging.codecrafters.io'),
 
+      // Always production, so staging and preview builds point search engines at the live site.
+      canonicalBaseUrl: 'https://app.codecrafters.io',
+
       defaultMetaTags: {
         type: 'website',
         siteName: 'CodeCrafters',

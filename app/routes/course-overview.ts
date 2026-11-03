@@ -39,6 +39,7 @@ export default class CourseOverviewRoute extends BaseRoute {
 
     this.previousMetaImageUrl = this.metaData.imageUrl;
     this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}course-${model.course.slug}.jpg`;
+    this.metaData.shouldPreventIndexing = model.course.releaseStatusIsAlpha || model.course.visibilityIsPrivate;
   }
 
   buildRouteInfoMetadata() {
@@ -47,6 +48,7 @@ export default class CourseOverviewRoute extends BaseRoute {
 
   deactivate() {
     this.metaData.imageUrl = this.previousMetaImageUrl;
+    this.metaData.shouldPreventIndexing = false;
   }
 
   async #findCourse(slug: string) {

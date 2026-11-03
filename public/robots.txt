@@ -1,3 +1,5 @@
 # http://www.robotstxt.org
 User-agent: *
 Disallow:
+
+Sitemap: https://app.codecrafters.io/sitemap.xml

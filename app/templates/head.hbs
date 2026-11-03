@@ -22,6 +22,11 @@
 <meta name="twitter:description" content={{or @model.metaData.description @model.defaults.description}} />
 <meta name="twitter:image" content={{or @model.metaData.imageUrl @model.defaults.imageUrl}} />
 
+{{#if @model.metaData.canonicalUrl}}
+  <link rel="canonical" href={{@model.metaData.canonicalUrl}} />
+  <meta property="og:url" content={{@model.metaData.canonicalUrl}} />
+{{/if}}
+
 {{#if @model.metaData.shouldRenderNoIndexTag}}
   <meta name="robots" content="noindex" />
 {{/if}}
