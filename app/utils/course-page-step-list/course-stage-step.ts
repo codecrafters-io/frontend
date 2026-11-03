@@ -155,6 +155,7 @@ Check the [How to pass this stage](#first-stage-tutorial-heading) section for in
   }
 
   get status() {
+    // debugger;
     // TODO: Might need to prioritize "in_progress" when allowing users to change currentStage
     if (this.completedAt) {
       return 'complete';

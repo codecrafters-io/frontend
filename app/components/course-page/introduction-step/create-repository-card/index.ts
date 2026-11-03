@@ -3,7 +3,6 @@ import type Owner from '@ember/owner';
 import CoursePageStateService from 'codecrafters-frontend/services/course-page-state';
 import LanguageModel from 'codecrafters-frontend/models/language';
 import RepositoryModel from 'codecrafters-frontend/models/repository';
-import RouterService from '@ember/routing/router-service';
 import * as Sentry from '@sentry/ember';
 import { type Section as MultiSectionCardSection } from 'codecrafters-frontend/components/course-page/multi-section-card';
 import { Section, SectionList } from 'codecrafters-frontend/utils/pre-challenge-assessment-section-list';
@@ -15,13 +14,13 @@ interface Signature {
   Element: HTMLDivElement;
 
   Args: {
+    onLanguageSelected: (repository: RepositoryModel) => void;
     preferredLanguageSlug: string | undefined;
     repository: RepositoryModel;
   };
 }
 
 export default class CreateRepositoryCard extends Component<Signature> {
-  @service declare router: RouterService;
   @service declare coursePageState: CoursePageStateService;
 
   @tracked expandedSectionIndex: number | null = null;
@@ -72,7 +71,7 @@ export default class CreateRepositoryCard extends Component<Signature> {
 
     this.expandNextSection();
 
-    this.router.transitionTo({ queryParams: { repo: this.args.repository.id, track: null } });
+    this.args.onLanguageSelected(this.args.repository);
   }
 
   @action

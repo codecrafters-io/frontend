@@ -35,6 +35,7 @@ export default class CourseController extends Controller {
   @tracked track: string | undefined = undefined;
 
   @tracked configureGithubIntegrationModalIsOpen = false;
+  @tracked shouldSkipNextModelRefresh = false;
   @tracked sidebarIsExpandedOnDesktop = true;
   @tracked sidebarIsExpandedOnMobile = false;
   @tracked leaderboardIsExpanded = true;
