@@ -21,14 +21,21 @@ export default class TrackRoute extends BaseRoute {
   @service declare store: Store;
 
   previousMetaImageUrl: string | undefined;
+  previousMetaTitle: string | undefined;
+  previousMetaDescription: string | undefined;
 
   activate(): void {
     scrollToTop();
   }
 
-  afterModel({ language: { slug } = {} }: { language?: { slug?: string } } = {}): void {
+  afterModel({ language }: { language?: LanguageModel }): void {
     this.previousMetaImageUrl = this.metaData.imageUrl;
-    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${slug}.jpg`;
+    this.previousMetaTitle = this.metaData.title;
+    this.previousMetaDescription = this.metaData.description;
+
+    this.metaData.imageUrl = `${config.x.metaTagImagesBaseURL}language-${language?.slug}.jpg`;
+    this.metaData.title = language?.trackPageTitle;
+    this.metaData.description = language?.trackMetaDescription;
   }
 
   buildRouteInfoMetadata() {
@@ -37,6 +44,8 @@ export default class TrackRoute extends BaseRoute {
 
   deactivate(): void {
     this.metaData.imageUrl = this.previousMetaImageUrl;
+    this.metaData.title = this.previousMetaTitle;
+    this.metaData.description = this.previousMetaDescription;
   }
 
   // TODO: Handle missing language?

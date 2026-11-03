@@ -29,6 +29,7 @@ import { service } from '@ember/service';
 import { memberAction } from 'ember-api-actions';
 import { isSameDay } from 'date-fns';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { pluralize } from 'ember-inflector';
 
 type SyncBuildpacksResponse = { error: string } | { success: boolean };
 
@@ -170,6 +171,24 @@ export default class CourseModel extends Model {
         sqlite: sqliteLogo,
       }[this.slug] || grepLogo
     );
+  }
+
+  get overviewPageMetaDescription() {
+    const languageNames = this.betaOrLiveLanguages.toSorted(fieldComparator('sortPositionForTrack')).map((language) => language.name);
+    const otherLanguagesCount = languageNames.length - 3;
+    const sentences = [`${this.name} from scratch.`];
+
+    if (this.shortDescription) {
+      sentences.push(`${this.shortDescription.replace(/\.$/, '')}.`);
+    }
+
+    if (languageNames.length > 0) {
+      const languages = otherLanguagesCount > 0 ? [...languageNames.slice(0, 3), pluralize(otherLanguagesCount, 'other language')] : languageNames;
+
+      sentences.push(`Available in ${new Intl.ListFormat('en').format(languages)}.`);
+    }
+
+    return sentences.join(' ');
   }
 
   get roundedCompletionPercentage() {
