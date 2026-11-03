@@ -3,6 +3,25 @@ import { service } from '@ember/service';
 
 export const SERIALIZER_SHOEBOX_IDENTIFIER = 'application-serializer-data';
 
+// Prerendered pages don't use these, and they'd make up most of each page's HTML.
+// The course route reloads them before rendering a stage (see `CourseRoute#hasStagesWithoutInstructions`).
+const ATTRIBUTES_EXCLUDED_FROM_SHOEBOX = {
+  'course-stages': ['community-solution-counts', 'description-markdown-template', 'marketing-markdown'],
+};
+
+function withoutAttributesExcludedFromShoebox(hash) {
+  const excludedAttributes = ATTRIBUTES_EXCLUDED_FROM_SHOEBOX[hash.type];
+
+  if (!excludedAttributes || !hash.attributes) {
+    return hash;
+  }
+
+  const attributes = { ...hash.attributes };
+  excludedAttributes.forEach((attribute) => delete attributes[attribute]);
+
+  return { ...hash, attributes };
+}
+
 export default class ApplicationSerializer extends JSONAPISerializer {
   @service fastboot;
 
@@ -17,7 +36,7 @@ export default class ApplicationSerializer extends JSONAPISerializer {
       const shoeboxRecords = this.fastboot.shoebox.retrieve(SERIALIZER_SHOEBOX_IDENTIFIER) || [];
 
       // Update shoebox cache, adding the new record
-      this.fastboot.shoebox.put(SERIALIZER_SHOEBOX_IDENTIFIER, [...shoeboxRecords, hash]);
+      this.fastboot.shoebox.put(SERIALIZER_SHOEBOX_IDENTIFIER, [...shoeboxRecords, withoutAttributesExcludedFromShoebox(hash)]);
     }
 
     return super.normalize(typeClass, hash);

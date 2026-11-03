@@ -16,6 +16,7 @@ import {
 } from 'codecrafters-frontend/tests/support/authentication-helpers';
 import { currentURL, find, isSettled, settled, visit, waitFor, waitUntil } from '@ember/test-helpers';
 import fieldComparator from 'codecrafters-frontend/utils/field-comparator';
+import { SERIALIZER_SHOEBOX_IDENTIFIER } from 'codecrafters-frontend/serializers/application';
 
 module('Acceptance | course-page | view-course-stages-test', function (hooks) {
   setupApplicationTest(hooks);
@@ -399,6 +400,33 @@ module('Acceptance | course-page | view-course-stages-test', function (hooks) {
     assert.ok(find('[data-test-loading]'), 'loader should be present');
     await settled();
     assert.strictEqual(coursePage.header.stepName, 'Respond to PING');
+  });
+
+  test('stage page loads the instructions that prerendered pages leave out', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    // Like a real page load, the background reload of courses lands after the first render
+    this.server.get('/courses', { timing: 300 });
+
+    // Same records a prerendered page puts in its shoebox: stages without instructions
+    const redis = this.server.schema.courses.findBy({ slug: 'redis' });
+    const { data, included } = this.server.serializerOrRegistry.serialize(redis, { queryParams: { include: 'stages' } });
+    included.forEach((record) => delete record.attributes['description-markdown-template']);
+
+    const shoebox = document.createElement('script');
+    shoebox.type = 'fastboot/shoebox';
+    shoebox.id = `shoebox-${SERIALIZER_SHOEBOX_IDENTIFIER}`;
+    shoebox.textContent = JSON.stringify([data, ...included]);
+    document.body.appendChild(shoebox);
+
+    try {
+      await visit('/courses/redis/stages/rg2');
+      assert.strictEqual(currentURL(), '/courses/redis/stages/rg2');
+      assert.ok(coursePage.secondStageYourTaskCard.text.includes("you'll implement support for the PING command"), 'instructions are shown');
+    } finally {
+      shoebox.remove();
+    }
   });
 
   test('transition from courses page has no loading page', async function (assert) {
