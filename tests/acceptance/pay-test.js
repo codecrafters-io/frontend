@@ -45,6 +45,19 @@ module('Acceptance | pay-test', function (hooks) {
     assert.strictEqual(this.server.schema.individualCheckoutSessions.first().promotionalDiscount, null);
   });
 
+  test('user can start checkout for the lifetime pass', async function (assert) {
+    testScenario(this.server);
+    signIn(this.owner, this.server);
+
+    await payPage.visit();
+    await payPage.pricingPlanCards[1].ctaButton.click();
+    await payPage.chooseMembershipPlanModal.planCards[2].click();
+    await payPage.chooseMembershipPlanModal.clickOnChoosePlanButton();
+    await payPage.chooseMembershipPlanModal.clickOnProceedToCheckoutButton();
+
+    assert.strictEqual(this.server.schema.individualCheckoutSessions.first().pricingPlanId, 'v1-lifetime');
+  });
+
   test('user with signup discount can start checkout session', async function (assert) {
     testScenario(this.server);
 
