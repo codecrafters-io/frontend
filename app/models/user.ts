@@ -38,7 +38,7 @@ export default class UserModel extends Model {
   @attr() declare authoredCourseSlugs: string[];
   @attr('string') declare avatarUrl: string;
   @attr('date') declare createdAt: Date;
-  @attr() declare featureFlags: { [key: string]: string };
+  @attr() declare featureFlags: { [key: string]: string | boolean };
   @attr('string') declare githubName: string | null;
   @attr('string') declare githubUsername: string;
   @attr('boolean') declare hasActiveFreeUsageGrants: boolean;

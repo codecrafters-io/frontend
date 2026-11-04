@@ -1,6 +1,7 @@
 import affiliateLink from './affiliate-link';
 import affiliateReferral from './affiliate-referral';
 import autofixRequest from './autofix-request';
+import challengeInterview from './challenge-interview';
 import communityCourseStageSolution from './community-course-stage-solution';
 import communityCourseStageSolutionComment from './community-course-stage-solution-comment';
 import communitySolutionEvaluation from './community-solution-evaluation';
@@ -21,6 +22,7 @@ export default {
   affiliateLink,
   affiliateReferral,
   autofixRequest,
+  challengeInterview,
   communityCourseStageSolution,
   communityCourseStageSolutionComment,
   communitySolutionEvaluation,

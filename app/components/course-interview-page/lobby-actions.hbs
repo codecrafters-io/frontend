@@ -1,0 +1,31 @@
+<div ...attributes>
+  {{#if this.isMicrophoneBlocked}}
+    <div class="flex items-start rounded-sm border border-red-500/30 bg-red-950/50 p-3 mb-6 text-sm text-red-300" data-test-microphone-blocked-notice>
+      {{svg-jar "exclamation" class="w-5 h-5 mr-2 shrink-0"}}
+      <span>Microphone access is blocked. Allow it in your browser's site settings, then click "{{@startButtonLabel}}" again.</span>
+    </div>
+  {{/if}}
+
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <label class="flex items-center text-sm text-gray-300 cursor-pointer select-none">
+      <input
+        type="checkbox"
+        checked={{@shouldShowCaptions}}
+        class="mr-2 rounded-sm border-gray-600 bg-gray-800 text-teal-500 focus:ring-teal-500"
+        data-test-captions-checkbox
+        {{on "change" @onCaptionsToggle}}
+      />
+      Show live captions
+    </label>
+
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.isStartButtonDisabled}}
+      @shouldShowSpinner={{@isStarting}}
+      disabled={{this.isStartButtonDisabled}}
+      data-test-start-button
+      {{on "click" @onStartButtonClick}}
+    >
+      {{@startButtonLabel}}
+    </PrimaryButtonWithSpinner>
+  </div>
+</div>

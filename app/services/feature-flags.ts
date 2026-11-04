@@ -14,11 +14,15 @@ export default class FeatureFlagsService extends Service {
     this.notifiedFeatureFlags = new Set();
   }
 
+  get canViewCompetitionQuiz(): boolean {
+    return !!(this.getFeatureFlagValue('can-view-competition-quiz') === true || this.currentUser?.isStaff);
+  }
+
   get currentUser(): User | null {
     return this.authenticator.currentUser;
   }
 
-  getFeatureFlagValue(flagName: string): string | null | undefined {
+  getFeatureFlagValue(flagName: string): string | boolean | null | undefined {
     const value = this.currentUser?.featureFlags?.[flagName];
 
     if (!this.notifiedFeatureFlags.has(flagName)) {

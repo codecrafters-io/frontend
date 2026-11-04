@@ -1,0 +1,24 @@
+<div class="rounded-md border border-gray-200 p-4" data-test-recording ...attributes>
+  <div class="text-sm font-semibold text-gray-900 mb-2">Recording</div>
+
+  {{#if this.audioUrl}}
+    <audio controls src={{this.audioUrl}} class="w-full" data-test-recording-player>
+      <track kind="captions" src={{this.captionsUrl}} srclang="en" label="Transcript" default />
+    </audio>
+  {{else}}
+    <PrimaryButtonWithSpinner
+      @isDisabled={{this.loadRecordingTask.isRunning}}
+      @shouldShowSpinner={{this.loadRecordingTask.isRunning}}
+      @size="small"
+      disabled={{this.loadRecordingTask.isRunning}}
+      data-test-load-recording-button
+      {{on "click" this.handleLoadRecordingButtonClick}}
+    >
+      Load recording
+    </PrimaryButtonWithSpinner>
+  {{/if}}
+
+  {{#if this.errorMessage}}
+    <div class="text-sm text-red-600 mt-2" role="alert" data-test-recording-error>{{this.errorMessage}}</div>
+  {{/if}}
+</div>

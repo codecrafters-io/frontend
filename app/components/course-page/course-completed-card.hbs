@@ -54,6 +54,9 @@
         </PrimaryLinkButton>
       </div>
     {{/if}}
+
+    <CoursePage::CompetitionQuizCard @repository={{@repository}} class="mt-6" />
+    <CoursePage::InterviewPromptCard @milestone={{this.interviewMilestone}} class="mt-6" />
   </:content>
 </CoursePage::InstructionsCard>
 

@@ -1,0 +1,57 @@
+<div
+  class="flex flex-col rounded-lg border border-white/10 bg-gray-900/60 min-h-0 overflow-hidden"
+  data-test-code-panel
+  {{did-update this.handleCodeHighlightDidChange this.voiceInterview.codeHighlight}}
+  ...attributes
+>
+  <div class="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-2 shrink-0">
+    <div class="flex items-center text-xs font-semibold uppercase tracking-wide text-gray-500">
+      {{svg-jar "code" class="w-4 h-4 mr-2"}}
+      Your code
+    </div>
+
+    {{#if this.voiceInterview.codeHighlight}}
+      <div class="text-xs text-teal-300 truncate" data-test-code-highlight-label>
+        Interviewer is asking about
+        <span class="font-mono">{{this.voiceInterview.codeHighlight.path}}</span>, lines
+        {{this.voiceInterview.codeHighlight.startLine}}–{{this.voiceInterview.codeHighlight.endLine}}
+      </div>
+    {{/if}}
+  </div>
+
+  {{#if this.activeFile}}
+    <div class="flex overflow-x-auto border-b border-white/10 px-2 shrink-0" role="tablist">
+      {{#each @codeFiles as |file|}}
+        <button
+          type="button"
+          role="tab"
+          aria-selected={{if (eq file.path this.activeFile.path) "true" "false"}}
+          class="flex items-center whitespace-nowrap px-3 py-2 font-mono text-xs border-b-2 transition-colors
+            {{if (eq file.path this.activeFile.path) 'border-teal-400 text-gray-100' 'border-transparent text-gray-500 hover:text-gray-300'}}"
+          data-test-code-file-tab
+          {{on "click" (fn this.handleFileTabClick file.path)}}
+        >
+          {{file.path}}
+
+          {{#if (eq file.path this.highlightedPath)}}
+            <span class="ml-2 w-1.5 h-1.5 rounded-full bg-teal-400" data-test-highlighted-file-indicator></span>
+          {{/if}}
+        </button>
+      {{/each}}
+    </div>
+
+    <div class="grow overflow-y-auto p-3" {{did-insert this.handleDidInsertScrollContainer}}>
+      <FileContentsCard
+        @code={{this.activeFile.contents}}
+        @filename={{this.activeFile.path}}
+        @highlightedRanges={{this.highlightedRanges}}
+        @language=""
+        data-test-active-code-file
+      />
+    </div>
+  {{else}}
+    <div class="m-auto text-sm text-gray-500 p-6 text-center" data-test-code-panel-empty>
+      We couldn't load your code, but the interviewer can still ask about it.
+    </div>
+  {{/if}}
+</div>

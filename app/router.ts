@@ -35,6 +35,8 @@ Router.map(function () {
     this.route('code-example-insights', { path: '/code-examples/stage/:stage_slug' });
     this.route('code-example-insights-index', { path: '/code-examples' });
     this.route('feedback');
+    this.route('quiz', { path: '/quizzes/:quiz_id' });
+    this.route('quizzes');
     this.route('stage-insights', { path: '/stage-insights/:stage_slug' });
     this.route('stage-insights-index', { path: '/stage-insights' });
     this.route('submissions');
@@ -61,6 +63,8 @@ Router.map(function () {
     this.route('completed');
   });
 
+  this.route('course-interview', { path: '/courses/:course_slug/interview/:milestone_slug' });
+  this.route('course-quiz', { path: '/courses/:course_slug/quiz/:competition_slug' });
   this.route('course-overview', { path: '/courses/:course_slug/overview' }); // TODO: Add dark mode support
   this.route('debug');
   this.route('gifts.buy', { path: '/gifts/buy' });
