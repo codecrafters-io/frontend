@@ -1,6 +1,8 @@
 <div
   class="bg-gray-950 border-t border-gray-900 dark flex flex-col items-center {{if this.isExpanded 'rounded-t-lg'}}"
   data-test-test-results-bar
+  {{did-insert this.handleDidInsertContainer}}
+  {{will-destroy this.handleWillDestroyContainer}}
   ...attributes
 >
   {{#if this.isExpanded}}

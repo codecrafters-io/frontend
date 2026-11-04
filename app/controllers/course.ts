@@ -14,6 +14,7 @@ import type FeatureFlagsService from 'codecrafters-frontend/services/feature-fla
 import type { ModelType } from 'codecrafters-frontend/routes/course';
 import type { StepDefinition } from 'codecrafters-frontend/utils/course-page-step-list';
 import type { StepStatus, StepType } from 'codecrafters-frontend/utils/course-page-step-list/step';
+import { htmlSafe } from '@ember/template';
 import { task } from 'ember-concurrency';
 
 export default class CourseController extends Controller {
@@ -46,6 +47,10 @@ export default class CourseController extends Controller {
 
   get currentUser() {
     return this.authenticator.currentUser;
+  }
+
+  get rightRailStyle() {
+    return htmlSafe(`max-height: calc(100vh - 4rem - ${this.coursePageState.testResultsBarOverlayHeight}); overflow-y: auto;`);
   }
 
   get selectedRepositoryId() {

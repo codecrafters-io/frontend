@@ -1,6 +1,7 @@
 import CommentList from 'codecrafters-frontend/tests/pages/components/course-page/comment-list';
 import ConfigureExtensionsModal from 'codecrafters-frontend/tests/pages/components/course-page/configure-extensions-modal';
 import CopyableTerminalCommand from 'codecrafters-frontend/tests/pages/components/copyable-terminal-command';
+import CourseStageChatPanel from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-chat-panel';
 import CreateRepositoryCard from 'codecrafters-frontend/tests/pages/components/course-page/create-repository-card';
 import FeedbackPrompt from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/feedback-prompt';
 import FirstStageYourTaskCard from 'codecrafters-frontend/tests/pages/components/course-page/course-stage-step/first-stage-your-task-card';
@@ -39,6 +40,7 @@ export default create({
 
   commentList: CommentList,
   configureExtensionsModal: ConfigureExtensionsModal,
+  courseStageChatPanel: CourseStageChatPanel,
 
   configureGithubIntegrationModal: {
     get isOpen(): boolean {

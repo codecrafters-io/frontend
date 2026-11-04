@@ -7,6 +7,8 @@ import communitySolutionEvaluation from './community-solution-evaluation';
 import communitySolutionExport from './community-solution-export';
 import conceptEngagement from './concept-engagement';
 import contest from './contest';
+import courseStageChat from './course-stage-chat';
+import courseStageChatMessage from './course-stage-chat-message';
 import courseStageComment from './course-stage-comment';
 import courseStageCompletion from './course-stage-completion';
 import institutionMembershipGrant from './institution-membership-grant';
@@ -27,6 +29,8 @@ export default {
   communitySolutionExport,
   conceptEngagement,
   contest,
+  courseStageChat,
+  courseStageChatMessage,
   courseStageComment,
   courseStageCompletion,
   institutionMembershipGrant,

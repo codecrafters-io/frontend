@@ -1,0 +1,113 @@
+<div class="contents" {{did-insert this.handleDidInsert}} {{did-update this.handleDidUpdate @repository.id this.courseStageId}}>
+  {{#if this.shouldShow}}
+    <div class="w-64 xl:w-80 px-6 pb-4" data-test-course-stage-chat-panel ...attributes>
+      <div class="bg-white dark:bg-gray-925 border border-gray-300 dark:border-white/10 rounded-sm flex flex-col overflow-hidden">
+        <div class="{{if this.isExpanded 'border-b border-gray-200 dark:border-white/5'}}">
+          <button
+            type="button"
+            class="flex items-start gap-2 w-full px-4 pt-4 sm:px-5 sm:pt-4 pb-2 text-left"
+            data-test-chat-toggle
+            aria-expanded={{this.isExpanded}}
+            {{on "click" this.handleToggleClick}}
+          >
+            {{svg-jar "chat-alt-2" class="w-5 h-5 mt-0.5 fill-current text-gray-400 dark:text-gray-600 shrink-0"}}
+            <span class="font-semibold text-lg leading-snug text-gray-700 dark:text-gray-200 grow" data-test-chat-title>Ask about this stage</span>
+            <Pill @color="teal" @size="small" class="shrink-0 mt-1" data-test-chat-beta-label>Beta</Pill>
+            {{svg-jar
+              "chevron-down"
+              class=(concat "w-4 h-4 mt-1.5 shrink-0 text-gray-400 dark:text-gray-600 transition-transform " (if this.isExpanded "rotate-180"))
+            }}
+          </button>
+        </div>
+
+        {{#if this.isExpanded}}
+          {{#unless this.isEmpty}}
+            <div
+              class="max-h-64 overflow-y-auto px-4 py-3 flex flex-col gap-3"
+              data-test-chat-messages
+              {{did-insert this.handleDidInsertMessages}}
+              {{did-update
+                this.handleDidUpdateMessages
+                this.displayedMessages.length
+                this.latestMessageBody
+                this.latestMessageId
+                this.latestMessageStatus
+              }}
+            >
+              {{#each this.displayedMessages key="id" as |message|}}
+                {{#if message.isUser}}
+                  <div data-test-chat-message data-test-chat-message-role="user">
+                    <div class="text-xs font-bold uppercase text-gray-400 dark:text-gray-600 mb-1">You</div>
+                    <div
+                      class="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap break-words"
+                      data-test-chat-message-body
+                    >{{message.body}}</div>
+                    {{#if message.isPending}}
+                      <div class="flex items-center mt-2">
+                        <img alt="Loading icon" src={{this.rippleSpinnerImage}} class="w-4 h-4" />
+                        <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">Loading…</span>
+                      </div>
+                    {{/if}}
+                  </div>
+                {{else}}
+                  <div data-test-chat-message data-test-chat-message-role="assistant">
+                    <div class="text-xs font-bold uppercase text-gray-400 dark:text-gray-600 mb-1">Assistant</div>
+                    <div class="border border-gray-200 dark:border-white/5 rounded-sm p-3 bg-gray-50 dark:bg-gray-900">
+                      <div class="prose prose-sm dark:prose-invert max-w-none" data-test-chat-message-body>
+                        {{markdown-to-html message.body}}
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-1 mt-2">
+                      <TertiaryButton @size="extra-small" {{on "click" (fn this.handleRatingClick message "up")}} data-test-rating-up>
+                        {{svg-jar "thumb-up" class=(concat "w-4 " (if (eq message.rating "up") "text-teal-500" "text-gray-400 dark:text-gray-600"))}}
+                      </TertiaryButton>
+                      <TertiaryButton @size="extra-small" {{on "click" (fn this.handleRatingClick message "down")}} data-test-rating-down>
+                        {{svg-jar
+                          "thumb-down"
+                          class=(concat "w-4 " (if (eq message.rating "down") "text-red-600" "text-gray-400 dark:text-gray-600"))
+                        }}
+                      </TertiaryButton>
+                    </div>
+                  </div>
+                {{/if}}
+              {{/each}}
+            </div>
+          {{/unless}}
+
+          <form
+            class="shrink-0 px-3 py-3 {{unless this.isEmpty 'border-t border-gray-200 dark:border-white/5'}}"
+            {{on "submit" this.handleSubmit}}
+            data-test-chat-composer
+          >
+            {{! template-lint-disable require-input-label }}
+            <Textarea
+              @value={{this.body}}
+              class="border border-gray-300 dark:border-white/10 rounded-sm w-full p-2 text-sm placeholder-gray-500 dark:placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-teal-600 bg-white dark:bg-gray-950 text-gray-950 dark:text-gray-100"
+              rows="3"
+              placeholder="Ask a question…"
+              {{markdown-input}}
+              {{on "keydown" this.handleInputKeydown}}
+              data-test-chat-input
+            />
+
+            <div class="flex justify-end mt-2">
+              <PrimaryButtonWithSpinner
+                @isDisabled={{not this.canSubmit}}
+                @shouldShowSpinner={{this.sendMessageTask.isRunning}}
+                @size="small"
+                type="submit"
+                data-test-chat-submit-button
+              >
+                Ask
+              </PrimaryButtonWithSpinner>
+            </div>
+
+            {{#if this.submitError}}
+              <p class="text-xs text-red-600 dark:text-red-400 mt-2" data-test-chat-submit-error>{{this.submitError}}</p>
+            {{/if}}
+          </form>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</div>
